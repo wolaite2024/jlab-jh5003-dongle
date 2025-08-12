@@ -1,0 +1,255 @@
+/* The custom CSS for doxygen 1.8.14 */
+
+body, table, div, p, dl {
+	font: 400 20px/28px Times New Roman,serif;
+}
+
+p.reference, p.definition {
+	font: 400 20px/28px Times New Roman,serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	-webkit-transition: text-shadow 0.5s linear;
+	-moz-transition: text-shadow 0.5s linear;
+	-ms-transition: text-shadow 0.5s linear;
+	-o-transition: text-shadow 0.5s linear;
+	transition: text-shadow 0.5s linear;
+	margin-right: 15px;
+	font-family: Arial,sans-serif;
+}
+
+.title {
+	font: 400 14px/28px Arial,sans-serif;
+	font-size: 150%;
+	font-weight: bold;
+	margin: 10px 2px;
+}
+
+table.directory {
+    font: 400 14px Arial,sans-serif;
+}
+
+div.line {
+	font-family: monospace, fixed;
+    font-size: 18px;
+	min-height: 13px;
+	line-height: 26px;
+	text-wrap: unrestricted;
+	white-space: -moz-pre-wrap; /* Moz */
+	white-space: -pre-wrap;     /* Opera 4-6 */
+	white-space: -o-pre-wrap;   /* Opera 7 */
+	white-space: pre-wrap;      /* CSS3  */
+	word-wrap: break-word;      /* IE 5.5+ */
+	text-indent: -53px;
+	padding-left: 53px;
+	padding-bottom: 0px;
+	margin: 0px;
+	-webkit-transition-property: background-color, box-shadow;
+	-webkit-transition-duration: 0.5s;
+	-moz-transition-property: background-color, box-shadow;
+	-moz-transition-duration: 0.5s;
+	-ms-transition-property: background-color, box-shadow;
+	-ms-transition-duration: 0.5s;
+	-o-transition-property: background-color, box-shadow;
+	-o-transition-duration: 0.5s;
+	transition-property: background-color, box-shadow;
+	transition-duration: 0.5s;
+}
+
+#powerTip div {
+        margin: 0px;
+        padding: 0px;
+        font: 12px/16px Arial,sans-serif;
+}
+
+
+/* txt page */
+.contents h1 {
+    text-align: center;
+}
+
+.contents h2:nth-of-type(1) {
+    text-align: center;
+}
+
+.contents h2:nth-of-type(2) {
+    text-align: center;
+}
+
+.contents h2:nth-of-type(3) {
+    text-align: center;
+}
+
+.contents h2:nth-of-type(4) {
+    text-align: center;
+}
+
+.contents h2:nth-of-type(5) {
+    text-align: center;
+}
+
+/* md page */
+.contents .textblock h2:nth-of-type(1) {
+    text-align: center;
+}
+
+.contents .textblock h2:nth-of-type(2) {
+    text-align: center;
+}
+
+.contents .textblock h2:nth-of-type(3) {
+    text-align: center;
+}
+
+.contents .textblock h2:nth-of-type(4) {
+    text-align: center;
+}
+
+.contents .textblock h2:nth-of-type(5) {
+    text-align: center;
+}
+/*
+.contents .textblock h2:nth-of-type(6) {
+    text-align: center;
+}*/
+
+
+h1 {
+	line-height: 2em;
+}
+
+p {
+	margin: 20px 0
+}
+
+.image {
+        text-align: center;
+		margin-top: 24px;
+        margin-bottom: 2px;
+}
+
+/* Code Spans */
+code {
+    padding: 0px;
+	background-color: #FBFCFD;
+	border: 1px solid #C4CFE5;
+    /*color: #e74c3c;*/
+}
+/*
+code a.el {
+	color: #e74c3c;
+}
+
+.contents code a:visited {
+	color: #e74c3c;
+}
+*/
+
+/* Force text not to wrap */
+center {
+	white-space: nowrap;
+}
+
+.markdownTable {
+    margin: 0 auto;
+	width: 900px;
+	word-break: break-all;
+}
+
+table.doxtable {
+	border-collapse:collapse;
+	margin: 0 auto;
+	width: 900px;
+	word-break: break-all;
+	margin-top: 4px;
+    margin-bottom: 24px;
+}
+
+table.doxtable th {
+	background-color: #DFE9F3;
+	color: #000000;
+	font-size: 110%;
+	padding-bottom: 4px;
+	padding-top: 5px;
+}
+
+table.markdownTable {
+	border-collapse:collapse;
+    margin-top: 4px;
+    margin-bottom: 24px;
+}
+
+th.markdownTableHeadLeft, th.markdownTableHeadRight, th.markdownTableHeadCenter, th.markdownTableHeadNone {
+	background-color: #DFE9F3;
+	color: #000000;
+	font-size: 110%;
+	padding-bottom: 4px;
+	padding-top: 5px;
+}
+
+/* admonition and warning*/
+@font-face { 
+	font-family: 'FontAwesome'; 
+	src: url('../text/fonts/fontawesome-webfont.eot?v=4.7.0'); 
+	src: url('../text/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('../text/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('../text/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('../text/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('../text/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg'); 
+	font-weight: normal; 
+	font-style: normal; 
+	} 
+	
+.admonition { 
+    margin-bottom: 1em;
+    background: #e7f2fa;
+}
+.admonition-title { 
+    color: #fff;
+    font-weight: bold;
+    display: block; 
+    background: #6ab0de;
+}
+.admonition-title:before {
+    margin-right: 0.25em;
+	font-family: "FontAwesome";
+    display: inline-block;
+    font-style: normal;
+    font-weight: normal; 
+    text-decoration: inherit;
+    content: "\f06a";
+}
+.admonition p, .admonition .line-block {
+    padding: 0.5em;
+	margin-top: 0;
+    margin-bottom: 0;
+}
+.admonition .line-block .line {
+	font: 400 20px/28px Times New Roman,serif;
+}
+
+.warning {
+    margin-bottom: 1em;
+    background: #ffedcc !important;
+}
+.warning .admonition-title {
+    color: #fff;
+    font-weight: bold;
+    display: block; 
+    background: #f0b37e !important;
+}
+.warning .admonition-title:before {
+    margin-right: 0.25em;
+	font-family: "FontAwesome";
+    display: inline-block;
+    font-style: normal;
+    font-weight: normal; 
+    text-decoration: inherit;
+    content: "\f071" !important;
+}
+.warning p, .warning .line-block {
+    padding: 0.5em;
+	margin-top: 0;
+    margin-bottom: 0;
+}
+.warning .line-block .line {
+	font: 400 20px/28px Times New Roman,serif;
+}
+
+/* @end */

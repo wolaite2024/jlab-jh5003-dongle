@@ -1,0 +1,9 @@
+TotalSucNum:1, TotalFailNum:0, CurSucNum:1, CurFailNum:0 
+2025-06-18-20:18:44  portID:0, status:OK, MAC Addr:000000000001
+===================================================================================
+TotalSucNum:2, TotalFailNum:0, CurSucNum:1, CurFailNum:0 
+2025-06-18-20:31:15  portID:0, status:OK, MAC Addr:000000000002
+===================================================================================
+TotalSucNum:3, TotalFailNum:0, CurSucNum:1, CurFailNum:0 
+2025-06-20-15:32:51  portID:0, status:OK, MAC Addr:000000000003
+===================================================================================

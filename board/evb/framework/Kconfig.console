@@ -1,0 +1,7 @@
+if REALTEK_CONSOLE
+
+config REALTEK_CONSOLE_TARGET_NAME
+   string
+   default "libconsole"
+
+endif

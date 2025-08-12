@@ -1,0 +1,13 @@
+if REALTEK_REMOTE
+
+config REALTEK_REMOTE_TARGET_NAME
+   string
+   default "libremote"
+
+config REALTEK_REMOTE_CONTROL_SUPPORT
+   bool "remote control support"
+   default y
+   help
+     REMOTE_CONTROL_SUPPORT
+
+endif

@@ -1,0 +1,12 @@
+.\objects\app_ipc.o: ..\..\..\src\sample\gaming_dongle\app_ipc.c
+.\objects\app_ipc.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
+.\objects\app_ipc.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
+.\objects\app_ipc.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\app_ipc.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\app_ipc.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\app_ipc.o: ..\..\..\inc\rtl87x3e\os\os_queue.h
+.\objects\app_ipc.o: ..\..\..\inc\rtl87x3e\os\os_mem.h
+.\objects\app_ipc.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\app_ipc.o: ..\..\..\inc\rtl87x3e\platform\mem_types.h
+.\objects\app_ipc.o: ..\..\..\inc\rtl87x3e\platform\trace.h
+.\objects\app_ipc.o: ..\..\..\src\sample\gaming_dongle\app_ipc.h

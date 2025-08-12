@@ -1,0 +1,12 @@
+.\objects\usb_dev.o: ..\..\..\src\sample\gaming_dongle\usb\usb_dev.c
+.\objects\usb_dev.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
+.\objects\usb_dev.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
+.\objects\usb_dev.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\usb_dev.o: ..\..\..\inc\usb\composite\usb_dev_driver.h
+.\objects\usb_dev.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\usb_dev.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\usb_dev.o: ..\..\..\inc\usb\usb_spec20.h
+.\objects\usb_dev.o: ..\..\..\src\sample\gaming_dongle\usb\usb_dev.h
+.\objects\usb_dev.o: ..\..\..\inc\rtl87x3e\platform\trace.h
+.\objects\usb_dev.o: ..\..\..\src\sample\gaming_dongle\usb\audio\usb_audio_config.h
+.\objects\usb_dev.o: ..\..\..\inc\usb\class\usb_audio_driver.h

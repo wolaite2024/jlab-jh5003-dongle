@@ -1,0 +1,175 @@
+
+if REALTEK_FRAMEWORK
+
+choice REALTEK_FRAMEWORK_TARGET
+    prompt "target"
+	default REALTEK_FRAMEWORK_TARGET_DEFAULT
+
+config  REALTEK_FRAMEWORK_TARGET_DEFAULT
+    bool "default"
+
+	help
+	  build framework library target name for default
+
+if REALTEK_FRAMEWORK_TARGET_DEFAULT
+config REALTEK_FRAMEWORK_TARGET_NAME
+    string
+	default "libframework_default"
+endif
+
+config  REALTEK_FRAMEWORK_TARGET_ALL
+    bool "all"
+	help
+	  build framework library target name for all
+
+if REALTEK_FRAMEWORK_TARGET_ALL
+config REALTEK_FRAMEWORK_TARGET_NAME
+    string
+	default "libframework_all"
+endif
+
+config  REALTEK_FRAMEWORK_TARGET_DURIAN
+    bool "durian"
+	help
+	  build framework library target name for durian
+
+if REALTEK_FRAMEWORK_TARGET_DURIAN
+config REALTEK_FRAMEWORK_TARGET_NAME
+    string
+	default "libframework_durian"
+endif
+
+config  REALTEK_FRAMEWORK_TARGET_STEREO
+    bool "stereo"
+	help
+	  build framework library target name for stereo
+
+if REALTEK_FRAMEWORK_TARGET_STEREO
+config REALTEK_FRAMEWORK_TARGET_NAME
+    string
+	default "libframework_stereo"
+endif
+
+config  REALTEK_FRAMEWORK_TARGET_WATCH
+    bool "watch"
+	help
+	  build framework library target name for watch
+
+if REALTEK_FRAMEWORK_TARGET_WATCH
+config REALTEK_FRAMEWORK_TARGET_NAME
+    string
+	default "libframework_watch"
+endif
+
+endchoice
+
+
+config REALTEK_BTM_HID_SUPPORT
+   bool "BTM HID SUPPORT"
+   default y
+   help
+     BTM HID SUPPORT
+
+config REALTEK_BTM_IAP_SUPPORT
+   bool "BTM IAP SUPPORT"
+   default y
+   help
+     BTM IAP SUPPORT
+
+config REALTEK_BTM_MAP_SUPPORT
+   bool "BTM MAP SUPPORT"
+   default y
+   help
+     BTM MAP SUPPORT
+
+config REALTEK_BTM_ROLESWAP_SUPPORT
+   bool "BTM ROLESWAP SUPPORT"
+   default y
+   help
+     BTM ROLESWAP SUPPORT
+
+config REALTEK_BTM_PBAP_SUPPORT
+   bool "BTM PBAP SUPPORT"
+   default y
+   help
+     BTM PBAP SUPPORT
+
+config REALTEK_BTM_ATT_SUPPORT
+   bool "BTM ATT SUPPORT"
+   default y
+   help
+     BTM ATT SUPPORT
+
+config REALTEK_BTM_AVRCP_BROWSING_SUPPORT
+   bool "BTM AVRCP BROWSING SUPPORT"
+   default y
+   help
+     BTM AVRCP BROWSING SUPPORT
+
+config REALTEK_BTM_AVRCP_COVER_ART_SUPPORT
+   bool "BTM AVRCP COVER ART SUPPORT"
+   default y
+   help
+     BTM AVRCP COVER ART SUPPORT
+
+config REALTEK_BTM_HFP_AG_SUPPORT
+   bool "BTM HFP AG SUPPORT"
+   default y
+   help
+     BTM HFP AG SUPPORT
+
+config REALTEK_AM_LINE_IN_SUPPORT
+   bool "AM LINE IN SUPPORT"
+   default y
+   help
+     AM LINE IN SUPPORT
+
+config REALTEK_AM_AUDIO_PIPE_SUPPORT
+   bool "AM AUDIO PIPE SUPPORT"
+   default y
+   help
+     AM AUDIO PIPE SUPPORT
+
+config REALTEK_LISTEN_WHILE_SAVE_SUPPORT
+   bool "LISTEN WHILE SAVE SUPPORT"
+   default y
+   help
+     LISTEN WHILE SAVE SUPPORT
+
+config REALTEK_AM_ANC_SUPPORT
+   bool "AM ANC SUPPORT"
+   default y
+   help
+     AM ANC SUPPORT
+
+config REALTEK_AM_AUDIO_PLUGIN_SUPPORT
+   bool "AM AUDIO PLUGIN SUPPORT"
+   default y
+   help
+     AM AUDIO PLUGIN SUPPORT
+
+config REALTEK_AM_AUDIO_STEREO_SUPPORT
+   bool "AM AUDIO STEREO SUPPORT"
+   default n
+   help
+     AM AUDIO STEREO SUPPORT
+
+config REALTEK_BTM_AVP_SUPPORT
+   bool "BTM AVP SUPPORT"
+   default n
+   help
+     BTM AVP SUPPORT
+
+config REALTEK_BTM_AVRCP_TG_SUPPORT
+   bool "BTM AVRCP TG SUPPORT"
+   default n
+   help
+     BTM AVRCP TG SUPPORT
+
+config REALTEK_REMOTE_CONTROL_SUPPORT
+   bool "remote control support"
+   default y
+   help
+     REMOTE_CONTROL_SUPPORT
+
+endif

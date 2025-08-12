@@ -1,0 +1,7 @@
+if REALTEK_SYSM
+
+config REALTEK_SYSM_TARGET_NAME
+   string
+   default "libsysm"
+
+endif

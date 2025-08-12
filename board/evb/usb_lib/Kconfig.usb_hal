@@ -1,0 +1,7 @@
+if REALTEK_USB_HAL
+
+config REALTEK_USB_HAL_TARGET_NAME
+   string
+   default "libusb_hal"
+
+endif

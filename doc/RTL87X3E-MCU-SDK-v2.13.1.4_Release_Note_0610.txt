@@ -1,0 +1,16 @@
+//-----------------------------------------------------------------------------------------------
+//20250610(v2.13.1.4)
+APP: 48.208.32.231(Commit-Id: 55777c89dc99ff826bef1ab9d1619532fb0c842b)
+
+Sys Patch Commit-Id: 368c8bcf38910131f6501a0b7a63d81b204facc7
+
+Stack Patch Commit-Id: 4394e52654947e43eff41e76b799f7b1fb63e6fe
+
+Change Note: 
+
+
+OTA Header: 48.208.32.231
+DSP Image: v2.0.5.8
+DspConfigTool: v3.130.55
+8763EAU MCUConfigTool: v6.130.8
+AncDesignTool: llaptdesigntool-v2.0.27.19-rtl8763ewm

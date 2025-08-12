@@ -1,0 +1,45 @@
+menuconfig REALTEK_APP_COMMON
+    bool "common"
+	default n
+	help
+	  app common feature
+
+if REALTEK_APP_COMMON
+
+config REALTEK_APP_CFU_TRANSFER_ENABLE
+    bool "use app cfu transfer"
+	default n
+	help
+	   compile app_cfu_transfer.c
+
+config REALTEK_APP_COMMON_CFU_ENABLE
+    bool "use app common cfu"
+	default n
+	help
+	   compile app_common_cfu.c
+
+config REALTEK_APP_DATA_CAPTURE_ENABLE
+    bool "use app data capture"
+	default n
+	help
+	   compile app_data_capture.c
+
+config REALTEK_APP_DSP_CONFIG_ENABLE
+    bool "use app dsp cfg"
+	default n
+	help
+	   compile app_dsp_cfg.c
+
+config REALTEK_APP_NREC_ENABLE
+    bool "use app nrec"
+	default n
+	help
+	   compile app_nrec.c
+	   
+config REALTEK_APP_SIDETONE_ENABLE
+    bool "use app side tone"
+	default n
+	help
+	   compile app_sidetone.c
+
+endif

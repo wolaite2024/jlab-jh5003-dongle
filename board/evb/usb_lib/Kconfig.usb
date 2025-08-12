@@ -1,0 +1,7 @@
+if REALTEK_USB
+
+config REALTEK_USB_TARGET_NAME
+   string
+   default "libusb"
+
+endif

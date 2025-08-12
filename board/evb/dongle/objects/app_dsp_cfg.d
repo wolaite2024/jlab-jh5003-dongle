@@ -1,0 +1,17 @@
+.\objects\app_dsp_cfg.o: ..\..\..\src\sample\common\app_dsp_cfg.c
+.\objects\app_dsp_cfg.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
+.\objects\app_dsp_cfg.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
+.\objects\app_dsp_cfg.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\app_dsp_cfg.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\app_dsp_cfg.o: ..\..\..\inc\rtl87x3e\os\os_mem.h
+.\objects\app_dsp_cfg.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\app_dsp_cfg.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\app_dsp_cfg.o: ..\..\..\inc\rtl87x3e\platform\mem_types.h
+.\objects\app_dsp_cfg.o: ..\..\..\inc\rtl87x3e\platform\trace.h
+.\objects\app_dsp_cfg.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\app_dsp_cfg.o: ..\..\..\inc\rtl87x3e\platform\patch_header_check.h
+.\objects\app_dsp_cfg.o: ..\..\..\inc\rtl87x3e\platform\compiler_abstraction.h
+.\objects\app_dsp_cfg.o: ..\..\..\inc\rtl87x3e\hal\fmc_api.h
+.\objects\app_dsp_cfg.o: ..\..\..\inc\rtl87x3e\hal\storage.h
+.\objects\app_dsp_cfg.o: ..\..\..\inc\bluetooth\gap\bt_types.h
+.\objects\app_dsp_cfg.o: ..\..\..\src\sample\common\app_dsp_cfg.h

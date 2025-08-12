@@ -1,0 +1,16 @@
+add_subdirectory(app)
+add_subdirectory(ble_mgr)
+add_subdirectory(bluetooth)
+add_subdirectory(filesystem)
+add_subdirectory(framework)
+add_subdirectory(hal)
+add_subdirectory(service)
+add_subdirectory(usb)
+add_subdirectory(usb/hal)
+
+if(CONFIG_RTL87X3E)
+add_subdirectory(rtl87x3e)
+elseif(CONFIG_RTL87X3D)
+add_subdirectory(rtl87x3D)
+endif()
+

@@ -1,0 +1,34 @@
+#HEADER_DIRECTORIES(bt_audio_trx_module_src_dir .)
+if(NOT compile_lib_only)	
+target_include_directories(btAudioTrx PRIVATE ./led)
+target_include_directories(btAudioTrx PRIVATE ./console)
+target_include_directories(btAudioTrx PRIVATE ./stream)
+target_include_directories(btAudioTrx PRIVATE ./vector)
+
+if(CONFIG_REALTEK_FLASH_MAP_16M)
+target_include_directories(btAudioTrx PRIVATE ./lcd_module)
+target_include_directories(btAudioTrx PRIVATE ./lcdc_driver)
+
+set(app_module_lcd_module_src "${CMAKE_CURRENT_SOURCE_DIR}/lcd_module/module_lcd_qspi.c"
+                        "${CMAKE_CURRENT_SOURCE_DIR}/lcd_module/module_psram.c"
+                        "${CMAKE_CURRENT_SOURCE_DIR}/lcd_module/module_touch_cst816t.c"
+                        "${CMAKE_CURRENT_SOURCE_DIR}/lcd_module/module_touch_cst816d.c"
+                        "${CMAKE_CURRENT_SOURCE_DIR}/lcd_module/module_lcd_te.c")
+set(app_module_lcd_driver_src "${CMAKE_CURRENT_SOURCE_DIR}/lcdc_driver/lcd_sh8601z_454_qspi.c"
+                        "${CMAKE_CURRENT_SOURCE_DIR}/lcdc_driver/lcd_st77916_320_385_qspi.c")
+
+						
+						
+target_sources(btAudioTrx  PRIVATE ${app_module_lcd_module_src})
+target_sources(btAudioTrx  PRIVATE ${app_module_lcd_driver_src})
+endif()
+
+set(app_module_stream_src "${CMAKE_CURRENT_SOURCE_DIR}/stream/spp_stream.c"
+						"${CMAKE_CURRENT_SOURCE_DIR}/stream/iap_stream.c"
+						"${CMAKE_CURRENT_SOURCE_DIR}/stream/common_stream.c"
+						"${CMAKE_CURRENT_SOURCE_DIR}/stream/ble_stream.c")
+set(app_module_vector_src "${CMAKE_CURRENT_SOURCE_DIR}/vector/vector.c")
+			
+target_sources(btAudioTrx  PRIVATE ${app_module_stream_src})	
+target_sources(btAudioTrx  PRIVATE ${app_module_vector_src})	
+endif()

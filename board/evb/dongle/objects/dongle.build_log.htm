@@ -1,0 +1,98 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: μVision V5.26.2.0
+Copyright (C) 2018 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: 1 User, 1, LIC=D0D7S-LNZE7-013P1-CJFAW-Z4PUQ-ILS0B
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Plus  Version: 5.26.2.0
+Toolchain Path:  D:\software\keil5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 6 (build 750)
+Assembler:       Armasm.exe V5.06 update 6 (build 750)
+Linker/Locator:  ArmLink.exe V5.06 update 6 (build 750)
+Library Manager: ArmAr.exe V5.06 update 6 (build 750)
+Hex Converter:   FromElf.exe V5.06 update 6 (build 750)
+CPU DLL:         SARMCM3.DLL V5.26.2.0
+Dialog DLL:      DCM.DLL V1.17.2.0
+Target DLL:      UL2CM3.DLL V1.161.6.0
+Dialog DLL:      TCM.DLL V1.36.1.0
+ 
+<h2>Project:</h2>
+E:\RTL\PH5003\PH5003_Dongle-98928\board\evb\dongle\gaming_dongle_rtl87x3e.uvprojx
+Project File Date:  06/18/2025
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\software\keil5\ARM\ARMCC\Bin'
+Build target 'dongle_bank1_bb2_ccut_legacy_gaming'
+Before Build - User command #2: cmd.exe /c before_build_script.bat 4M "0" rtl87x3e dongle gaming_dongle
+系统找不到指定的路径。
+"copy gaming dongle flash map"
+已复制         1 个文件。
+已复制         1 个文件。
+已复制         1 个文件。
+已复制         1 个文件。
+已复制         1 个文件。
+已复制         1 个文件。
+已复制         1 个文件。
+已复制         1 个文件。
+已复制         1 个文件。
+已复制         1 个文件。
+assembling startup_rtl87x3e.s...
+linking...
+Program Size: Code=706284 RO-data=283700 RW-data=2984 ZI-data=6548  
+After Build - User command #2: cmd.exe /c dual_bank_after_build.bat "D:\software\keil5\ARM\ARMCC\include\..\bin\fromelf.exe"   "E:\RTL\PH5003\PH5003_Dongle-98928\board\evb\dongle\objects\dongle.axf"  dongle  bank1 rtl87x3e gaming_dongle
+E:\RTL\PH5003\PH5003_Dongle-98928\board\evb\dongle>echo off 
+已复制         1 个文件。
+已复制         1 个文件。
+"..\..\..\tool\Gadgets\prepend_header.exe"   /app_code "bin\rtl87x3e\bank1\dongle_bank1.bin"
+skip updating uuid
+<===image ctrl header crc16: 0xb172
+image header size is 0x400 !
+update image header length as 0xb4db0 ok!
+"..\..\..\tool\Gadgets\prepend_header.exe"  /rsa "..\..\..\tool\Gadgets\default_rsa_key.pem" /app_code "bin\rtl87x3e\bank1\dongle_bank1.bin"
+<===image ctrl header crc16: 0x48ca
+  PKCS#1 data sign  : passed
+RSA sign image OK.
+mp file is E:\RTL\PH5003\PH5003_Dongle-98928\board\evb\dongle\mp.ini!
+"..\..\..\tool\Gadgets\prepend_header.exe"  /mp_ini mp.ini /app_code "bin\rtl87x3e\bank1\dongle_bank1.bin"
+MP header appending start...
+Bin_ID : ID_APP
+  OtaVersion not exists in mp.ini [OtaInfo] node, set [OtaInfo] OtaVersion=2
+MP header appending OK!
+bin\rtl87x3e\bank1\dongle_bank1_MP.bin
+%#define%VERSION_MAJOR%3%#define%VERSION_MINOR%13%#define%VERSION_REVISION%4%#define%VERSION_BUILDNUM%231%#define%VERSION_GCID%0x55777c89
+bin\rtl87x3e\bank1\dongle_bank1_MP-v3.13.4.231-55777c89-87be08d0e53ccdc1b8ecaa89d509a13a.bin
+已复制         1 个文件。
+已复制         1 个文件。
+debug file directory: bin\rtl87x3e\bank1
+### Extract function table pickle:
+		dongle_bank1_function_table.pickle
+### Extract variable table pickle:
+		dongle_bank1_variable_table.pickle
+移动了         1 个文件。
+系统找不到文件 ..\..\..\bin\rtl87x3e\flash_map_config\4M\flash_4M\flash_map.h。
+srec_cat: number expected for --offset before -Output
+Output Image for Keil Download: "Objects\app_image.hex"
+Build Bank: bank1
+Download Address: 
+".\objects\dongle.axf" - 0 Error(s), 0 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.4.0.pack
+                ARM.CMSIS.5.4.0
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\_dongle_bank1_bb2_ccut_legacy_gaming
+  D:\software\keil5\ARM\PACK\ARM\CMSIS\5.4.0\Device\ARM\ARMCM3\Include
+
+<h2>Collection of Component Files used:</h2>
+Build Time Elapsed:  00:00:06
+</pre>
+</body>
+</html>
