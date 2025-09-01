@@ -1,11 +1,11 @@
 .\objects\console_uart.o: ..\..\..\src\mcu\module\console\transport\console_uart.c
 .\objects\console_uart.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\console_uart.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\console_uart.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
-.\objects\console_uart.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\console_uart.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\console_uart.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\console_uart.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\console_uart.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\console_uart.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\console_uart.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\console_uart.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\console_uart.o: ..\..\..\inc\rtl87x3e\os\os_msg.h
 .\objects\console_uart.o: ..\..\..\inc\rtl87x3e\os\os_sync.h
 .\objects\console_uart.o: ..\..\..\inc\rtl87x3e\io\rtl876x_uart.h

@@ -4,8 +4,8 @@
 .\objects\app_line_in.o: ..\..\..\inc\rtl87x3e\io\rtl876x_pinmux.h
 .\objects\app_line_in.o: ..\..\..\inc\rtl87x3e\platform\rtl876x.h
 .\objects\app_line_in.o: ..\..\..\inc\rtl87x3e\platform\cmsis\core_cm4.h
-.\objects\app_line_in.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\app_line_in.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\app_line_in.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\app_line_in.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\app_line_in.o: ..\..\..\inc\rtl87x3e\platform\compiler_abstraction.h
 .\objects\app_line_in.o: ..\..\..\inc\rtl87x3e\platform\cmsis\core_cmInstr.h
 .\objects\app_line_in.o: ..\..\..\inc\rtl87x3e\platform\cmsis\core_cmFunc.h
@@ -16,14 +16,14 @@
 .\objects\app_line_in.o: ..\..\..\inc\rtl87x3e\hal\io\hal_gpio.h
 .\objects\app_line_in.o: ..\..\..\inc\rtl87x3e\platform\trace.h
 .\objects\app_line_in.o: ..\..\..\inc\framework\sys\sysm.h
-.\objects\app_line_in.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\app_line_in.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\app_line_in.o: ..\..\..\inc\framework\bt\bt_avrcp.h
 .\objects\app_line_in.o: ..\..\..\inc\app\app_timer.h
 .\objects\app_line_in.o: ..\..\..\inc\rtl87x3e\platform\errno.h
 .\objects\app_line_in.o: ..\..\..\inc\framework\audio\audio_track.h
 .\objects\app_line_in.o: ..\..\..\inc\framework\audio\audio_type.h
 .\objects\app_line_in.o: ..\..\..\src\sample\gaming_dongle\app_cfg.h
-.\objects\app_line_in.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\app_line_in.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\app_line_in.o: ..\..\..\inc\rtl87x3e\os\os_mem.h
 .\objects\app_line_in.o: ..\..\..\inc\rtl87x3e\platform\mem_types.h
 .\objects\app_line_in.o: ..\..\..\src\sample\gaming_dongle\app_io_msg.h

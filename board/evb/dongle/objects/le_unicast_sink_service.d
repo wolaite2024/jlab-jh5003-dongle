@@ -1,10 +1,10 @@
 .\objects\le_unicast_sink_service.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_audio_service\le_unicast_sink_service.c
 .\objects\le_unicast_sink_service.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\le_unicast_sink_service.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\le_unicast_sink_service.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\le_unicast_sink_service.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\le_unicast_sink_service.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\le_unicast_sink_service.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\le_unicast_sink_service.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\le_unicast_sink_service.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\le_unicast_sink_service.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\le_unicast_sink_service.o: ..\..\..\inc\bluetooth\leaudio\ascs_def.h
 .\objects\le_unicast_sink_service.o: ..\..\..\inc\bluetooth\leaudio\ble_audio_def.h
 .\objects\le_unicast_sink_service.o: ..\..\..\inc\bluetooth\leaudio\ascs_mgr.h
@@ -46,7 +46,7 @@
 .\objects\le_unicast_sink_service.o: ..\..\..\inc\bluetooth\leaudio\csis_def.h
 .\objects\le_unicast_sink_service.o: ..\..\..\inc\bluetooth\leaudio\mics_def.h
 .\objects\le_unicast_sink_service.o: ..\..\..\src\sample\gaming_dongle\app_audio_path.h
-.\objects\le_unicast_sink_service.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\le_unicast_sink_service.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\le_unicast_sink_service.o: ..\..\..\inc\framework\audio\audio_type.h
 .\objects\le_unicast_sink_service.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_service_mgr.h
 .\objects\le_unicast_sink_service.o: ..\..\..\inc\bluetooth\profile\profile_server.h

@@ -118,6 +118,7 @@ void app_cmd_send_by_spp(uint8_t cmd, uint8_t *data, uint16_t len)
         return;
     }
     APP_PRINT_INFO2("app_cmd_send_by_spp data %b len %d", TRACE_BINARY(len, data), len);
+	APP_PRINT_INFO1("----> cmd 0x%x",cmd);
     spp_cmd_t *p_spp = (spp_cmd_t *)p_data;
     p_spp->sync = 'R';
     p_spp->type = 0x01;

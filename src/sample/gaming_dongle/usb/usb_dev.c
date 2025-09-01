@@ -29,8 +29,8 @@ static T_USB_DEVICE_DESC usb_dev_desc =
     .bDeviceProtocol        = 0x00,
 #endif
     .bMaxPacketSize0        = 0x40,
-    .idVendor               = 0x0bda,
-    .idProduct              = 0x8773,
+    .idVendor               = 0x1001,
+    .idProduct              = 0x38C2,
     .bcdDevice              = 0x0200,
     .iManufacturer          = STRING_ID_MANUFACTURER,
     .iProduct               = STRING_ID_PRODUCT,

@@ -161,6 +161,8 @@ static void hid_pt_send_ack(uint8_t *data, uint16_t length)
 
 void app_usb_hid_handle_passthrough(uint8_t *data, uint8_t length)
 {
+	APP_PRINT_INFO2("----> data %b length %x", TRACE_BINARY(length, data), length);
+	
     if ((!data) || (!length))
     {
         return;

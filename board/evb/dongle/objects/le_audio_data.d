@@ -1,12 +1,12 @@
 .\objects\le_audio_data.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_audio_service\le_audio_data.c
 .\objects\le_audio_data.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\le_audio_data.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\le_audio_data.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
-.\objects\le_audio_data.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\le_audio_data.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\le_audio_data.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\le_audio_data.o: ..\..\..\inc\rtl87x3e\platform\section.h
 .\objects\le_audio_data.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\le_audio_data.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\le_audio_data.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\le_audio_data.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\le_audio_data.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\le_audio_data.o: ..\..\..\inc\hal\io\hw_tim.h
 .\objects\le_audio_data.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_audio_service\le_audio_data.h
 .\objects\le_audio_data.o: ..\..\..\inc\rtl87x3e\os\os_queue.h
@@ -68,7 +68,7 @@
 .\objects\le_audio_data.o: ..\..\..\inc\bluetooth\gap\ble_isoch_def.h
 .\objects\le_audio_data.o: ..\..\..\src\sample\gaming_dongle\app_cyclic_buffer.h
 .\objects\le_audio_data.o: ..\..\..\inc\rtl87x3e\os\os_mem.h
-.\objects\le_audio_data.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\le_audio_data.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\le_audio_data.o: ..\..\..\inc\rtl87x3e\platform\mem_types.h
 .\objects\le_audio_data.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_audio_service\le_unicast_src_service.h
 .\objects\le_audio_data.o: ..\..\..\inc\bluetooth\leaudio\bap_unicast_client.h
@@ -80,7 +80,7 @@
 .\objects\le_audio_data.o: ..\..\..\inc\rtl87x3e\platform\cmsis\core_cmFunc.h
 .\objects\le_audio_data.o: ..\..\..\inc\rtl87x3e\platform\cmsis\core_cmSimd.h
 .\objects\le_audio_data.o: ..\..\..\src\sample\gaming_dongle\app_audio_path.h
-.\objects\le_audio_data.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\le_audio_data.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\le_audio_data.o: ..\..\..\inc\app\app_timer.h
 .\objects\le_audio_data.o: ..\..\..\inc\rtl87x3e\platform\errno.h
 .\objects\le_audio_data.o: ..\..\..\src\sample\gaming_dongle\app_cfg.h

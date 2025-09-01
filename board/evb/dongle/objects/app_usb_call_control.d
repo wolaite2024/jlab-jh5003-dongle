@@ -1,10 +1,10 @@
 .\objects\app_usb_call_control.o: ..\..\..\src\sample\gaming_dongle\general_bt\app_usb_call_control.c
 .\objects\app_usb_call_control.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\app_usb_call_control.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\app_usb_call_control.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\app_usb_call_control.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\app_usb_call_control.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\app_usb_call_control.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\app_usb_call_control.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\app_usb_call_control.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\app_usb_call_control.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\app_usb_call_control.o: ..\..\..\src\sample\gaming_dongle\general_bt\app_general_policy.h
 .\objects\app_usb_call_control.o: ..\..\..\src\sample\gaming_dongle\app_led_ctl.h
 .\objects\app_usb_call_control.o: ..\..\..\inc\rtl87x3e\io\rtl876x_pinmux.h

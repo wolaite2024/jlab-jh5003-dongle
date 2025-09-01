@@ -1,11 +1,11 @@
 .\objects\app_ctrl_pkt_policy.o: ..\..\..\src\sample\gaming_dongle\app_ctrl_pkt_policy.c
 .\objects\app_ctrl_pkt_policy.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\app_ctrl_pkt_policy.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\app_ctrl_pkt_policy.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
-.\objects\app_ctrl_pkt_policy.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\app_ctrl_pkt_policy.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\app_ctrl_pkt_policy.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\app_ctrl_pkt_policy.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\app_ctrl_pkt_policy.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\app_ctrl_pkt_policy.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\app_ctrl_pkt_policy.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\app_ctrl_pkt_policy.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\app_ctrl_pkt_policy.o: ..\..\..\inc\bluetooth\gap\gap_br.h
 .\objects\app_ctrl_pkt_policy.o: ..\..\..\inc\bluetooth\gap\gap.h
 .\objects\app_ctrl_pkt_policy.o: ..\..\..\inc\bluetooth\gap\bt_types.h
@@ -31,7 +31,7 @@
 .\objects\app_ctrl_pkt_policy.o: ..\..\..\inc\bluetooth\gap\gap_appearance.h
 .\objects\app_ctrl_pkt_policy.o: ..\..\..\src\sample\gaming_dongle\app_link_util.h
 .\objects\app_ctrl_pkt_policy.o: ..\..\..\inc\framework\audio\tts.h
-.\objects\app_ctrl_pkt_policy.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\app_ctrl_pkt_policy.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\app_ctrl_pkt_policy.o: ..\..\..\inc\rtl87x3e\os\os_queue.h
 .\objects\app_ctrl_pkt_policy.o: ..\..\..\src\sample\gaming_dongle\app_audio_pipe_mgr.h
 .\objects\app_ctrl_pkt_policy.o: ..\..\..\inc\framework\audio\audio_pipe.h

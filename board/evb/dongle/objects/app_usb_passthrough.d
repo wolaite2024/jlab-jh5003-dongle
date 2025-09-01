@@ -2,11 +2,11 @@
 .\objects\app_usb_passthrough.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\app_usb_passthrough.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
 .\objects\app_usb_passthrough.o: ..\..\..\inc\bluetooth\gap\bt_types.h
-.\objects\app_usb_passthrough.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
-.\objects\app_usb_passthrough.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\app_usb_passthrough.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\app_usb_passthrough.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\app_usb_passthrough.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\app_usb_passthrough.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\app_usb_passthrough.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\app_usb_passthrough.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\app_usb_passthrough.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\app_usb_passthrough.o: ..\..\..\inc\rtl87x3e\os\os_queue.h
 .\objects\app_usb_passthrough.o: ..\..\..\inc\rtl87x3e\platform\rtl876x.h
 .\objects\app_usb_passthrough.o: ..\..\..\inc\rtl87x3e\platform\cmsis\core_cm4.h

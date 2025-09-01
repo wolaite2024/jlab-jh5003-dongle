@@ -2,8 +2,8 @@
 .\objects\general_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\general_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
 .\objects\general_audio_wrapper.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\general_audio_wrapper.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\general_audio_wrapper.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\general_audio_wrapper.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\general_audio_wrapper.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\general_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\general_bt\general_audio_wrapper.h
 .\objects\general_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\general_bt\general_bt.h
 .\objects\general_audio_wrapper.o: ..\..\..\inc\framework\bt\btm.h
@@ -13,7 +13,7 @@
 .\objects\general_audio_wrapper.o: ..\..\..\inc\framework\bt\bt_iap.h
 .\objects\general_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\app_link_util.h
 .\objects\general_audio_wrapper.o: ..\..\..\inc\framework\audio\tts.h
-.\objects\general_audio_wrapper.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\general_audio_wrapper.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\general_audio_wrapper.o: ..\..\..\inc\rtl87x3e\os\os_queue.h
 .\objects\general_audio_wrapper.o: ..\..\..\inc\framework\audio\audio_type.h
 .\objects\general_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\app_mmi.h

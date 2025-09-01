@@ -1,12 +1,12 @@
 .\objects\teams_call_control.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_audio_service\teams_call_control.c
 .\objects\teams_call_control.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\teams_call_control.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\teams_call_control.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\teams_call_control.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\teams_call_control.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\teams_call_control.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\teams_call_control.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\teams_call_control.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\teams_call_control.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\teams_call_control.o: ..\..\..\inc\rtl87x3e\os\os_mem.h
-.\objects\teams_call_control.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\teams_call_control.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\teams_call_control.o: ..\..\..\inc\rtl87x3e\platform\mem_types.h
 .\objects\teams_call_control.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_audio_service\le_audio_service.h
 .\objects\teams_call_control.o: ..\..\..\inc\app\app_msg.h

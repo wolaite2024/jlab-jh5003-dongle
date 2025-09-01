@@ -53,7 +53,6 @@
 static uint8_t app_mmi_timer_id = 0;
 static uint8_t timer_idx_app_mmi_delay_power_off = 0;
 static uint8_t timer_idx_bt_mode_change = 0;
-static uint8_t timer_idx_dongle_paring = 0;
 static uint8_t timer_idx_dongle_plugin_times_record = 0;
 static uint8_t timer_idx_dongle_plugin_times_clear = 0;
 

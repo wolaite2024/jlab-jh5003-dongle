@@ -1,10 +1,10 @@
 .\objects\le_pacs_service.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_audio_service\le_pacs_service.c
 .\objects\le_pacs_service.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\le_pacs_service.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\le_pacs_service.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\le_pacs_service.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\le_pacs_service.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\le_pacs_service.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\le_pacs_service.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\le_pacs_service.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\le_pacs_service.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\le_pacs_service.o: ..\..\..\inc\bluetooth\leaudio\codec_def.h
 .\objects\le_pacs_service.o: ..\..\..\inc\bluetooth\leaudio\metadata_def.h
 .\objects\le_pacs_service.o: ..\..\..\inc\bluetooth\leaudio\pacs_mgr.h

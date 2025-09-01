@@ -2,8 +2,8 @@
 .\objects\app_general_policy.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\app_general_policy.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
 .\objects\app_general_policy.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\app_general_policy.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\app_general_policy.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\app_general_policy.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\app_general_policy.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\app_general_policy.o: ..\..\..\inc\framework\bt\btm.h
 .\objects\app_general_policy.o: ..\..\..\inc\framework\remote\remote.h
 .\objects\app_general_policy.o: ..\..\..\inc\framework\bt\bt_pbap.h
@@ -11,7 +11,7 @@
 .\objects\app_general_policy.o: ..\..\..\inc\framework\bt\bt_iap.h
 .\objects\app_general_policy.o: ..\..\..\src\sample\gaming_dongle\app_link_util.h
 .\objects\app_general_policy.o: ..\..\..\inc\framework\audio\tts.h
-.\objects\app_general_policy.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\app_general_policy.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\app_general_policy.o: ..\..\..\inc\rtl87x3e\os\os_queue.h
 .\objects\app_general_policy.o: ..\..\..\inc\framework\audio\audio_type.h
 .\objects\app_general_policy.o: ..\..\..\inc\framework\bt\bt_spp.h
@@ -21,11 +21,11 @@
 .\objects\app_general_policy.o: ..\..\..\inc\rtl87x3e\platform\mem_types.h
 .\objects\app_general_policy.o: ..\..\..\inc\rtl87x3e\os\os_mem.h
 .\objects\app_general_policy.o: ..\..\..\src\sample\gaming_dongle\app_cfg.h
-.\objects\app_general_policy.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\app_general_policy.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\app_general_policy.o: ..\..\..\inc\hal\platform\ftl.h
 .\objects\app_general_policy.o: ..\..\..\inc\rtl87x3e\platform\errno.h
 .\objects\app_general_policy.o: ..\..\..\inc\rtl87x3e\hal\storage.h
-.\objects\app_general_policy.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\app_general_policy.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\app_general_policy.o: ..\..\..\inc\app\app_timer.h
 .\objects\app_general_policy.o: ..\..\..\src\sample\gaming_dongle\general_bt\app_general_policy.h
 .\objects\app_general_policy.o: ..\..\..\src\sample\gaming_dongle\general_bt\app_src_bond_storage.h

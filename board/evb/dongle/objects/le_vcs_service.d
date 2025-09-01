@@ -1,10 +1,10 @@
 .\objects\le_vcs_service.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_audio_service\le_vcs_service.c
 .\objects\le_vcs_service.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\le_vcs_service.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\le_vcs_service.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\le_vcs_service.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\le_vcs_service.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\le_vcs_service.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\le_vcs_service.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\le_vcs_service.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\le_vcs_service.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\le_vcs_service.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_audio_service\le_vcs_service.h
 .\objects\le_vcs_service.o: ..\..\..\inc\bluetooth\profile\profile_server.h
 .\objects\le_vcs_service.o: ..\..\..\inc\bluetooth\gap\bt_types.h
@@ -70,4 +70,4 @@
 .\objects\le_vcs_service.o: ..\..\..\inc\rtl87x3e\platform\errno.h
 .\objects\le_vcs_service.o: ..\..\..\src\sample\common\app_dsp_cfg.h
 .\objects\le_vcs_service.o: ..\..\..\src\sample\gaming_dongle\app_audio_path.h
-.\objects\le_vcs_service.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\le_vcs_service.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

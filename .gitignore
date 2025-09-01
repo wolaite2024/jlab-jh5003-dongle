@@ -1,0 +1,6 @@
+doc
+tool
+trace
+*.si4project
+bin
+board

@@ -2,13 +2,13 @@
 .\objects\app_spp_vender_passthrough.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\app_spp_vender_passthrough.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
 .\objects\app_spp_vender_passthrough.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\app_spp_vender_passthrough.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\app_spp_vender_passthrough.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\app_spp_vender_passthrough.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\app_spp_vender_passthrough.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\app_spp_vender_passthrough.o: ..\..\..\inc\framework\bt\bt_rfc.h
 .\objects\app_spp_vender_passthrough.o: ..\..\..\src\sample\gaming_dongle\general_bt\app_spp_vender_passthrough.h
 .\objects\app_spp_vender_passthrough.o: ..\..\..\src\sample\gaming_dongle\app_link_util.h
 .\objects\app_spp_vender_passthrough.o: ..\..\..\inc\framework\audio\tts.h
-.\objects\app_spp_vender_passthrough.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\app_spp_vender_passthrough.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\app_spp_vender_passthrough.o: ..\..\..\inc\framework\bt\btm.h
 .\objects\app_spp_vender_passthrough.o: ..\..\..\inc\framework\remote\remote.h
 .\objects\app_spp_vender_passthrough.o: ..\..\..\inc\framework\bt\bt_pbap.h

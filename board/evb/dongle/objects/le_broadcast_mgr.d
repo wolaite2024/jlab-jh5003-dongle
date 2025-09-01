@@ -1,11 +1,11 @@
 .\objects\le_broadcast_mgr.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_broadcast_mgr.c
 .\objects\le_broadcast_mgr.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\le_broadcast_mgr.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\le_broadcast_mgr.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
-.\objects\le_broadcast_mgr.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\le_broadcast_mgr.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\le_broadcast_mgr.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\le_broadcast_mgr.o: ..\..\..\inc\rtl87x3e\os\os_queue.h
-.\objects\le_broadcast_mgr.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\le_broadcast_mgr.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\le_broadcast_mgr.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\le_broadcast_mgr.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\le_broadcast_mgr.o: ..\..\..\inc\rtl87x3e\platform\trace.h
 .\objects\le_broadcast_mgr.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_broadcast_mgr.h
 .\objects\le_broadcast_mgr.o: ..\..\..\inc\bluetooth\leaudio\bap.h
@@ -58,7 +58,7 @@
 .\objects\le_broadcast_mgr.o: ..\..\..\inc\bluetooth\leaudio\ble_audio.h
 .\objects\le_broadcast_mgr.o: ..\..\..\src\sample\gaming_dongle\app_cfg.h
 .\objects\le_broadcast_mgr.o: ..\..\..\inc\rtl87x3e\os\os_mem.h
-.\objects\le_broadcast_mgr.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\le_broadcast_mgr.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\le_broadcast_mgr.o: ..\..\..\inc\rtl87x3e\platform\mem_types.h
 .\objects\le_broadcast_mgr.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_audio_service\le_ba_service.h
 .\objects\le_broadcast_mgr.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_audio_service\le_bsk_service.h

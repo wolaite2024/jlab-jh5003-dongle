@@ -2,15 +2,15 @@
 .\objects\audio_test.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\audio_test.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
 .\objects\audio_test.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\audio_test.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\audio_test.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\audio_test.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\audio_test.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\audio_test.o: ..\..\..\inc\rtl87x3e\os\os_queue.h
 .\objects\audio_test.o: ..\..\..\src\sample\gaming_dongle\app_mmi.h
 .\objects\audio_test.o: ..\..\..\src\sample\gaming_dongle\audio_test\audio_test.h
 .\objects\audio_test.o: ..\..\..\src\sample\gaming_dongle\app_cfg.h
-.\objects\audio_test.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\audio_test.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\audio_test.o: ..\..\..\inc\rtl87x3e\os\os_mem.h
-.\objects\audio_test.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\audio_test.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\audio_test.o: ..\..\..\inc\rtl87x3e\platform\mem_types.h
 .\objects\audio_test.o: ..\..\..\src\sample\gaming_dongle\ual\app_usb_layer.h
 .\objects\audio_test.o: ..\..\..\src\app\bt_ual\ual_bluetooth.h
@@ -64,4 +64,4 @@
 .\objects\audio_test.o: ..\..\..\inc\bluetooth\leaudio\aics_client.h
 .\objects\audio_test.o: ..\..\..\inc\bluetooth\leaudio\aics_def.h
 .\objects\audio_test.o: ..\..\..\src\sample\gaming_dongle\app_audio_path.h
-.\objects\audio_test.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\audio_test.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

@@ -1,11 +1,11 @@
 .\objects\app_main.o: ..\..\..\src\sample\gaming_dongle\app_main.c
 .\objects\app_main.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\app_main.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\app_main.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\app_main.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
-.\objects\app_main.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\app_main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\app_main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\app_main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\app_main.o: ..\..\..\inc\rtl87x3e\os\os_sched.h
-.\objects\app_main.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\app_main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\app_main.o: ..\..\..\inc\rtl87x3e\os\os_msg.h
 .\objects\app_main.o: ..\..\..\inc\rtl87x3e\os\os_task.h
 .\objects\app_main.o: ..\..\..\inc\rtl87x3e\hal\pm.h
@@ -26,7 +26,7 @@
 .\objects\app_main.o: ..\..\..\inc\framework\audio\audio_track.h
 .\objects\app_main.o: ..\..\..\inc\framework\audio\audio_type.h
 .\objects\app_main.o: ..\..\..\inc\framework\audio\tts.h
-.\objects\app_main.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\app_main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\app_main.o: ..\..\..\inc\framework\audio\audio_passthrough.h
 .\objects\app_main.o: ..\..\..\inc\framework\sys\sysm.h
 .\objects\app_main.o: ..\..\..\inc\framework\remote\remote.h
@@ -84,7 +84,7 @@
 .\objects\app_main.o: ..\..\..\inc\usb\composite\usb_dm.h
 .\objects\app_main.o: ..\..\..\src\sample\gaming_dongle\usb\usb_msg.h
 .\objects\app_main.o: ..\..\..\src\sample\gaming_dongle\app_audio_path.h
-.\objects\app_main.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\app_main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\app_main.o: ..\..\..\src\app\bt_ual\ual_adapter.h
 .\objects\app_main.o: ..\..\..\src\app\bt_ual\ual_types.h
 .\objects\app_main.o: ..\..\..\src\app\bt_ual\ual_bluetooth.h

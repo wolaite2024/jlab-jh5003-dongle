@@ -1,10 +1,10 @@
 .\objects\usb_host_detect.o: ..\..\..\src\sample\common\usb\usb_host_detect.c
 .\objects\usb_host_detect.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\usb_host_detect.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\usb_host_detect.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\usb_host_detect.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\usb_host_detect.o: ..\..\..\inc\usb\composite\usb_dm.h
-.\objects\usb_host_detect.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
-.\objects\usb_host_detect.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\usb_host_detect.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\usb_host_detect.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\usb_host_detect.o: ..\..\..\inc\app\app_msg.h
 .\objects\usb_host_detect.o: ..\..\..\src\sample\gaming_dongle\usb\usb_msg.h
 .\objects\usb_host_detect.o: ..\..\..\src\sample\gaming_dongle\app_io_msg.h

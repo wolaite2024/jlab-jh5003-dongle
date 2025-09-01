@@ -1,12 +1,12 @@
 .\objects\app_led_ctl.o: ..\..\..\src\sample\gaming_dongle\app_led_ctl.c
 .\objects\app_led_ctl.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\app_led_ctl.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\app_led_ctl.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\app_led_ctl.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\app_led_ctl.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\app_led_ctl.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\app_led_ctl.o: ..\..\..\inc\rtl87x3e\io\rtl876x_pinmux.h
 .\objects\app_led_ctl.o: ..\..\..\inc\rtl87x3e\platform\rtl876x.h
 .\objects\app_led_ctl.o: ..\..\..\inc\rtl87x3e\platform\cmsis\core_cm4.h
-.\objects\app_led_ctl.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\app_led_ctl.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\app_led_ctl.o: ..\..\..\inc\rtl87x3e\platform\compiler_abstraction.h
 .\objects\app_led_ctl.o: ..\..\..\inc\rtl87x3e\platform\cmsis\core_cmInstr.h
 .\objects\app_led_ctl.o: ..\..\..\inc\rtl87x3e\platform\cmsis\core_cmFunc.h
@@ -23,7 +23,7 @@
 .\objects\app_led_ctl.o: ..\..\..\inc\app\app_timer.h
 .\objects\app_led_ctl.o: ..\..\..\inc\rtl87x3e\platform\errno.h
 .\objects\app_led_ctl.o: ..\..\..\inc\rtl87x3e\os\os_mem.h
-.\objects\app_led_ctl.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\app_led_ctl.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\app_led_ctl.o: ..\..\..\inc\rtl87x3e\platform\mem_types.h
 .\objects\app_led_ctl.o: ..\..\..\src\sample\gaming_dongle\app_cfg.h
 .\objects\app_led_ctl.o: ..\..\..\inc\rtl87x3e\platform\trace.h

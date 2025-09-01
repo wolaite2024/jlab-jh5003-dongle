@@ -1,11 +1,11 @@
 .\objects\usb_audio_stream.o: ..\..\..\src\sample\gaming_dongle\usb\audio\usb_audio_stream.c
 .\objects\usb_audio_stream.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\usb_audio_stream.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\usb_audio_stream.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\usb_audio_stream.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
-.\objects\usb_audio_stream.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\usb_audio_stream.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\usb_audio_stream.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\usb_audio_stream.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\usb_audio_stream.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\usb_audio_stream.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\usb_audio_stream.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\usb_audio_stream.o: ..\..\..\inc\rtl87x3e\platform\ring_buffer.h
 .\objects\usb_audio_stream.o: ..\..\..\inc\app\app_timer.h
 .\objects\usb_audio_stream.o: ..\..\..\inc\rtl87x3e\platform\errno.h

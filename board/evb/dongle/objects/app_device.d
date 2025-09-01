@@ -4,8 +4,8 @@
 .\objects\app_device.o: ..\..\..\inc\rtl87x3e\io\rtl876x_wdg.h
 .\objects\app_device.o: ..\..\..\inc\rtl87x3e\platform\rtl876x.h
 .\objects\app_device.o: ..\..\..\inc\rtl87x3e\platform\cmsis\core_cm4.h
-.\objects\app_device.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\app_device.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\app_device.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\app_device.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\app_device.o: ..\..\..\inc\rtl87x3e\platform\compiler_abstraction.h
 .\objects\app_device.o: ..\..\..\inc\rtl87x3e\platform\cmsis\core_cmInstr.h
 .\objects\app_device.o: ..\..\..\inc\rtl87x3e\platform\cmsis\core_cmFunc.h
@@ -19,7 +19,7 @@
 .\objects\app_device.o: ..\..\..\inc\framework\audio\audio_passthrough.h
 .\objects\app_device.o: ..\..\..\inc\framework\audio\audio_type.h
 .\objects\app_device.o: ..\..\..\inc\framework\sys\sysm.h
-.\objects\app_device.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\app_device.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\app_device.o: ..\..\..\src\sample\gaming_dongle\app_device.h
 .\objects\app_device.o: ..\..\..\src\sample\gaming_dongle\app_main.h
 .\objects\app_device.o: ..\..\..\src\sample\gaming_dongle\app_link_util.h
@@ -41,7 +41,7 @@
 .\objects\app_device.o: ..\..\..\inc\bluetooth\gap\gap_le_types.h
 .\objects\app_device.o: ..\..\..\inc\bluetooth\gap\gap_appearance.h
 .\objects\app_device.o: ..\..\..\src\sample\gaming_dongle\app_cfg.h
-.\objects\app_device.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\app_device.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\app_device.o: ..\..\..\inc\rtl87x3e\os\os_mem.h
 .\objects\app_device.o: ..\..\..\inc\rtl87x3e\platform\mem_types.h
 .\objects\app_device.o: ..\..\..\src\sample\gaming_dongle\app_dlps.h
@@ -94,7 +94,7 @@
 .\objects\app_device.o: ..\..\..\inc\bluetooth\leaudio\base_data_parse.h
 .\objects\app_device.o: ..\..\..\inc\bluetooth\leaudio\bap_unicast_client.h
 .\objects\app_device.o: ..\..\..\src\sample\gaming_dongle\app_audio_path.h
-.\objects\app_device.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\app_device.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\app_device.o: ..\..\..\src\sample\gaming_dongle\legacy_bt\legacy_audio_wrapper.h
 .\objects\app_device.o: ..\..\..\src\sample\gaming_dongle\general_bt\general_audio_wrapper.h
 .\objects\app_device.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_audio_wrapper.h

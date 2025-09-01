@@ -2,12 +2,12 @@
 .\objects\ble_stream.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\ble_stream.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
 .\objects\ble_stream.o: ..\..\..\src\mcu\module\vector\vector.h
-.\objects\ble_stream.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\ble_stream.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\ble_stream.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\ble_stream.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\ble_stream.o: ..\..\..\src\sample\gaming_dongle\app_cfg.h
-.\objects\ble_stream.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\ble_stream.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\ble_stream.o: ..\..\..\inc\rtl87x3e\os\os_mem.h
-.\objects\ble_stream.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\ble_stream.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\ble_stream.o: ..\..\..\inc\rtl87x3e\platform\mem_types.h
 .\objects\ble_stream.o: ..\..\..\inc\rtl87x3e\platform\trace.h
 .\objects\ble_stream.o: ..\..\..\src\mcu\module\stream\ble_stream.h
@@ -23,7 +23,7 @@
 .\objects\ble_stream.o: ..\..\..\inc\bluetooth\gap\gap_appearance.h
 .\objects\ble_stream.o: ..\..\..\inc\bluetooth\profile\profile_server_def.h
 .\objects\ble_stream.o: ..\..\..\src\mcu\module\stream\common_stream.h
-.\objects\ble_stream.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\ble_stream.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\ble_stream.o: ..\..\..\inc\framework\remote\remote.h
 .\objects\ble_stream.o: ..\..\..\inc\bluetooth\gap\gap_conn_le.h
 .\objects\ble_stream.o: ..\..\..\inc\bluetooth\gap\gap_msg.h

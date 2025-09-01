@@ -1,11 +1,11 @@
 .\objects\usb_hid.o: ..\..\..\src\sample\gaming_dongle\usb\hid\usb_hid.c
 .\objects\usb_hid.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\usb_hid.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\usb_hid.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
-.\objects\usb_hid.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\usb_hid.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\usb_hid.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\usb_hid.o: ..\..\..\inc\rtl87x3e\os\os_queue.h
-.\objects\usb_hid.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\usb_hid.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\usb_hid.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\usb_hid.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\usb_hid.o: ..\..\..\inc\rtl87x3e\os\os_sync.h
 .\objects\usb_hid.o: ..\..\..\src\sample\gaming_dongle\usb\hid\usb_hid_desc.h
 .\objects\usb_hid.o: ..\..\..\src\sample\gaming_dongle\usb\app_usb_hid.h

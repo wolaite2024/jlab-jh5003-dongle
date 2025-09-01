@@ -1,8 +1,8 @@
 .\objects\legacy_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\legacy_bt\legacy_audio_wrapper.c
 .\objects\legacy_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\legacy_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\legacy_audio_wrapper.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\legacy_audio_wrapper.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\legacy_audio_wrapper.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\legacy_audio_wrapper.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\legacy_audio_wrapper.o: ..\..\..\inc\rtl87x3e\platform\trace.h
 .\objects\legacy_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\legacy_bt\legacy_audio_wrapper.h
 .\objects\legacy_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\legacy_bt\gaming_bt.h
@@ -20,7 +20,7 @@
 .\objects\legacy_audio_wrapper.o: ..\..\..\inc\bluetooth\gap\gap_appearance.h
 .\objects\legacy_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\app_link_util.h
 .\objects\legacy_audio_wrapper.o: ..\..\..\inc\framework\audio\tts.h
-.\objects\legacy_audio_wrapper.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\legacy_audio_wrapper.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\legacy_audio_wrapper.o: ..\..\..\inc\rtl87x3e\os\os_queue.h
 .\objects\legacy_audio_wrapper.o: ..\..\..\inc\framework\audio\audio_type.h
 .\objects\legacy_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\app_mmi.h
@@ -39,7 +39,7 @@
 .\objects\legacy_audio_wrapper.o: ..\..\..\src\app\bt_ual\ual_types.h
 .\objects\legacy_audio_wrapper.o: ..\..\..\src\app\bt_ual\ual_bluetooth.h
 .\objects\legacy_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\app_cfg.h
-.\objects\legacy_audio_wrapper.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\legacy_audio_wrapper.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\legacy_audio_wrapper.o: ..\..\..\inc\rtl87x3e\os\os_mem.h
 .\objects\legacy_audio_wrapper.o: ..\..\..\inc\rtl87x3e\platform\mem_types.h
 .\objects\legacy_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\legacy_bt\app_gaming_ctrl_cfg.h

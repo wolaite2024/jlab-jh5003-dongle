@@ -2,10 +2,10 @@
 .\objects\le_unicast_gaming.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\le_unicast_gaming.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
 .\objects\le_unicast_gaming.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\le_unicast_gaming.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\le_unicast_gaming.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\le_unicast_gaming.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\le_unicast_gaming.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\le_unicast_gaming.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_audio_service\le_unicast_gaming.h
-.\objects\le_unicast_gaming.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\le_unicast_gaming.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\le_unicast_gaming.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_audio_service\le_unicast_src_service.h
 .\objects\le_unicast_gaming.o: ..\..\..\inc\app\app_msg.h
 .\objects\le_unicast_gaming.o: ..\..\..\inc\bluetooth\gap\gap_conn_le.h

@@ -1,9 +1,9 @@
 .\objects\cli_cfg_main.o: ..\..\..\src\sample\gaming_dongle\cli\cli_cfg_main.c
 .\objects\cli_cfg_main.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\cli_cfg_main.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\cli_cfg_main.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\cli_cfg_main.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\cli_cfg_main.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
-.\objects\cli_cfg_main.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\cli_cfg_main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\cli_cfg_main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\cli_cfg_main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\cli_cfg_main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\cli_cfg_main.o: ..\..\..\inc\framework\console\cli.h
 .\objects\cli_cfg_main.o: ..\..\..\src\sample\gaming_dongle\cli\cli_cfg_cmd.h

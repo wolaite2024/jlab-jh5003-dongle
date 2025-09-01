@@ -1,12 +1,12 @@
 .\objects\cli_power_cmd.o: ..\..\..\src\sample\gaming_dongle\cli\cli_power_cmd.c
 .\objects\cli_power_cmd.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\cli_power_cmd.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\cli_power_cmd.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\cli_power_cmd.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\cli_power_cmd.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
-.\objects\cli_power_cmd.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\cli_power_cmd.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\cli_power_cmd.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\cli_power_cmd.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\cli_power_cmd.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\cli_power_cmd.o: ..\..\..\inc\rtl87x3e\os\os_mem.h
-.\objects\cli_power_cmd.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\cli_power_cmd.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\cli_power_cmd.o: ..\..\..\inc\rtl87x3e\platform\mem_types.h
 .\objects\cli_power_cmd.o: ..\..\..\inc\rtl87x3e\os\os_msg.h
 .\objects\cli_power_cmd.o: ..\..\..\inc\bluetooth\gap\bt_types.h

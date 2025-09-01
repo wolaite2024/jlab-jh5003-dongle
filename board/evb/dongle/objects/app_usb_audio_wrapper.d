@@ -1,10 +1,10 @@
 .\objects\app_usb_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\usb\app_usb_audio_wrapper.c
 .\objects\app_usb_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\app_usb_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\app_usb_audio_wrapper.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\app_usb_audio_wrapper.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\app_usb_audio_wrapper.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\app_usb_audio_wrapper.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\app_usb_audio_wrapper.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\app_usb_audio_wrapper.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\app_usb_audio_wrapper.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\app_usb_audio_wrapper.o: ..\..\..\inc\rtl87x3e\platform\ring_buffer.h
 .\objects\app_usb_audio_wrapper.o: ..\..\..\inc\rtl87x3e\platform\section.h
 .\objects\app_usb_audio_wrapper.o: ..\..\..\inc\app\app_timer.h
@@ -17,7 +17,7 @@
 .\objects\app_usb_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\usb\audio\usb_audio_stream.h
 .\objects\app_usb_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\app_cfg.h
 .\objects\app_usb_audio_wrapper.o: ..\..\..\inc\rtl87x3e\os\os_mem.h
-.\objects\app_usb_audio_wrapper.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\app_usb_audio_wrapper.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\app_usb_audio_wrapper.o: ..\..\..\inc\rtl87x3e\platform\mem_types.h
 .\objects\app_usb_audio_wrapper.o: ..\..\..\src\sample\common\app_gaming_sync.h
 .\objects\app_usb_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\usb\app_usb_uac.h
@@ -39,7 +39,7 @@
 .\objects\app_usb_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\app_upstream_decode.h
 .\objects\app_usb_audio_wrapper.o: ..\..\..\inc\bluetooth\gap\bt_direct_msg.h
 .\objects\app_usb_audio_wrapper.o: ..\..\..\inc\bluetooth\leaudio\codec_def.h
-.\objects\app_usb_audio_wrapper.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\app_usb_audio_wrapper.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\app_usb_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\app_io_msg.h
 .\objects\app_usb_audio_wrapper.o: ..\..\..\inc\hal\io\hw_tim.h
 .\objects\app_usb_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\usb\app_usb.h

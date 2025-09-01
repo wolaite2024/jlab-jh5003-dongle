@@ -1,9 +1,9 @@
 .\objects\le_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_audio_wrapper.c
 .\objects\le_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\le_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\le_audio_wrapper.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\le_audio_wrapper.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
-.\objects\le_audio_wrapper.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\le_audio_wrapper.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\le_audio_wrapper.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\le_audio_wrapper.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\le_audio_wrapper.o: ..\..\..\inc\rtl87x3e\platform\trace.h
 .\objects\le_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\app_mmi.h
 .\objects\le_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\le_bt\app_le_audio.h
@@ -67,6 +67,6 @@
 .\objects\le_audio_wrapper.o: ..\..\..\inc\bluetooth\leaudio\ble_audio.h
 .\objects\le_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\app_cfg.h
 .\objects\le_audio_wrapper.o: ..\..\..\inc\rtl87x3e\os\os_mem.h
-.\objects\le_audio_wrapper.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\le_audio_wrapper.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\le_audio_wrapper.o: ..\..\..\inc\rtl87x3e\platform\mem_types.h
 .\objects\le_audio_wrapper.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_audio_wrapper.h

@@ -1,10 +1,10 @@
 .\objects\uac_silence_detect.o: ..\..\..\src\sample\gaming_dongle\usb\uac_silence_detect.c
 .\objects\uac_silence_detect.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\uac_silence_detect.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\uac_silence_detect.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\uac_silence_detect.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\uac_silence_detect.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\uac_silence_detect.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\uac_silence_detect.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\uac_silence_detect.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\uac_silence_detect.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\uac_silence_detect.o: ..\..\..\src\sample\gaming_dongle\usb\uac_silence_detect.h
 .\objects\uac_silence_detect.o: ..\..\..\src\sample\gaming_dongle\app_io_msg.h
 .\objects\uac_silence_detect.o: ..\..\..\inc\app\app_msg.h

@@ -316,6 +316,7 @@ static int usb_pipe_ep_data_send(void *handle, uint8_t *buf, uint32_t len)
             urb->zlp = 0;// send zlp
         }
     }
+	APP_PRINT_INFO2("---->hal_usb_ep_tx data %b length %x", TRACE_BINARY(len, buf), len);
     ret = hal_usb_ep_tx(urb->ep_handle, urb);
     if (ret != ESUCCESS)
     {

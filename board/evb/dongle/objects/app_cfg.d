@@ -2,11 +2,11 @@
 .\objects\app_cfg.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\app_cfg.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
 .\objects\app_cfg.o: ..\..\..\inc\hal\platform\ftl.h
-.\objects\app_cfg.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\app_cfg.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\app_cfg.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\app_cfg.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\app_cfg.o: ..\..\..\inc\rtl87x3e\platform\errno.h
 .\objects\app_cfg.o: ..\..\..\inc\rtl87x3e\hal\storage.h
-.\objects\app_cfg.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\app_cfg.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\app_cfg.o: ..\..\..\inc\rtl87x3e\platform\patch_header_check.h
 .\objects\app_cfg.o: ..\..\..\inc\rtl87x3e\platform\compiler_abstraction.h
 .\objects\app_cfg.o: ..\..\..\inc\rtl87x3e\platform\rtl876x.h
@@ -15,9 +15,9 @@
 .\objects\app_cfg.o: ..\..\..\inc\rtl87x3e\platform\cmsis\core_cmFunc.h
 .\objects\app_cfg.o: ..\..\..\inc\rtl87x3e\platform\cmsis\core_cmSimd.h
 .\objects\app_cfg.o: ..\..\..\src\sample\gaming_dongle\app_cfg.h
-.\objects\app_cfg.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\app_cfg.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\app_cfg.o: ..\..\..\inc\rtl87x3e\os\os_mem.h
-.\objects\app_cfg.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\app_cfg.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\app_cfg.o: ..\..\..\inc\rtl87x3e\platform\mem_types.h
 .\objects\app_cfg.o: ..\..\..\inc\rtl87x3e\platform\trace.h
 .\objects\app_cfg.o: ..\..\..\src\sample\gaming_dongle\app_main.h

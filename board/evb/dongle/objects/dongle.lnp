@@ -131,7 +131,7 @@
 ".\objects\app_general_policy.o"
 ".\objects\general_audio_wrapper.o"
 ".\objects\app_spp_cmd.o"
---strict --scatter ".\dongle_bank1_rtl87x3e.sct"
+--strict --scatter ".\dongle_bank0_rtl87x3e.sct"
 --diag_suppress=L6314 --datacompressor off --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
 --list ".\listings\dongle.map" -o .\objects\dongle.axf

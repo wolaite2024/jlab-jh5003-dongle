@@ -2,11 +2,11 @@
 .\objects\app_key_gpio.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\app_key_gpio.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
 .\objects\app_key_gpio.o: ..\..\..\inc\rtl87x3e\os\os_mem.h
-.\objects\app_key_gpio.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\app_key_gpio.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\app_key_gpio.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\app_key_gpio.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\app_key_gpio.o: ..\..\..\inc\rtl87x3e\platform\mem_types.h
 .\objects\app_key_gpio.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\app_key_gpio.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\app_key_gpio.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\app_key_gpio.o: ..\..\..\inc\rtl87x3e\io\rtl876x_nvic.h
 .\objects\app_key_gpio.o: ..\..\..\inc\rtl87x3e\platform\rtl876x.h
 .\objects\app_key_gpio.o: ..\..\..\inc\rtl87x3e\platform\cmsis\core_cm4.h
@@ -17,7 +17,7 @@
 .\objects\app_key_gpio.o: ..\..\..\inc\rtl87x3e\io\rtl876x_rcc.h
 .\objects\app_key_gpio.o: ..\..\..\src\sample\gaming_dongle\app_key_gpio.h
 .\objects\app_key_gpio.o: ..\dongle\board.h
-.\objects\app_key_gpio.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\app_key_gpio.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\app_key_gpio.o: ..\..\..\inc\rtl87x3e\hal\mfb_api.h
 .\objects\app_key_gpio.o: ..\..\..\inc\rtl87x3e\io\rtl876x_pinmux.h
 .\objects\app_key_gpio.o: ..\..\..\inc\rtl87x3e\hal\io\hal_gpio_int.h

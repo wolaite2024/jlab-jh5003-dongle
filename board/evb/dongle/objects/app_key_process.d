@@ -4,8 +4,8 @@
 .\objects\app_key_process.o: ..\..\..\inc\rtl87x3e\io\rtl876x_pinmux.h
 .\objects\app_key_process.o: ..\..\..\inc\rtl87x3e\platform\rtl876x.h
 .\objects\app_key_process.o: ..\..\..\inc\rtl87x3e\platform\cmsis\core_cm4.h
-.\objects\app_key_process.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\app_key_process.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\app_key_process.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\app_key_process.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\app_key_process.o: ..\..\..\inc\rtl87x3e\platform\compiler_abstraction.h
 .\objects\app_key_process.o: ..\..\..\inc\rtl87x3e\platform\cmsis\core_cmInstr.h
 .\objects\app_key_process.o: ..\..\..\inc\rtl87x3e\platform\cmsis\core_cmFunc.h
@@ -13,7 +13,7 @@
 .\objects\app_key_process.o: ..\..\..\inc\rtl87x3e\hal\io\hal_gpio.h
 .\objects\app_key_process.o: ..\..\..\inc\rtl87x3e\platform\trace.h
 .\objects\app_key_process.o: ..\dongle\board.h
-.\objects\app_key_process.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\app_key_process.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\app_key_process.o: ..\..\..\inc\rtl87x3e\platform\section.h
 .\objects\app_key_process.o: ..\..\..\inc\framework\audio\ringtone.h
 .\objects\app_key_process.o: ..\..\..\inc\bluetooth\gap\gap_vendor.h
@@ -31,7 +31,7 @@
 .\objects\app_key_process.o: ..\..\..\src\sample\gaming_dongle\app_main.h
 .\objects\app_key_process.o: ..\..\..\src\sample\gaming_dongle\app_link_util.h
 .\objects\app_key_process.o: ..\..\..\inc\framework\audio\tts.h
-.\objects\app_key_process.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\app_key_process.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\app_key_process.o: ..\..\..\inc\framework\bt\btm.h
 .\objects\app_key_process.o: ..\..\..\inc\framework\remote\remote.h
 .\objects\app_key_process.o: ..\..\..\inc\framework\bt\bt_pbap.h

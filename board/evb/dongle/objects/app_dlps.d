@@ -2,10 +2,10 @@
 .\objects\app_dlps.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\app_dlps.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
 .\objects\app_dlps.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\app_dlps.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\app_dlps.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\app_dlps.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\app_dlps.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\app_dlps.o: ..\dongle\board.h
-.\objects\app_dlps.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\app_dlps.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\app_dlps.o: ..\..\..\inc\rtl87x3e\io\rtl876x_gdma.h
 .\objects\app_dlps.o: ..\..\..\inc\rtl87x3e\platform\rtl876x.h
 .\objects\app_dlps.o: ..\..\..\inc\rtl87x3e\platform\cmsis\core_cm4.h
@@ -27,7 +27,7 @@
 .\objects\app_dlps.o: ..\..\..\src\sample\gaming_dongle\app_main.h
 .\objects\app_dlps.o: ..\..\..\src\sample\gaming_dongle\app_link_util.h
 .\objects\app_dlps.o: ..\..\..\inc\framework\audio\tts.h
-.\objects\app_dlps.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\app_dlps.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\app_dlps.o: ..\..\..\inc\framework\bt\btm.h
 .\objects\app_dlps.o: ..\..\..\inc\framework\remote\remote.h
 .\objects\app_dlps.o: ..\..\..\inc\framework\bt\bt_pbap.h

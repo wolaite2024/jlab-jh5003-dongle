@@ -2,9 +2,9 @@
 .\objects\app_usb_hid_wrapper.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\app_usb_hid_wrapper.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
 .\objects\app_usb_hid_wrapper.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\app_usb_hid_wrapper.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\app_usb_hid_wrapper.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
-.\objects\app_usb_hid_wrapper.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\app_usb_hid_wrapper.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\app_usb_hid_wrapper.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\app_usb_hid_wrapper.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\app_usb_hid_wrapper.o: ..\..\..\src\sample\gaming_dongle\usb\app_usb_hid_wrapper.h
 .\objects\app_usb_hid_wrapper.o: ..\..\..\src\sample\gaming_dongle\usb\app_usb_hid.h
 .\objects\app_usb_hid_wrapper.o: ..\..\..\inc\app\app_msg.h

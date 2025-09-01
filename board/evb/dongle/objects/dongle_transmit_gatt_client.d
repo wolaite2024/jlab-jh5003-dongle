@@ -2,9 +2,9 @@
 .\objects\dongle_transmit_gatt_client.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\dongle_transmit_gatt_client.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
 .\objects\dongle_transmit_gatt_client.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\dongle_transmit_gatt_client.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\dongle_transmit_gatt_client.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
-.\objects\dongle_transmit_gatt_client.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\dongle_transmit_gatt_client.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\dongle_transmit_gatt_client.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\dongle_transmit_gatt_client.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\dongle_transmit_gatt_client.o: ..\..\..\inc\bluetooth\gap\gap_msg.h
 .\objects\dongle_transmit_gatt_client.o: ..\..\..\src\ble\bt_gatt_client\dongle_transmit_gatt_client.h
 .\objects\dongle_transmit_gatt_client.o: ..\..\..\inc\ble_mgr\bt_gatt_client.h
@@ -19,5 +19,5 @@
 .\objects\dongle_transmit_gatt_client.o: ..\..\..\inc\bluetooth\gap\gap_le_types.h
 .\objects\dongle_transmit_gatt_client.o: ..\..\..\inc\bluetooth\gap\gap_appearance.h
 .\objects\dongle_transmit_gatt_client.o: ..\..\..\inc\rtl87x3e\os\os_mem.h
-.\objects\dongle_transmit_gatt_client.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\dongle_transmit_gatt_client.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\dongle_transmit_gatt_client.o: ..\..\..\inc\rtl87x3e\platform\mem_types.h

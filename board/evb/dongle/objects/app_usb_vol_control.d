@@ -1,11 +1,11 @@
 .\objects\app_usb_vol_control.o: ..\..\..\src\sample\common\app_usb_vol_control.c
 .\objects\app_usb_vol_control.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\app_usb_vol_control.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\app_usb_vol_control.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
-.\objects\app_usb_vol_control.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\app_usb_vol_control.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\app_usb_vol_control.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\app_usb_vol_control.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\app_usb_vol_control.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\app_usb_vol_control.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\app_usb_vol_control.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\app_usb_vol_control.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\app_usb_vol_control.o: ..\..\..\inc\framework\audio\audio_track.h
 .\objects\app_usb_vol_control.o: ..\..\..\inc\framework\audio\audio_type.h
 .\objects\app_usb_vol_control.o: ..\..\..\src\sample\common\app_usb_vol_control.h

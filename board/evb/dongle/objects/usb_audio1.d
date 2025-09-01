@@ -3,8 +3,8 @@
 .\objects\usb_audio1.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
 .\objects\usb_audio1.o: ..\..\..\src\sample\gaming_dongle\usb\audio\usb_audio_config.h
 .\objects\usb_audio1.o: ..\..\..\inc\usb\class\usb_audio_driver.h
-.\objects\usb_audio1.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
-.\objects\usb_audio1.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\usb_audio1.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\usb_audio1.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\usb_audio1.o: ..\..\..\inc\rtl87x3e\platform\trace.h
 .\objects\usb_audio1.o: ..\..\..\inc\rtl87x3e\platform\section.h
 .\objects\usb_audio1.o: ..\..\..\inc\usb\class\usb_audio1_spec.h
@@ -16,10 +16,10 @@
 .\objects\usb_audio1.o: ..\..\..\inc\framework\audio\audio_type.h
 .\objects\usb_audio1.o: ..\..\..\inc\usb\composite\usb_dm.h
 .\objects\usb_audio1.o: ..\..\..\src\sample\gaming_dongle\usb\usb_dev.h
-.\objects\usb_audio1.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\usb_audio1.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\usb_audio1.o: ..\..\..\src\sample\gaming_dongle\app_cfg.h
 .\objects\usb_audio1.o: ..\..\..\inc\rtl87x3e\os\os_mem.h
-.\objects\usb_audio1.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\usb_audio1.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\usb_audio1.o: ..\..\..\inc\rtl87x3e\platform\mem_types.h
 .\objects\usb_audio1.o: ..\..\..\src\sample\gaming_dongle\app_ipc.h
 .\objects\usb_audio1.o: ..\..\..\src\sample\gaming_dongle\usb\usb_msg.h

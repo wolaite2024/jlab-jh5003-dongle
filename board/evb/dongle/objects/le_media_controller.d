@@ -1,11 +1,11 @@
 .\objects\le_media_controller.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_audio_service\le_media_controller.c
 .\objects\le_media_controller.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\le_media_controller.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\le_media_controller.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
-.\objects\le_media_controller.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\le_media_controller.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\le_media_controller.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\le_media_controller.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\le_media_controller.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\le_media_controller.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\le_media_controller.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\le_media_controller.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\le_media_controller.o: ..\..\..\inc\bluetooth\leaudio\mcp_client.h
 .\objects\le_media_controller.o: ..\..\..\inc\bluetooth\leaudio\mcp_def.h
 .\objects\le_media_controller.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_audio_service\le_media_controller.h

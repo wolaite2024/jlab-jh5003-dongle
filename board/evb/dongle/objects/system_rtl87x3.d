@@ -1,12 +1,12 @@
 .\objects\system_rtl87x3.o: ..\..\..\src\mcu\rtl87x3\system_rtl87x3.c
 .\objects\system_rtl87x3.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\system_rtl87x3.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\system_rtl87x3.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\locale.h
-.\objects\system_rtl87x3.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\system_rtl87x3.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\locale.h
+.\objects\system_rtl87x3.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\system_rtl87x3.o: ..\..\..\inc\rtl87x3e\platform\rtl876x.h
 .\objects\system_rtl87x3.o: ..\..\..\inc\rtl87x3e\platform\cmsis\core_cm4.h
-.\objects\system_rtl87x3.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\system_rtl87x3.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\system_rtl87x3.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\system_rtl87x3.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\system_rtl87x3.o: ..\..\..\inc\rtl87x3e\platform\compiler_abstraction.h
 .\objects\system_rtl87x3.o: ..\..\..\inc\rtl87x3e\platform\cmsis\core_cmInstr.h
 .\objects\system_rtl87x3.o: ..\..\..\inc\rtl87x3e\platform\cmsis\core_cmFunc.h
@@ -18,7 +18,7 @@
 .\objects\system_rtl87x3.o: ..\..\..\inc\rtl87x3e\platform\patch_header_check.h
 .\objects\system_rtl87x3.o: ..\dongle\mem_config.h
 .\objects\system_rtl87x3.o: ..\..\..\inc\rtl87x3e\os\os_mem.h
-.\objects\system_rtl87x3.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\system_rtl87x3.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\system_rtl87x3.o: ..\..\..\inc\rtl87x3e\platform\mem_types.h
 .\objects\system_rtl87x3.o: ..\..\..\inc\rtl87x3e\platform\platform_utils.h
 .\objects\system_rtl87x3.o: ..\..\..\inc\rtl87x3e\platform\crc16btx.h

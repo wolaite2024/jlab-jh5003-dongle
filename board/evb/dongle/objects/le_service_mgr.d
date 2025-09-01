@@ -1,10 +1,10 @@
 .\objects\le_service_mgr.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_service_mgr.c
 .\objects\le_service_mgr.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\le_service_mgr.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\le_service_mgr.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\le_service_mgr.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\le_service_mgr.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\le_service_mgr.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\le_service_mgr.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\le_service_mgr.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\le_service_mgr.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\le_service_mgr.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_audio_service\le_audio_service.h
 .\objects\le_service_mgr.o: ..\..\..\inc\app\app_msg.h
 .\objects\le_service_mgr.o: ..\..\..\inc\bluetooth\gap\gap_conn_le.h

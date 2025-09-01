@@ -1,14 +1,14 @@
 .\objects\app_cfu.o: ..\..\..\src\sample\gaming_dongle\cfu\app_cfu.c
 .\objects\app_cfu.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\app_cfu.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\app_cfu.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\app_cfu.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\app_cfu.o: ..\..\..\inc\bluetooth\gap\bt_types.h
 .\objects\app_cfu.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\app_cfu.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\app_cfu.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\app_cfu.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\app_cfu.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\app_cfu.o: ..\..\..\src\sample\gaming_dongle\app_cfg.h
 .\objects\app_cfu.o: ..\..\..\inc\rtl87x3e\os\os_mem.h
-.\objects\app_cfu.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\app_cfu.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\app_cfu.o: ..\..\..\inc\rtl87x3e\platform\mem_types.h
 .\objects\app_cfu.o: ..\..\..\inc\rtl87x3e\platform\rtl876x.h
 .\objects\app_cfu.o: ..\..\..\inc\rtl87x3e\platform\cmsis\core_cm4.h
@@ -26,7 +26,7 @@
 .\objects\app_cfu.o: ..\..\..\inc\app\dfu_api.h
 .\objects\app_cfu.o: ..\..\..\inc\rtl87x3e\hal\fmc_api.h
 .\objects\app_cfu.o: ..\..\..\inc\rtl87x3e\hal\storage.h
-.\objects\app_cfu.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\app_cfu.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\app_cfu.o: ..\..\..\src\sample\gaming_dongle\cfu\dfu_common.h
 .\objects\app_cfu.o: ..\..\..\inc\hal\platform\wdg.h
 .\objects\app_cfu.o: ..\..\..\src\sample\gaming_dongle\usb\app_usb_hid.h

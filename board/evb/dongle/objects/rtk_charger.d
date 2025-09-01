@@ -3,8 +3,8 @@
 .\objects\rtk_charger.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
 .\objects\rtk_charger.o: ..\..\..\src\sample\gaming_dongle\rtk_charger.h
 .\objects\rtk_charger.o: ..\..\..\inc\rtl87x3e\platform\charger_api.h
-.\objects\rtk_charger.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\rtk_charger.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\rtk_charger.o: ..\..\..\src\sample\gaming_dongle\app_charger.h
-.\objects\rtk_charger.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\rtk_charger.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\rtk_charger.o: ..\..\..\inc\app\app_msg.h
 .\objects\rtk_charger.o: ..\..\..\inc\hal\power\charger_utils.h

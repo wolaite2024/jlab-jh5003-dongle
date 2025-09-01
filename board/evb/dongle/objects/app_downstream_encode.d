@@ -1,11 +1,11 @@
 .\objects\app_downstream_encode.o: ..\..\..\src\sample\gaming_dongle\app_downstream_encode.c
 .\objects\app_downstream_encode.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\app_downstream_encode.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\app_downstream_encode.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
-.\objects\app_downstream_encode.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\app_downstream_encode.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\app_downstream_encode.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\app_downstream_encode.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\app_downstream_encode.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\app_downstream_encode.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\app_downstream_encode.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\app_downstream_encode.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\app_downstream_encode.o: ..\..\..\inc\rtl87x3e\platform\section.h
 .\objects\app_downstream_encode.o: ..\..\..\inc\rtl87x3e\platform\ring_buffer.h
 .\objects\app_downstream_encode.o: ..\..\..\inc\framework\audio\audio_type.h
@@ -33,7 +33,7 @@
 .\objects\app_downstream_encode.o: ..\..\..\inc\app\legacy_gaming.h
 .\objects\app_downstream_encode.o: ..\..\..\src\sample\gaming_dongle\app_link_util.h
 .\objects\app_downstream_encode.o: ..\..\..\inc\framework\audio\tts.h
-.\objects\app_downstream_encode.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\app_downstream_encode.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\app_downstream_encode.o: ..\..\..\inc\rtl87x3e\os\os_queue.h
 .\objects\app_downstream_encode.o: ..\..\..\src\sample\gaming_dongle\usb\app_usb_uac.h
 .\objects\app_downstream_encode.o: ..\..\..\src\sample\gaming_dongle\app_upstream_decode.h

@@ -2,8 +2,8 @@
 .\objects\le_audio_lib_msg.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\le_audio_lib_msg.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
 .\objects\le_audio_lib_msg.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\le_audio_lib_msg.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\le_audio_lib_msg.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\le_audio_lib_msg.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\le_audio_lib_msg.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\le_audio_lib_msg.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_audio_service\le_audio_lib_msg.h
 .\objects\le_audio_lib_msg.o: ..\..\..\inc\bluetooth\leaudio\ble_audio.h
 .\objects\le_audio_lib_msg.o: ..\..\..\inc\bluetooth\gap\gap_msg.h
@@ -51,7 +51,7 @@
 .\objects\le_audio_lib_msg.o: ..\..\..\inc\bluetooth\leaudio\codec_qos.h
 .\objects\le_audio_lib_msg.o: ..\..\..\inc\bluetooth\leaudio\ascs_def.h
 .\objects\le_audio_lib_msg.o: ..\..\..\inc\rtl87x3e\os\os_mem.h
-.\objects\le_audio_lib_msg.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\le_audio_lib_msg.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\le_audio_lib_msg.o: ..\..\..\inc\rtl87x3e\platform\mem_types.h
 .\objects\le_audio_lib_msg.o: ..\..\..\inc\bluetooth\leaudio\vcs_mgr.h
 .\objects\le_audio_lib_msg.o: ..\..\..\inc\bluetooth\leaudio\vcs_def.h
@@ -75,7 +75,7 @@
 .\objects\le_audio_lib_msg.o: ..\..\..\src\app\bt_ual\inc_int\adapter_int.h
 .\objects\le_audio_lib_msg.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_audio_service\le_bst_src_service.h
 .\objects\le_audio_lib_msg.o: ..\..\..\src\sample\gaming_dongle\app_cfg.h
-.\objects\le_audio_lib_msg.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\le_audio_lib_msg.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\le_audio_lib_msg.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_audio_service\le_ba_service.h
 .\objects\le_audio_lib_msg.o: ..\..\..\src\sample\gaming_dongle\le_bt\le_audio_service\le_bass_service.h
 .\objects\le_audio_lib_msg.o: ..\..\..\src\sample\gaming_dongle\ual\app_usb_layer.h

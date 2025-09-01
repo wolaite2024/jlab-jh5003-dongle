@@ -1,10 +1,10 @@
 .\objects\app_usb_uac.o: ..\..\..\src\sample\gaming_dongle\usb\app_usb_uac.c
 .\objects\app_usb_uac.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\app_usb_uac.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
-.\objects\app_usb_uac.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\app_usb_uac.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\app_usb_uac.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\app_usb_uac.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\app_usb_uac.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\app_usb_uac.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\app_usb_uac.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\app_usb_uac.o: ..\..\..\src\sample\gaming_dongle\usb\app_usb_uac.h
 .\objects\app_usb_uac.o: ..\..\..\inc\app\app_msg.h
 .\objects\app_usb_uac.o: ..\..\..\src\sample\gaming_dongle\usb\audio\usb_audio_stream.h
@@ -66,8 +66,8 @@
 .\objects\app_usb_uac.o: ..\..\..\inc\bluetooth\leaudio\ascs_def.h
 .\objects\app_usb_uac.o: ..\..\..\inc\hal\io\hw_tim.h
 .\objects\app_usb_uac.o: ..\..\..\src\sample\gaming_dongle\app_audio_path.h
-.\objects\app_usb_uac.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\app_usb_uac.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\app_usb_uac.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\app_usb_uac.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\app_usb_uac.o: ..\..\..\src\sample\gaming_dongle\app_dongle_vol.h
 .\objects\app_usb_uac.o: ..\..\..\src\sample\gaming_dongle\legacy_bt\gaming_bt.h
 .\objects\app_usb_uac.o: ..\..\..\inc\framework\bt\btm.h
@@ -82,7 +82,7 @@
 .\objects\app_usb_uac.o: ..\..\..\inc\rtl87x3e\platform\ring_buffer.h
 .\objects\app_usb_uac.o: ..\..\..\src\sample\gaming_dongle\app_cfg.h
 .\objects\app_usb_uac.o: ..\..\..\inc\rtl87x3e\os\os_mem.h
-.\objects\app_usb_uac.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\app_usb_uac.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\app_usb_uac.o: ..\..\..\inc\rtl87x3e\platform\mem_types.h
 .\objects\app_usb_uac.o: ..\..\..\src\sample\gaming_dongle\usb\app_usb_audio_wrapper.h
 .\objects\app_usb_uac.o: ..\..\..\src\sample\gaming_dongle\usb\audio\usb_audio.h

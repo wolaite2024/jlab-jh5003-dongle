@@ -2,13 +2,13 @@
 .\objects\app_src_policy.o: ..\..\..\src\sample\gaming_dongle\app_flags.h
 .\objects\app_src_policy.o: ..\..\..\src\sample\gaming_dongle\le_bt\upperstack_config.h
 .\objects\app_src_policy.o: ..\..\..\inc\rtl87x3e\platform\trace.h
-.\objects\app_src_policy.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdint.h
-.\objects\app_src_policy.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\app_src_policy.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\app_src_policy.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\app_src_policy.o: ..\..\..\inc\framework\audio\audio.h
 .\objects\app_src_policy.o: ..\..\..\inc\framework\audio\audio_track.h
 .\objects\app_src_policy.o: ..\..\..\inc\framework\audio\audio_type.h
 .\objects\app_src_policy.o: ..\..\..\inc\framework\audio\tts.h
-.\objects\app_src_policy.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\app_src_policy.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\app_src_policy.o: ..\..\..\inc\framework\audio\audio_passthrough.h
 .\objects\app_src_policy.o: ..\..\..\inc\rtl87x3e\io\rtl876x_wdg.h
 .\objects\app_src_policy.o: ..\..\..\inc\rtl87x3e\platform\rtl876x.h
@@ -34,7 +34,7 @@
 .\objects\app_src_policy.o: ..\..\..\inc\framework\sys\sysm.h
 .\objects\app_src_policy.o: ..\..\..\inc\bluetooth\gap\gap_vendor.h
 .\objects\app_src_policy.o: ..\..\..\src\sample\gaming_dongle\app_cfg.h
-.\objects\app_src_policy.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\app_src_policy.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\app_src_policy.o: ..\..\..\inc\app\app_timer.h
 .\objects\app_src_policy.o: ..\..\..\inc\rtl87x3e\platform\errno.h
 .\objects\app_src_policy.o: ..\..\..\src\sample\gaming_dongle\app_ctrl_pkt_policy.h
@@ -50,7 +50,7 @@
 .\objects\app_src_policy.o: ..\..\..\src\sample\gaming_dongle\legacy_bt\app_bond.h
 .\objects\app_src_policy.o: ..\..\..\inc\app\app_msg.h
 .\objects\app_src_policy.o: ..\..\..\src\sample\gaming_dongle\app_audio_path.h
-.\objects\app_src_policy.o: D:\software\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\app_src_policy.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\app_src_policy.o: ..\..\..\src\sample\gaming_dongle\legacy_bt\gaming_bt.h
 .\objects\app_src_policy.o: ..\..\..\inc\bluetooth\gap\gap_callback_le.h
 .\objects\app_src_policy.o: ..\..\..\inc\bluetooth\gap\gap_storage_le.h

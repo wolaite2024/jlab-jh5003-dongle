@@ -907,17 +907,16 @@ SR Handler for IRQ %d!\n", 0
               00000000 
 Command Line: --16 --debug --xref --cpreproc --diag_suppress=9931 --cpu=Cortex-
 M3 --apcs=interwork --depend=.\objects\startup_rtl87x3e.d -o.\objects\startup_r
-tl87x3e.o -I..\..\..\inc\platform -I.\ -I.\RTE\_dongle_bank1_bb2_ccut_legacy_ga
+tl87x3e.o -I..\..\..\inc\platform -I.\ -IC:\Users\Administrator\AppData\Local\A
 
 
 
 ARM Macro Assembler    Page 15 
 
 
-ming -ID:\software\keil5\ARM\PACK\ARM\CMSIS\5.4.0\Device\ARM\ARMCM3\Include -ID
-:\software\keil5\ARM\CMSIS\Include --predefine="__UVISION_VERSION SETA 526" --p
-redefine="ARMCM3 SETA 1" --list=.\listings\startup_rtl87x3e.lst ..\..\..\src\mc
-u\rtl87x3\arm\startup_rtl87x3e.s
+rm\Packs\ARM\CMSIS\5.8.0\Device\ARM\ARMCM3\Include --predefine="__UVISION_VERSI
+ON SETA 535" --predefine="ARMCM3 SETA 1" --list=.\listings\startup_rtl87x3e.lst
+ ..\..\..\src\mcu\rtl87x3\arm\startup_rtl87x3e.s
 
 
 
