@@ -616,6 +616,8 @@ static bool ual_join_rsp_adv_report(T_DISC_RESULT *p_cur, T_LE_EXT_ADV_REPORT_IN
 
 static bool ual_join_legacy_adv_report(T_DISC_RESULT *p_cur, T_LE_EXT_ADV_REPORT_INFO *p_report)
 {
+  static bool printf_flag = false;  
+	
     if ((!p_cur) || (!p_report))
     {
         return false;
@@ -656,7 +658,11 @@ static bool ual_join_legacy_adv_report(T_DISC_RESULT *p_cur, T_LE_EXT_ADV_REPORT
     if (p_report->event_type & GAP_EXT_ADV_REPORT_BIT_SCANNABLE_ADV &&
         bt_adap_get_scan_mode() != GAP_SCAN_MODE_PASSIVE)
     {
-        APP_PRINT_INFO1("ual_join_legacy_adv_report: %s wait rsp ", TRACE_BDADDR(p_report->bd_addr));
+      if(!printf_flag)
+       {
+         printf_flag = true;
+         APP_PRINT_INFO1("ual_join_legacy_adv_report: %s wait rsp ", TRACE_BDADDR(p_report->bd_addr));
+       }
         return false;
     }
 

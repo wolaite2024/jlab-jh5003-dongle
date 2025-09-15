@@ -53,6 +53,8 @@
 static uint8_t app_mmi_timer_id = 0;
 static uint8_t timer_idx_app_mmi_delay_power_off = 0;
 static uint8_t timer_idx_bt_mode_change = 0;
+static uint8_t timer_idx_dongle_plugin_times_record = 0;
+static uint8_t timer_idx_dongle_plugin_times_clear = 0;
 
 static uint8_t curr_bt_mode = DONGLE_BT_MODE_LEGACY;
 static uint8_t next_bt_mode = DONGLE_BT_MODE_LEGACY;
@@ -69,6 +71,9 @@ typedef enum
     APP_TIMER_DELAY_POWER_OFF,
     APP_TIMER_BT_MODE_CHANGE,
     APP_TIMER_REBOOT_CHECK,
+	APP_TIMER_DONGLE_PAIRING,
+	APP_TIMER_DONGLE_PLUGIN_TIMES_RECORD,
+	APP_TIMER_DONGLE_PLUGIN_TIMES_CLEAR,
 } T_APP_MMI_TIMER;
 
 static void app_mmi_delay_power_off(void)
@@ -212,6 +217,7 @@ static void bt_mode_transfer_to_cis(uint8_t prev)
 
 static void app_mmi_timeout_cb(uint8_t timer_evt, uint16_t param)
 {
+	uint8_t null_id[3] = { 0, 0, 0};
     switch (timer_evt)
     {
     case APP_TIMER_DELAY_POWER_OFF:
@@ -280,7 +286,34 @@ static void app_mmi_timeout_cb(uint8_t timer_evt, uint16_t param)
             app_mmi_reboot_check();
         }
         break;
-
+   case APP_TIMER_DONGLE_PLUGIN_TIMES_RECORD:
+    	APP_PRINT_INFO1("app_mmi_timeout_cb:RECORD   dongle_plug_in_times = %d",app_cfg_nv.dongle_plug_in_times);
+		app_cfg_nv.dongle_plug_in_times++;
+        app_cfg_store();
+		app_stop_timer(&timer_idx_dongle_plugin_times_record);
+		app_start_timer(&timer_idx_dongle_plugin_times_clear, "app_mmi_bt_mode_change",
+                    app_mmi_timer_id, APP_TIMER_DONGLE_PLUGIN_TIMES_CLEAR, 0, false, 3300);
+   	break;
+	case APP_TIMER_DONGLE_PLUGIN_TIMES_CLEAR:
+		APP_PRINT_INFO1("CLEAR dongle_plug_in_times   %d", app_cfg_nv.dongle_plug_in_times);
+		if(app_cfg_nv.dongle_plug_in_times >= 3)
+		{
+		   APP_PRINT_INFO0("enter MMI_BT_LEGACY_LINK1_SCAN");
+           app_mmi_handle_action(MMI_BT_LEGACY_LINK1_SCAN);
+		}
+		   app_stop_timer(&timer_idx_dongle_plugin_times_clear);
+		   app_cfg_nv.dongle_plug_in_times = 0;
+           app_cfg_store();
+		break;
+   case APP_TIMER_DONGLE_PAIRING:
+     	APP_PRINT_INFO0("app_mmi_timeout_cb: APP_TIMER_DONGLE_PAIRING");
+		APP_PRINT_INFO2("saved_id %b %d",  TRACE_BINARY(3,app_cfg_nv.saved_id),memcmp(app_cfg_nv.saved_id, null_id, 3));
+        if(!memcmp(app_cfg_nv.saved_id, null_id, 3))
+           {
+                APP_PRINT_INFO0("enter MMI_BT_LEGACY_LINK1_SCAN");
+                app_mmi_handle_action(MMI_BT_LEGACY_LINK1_SCAN);
+           }
+   	   break;
     default:
         break;
     }
@@ -350,6 +383,9 @@ void app_mmi_init(void)
 {
     app_bt_mode_load();
     app_timer_reg_cb(app_mmi_timeout_cb, &app_mmi_timer_id);
+	app_start_timer(&timer_idx_dongle_plugin_times_record, "APP_TIMER_DONGLE_PLUGIN_TIMES_RECORD",
+                    app_mmi_timer_id, APP_TIMER_DONGLE_PLUGIN_TIMES_RECORD, 0, false,
+                    1500);
 }
 
 void app_mmi_reboot_check_timer_start(uint32_t period_timer)

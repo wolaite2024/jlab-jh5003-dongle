@@ -81,8 +81,8 @@ void (*usb_start_enum_cb)(void) = NULL;
 void (*usb_suspend_cb)(void) = NULL;
 #endif
 
-const char *usb_uac_1st_str = "RTL8763EAU - Chat";
-const char *usb_uac_2nd_str = "RTL8763EAU - Game";
+const char *usb_uac_1st_str = "JLab Daybreak Wireless Dongle";
+const char *usb_uac_2nd_str = "JLab Daybreak Wireless Dongle";
 
 #if USBLIB_LEGACY
 

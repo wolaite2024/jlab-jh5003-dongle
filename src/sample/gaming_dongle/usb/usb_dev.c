@@ -29,8 +29,8 @@ static T_USB_DEVICE_DESC usb_dev_desc =
     .bDeviceProtocol        = 0x00,
 #endif
     .bMaxPacketSize0        = 0x40,
-    .idVendor               = 0x0bda,
-    .idProduct              = 0x8773,
+    .idVendor               = 0x1001,
+    .idProduct              = 0x38C2,
     .bcdDevice              = 0x0200,
     .iManufacturer          = STRING_ID_MANUFACTURER,
     .iProduct               = STRING_ID_PRODUCT,
@@ -101,13 +101,13 @@ static T_STRING dev_strings[] =
     [STRING_IDX_UAC_1st] =
     {
         .id     = STRING_ID_UAC_1st,
-        .s = "RTL8763EAU - Chat",
+        .s = "JLab Daybreak Wireless USB",
     },
 
     [STRING_IDX_UAC_2st] =
     {
         .id     = STRING_ID_UAC_2st,
-        .s = "RTL8763EAU - Game",
+        .s = "JLab Daybreak Wireless USB",
     },
 
     [STRING_IDX_MAX] =
