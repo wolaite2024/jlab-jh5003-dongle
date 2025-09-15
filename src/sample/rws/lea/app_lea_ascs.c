@@ -1,13 +1,14 @@
 #include <string.h>
 #include "trace.h"
+#include "gap_cig_mgr.h"
 #include "ascs_def.h"
 #include "ascs_mgr.h"
 #include "ble_conn.h"
 #include "metadata_def.h"
 #include "app_lea_ascs.h"
+#include "app_lea_pacs.h"
 #include "bt_direct_msg.h"
 #include "app_main.h"
-#include "app_vendor.h"
 
 #if F_APP_TMAP_CT_SUPPORT || F_APP_TMAP_UMR_SUPPORT
 static uint16_t app_lea_ascs_ble_audio_cback(T_LE_AUDIO_MSG msg, void *buf)
@@ -26,7 +27,6 @@ static uint16_t app_lea_ascs_ble_audio_cback(T_LE_AUDIO_MSG msg, void *buf)
                                                       (void *)(&p_data->ase_id));
             if (p_ase_entry != NULL)
             {
-                p_ase_entry->cis_conn_handle = p_data->cis_conn_handle;
                 p_ase_entry->path_direction = p_data->path_direction;
 
                 if (p_ase_entry->path_direction == DATA_PATH_OUTPUT_FLAG)
@@ -55,13 +55,6 @@ static uint16_t app_lea_ascs_ble_audio_cback(T_LE_AUDIO_MSG msg, void *buf)
     case LE_AUDIO_MSG_ASCS_REMOVE_DATA_PATH:
         {
             T_ASCS_REMOVE_DATA_PATH *p_data = (T_ASCS_REMOVE_DATA_PATH *)buf;
-
-            p_ase_entry = app_lea_ascs_find_ase_entry(LEA_ASE_ASE_ID, p_data->conn_handle,
-                                                      (void *)(&p_data->ase_id));
-            if (p_ase_entry != NULL)
-            {
-                p_ase_entry->cis_conn_handle = 0;
-            }
         }
         break;
 
@@ -80,7 +73,7 @@ static uint16_t app_lea_ascs_ble_audio_cback(T_LE_AUDIO_MSG msg, void *buf)
                 else
                 {
                     app_lea_ascs_alloc_ase_entry(p_data->conn_handle, p_data->param[i].data.ase_id,
-                                                 p_data->param[i].codec_parsed_data);
+                                                 p_data->param[i].data.codec_id, p_data->param[i].codec_parsed_data);
                 }
             }
         }
@@ -96,6 +89,8 @@ static uint16_t app_lea_ascs_ble_audio_cback(T_LE_AUDIO_MSG msg, void *buf)
                                                           (void *)(&p_data->param[i].ase_id));
                 if (p_ase_entry != NULL)
                 {
+                    p_ase_entry->cig_id = p_data->param[i].cig_id;
+                    p_ase_entry->cis_id = p_data->param[i].cis_id;
                     LE_ARRAY_TO_UINT24(p_ase_entry->presentation_delay, p_data->param[i].presentation_delay);
                 }
             }
@@ -108,7 +103,7 @@ static uint16_t app_lea_ascs_ble_audio_cback(T_LE_AUDIO_MSG msg, void *buf)
             bool need_return = false;
             bool check = true;
 
-            if (mtc_if_fm_lcis(LCIS_TO_MTC_ASCS_CP_ENABLE, &check, &need_return) == MTC_RESULT_SUCCESS)
+            if (mtc_if_fm_lcis_handle(LCIS_TO_MTC_ASCS_CP_ENABLE, &check, &need_return) == MTC_RESULT_SUCCESS)
             {
                 if (need_return)
                 {
@@ -138,11 +133,14 @@ static uint16_t app_lea_ascs_ble_audio_cback(T_LE_AUDIO_MSG msg, void *buf)
         {
             T_ASCS_CP_DISABLE_IND *p_data = (T_ASCS_CP_DISABLE_IND *)buf;
 
-            p_ase_entry = app_lea_ascs_find_ase_entry(LEA_ASE_CONN, p_data->conn_handle, NULL);
-            if (p_ase_entry != NULL)
+            for (uint8_t i = 0; i < p_data->number_of_ase; i++)
             {
-                p_ase_entry->control_point_enable = false;
-                p_ase_entry->cis_conn_handle = 0;
+                p_ase_entry = app_lea_ascs_find_ase_entry(LEA_ASE_ASE_ID, p_data->conn_handle,  &p_data->ase_id[i]);
+
+                if (p_ase_entry != NULL)
+                {
+                    p_ase_entry->control_point_enable = false;
+                }
             }
         }
         break;
@@ -162,6 +160,76 @@ static uint16_t app_lea_ascs_ble_audio_cback(T_LE_AUDIO_MSG msg, void *buf)
                 if (p_ase_entry != NULL && audio_context)
                 {
                     p_ase_entry->audio_context = audio_context;
+                }
+            }
+        }
+        break;
+
+    case LE_AUDIO_MSG_ASCS_CP_RELEASE_IND:
+        {
+            T_ASCS_CP_RELEASE_IND *p_data = (T_ASCS_CP_RELEASE_IND *)buf;
+
+            for (uint8_t i = 0; i < p_data->number_of_ase; i++)
+            {
+                p_ase_entry = app_lea_ascs_find_ase_entry(LEA_ASE_ASE_ID, p_data->conn_handle,  &p_data->ase_id[i]);
+
+                if (p_ase_entry != NULL)
+                {
+                    p_ase_entry->control_point_enable = false;
+                }
+            }
+        }
+        break;
+
+    case LE_AUDIO_MSG_ASCS_CIS_DISCONN_INFO:
+        {
+            T_ASCS_CIS_DISCONN_INFO *p_data = (T_ASCS_CIS_DISCONN_INFO *)buf;
+            T_APP_LE_LINK *p_link = app_link_find_le_link_by_conn_handle(p_data->conn_handle);
+
+            if (p_link)
+            {
+                T_LEA_ASE_ENTRY *p_ase_entry = NULL;
+
+                for (uint8_t i = 0; i < ASCS_ASE_ENTRY_NUM; i++)
+                {
+                    p_ase_entry = &p_link->lea_ase_entry[i];
+                    if (p_ase_entry->used == true &&
+                        p_ase_entry->cig_id == p_data->cig_id &&
+                        p_ase_entry->cis_id == p_data->cis_id)
+                    {
+                        p_ase_entry->cis_conn_handle = 0;
+                        p_ase_entry->nse = 0;
+                    }
+                }
+            }
+        }
+        break;
+
+    case LE_AUDIO_MSG_ASCS_CIS_CONN_INFO:
+        {
+            T_ASCS_CIS_CONN_INFO *p_data = (T_ASCS_CIS_CONN_INFO *)buf;
+            T_APP_LE_LINK *p_link = app_link_find_le_link_by_conn_handle(p_data->conn_handle);
+
+            if (p_link)
+            {
+                T_LEA_ASE_ENTRY *p_ase_entry = NULL;
+
+                for (uint8_t i = 0; i < ASCS_ASE_ENTRY_NUM; i++)
+                {
+                    p_ase_entry = &p_link->lea_ase_entry[i];
+                    if (p_ase_entry->used == true &&
+                        p_ase_entry->cig_id == p_data->cig_id &&
+                        p_ase_entry->cis_id == p_data->cis_id)
+                    {
+                        T_ISOCH_INFO isoch_info;
+
+                        p_ase_entry->cis_conn_handle = p_data->cis_conn_handle;
+
+                        if (cig_mgr_get_isoch_info(p_ase_entry->cis_conn_handle, &isoch_info))
+                        {
+                            p_ase_entry->nse = isoch_info.nse;
+                        }
+                    }
                 }
             }
         }
@@ -193,11 +261,12 @@ static bool app_lea_ascs_check_ase_condition(T_LEA_ASE_ENTRY *p_ase_entry, T_LEA
             {
                 uint32_t device = 0;
 
-                audio_track_device_get(p_ase_entry->track_handle, &device);
-
-                if (device == (AUDIO_DEVICE_OUT_SPK | AUDIO_DEVICE_IN_MIC))
+                if (audio_track_device_get(p_ase_entry->track_handle, &device))
                 {
-                    ret = true;
+                    if (device == (AUDIO_DEVICE_OUT_SPK | AUDIO_DEVICE_IN_MIC))
+                    {
+                        ret = true;
+                    }
                 }
             }
         }
@@ -315,7 +384,7 @@ exit:
 }
 
 bool static app_lea_ascs_alloc_ase_entry(uint16_t conn_handle, uint8_t ase_id,
-                                         T_CODEC_CFG codec_cfg)
+                                         uint8_t codec_id[CODEC_ID_LEN], T_CODEC_CFG codec_cfg)
 {
     bool ret = false;
     T_APP_LE_LINK *p_link;
@@ -334,7 +403,11 @@ bool static app_lea_ascs_alloc_ase_entry(uint16_t conn_handle, uint8_t ase_id,
                 p_ase_entry->used = true;
                 p_ase_entry->ase_id = ase_id;
                 p_ase_entry->conn_handle = conn_handle;
+                p_ase_entry->codec_type = AUDIO_FORMAT_TYPE_LC3;
                 memcpy(&p_ase_entry->codec_cfg, &codec_cfg, sizeof(T_CODEC_CFG));
+#if F_APP_LC3_PLUS_SUPPORT
+                p_ase_entry->codec_type = app_lea_pacs_check_codec_type(codec_id);
+#endif
                 ret = true;
                 break;
             }

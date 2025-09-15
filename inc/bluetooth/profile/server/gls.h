@@ -3,8 +3,8 @@
 *     Copyright(c) 2017, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * @file     gls.h
-  * @brief    Head file for using glucose service.
-  * @details  Glusose data types and external functions declaration.
+  * @brief    Header file for using Glucose Service.
+  * @details  Glucose data types and external functions declaration.
   * @author   bill
   * @date     2017-6-8
   * @version  v1.0
@@ -25,7 +25,7 @@ extern "C"  {
 
 
 /** @defgroup GLS Glucose Service
-  * @brief  Glucose service
+  * @brief  Glucose Service
    * @details
 
     The Glucose Service exposes glucose and other data related to a personal glucose sensor for
@@ -44,11 +44,11 @@ extern "C"  {
     the Client configures the Record Access Control Point (RACP) characteristic for indications.
     The Client must perform a write to the Record Access Control Point to execute a desired procedure at the Server.
 
-    Application shall register glucose service when initialization through @ref gls_add_service function.
+    Applications shall register Glucose Service during initialization through @ref gls_add_service function.
 
-    Application can set the glucose service parameters through @ref gls_set_parameter function.
+    Applications can set the Glucose Service parameters through @ref gls_set_parameter function.
 
-    Application can send the glucose measurements through @ref gls_glc_measurement_notify function.
+    Applications can send the glucose measurements through @ref gls_glc_measurement_notify function.
 
   * @{
   */
@@ -63,7 +63,7 @@ extern "C"  {
   */
 
 /** @defgroup GLS_Feature GLS Feature
-  * @brief  glucose feature bits.
+  * @brief  Glucose feature bits.
   * @{
   */
 #define GLC_FEATURES_LOW_BATTERY                0x0001
@@ -82,41 +82,6 @@ extern "C"  {
 #define GLC_FEATURES          (GLC_FEATURES_LOW_BATTERY    |  \
                                GLC_FEATURES_SENSOR_STRIP_INS_ERROR)
 /** @} */
-
-/**
-*  @brief Gulcose service parameter type
-*/
-typedef enum
-{
-    /** glucose measurement parameters */
-    GLS_PARAM_GLC_MS_FLAG = 0x01,
-    GLS_PARAM_GLC_MS_BASE_TIME,
-    GLS_PARAM_GLC_MS_TIME_OFFSET,
-    GLS_PARAM_GLC_MS_CONCENTRATION,
-    GLS_PARAM_GLC_MS_CONCENTRATION_UNITS,
-    GLS_PARAM_GLC_MS_TYPE_SAMPLE_LOCATION,
-    GLS_PARAM_GLC_MS_SENSOR_STATUS_ANNUNCIATION,
-
-    /** glucose measurement context parameters */
-    GLS_PARAM_GLC_MS_CT_FLAG,
-    GLS_PARAM_GLC_MS_CT_CARBOHYDRATE_ID,
-    GLS_PARAM_GLC_MS_CT_CARBOHYDRATE,
-    GLS_PARAM_GLC_MS_CT_MEAL,
-    GLS_PARAM_GLC_MS_CT_TESTER_HEALTH,
-    GLS_PARAM_GLC_MS_CT_EXERCISE_DURATION,
-    GLS_PARAM_GLC_MS_CT_EXERCISE_INTENSITY,
-    GLS_PARAM_GLC_MS_CT_MEDICATION_ID,
-    GLS_PARAM_GLC_MS_CT_MEDICATION,
-    GLS_PARAM_GLC_MS_CT_MEDICATION_UNITS,
-    GLS_PARAM_GLC_MS_CT_HbA1c,
-
-    /** Parameters that can be get by application */
-    GLS_PARAM_GLC_FEATURES,
-    GLS_PARAM_CTL_PNT_PROG_CLR,
-    GLS_PARAM_RECORD_NUM,
-    GLS_PARAM_RECORD_SEQ_NUM
-} T_GLS_PARAM_TYPE;
-
 
 /** @defgroup GLS_Upstream_Message GLS Upstream Message
   * @brief  Upstream message used to inform application.
@@ -145,7 +110,7 @@ typedef enum
 /** @} End of GLS_Upstream_Message */
 
 /** @defgroup GLS_Control_Point GLS Control Point
-  * @brief  glucose record access control point
+  * @brief  Glucose record access control point.
   * @{
   */
 
@@ -201,30 +166,30 @@ typedef enum
     GLC_RACP_RESP_OPERAND_NOT_SUPPORTED = 0x09
 } T_GLC_CTRL_POINT_RESP_CODES;
 
-/** @brief profile specific attribute protocol application error codes */
+/* Profile specific attribute protocol application error codes. */
 #define GLC_ERR_PROC_ALREADY_IN_PROGRESS                0x80
 #define GLC_ERR_CCCD_IMPROPERLY_CONFIGURED              0x81
 /** @} */
 
-/** @brief concentration unit */
+/* Concentration unit. */
 #define GLC_FLAGS_UNITS_MOL_L_ON                        1
 #define GLC_FLAGS_UNITS_KG_L_ON                         0
 
-/** @brief medication unit */
+/* Medication unit. */
 #define GLC_FLAGS_MEDICATION_UNITS_LITERS_ON            1
 #define GLC_FLAGS_MEDICATION_UNITS_KG_ON                0
 
-/** GLC sensor status annunciation bits */
+/** GLC sensor status annunciation bits. */
 #define GLC_SS_ANNUNC_LOW_BATTERY                       0x0001
 
-/** special short float values */
-#define SFLOAT_VALUE_NaN                                0x07ff    /**< not a number             */
-#define SFLOAT_VALUE_NRes                               0x0800    /**< not at this resolution   */
-#define SFLOAT_VALUE_PlusINFINITY                       0x07fe    /**< + INFINITY               */
-#define SFLOAT_VALUE_MinusINFINITY                      0x0802    /**< - INFINITY               */
-#define SFLOAT_VALUE_RFU                                0x0801    /**< reserved for future use  */
+/* Special short float values. */
+#define SFLOAT_VALUE_NaN                                0x07ff    /**< Not a number.             */
+#define SFLOAT_VALUE_NRes                               0x0800    /**< Not at this resolution.   */
+#define SFLOAT_VALUE_PlusINFINITY                       0x07fe    /**< + INFINITY.               */
+#define SFLOAT_VALUE_MinusINFINITY                      0x0802    /**< - INFINITY.               */
+#define SFLOAT_VALUE_RFU                                0x0801    /**< Reserved for future use.  */
 
-/** @brief RACP database parameters */
+/* RACP database parameters. */
 #define GLC_RACP_DATABASE_SIZE                          (GLC_RACP_MAX_NBR_OF_STORED_RECS + 1)
 #define GLC_RACP_INIT_SEQ_NBR_DEFAULT                   0
 
@@ -243,28 +208,62 @@ typedef enum
 
 /* Add all public types here */
 
+/**
+*  @brief Glucose Service parameter type
+*/
+typedef enum
+{
+    /* glucose measurement parameters */
+    GLS_PARAM_GLC_MS_FLAG = 0x01,
+    GLS_PARAM_GLC_MS_BASE_TIME,
+    GLS_PARAM_GLC_MS_TIME_OFFSET,
+    GLS_PARAM_GLC_MS_CONCENTRATION,
+    GLS_PARAM_GLC_MS_CONCENTRATION_UNITS,
+    GLS_PARAM_GLC_MS_TYPE_SAMPLE_LOCATION,
+    GLS_PARAM_GLC_MS_SENSOR_STATUS_ANNUNCIATION,
+
+    /* glucose measurement context parameters */
+    GLS_PARAM_GLC_MS_CT_FLAG,
+    GLS_PARAM_GLC_MS_CT_CARBOHYDRATE_ID,
+    GLS_PARAM_GLC_MS_CT_CARBOHYDRATE,
+    GLS_PARAM_GLC_MS_CT_MEAL,
+    GLS_PARAM_GLC_MS_CT_TESTER_HEALTH,
+    GLS_PARAM_GLC_MS_CT_EXERCISE_DURATION,
+    GLS_PARAM_GLC_MS_CT_EXERCISE_INTENSITY,
+    GLS_PARAM_GLC_MS_CT_MEDICATION_ID,
+    GLS_PARAM_GLC_MS_CT_MEDICATION,
+    GLS_PARAM_GLC_MS_CT_MEDICATION_UNITS,
+    GLS_PARAM_GLC_MS_CT_HbA1c,
+
+    /* Parameters that can be get by application */
+    GLS_PARAM_GLC_FEATURES,
+    GLS_PARAM_CTL_PNT_PROG_CLR,
+    GLS_PARAM_RECORD_NUM,
+    GLS_PARAM_RECORD_SEQ_NUM
+} T_GLS_PARAM_TYPE;
+
 /** GLC measurement flag bits */
 typedef struct
 {
-    uint8_t time_offset: 1;  /**< time offset         */
-    uint8_t con_ts_loc: 1;  /**< concentration, time/sample location */
-    uint8_t con_units: 1;  /**< 0: kg/L, 1: mol/L        */
-    uint8_t ss_annuciation: 1;  /**< sensor status annunciation */
-    uint8_t ctxt_info_follows: 1;  /**< context information  */
+    uint8_t time_offset: 1;  /**< Time offset.         */
+    uint8_t con_ts_loc: 1;  /**< Concentration, time/sample location. */
+    uint8_t con_units: 1;  /**< 0: kg/L, 1: mol/L.        */
+    uint8_t ss_annuciation: 1;  /**< Sensor status annunciation. */
+    uint8_t ctxt_info_follows: 1;  /**< Context information.  */
     uint8_t rfu: 3;
 } T_GLC_MEASUREMENT_FLAG;
 
 /** GLC measurement context flag bits */
 typedef struct
 {
-    uint8_t carbohydrate: 1;  /**< Carbohydrates ID and field  */
-    uint8_t meal: 1;  /**< Meal ID and field           */
-    uint8_t tester_health: 1;  /**< Tester-Health field         */
-    uint8_t excercise: 1;  /**< Exercise Duration and Intensity field */
-    uint8_t medication: 1; /**< Medication ID and field     */
-    uint8_t medication_units: 1;  /**< Medication units 0:kg, 1:liter */
-    uint8_t hb_a1c: 1;  /**< hb_a1c field                 */
-    uint8_t ext_flags: 1;  /**< extended flag               */
+    uint8_t carbohydrate: 1;  /**< Carbohydrates ID and field.  */
+    uint8_t meal: 1;  /**< Meal ID and field.           */
+    uint8_t tester_health: 1;  /**< Tester-Health field.         */
+    uint8_t excercise: 1;  /**< Exercise Duration and Intensity field. */
+    uint8_t medication: 1; /**< Medication ID and field.     */
+    uint8_t medication_units: 1;  /**< Medication units 0:kg, 1:liter. */
+    uint8_t hb_a1c: 1;  /**< hb_a1c field.                 */
+    uint8_t ext_flags: 1;  /**< Extended flag.               */
 } T_GLC_MSR_CTXT_FLAG;
 
 typedef uint8_t     TIMESTAMP[7];
@@ -320,7 +319,7 @@ typedef struct
 typedef struct
 {
     T_GLC_CTRL_POINT_OPCODE op_code;
-    T_GLC_CTRL_POINT_OPERATOR op; /**< operator */
+    T_GLC_CTRL_POINT_OPERATOR op; /**< Operator. */
     uint8_t operand[18];
 } T_GLC_CONTROL_POINT;
 
@@ -334,23 +333,23 @@ typedef struct
 
 typedef struct
 {
-    T_PATIENT_RECORD records[GLC_RACP_DATABASE_SIZE];
+    T_PATIENT_RECORD  records[GLC_RACP_DATABASE_SIZE];
     uint8_t record_num;
     /**
         The tail points to an empty record who plays a role as a guard.
-        1. empty tail == head
-        2. one   (tail - head + GLC_RACP_DATABASE_SIZE) % GLC_RACP_DATABASE_SIZE == 1
-        3. full (head - tail + GLC_RACP_DATABASE_SIZE) % GLC_RACP_DATABASE_SIZE == 1
+         1.  empty  tail == head.
+         2.  one    (tail - head + GLC_RACP_DATABASE_SIZE) % GLC_RACP_DATABASE_SIZE == 1.
+         3.  full   (head - tail + GLC_RACP_DATABASE_SIZE) % GLC_RACP_DATABASE_SIZE == 1.
     */
     uint8_t head;
     uint8_t tail;
-    uint16_t seq_num; /**< sequence number of latest record */
+    uint16_t seq_num; /**< Sequence number of latest record. */
 } T_RECORD_DATA_BASE;
 
 typedef struct
 {
     T_GLC_CONTROL_POINT ctrl_point;
-    uint8_t cp_length; /**< length of current operand of control point */
+    uint8_t cp_length; /**< Length of current operand of control point. */
     T_RECORD_DATA_BASE record_db;
 } T_GLC_RACP;
 
@@ -394,19 +393,19 @@ typedef struct
   */
 
 /**
-  * @brief       Add gulcose service to the BLE stack database.
+  * @brief       Add Glucose Service to the Bluetooth Host.
   *
   *
-  * @param[in]   p_func  Callback when service attribute was read, write or cccd update.
-  * @return Service id generated by the BLE stack: @ref T_SERVER_ID.
+  * @param[in]   p_func  Callback when service attribute was read, write or CCCD update.
+  * @return Service ID generated by the Bluetooth Host: @ref T_SERVER_ID.
   * @retval 0xFF Operation failure.
-  * @retval Others Service id assigned by stack.
+  * @retval Others Service ID assigned by Bluetooth Host.
   *
   * <b>Example usage</b>
   * \code{.c}
      void profile_init()
      {
-         server_init(1);
+         server_init(service_num);
          gls_id = gls_add_service(app_handle_profile_message);
      }
   * \endcode
@@ -417,13 +416,13 @@ T_SERVER_ID gls_add_service(void *p_func);
 /**
  * @brief       Set a GLS parameter.
  *
- *              NOTE: You can call this function with a gulcose service parameter type and it will set the
- *                      gulcose service parameter.  Gulcose service parameters are defined in @ref T_GLS_PARAM_TYPE.
- *                      If the "len" field sets to the size of a "uint16_t" ,the
+ * This function can be called with a Glucose Service parameter type and it will set the
+ *                      Glucose Service parameter.  Glucose Service parameters are defined in @ref T_GLS_PARAM_TYPE.
+ *                      If the "len" field is set to the size of a "uint16_t", the
  *                      "p_value" field must point to a data with type of "uint16_t".
  *
- * @param[in]   param_type   Gulcose service parameter type: @ref T_GLS_PARAM_TYPE
- * @param[in]   len       Length of data to write
+ * @param[in]   param_type   Glucose Service parameter type: @ref T_GLS_PARAM_TYPE.
+ * @param[in]   len       Length of data to write.
  * @param[in]   p_value Pointer to data to write.  This is dependent on
  *                      the parameter type and WILL be cast to the appropriate
  *                      data type (For example: if data type of param is uint16_t, p_value will be cast to
@@ -446,7 +445,7 @@ T_SERVER_ID gls_add_service(void *p_func);
             0, //ctxt_info_follows
             0  //rfu
         };
-        gls_set_parameter(GLS_PARAM_GLC_MS_FLAG, 1, &ms_flag);
+        bool ret = gls_set_parameter(GLS_PARAM_GLC_MS_FLAG, 1, &ms_flag);
     }
  * \endcode
  */
@@ -456,10 +455,10 @@ bool gls_set_parameter(T_GLS_PARAM_TYPE param_type, uint8_t len, void *p_value);
 /**
  * @brief   Get a GLS parameter.
  *
- *          NOTE: You can call this function with a gulcose parameter type and it will get a
- *          gulcose parameter. Gulcose parameters are defined in @ref T_GLS_PARAM_TYPE.
+ * This function can be called with a glucose parameter type and it will get a
+ *          glucose parameter. Glucose parameters are defined in @ref T_GLS_PARAM_TYPE.
  *
- * @param[in]   param_type Gulcose parameter type: @ref T_GLS_PARAM_TYPE
+ * @param[in]   param_type Glucose parameter type: @ref T_GLS_PARAM_TYPE
  * @param[in,out]   len Pointer to the location to get the length of data.
  * @param[in,out]  p_value Pointer to the location to get the parameter value.  This is dependent on
  *                      the parameter type and will be cast to the appropriate
@@ -467,15 +466,14 @@ bool gls_set_parameter(T_GLS_PARAM_TYPE param_type, uint8_t len, void *p_value);
  *                      pointer of uint16_t).
  *
  * @return Operation result.
- * @retval GAP_CAUSE_SUCCESS Operation success.
- * @retval GAP_CAUSE_INVALID_PARAM Operation failure.
+ * @retval true Operation success.
+ * @retval false Operation failure.
  *
  * <b>Example usage</b>
  * \code{.c}
     void test(void)
     {
-        int record_num;
-        gls_get_parameter(GLS_PARAM_RECORD_NUM, &len, &record_num);
+        bool ret = gls_get_parameter(GLS_PARAM_RECORD_NUM, &len, &record_num);
     }
  * \endcode
  */
@@ -483,11 +481,11 @@ bool gls_get_parameter(T_GLS_PARAM_TYPE param_type, uint8_t *len, void *p_value)
 
 
 /**
- * @brief       Send measurement notification data .
+ * @brief       Send measurement notification data.
  *
  *
- * @param[in]   conn_id  Connection id.
- * @param[in]   service_id  Service id.
+ * @param[in]   conn_id  Connection ID.
+ * @param[in]   service_id  Service ID.
  * @param[in]   index  Index.
  * @return Operation result.
  * @retval true Operation success.
@@ -497,8 +495,7 @@ bool gls_get_parameter(T_GLS_PARAM_TYPE param_type, uint8_t *len, void *p_value)
  * \code{.c}
     void test(void)
     {
-        uint8_t battery_level = 90;
-        bas_battery_level_value_notify(conn_id, bas_id, battery_level);
+        bool ret = gls_glc_measurement_notify(conn_id, gls_id, index);
     }
  * \endcode
  */
@@ -507,11 +504,11 @@ bool gls_glc_measurement_notify(uint8_t conn_id, T_SERVER_ID service_id, uint8_t
 #if GLC_MEASUREMENT_CONTEXT_SUPPORT
 
 /**
- * @brief       Send measurement context notification data .
+ * @brief       Send measurement context notification data.
  *
  *
- * @param[in]   conn_id  Connection id.
- * @param[in]   service_id  Service id.
+ * @param[in]   conn_id  Connection ID.
+ * @param[in]   service_id  Service ID.
  * @param[in]   index  Index.
  * @return Operation result.
  * @retval true Operation success.
@@ -521,8 +518,7 @@ bool gls_glc_measurement_notify(uint8_t conn_id, T_SERVER_ID service_id, uint8_t
  * \code{.c}
     void test(void)
     {
-        uint8_t battery_level = 90;
-        bas_battery_level_value_notify(conn_id, bas_id, battery_level);
+        bool ret = gls_glc_measurement_context_notify(conn_id, gls_id, index);
     }
  * \endcode
  */
@@ -531,11 +527,11 @@ bool gls_glc_measurement_context_notify(uint8_t conn_id, T_SERVER_ID service_id,
 
 
 /**
- * @brief       Indicate control point data response to client from application
+ * @brief       Indicate control point data response to client from application.
  *
  *
- * @param[in]   conn_id  Connection id.
- * @param[in]   service_id  Service id.
+ * @param[in]   conn_id  Connection ID.
+ * @param[in]   service_id  Service ID.
  * @param[in]   rsp_code  Response code.
  * @return Operation result.
  * @retval true Operation success.
@@ -544,17 +540,17 @@ bool gls_glc_measurement_context_notify(uint8_t conn_id, T_SERVER_ID service_id,
 bool gls_racp_response(uint8_t conn_id, T_SERVER_ID service_id, uint8_t rsp_code);
 
 /**
- * @brief       Indicate control point data number response to client from application
+ * @brief       Indicate control point data number response to client from application.
  *
  *
- * @param[in]   conn_id  Connection id.
- * @param[in]   service_id  Service id.
+ * @param[in]   conn_id  Connection ID.
+ * @param[in]   service_id  Service ID.
  * @param[in]   num  Number of glucose records.
  * @return Operation result.
  * @retval true Operation success.
  * @retval false Operation failure.
  */
-bool gls_racp_num_response(uint8_t conn_id, T_SERVER_ID service_i, uint16_t num);
+bool gls_racp_num_response(uint8_t conn_id, T_SERVER_ID service_id, uint16_t num);
 
 /**
  * @brief       Prepare a new record in database.
@@ -575,8 +571,8 @@ void gls_push_new_record(void);
  * @brief       Report records sub procedure.
  *
  *
- * @param[in]   conn_id  Connection id.
- * @param[in]   service_id  Service id.
+ * @param[in]   conn_id  Connection ID.
+ * @param[in]   service_id  Service ID.
  * @return Operation result.
  * @retval true Operation success.
  * @retval false Operation failure.
@@ -585,27 +581,26 @@ void gls_push_new_record(void);
  * \code{.c}
     void test(void)
     {
-        uint8_t battery_level = 90;
-        bas_battery_level_value_notify(conn_id, bas_id, battery_level);
+        bool ret = gls_report_records_task(conn_id, gls_id);
     }
  * \endcode
  */
 bool gls_report_records_task(uint8_t conn_id, T_SERVER_ID service_id);
 
 /**
- * @brief       Calculate user facing time by adding basetime and timeoffset.
+ * @brief       Calculate user-facing time by adding base time and time offset.
  *
  *
- * @param[in]   time_in  Connection id.
- * @param[in]   time_offset  Service id.
- * @param[in]   time_out  Battery level value.
+ * @param[in]   time_in  Time in.
+ * @param[in]   time_offset  Time offset.
+ * @param[in]   time_out  Time out.
  * @return void.
  *
  * <b>Example usage</b>
  * \code{.c}
     void test(void)
     {
-        user_face_time(time, 30, time);
+        user_face_time(time_in, time_offset, time_out);
     }
  * \endcode
  */
@@ -613,7 +608,7 @@ bool gls_report_records_task(uint8_t conn_id, T_SERVER_ID service_id);
 void user_face_time(TIMESTAMP time_in, int16_t time_offset, TIMESTAMP time_out);
 
 /**
- * @brief       Abort RACP procedure by app.
+ * @brief       Abort RACP procedure by APP.
  *
  * @return void.
  *

@@ -141,6 +141,13 @@ void app_ble_common_adv_cb_reg(LE_COMMON_ADV_CB cb);
 bool app_ble_common_adv_update_scan_rsp_data(void);
 
 /**
+    * @brief update peer addr
+    * @param  void
+    * @return void
+    */
+void app_ble_common_adv_update_peer_addr(void);
+
+/**
  * @brief handle ble disconnected msg
  *
  * @param conn_id ble connection id

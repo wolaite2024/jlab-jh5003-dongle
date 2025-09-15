@@ -59,7 +59,24 @@ extern "C" {
 #define AMA_PROFILE_MASK                0x00040000    /**< AMA profile bitmask */
 #define AVP_PROFILE_MASK                0x00080000    /**< AVP profile bitmask */
 #define DID_PROFILE_MASK                0x80000000    /**< DID profile bitmask */
+#define UCA_PROFILE_MASK                0x01000000    /**< UCA profile bitmask */
 #define ALL_PROFILE_MASK                0xFFFFFFFF
+
+
+/**
+bitmask of idle zone traffics used in htpoll cmd.
+(which one could active in idle zone.)
+bit 0, bit8-bit15 are reserved now.
+**/
+#define TRAFFIC_MASK_ALL_DISABLE        0x0000
+#define TRAFFIC_MASK_LE_ADV             0x0002
+#define TRAFFIC_MASK_LE_SCAN            0x0004
+#define TRAFFIC_MASK_LE_INIT_SCAN       0x0008
+#define TRAFFIC_MASK_LE_ACL             0x0010
+#define TRAFFIC_MASK_LE_CIS             0x0020
+#define TRAFFIC_MASK_LE_BIS             0x0040
+#define TRAFFIC_MASK_LE_PA              0x0080
+#define TRAFFIC_MASK_ALL_ENABLE         0xFFFF
 
 typedef enum t_app_hf_state
 {
@@ -82,36 +99,52 @@ typedef enum t_app_link_misc
     APP_LINK_MEMS               = 0x03,
 } T_APP_LINK_MISC;
 
+
+typedef struct
+{
+    uint8_t             *buf;
+    uint16_t            len;
+    bool                enable;
+    uint8_t             rx_seqn;
+    uint8_t             tx_seqn;
+    uint8_t             tx_mask;
+    bool                resume;
+    uint8_t             dongle_tx_mask;
+} T_APP_VENDOR_CMD;
+
 /**  @brief  APP's Bluetooth BR/EDR link connection database */
 typedef struct t_app_br_link
 {
     uint8_t             bd_addr[6];
     bool                used;
     uint8_t             id;
-    uint8_t             *p_embedded_cmd;
+
     uint8_t             *uart_rx_dt_pkt_ptr;
-    T_TTS_INFO          tts_info;
+    uint16_t            uart_rx_dt_pkt_len;
+    uint16_t            mtu_size;    // GATT MTU Size
+    T_APP_VENDOR_CMD    cmd;
+
     T_AUDIO_EQ_INFO     audio_set_eq_info;
     T_AUDIO_EQ_INFO     audio_get_eq_info;
     T_AUDIO_EFFECT_INSTANCE eq_instance;
     T_AUDIO_EFFECT_INSTANCE nrec_instance;
-    uint16_t            embedded_cmd_len;
-    uint16_t            uart_rx_dt_pkt_len;
-    uint16_t            rfc_frame_size;
-    uint16_t            rfc_spp_frame_size;
+
+    T_TTS_INFO          tts_info;
     uint8_t             rfc_spp_credit;
     uint8_t             rfc_credit;
+    uint16_t            rfc_frame_size;
+    uint16_t            rfc_spp_frame_size;
+
     uint32_t            connected_profile;
     uint32_t            plan_disconnect_profs;
     bool                call_id_type_check;
     bool                call_id_type_num;
-    uint8_t             tx_event_seqn;
-    uint8_t             rx_cmd_seqn;
-    uint8_t             resume_fg;
     T_APP_CALL_STATUS   call_status;
     bool                service_status;
-    uint8_t             a2dp_codec_type;
 
+    uint8_t             streaming_fg;
+    uint8_t             avrcp_play_status;
+    uint8_t             a2dp_codec_type;
     union
     {
         uint32_t sampling_frequency;
@@ -160,33 +193,38 @@ typedef struct t_app_br_link
 
     void                *a2dp_track_handle;
     void                *sco_track_handle;
+
     uint8_t             sco_seq_num;
     uint8_t             duplicate_fst_sco_data;
     T_BT_LINK_ROLE      acl_link_role;
     uint8_t             pbap_repos;
+
     uint16_t            acl_handle;
     uint16_t            sco_handle;
     bool                sco_initial;
-    uint8_t             streaming_fg;
-    uint8_t             avrcp_play_status;
     bool                is_inband_ring;
+
     uint8_t             *p_gfps_cmd;
+
     uint16_t            gfps_cmd_len;
     uint8_t             gfps_rfc_chann;
     bool                auth_flag;
+
     uint8_t             link_encrypt; // 0 not encrpyt; 1 encrypted; 2 de-encrpyted (only for b2b link)
     uint8_t             link_role_switch_count;
     T_BT_SNIFFING_TYPE  sniffing_type;
     bool                sniffing_active;
+
     T_APP_BT_SNIFFING_STATE bt_sniffing_state;
     T_APP_BT_SNIFFING_STATE sniffing_type_before_roleswap;
     bool                pending_ind_confirm;
     T_APP_HF_STATE      app_hf_state;
+
     uint16_t            src_conn_idx;
     uint16_t            remote_hfp_brsf_capability;
-    T_APP_REMOTE_DEVICE_VENDOR_ID remote_device_vendor_id;
-    uint16_t            remote_device_vendor_version;
 
+    uint16_t            remote_device_vendor_version;
+    T_APP_REMOTE_DEVICE_VENDOR_ID remote_device_vendor_id;
     uint8_t             disconn_acl_flg: 1;
     uint8_t             acl_link_in_sniffmode_flg: 1;
     uint8_t             roleswitch_check_after_unsniff_flg: 1;
@@ -199,11 +237,12 @@ typedef struct t_app_br_link
     uint32_t            sniff_mode_disable_flag;
     bool                stop_after_shadow;
     uint8_t             tpoll_value;
+
     T_APP_ABS_VOL_STATE abs_vol_state;
     bool                cmd_set_enable;
     bool                conn_done;
-
     bool                voice_muted;
+
     bool                playback_muted;
     bool                audio_eq_enabled;
 
@@ -290,26 +329,25 @@ typedef struct t_app_le_link
     uint8_t                 le_pulbic_bd_addr[6];
     T_APP_LE_REMOTE_BD_TYPE bd_type;
     bool                    used;
+
+    T_APP_VENDOR_CMD        cmd;
+    uint16_t                mtu_size;
+    uint16_t                conn_handle;
+    uint8_t                 conn_id;
     uint8_t                 id;
-    uint8_t                 *p_embedded_cmd;
+    uint8_t                 state;
+    bool                    is_common_link;
+
     T_TTS_INFO              tts_info;
     T_AUDIO_EQ_INFO         audio_set_eq_info;
     T_AUDIO_EQ_INFO         audio_get_eq_info;
-    uint16_t                embedded_cmd_len;
-    uint16_t                mtu_size;
-    uint16_t                conn_handle;
-    uint8_t                 state;
-    uint8_t                 conn_id;
-    uint8_t                 rx_cmd_seqn;
-    uint8_t                 tx_event_seqn;
+
     T_OS_QUEUE              disc_cb_list;
-    uint8_t                 transmit_srv_tx_enable_fg;
-    uint8_t                 transmit_srv_dongle_tx_enable_fg;
+
     uint8_t                 remote_device_type;
     uint8_t                 local_disc_cause;
     uint8_t                 encryption_status;
-    bool                    cmd_set_enable;
-    bool                    is_rtk_link;
+
 
 #if F_APP_LEA_SUPPORT
     T_LEA_LINK_STATE        lea_link_state;
@@ -317,6 +355,7 @@ typedef struct t_app_le_link
     uint8_t                 lea_device;
     uint8_t                 pre_media_state;
     uint8_t                 media_state;
+    uint8_t                 pending_mcp_cmd;
     T_LEA_ASE_ENTRY         lea_ase_entry[ASCS_ASE_ENTRY_NUM];
     bool                    gmcs;
     uint8_t                 *active_call_uri;
@@ -331,6 +370,7 @@ typedef struct t_app_le_link
     uint8_t                 cis_left_ch_iso_state;
     uint8_t                 cis_right_ch_iso_state;
     uint32_t                stream_channel_allocation;
+    uint8_t                 lea_ready_to_downstream;
     bool                    bas_report_batt;
 #endif
 
@@ -357,6 +397,13 @@ typedef struct t_app_le_link
     uint8_t                 service_change_state;
     bool                    robust_caching_support;
 #endif
+
+#if F_APP_CHATGPT_SUPPORT
+    uint8_t             chatgpt_transmit_srv_tx_enable_fg;
+#endif
+#if F_APP_SLAVE_LATENCY_UPDATE_SUPPORT
+    uint8_t             apk_state;
+#endif
 } T_APP_LE_LINK;
 
 uint32_t app_link_conn_profiles(void);
@@ -376,11 +423,21 @@ uint8_t app_link_get_sco_conn_num(void);
 uint8_t app_link_get_a2dp_start_num(void);
 
 /**
+    * @brief  update a2dp streaming status
+    * @param  p_link: BR/EDR link
+    * @return void
+    */
+void app_link_update_a2dp_streaming(T_APP_BR_LINK *p_link, bool streaming);
+
+/**
     * @brief  get the BR/EDR link by bluetooth address
     * @param  bd_addr bluetooth address
     * @return the BR/EDR link
     */
 T_APP_BR_LINK *app_link_find_br_link(uint8_t *bd_addr);
+
+T_APP_BR_LINK *app_link_find_br_link_by_conn_handle(uint16_t conn_handle);
+
 
 /**
     * @brief  get the BR/EDR link by tts handle
@@ -479,19 +536,14 @@ bool app_link_check_phone_link(uint8_t *bd_addr);
 T_APP_BR_LINK *app_link_find_b2s_link(uint8_t *bd_addr);
 
 /**
-    * @brief  Check if connected source num reach max
-    * @param  void
-    * @return true: Connected source num reaches max;
-    *         false: Connected source num isn't max and can connect to other source
-    */
-bool app_link_is_b2s_link_num_full(void);
-
-/**
     * @brief  get the bud2phone link num
     * @param  void
     * @return link num
     */
 uint8_t app_link_get_b2s_link_num(void);
+
+
+void app_link_set_b2s_link_num(uint8_t num);
 
 /**
     * @brief  get BR/EDR link num wich connected with phone by the mask profile
@@ -542,12 +594,12 @@ void app_link_disallow_legacy_stream(bool disable);
 #endif
 
 /**
- * @brief check rtk ble link exist or not
- *
- * @return true  rtk ble link exist
- * @return false  rtk ble link not exist
+ * @brief check common ble link exist or not
+ * "Common link" means that this BLE link is established through common adv
+ * @return true  common ble link exist
+ * @return false  common ble link not exist
  */
-bool app_link_le_check_rtk_link_exist(void);
+bool app_link_le_check_common_link_exist(void);
 /** End of APP_LINK
 * @}
 */

@@ -980,6 +980,8 @@ void dev_mgr_handle_le_authen_state_evt(uint8_t conn_id, uint8_t new_state, uint
                 p_dev_rec->auth_cmpl = true;
                 if (p_dev_rec->mtu_received)
                 {
+                    bt_dev_handle_conn_update_event(p_dev_rec->bd_addr, CI_EVENT_GATT_DISCOVERY);
+                    bt_dev_disable_conn_update(p_dev_rec->bd_addr);
                     gatt_client_start_discovery_all(p_dev_rec->le_conn_handle, ble_gatt_client_discover_cb);
                 }
 

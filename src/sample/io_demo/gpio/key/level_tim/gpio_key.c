@@ -14,17 +14,13 @@
 /*============================================================================*
  *                              Header Files
  *============================================================================*/
-#include <string.h>
 #include "rtl876x.h"
-#include "board.h"
-#include "rtl876x_pinmux.h"
-#include "rtl876x_rcc.h"
-#include "rtl876x_gpio.h"
-#include "rtl876x_nvic.h"
+#include <string.h>
 #include "trace.h"
-#include "vector_table.h"
 #include "hw_tim.h"
 #include "section.h"
+#include "hal_gpio.h"
+#include "hal_gpio_int.h"
 
 /** @defgroup  GPIO_KEY  GPIO KEY DEMO
     * @brief  Gpio key using hw tim to debounce implementation demo code
@@ -40,14 +36,13 @@
   */
 
 #define KEY_PIN                       ADC_0
-#define KEY_IRQN                      GPIO0_IRQn
 
 #define KEY_PRESS_DEBOUNCE_TIME       (30 * 1000)            //30ms
 #define KEY_RELEASE_DEBOUNCE_TIME     (30 * 1000)            //30ms
 
 /** @} */ /* End of group Gpio_Key_Exported_Macros */
 
-static void key_handler(void);
+static void key_handler(uint32_t key_index);
 
 /*============================================================================*
  *                              Variables
@@ -83,28 +78,25 @@ static void debounce_hw_timer_callback(T_HW_TIMER_HANDLE handle)
 {
     hw_timer_stop(debounce_timer_handle);
 
-    if (key_status != GPIOx_ReadInputDataBit(GPIOA, GPIO_GetPin(KEY_PIN)))
+    if (key_status != hal_gpio_get_input_level(KEY_PIN))
     {
-        GPIOx_MaskINTConfig(GPIOA, GPIO_GetPin(KEY_PIN), DISABLE);
-        GPIOx_INTConfig(GPIOA, GPIO_GetPin(KEY_PIN), ENABLE);
+        hal_gpio_irq_enable(KEY_PIN);
         return;
     }
 
     if (key_status)
     {
-        GPIO->INTPOLARITY &= ~(GPIO_GetPin(KEY_PIN));
+        hal_gpio_irq_change_polarity(KEY_PIN, GPIO_IRQ_ACTIVE_LOW);
         isPress = false;
         IO_PRINT_INFO0("debounce_hw_timer_callback: Key release");
     }
     else
     {
-        GPIO->INTPOLARITY |= GPIO_GetPin(KEY_PIN);
+        hal_gpio_irq_change_polarity(KEY_PIN, GPIO_IRQ_ACTIVE_HIGH);
         isPress = true;
         IO_PRINT_INFO0("debounce_hw_timer_callback: Key press");
     }
-    GPIOx_ClearINTPendingBit(GPIOA, GPIO_GetPin(KEY_PIN));
-    GPIOx_MaskINTConfig(GPIOA, GPIO_GetPin(KEY_PIN), DISABLE);
-    GPIOx_INTConfig(GPIOA, GPIO_GetPin(KEY_PIN), ENABLE);
+    hal_gpio_irq_enable(KEY_PIN);
 }
 
 /**
@@ -116,33 +108,13 @@ static void debounce_hw_timer_callback(T_HW_TIMER_HANDLE handle)
 */
 void gpio_key(void)
 {
-    Pinmux_Config(KEY_PIN, DWGPIO);
-    Pad_Config(KEY_PIN, PAD_PINMUX_MODE, PAD_IS_PWRON, PAD_PULL_UP, PAD_OUT_DISABLE, PAD_OUT_HIGH);
+    hal_gpio_init();
+    hal_gpio_int_init();
 
-    GPIO_InitTypeDef
-    KeyboardButton_Param;     /* Define Mouse Button parameter structure. Mouse button is configed as GPIO. */
-    GPIO_StructInit(&KeyboardButton_Param);
-    RCC_PeriphClockCmd(APBPeriph_GPIOA, APBPeriph_GPIOA_CLOCK, ENABLE);
-
-    KeyboardButton_Param.GPIO_PinBit  = GPIO_GetPin(KEY_PIN);
-    KeyboardButton_Param.GPIO_Mode = GPIO_Mode_IN;
-    KeyboardButton_Param.GPIO_ITCmd = ENABLE;
-    KeyboardButton_Param.GPIO_ITTrigger = GPIO_INT_Trigger_LEVEL;
-    KeyboardButton_Param.GPIO_ITPolarity = GPIO_INT_POLARITY_ACTIVE_LOW;
-    KeyboardButton_Param.GPIO_ITDebounce = GPIO_INT_DEBOUNCE_DISABLE;
-    GPIOx_Init(GPIOA, &KeyboardButton_Param);
-
-    GPIOx_INTConfig(GPIOA, GPIO_GetPin(KEY_PIN), ENABLE);
-    GPIOx_MaskINTConfig(GPIOA, GPIO_GetPin(KEY_PIN), DISABLE);
-
-    RamVectorTableUpdate(GPIO_A0_VECTORn, key_handler);
-
-    /*  Enable GPIO0 IRQ  */
-    NVIC_InitTypeDef NVIC_InitStruct;
-    NVIC_InitStruct.NVIC_IRQChannel = KEY_IRQN;
-    NVIC_InitStruct.NVIC_IRQChannelPriority = 3;
-    NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
-    NVIC_Init(&NVIC_InitStruct);
+    hal_gpio_init_pin(KEY_PIN, GPIO_TYPE_AUTO, GPIO_DIR_INPUT, GPIO_PULL_UP);
+    hal_gpio_set_up_irq(KEY_PIN, GPIO_IRQ_LEVEL, GPIO_IRQ_ACTIVE_LOW, false);
+    hal_gpio_register_isr_callback(KEY_PIN, key_handler, KEY_PIN);
+    hal_gpio_irq_enable(KEY_PIN);
 
     debounce_timer_handle = hw_timer_create("debouce_hw_timer", KEY_PRESS_DEBOUNCE_TIME, true,
                                             debounce_hw_timer_callback);
@@ -167,14 +139,12 @@ void gpio_key(void)
 *
 * @return  void
 */
-static void key_handler(void)
+static void key_handler(uint32_t key_index)
 {
-    /*  Mask GPIO interrupt */
-    GPIOx_INTConfig(GPIOA, GPIO_GetPin(KEY_PIN), DISABLE);
-    GPIOx_MaskINTConfig(GPIOA, GPIO_GetPin(KEY_PIN), ENABLE);
-    GPIOx_ClearINTPendingBit(GPIOA, GPIO_GetPin(KEY_PIN));
+    /*  Disable GPIO interrupt */
+    hal_gpio_irq_disable(key_index);
 
-    key_status = GPIOx_ReadInputDataBit(GPIOA, GPIO_GetPin(KEY_PIN));
+    key_status = hal_gpio_get_input_level(key_index);
     IO_PRINT_INFO1("key_handler: key_status %d", key_status);
 
     if (isPress == false)

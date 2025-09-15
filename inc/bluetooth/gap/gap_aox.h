@@ -3,7 +3,7 @@
 *               Copyright(c) 2020, Realtek Semiconductor Corporation. All rights reserved.
 *********************************************************************************************************
 * @file      gap_aox.h
-* @brief    Head file for GAP AoA/AoD
+* @brief    Header file for GAP AoA/AoD
 * @details
 * @author
 * @date      2020-06-18
@@ -28,7 +28,7 @@ extern "C"
 #include "gap_le.h"
 #include "gap_le_types.h"
 
-/** @addtogroup GAP GAP Module
+/** @addtogroup BT_Host Bluetooth Host
   * @{
   */
 
@@ -37,6 +37,7 @@ extern "C"
   */
 
 /** @addtogroup GAP_LE_AOX GAP LE AoA/AoD Module
+  * @brief GAP LE AoA/AoD Module
   * @{
   */
 
@@ -48,7 +49,7 @@ extern "C"
   * @{
   */
 
-/** @defgroup GAP_LE_AOX_CALLLBACK_MSG GAP LE AoA/AoD Callback Msg
+/** @defgroup GAP_LE_AOX_CALLBACK_MSG GAP LE AoA/AoD Callback Msg
   * @brief    Used to identify LE AoA/AoD Callback Message.
  * @{
  */
@@ -61,12 +62,12 @@ extern "C"
 #define GAP_MSG_LE_AOX_CONN_IQ_REPORT_INFO          0x25 /**<Notification msg type for connection IQ report. */
 #define GAP_MSG_LE_AOX_CTE_REQUEST_FAILED_INFO      0x26 /**<Notification msg type for failure of CTE request. */
 
-#define GAP_MSG_LE_AOX_CONNLESS_TRANSMITTER_SET_CTE_TRANSMIT_PARAMS  0x40 /**<Response msg type for le_aox_connless_transmitter_set_cte_transmit_params. */
-#define GAP_MSG_LE_AOX_CONNLESS_TRANSMITTER_STATE_CHANGE_INFO        0x41 /**<Connectionless CTE transmitter state change info. */
+#define GAP_MSG_LE_AOX_CONNLESS_TRANSMITTER_SET_CTE_TRANSMIT_PARAMS  0x40 /**< Response msg type for le_aox_connless_transmitter_set_cte_transmit_params. */
+#define GAP_MSG_LE_AOX_CONNLESS_TRANSMITTER_STATE_CHANGE_INFO        0x41 /**< Connectionless CTE transmitter state change info. */
 
-#define GAP_MSG_LE_AOX_CONNLESS_RECEIVER_SET_IQ_SAMPLING_ENABLE      0x50 /**<Response msg type for le_aox_connless_receiver_set_iq_sampling_enable. */
-#define GAP_MSG_LE_AOX_CONNLESS_RECEIVER_CONNLESS_IQ_REPORT_INFO     0x51 /**<Notification msg type for LE connectionless IQ report info. */
-/** End of GAP_LE_AOX_CALLLBACK_MSG
+#define GAP_MSG_LE_AOX_CONNLESS_RECEIVER_SET_IQ_SAMPLING_ENABLE      0x50 /**< Response msg type for le_aox_connless_receiver_set_iq_sampling_enable. */
+#define GAP_MSG_LE_AOX_CONNLESS_RECEIVER_CONNLESS_IQ_REPORT_INFO     0x51 /**< Notification msg type for LE connectionless IQ report info. */
+/** End of GAP_LE_AOX_CALLBACK_MSG
   * @}
   */
 
@@ -153,13 +154,13 @@ typedef struct
     T_GAP_AOX_PACKET_STATUS_TYPE        packet_status;
     uint16_t                            connection_event_counter; /**< The value of connEventCounter
                                                                        for the reported PDU. */
-    uint8_t                             sample_count; /**< 0x00: No samples provided
-                                                                (only permitted if Packet_Status is 0xFF)
-                                                           0x09 to 0x52: Total number of sample pairs (there shall be the
+    uint8_t                             sample_count; /**< @arg 0x00: No samples provided
+                                                                (only permitted if Packet_Status is 0xFF).
+                                                           @arg 0x09 to 0x52: Total number of sample pairs (there shall be the
                                                                          same number of I samples and Q samples). */
     int8_t                             *p_iq_sample; /**< Length is sample_cout * 2.
                                                           I_Sample[0],Q_Sample[0], ... ,
-                                                          I_Sample[i],Q_Sample[i]
+                                                          I_Sample[i],Q_Sample[i].
                                                           Value 0x80 indicates No valid sample available. */
 } T_LE_AOX_CONN_IQ_REPORT_INFO;
 
@@ -198,8 +199,8 @@ typedef struct
     uint8_t                             channel_index;/**< The index of the channel on which the
                                                            packet was received.
                                                            Range: 0x00 to 0x27.
-                                                           Note: 0x25 to 0x27 can be used only for packets generated
-                                                                 during test modes. */
+                                                           0x25 to 0x27 can be used only for packets generated
+                                                           during test modes. */
     int16_t                             rssi;         /**< RSSI of the packet.
                                                            Range: -1270 to +200
                                                            Units: 0.1 dBm. */
@@ -210,14 +211,14 @@ typedef struct
     T_GAP_AOX_PACKET_STATUS_TYPE        packet_status;
     uint16_t                            periodic_event_counter;/**< The value of paEventCounter
                                                                     for the reported AUX_SYNC_IND PDU. */
-    uint8_t                             sample_count; /**< 0x00: No samples provided
-                                                                 (only permitted if Packet_Status is 0xFF)
-                                                           0x09 to 0x52: Total number of sample pairs
+    uint8_t                             sample_count; /**< @arg 0x00: No samples provided
+                                                                 (only permitted if Packet_Status is 0xFF).
+                                                           @arg 0x09 to 0x52: Total number of sample pairs
                                                                          (there shall be the same number of
                                                                          I samples and Q samples). */
     int8_t                             *p_iq_sample;  /**< Length is sample_cout * 2.
                                                            I_Sample[0],Q_Sample[0], ... ,
-                                                           I_Sample[i],Q_Sample[i]
+                                                           I_Sample[i],Q_Sample[i].
                                                            Value 0x80 indicates No valid sample available. */
 } T_LE_AOX_CONNLESS_RECEIVER_CONNECTIONLESS_IQ_REPORT_INFO;
 
@@ -255,20 +256,21 @@ typedef union
   * @{
   */
 /**
-  * @brief Callback for gap aox to notify app
+  * @brief Callback for GAP aox to notify APP.
   *
-  * @param[in] cb_type    Callback msy type @ref GAP_LE_AOX_CALLLBACK_MSG.
+  * @param[in] cb_type    Callback msg type @ref GAP_LE_AOX_CALLBACK_MSG.
   * @param[in] p_cb_data  Point to callback data @ref T_LE_AOX_CB_DATA.
-  * @retval    result     @ref T_APP_RESULT
+  * @return    Result.
+  * @retval    result @ref T_APP_RESULT.
   */
 typedef T_APP_RESULT(*P_FUN_LE_AOX_CB)(uint8_t cb_type, void *p_cb_data);
 
 /**
- * @brief  Register callback to gap, when messages in @ref GAP_LE_AOX_CALLLBACK_MSG happens, it will callback to app.
- * @param[in]   aox_callback Callback function provided by the APP to handle gap aox command messages sent from the GAP.
- *              @arg NULL -> Not send gap aox command messages to APP.
- *              @arg Other -> Use application defined callback function.
- * @return void
+ * @brief  Register callback to GAP. When messages in @ref GAP_LE_AOX_CALLBACK_MSG happen, it will callback to the application.
+ * @param[in]   aox_callback Callback function provided by the APP to handle GAP aox command messages sent from the GAP.
+ *              @arg NULL -> Not send GAP aox command messages to APP.
+ *              @arg Other -> Use application-defined callback function.
+ * @return void.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -307,8 +309,8 @@ void le_register_aox_cb(P_FUN_LE_AOX_CB aox_callback);
  *          of a transmitted Constant Tone Extension supported by the Controller.
  *          Antenna information will be returned by @ref app_gap_aox_callback with cb_type @ref GAP_MSG_LE_AOX_READ_ANTENNA_INFORMATION.
  *
- *          Application can only call this API after stack is ready.
- *                 Explanation: If stack is ready, Application will be notified by message @ref GAP_MSG_LE_DEV_STATE_CHANGE
+ * Applications can only call this API after Bluetooth Host is ready. \n
+ *                 Explanation: If Bluetooth Host is ready, the application will be notified by message @ref GAP_MSG_LE_DEV_STATE_CHANGE
  *                              with new_state about gap_init_state which is configured as @ref GAP_INIT_STATE_STACK_READY.
  *
  * @return  Result of sending request.
@@ -317,7 +319,7 @@ void le_register_aox_cb(P_FUN_LE_AOX_CB aox_callback);
  *
  * <b>Example usage</b>
  * \code{.c}
-   void test()
+   void test(void)
    {
         T_GAP_CAUSE cause = le_aox_read_antenna_information();
    }
@@ -359,7 +361,7 @@ T_GAP_CAUSE le_aox_read_antenna_information(void);
   * @}
   */
 
-/** End of GAP
+/** End of BT_Host
   * @}
   */
 

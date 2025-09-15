@@ -45,17 +45,17 @@ $(function() {
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">GAP LE Bond Manager Exported Types<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___b_l_u_e_t_o_o_t_h.html">Bluetooth</a> &raquo; <a class="el" href="group___g_a_p.html">GAP</a> &raquo; <a class="el" href="group___g_a_p___l_e.html">GAP LE Module</a> &raquo; <a class="el" href="group___g_a_p___l_e___bond___manager.html">GAP LE Bond Manager</a></div></div>  </div>
+<div class="title">GAP LE Bond Manager Exported Types<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___b_l_u_e_t_o_o_t_h.html">Bluetooth</a> &raquo; <a class="el" href="group___g_a_p.html">GAP</a> &#124; <a class="el" href="group___b_t___host.html">Bluetooth Host</a> &raquo; <a class="el" href="group___g_a_p___l_e.html">GAP LE Module</a> &raquo; <a class="el" href="group___g_a_p___l_e___bond___manager.html">GAP LE Bond Manager</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_t___g_a_p___l_e___l_o_c_a_l___o_o_b___d_a_t_a.html">T_GAP_LE_LOCAL_OOB_DATA</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">LE local out of bond data.  <a href="struct_t___g_a_p___l_e___l_o_c_a_l___o_o_b___d_a_t_a.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">LE local Out of Band data.  <a href="struct_t___g_a_p___l_e___l_o_c_a_l___o_o_b___d_a_t_a.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_t___g_a_p___l_e___p_e_e_r___o_o_b___d_a_t_a.html">T_GAP_LE_PEER_OOB_DATA</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">LE peer out of bond data.  <a href="struct_t___g_a_p___l_e___p_e_e_r___o_o_b___d_a_t_a.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">LE peer Out of Band data.  <a href="struct_t___g_a_p___l_e___p_e_e_r___o_o_b___d_a_t_a.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
@@ -105,25 +105,25 @@ Enumerations</h2></td></tr>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga440dc453d051aeef569a5861c0f66b82a07d9cda9192f5ef3cd56dbc0a8ec50ab"></a>GAP_PARAM_BOND_OOB_DATA&#160;</td><td class="fielddoc"><p>OOB Data. Read/Write. size uint8_t[16]. Default is all 0's. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga440dc453d051aeef569a5861c0f66b82abfccdc4864e8ac86cf8854b615dc597b"></a>GAP_PARAM_BOND_FIXED_PASSKEY&#160;</td><td class="fielddoc"><p>The fix passcode for MITM protection. Read/Write. size is uint32_t. Range is 0 - 999,999. Default is 0. </p>
+<tr><td class="fieldname"><a id="gga440dc453d051aeef569a5861c0f66b82abfccdc4864e8ac86cf8854b615dc597b"></a>GAP_PARAM_BOND_FIXED_PASSKEY&#160;</td><td class="fielddoc"><p>The fixed passcode for MITM protection. Read/Write. Size is uint32_t. Range is 0 - 999,999. Default is 0. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga440dc453d051aeef569a5861c0f66b82aaa621c00cd637e65b83b048e99df184f"></a>GAP_PARAM_BOND_FIXED_PASSKEY_ENABLE&#160;</td><td class="fielddoc"><p>The fix passcode available for pairing. Read/Write. size is uint8_t. Default is 0(disabled). </p>
+<tr><td class="fieldname"><a id="gga440dc453d051aeef569a5861c0f66b82aaa621c00cd637e65b83b048e99df184f"></a>GAP_PARAM_BOND_FIXED_PASSKEY_ENABLE&#160;</td><td class="fielddoc"><p>The fixed passcode available for pairing. Read/Write. Size is uint8_t. Default is 0 (disabled). </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga440dc453d051aeef569a5861c0f66b82ac67d75eb0faafe63c934c0f97aeebbb3"></a>GAP_PARAM_BOND_SEC_REQ_ENABLE&#160;</td><td class="fielddoc"><p>Send smp security request when connected. Read/Write. size is uint8_t. Default is 0(disabled). </p>
+<tr><td class="fieldname"><a id="gga440dc453d051aeef569a5861c0f66b82ac67d75eb0faafe63c934c0f97aeebbb3"></a>GAP_PARAM_BOND_SEC_REQ_ENABLE&#160;</td><td class="fielddoc"><p>Send SMP security request when connected. Read/Write. Size is uint8_t. Default is 0 (disabled). </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga440dc453d051aeef569a5861c0f66b82a67273a2271e0a6826ac4bf27d59a4757"></a>GAP_PARAM_BOND_SEC_REQ_REQUIREMENT&#160;</td><td class="fielddoc"><p>Security request requirements. Read/Write. size is uint8_t. Default is GAP_AUTHEN_BIT_BONDING_FLAG (<a class="el" href="group___b_o_n_d___m_i_t_m___d_e_f_i_n_e_s.html">Mitm And Bonding Flags</a>) </p>
+<tr><td class="fieldname"><a id="gga440dc453d051aeef569a5861c0f66b82a67273a2271e0a6826ac4bf27d59a4757"></a>GAP_PARAM_BOND_SEC_REQ_REQUIREMENT&#160;</td><td class="fielddoc"><p>Security request requirements. Read/Write. Size is uint8_t. Default is GAP_AUTHEN_BIT_BONDING_FLAG (<a class="el" href="group___b_o_n_d___m_i_t_m___d_e_f_i_n_e_s.html">Mitm and Bonding Flags</a>). </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga440dc453d051aeef569a5861c0f66b82a690a087675daff5f258437ff1eacf7fe"></a>GAP_PARAM_BOND_MIN_KEY_SIZE&#160;</td><td class="fielddoc"><p>Minium LTK size required. Read/Write. size is uint8_t. </p>
+<tr><td class="fieldname"><a id="gga440dc453d051aeef569a5861c0f66b82a690a087675daff5f258437ff1eacf7fe"></a>GAP_PARAM_BOND_MIN_KEY_SIZE&#160;</td><td class="fielddoc"><p>Minimum LTK size required. Read/Write. Size is uint8_t. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga440dc453d051aeef569a5861c0f66b82a7d04b9c55fee77335aefca0382a3b626"></a>GAP_PARAM_BOND_GEN_LOCAL_IRK_AUTO&#160;</td><td class="fielddoc"><p>Auto generate local IRK. Write only. size is uint8_t. Default is 0(disabled). </p>
+<tr><td class="fieldname"><a id="gga440dc453d051aeef569a5861c0f66b82a7d04b9c55fee77335aefca0382a3b626"></a>GAP_PARAM_BOND_GEN_LOCAL_IRK_AUTO&#160;</td><td class="fielddoc"><p>Auto generate local IRK. Write only. Size is uint8_t. Default is 0 (disabled). </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga440dc453d051aeef569a5861c0f66b82a6f8f3f86524ea06894173ac8b722fb9b"></a>GAP_PARAM_BOND_SET_LOCAL_IRK&#160;</td><td class="fielddoc"><p>Set local IRK. Write only. size is uint8_t. Default is all zero. </p>
+<tr><td class="fieldname"><a id="gga440dc453d051aeef569a5861c0f66b82a6f8f3f86524ea06894173ac8b722fb9b"></a>GAP_PARAM_BOND_SET_LOCAL_IRK&#160;</td><td class="fielddoc"><p>Set local IRK. Write only. Size is uint8_t. Default is all zero. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga440dc453d051aeef569a5861c0f66b82a67330abe3263b5a8dc8e5bd76464c9f4"></a>GAP_PARAM_BOND_KEY_MANAGER&#160;</td><td class="fielddoc"><p>Key manager. Write only. size is uint8_t. Default is 0(disabled). </p>
+<tr><td class="fieldname"><a id="gga440dc453d051aeef569a5861c0f66b82a67330abe3263b5a8dc8e5bd76464c9f4"></a>GAP_PARAM_BOND_KEY_MANAGER&#160;</td><td class="fielddoc"><p>Key manager. Write only. Size is uint8_t. Default is 0 (disabled). </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga440dc453d051aeef569a5861c0f66b82a9c356a98cc63287b1678feb2538c202f"></a>GAP_PARAM_BOND_SIGN_KEY_FLAG&#160;</td><td class="fielddoc"><p>Sign key flag configure. Write only. size is uint8_t. Default is 0(disabled). </p>
+<tr><td class="fieldname"><a id="gga440dc453d051aeef569a5861c0f66b82a9c356a98cc63287b1678feb2538c202f"></a>GAP_PARAM_BOND_SIGN_KEY_FLAG&#160;</td><td class="fielddoc"><p>Sign key flag configuration. Write only. Size is uint8_t. Default is 0 (disabled). </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga440dc453d051aeef569a5861c0f66b82a7d1493a4e743fc0a5a6d88f2265d8b21"></a>GAP_PARAM_BOND_CCCD_STORAGE&#160;</td><td class="fielddoc"><p>Whether to store cccd information. Write only. size is uint8_t. Default is true. </p>
+<tr><td class="fieldname"><a id="gga440dc453d051aeef569a5861c0f66b82a7d1493a4e743fc0a5a6d88f2265d8b21"></a>GAP_PARAM_BOND_CCCD_STORAGE&#160;</td><td class="fielddoc"><p>Whether to store CCCD information. Write only. Size is uint8_t. Default is true. </p>
 </td></tr>
 </table>
 

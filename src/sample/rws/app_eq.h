@@ -66,6 +66,13 @@ typedef struct t_audio_eq_report_data
     uint16_t max_frame_len;
 } T_AUDIO_EQ_REPORT_DATA;
 
+typedef struct t_eq_enable_info
+{
+    T_AUDIO_EFFECT_INSTANCE  instance;
+    bool                     is_enable;
+    uint8_t                  idx;
+} T_EQ_ENABLE_INFO;
+
 typedef enum
 {
     EQ_INDEX_REPORT_BY_PLAYING,
@@ -153,6 +160,21 @@ bool app_eq_index_set(T_EQ_TYPE eq_type, uint8_t mode, uint8_t index);
  * \retval  false       EQ parameter was failed to set.
  */
 bool app_eq_param_set(uint8_t eq_mode, uint8_t index, void *data, uint16_t len);
+
+/**
+ * \brief   Enable the media eq.
+ *
+ * \param[in] enable_info  EQ enable info.
+ */
+void app_eq_media_eq_enable(T_EQ_ENABLE_INFO *enable_info);
+
+/**
+ * \brief   Get the specific EQ enable info.
+ *
+ * \param[in] eq_mode      EQ mode.
+ * \param[in] enable_info  EQ enable info.
+ */
+void app_eq_enable_info_get(uint8_t eq_mode, T_EQ_ENABLE_INFO *enable_info);
 
 /**
  * \brief Report EQ parameter
@@ -358,7 +380,7 @@ void app_eq_continue_sync_user_eq_when_connected(bool is_first_time, T_EQ_TYPE l
 void app_eq_process_sync_user_eq_when_b2b_connected(T_EQ_TYPE eq_type, uint8_t eq_idx,
                                                     uint16_t offset, uint8_t *eq_data, uint16_t eq_len);
 
-#if F_APP_SEPARATE_ADJUST_APT_EQ_SUPPORT
+#if (F_APP_SEPARATE_ADJUST_APT_EQ_SUPPORT == 1) || (F_APP_AUDIO_VOICE_SPK_EQ_INDEPENDENT_CFG == 1)
 /**
  * \brief   Report the EQ of secondary to primary.
  *

@@ -13,14 +13,12 @@ extern "C" {
 #endif /* __cplusplus */
 
 /**
- * \defgroup  BT_RDTP BT RDTP Vendor Profile
+ * \defgroup  BT_RDTP BT Remote Data Transmission Profile (RDTP)
  *
- * \brief Provide BT RDTP vendor profile interfaces.
+ * \brief Provide BT RDTP profile interfaces.
  */
 
 /**
- * bt_rdtp.h
- *
  * \brief  Initialize RDTP profile.
  *
  * \return          The status of initializing RDTP profile.
@@ -32,8 +30,6 @@ extern "C" {
 bool bt_rdtp_init(void);
 
 /**
- * bt_rdtp.h
- *
  * \brief   Send a RDTP connection request.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -47,8 +43,6 @@ bool bt_rdtp_init(void);
 bool bt_rdtp_connect_req(uint8_t bd_addr[6]);
 
 /**
- * bt_rdtp.h
- *
  * \brief  Send a RDTP disconnection request.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -62,8 +56,6 @@ bool bt_rdtp_connect_req(uint8_t bd_addr[6]);
 bool bt_rdtp_disconnect_req(uint8_t bd_addr[6]);
 
 /**
- * bt_rdtp.h
- *
  * \brief  Send data to remote device.
  *
  * \param[in]  bd_addr    Remote BT address.

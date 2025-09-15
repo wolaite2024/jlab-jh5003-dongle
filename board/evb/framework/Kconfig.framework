@@ -64,11 +64,29 @@ endif
 endchoice
 
 
-config REALTEK_BTM_HID_SUPPORT
-   bool "BTM HID SUPPORT"
-   default y
+config REALTEK_BTM_HID_DEVICE_SUPPORT
+   bool "BTM HID DEVICE SUPPORT"
+   default n
    help
-     BTM HID SUPPORT
+     BTM HID DEVICE SUPPORT
+
+config REALTEK_BTM_HID_HOST_SUPPORT
+   bool "BTM HID HOST SUPPORT"
+   default n
+   help
+     BTM HID HOST SUPPORT
+
+config REALTEK_BTM_AVP_SUPPORT
+   bool "BTM AVP SUPPORT"
+   default n
+   help
+     BTM AVP SUPPORT
+
+config REALTEK_BTM_PAN_SUPPORT
+   bool "BTM PAN SUPPORT"
+   default n
+   help
+     BTM PAN SUPPORT
 
 config REALTEK_BTM_IAP_SUPPORT
    bool "BTM IAP SUPPORT"
@@ -88,6 +106,12 @@ config REALTEK_BTM_ROLESWAP_SUPPORT
    help
      BTM ROLESWAP SUPPORT
 
+config REALTEK_BTM_A2DP_SUPPORT
+   bool "BTM A2DP SUPPORT"
+   default y
+   help
+     BTM A2DP SUPPORT
+
 config REALTEK_BTM_PBAP_SUPPORT
    bool "BTM PBAP SUPPORT"
    default y
@@ -100,6 +124,12 @@ config REALTEK_BTM_ATT_SUPPORT
    help
      BTM ATT SUPPORT
 
+config REALTEK_BTM_AVRCP_SUPPORT
+   bool "BTM AVRCP SUPPORT"
+   default y
+   help
+     BTM AVRCP SUPPORT
+
 config REALTEK_BTM_AVRCP_BROWSING_SUPPORT
    bool "BTM AVRCP BROWSING SUPPORT"
    default y
@@ -111,6 +141,12 @@ config REALTEK_BTM_AVRCP_COVER_ART_SUPPORT
    default y
    help
      BTM AVRCP COVER ART SUPPORT
+
+config REALTEK_BTM_HFP_SUPPORT
+   bool "BTM HFP SUPPORT"
+   default y
+   help
+     BTM HFP SUPPORT
 
 config REALTEK_BTM_HFP_AG_SUPPORT
    bool "BTM HFP AG SUPPORT"
@@ -168,6 +204,12 @@ config REALTEK_BTM_AVRCP_TG_SUPPORT
 
 config REALTEK_REMOTE_CONTROL_SUPPORT
    bool "remote control support"
+   default y
+   help
+     REMOTE_CONTROL_SUPPORT
+
+config REALTEK_BTM_A2DP_SUPPORT
+   bool "btm a2dp support"
    default y
    help
      REMOTE_CONTROL_SUPPORT

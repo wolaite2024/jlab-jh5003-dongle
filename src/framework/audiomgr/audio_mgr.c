@@ -207,22 +207,6 @@ bool audio_mgr_event_post(T_AUDIO_EVENT event_type, void *event_buf, uint16_t bu
     return true;
 }
 
-void audio_report_buffer_high(T_MEDIA_BUFFER_ENTITY *buffer_ent)
-{
-    T_AUDIO_EVENT_PARAM_TRACK_BUFFER_HIGH param;
-    T_MEDIA_BUFFER_CFG *p_cfg = buffer_ent->p_cfg;
-
-    if (p_cfg == NULL)
-    {
-        return;
-    }
-
-    media_buffer_level_get(p_cfg, &param.buffer_level_ms);
-    param.handle = p_cfg->track_handle;
-    audio_mgr_event_post(AUDIO_EVENT_TRACK_BUFFER_HIGH, &param,
-                         sizeof(T_AUDIO_EVENT_PARAM_TRACK_BUFFER_HIGH));
-}
-
 void audio_buffer_uninit_state(T_AUDIO_MSG msg, T_MEDIA_BUFFER_ENTITY *buffer_ent)
 {
     if (buffer_ent->p_cfg == NULL)
@@ -263,9 +247,9 @@ void audio_buffer_uninit_state(T_AUDIO_MSG msg, T_MEDIA_BUFFER_ENTITY *buffer_en
                 if (buffer_ent->p_cfg->mode == AUDIO_STREAM_MODE_LOW_LATENCY ||
                     buffer_ent->p_cfg->mode == AUDIO_STREAM_MODE_ULTRA_LOW_LATENCY)
                 {
-                    AUDIO_PRINT_TRACE4("media_buffer_init: gaming_mode start frame num %u latency %u fixed %u max_latency_plc_count %u",
-                                       buffer_ent->start_decode_frame_cnt, buffer_ent->p_cfg->latency, buffer_ent->p_cfg->latency_fixed,
-                                       buffer_ent->max_latency_plc_count);
+                    AUDIO_PRINT_INFO4("media_buffer_init: gaming_mode start frame num %u latency %u fixed %u max_latency_plc_count %u",
+                                      buffer_ent->start_decode_frame_cnt, buffer_ent->p_cfg->latency, buffer_ent->p_cfg->latency_fixed,
+                                      buffer_ent->max_latency_plc_count);
                     media_buffer_set_status(buffer_ent, MEDIA_BUFFER_PREQUEUE);
                     audio_remote_reset(buffer_ent->audio_remote_handle);
                     if (remote_session_state_get() == REMOTE_SESSION_STATE_CONNECTED &&
@@ -291,9 +275,9 @@ void audio_buffer_uninit_state(T_AUDIO_MSG msg, T_MEDIA_BUFFER_ENTITY *buffer_en
                 }
                 else
                 {
-                    AUDIO_PRINT_TRACE3("media_buffer_init: start frame num %u latency %u max_plc %u",
-                                       buffer_ent->start_decode_frame_cnt, buffer_ent->p_cfg->latency,
-                                       audio_db->max_plc_count);
+                    AUDIO_PRINT_INFO3("media_buffer_init: start frame num %u latency %u max_plc %u",
+                                      buffer_ent->start_decode_frame_cnt, buffer_ent->p_cfg->latency,
+                                      audio_db->max_plc_count);
                     media_buffer_set_status(buffer_ent, MEDIA_BUFFER_PREQUEUE);
                     audio_remote_reset(buffer_ent->audio_remote_handle);
                     if (buffer_ent->p_cfg->usage == AUDIO_STREAM_USAGE_SNOOP)
@@ -367,7 +351,7 @@ void audio_buffer_prequeue_state(T_AUDIO_MSG msg, T_MEDIA_BUFFER_ENTITY *buffer_
                         if (clk_ref != BT_CLK_NONE)
                         {
                             bb_clock_slot_sync = (bb_clock_slot + latency * 1000 * 2 / 625) & 0x0fffffff;
-                            AUDIO_PRINT_TRACE1("media_buffer_set_playing: gaming_mode latency %d", latency);
+                            AUDIO_PRINT_INFO1("media_buffer_set_playing: gaming_mode latency %d", latency);
                             media_buffer_set_status(buffer_ent, MEDIA_BUFFER_PLAYING);
                             audio_path_timestamp_set(p_cfg->attached_path_handle, BT_CLK_SNIFFING, bb_clock_slot_sync, false);
                             media_buffer_downstream_dsp(buffer_ent, true);
@@ -376,8 +360,8 @@ void audio_buffer_prequeue_state(T_AUDIO_MSG msg, T_MEDIA_BUFFER_ENTITY *buffer_
                         {
                             if (media_buffer_ds_frame_cnt(buffer_ent) >= buffer_ent->start_decode_frame_cnt)
                             {
-                                AUDIO_PRINT_TRACE1("media_buffer_set_playing: gaming_mode total_frames %d",
-                                                   media_buffer_ds_frame_cnt(buffer_ent));
+                                AUDIO_PRINT_INFO1("media_buffer_set_playing: gaming_mode total_frames %d",
+                                                  media_buffer_ds_frame_cnt(buffer_ent));
                                 media_buffer_set_status(buffer_ent, MEDIA_BUFFER_PLAYING);
                                 audio_path_timestamp_set(p_cfg->attached_path_handle, BT_CLK_NONE, 0xffffffff, false);
                                 media_buffer_downstream_dsp(buffer_ent, false);
@@ -393,7 +377,7 @@ void audio_buffer_prequeue_state(T_AUDIO_MSG msg, T_MEDIA_BUFFER_ENTITY *buffer_
                             if (clk_ref != BT_CLK_NONE)
                             {
                                 bb_clock_slot_sync = (bb_clock_slot + latency * 1000 * 2 / 625) & 0x0fffffff;
-                                AUDIO_PRINT_TRACE1("media_buffer_set_playing: gaming_mode latency %d", buffer_ent->p_cfg->latency);
+                                AUDIO_PRINT_INFO1("media_buffer_set_playing: gaming_mode latency %d", buffer_ent->p_cfg->latency);
                                 media_buffer_set_status(buffer_ent, MEDIA_BUFFER_PLAYING);
                                 audio_path_timestamp_set(p_cfg->attached_path_handle, BT_CLK_SNIFFING, bb_clock_slot_sync, false);
                                 media_buffer_downstream_dsp(buffer_ent, true);
@@ -402,8 +386,8 @@ void audio_buffer_prequeue_state(T_AUDIO_MSG msg, T_MEDIA_BUFFER_ENTITY *buffer_
                             {
                                 if (media_buffer_ds_frame_cnt(buffer_ent) >= buffer_ent->start_decode_frame_cnt)
                                 {
-                                    AUDIO_PRINT_TRACE1("media_buffer_set_playing: gaming_mode total_frames %d",
-                                                       media_buffer_ds_frame_cnt(buffer_ent));
+                                    AUDIO_PRINT_INFO1("media_buffer_set_playing: gaming_mode total_frames %d",
+                                                      media_buffer_ds_frame_cnt(buffer_ent));
                                     media_buffer_set_status(buffer_ent, MEDIA_BUFFER_PLAYING);
                                     audio_path_timestamp_set(p_cfg->attached_path_handle, BT_CLK_NONE, 0xffffffff, false);
                                     media_buffer_downstream_dsp(buffer_ent, false);
@@ -413,7 +397,7 @@ void audio_buffer_prequeue_state(T_AUDIO_MSG msg, T_MEDIA_BUFFER_ENTITY *buffer_
                         }
                         else
                         {
-                            AUDIO_PRINT_TRACE0("media_buffer_set_playing: gaming_mode latency 0");
+                            AUDIO_PRINT_INFO0("media_buffer_set_playing: gaming_mode latency 0");
                             media_buffer_set_status(buffer_ent, MEDIA_BUFFER_PLAYING);
                             clk_ref = bt_piconet_clk_get(BT_CLK_SNIFFING, &bb_clock_slot, &bb_clock_us);
                             audio_path_timestamp_set(p_cfg->attached_path_handle, clk_ref, 0xffffffff, false);
@@ -426,8 +410,8 @@ void audio_buffer_prequeue_state(T_AUDIO_MSG msg, T_MEDIA_BUFFER_ENTITY *buffer_
                         {
                             uint16_t play_time;
 
-                            AUDIO_PRINT_TRACE2("media_buffer_state: single play total_frames %d, goal %u",
-                                               media_buffer_ds_frame_cnt(buffer_ent), buffer_ent->start_decode_frame_cnt);
+                            AUDIO_PRINT_INFO2("media_buffer_state: single play total_frames %d, goal %u",
+                                              media_buffer_ds_frame_cnt(buffer_ent), buffer_ent->start_decode_frame_cnt);
                             media_buffer_set_status(buffer_ent, MEDIA_BUFFER_PLAYING);
                             audio_remote_set_state(buffer_ent->audio_remote_handle, AUDIO_REMOTE_STATE_UNSYNC);
                             jitter_buffer_asrc_pid_init(buffer_ent->jitter_buffer_handle);
@@ -503,6 +487,7 @@ void audio_buffer_prequeue_state(T_AUDIO_MSG msg, T_MEDIA_BUFFER_ENTITY *buffer_
                 }
                 else if (buffer_ent->p_cfg->mode == AUDIO_STREAM_MODE_LOW_LATENCY)
                 {
+                    audio_track_volume_out_mute_all(AUDIO_STREAM_TYPE_PLAYBACK);
                     if (remote_session_role_get() == REMOTE_SESSION_ROLE_PRIMARY)
                     {
                         if (buffer_ent->sec_path_ready)
@@ -697,7 +682,7 @@ void audio_buffer_playing_state(T_AUDIO_MSG msg, T_MEDIA_BUFFER_ENTITY *buffer_e
                 }
                 else if (buffer_ent->p_cfg->mode == AUDIO_STREAM_MODE_DIRECT)
                 {
-                    media_buffer_downstream_dsp(buffer_ent, true);
+                    while (media_buffer_downstream_dsp(buffer_ent, true));
                 }
             }
 
@@ -798,6 +783,20 @@ bool audio_mgr_dispatch(T_AUDIO_MSG msg, void *buf)
         }
         break;
 
+    case AUDIO_MSG_BUFFER_LEVEL_LOW:
+        {
+            T_MEDIA_BUFFER_ENTITY *buffer_ent = (T_MEDIA_BUFFER_ENTITY *)buf;
+            uint16_t buffer_level = 0;
+            T_AUDIO_EVENT_PARAM_TRACK_BUFFER_LOW buffer_low_param;
+
+            media_buffer_level_get((T_MEDIA_BUFFER_PROXY)buffer_ent->p_cfg, &buffer_level);
+            buffer_low_param.buffer_level_ms = buffer_level;
+            buffer_low_param.handle = buffer_ent->p_cfg->track_handle;
+            ret = audio_mgr_event_post(AUDIO_EVENT_TRACK_BUFFER_LOW, &buffer_low_param,
+                                       sizeof(T_AUDIO_EVENT_PARAM_TRACK_BUFFER_LOW));
+        }
+        break;
+
     case AUDIO_MSG_BUFFER_LEVEL_HIGH:
         {
             T_MEDIA_BUFFER_ENTITY *buffer_ent = (T_MEDIA_BUFFER_ENTITY *)buf;
@@ -814,7 +813,7 @@ bool audio_mgr_dispatch(T_AUDIO_MSG msg, void *buf)
 
     case AUDIO_MSG_BUFFER_STATE_PLAYING:
         {
-            ret = audio_mgr_event_post(AUDIO_EVENT_BUFFER_STATE_PALYING, NULL, 0);
+            ret = audio_mgr_event_post(AUDIO_EVENT_BUFFER_STATE_PLAYING, NULL, 0);
         }
         break;
 
@@ -914,7 +913,6 @@ bool audio_mgr_dispatch(T_AUDIO_MSG msg, void *buf)
         {
             T_MEDIA_BUFFER_ENTITY *buffer_ent;
             T_MEDIA_BUFFER_CFG *p_buffer_cfg;
-            uint16_t buffer_level = 0;
 
             p_buffer_cfg = (T_MEDIA_BUFFER_CFG *)buf;
             buffer_ent = (T_MEDIA_BUFFER_ENTITY *)p_buffer_cfg->buffer_handle;
@@ -944,8 +942,6 @@ bool audio_mgr_dispatch(T_AUDIO_MSG msg, void *buf)
                 }
                 else
                 {
-                    media_buffer_level_get((T_MEDIA_BUFFER_PROXY)buffer_ent->p_cfg, &buffer_level);
-
                     if (audio_remote_is_buffer_unsync(buffer_ent->audio_remote_handle))
                     {
                         if (audio_remote_buffer_PLC(buffer_ent->audio_remote_handle) == false)
@@ -958,19 +954,6 @@ bool audio_mgr_dispatch(T_AUDIO_MSG msg, void *buf)
                         if (media_buffer_downstream_dsp(buffer_ent, true) == false)
                         {
                             buffer_ent->miss_ack_cnt++;
-                        }
-                    }
-
-                    if (p_buffer_cfg->lower_threshold_ms != 0 && buffer_level > p_buffer_cfg->lower_threshold_ms)
-                    {
-                        media_buffer_level_get((T_MEDIA_BUFFER_PROXY)buffer_ent->p_cfg, &buffer_level);
-                        if (buffer_level <= p_buffer_cfg->lower_threshold_ms)
-                        {
-                            T_AUDIO_EVENT_PARAM_TRACK_BUFFER_LOW buffer_low_param;
-                            buffer_low_param.buffer_level_ms = buffer_level;
-                            buffer_low_param.handle = p_buffer_cfg->track_handle;
-                            ret = audio_mgr_event_post(AUDIO_EVENT_TRACK_BUFFER_LOW, &buffer_low_param,
-                                                       sizeof(T_AUDIO_EVENT_PARAM_TRACK_BUFFER_LOW));
                         }
                     }
                 }
@@ -1560,13 +1543,16 @@ bool audio_mgr_dispatch(T_AUDIO_MSG msg, void *buf)
 
             media_buffer_packet_record_get_timestamps(buffer_ent->audio_remote_handle, timestamps, 2);
 
-            if (average_fifo_queuing == 0 ||
-                (timestamps[0] == 0 && timestamps[1] == 0) ||
-                (timestamps[0] == 0xffffffff && timestamps[1] == 0xffffffff) ||
-                average_latency_us > 500000)
+            if (buffer_ent->p_cfg->usage != AUDIO_STREAM_USAGE_LOCAL)
             {
-                AUDIO_PRINT_TRACE0("latency_report: timestamps improbable");
-                break;
+                if (average_fifo_queuing == 0 ||
+                    (timestamps[0] == 0 && timestamps[1] == 0) ||
+                    (timestamps[0] == 0xffffffff && timestamps[1] == 0xffffffff) ||
+                    average_latency_us > 500000)
+                {
+                    AUDIO_PRINT_TRACE0("latency_report: timestamps improbable");
+                    break;
+                }
             }
 
             audio_latency_record_update(buffer_ent->audio_latency_handle,
@@ -2153,7 +2139,7 @@ void audio_mgr_exception(T_MEDIA_BUFFER_ENTITY *buffer_ent, T_AUDIO_MGR_EXCEPTIO
             {
                 if (exc == MEDIA_BUFFER_FULL || exc == DSP_UNSYNC)
                 {
-                    AUDIO_PRINT_TRACE1("audio_mgr_exc: pri ignores sec exceptions 0x%x", exc);
+                    AUDIO_PRINT_INFO1("audio_mgr_exc: pri ignores sec exceptions 0x%x", exc);
                     return;
                 }
             }
@@ -2206,8 +2192,7 @@ void audio_mgr_exception(T_MEDIA_BUFFER_ENTITY *buffer_ent, T_AUDIO_MGR_EXCEPTIO
                     if (from_remote == 1)
                     {
                         if (buffer_ent->media_buffer_fst_sync_tid == (uint8_t)(param & 0x00ff) &&
-                            (param >> 16) == FST_SYNC_STATE_ERROR &&
-                            media_buffer_get_status(buffer_ent) == MEDIA_BUFFER_PREQUEUE)
+                            (param >> 16) == FST_SYNC_STATE_ERROR)
                         {
                             buffer_ent->ops.flush_fun(buffer_ent,
                                                       media_buffer_ds_pkt_cnt(buffer_ent) - MEDIA_SYNC_TRIGGER_CNT, BUFFER_DIR_DOWNSTREAM);

@@ -3,7 +3,7 @@
 *               Copyright(c) 2020, Realtek Semiconductor Corporation. All rights reserved.
 *********************************************************************************************************
 * @file      gap_aox_conn.h
-* @brief    Head file for GAP AoA/AoD connection
+* @brief    Header file for GAP AoA/AoD connection
 * @details
 * @author
 * @date      2020-06-18
@@ -28,7 +28,7 @@ extern "C"
 #include "gap_le.h"
 #include "gap_le_types.h"
 
-/** @addtogroup GAP GAP Module
+/** @addtogroup BT_Host Bluetooth Host
   * @{
   */
 
@@ -37,6 +37,7 @@ extern "C"
   */
 
 /** @addtogroup GAP_LE_AOX_CONN GAP LE AoA/AoD Connection Module
+  * @brief GAP LE AoA/AoD Connection Module
   * @{
   */
 
@@ -115,7 +116,7 @@ typedef enum
  *
  * <b>Example usage</b>
  * \code{.c}
-   void test()
+   void test(void)
    {
         uint8_t conn_id = 0;
         T_GAP_AOX_SAMPLING_ENABLE_TYPE sampling_enable = GAP_AOX_SAMPLING_ENABLE;
@@ -156,8 +157,8 @@ T_GAP_CAUSE le_aox_set_conn_cte_receive_params(uint8_t conn_id,
  * @brief   Set Connection CTE Transmit Parameters.
  *          Result will be returned by @ref app_gap_aox_callback with cb_type @ref GAP_MSG_LE_AOX_SET_CONN_CTE_TRANSMIT_PARAMS.
  *
- * @param[in] conn_id  Connection ID
- * @param[in] cte_types   A bit field that indicates the type of Constant Tone Extension that the Controller support
+ * @param[in] conn_id  Connection ID.
+ * @param[in] cte_types   A bit field that indicates the type of Constant Tone Extension that the Controller supports
                           @ref GAP_AOX_CONN_CTE_TYPES_BITS.
  * @param[in] switching_pattern_length  The number of Antenna IDs in the pattern, and shall be ignored when cte_types does not
  *                                      have a bit set for an AoD Constant Tone Extension.
@@ -173,7 +174,7 @@ T_GAP_CAUSE le_aox_set_conn_cte_receive_params(uint8_t conn_id,
  *
  * <b>Example usage</b>
  * \code{.c}
-   void test()
+   void test(void)
    {
         uint8_t conn_id = 0;
         uint8_t cte_types = GAP_AOX_CONN_CTE_TYPES_AOA_BIT | GAP_AOX_CONN_CTE_TYPES_AOD_2US_BIT;
@@ -210,24 +211,24 @@ T_GAP_CAUSE le_aox_set_conn_cte_transmit_params(uint8_t conn_id, uint8_t cte_typ
  * @brief   Request the Controller to start or stop initiating the Constant Tone Extension Request procedure.
  *          Result will be returned by @ref app_gap_aox_callback with cb_type @ref GAP_MSG_LE_AOX_CONN_CTE_REQUEST_ENABLE.
  *
- *          IQ samples will be returned by @ref app_gap_aox_callback with cb_type @ref GAP_MSG_LE_AOX_CONN_IQ_REPORT_INFO
+ * IQ samples will be returned by @ref app_gap_aox_callback with cb_type @ref GAP_MSG_LE_AOX_CONN_IQ_REPORT_INFO
  *          on Constant Tone Extensions received.
  *          Otherwise, request failed info will be returned by @ref app_gap_aox_callback with cb_type
  *          @ref GAP_MSG_LE_AOX_CTE_REQUEST_FAILED_INFO.
  *
- * @param[in] conn_id  Connection ID
+ * @param[in] conn_id  Connection ID.
  * @param[in] enable  Enable/disable Constant Tone Extension Request: @ref T_GAP_AOX_CTE_REQUEST_ENABLE_TYPE.
                       If Enable is set to GAP_AOX_CTE_REQUEST_DISABLE, the remaining parameters shall be ignored.
  * @param[in] cte_request_interval  Defines whether the Constant Tone Extension Request procedure is initiated
                                     only once or periodically.
-                                    0x0000: Initiate the Constant Tone Extension Request procedure once, at the
-                                            earliest practical opportunity
-                                    0x0001 to 0xFFFF: Requested interval for initiating the Constant Tone Extension
-                                                      Request procedure in number of connection events.
+                                    @arg 0x0000: Initiate the Constant Tone Extension Request procedure once, at the
+                                                 earliest practical opportunity.
+                                    @arg 0x0001 to 0xFFFF: Requested interval for initiating the Constant Tone Extension
+                                                           Request procedure in number of connection events.
  * @param[in] requested_cte_length  The minimum length of the Constant Tone Extension that the Controller shall
                                     request from the remote device.
-                                    Range: 0x02 to 0x14.
-                                    Units: 8 us.
+                                    @arg Range: 0x02 to 0x14.
+                                    @arg Units: 8 us.
  * @param[in] requested_cte_type  The type of Constant Tone Extension that the Controller shall request from the remote device:
  *                                @ref T_GAP_CTE_TYPE.
  * @return  Result of sending request.
@@ -238,7 +239,7 @@ T_GAP_CAUSE le_aox_set_conn_cte_transmit_params(uint8_t conn_id, uint8_t cte_typ
  *
  * <b>Example usage</b>
  * \code{.c}
-   void test()
+   void test(void)
    {
         uint8_t conn_id = 0;
         T_GAP_AOX_CTE_REQUEST_ENABLE_TYPE enable = GAP_AOX_CTE_REQUEST_ENABLE;
@@ -313,7 +314,7 @@ T_GAP_CAUSE le_aox_conn_cte_request_enable(uint8_t conn_id,
  *
  * <b>Example usage</b>
  * \code{.c}
-   void test()
+   void test(void)
    {
         uint8_t conn_id = 0;
         T_GAP_AOX_CTE_RESPONSE_ENABLE_TYPE enable = GAP_AOX_CTE_RESPONSE_ENABLE;
@@ -355,7 +356,7 @@ T_GAP_CAUSE le_aox_conn_cte_response_enable(uint8_t conn_id,
   * @}
   */
 
-/** End of GAP
+/** End of BT_Host
   * @}
   */
 

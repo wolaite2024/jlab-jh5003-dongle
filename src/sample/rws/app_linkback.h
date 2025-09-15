@@ -29,6 +29,7 @@ typedef struct
     uint8_t server_channel;
     uint8_t local_server_chann;
     bool feature;
+    bool spp_has_vendor;
 } T_LINKBACK_CONN_PARAM;
 
 typedef struct
@@ -41,6 +42,7 @@ typedef struct
     bool is_special;
     bool check_bond_flag;
     bool is_group_member;
+    bool plan_lea;
     T_LINKBACK_SEARCH_PARAM search_param;
 
 } __attribute__((packed)) T_LINKBACK_NODE;
@@ -69,6 +71,9 @@ typedef struct
     bool is_sdp_ok;
     uint8_t prof_retry_cnt;
     T_LINKBACK_CONN_PARAM linkback_conn_param;
+    bool remain_lea;
+    bool exist_lea_adv;
+    bool is_lea_adv_timeout;
 } T_LINKBACK_ACTIVE_NODE;
 
 bool linkback_profile_is_need_search(uint32_t prof);

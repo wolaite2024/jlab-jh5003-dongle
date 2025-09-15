@@ -79,6 +79,8 @@ Data Fields</h2></td></tr>
 <tr class="separator:a0356a0eaf59e59da327d2a7ff3b87932"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a80d9a765b15e11247088f4566f5953a0"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_i2_c___init_type_def.html#a80d9a765b15e11247088f4566f5953a0">I2C_RxWaterlevel</a></td></tr>
 <tr class="separator:a80d9a765b15e11247088f4566f5953a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7d4cae955a42cffe6369113c0194a79"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_i2_c___init_type_def.html#aa7d4cae955a42cffe6369113c0194a79">I2C_RisingTimeNs</a></td></tr>
+<tr class="separator:aa7d4cae955a42cffe6369113c0194a79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>I2C Init structure definition. </p>
@@ -94,7 +96,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>the clock frequency,default 40000000. This parameter must be set with I2C clock div </p>
+<p>Specifies the clock frequency,default 40000000. This parameter must be set with I2C clock div.</p>
+<p>Specifies the I2C clock source frequency, default 40000000. This parameter can be set with <a class="el" href="group__x3e___i2_c___clock___divider.html">I2C Clock Divider</a>. I2C_Clock = 40000000 / I2C_Clock_Divider. </p>
 
 </div>
 </div>
@@ -109,7 +112,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the clock frequency. This parameter must be set to a value lower than 400kHz </p>
+<p>Specifies the clock frequency. This parameter must be set to a value lower than 400kHz.</p>
+<p>Specifies the I2C clock speed. This parameter must be set to a value lower than 1MHz. </p>
 
 </div>
 </div>
@@ -124,7 +128,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the I2C devie mode. This parameter can be a value of <a class="el" href="group___i2_c__device__mode.html">I2C Device Mode</a> </p>
+<p>Specifies the I2C devie mode. This parameter can be a value of <a class="el" href="group___i2_c__device__mode.html">I2C Device Mode</a>.</p>
+<p>Specifies the I2C device mode. This parameter can be a value of <a class="el" href="group__x3e___i2_c__device__mode.html">I2C Device Mode</a>. </p>
 
 </div>
 </div>
@@ -139,7 +144,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the I2C address mode. This parameter can be a value of <a class="el" href="group___i2_c__address__mode.html">I2C Address Mode</a> </p>
+<p>Specifies the I2C address mode. This parameter can be a value of <a class="el" href="group___i2_c__address__mode.html">I2C Address Mode</a>.</p>
+<p>Specifies the I2C address mode. This parameter can be a value of <a class="el" href="group__x3e___i2_c__address__mode.html">I2C Address Mode</a>. </p>
 
 </div>
 </div>
@@ -154,7 +160,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the first device own address. This parameter can be a 7-bit or 10-bit address. </p>
+<p>Specifies the first device own address. This parameter can be a 7-bit or 10-bit address.</p>
+<p>Specifies the I2C slave address. This parameter can be a 7-bit or 10-bit address, must range from 0x0 to 0x3FF. </p>
 
 </div>
 </div>
@@ -169,7 +176,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Enables or disables the acknowledgement only in slave mode. This parameter can be a value of <a class="el" href="group___i2_c__acknowledgement.html">I2C Acknowledgement</a> </p>
+<p>Enables or disables the acknowledgement only in slave mode. This parameter can be a value of <a class="el" href="group___i2_c__acknowledgement.html">I2C Acknowledgement</a>.</p>
+<p>Enables or disables the acknowledgement only in slave mode. This parameter can be a value of <a class="el" href="group__x3e___i2_c__acknowledgement.html">I2C Acknowledgement</a>. </p>
 
 </div>
 </div>
@@ -184,6 +192,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Specifies the transmit FIFO Threshold to trigger interrupt I2C_INT_TX_EMPTY. This parameter can be a value less than 24.</p>
+<p>Specifies the transmit FIFO threshold to trigger interrupt <a class="el" href="group__x3e___i2_c__interrupts__definition.html#ga8a77e1d07288ad8168e5b1632ff4657f">I2C_INT_TX_EMPTY</a>. This parameter can be a value less than 24. </p>
 
 </div>
 </div>
@@ -198,6 +208,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Specifies the receive FIFO Threshold to trigger interrupt I2C_INT_RX_FULL. This parameter can be a value less than 16.</p>
+<p>Specifies the receive FIFO Threshold to trigger interrupt <a class="el" href="group__x3e___i2_c__interrupts__definition.html#ga56a1983722862345c550f890d9af3a9e">I2C_INT_RX_FULL</a>. This parameter can be a value less than 40. </p>
 
 </div>
 </div>
@@ -212,7 +224,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the Tx dma mode. This parameter can be a value of ENABLE or DISABLE </p>
+<p>Specifies the Tx dma mode. This parameter can be a value of ENABLE or DISABLE.</p>
+<p>Specifies the I2C TX DMA mode. This parameter can be a value of ENABLE or DISABLE. </p>
 
 </div>
 </div>
@@ -227,7 +240,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the Rx dma mode This parameter can be a value of ENABLE or DISABLE </p>
+<p>Specifies the Rx dma mode This parameter can be a value of ENABLE or DISABLE.</p>
+<p>Specifies the I2C RX DMA mode. This parameter can be a value of ENABLE or DISABLE. </p>
 
 </div>
 </div>
@@ -242,7 +256,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the DMA tx water level This parameter should be I2C Tx fifo depth minus GDMA MSize </p>
+<p>Specifies the DMA tx water level. This parameter should be I2C Tx fifo depth minus GDMA MSize.</p>
+<p>Specifies the DMA TX water level. This parameter must range from 1 to 23. I2C_TxWaterlevel = I2C TX FIFO depth - I2C TX GDMA MSize. </p>
 
 </div>
 </div>
@@ -257,7 +272,23 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the DMA rx water level This parameter should be I2C Rx GDMA MSize - 1 </p>
+<p>Specifies the DMA rx water level. This parameter should be I2C Rx GDMA MSize - 1.</p>
+<p>Specifies the DMA RX water level. This parameter must range from 1 to 39. I2C_RxWaterlevel = I2C RX GDMA MSize - 1. </p>
+
+</div>
+</div>
+<a id="aa7d4cae955a42cffe6369113c0194a79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7d4cae955a42cffe6369113c0194a79">&#9670;&nbsp;</a></span>I2C_RisingTimeNs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t I2C_RisingTimeNs</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Specifies the I2C SDA/SCL rising time. The unit is ns and must be an integer multiple of clock src period. This parameter must range from 0x1 to 0xff. </p>
 
 </div>
 </div>

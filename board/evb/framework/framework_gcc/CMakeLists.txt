@@ -16,3 +16,8 @@ target_link_libraries(frameworkLib
 						
 target_precompile_headers(frameworkLib PUBLIC  ${kconfig_header_dir_path}/config.h)
 target_include_directories(frameworkLib PUBLIC ${kconfig_header_dir_path})
+
+add_custom_command(TARGET frameworkLib POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:frameworkLib>  ${lib_output_path_temp_dirt}
+    COMMENT "Copying frameworkLib to  ${lib_output_path}/../temp"
+)

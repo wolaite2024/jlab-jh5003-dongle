@@ -17,6 +17,26 @@
 #include "app_usb_vol_control.h"
 #include "app_lea_ascs.h"
 
+#if F_APP_GAMING_LE_FIX_CHANNEL_SUPPORT
+#include "btm.h"
+#include "gap_fix_chann_conn.h"
+#endif
+
+#if F_APP_ERWS_SUPPORT
+#include "app_main.h"
+#if F_APP_B2B_ENGAGE_IMPROVE_BY_LE_FIX_CHANNEL
+#include "engage.h"
+
+typedef struct
+{
+    uint8_t len;
+    uint8_t data[64];
+} T_APP_ENGAGE_ADV_DATA;
+
+static T_APP_ENGAGE_ADV_DATA engage_adv_data;
+#endif
+#endif
+
 #if F_APP_COMMON_DONGLE_SUPPORT
 bool app_dongle_send_cmd(T_APP_DONGLE_CMD cmd, uint8_t *data, uint8_t len)
 {
@@ -69,10 +89,14 @@ bool app_dongle_send_cmd(T_APP_DONGLE_CMD cmd, uint8_t *data, uint8_t len)
 #if TARGET_LE_AUDIO_GAMING || TARGET_LEGACY_AUDIO_GAMING
             if (0)
             {}
-#if TARGET_LE_AUDIO_GAMING
+#if TARGET_LE_AUDIO_GAMING && F_APP_GAMING_LE_FIX_CHANNEL_SUPPORT
             else if (p_lea_link != NULL)
             {
-                ret = app_transfer_start_for_le(p_lea_link->id, total_len, buf);
+                if (le_fixed_chann_data_send(p_lea_link->conn_id, LE_FIX_CHANNEL_ID, buf,
+                                             total_len) == GAP_CAUSE_SUCCESS)
+                {
+                    ret = true;
+                }
             }
 #endif
 #if TARGET_LEGACY_AUDIO_GAMING || F_APP_GAMING_LEA_A2DP_SWITCH_SUPPORT
@@ -111,6 +135,106 @@ exit:
 
 #if F_APP_GAMING_DONGLE_SUPPORT
 #if TARGET_LE_AUDIO_GAMING
+#if F_APP_ERWS_SUPPORT
+static bool app_dongle_relay_handle(T_APP_DONGLE_CMD cmd, uint8_t *data, uint16_t len)
+{
+    uint8_t cause = 0;
+    T_DONGLE_RELAY_B2B_DATA *b2b_relay_data = NULL;
+    T_DONGLE_RELAY_B2B_ADV *b2b_relay_adv = NULL;
+    bool ret = false;
+    uint8_t local_addr[6];
+    uint16_t alloc_size = 0;
+    uint8_t *buf = NULL;
+
+    if (cmd == DONGLE_CMD_B2B_RELAY_DATA)
+    {
+        alloc_size = sizeof(T_DONGLE_RELAY_B2B_DATA) + len;
+    }
+    else if (cmd == DONGLE_CMD_B2B_RELAY_ENGAGE_ADV)
+    {
+        alloc_size = sizeof(T_DONGLE_RELAY_B2B_ADV) + len;
+    }
+    else
+    {
+        cause = 1;
+        goto exit;
+    }
+
+    if (len == 0)
+    {
+        cause = 2;
+        goto exit;
+    }
+
+    buf = calloc(1, alloc_size);
+
+    if (buf == NULL)
+    {
+        cause = 3;
+        goto exit;
+    }
+
+    if (dongle_status.bud_le_conn_status != ALL_BUDS_LE_CONNECTED)
+    {
+        cause = 4;
+        goto exit;
+    }
+
+    if (cmd == DONGLE_CMD_B2B_RELAY_DATA)
+    {
+        b2b_relay_data = (T_DONGLE_RELAY_B2B_DATA *)buf;
+
+        b2b_relay_data->bud_side = (T_DEVICE_BUD_SIDE)app_cfg_const.bud_side;
+        b2b_relay_data->len = len;
+        memcpy(b2b_relay_data->data, data, len);
+    }
+    else if (cmd == DONGLE_CMD_B2B_RELAY_ENGAGE_ADV)
+    {
+        b2b_relay_adv = (T_DONGLE_RELAY_B2B_ADV *)buf;
+
+        b2b_relay_adv->bud_side = (T_DEVICE_BUD_SIDE)app_cfg_const.bud_side;
+        if (gap_get_param(GAP_PARAM_BD_ADDR, local_addr) == GAP_CAUSE_SUCCESS)
+        {
+            memcpy(b2b_relay_adv->addr, local_addr, 6);
+        }
+        b2b_relay_adv->adv_len = len;
+        memcpy(b2b_relay_adv->adv_data, data, len);
+    }
+
+    if (app_dongle_send_cmd(cmd, buf, alloc_size))
+    {
+        ret = true;
+    }
+
+exit:
+    if (buf != NULL)
+    {
+        free(buf);
+    }
+
+    APP_PRINT_TRACE4("app_dongle_relay_handle: cmd %d len %d ret %d cause %d", cmd, len, ret, cause);
+
+    return ret;
+}
+
+#if F_APP_B2B_ENGAGE_IMPROVE_BY_LE_FIX_CHANNEL
+static bool app_dongle_relay_b2b_adv(uint8_t *data, uint16_t len)
+{
+    if (app_db.remote_session_state == REMOTE_SESSION_STATE_CONNECTED)
+    {
+        return false;
+    }
+
+    return app_dongle_relay_handle(DONGLE_CMD_B2B_RELAY_ENGAGE_ADV, data, len);
+}
+#endif
+
+bool app_dongle_relay_b2b_data(uint8_t *data, uint16_t len)
+{
+    return app_dongle_relay_handle(DONGLE_CMD_B2B_RELAY_DATA, data, len);
+}
+#endif
+
 void app_dongle_handle_le_data(uint8_t *data, uint16_t len)
 {
     if ((data[0] != DONGLE_FORMAT_START_BIT) || (data[len - 1] != DONGLE_FORMAT_STOP_BIT))
@@ -135,6 +259,13 @@ void app_dongle_handle_le_data(uint8_t *data, uint16_t len)
             {
                 memcpy(&dongle_status, &data[4], sizeof(dongle_status));
 
+#if F_APP_B2B_ENGAGE_IMPROVE_BY_LE_FIX_CHANNEL
+                if (dongle_status.bud_le_conn_status == ALL_BUDS_LE_CONNECTED)
+                {
+                    app_dongle_relay_b2b_adv(engage_adv_data.data, engage_adv_data.len);
+                }
+#endif
+
                 app_dongle_streaming_handle(dongle_status.streaming_to_peer);
                 app_dongle_lea_handle_dongle_status();
             }
@@ -148,6 +279,22 @@ void app_dongle_handle_le_data(uint8_t *data, uint16_t len)
                 memcpy(&usb_spk_vol, &data[4], sizeof(T_USB_SPK_INFO));
                 app_gaming_handle_usb_spk_vol();
             }
+#endif
+#if F_APP_ERWS_SUPPORT
+            else if (sync_hdr->cmd == DONGLE_CMD_B2B_RELAY_DATA)
+            {
+                T_DONGLE_RELAY_B2B_DATA *b2b_relay_data = (T_DONGLE_RELAY_B2B_DATA *)sync_hdr->payload;
+
+                APP_PRINT_TRACE1("rcv b2b relay data %b", TRACE_BINARY(b2b_relay_data->len, b2b_relay_data->data));
+            }
+#if F_APP_B2B_ENGAGE_IMPROVE_BY_LE_FIX_CHANNEL
+            else if (sync_hdr->cmd == DONGLE_CMD_B2B_RELAY_ENGAGE_ADV)
+            {
+                T_DONGLE_RELAY_B2B_ADV *b2b_relay_adv = (T_DONGLE_RELAY_B2B_ADV *)sync_hdr->payload;
+
+                engage_adv_report(b2b_relay_adv->addr, b2b_relay_adv->adv_data, b2b_relay_adv->adv_len);
+            }
+#endif
 #endif
         }
         break;
@@ -241,6 +388,46 @@ void app_gaming_handle_usb_spk_vol(void)
 #endif
 }
 
+static void app_dongle_data_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t buf_len)
+{
+    T_BT_EVENT_PARAM *param = event_buf;
+
+    switch (event_type)
+    {
+    case BT_EVENT_READY:
+        {
+#if F_APP_GAMING_LE_FIX_CHANNEL_SUPPORT
+            le_fixed_chann_reg(LE_FIX_CHANNEL_ID);
+#endif
+        }
+        break;
+
+    default:
+        break;
+    }
+}
+
+#if F_APP_B2B_ENGAGE_IMPROVE_BY_LE_FIX_CHANNEL
+static void app_dongle_data_engage_action_cb(T_ENGAGE_ACTION action, uint8_t *adv_data,
+                                             uint16_t adv_len)
+{
+    switch (action)
+    {
+    case ENGAGE_ACTION_ADV_SET:
+        {
+            engage_adv_data.len = adv_len;
+            memcpy(engage_adv_data.data, adv_data, adv_len);
+
+            app_dongle_relay_b2b_adv(engage_adv_data.data, engage_adv_data.len);
+        }
+        break;
+
+    default:
+        break;
+    }
+}
+#endif
+
 void app_dongle_data_ctrl_init(void)
 {
 #if TARGET_LEGACY_AUDIO_GAMING || F_APP_GAMING_LEA_A2DP_SWITCH_SUPPORT
@@ -248,6 +435,7 @@ void app_dongle_data_ctrl_init(void)
     gap_br_reg_fix_chann_cb(app_dongle_fix_chann_cb);
 #endif
 
+    bt_mgr_cback_register(app_dongle_data_bt_cback);
 
 #if TARGET_LEGACY_AUDIO_GAMING
     app_gaming_sync_legacy_send_register(app_dongle_send_fix_chann_data);
@@ -261,5 +449,8 @@ void app_dongle_data_ctrl_init(void)
     app_gaming_sync_le_cmd_register(app_dongle_handle_le_data);
 #endif
 
+#if F_APP_B2B_ENGAGE_IMPROVE_BY_LE_FIX_CHANNEL
+    engage_action_register_cb(app_dongle_data_engage_action_cb);
+#endif
 }
 #endif

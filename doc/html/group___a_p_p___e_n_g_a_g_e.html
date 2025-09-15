@@ -68,6 +68,9 @@ Typedefs</h2></td></tr>
 <tr class="memitem:ga1c29638741bbff5ab8f053ab274b5cf3"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___e_n_g_a_g_e.html#ga1c29638741bbff5ab8f053ab274b5cf3">T_BAT_STATE_FUN</a>) (uint8_t *bat, uint8_t *state)</td></tr>
 <tr class="memdesc:ga1c29638741bbff5ab8f053ab274b5cf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">engage lib get bat and state from app  <a href="#ga1c29638741bbff5ab8f053ab274b5cf3">More...</a><br /></td></tr>
 <tr class="separator:ga1c29638741bbff5ab8f053ab274b5cf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad9c33bce5281de3ee9d1189a3f9b1cdb"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___e_n_g_a_g_e.html#gad9c33bce5281de3ee9d1189a3f9b1cdb">T_ENGAGE_ACTION_FUN</a>) (<a class="el" href="group___a_p_p___e_n_g_a_g_e.html#ga716ae3f031d9d7d4438dc7fd93109c27">T_ENGAGE_ACTION</a> action, uint8_t *adv_data, uint16_t adv_len)</td></tr>
+<tr class="memdesc:gad9c33bce5281de3ee9d1189a3f9b1cdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">engage lib report adv action to app  <a href="#gad9c33bce5281de3ee9d1189a3f9b1cdb">More...</a><br /></td></tr>
+<tr class="separator:gad9c33bce5281de3ee9d1189a3f9b1cdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -81,9 +84,24 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:gadcaccbb82116d77fb3b737f606dbab26"><td class="mdescLeft">&#160;</td><td class="mdescRight">engage lib ind to app  <a href="group___a_p_p___e_n_g_a_g_e.html#gadcaccbb82116d77fb3b737f606dbab26">More...</a><br /></td></tr>
 <tr class="separator:gadcaccbb82116d77fb3b737f606dbab26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga716ae3f031d9d7d4438dc7fd93109c27"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___e_n_g_a_g_e.html#ga716ae3f031d9d7d4438dc7fd93109c27">T_ENGAGE_ACTION</a> { <br />
+&#160;&#160;<a class="el" href="group___a_p_p___e_n_g_a_g_e.html#gga716ae3f031d9d7d4438dc7fd93109c27a9647ed4017c4687df370aabf47e5a26d">ENGAGE_ACTION_ADV_SET</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___e_n_g_a_g_e.html#gga716ae3f031d9d7d4438dc7fd93109c27ac072b48523dd8ed1b9ab2b3be74dad8d">ENGAGE_ACTION_ADV_START</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___e_n_g_a_g_e.html#gga716ae3f031d9d7d4438dc7fd93109c27a9e4966b2691789dd9df660f4d3cc4476">ENGAGE_ACTION_ADV_STOP</a>
+<br />
+ }</td></tr>
+<tr class="separator:ga716ae3f031d9d7d4438dc7fd93109c27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ga373abe4800f1454dff2ebfe695bad9f6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___e_n_g_a_g_e.html#ga373abe4800f1454dff2ebfe695bad9f6">engage_action_register_cb</a> (<a class="el" href="group___a_p_p___e_n_g_a_g_e.html#gad9c33bce5281de3ee9d1189a3f9b1cdb">T_ENGAGE_ACTION_FUN</a> action)</td></tr>
+<tr class="memdesc:ga373abe4800f1454dff2ebfe695bad9f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">engage action callback register  <a href="#ga373abe4800f1454dff2ebfe695bad9f6">More...</a><br /></td></tr>
+<tr class="separator:ga373abe4800f1454dff2ebfe695bad9f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab7c92c47143fe56bdb662f1f89dd9150"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___e_n_g_a_g_e.html#gab7c92c47143fe56bdb662f1f89dd9150">engage_adv_report</a> (uint8_t *addr, uint8_t *data, uint16_t len)</td></tr>
+<tr class="memdesc:gab7c92c47143fe56bdb662f1f89dd9150"><td class="mdescLeft">&#160;</td><td class="mdescRight">handle engage adv by other receive path (ex: via dongle)  <a href="#gab7c92c47143fe56bdb662f1f89dd9150">More...</a><br /></td></tr>
+<tr class="separator:gab7c92c47143fe56bdb662f1f89dd9150"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga51b1d1757a3734b4e644158c37ecf512"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___e_n_g_a_g_e.html#ga51b1d1757a3734b4e644158c37ecf512">engage_init</a> (void)</td></tr>
 <tr class="memdesc:ga51b1d1757a3734b4e644158c37ecf512"><td class="mdescLeft">&#160;</td><td class="mdescRight">engage lib init  <a href="#ga51b1d1757a3734b4e644158c37ecf512">More...</a><br /></td></tr>
 <tr class="separator:ga51b1d1757a3734b4e644158c37ecf512"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -147,6 +165,22 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="gad9c33bce5281de3ee9d1189a3f9b1cdb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad9c33bce5281de3ee9d1189a3f9b1cdb">&#9670;&nbsp;</a></span>T_ENGAGE_ACTION_FUN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* T_ENGAGE_ACTION_FUN) (<a class="el" href="group___a_p_p___e_n_g_a_g_e.html#ga716ae3f031d9d7d4438dc7fd93109c27">T_ENGAGE_ACTION</a> action, uint8_t *adv_data, uint16_t adv_len)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>engage lib report adv action to app </p>
+
+</div>
+</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="gadcaccbb82116d77fb3b737f606dbab26"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gadcaccbb82116d77fb3b737f606dbab26">&#9670;&nbsp;</a></span>T_ENGAGE_IND</h2>
@@ -169,7 +203,98 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ga716ae3f031d9d7d4438dc7fd93109c27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga716ae3f031d9d7d4438dc7fd93109c27">&#9670;&nbsp;</a></span>T_ENGAGE_ACTION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___a_p_p___e_n_g_a_g_e.html#ga716ae3f031d9d7d4438dc7fd93109c27">T_ENGAGE_ACTION</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga716ae3f031d9d7d4438dc7fd93109c27a9647ed4017c4687df370aabf47e5a26d"></a>ENGAGE_ACTION_ADV_SET&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga716ae3f031d9d7d4438dc7fd93109c27ac072b48523dd8ed1b9ab2b3be74dad8d"></a>ENGAGE_ACTION_ADV_START&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga716ae3f031d9d7d4438dc7fd93109c27a9e4966b2691789dd9df660f4d3cc4476"></a>ENGAGE_ACTION_ADV_STOP&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ga373abe4800f1454dff2ebfe695bad9f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga373abe4800f1454dff2ebfe695bad9f6">&#9670;&nbsp;</a></span>engage_action_register_cb()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void engage_action_register_cb </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_p_p___e_n_g_a_g_e.html#gad9c33bce5281de3ee9d1189a3f9b1cdb">T_ENGAGE_ACTION_FUN</a>&#160;</td>
+          <td class="paramname"><em>action</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>engage action callback register </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">action</td><td>callback function </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
+
+</div>
+</div>
+<a id="gab7c92c47143fe56bdb662f1f89dd9150"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab7c92c47143fe56bdb662f1f89dd9150">&#9670;&nbsp;</a></span>engage_adv_report()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void engage_adv_report </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>handle engage adv by other receive path (ex: via dongle) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">addr</td><td>: peer bud addr </td></tr>
+    <tr><td class="paramname">data</td><td>: adv data </td></tr>
+    <tr><td class="paramname">len</td><td>: adv len </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
+
+</div>
+</div>
 <a id="ga51b1d1757a3734b4e644158c37ecf512"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga51b1d1757a3734b4e644158c37ecf512">&#9670;&nbsp;</a></span>engage_init()</h2>
 

@@ -8,13 +8,19 @@ extern "C" {
 #include "codec_def.h"
 #include "audio_track.h"
 
+#if F_APP_ERWS_SUPPORT
 #define ASCS_ASE_ENTRY_NUM 3 /** max ASE entry num */
+#else
+#define ASCS_ASE_ENTRY_NUM 6 /** max ASE entry num */
+#endif
 
 typedef struct t_lea_ase_entry
 {
     bool used;
     bool control_point_enable;
     uint8_t ase_id;
+    uint8_t cig_id;
+    uint8_t cis_id;
     uint8_t prequeue_pkt_cnt;
     uint16_t pkt_seq;
     uint16_t conn_handle;
@@ -23,9 +29,12 @@ typedef struct t_lea_ase_entry
     uint8_t frame_num;
     uint8_t handshake_fg;
     uint8_t path_direction;
+    uint8_t bit_depth;
+    uint8_t nse;
     T_AUDIO_TRACK_HANDLE track_handle;
     T_AUDIO_STREAM_TYPE stream_type;
     uint16_t track_write_len;
+    T_AUDIO_FORMAT_TYPE codec_type;
     T_CODEC_CFG codec_cfg;
     uint32_t presentation_delay;
     T_AUDIO_EFFECT_INSTANCE sidetone_instance;

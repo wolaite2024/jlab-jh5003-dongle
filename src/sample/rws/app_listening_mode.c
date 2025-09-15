@@ -69,6 +69,8 @@ typedef enum
 {
     APP_TIMER_DELAY_APPLY_LISTENING_MODE,
     APP_TIMER_DISALLOW_TRIGGER_LISTENING_MODE,
+    APP_TIMER_DELAY_APPLY_ANC_WHEN_POWER_ON,
+    APP_TIMER_DELAY_APPLY_APT_WHEN_POWER_ON,
 } T_APP_LISTENING_MODE_TIMER;
 
 typedef enum
@@ -206,6 +208,8 @@ app_listening_cycle_list[APP_LISTENING_CYCLE_MODE_TOTAL][LISTENING_CYCLE_LIST_MA
 
 static uint8_t app_listening_mode_timer_id = 0;
 static uint8_t timer_idx_delay_apply_listening_mode = 0;
+static uint8_t timer_idx_delay_apply_anc_when_power_on = 0;
+static uint8_t timer_idx_delay_apply_apt_when_power_on = 0;
 static uint8_t timer_idx_disallow_trigger_listening_mode = 0;
 static T_ANC_APT_STATE temp_listening_state = ANC_OFF_APT_OFF;
 static T_ANC_APT_STATE blocked_listening_state = ANC_APT_STATE_TOTAL;
@@ -255,7 +259,39 @@ static bool app_listening_special_event_state_get(uint8_t event_index, T_ANC_APT
     return (*state != ANC_APT_STATE_TOTAL) ? true : false;
 }
 
-
+static void app_listening_special_event_state_get_all(T_ANC_APT_STATE *state)
+{
+    if (listening_special_event_bitmap & BIT(APP_LISTENING_EVENT_BOX) ||
+        listening_special_event_bitmap & BIT(APP_LISTENING_EVENT_B2B_CONNECT) ||
+        listening_special_event_bitmap & BIT(APP_LISTENING_EVENT_B2S_CONNECT) ||
+        listening_special_event_bitmap & BIT(APP_LISTENING_EVENT_GAMING_MODE))
+    {
+        *state = ANC_OFF_APT_OFF;
+    }
+    else if (listening_special_event_bitmap & BIT(APP_LISTENING_EVENT_AIRPLANE))
+    {
+        app_listening_special_event_state_get(APP_LISTENING_EVENT_AIRPLANE, state);
+    }
+    else if (listening_special_event_bitmap & BIT(APP_LISTENING_EVENT_DIRECT_APT_ON))
+    {
+        app_listening_special_event_state_get(APP_LISTENING_EVENT_DIRECT_APT_ON, state);
+    }
+    else if (listening_special_event_bitmap & BIT(APP_LISTENING_EVENT_SCO))
+    {
+        app_listening_special_event_state_get(APP_LISTENING_EVENT_SCO, state);
+    }
+    else if (listening_special_event_bitmap & BIT(APP_LISTENING_EVENT_A2DP))
+    {
+        app_listening_special_event_state_get(APP_LISTENING_EVENT_A2DP, state);
+    }
+#if XM_XIAOAI_FEATURE_SUPPORT
+    else if (listening_special_event_bitmap & BIT(APP_LISTENING_EVENT_XIAOAI))
+    {
+        app_listening_special_event_state_get(APP_LISTENING_EVENT_XIAOAI, state);
+    }
+#endif
+    APP_PRINT_TRACE1("app_listening_special_event_state_get_all state = %x", *state);
+}
 
 void app_listening_assign_specific_state(T_ANC_APT_STATE start_state, T_ANC_APT_STATE des_state,
                                          bool tone, bool update_final)
@@ -326,7 +362,6 @@ static void app_listening_mode_timeout_cb(uint8_t timer_evt, uint16_t param)
     {
     case APP_TIMER_DELAY_APPLY_LISTENING_MODE:
         {
-            app_db.delay_open_apt_when_power_on = false;
             app_stop_timer(&timer_idx_delay_apply_listening_mode);
             app_listening_state_machine(EVENT_DELAY_APPLY_LISTENING_MODE, param, true);
             app_db.delay_apply_listening_mode = false;
@@ -337,6 +372,48 @@ static void app_listening_mode_timeout_cb(uint8_t timer_evt, uint16_t param)
         {
             app_stop_timer(&timer_idx_disallow_trigger_listening_mode);
             app_db.key_action_disallow_too_close = MMI_NULL;
+        }
+        break;
+
+    case APP_TIMER_DELAY_APPLY_ANC_WHEN_POWER_ON:
+        {
+            T_ANC_APT_STATE recover_state = ANC_APT_STATE_TOTAL;
+
+            app_stop_timer(&timer_idx_delay_apply_anc_when_power_on);
+            app_db.power_on_delay_opening_anc = false;
+
+            app_listening_special_event_state_get_all(&recover_state);
+
+            if (recover_state != ANC_APT_STATE_TOTAL)
+            {
+                app_listening_assign_specific_state(app_db.current_listening_state, recover_state,
+                                                    false, false);
+            }
+            else
+            {
+                app_listening_apply_final_state_when_power_on(*app_db.final_listening_state, true);
+            }
+        }
+        break;
+
+    case APP_TIMER_DELAY_APPLY_APT_WHEN_POWER_ON:
+        {
+            T_ANC_APT_STATE recover_state = ANC_APT_STATE_TOTAL;
+
+            app_stop_timer(&timer_idx_delay_apply_apt_when_power_on);
+            app_db.power_on_delay_opening_apt = false;
+
+            app_listening_special_event_state_get_all(&recover_state);
+
+            if (recover_state != ANC_APT_STATE_TOTAL)
+            {
+                app_listening_assign_specific_state(app_db.current_listening_state, recover_state,
+                                                    false, false);
+            }
+            else
+            {
+                app_listening_apply_final_state_when_power_on(*app_db.final_listening_state, true);
+            }
         }
         break;
 
@@ -377,7 +454,8 @@ static void app_listening_audio_cback(T_AUDIO_EVENT event_type, void *event_buf,
 
             if (param->track_state_changed.state == AUDIO_TRACK_STATE_RELEASED)
             {
-                if (app_audio_track_handle_num_get(AUDIO_STREAM_TYPE_VOICE) == 0)
+                if ((app_audio_track_handle_num_get(AUDIO_STREAM_TYPE_VOICE) == 0) &&
+                    (app_audio_track_handle_num_get(AUDIO_STREAM_TYPE_RECORD) == 0))
                 {
                     app_listening_judge_sco_event(APPLY_LISTENING_MODE_VOICE_TRACE_RELEASE);
                 }
@@ -388,7 +466,7 @@ static void app_listening_audio_cback(T_AUDIO_EVENT event_type, void *event_buf,
                 break;
             }
 
-            if (stream_type == AUDIO_STREAM_TYPE_VOICE)
+            if (stream_type != AUDIO_STREAM_TYPE_PLAYBACK)
             {
                 if (param->track_state_changed.state == AUDIO_TRACK_STATE_CREATED)
                 {
@@ -477,6 +555,11 @@ static bool app_listening_mode_tone_flush_and_play(T_APP_AUDIO_TONE_TYPE tone_ty
 #if F_APP_SUPPORT_ANC_APT_COEXIST
 bool app_listening_anc_apt_open_condition_check(T_ANC_APT_STATE state)
 {
+    if (app_db.power_on_delay_opening_anc || app_db.power_on_delay_opening_apt)
+    {
+        return false;
+    }
+
     if ((state >= ANC_ON_SCENARIO_1_APT_ON) &&
         (state <= ANC_ON_SCENARIO_5_APT_ON) &&
         app_apt_open_condition_check(state) &&
@@ -724,10 +807,8 @@ uint8_t app_listening_check_delay_apply_time(T_ANC_APT_STATE new_state, T_ANC_AP
 #endif
 #endif
 
-    if (!tone && !app_db.delay_open_apt_when_power_on)
+    if (!tone)
     {
-        // Gernaral    : no tone with no delay apply
-        // Special case: delay to open APT when power on
         return delay_apply_time;
     }
 
@@ -761,29 +842,19 @@ uint8_t app_listening_check_delay_apply_time(T_ANC_APT_STATE new_state, T_ANC_AP
 
     if ((event != EVENT_DELAY_APPLY_LISTENING_MODE) &&
         (event != EVENT_APPLY_PENDING_STATE) &&
-        ((event != EVENT_APPLY_FINAL_STATE) ||
-         ((event == EVENT_APPLY_FINAL_STATE) &&
-          (app_db.delay_open_apt_when_power_on))) &&
+        (event != EVENT_APPLY_FINAL_STATE) &&
         (event != EVENT_ALL_OFF) &&
         (event != EVENT_APPLY_BLOCKED_STATE) &&
         !app_db.delay_apply_listening_mode)
     {
-        bool is_delay_apt_power_on = false;
         delay_apply_time = app_listening_set_delay_apply_time(new_state, prev_state);
-
-#if F_APP_APT_SUPPORT
-        if ((app_apt_is_apt_on_state(new_state)) && (app_db.delay_open_apt_when_power_on))
-        {
-            is_delay_apt_power_on = true;
-        }
-#endif
 
         if (delay_apply_time && (!timer_idx_delay_apply_listening_mode))
         {
             app_db.delay_apply_listening_mode = true;
             *app_db.final_listening_state = new_state;
             app_start_timer(&timer_idx_delay_apply_listening_mode, "delay_apply_listening_mode",
-                            app_listening_mode_timer_id, APP_TIMER_DELAY_APPLY_LISTENING_MODE, is_delay_apt_power_on, false,
+                            app_listening_mode_timer_id, APP_TIMER_DELAY_APPLY_LISTENING_MODE, false, false,
                             delay_apply_time * 1000);
         }
     }
@@ -794,8 +865,12 @@ uint8_t app_listening_check_delay_apply_time(T_ANC_APT_STATE new_state, T_ANC_AP
 void app_listening_stop_delay_apply_state(void)
 {
     app_db.delay_apply_listening_mode = false;
-    app_db.delay_open_apt_when_power_on = false;
+    app_db.power_on_delay_opening_anc = false;
+    app_db.power_on_delay_opening_apt = false;
+
     app_stop_timer(&timer_idx_delay_apply_listening_mode);
+    app_stop_timer(&timer_idx_delay_apply_anc_when_power_on);
+    app_stop_timer(&timer_idx_delay_apply_apt_when_power_on);
 }
 
 bool app_listening_is_allow_all_off_condition_check(void)
@@ -1409,8 +1484,6 @@ static void app_listening_mode_tone_play(T_ANC_APT_STATE new_state, bool is_sync
 
 void app_listening_mode_apply_new_state(T_ANC_APT_STATE new_state)
 {
-    T_SNK_CAPABILITY snk_capability = app_cmd_get_system_capability();
-
     if (temp_listening_state == new_state)
     {
         //The listening state is the same, no need to assign again
@@ -1471,7 +1544,7 @@ void app_listening_mode_apply_new_state(T_ANC_APT_STATE new_state)
 #if F_APP_APT_SUPPORT
     else if (app_apt_is_apt_on_state(new_state))
     {
-        audio_passthrough_volume_out_set(app_cfg_nv.apt_volume_out_level);
+        app_apt_volume_out_set(app_cfg_nv.apt_volume_out_level);
 
 #if F_APP_BRIGHTNESS_SUPPORT
         if (app_apt_is_llapt_on_state(new_state))
@@ -1533,11 +1606,6 @@ void app_listening_mode_apply_new_state(T_ANC_APT_STATE new_state)
 
                 if (app_apt_is_normal_apt_on_state(new_state))
                 {
-                    if (snk_capability.snk_support_HA && snk_capability.snk_not_support_normal_apt_volume_adjust)
-                    {
-                        audio_passthrough_volume_out_set(app_dsp_cfg_vol.apt_volume_out_max);
-                    }
-
                     app_apt_normal_apt_enable();
 
                     if (app_db.apt_eq_instance != NULL)
@@ -1759,7 +1827,7 @@ void app_listening_mode_apply_new_state(T_ANC_APT_STATE new_state)
                     coff_idx = app_anc_get_coeff_idx(0);
                 }
 
-                audio_passthrough_volume_out_set(app_cfg_nv.apt_volume_out_level);
+                app_apt_volume_out_set(app_cfg_nv.apt_volume_out_level);
 
                 if (!app_cfg_const.enable_auto_power_off_when_listening_mode_is_not_off)
                 {
@@ -1774,11 +1842,6 @@ void app_listening_mode_apply_new_state(T_ANC_APT_STATE new_state)
 
                 temp_listening_state = new_state;
                 app_anc_enable(coff_idx);
-
-                if (snk_capability.snk_support_HA && snk_capability.snk_not_support_normal_apt_volume_adjust)
-                {
-                    audio_passthrough_volume_out_set(app_dsp_cfg_vol.apt_volume_out_max);
-                }
 
                 app_apt_normal_apt_enable();
 
@@ -1995,6 +2058,8 @@ void app_listening_apply_when_power_on(void)
 {
     T_ANC_APT_STATE power_on_init_state = ANC_OFF_APT_OFF;
     bool change_init_state = false;
+    uint8_t delay_anc_apply_time = 0;
+    uint8_t delay_apt_apply_time = 0;
     uint8_t llapt_num = 0;
     uint8_t anc_num = 0;
     uint8_t listening_mode_power_on_status = ((app_cfg_const.listening_mode_power_on_status_ext << 2 &
@@ -2243,12 +2308,29 @@ void app_listening_apply_when_power_on(void)
 #endif
     }
 
-#if F_APP_APT_SUPPORT
-    if (app_apt_is_apt_on_state(*app_db.final_listening_state))
+    delay_anc_apply_time = app_cfg_nv.time_delay_to_open_anc_when_power_on;
+    delay_apt_apply_time = app_cfg_nv.time_delay_to_open_apt_when_power_on;
+
+    APP_PRINT_TRACE2("app_listening_apply_when_power_on: delay anc timer %d, delay apt timer %d",
+                     delay_anc_apply_time,
+                     delay_apt_apply_time);
+    if (delay_anc_apply_time)
     {
-        app_db.delay_open_apt_when_power_on = true;
+        app_db.power_on_delay_opening_anc = true;
+        app_start_timer(&timer_idx_delay_apply_anc_when_power_on,
+                        "delay_apply_anc_when_power_on",
+                        app_listening_mode_timer_id, APP_TIMER_DELAY_APPLY_ANC_WHEN_POWER_ON, true, false,
+                        delay_anc_apply_time * 1000);
     }
-#endif
+
+    if (delay_apt_apply_time)
+    {
+        app_db.power_on_delay_opening_apt = true;
+        app_start_timer(&timer_idx_delay_apply_apt_when_power_on,
+                        "delay_apply_apt_when_power_on",
+                        app_listening_mode_timer_id, APP_TIMER_DELAY_APPLY_APT_WHEN_POWER_ON, true, false,
+                        delay_apt_apply_time * 1000);
+    }
 
     if (app_cfg_const.enable_rtk_charging_box)
     {
@@ -2272,42 +2354,47 @@ void app_listening_apply_when_power_on(void)
     }
 #endif
 
-    if (LIGHT_SENSOR_ENABLED &&
-        !app_cfg_const.listening_mode_does_not_depend_on_in_ear_status)
+    if (!app_db.power_on_delay_opening_anc &&
+        !app_db.power_on_delay_opening_apt)
     {
-        return;
+        app_listening_apply_final_state_when_power_on(*app_db.final_listening_state, false);
     }
+}
 
+void app_listening_apply_final_state_when_power_on(T_ANC_APT_STATE state, bool is_need_push_tone)
+{
+    if (*app_db.final_listening_state != app_db.current_listening_state)
+    {
 #if F_APP_APT_SUPPORT
-    if (app_apt_is_normal_apt_on_state(*app_db.final_listening_state))
-    {
-        app_listening_state_machine(EVENT_NORMAL_APT_ON, false, true);
-    }
-    else if (app_apt_is_llapt_on_state(*app_db.final_listening_state))
-    {
-        app_listening_state_machine(LLAPT_STATE_TO_EVENT(*app_db.final_listening_state), false, true);
-    }
-    else
-#endif
-    {
-#if F_APP_ANC_SUPPORT
-        if (app_anc_is_anc_on_state(*app_db.final_listening_state))
+        if (app_apt_is_normal_apt_on_state(state))
         {
-            app_listening_state_machine(ANC_STATE_TO_EVENT(*app_db.final_listening_state), false, true);
+            app_listening_state_machine(EVENT_NORMAL_APT_ON, is_need_push_tone, true);
         }
-#if F_APP_SUPPORT_ANC_APT_COEXIST
-        else if (app_listening_is_anc_apt_on_state(*app_db.final_listening_state))
+        else if (app_apt_is_llapt_on_state(state))
         {
-            app_listening_state_machine(ANC_APT_STATE_TO_EVENT(*app_db.final_listening_state), false, true);
+            app_listening_state_machine(LLAPT_STATE_TO_EVENT(state), is_need_push_tone, true);
         }
-#endif
         else
 #endif
         {
-            //all off, do nothing
+#if F_APP_ANC_SUPPORT
+            if (app_anc_is_anc_on_state(state))
+            {
+                app_listening_state_machine(ANC_STATE_TO_EVENT(state), is_need_push_tone, true);
+            }
+#if F_APP_SUPPORT_ANC_APT_COEXIST
+            else if (app_listening_is_anc_apt_on_state(state))
+            {
+                app_listening_state_machine(ANC_APT_STATE_TO_EVENT(state), is_need_push_tone, true);
+            }
+#endif
+            else
+#endif
+            {
+                //all off, do nothing
+            }
         }
     }
-
 }
 
 void app_listening_apply_when_power_off(void)
@@ -2523,11 +2610,7 @@ void app_listening_special_event_trigger(T_LISTENING_SPECIAL_EVENT enter_special
                     {
                         app_listening_special_event_state_set(APP_LISTENING_EVENT_AIRPLANE, ANC_OFF_NORMAL_APT_ON);
 
-                        if (!timer_idx_delay_apply_listening_mode ||
-                            !app_apt_is_apt_on_state(*app_db.final_listening_state))
-                        {
-                            app_listening_state_machine(EVENT_NORMAL_APT_ON, false, false);
-                        }
+                        app_listening_state_machine(EVENT_NORMAL_APT_ON, false, false);
                     }
                     else if (app_apt_get_apt_support_type() == APT_SUPPORT_TYPE_LLAPT)
                     {
@@ -2537,12 +2620,8 @@ void app_listening_special_event_trigger(T_LISTENING_SPECIAL_EVENT enter_special
                         {
                             app_listening_special_event_state_set(APP_LISTENING_EVENT_AIRPLANE,
                                                                   first_llapt_scenario);
-                            if (!timer_idx_delay_apply_listening_mode ||
-                                !app_apt_is_apt_on_state(*app_db.final_listening_state))
-                            {
-                                app_listening_state_machine(LLAPT_STATE_TO_EVENT(first_llapt_scenario), false, false);
-                            }
 
+                            app_listening_state_machine(LLAPT_STATE_TO_EVENT(first_llapt_scenario), false, false);
                         }
                     }
                 }
@@ -2916,35 +2995,7 @@ void app_listening_special_event_trigger(T_LISTENING_SPECIAL_EVENT enter_special
     {
         T_ANC_APT_STATE recover_state = ANC_APT_STATE_TOTAL;
 
-        if (listening_special_event_bitmap & BIT(APP_LISTENING_EVENT_BOX) ||
-            listening_special_event_bitmap & BIT(APP_LISTENING_EVENT_B2B_CONNECT) ||
-            listening_special_event_bitmap & BIT(APP_LISTENING_EVENT_B2S_CONNECT) ||
-            listening_special_event_bitmap & BIT(APP_LISTENING_EVENT_GAMING_MODE))
-        {
-            recover_state = ANC_OFF_APT_OFF;
-        }
-        else if (listening_special_event_bitmap & BIT(APP_LISTENING_EVENT_AIRPLANE))
-        {
-            app_listening_special_event_state_get(APP_LISTENING_EVENT_AIRPLANE, &recover_state);
-        }
-        else if (listening_special_event_bitmap & BIT(APP_LISTENING_EVENT_DIRECT_APT_ON))
-        {
-            app_listening_special_event_state_get(APP_LISTENING_EVENT_DIRECT_APT_ON, &recover_state);
-        }
-        else if (listening_special_event_bitmap & BIT(APP_LISTENING_EVENT_SCO))
-        {
-            app_listening_special_event_state_get(APP_LISTENING_EVENT_SCO, &recover_state);
-        }
-        else if (listening_special_event_bitmap & BIT(APP_LISTENING_EVENT_A2DP))
-        {
-            app_listening_special_event_state_get(APP_LISTENING_EVENT_A2DP, &recover_state);
-        }
-#if XM_XIAOAI_FEATURE_SUPPORT
-        else if (listening_special_event_bitmap & BIT(APP_LISTENING_EVENT_XIAOAI))
-        {
-            app_listening_special_event_state_get(APP_LISTENING_EVENT_XIAOAI, &recover_state);
-        }
-#endif
+        app_listening_special_event_state_get_all(&recover_state);
 
         if (recover_state != ANC_APT_STATE_TOTAL)
         {
@@ -2962,14 +3013,6 @@ void app_listening_special_event_trigger(T_LISTENING_SPECIAL_EVENT enter_special
                 }
                 else
                 {
-#if F_APP_APT_SUPPORT
-                    if ((enter_special_event == LISTENING_MODE_SPECIAL_EVENT_OUT_BOX) &&
-                        (timer_idx_delay_apply_listening_mode) &&
-                        (app_apt_is_apt_on_state(*app_db.final_listening_state)))
-                    {
-                        return;
-                    }
-#endif
                     app_listening_state_machine(EVENT_APPLY_FINAL_STATE, false, false);
                 }
             }
@@ -3039,36 +3082,20 @@ uint8_t app_listening_set_delay_apply_time(T_ANC_APT_STATE new_state, T_ANC_APT_
 #if F_APP_APT_SUPPORT
     else if (new_state == ANC_OFF_NORMAL_APT_ON)
     {
-        if ((app_cfg_nv.time_delay_to_open_apt_when_power_on) &&
-            (app_db.delay_open_apt_when_power_on))
-        {
-            delay_apply_time = app_cfg_nv.time_delay_to_open_apt_when_power_on;
-        }
-        else
-        {
 #if F_APP_ANC_SUPPORT
-            if ((app_anc_is_anc_on_state(prev_state))
+        if ((app_anc_is_anc_on_state(prev_state))
 #if F_APP_SUPPORT_ANC_APT_COEXIST
-                || (app_listening_is_anc_apt_on_state(prev_state))
+            || (app_listening_is_anc_apt_on_state(prev_state))
 #endif
-               )
-            {
-                delay_apply_time = app_cfg_const.time_delay_to_close_anc;
-            }
-#endif
+           )
+        {
+            delay_apply_time = app_cfg_const.time_delay_to_close_anc;
         }
+#endif
     }
     else if (app_apt_is_llapt_on_state(new_state))
     {
-        if ((app_cfg_nv.time_delay_to_open_apt_when_power_on) &&
-            (app_db.delay_open_apt_when_power_on))
-        {
-            delay_apply_time = app_cfg_nv.time_delay_to_open_apt_when_power_on;
-        }
-        else
-        {
-            delay_apply_time = app_cfg_const.time_delay_to_open_llapt;
-        }
+        delay_apply_time = app_cfg_const.time_delay_to_open_llapt;
     }
 #endif
 #if F_APP_ANC_SUPPORT
@@ -3159,22 +3186,18 @@ void app_listening_judge_sco_event(T_APPLY_LISTENING_MODE_EVENT event)
 
 void app_listening_judge_a2dp_event(T_APPLY_LISTENING_MODE_EVENT event)
 {
-    APP_PRINT_TRACE3("app_listening_judge_a2dp_event event = 0x%02x, AVRCP_play_status = 0x%02x, %d",
-                     event, app_db.avrcp_play_status, app_cfg_const.apt_auto_on_off_while_music_playing);
+    APP_PRINT_TRACE3("app_listening_judge_a2dp_event event = 0x%02x, a2dp play status = 0x%02x, %d",
+                     event, app_db.a2dp_play_status, app_cfg_const.apt_auto_on_off_while_music_playing);
 
-    if (event == APPLY_LISTENING_MODE_AVRCP_PLAY_STATUS_CHANGE)
+    if (event == APPLY_LISTENING_MODE_MUSIC_PLAY_STATUS_CHANGE)
     {
 #if F_APP_APT_SUPPORT
-        if ((app_db.avrcp_play_status == BT_AVRCP_PLAY_STATUS_PLAYING) &&
+        if ((app_db.a2dp_play_status) &&
             ((listening_special_event_bitmap & BIT(APP_LISTENING_EVENT_A2DP)) == 0))
         {
-            if (app_cfg_const.apt_auto_on_off_while_music_playing)
-            {
-                app_listening_special_event_trigger(LISTENING_MODE_SPECIAL_EVENT_A2DP);
-            }
+            app_listening_special_event_trigger(LISTENING_MODE_SPECIAL_EVENT_A2DP);
         }
-        else if (((app_db.avrcp_play_status == BT_AVRCP_PLAY_STATUS_PAUSED) ||
-                  (app_db.avrcp_play_status == BT_AVRCP_PLAY_STATUS_STOPPED)) &&
+        else if ((!app_db.a2dp_play_status) &&
                  (listening_special_event_bitmap & BIT(APP_LISTENING_EVENT_A2DP)))
         {
             app_listening_special_event_trigger(LISTENING_MODE_SPECIAL_EVENT_A2DP_END);
@@ -3402,6 +3425,7 @@ void app_listening_cmd_postpone_pop(void)
 
 #if F_APP_ANC_SUPPORT
     case ANC_APT_CMD_POSTPONE_WAIT_USER_MODE_CLOSE:
+    case ANC_APT_CMD_POSTPONE_WAIT_ANC_OFF:
         {
             app_anc_cmd_handle(anc_apt_cmd_postpone_data.pos_anc_apt_cmd,
                                anc_apt_cmd_postpone_data.pos_param_ptr,
@@ -3453,7 +3477,11 @@ bool app_listening_mode_mmi(uint8_t action)
         (action == MMI_ANC_CYCLE) ||
         (action == MMI_LLAPT_CYCLE) ||
         (action == MMI_DEFAULT_LISTENING_MODE_CYCLE) ||
-        (action == MMI_ANC_APT_ON_OFF))
+        (action == MMI_ANC_APT_ON_OFF) ||
+        (action == MMI_AUDIO_ANC_APT_ALL_OFF) ||
+        (action == MMI_AUDIO_ANC_ON) ||
+        (action == MMI_AUDIO_APT_ON) ||
+        (action == MMI_SWITCH_APT_TYPE))
     {
         ret = true;
     }
@@ -3852,18 +3880,21 @@ static void app_listening_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t l
                 }
 
 #if F_APP_APT_SUPPORT
-                if (app_apt_is_normal_apt_on_state((T_ANC_APT_STATE)buf[0]) &&
-                    (eq_utils_num_get(MIC_SW_EQ, APT_MODE) != 0))
+                if (eq_utils_num_get(MIC_SW_EQ, APT_MODE) != 0)
                 {
-                    T_APT_EQ_DATA_UPDATE_EVENT event = EQ_INDEX_REPORT_BY_RWS_CONNECTED;
+                    if (app_apt_is_normal_apt_on_state((T_ANC_APT_STATE)buf[0]) ||
+                        app_listening_is_anc_apt_on_state((T_ANC_APT_STATE)buf[0]))
+                    {
+                        T_APT_EQ_DATA_UPDATE_EVENT event = EQ_INDEX_REPORT_BY_RWS_CONNECTED;
 
 #if F_APP_USER_EQ_SUPPORT
-                    if (app_eq_is_valid_user_eq_index(MIC_SW_EQ, APT_MODE, app_cfg_nv.apt_eq_idx))
-                    {
-                        event = EQ_INDEX_REPORT_BY_GET_UNSAVED_APT_EQ;
-                    }
+                        if (app_eq_is_valid_user_eq_index(MIC_SW_EQ, APT_MODE, app_cfg_nv.apt_eq_idx))
+                        {
+                            event = EQ_INDEX_REPORT_BY_GET_UNSAVED_APT_EQ;
+                        }
 #endif
-                    app_report_apt_eq_idx(event);
+                        app_report_apt_eq_idx(event);
+                    }
                 }
 #endif
             }
@@ -3986,6 +4017,24 @@ static void app_listening_mode_bud_loc_event_cback(uint32_t event, void *msg)
                      event, from_remote);
 }
 
+static void app_listening_mode_ipc_device_event_cback(uint32_t event, void *msg)
+{
+    switch (event)
+    {
+    case APP_DEVICE_IPC_EVT_A2DP_PLAY_STATUS:
+        {
+            if (app_cfg_const.apt_auto_on_off_while_music_playing)
+            {
+                app_listening_judge_a2dp_event(APPLY_LISTENING_MODE_MUSIC_PLAY_STATUS_CHANGE);
+            }
+        }
+        break;
+
+    default:
+        break;
+    }
+}
+
 bool app_listening_is_anc_apt_on_state(T_ANC_APT_STATE state)
 {
     bool ret = false;
@@ -4063,6 +4112,7 @@ void app_listening_mode_init(void)
                              APP_MODULE_TYPE_LISTENING_MODE, APP_REMOTE_MSG_LISTENING_MODE_TOTAL);
 #endif
     app_ipc_subscribe(BUD_LOCATION_IPC_TOPIC, app_listening_mode_bud_loc_event_cback);
+    app_ipc_subscribe(APP_DEVICE_IPC_TOPIC, app_listening_mode_ipc_device_event_cback);
 }
 
 #endif

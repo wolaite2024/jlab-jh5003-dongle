@@ -51,28 +51,40 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga7022b1b638d1f28da8ae8cf178a1dcde"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i_r___interrupts___definition.html#ga7022b1b638d1f28da8ae8cf178a1dcde">IR_INT_TF_EMPTY</a>&#160;&#160;&#160;((uint32_t)IR_TX_FIFO_EMPTY_INT_EN_Msk)</td></tr>
+<tr class="memdesc:ga7022b1b638d1f28da8ae8cf178a1dcde"><td class="mdescLeft">&#160;</td><td class="mdescRight">When TX FIFO is empty, TX FIFO empty interrupt will be triggered.  <a href="#ga7022b1b638d1f28da8ae8cf178a1dcde">More...</a><br /></td></tr>
 <tr class="separator:ga7022b1b638d1f28da8ae8cf178a1dcde"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8b4c235c4e2de1ec5b1628a3b55ae7d4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i_r___interrupts___definition.html#ga8b4c235c4e2de1ec5b1628a3b55ae7d4">IR_INT_TF_LEVEL</a>&#160;&#160;&#160;((uint32_t)IR_TX_FIFO_LEVEL_INT_EN_Msk)</td></tr>
+<tr class="memdesc:ga8b4c235c4e2de1ec5b1628a3b55ae7d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">When TX FIFO offset &lt;= threshold value, trigger TX FIFO level interrupt.  <a href="#ga8b4c235c4e2de1ec5b1628a3b55ae7d4">More...</a><br /></td></tr>
 <tr class="separator:ga8b4c235c4e2de1ec5b1628a3b55ae7d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga77f7494a778b5ca0dac046512955a6fb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i_r___interrupts___definition.html#ga77f7494a778b5ca0dac046512955a6fb">IR_INT_TF_OF</a>&#160;&#160;&#160;((uint32_t)IR_TX_FIFO_OVER_INT_EN_Msk)</td></tr>
+<tr class="memdesc:ga77f7494a778b5ca0dac046512955a6fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">When TX FIFO is full, data continues to be wrote to TX FIFO, TX FIFO overflow interrupt will be triggered.  <a href="#ga77f7494a778b5ca0dac046512955a6fb">More...</a><br /></td></tr>
 <tr class="separator:ga77f7494a778b5ca0dac046512955a6fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac1a8012fff330088abec0d4f9e99f43b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i_r___interrupts___definition.html#gac1a8012fff330088abec0d4f9e99f43b">IR_INT_RF_FULL</a>&#160;&#160;&#160;((uint32_t)IR_RX_FIFO_FULL_INT_Msk)</td></tr>
+<tr class="memdesc:gac1a8012fff330088abec0d4f9e99f43b"><td class="mdescLeft">&#160;</td><td class="mdescRight">When RX FIFO offset = 32, RX FIFO full interrupt will be triggered.  <a href="#gac1a8012fff330088abec0d4f9e99f43b">More...</a><br /></td></tr>
 <tr class="separator:gac1a8012fff330088abec0d4f9e99f43b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad5bdf868b14f494160c5bbb3ed59ba90"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i_r___interrupts___definition.html#gad5bdf868b14f494160c5bbb3ed59ba90">IR_INT_RF_LEVEL</a>&#160;&#160;&#160;((uint32_t)IR_RX_FIFO_LEVEL_INT_Msk)</td></tr>
+<tr class="memdesc:gad5bdf868b14f494160c5bbb3ed59ba90"><td class="mdescLeft">&#160;</td><td class="mdescRight">When RX FIFO offset &gt;= threshold value, trigger RX FIFO Level Interrupt.  <a href="#gad5bdf868b14f494160c5bbb3ed59ba90">More...</a><br /></td></tr>
 <tr class="separator:gad5bdf868b14f494160c5bbb3ed59ba90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa914a136f2e56dc70ea04d1e52f7446b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i_r___interrupts___definition.html#gaa914a136f2e56dc70ea04d1e52f7446b">IR_INT_RX_CNT_OF</a>&#160;&#160;&#160;((uint32_t)IR_RX_CNT_OF_INT_Msk)</td></tr>
+<tr class="memdesc:gaa914a136f2e56dc70ea04d1e52f7446b"><td class="mdescLeft">&#160;</td><td class="mdescRight">When RX counter is overflow, RX counter overflow interrupt will be triggered.  <a href="#gaa914a136f2e56dc70ea04d1e52f7446b">More...</a><br /></td></tr>
 <tr class="separator:gaa914a136f2e56dc70ea04d1e52f7446b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga122c198db59a9cb628cb86d4bbb5f01c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i_r___interrupts___definition.html#ga122c198db59a9cb628cb86d4bbb5f01c">IR_INT_RF_OF</a>&#160;&#160;&#160;((uint32_t)IR_RX_FIFO_OF_INT_Msk)</td></tr>
+<tr class="memdesc:ga122c198db59a9cb628cb86d4bbb5f01c"><td class="mdescLeft">&#160;</td><td class="mdescRight">When RX FIFO is full and continue to be wrote, RX FIFO overflow interrupt will be triggered.  <a href="#ga122c198db59a9cb628cb86d4bbb5f01c">More...</a><br /></td></tr>
 <tr class="separator:ga122c198db59a9cb628cb86d4bbb5f01c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9107e9107205ee7714c76320f631a2b3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i_r___interrupts___definition.html#ga9107e9107205ee7714c76320f631a2b3">IR_INT_RX_CNT_THR</a>&#160;&#160;&#160;((uint32_t)IR_RX_CNT_THR_INT_Msk)</td></tr>
+<tr class="memdesc:ga9107e9107205ee7714c76320f631a2b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">When RX counter &gt;= IR_RxCntThr, RX counter threshold interrupt will be triggered.  <a href="#ga9107e9107205ee7714c76320f631a2b3">More...</a><br /></td></tr>
 <tr class="separator:ga9107e9107205ee7714c76320f631a2b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafe6fcb88c9b9fa54c0ecaa44c505d6ad"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i_r___interrupts___definition.html#gafe6fcb88c9b9fa54c0ecaa44c505d6ad">IR_INT_RF_ERROR</a>&#160;&#160;&#160;((uint32_t)IR_RX_FIFO_ERROR_INT_Msk)</td></tr>
+<tr class="memdesc:gafe6fcb88c9b9fa54c0ecaa44c505d6ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">When RX FIFO is empty and continue to be read, RX FIFO error read interrupt will be triggered.  <a href="#gafe6fcb88c9b9fa54c0ecaa44c505d6ad">More...</a><br /></td></tr>
 <tr class="separator:gafe6fcb88c9b9fa54c0ecaa44c505d6ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab447ba972d5405d0534784fce38ce452"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i_r___interrupts___definition.html#gab447ba972d5405d0534784fce38ce452">IS_IR_TX_INT_CONFIG</a>(CONFIG)</td></tr>
+<tr class="memdesc:gab447ba972d5405d0534784fce38ce452"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains all IR TX interrupt.  <a href="#gab447ba972d5405d0534784fce38ce452">More...</a><br /></td></tr>
 <tr class="separator:gab447ba972d5405d0534784fce38ce452"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga11dd1f26e311dbf7d2170ee3d33d4a0d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i_r___interrupts___definition.html#ga11dd1f26e311dbf7d2170ee3d33d4a0d">IS_IR_RX_INT_CONFIG</a>(CONFIG)</td></tr>
+<tr class="memdesc:ga11dd1f26e311dbf7d2170ee3d33d4a0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains all IR RX interrupt.  <a href="#ga11dd1f26e311dbf7d2170ee3d33d4a0d">More...</a><br /></td></tr>
 <tr class="separator:ga11dd1f26e311dbf7d2170ee3d33d4a0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga68a9a7a7f8dc6251c1e22bd37d85fb3a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i_r___interrupts___definition.html#ga68a9a7a7f8dc6251c1e22bd37d85fb3a">IS_IR_INT_CONFIG</a>(CONFIG)&#160;&#160;&#160;(<a class="el" href="group__x3e___i_r___interrupts___definition.html#gab447ba972d5405d0534784fce38ce452">IS_IR_TX_INT_CONFIG</a>(CONFIG) || <a class="el" href="group__x3e___i_r___interrupts___definition.html#ga11dd1f26e311dbf7d2170ee3d33d4a0d">IS_IR_RX_INT_CONFIG</a>(CONFIG))</td></tr>
+<tr class="memdesc:ga68a9a7a7f8dc6251c1e22bd37d85fb3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains all IR TX and RX interrupt.  <a href="#ga68a9a7a7f8dc6251c1e22bd37d85fb3a">More...</a><br /></td></tr>
 <tr class="separator:ga68a9a7a7f8dc6251c1e22bd37d85fb3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -89,6 +101,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>When TX FIFO is empty, TX FIFO empty interrupt will be triggered. </p>
+
 </div>
 </div>
 <a id="ga8b4c235c4e2de1ec5b1628a3b55ae7d4"></a>
@@ -102,6 +116,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>When TX FIFO offset &lt;= threshold value, trigger TX FIFO level interrupt. </p>
 
 </div>
 </div>
@@ -117,6 +133,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>When TX FIFO is full, data continues to be wrote to TX FIFO, TX FIFO overflow interrupt will be triggered. </p>
+
 </div>
 </div>
 <a id="gac1a8012fff330088abec0d4f9e99f43b"></a>
@@ -130,6 +148,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>When RX FIFO offset = 32, RX FIFO full interrupt will be triggered. </p>
 
 </div>
 </div>
@@ -145,6 +165,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>When RX FIFO offset &gt;= threshold value, trigger RX FIFO Level Interrupt. </p>
+
 </div>
 </div>
 <a id="gaa914a136f2e56dc70ea04d1e52f7446b"></a>
@@ -158,6 +180,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>When RX counter is overflow, RX counter overflow interrupt will be triggered. </p>
 
 </div>
 </div>
@@ -173,6 +197,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>When RX FIFO is full and continue to be wrote, RX FIFO overflow interrupt will be triggered. </p>
+
 </div>
 </div>
 <a id="ga9107e9107205ee7714c76320f631a2b3"></a>
@@ -187,6 +213,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>When RX counter &gt;= IR_RxCntThr, RX counter threshold interrupt will be triggered. </p>
+
 </div>
 </div>
 <a id="gafe6fcb88c9b9fa54c0ecaa44c505d6ad"></a>
@@ -200,6 +228,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>When RX FIFO is empty and continue to be read, RX FIFO error read interrupt will be triggered. </p>
 
 </div>
 </div>
@@ -218,10 +248,12 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">(((CONFIG) == <a class="code" href="group__x3e___i_r___interrupts___definition.html#ga7022b1b638d1f28da8ae8cf178a1dcde">IR_INT_TF_EMPTY</a>)   || \</div><div class="line">                                       ((CONFIG) == <a class="code" href="group__x3e___i_r___interrupts___definition.html#ga8b4c235c4e2de1ec5b1628a3b55ae7d4">IR_INT_TF_LEVEL</a>)   || \</div><div class="line">                                       ((CONFIG) == <a class="code" href="group__x3e___i_r___interrupts___definition.html#ga77f7494a778b5ca0dac046512955a6fb">IR_INT_TF_OF</a>))</div><div class="ttc" id="group__x3e___i_r___interrupts___definition_html_ga7022b1b638d1f28da8ae8cf178a1dcde"><div class="ttname"><a href="group__x3e___i_r___interrupts___definition.html#ga7022b1b638d1f28da8ae8cf178a1dcde">IR_INT_TF_EMPTY</a></div><div class="ttdeci">#define IR_INT_TF_EMPTY</div><div class="ttdef"><b>Definition:</b> rtl876x_ir.h:516</div></div>
-<div class="ttc" id="group__x3e___i_r___interrupts___definition_html_ga8b4c235c4e2de1ec5b1628a3b55ae7d4"><div class="ttname"><a href="group__x3e___i_r___interrupts___definition.html#ga8b4c235c4e2de1ec5b1628a3b55ae7d4">IR_INT_TF_LEVEL</a></div><div class="ttdeci">#define IR_INT_TF_LEVEL</div><div class="ttdef"><b>Definition:</b> rtl876x_ir.h:517</div></div>
-<div class="ttc" id="group__x3e___i_r___interrupts___definition_html_ga77f7494a778b5ca0dac046512955a6fb"><div class="ttname"><a href="group__x3e___i_r___interrupts___definition.html#ga77f7494a778b5ca0dac046512955a6fb">IR_INT_TF_OF</a></div><div class="ttdeci">#define IR_INT_TF_OF</div><div class="ttdef"><b>Definition:</b> rtl876x_ir.h:518</div></div>
+<b>Value:</b><div class="fragment"><div class="line">(((CONFIG) == <a class="code" href="group__x3e___i_r___interrupts___definition.html#ga7022b1b638d1f28da8ae8cf178a1dcde">IR_INT_TF_EMPTY</a>)   || \</div><div class="line">                                       ((CONFIG) == <a class="code" href="group__x3e___i_r___interrupts___definition.html#ga8b4c235c4e2de1ec5b1628a3b55ae7d4">IR_INT_TF_LEVEL</a>)   || \</div><div class="line">                                       ((CONFIG) == <a class="code" href="group__x3e___i_r___interrupts___definition.html#ga77f7494a778b5ca0dac046512955a6fb">IR_INT_TF_OF</a>))</div><div class="ttc" id="group__x3e___i_r___interrupts___definition_html_ga7022b1b638d1f28da8ae8cf178a1dcde"><div class="ttname"><a href="group__x3e___i_r___interrupts___definition.html#ga7022b1b638d1f28da8ae8cf178a1dcde">IR_INT_TF_EMPTY</a></div><div class="ttdeci">#define IR_INT_TF_EMPTY</div><div class="ttdoc">When TX FIFO is empty, TX FIFO empty interrupt will be triggered. </div><div class="ttdef"><b>Definition:</b> rtl876x_ir.h:521</div></div>
+<div class="ttc" id="group__x3e___i_r___interrupts___definition_html_ga8b4c235c4e2de1ec5b1628a3b55ae7d4"><div class="ttname"><a href="group__x3e___i_r___interrupts___definition.html#ga8b4c235c4e2de1ec5b1628a3b55ae7d4">IR_INT_TF_LEVEL</a></div><div class="ttdeci">#define IR_INT_TF_LEVEL</div><div class="ttdoc">When TX FIFO offset &lt;= threshold value, trigger TX FIFO level interrupt. </div><div class="ttdef"><b>Definition:</b> rtl876x_ir.h:522</div></div>
+<div class="ttc" id="group__x3e___i_r___interrupts___definition_html_ga77f7494a778b5ca0dac046512955a6fb"><div class="ttname"><a href="group__x3e___i_r___interrupts___definition.html#ga77f7494a778b5ca0dac046512955a6fb">IR_INT_TF_OF</a></div><div class="ttdeci">#define IR_INT_TF_OF</div><div class="ttdoc">When TX FIFO is full, data continues to be wrote to TX FIFO, TX FIFO overflow interrupt will be trigg...</div><div class="ttdef"><b>Definition:</b> rtl876x_ir.h:523</div></div>
 </div><!-- fragment -->
+<p>Contains all IR TX interrupt. </p>
+
 </div>
 </div>
 <a id="ga11dd1f26e311dbf7d2170ee3d33d4a0d"></a>
@@ -239,13 +271,15 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">(((CONFIG) == <a class="code" href="group__x3e___i_r___interrupts___definition.html#gac1a8012fff330088abec0d4f9e99f43b">IR_INT_RF_FULL</a>)     || \</div><div class="line">                                       ((CONFIG) == <a class="code" href="group__x3e___i_r___interrupts___definition.html#gad5bdf868b14f494160c5bbb3ed59ba90">IR_INT_RF_LEVEL</a>)   || \</div><div class="line">                                       ((CONFIG) == <a class="code" href="group__x3e___i_r___interrupts___definition.html#gaa914a136f2e56dc70ea04d1e52f7446b">IR_INT_RX_CNT_OF</a>)  || \</div><div class="line">                                       ((CONFIG) == <a class="code" href="group__x3e___i_r___interrupts___definition.html#ga122c198db59a9cb628cb86d4bbb5f01c">IR_INT_RF_OF</a>)      || \</div><div class="line">                                       ((CONFIG) == <a class="code" href="group__x3e___i_r___interrupts___definition.html#ga9107e9107205ee7714c76320f631a2b3">IR_INT_RX_CNT_THR</a>) || \</div><div class="line">                                       ((CONFIG) == <a class="code" href="group__x3e___i_r___interrupts___definition.html#gafe6fcb88c9b9fa54c0ecaa44c505d6ad">IR_INT_RF_ERROR</a>))</div><div class="ttc" id="group__x3e___i_r___interrupts___definition_html_ga122c198db59a9cb628cb86d4bbb5f01c"><div class="ttname"><a href="group__x3e___i_r___interrupts___definition.html#ga122c198db59a9cb628cb86d4bbb5f01c">IR_INT_RF_OF</a></div><div class="ttdeci">#define IR_INT_RF_OF</div><div class="ttdef"><b>Definition:</b> rtl876x_ir.h:523</div></div>
-<div class="ttc" id="group__x3e___i_r___interrupts___definition_html_ga9107e9107205ee7714c76320f631a2b3"><div class="ttname"><a href="group__x3e___i_r___interrupts___definition.html#ga9107e9107205ee7714c76320f631a2b3">IR_INT_RX_CNT_THR</a></div><div class="ttdeci">#define IR_INT_RX_CNT_THR</div><div class="ttdef"><b>Definition:</b> rtl876x_ir.h:524</div></div>
-<div class="ttc" id="group__x3e___i_r___interrupts___definition_html_gaa914a136f2e56dc70ea04d1e52f7446b"><div class="ttname"><a href="group__x3e___i_r___interrupts___definition.html#gaa914a136f2e56dc70ea04d1e52f7446b">IR_INT_RX_CNT_OF</a></div><div class="ttdeci">#define IR_INT_RX_CNT_OF</div><div class="ttdef"><b>Definition:</b> rtl876x_ir.h:522</div></div>
-<div class="ttc" id="group__x3e___i_r___interrupts___definition_html_gac1a8012fff330088abec0d4f9e99f43b"><div class="ttname"><a href="group__x3e___i_r___interrupts___definition.html#gac1a8012fff330088abec0d4f9e99f43b">IR_INT_RF_FULL</a></div><div class="ttdeci">#define IR_INT_RF_FULL</div><div class="ttdef"><b>Definition:</b> rtl876x_ir.h:520</div></div>
-<div class="ttc" id="group__x3e___i_r___interrupts___definition_html_gad5bdf868b14f494160c5bbb3ed59ba90"><div class="ttname"><a href="group__x3e___i_r___interrupts___definition.html#gad5bdf868b14f494160c5bbb3ed59ba90">IR_INT_RF_LEVEL</a></div><div class="ttdeci">#define IR_INT_RF_LEVEL</div><div class="ttdef"><b>Definition:</b> rtl876x_ir.h:521</div></div>
-<div class="ttc" id="group__x3e___i_r___interrupts___definition_html_gafe6fcb88c9b9fa54c0ecaa44c505d6ad"><div class="ttname"><a href="group__x3e___i_r___interrupts___definition.html#gafe6fcb88c9b9fa54c0ecaa44c505d6ad">IR_INT_RF_ERROR</a></div><div class="ttdeci">#define IR_INT_RF_ERROR</div><div class="ttdef"><b>Definition:</b> rtl876x_ir.h:525</div></div>
+<b>Value:</b><div class="fragment"><div class="line">(((CONFIG) == <a class="code" href="group__x3e___i_r___interrupts___definition.html#gac1a8012fff330088abec0d4f9e99f43b">IR_INT_RF_FULL</a>)     || \</div><div class="line">                                       ((CONFIG) == <a class="code" href="group__x3e___i_r___interrupts___definition.html#gad5bdf868b14f494160c5bbb3ed59ba90">IR_INT_RF_LEVEL</a>)   || \</div><div class="line">                                       ((CONFIG) == <a class="code" href="group__x3e___i_r___interrupts___definition.html#gaa914a136f2e56dc70ea04d1e52f7446b">IR_INT_RX_CNT_OF</a>)  || \</div><div class="line">                                       ((CONFIG) == <a class="code" href="group__x3e___i_r___interrupts___definition.html#ga122c198db59a9cb628cb86d4bbb5f01c">IR_INT_RF_OF</a>)      || \</div><div class="line">                                       ((CONFIG) == <a class="code" href="group__x3e___i_r___interrupts___definition.html#ga9107e9107205ee7714c76320f631a2b3">IR_INT_RX_CNT_THR</a>) || \</div><div class="line">                                       ((CONFIG) == <a class="code" href="group__x3e___i_r___interrupts___definition.html#gafe6fcb88c9b9fa54c0ecaa44c505d6ad">IR_INT_RF_ERROR</a>))</div><div class="ttc" id="group__x3e___i_r___interrupts___definition_html_ga122c198db59a9cb628cb86d4bbb5f01c"><div class="ttname"><a href="group__x3e___i_r___interrupts___definition.html#ga122c198db59a9cb628cb86d4bbb5f01c">IR_INT_RF_OF</a></div><div class="ttdeci">#define IR_INT_RF_OF</div><div class="ttdoc">When RX FIFO is full and continue to be wrote, RX FIFO overflow interrupt will be triggered...</div><div class="ttdef"><b>Definition:</b> rtl876x_ir.h:528</div></div>
+<div class="ttc" id="group__x3e___i_r___interrupts___definition_html_ga9107e9107205ee7714c76320f631a2b3"><div class="ttname"><a href="group__x3e___i_r___interrupts___definition.html#ga9107e9107205ee7714c76320f631a2b3">IR_INT_RX_CNT_THR</a></div><div class="ttdeci">#define IR_INT_RX_CNT_THR</div><div class="ttdoc">When RX counter &gt;= IR_RxCntThr, RX counter threshold interrupt will be triggered. ...</div><div class="ttdef"><b>Definition:</b> rtl876x_ir.h:529</div></div>
+<div class="ttc" id="group__x3e___i_r___interrupts___definition_html_gaa914a136f2e56dc70ea04d1e52f7446b"><div class="ttname"><a href="group__x3e___i_r___interrupts___definition.html#gaa914a136f2e56dc70ea04d1e52f7446b">IR_INT_RX_CNT_OF</a></div><div class="ttdeci">#define IR_INT_RX_CNT_OF</div><div class="ttdoc">When RX counter is overflow, RX counter overflow interrupt will be triggered. </div><div class="ttdef"><b>Definition:</b> rtl876x_ir.h:527</div></div>
+<div class="ttc" id="group__x3e___i_r___interrupts___definition_html_gac1a8012fff330088abec0d4f9e99f43b"><div class="ttname"><a href="group__x3e___i_r___interrupts___definition.html#gac1a8012fff330088abec0d4f9e99f43b">IR_INT_RF_FULL</a></div><div class="ttdeci">#define IR_INT_RF_FULL</div><div class="ttdoc">When RX FIFO offset = 32, RX FIFO full interrupt will be triggered. </div><div class="ttdef"><b>Definition:</b> rtl876x_ir.h:525</div></div>
+<div class="ttc" id="group__x3e___i_r___interrupts___definition_html_gad5bdf868b14f494160c5bbb3ed59ba90"><div class="ttname"><a href="group__x3e___i_r___interrupts___definition.html#gad5bdf868b14f494160c5bbb3ed59ba90">IR_INT_RF_LEVEL</a></div><div class="ttdeci">#define IR_INT_RF_LEVEL</div><div class="ttdoc">When RX FIFO offset &gt;= threshold value, trigger RX FIFO Level Interrupt. </div><div class="ttdef"><b>Definition:</b> rtl876x_ir.h:526</div></div>
+<div class="ttc" id="group__x3e___i_r___interrupts___definition_html_gafe6fcb88c9b9fa54c0ecaa44c505d6ad"><div class="ttname"><a href="group__x3e___i_r___interrupts___definition.html#gafe6fcb88c9b9fa54c0ecaa44c505d6ad">IR_INT_RF_ERROR</a></div><div class="ttdeci">#define IR_INT_RF_ERROR</div><div class="ttdoc">When RX FIFO is empty and continue to be read, RX FIFO error read interrupt will be triggered...</div><div class="ttdef"><b>Definition:</b> rtl876x_ir.h:530</div></div>
 </div><!-- fragment -->
+<p>Contains all IR RX interrupt. </p>
+
 </div>
 </div>
 <a id="ga68a9a7a7f8dc6251c1e22bd37d85fb3a"></a>
@@ -263,6 +297,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Contains all IR TX and RX interrupt. </p>
 
 </div>
 </div>

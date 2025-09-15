@@ -13,9 +13,8 @@ extern "C" {
 #include "codec_def.h"
 #include "ble_audio.h"
 #include "multitopology_ctrl.h"
-#include "app_msg.h"
-#include "app_types.h"
 #include "app_lea_scan.h"
+#include "app_types.h"
 
 #define LEA_SYNC_CLK_REF SYNCCLK_ID4
 
@@ -29,6 +28,8 @@ extern "C" {
 
 //Setting 1 due to DSP doesn't support LC3 multi-frame*/
 #define FIXED_FRAME_NUM           1
+
+#define PLAYBACK_RESUME_CNT 400
 
 extern uint8_t lea_bas_id;
 
@@ -84,11 +85,11 @@ typedef enum
 typedef enum
 {
     LEA_REMOTE_MMI_SWITCH_SYNC        = 0x01,
-    LEA_REMOTE_PA_INFO_SYNC           = 0x02,
-    LEA_REMOTE_SEC_SYNC_CIS_STREAMING = 0x03,
-    LEA_REMOTE_MEDIA_SUSPEND_SYNC     = 0x04,
-    LEA_REMOTE_SYNC_SIRK              = 0x05,
-    LEA_REMOTE_SYNC_PRI_MIC_STATE     = 0x06,
+    LEA_REMOTE_SEC_SYNC_CIS_STREAMING = 0x02,
+    LEA_REMOTE_MEDIA_SUSPEND_SYNC     = 0x03,
+    LEA_REMOTE_SYNC_SIRK              = 0x04,
+    LEA_REMOTE_SYNC_PRI_MIC_STATE     = 0x05,
+    LEA_REMOTE_SYNC_LINK_NUM          = 0x06,
     LEA_REMOTE_MSG_TOTAL
 } T_LEA_REMOTE_MSG;
 
@@ -143,12 +144,9 @@ void app_lea_mgr_init(void);
 void app_lea_mgr_set_media_state(uint8_t para);
 void app_lea_mgr_mmi_handle(uint8_t action);
 void app_lea_mgr_update_sniff_mask(void);
-void app_lea_mgr_tri_mmi_handle_action(uint8_t action, bool inter);
 bool app_lea_mgr_dev_ctrl(uint8_t para, uint8_t *data);
-bool app_lea_mgr_ase_exist_conn(uint16_t conn_handle);
-bool app_lea_mgr_get_link_info(uint8_t *sets, uint8_t *active_index, uint8_t *param);
 bool app_lea_mgr_is_media_streaming(void);
-bool app_lea_mgr_is_streaming(void);
+bool app_lea_mgr_is_downstreaming(void);
 bool app_lea_mgr_is_upstreaming(void);
 void app_lea_mgr_update_current_mcp_state(void *p_link_info, uint8_t mcp_last_state);
 void app_lea_mgr_clear_iso_queue(T_OS_QUEUE *p_queue);
@@ -156,11 +154,11 @@ void app_lea_mgr_enqueue_iso_data(T_OS_QUEUE *p_queue, T_BT_DIRECT_ISO_DATA_IND 
                                   uint16_t output_handle);
 T_ISO_DATA_IND *app_lea_mgr_find_iso_elem(T_OS_QUEUE *p_queue,
                                           T_BT_DIRECT_ISO_DATA_IND *p_direct_iso);
-void app_lea_mgr_msg_handle(T_IO_MSG *io_msg);
 bool app_lea_mgr_get_media_suspend_by_out_ear(void);
 void app_lea_mgr_sync_media_suspend_by_remote(uint8_t remote_media_suspend);
-void app_lea_mgr_set_gaming_state(bool state);
 void app_lea_mgr_update_media_suspend_by_out_ear(bool out_ear);
+bool app_lea_mgr_find_call_device_by_priority(void);
+bool app_lea_mgr_sync_link_num(void);
 void app_lea_mgr_bas_batt_level_report(uint16_t conn_handle);
 bool app_lea_mgr_handle_vol_mmi(uint8_t action);
 

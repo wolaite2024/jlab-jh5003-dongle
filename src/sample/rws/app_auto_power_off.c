@@ -11,7 +11,6 @@
 #include "app_mmi.h"
 #include "app_main.h"
 #include "app_relay.h"
-#include "pm.h"
 #include "app_ota.h"
 
 typedef enum

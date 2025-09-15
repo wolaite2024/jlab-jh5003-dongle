@@ -57,7 +57,7 @@ void app_lea_realcast_stop_scan(void)
             (app_lea_bca_state() == LEA_BCA_STATE_SCAN))
         {
             app_lea_bca_state_change(LEA_BCA_STATE_IDLE);
-            app_lea_scan_stop();
+            app_lea_bca_scan_stop();
             app_lea_realcast_state_notify(CMD_LEA_SCAN_STOP, CMD_STATUS_SUCCESS, 0,
                                           PKT_TYPE_COMPLETE, NULL, 0);
         }
@@ -507,7 +507,7 @@ static void app_lea_realcast_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_
             {
                 T_LEA_BRS_INFO *p_src_info = (T_LEA_BRS_INFO *)buf;
 
-                app_lea_scan_start(LE_AUDIO_SCAN_TIME);
+                app_lea_bca_scan_start(app_cfg_const.scan_to * 1000);
                 mtc_topology_dm(MTC_TOPO_EVENT_BIS_START);
                 app_lea_bca_state_change(LEA_BCA_STATE_SCAN);
                 app_lea_bca_scan_info(p_src_info);
@@ -592,7 +592,7 @@ void app_lea_realcast_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd
                 }
                 else
                 {
-                    app_lea_mgr_tri_mmi_handle_action(MMI_BIG_START, true);
+                    app_lea_mgr_mmi_handle(MMI_BIG_START);
                 }
                 app_lea_realcast_state_notify(cmd_id, CMD_STATUS_SUCCESS, SYNC_STATE_SEARCHING, PKT_TYPE_COMPLETE,
                                               NULL, 0);
@@ -695,7 +695,7 @@ void app_lea_realcast_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd
                 }
                 else
                 {
-                    app_lea_mgr_tri_mmi_handle_action(MMI_BIG_STOP, false);
+                    app_lea_mgr_mmi_handle(MMI_BIG_STOP);
                 }
                 app_lea_realcast_state_notify(cmd_id, CMD_STATUS_SUCCESS, 0, PKT_TYPE_COMPLETE, NULL, 0);
             }
@@ -735,7 +735,7 @@ void app_lea_realcast_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd
                     bt_avrcp_pause(app_db.br_link[active_a2dp_idx].bd_addr);
                 }
                 app_lea_bca_state_change(LEA_BCA_STATE_SCAN);
-                app_lea_scan_start(timeout);
+                app_lea_bca_scan_start(timeout * 1000);
                 APP_PRINT_TRACE2("app_lea_realcast_cmd_handle: filter 0x%02X, timeout 0x%02X", filter, timeout);
             }
         }
@@ -752,7 +752,7 @@ void app_lea_realcast_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd
                 realcast_device.cmd_path = cmd_path;
                 realcast_device.cmd_id = cmd_id;
                 app_lea_bca_state_change(LEA_BCA_STATE_IDLE);
-                app_lea_scan_stop();
+                app_lea_bca_scan_stop();
                 app_lea_realcast_state_notify(cmd_id, CMD_STATUS_SUCCESS, 0, PKT_TYPE_COMPLETE, NULL, 0);
             }
             else
@@ -823,7 +823,7 @@ void app_lea_realcast_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd
                     }
                     else
                     {
-                        app_lea_scan_start(LE_AUDIO_SCAN_TIME);
+                        app_lea_bca_scan_start(app_cfg_const.scan_to * 1000);
                         mtc_topology_dm(MTC_TOPO_EVENT_BIS_START);
                         app_lea_bca_state_change(LEA_BCA_STATE_SCAN);
                         app_lea_bca_scan_info(&src_info);
@@ -862,7 +862,7 @@ timeout 0x%02X, broadcast_id %b, adv_addr_type 0x%02X, advertiser_sid 0x%02X",
                 }
                 else
                 {
-                    app_lea_mgr_tri_mmi_handle_action(MMI_BIG_STOP, true);
+                    app_lea_mgr_mmi_handle(MMI_BIG_STOP);
                 }
                 app_lea_realcast_state_notify(cmd_id, CMD_STATUS_SUCCESS, 0, PKT_TYPE_COMPLETE, NULL, 0);
             }

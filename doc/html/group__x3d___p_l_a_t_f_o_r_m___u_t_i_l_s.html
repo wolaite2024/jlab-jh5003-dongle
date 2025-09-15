@@ -44,6 +44,7 @@ $(function() {
   <div class="summary">
 <a href="#groups">Modules</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#enumval-members">Enumerator</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">Platform Utilities<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___p_l_a_t_f_o_r_m.html">Platform</a> &raquo; <a class="el" href="group___p_l_a_t_f_o_r_m__87x3d.html">rtl87x3d</a></div></div>  </div>
@@ -55,6 +56,8 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
+<tr class="memitem:group___s_y_n_c_c_l_k___i_d___types"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_y_n_c_c_l_k___i_d___types.html">Export SYNCCLK ID</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___p_l_a_t_f_o_r_m___u_t_i_l_s___exported___functions"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_l_a_t_f_o_r_m___u_t_i_l_s___exported___functions.html">Platform Utils Exported Functions</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -82,20 +85,38 @@ Macros</h2></td></tr>
 <tr class="separator:ga41acb9e0b4c7681d9161d590ad5b8c11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae2e445cae73883ffa13e48b5d648686a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3d___p_l_a_t_f_o_r_m___u_t_i_l_s.html#gae2e445cae73883ffa13e48b5d648686a">LE_U32TA</a>(a,  u32)</td></tr>
 <tr class="separator:gae2e445cae73883ffa13e48b5d648686a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabf691d86d3b3903a97856baa80d680da"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3d___p_l_a_t_f_o_r_m___u_t_i_l_s.html#gabf691d86d3b3903a97856baa80d680da">TIM7_Handler</a>&#160;&#160;&#160;<a class="el" href="group___p_l_a_t_f_o_r_m___u_t_i_l_s___exported___functions.html#gac2454664c559142dcdb61af271495203">Timestamp_Handler</a></td></tr>
-<tr class="separator:gabf691d86d3b3903a97856baa80d680da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga38c153990e5177d4fba931b7e38de1ec"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3d___p_l_a_t_f_o_r_m___u_t_i_l_s.html#ga38c153990e5177d4fba931b7e38de1ec">TIM11_Handler</a>&#160;&#160;&#160;<a class="el" href="group___p_l_a_t_f_o_r_m___u_t_i_l_s___exported___functions.html#gac2454664c559142dcdb61af271495203">Timestamp_Handler</a></td></tr>
-<tr class="separator:ga38c153990e5177d4fba931b7e38de1ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga93973e711b8832176789c467c9bc34c2"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3d___p_l_a_t_f_o_r_m___u_t_i_l_s.html#ga93973e711b8832176789c467c9bc34c2">RxPktFunc</a></td></tr>
-<tr class="separator:ga93973e711b8832176789c467c9bc34c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga286be2a599aee445d7792b72890a1d0f"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3d___p_l_a_t_f_o_r_m___u_t_i_l_s.html#ga286be2a599aee445d7792b72890a1d0f">TxCompFunc</a></td></tr>
-<tr class="separator:ga286be2a599aee445d7792b72890a1d0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2231bf21bd869309845aabab6e776055"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3d___p_l_a_t_f_o_r_m___u_t_i_l_s.html#ga2231bf21bd869309845aabab6e776055">d32</a> [6]</td></tr>
+<tr class="separator:ga2231bf21bd869309845aabab6e776055"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb07f0ff9c3ce15006d7595e5464be83"><td class="memItemLeft" >uint8_t&#160;&#160;&#160;<a class="el" href="group__x3d___p_l_a_t_f_o_r_m___u_t_i_l_s.html#gadb07f0ff9c3ce15006d7595e5464be83">conn_role</a></td></tr>
+<tr class="separator:gadb07f0ff9c3ce15006d7595e5464be83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7f7e030477abafb4d6776923b203c73b"><td class="memItemLeft" >uint8_t&#160;&#160;&#160;<a class="el" href="group__x3d___p_l_a_t_f_o_r_m___u_t_i_l_s.html#ga7f7e030477abafb4d6776923b203c73b">conn_type</a></td></tr>
+<tr class="separator:ga7f7e030477abafb4d6776923b203c73b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b9aeb2bb7989ef331f452dd9626f139"><td class="memItemLeft" >uint8_t&#160;&#160;&#160;<a class="el" href="group__x3d___p_l_a_t_f_o_r_m___u_t_i_l_s.html#ga5b9aeb2bb7989ef331f452dd9626f139">role</a></td></tr>
+<tr class="separator:ga5b9aeb2bb7989ef331f452dd9626f139"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaca4e0599c0b009ad831c91636b85550e"><td class="memItemLeft" >uint8_t&#160;&#160;&#160;<a class="el" href="group__x3d___p_l_a_t_f_o_r_m___u_t_i_l_s.html#gaca4e0599c0b009ad831c91636b85550e">net_id</a></td></tr>
+<tr class="separator:gaca4e0599c0b009ad831c91636b85550e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga90128c0d407065542a2aef399c497b3e"><td class="memItemLeft" >uint32_t&#160;&#160;&#160;<a class="el" href="group__x3d___p_l_a_t_f_o_r_m___u_t_i_l_s.html#ga90128c0d407065542a2aef399c497b3e">exp_sync_clock</a></td></tr>
+<tr class="separator:ga90128c0d407065542a2aef399c497b3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga425d864d1c20480e1942d875269cef8e"><td class="memItemLeft" >struct {</td></tr>
+<tr class="memitem:gadb07f0ff9c3ce15006d7595e5464be83"><td class="memItemLeft" >&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<a class="el" href="group__x3d___p_l_a_t_f_o_r_m___u_t_i_l_s.html#gadb07f0ff9c3ce15006d7595e5464be83">conn_role</a></td></tr>
+<tr class="separator:gadb07f0ff9c3ce15006d7595e5464be83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7f7e030477abafb4d6776923b203c73b"><td class="memItemLeft" >&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<a class="el" href="group__x3d___p_l_a_t_f_o_r_m___u_t_i_l_s.html#ga7f7e030477abafb4d6776923b203c73b">conn_type</a></td></tr>
+<tr class="separator:ga7f7e030477abafb4d6776923b203c73b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b9aeb2bb7989ef331f452dd9626f139"><td class="memItemLeft" >&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<a class="el" href="group__x3d___p_l_a_t_f_o_r_m___u_t_i_l_s.html#ga5b9aeb2bb7989ef331f452dd9626f139">role</a></td></tr>
+<tr class="separator:ga5b9aeb2bb7989ef331f452dd9626f139"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaca4e0599c0b009ad831c91636b85550e"><td class="memItemLeft" >&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<a class="el" href="group__x3d___p_l_a_t_f_o_r_m___u_t_i_l_s.html#gaca4e0599c0b009ad831c91636b85550e">net_id</a></td></tr>
+<tr class="separator:gaca4e0599c0b009ad831c91636b85550e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga90128c0d407065542a2aef399c497b3e"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="group__x3d___p_l_a_t_f_o_r_m___u_t_i_l_s.html#ga90128c0d407065542a2aef399c497b3e">exp_sync_clock</a></td></tr>
+<tr class="separator:ga90128c0d407065542a2aef399c497b3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga425d864d1c20480e1942d875269cef8e"><td class="memItemLeft" valign="top">};&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:ga425d864d1c20480e1942d875269cef8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Utility helper functions. </p>
+<p>Manage the sync clock (freerun clock) functions.</p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="gaf2d7c80c86ec3d5cb34e0b0f50f9f113"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaf2d7c80c86ec3d5cb34e0b0f50f9f113">&#9670;&nbsp;</a></span>RTK_STATIC_ASSERT_MSG</h2>
@@ -385,57 +406,169 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="gabf691d86d3b3903a97856baa80d680da"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gabf691d86d3b3903a97856baa80d680da">&#9670;&nbsp;</a></span>TIM7_Handler</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define TIM7_Handler&#160;&#160;&#160;<a class="el" href="group___p_l_a_t_f_o_r_m___u_t_i_l_s___exported___functions.html#gac2454664c559142dcdb61af271495203">Timestamp_Handler</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ga38c153990e5177d4fba931b7e38de1ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga38c153990e5177d4fba931b7e38de1ec">&#9670;&nbsp;</a></span>TIM11_Handler</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define TIM11_Handler&#160;&#160;&#160;<a class="el" href="group___p_l_a_t_f_o_r_m___u_t_i_l_s___exported___functions.html#gac2454664c559142dcdb61af271495203">Timestamp_Handler</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a id="ga93973e711b8832176789c467c9bc34c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga93973e711b8832176789c467c9bc34c2">&#9670;&nbsp;</a></span>RxPktFunc</h2>
+<a id="ga2231bf21bd869309845aabab6e776055"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2231bf21bd869309845aabab6e776055">&#9670;&nbsp;</a></span>d32</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* RxPktFunc</td>
+          <td class="memname">uint32_t d32</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ga286be2a599aee445d7792b72890a1d0f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga286be2a599aee445d7792b72890a1d0f">&#9670;&nbsp;</a></span>TxCompFunc</h2>
+<a id="gadb07f0ff9c3ce15006d7595e5464be83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadb07f0ff9c3ce15006d7595e5464be83">&#9670;&nbsp;</a></span>conn_role <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* TxCompFunc</td>
+          <td class="memname">uint8_t conn_role</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="gadb07f0ff9c3ce15006d7595e5464be83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadb07f0ff9c3ce15006d7595e5464be83">&#9670;&nbsp;</a></span>conn_role <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t conn_role</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ga7f7e030477abafb4d6776923b203c73b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7f7e030477abafb4d6776923b203c73b">&#9670;&nbsp;</a></span>conn_type <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t conn_type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ga7f7e030477abafb4d6776923b203c73b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7f7e030477abafb4d6776923b203c73b">&#9670;&nbsp;</a></span>conn_type <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t conn_type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ga5b9aeb2bb7989ef331f452dd9626f139"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5b9aeb2bb7989ef331f452dd9626f139">&#9670;&nbsp;</a></span>role <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t role</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ga5b9aeb2bb7989ef331f452dd9626f139"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5b9aeb2bb7989ef331f452dd9626f139">&#9670;&nbsp;</a></span>role <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t role</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="gaca4e0599c0b009ad831c91636b85550e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaca4e0599c0b009ad831c91636b85550e">&#9670;&nbsp;</a></span>net_id <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t net_id</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="gaca4e0599c0b009ad831c91636b85550e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaca4e0599c0b009ad831c91636b85550e">&#9670;&nbsp;</a></span>net_id <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t net_id</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ga90128c0d407065542a2aef399c497b3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga90128c0d407065542a2aef399c497b3e">&#9670;&nbsp;</a></span>exp_sync_clock <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t exp_sync_clock</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ga90128c0d407065542a2aef399c497b3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga90128c0d407065542a2aef399c497b3e">&#9670;&nbsp;</a></span>exp_sync_clock <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t exp_sync_clock</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ga425d864d1c20480e1942d875269cef8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga425d864d1c20480e1942d875269cef8e">&#9670;&nbsp;</a></span>@4066</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct { ... } </td>
         </tr>
       </table>
 </div><div class="memdoc">

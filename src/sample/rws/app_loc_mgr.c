@@ -172,6 +172,7 @@ void app_loc_mgr_state_machine(T_BUD_LOCATION_EVENT evt, bool from_remote,
 
 #if F_APP_CHARGER_CASE_SUPPORT
     app_report_bud_loc_to_charger_case();
+    app_report_status_to_charger_case(CHARGER_CASE_GET_IN_CASE_STATUS, NULL);
 #endif
 
 log_mgr_print:

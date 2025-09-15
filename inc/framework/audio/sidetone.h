@@ -17,7 +17,7 @@ extern "C" {
 /**
  * \defgroup AUDIO_SIDETONE Sidetone
  *
- * \brief   Control and customize the sidetone engine in the audio framework.
+ * \brief   Control and customize the Sidetone engine in the Audio Subsystem.
  * \details Sidetone is the sound of the user voice captured by the microphone
  *          that is fed back into the earpiece. Sidetone gives indications to
  *          the user that the microphone is picking up the voice; the voice is
@@ -26,29 +26,25 @@ extern "C" {
  */
 
 /**
- * sidetone.h
- *
- * \brief Define the supported sidetone types.
+ * \brief Define the supported Sidetone types.
  *
  * \ingroup AUDIO_SIDETONE
  */
 typedef enum t_sidetone_type
 {
-    SIDETONE_TYPE_SW    = 0x00, /**< Software sidetone engine type */
-    SIDETONE_TYPE_HW    = 0x01, /**< Hardware sidetone engine type */
+    SIDETONE_TYPE_SW    = 0x00, /**< Software Sidetone engine type */
+    SIDETONE_TYPE_HW    = 0x01, /**< Hardware Sidetone engine type */
 } T_SIDETONE_TYPE;
 
 /**
- * sidetone.h
- *
- * \brief   Create a sidetone instance.
+ * \brief   Create a Sidetone instance.
  *
  * \param[in] type       Sidetone type \ref T_SIDETONE_TYPE.
  * \param[in] gain       DAC digital gain value in dB unit.
  * \param[in] level      Cutoff frequency level.
  *
- * \return  The instance of the sidetone engine. If returned instance is NULL, the
- *          sidetone instance was failed to create.
+ * \return  The instance of the Sidetone engine. If returned instance is NULL, the
+ *          Sidetone instance was failed to create.
  *
  * \ingroup AUDIO_SIDETONE
  */
@@ -57,61 +53,53 @@ T_AUDIO_EFFECT_INSTANCE sidetone_create(T_SIDETONE_TYPE type,
                                         uint8_t         level);
 
 /**
- * sidetone.h
+ * \brief   Enable the specific Sidetone instance.
  *
- * \brief   Enable the specific sidetone instance.
+ * \param[in] instance  The Sidetone engine session \ref T_AUDIO_EFFECT_INSTANCE.
  *
- * \param[in] instance  The sidetone engine session \ref AUDIO_SIDETONE.
- *
- * \return  The status of enabling the sidetone instance.
- * \retval  true    Sidetone instance was enabled successfully.
- * \retval  false   Sidetone instance was failed to enable.
+ * \return  The status of enabling the Sidetone instance.
+ * \retval  true    The Sidetone instance was enabled successfully.
+ * \retval  false   The Sidetone instance was failed to enable.
  *
  * \ingroup AUDIO_SIDETONE
  */
 bool sidetone_enable(T_AUDIO_EFFECT_INSTANCE instance);
 
 /**
- * sidetone.h
+ * \brief   Disable the specific Sidetone instance.
  *
- * \brief   Disable the specific sidetone instance.
+ * \param[in] instance  The Sidetone engine session \ref T_AUDIO_EFFECT_INSTANCE.
  *
- * \param[in] instance  The sidetone engine session \ref AUDIO_SIDETONE.
- *
- * \return  The status of disabling the sidetone instance.
- * \retval  true    Sidetone instance was disabled successfully.
- * \retval  false   Sidetone instance was failed to disable.
+ * \return  The status of disabling the Sidetone instance.
+ * \retval  true    The Sidetone instance was disabled successfully.
+ * \retval  false   The Sidetone instance was failed to disable.
  *
  * \ingroup AUDIO_SIDETONE
  */
 bool sidetone_disable(T_AUDIO_EFFECT_INSTANCE instance);
 
 /**
- * sidetone.h
+ * \brief   Set the gain of the specific Sidetone instance.
  *
- * \brief   Set the gain of the specific sidetone instance.
- *
- *\param[in] instance  The sidetone engine session \ref AUDIO_SIDETONE.
+ *\param[in] instance  The Sidetone engine session \ref T_AUDIO_EFFECT_INSTANCE.
  *\param[in] gain      DAC digital gain value in dB unit.
  *
- * \return  The status of setting the sidetone gain.
- * \retval  true    Sidetone gain was set successfully.
- * \retval  false   Sidetone gain was failed to set.
+ * \return  The status of setting the gain.
+ * \retval  true    The gain was set successfully.
+ * \retval  false   The gain was failed to set.
  *
  * \ingroup AUDIO_SIDETONE
  */
 bool sidetone_gain_set(T_AUDIO_EFFECT_INSTANCE instance, int16_t gain);
 
 /**
- * sidetone.h
+ * \brief   Release the specific Sidetone instance.
  *
- * \brief   Release the specific sidetone instance.
+ * \param[in] instance  The Sidetone engine session \ref T_AUDIO_EFFECT_INSTANCE.
  *
- * \param[in] instance  The sidetone engine session \ref AUDIO_SIDETONE.
- *
- * \return  The status of releasing the sidetone instance.
- * \retval  true    Sidetone instance was released successfully.
- * \retval  false   Sidetone instance was failed to release.
+ * \return  The status of releasing the Sidetone instance.
+ * \retval  true    The Sidetone instance was released successfully.
+ * \retval  false   The Sidetone instance was failed to release.
  *
  * \ingroup AUDIO_SIDETONE
  */

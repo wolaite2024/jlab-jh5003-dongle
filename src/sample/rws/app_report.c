@@ -15,12 +15,12 @@
 #include "app_transfer.h"
 #include "app_ble_gap.h"
 #include "app_cfg.h"
+#include "app_dsp_cfg.h"
+
 #if F_APP_APT_SUPPORT
 #include "app_audio_passthrough.h"
 #endif
-#if F_APP_ANC_SUPPORT
-#include "app_anc.h"
-#endif
+
 #include "eq_utils.h"
 #include "app_eq.h"
 
@@ -45,16 +45,18 @@ static bool app_report_one_wire_uart_event_check(uint16_t event_id)
     if ((event_id == EVENT_ACK) ||
         (event_id == EVENT_MP_TEST_RESULT) ||
         (event_id == EVENT_FORCE_ENGAGE) ||
-        (event_id == EVENT_AGING_TEST_CONTROL))
+        (event_id == EVENT_AGING_TEST_CONTROL) ||
+        (event_id == EVENT_DEDICATE_BUD_COUPLING))
     {
         return true;
     }
 
 #if F_APP_CHARGER_CASE_SUPPORT
     if ((event_id == EVENT_CHARGER_CASE_REPORT_STATUS) ||
-        (event_id == EVENT_CHARGER_CASE_ENTER_OTA_MODE) ||
+        (event_id == EVENT_CHARGER_CASE_OTA_MODE) ||
         (event_id == EVENT_CHAGRER_CASE_REPORT_BT_ADDR) ||
-        (event_id == EVENT_CHARGER_CASE_FIND_CHARGER_CASE))
+        (event_id == EVENT_CHARGER_CASE_FIND_CHARGER_CASE) ||
+        (event_id == EVENT_CHARGER_CASE_BUD_AUTO_PAIR_SUC))
     {
         return true;
     }
@@ -122,12 +124,12 @@ static void app_report_le_event(T_APP_LE_LINK *p_link, uint16_t event_id, uint8_
         }
 
         buf[0] = CMD_SYNC_BYTE;
-        p_link->tx_event_seqn++;
-        if (p_link->tx_event_seqn == 0)
+        p_link->cmd.tx_seqn++;
+        if (p_link->cmd.tx_seqn == 0)
         {
-            p_link->tx_event_seqn = 1;
+            p_link->cmd.tx_seqn = 1;
         }
-        buf[1] = p_link->tx_event_seqn;
+        buf[1] = p_link->cmd.tx_seqn;
         buf[2] = (uint8_t)(len + 2);
         buf[3] = (uint8_t)((len + 2) >> 8);
         buf[4] = (uint8_t)event_id;
@@ -145,6 +147,41 @@ static void app_report_le_event(T_APP_LE_LINK *p_link, uint16_t event_id, uint8_
     }
 }
 
+// static void app_report_gatt_over_bredr_event(T_APP_BR_LINK *p_link, uint16_t event_id,
+//                                              uint8_t *data,
+//                                              uint16_t len)
+// {
+//     uint8_t *buf;
+
+//     buf = malloc(len + 6);
+//     if (buf == NULL)
+//     {
+//         return;
+//     }
+
+//     buf[0] = CMD_SYNC_BYTE;
+//     p_link->cmd.tx_seqn++;
+//     if (p_link->cmd.tx_seqn == 0)
+//     {
+//         p_link->cmd.tx_seqn = 1;
+//     }
+//     buf[1] = p_link->cmd.tx_seqn;
+//     buf[2] = (uint8_t)(len + 2);
+//     buf[3] = (uint8_t)((len + 2) >> 8);
+//     buf[4] = (uint8_t)event_id;
+//     buf[5] = (uint8_t)(event_id >> 8);
+
+//     if (len)
+//     {
+//         memcpy(&buf[6], data, len);
+//     }
+
+//     if (app_transfer_push_data_queue(CMD_PATH_GATT_OVER_BREDR, buf, len + 6, p_link->id) == false)
+//     {
+//         free(buf);
+//     }
+// }
+
 static void app_report_spp_iap_event(T_APP_BR_LINK *p_link, uint16_t event_id, uint8_t *data,
                                      uint16_t len, uint8_t cmd_path)
 {
@@ -158,6 +195,10 @@ static void app_report_spp_iap_event(T_APP_BR_LINK *p_link, uint16_t event_id, u
     {
         check_prof = IAP_PROFILE_MASK;
     }
+    else if (cmd_path == CMD_PATH_GATT_OVER_BREDR)
+    {
+        check_prof = GATT_PROFILE_MASK;
+    }
 
     if (p_link->connected_profile & check_prof)
     {
@@ -170,12 +211,12 @@ static void app_report_spp_iap_event(T_APP_BR_LINK *p_link, uint16_t event_id, u
         }
 
         buf[0] = CMD_SYNC_BYTE;
-        p_link->tx_event_seqn++;
-        if (p_link->tx_event_seqn == 0)
+        p_link->cmd.tx_seqn++;
+        if (p_link->cmd.tx_seqn == 0)
         {
-            p_link->tx_event_seqn = 1;
+            p_link->cmd.tx_seqn = 1;
         }
-        buf[1] = p_link->tx_event_seqn;
+        buf[1] = p_link->cmd.tx_seqn;
         buf[2] = (uint8_t)(len + 2);
         buf[3] = (uint8_t)((len + 2) >> 8);
         buf[4] = (uint8_t)event_id;
@@ -216,6 +257,10 @@ static bool app_report_spp_iap_raw_data(T_APP_BR_LINK *p_link, uint8_t *data, ui
     else if (cmd_path == CMD_PATH_IAP)
     {
         check_prof = IAP_PROFILE_MASK;
+    }
+    else if (cmd_path == CMD_PATH_GATT_OVER_BREDR)
+    {
+        check_prof = GATT_PROFILE_MASK;
     }
 
     if (p_link->connected_profile & check_prof)
@@ -292,6 +337,7 @@ void app_report_event(uint8_t cmd_path, uint16_t event_id, uint8_t app_index, ui
         }
         break;
 
+    case CMD_PATH_GATT_OVER_BREDR:
     case CMD_PATH_SPP:
     case CMD_PATH_IAP:
         if (app_index < MAX_BR_LINK_NUM)
@@ -317,7 +363,7 @@ void app_report_event_broadcast(uint16_t event_id, uint8_t *buf, uint16_t len)
     {
         br_link = &app_db.br_link[i];
 
-        if (br_link->cmd_set_enable == true)
+        if (br_link->cmd.enable == true)
         {
             if (br_link->connected_profile & SPP_PROFILE_MASK)
             {
@@ -328,6 +374,11 @@ void app_report_event_broadcast(uint16_t event_id, uint8_t *buf, uint16_t len)
             {
                 app_report_event(CMD_PATH_IAP, event_id, i, buf, len);
             }
+
+            if (br_link->connected_profile & GATT_PROFILE_MASK)
+            {
+                app_report_event(CMD_PATH_GATT_OVER_BREDR, event_id, i, buf, len);
+            }
         }
     }
 
@@ -337,7 +388,7 @@ void app_report_event_broadcast(uint16_t event_id, uint8_t *buf, uint16_t len)
 
         if (le_link->state == LE_LINK_STATE_CONNECTED)
         {
-            if (le_link->cmd_set_enable == true)
+            if (le_link->cmd.enable == true)
             {
                 app_report_event(CMD_PATH_LE, event_id, i, buf, len);
             }
@@ -357,6 +408,7 @@ bool app_report_raw_data(uint8_t cmd_path, uint8_t app_index, uint8_t *data,
     {
     case CMD_PATH_SPP:
     case CMD_PATH_IAP:
+    case CMD_PATH_GATT_OVER_BREDR:
         if ((app_index < MAX_BR_LINK_NUM) && data)
         {
             ret = app_report_spp_iap_raw_data(&app_db.br_link[app_index], data, len, cmd_path);
@@ -504,7 +556,11 @@ void app_report_get_bud_info(uint8_t *data)
     }
 
     // case battery volume equals to (case_battery & 0x7F)
+#if F_APP_CHARGER_CASE_SUPPORT
+    buf[5] = app_cfg_nv.case_battery & 0x7F;
+#else
     buf[5] = (app_cfg_const.enable_rtk_charging_box) ? (app_cfg_nv.case_battery & 0x7F) : INVALID_VALUE;
+#endif
 
     memcpy(data, &buf[0], sizeof(buf));
 }
@@ -517,7 +573,7 @@ void app_report_rws_bud_info(void)
     app_report_event_broadcast(EVENT_REPORT_BUD_INFO, buf, sizeof(buf));
 }
 
-void app_report_gaming_mode_info(void)
+void app_report_gaming_mode_info(bool gaming_mode)
 {
     uint8_t buf[4];
 
@@ -525,12 +581,36 @@ void app_report_gaming_mode_info(void)
 
     buf[1] = 2;
     buf[2] = GAMING_MODE_STATUS;
-    buf[3] = app_db.gaming_mode;
+    buf[3] = gaming_mode;
 
     app_report_event_broadcast(EVENT_GAMING_MODE_INFO, buf, sizeof(buf));
 }
 
 #if F_APP_CHARGER_CASE_SUPPORT
+void app_report_level_to_charger_case(uint8_t level, uint8_t *bd_addr)
+{
+    uint8_t charger_level = app_cmd_charger_case_get_level();
+
+    APP_PRINT_TRACE2("app_report_level_to_charger_case: level %d-->%d", charger_level, level);
+
+    if (abs(charger_level - level) == 1)
+    {
+        return;
+    }
+
+    app_cmd_charger_case_record_level(level, bd_addr);
+
+    if (app_db.charger_case_connected && app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SECONDARY)
+    {
+        uint8_t evt_buf[7] = {0};
+
+        memcpy(&evt_buf[0], bd_addr, 6);
+        evt_buf[6] = level;
+        app_report_event(CMD_PATH_LE, EVENT_VOLUME_SYNC, app_db.charger_case_link_id, evt_buf,
+                         sizeof(evt_buf));
+    }
+}
+
 void app_report_bud_loc_to_charger_case(void)
 {
     uint8_t loc_status[2];
@@ -547,11 +627,6 @@ void app_report_bud_loc_to_charger_case(void)
     }
 
     app_report_status_to_charger_case(CHARGER_CASE_GET_BUD_LOCATION_STATUS, loc_status);
-
-    if (app_db.local_loc == BUD_LOC_IN_CASE)
-    {
-        app_report_status_to_charger_case(CHARGER_CASE_GET_BUD_INFO, NULL);
-    }
 }
 
 void app_report_status_to_charger_case(uint8_t type, uint8_t *param)
@@ -598,7 +673,7 @@ void app_report_status_to_charger_case(uint8_t type, uint8_t *param)
             uint8_t evt_buf[49];
 
             evt_buf[0] = type;
-            memcpy(&evt_buf[1], &param[0], 40);
+            memcpy(&evt_buf[1], app_cfg_nv.device_name_legacy, 40);
             memcpy(&evt_buf[41], app_cfg_nv.bud_local_addr, 6);
 #if F_APP_SC_KEY_DERIVE_SUPPORT
             evt_buf[47] = GAP_LOCAL_ADDR_LE_PUBLIC;
@@ -607,13 +682,6 @@ void app_report_status_to_charger_case(uint8_t type, uint8_t *param)
 #endif
             evt_buf[48] = app_cfg_const.bud_side;
 
-            if (app_db.local_loc == BUD_LOC_IN_CASE)
-            {
-                app_report_event(CMD_PATH_UART, EVENT_CHARGER_CASE_REPORT_STATUS, 0,
-                                 evt_buf,
-                                 sizeof(evt_buf));
-            }
-            else
             {
                 app_report_event(CMD_PATH_LE, EVENT_CHARGER_CASE_REPORT_STATUS, app_db.charger_case_link_id,
                                  evt_buf,
@@ -621,6 +689,31 @@ void app_report_status_to_charger_case(uint8_t type, uint8_t *param)
             }
         }
         break;
+
+    case CHARGER_CASE_GET_IN_CASE_STATUS:
+        {
+            if (app_db.local_loc == BUD_LOC_IN_CASE)
+            {
+                uint8_t evt_buf[7];
+
+                if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_SECONDARY)
+                {
+                    memcpy(&evt_buf[0], app_cfg_nv.bud_peer_addr, 6);
+                }
+                else
+                {
+                    memcpy(&evt_buf[0], app_cfg_nv.bud_local_addr, 6);
+                }
+
+#if F_APP_SC_KEY_DERIVE_SUPPORT
+                evt_buf[6] = GAP_LOCAL_ADDR_LE_PUBLIC;
+#else
+                evt_buf[6] = GAP_LOCAL_ADDR_LE_RANDOM;
+#endif
+
+                app_report_event(CMD_PATH_UART, EVENT_CHARGER_CASE_REPORT_STATUS, 0, evt_buf, sizeof(evt_buf));
+            }
+        }
 
     default:
         break;

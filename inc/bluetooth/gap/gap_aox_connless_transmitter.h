@@ -3,12 +3,12 @@
 *               Copyright(c) 2021, Realtek Semiconductor Corporation. All rights reserved.
 *********************************************************************************************************
 * @file      gap_aox_connless_transmitter.h
-* @brief     Head file for GAP AoA/AoD connectionless transmitter
+* @brief     Header file for GAP AoA/AoD connectionless transmitter
 * @details
 * @author
 * @date      2021-07-12
 * @version   v0.8
-* *********************************************************************************************************
+*********************************************************************************************************
 */
 
 /*============================================================================*
@@ -28,7 +28,7 @@ extern "C"
 #include "gap_le.h"
 #include "gap_le_types.h"
 
-/** @addtogroup GAP GAP Module
+/** @addtogroup BT_Host Bluetooth Host
   * @{
   */
 
@@ -37,6 +37,7 @@ extern "C"
   */
 
 /** @addtogroup GAP_LE_AOX_CONNLESS_TRANSMITTER GAP LE AoA/AoD Connectionless Transmitter Module
+  * @brief GAP LE AoA/AoD Connectionless Transmitter Module
   * @{
   */
 
@@ -47,7 +48,7 @@ extern "C"
   * @{
   */
 
-/** @defgroup AOX_CONNLESS_TRANSMITTER_CTE_ENABLE AoA/AoD Connectionless Transmitter CTE Enable flag
+/** @defgroup AOX_CONNLESS_TRANSMITTER_CTE_ENABLE AoA/AoD Connectionless Transmitter CTE Enable Flag
   * @brief Use the macro definitions to describe the CTE enable parameters.
   * @{
   */
@@ -76,7 +77,7 @@ typedef enum
 
 typedef enum
 {
-    AOX_CONNLESS_TRANSMITTER_STATE_IDLE = 0x00,                                       /**< Idle, not enable the use of Constant Tone Extensions. */
+    AOX_CONNLESS_TRANSMITTER_STATE_IDLE = 0x00,                                       /**< Idle, not enabling the use of Constant Tone Extensions. */
     AOX_CONNLESS_TRANSMITTER_STATE_ENABLING_EXT_ADV_STATE_PA_ADV_STATE_IDLE = 0x01,   /**< Enable the use of Constant Tone Extensions in periodic
                                                                                            advertising when extended advertising and periodic
                                                                                            advertising of the specified advertising set are disabled.
@@ -140,11 +141,11 @@ T_GAP_CAUSE le_aox_connless_transmitter_init(uint8_t adv_set_num);
 /**
  * @brief       Request the Controller to set parameters for the transmission of Constant Tone Extensions in periodic advertising.
  *
- *              NOTE: This function can be called after stack is ready.
- *              Explanation: If stack is ready, Application will be notified by message @ref GAP_MSG_LE_DEV_STATE_CHANGE
+ * This function can be called after Bluetooth Host is ready. \n
+ *              Explanation: If Bluetooth Host is ready, the application will be notified by message @ref GAP_MSG_LE_DEV_STATE_CHANGE
  *                           with new_state about gap_init_state which is configured as @ref GAP_INIT_STATE_STACK_READY.
  *
- *              If sending request operation is success, the result of setting parameters related parameters will be returned by
+ * If sending request operation is successful, the result of setting parameters related parameters will be returned by
  *              @ref app_gap_aox_callback with cb_type @ref GAP_MSG_LE_AOX_CONNLESS_TRANSMITTER_SET_CTE_TRANSMIT_PARAMS.
  *
  * @param[in]   adv_handle                 Used to identify an advertising set.
@@ -153,7 +154,7 @@ T_GAP_CAUSE le_aox_connless_transmitter_init(uint8_t adv_set_num);
  *                                                @ref le_aox_read_antenna_information.
  * @param[in]   cte_type                   @ref T_GAP_AOX_CONNLESS_TRANSMITTER_CTE_TYPES.
  * @param[in]   cte_count                  The number of Constant Tone Extensions to transmit in each periodic advertising interval.
- *                                         Range: 0x01 to 0x10
+ *                                         Range: 0x01 to 0x10.
  * @param[in]   switching_pattern_length   The number of Antenna IDs in the pattern.
  *                                         Range: 0x02 to max_switching_pattern_length supported by controller returned by
  *                                                @ref le_aox_read_antenna_information.
@@ -196,11 +197,11 @@ T_GAP_CAUSE le_aox_connless_transmitter_set_cte_transmit_params(uint8_t adv_hand
 /**
  * @brief       Request the Controller to enable or disable the use of Constant Tone Extensions in periodic advertising.
  *
- *              NOTE: This function can be called after stack is ready.
- *              Explanation: If stack is ready, Application will be notified by message @ref GAP_MSG_LE_DEV_STATE_CHANGE
+ * This function can be called after Bluetooth Host is ready. \n
+ *              Explanation: If Bluetooth Host is ready, the application will be notified by message @ref GAP_MSG_LE_DEV_STATE_CHANGE
  *                           with new_state about gap_init_state which is configured as @ref GAP_INIT_STATE_STACK_READY.
  *
- *              If sending request operation is success, the result of enabling or disabling will be returned by
+ * If sending request operation is successful, the result of enabling or disabling will be returned by
  *              @ref app_gap_aox_callback with cb_type @ref GAP_MSG_LE_AOX_CONNLESS_TRANSMITTER_STATE_CHANGE_INFO.
  *
  * @param[in]   adv_handle  Identifier for the advertising set in which Constant Tone Extension is being enabled or disabled.
@@ -311,7 +312,7 @@ T_GAP_CAUSE le_aox_connless_transmitter_set_cte_transmit_enable(uint8_t adv_hand
   * @}
   */
 
-/** End of GAP
+/** End of BT_Host
   * @}
   */
 

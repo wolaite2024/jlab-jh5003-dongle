@@ -7,12 +7,12 @@
   * @{
   */
 
-/** @defgroup SPS_CONFIG Scan Parameters Service Config
+/** @defgroup SPS_CONFIG SPS Config
   * @brief Scan parameters service config
   * @{
   */
 
-/** @defgroup SPS_Exported_Macros SPS Exported Macros
+/** @defgroup SPS_Common_Exported_Macros SPS Common Exported Macros
   * @brief
   * @{
   */

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2018, Realsil Semiconductor Corporation. All rights reserved.
  */
-
+#include <string.h>
 #include "trace.h"
 #include "gap_bond_le.h"
 #include "sysm.h"
@@ -19,7 +19,6 @@
 #include "iap_stream.h"
 #include "spp_stream.h"
 #include "app_ble_rand_addr_mgr.h"
-#include "string.h"
 #include "platform_utils.h"
 #if F_APP_RWS_BLE_USE_RPA_SUPPORT
 #include "bt_bond_le.h"
@@ -106,6 +105,10 @@
 #include "app_ble_gatt_caching.h"
 #endif
 
+#if F_APP_GAMING_WIRED_MODE_HANDLE
+#include "app_dongle_dual_mode.h"
+#endif
+
 void app_ble_device_handle_factory_reset(void)
 {
     APP_PRINT_INFO0("app_ble_device_handle_factory_reset");
@@ -157,6 +160,13 @@ void app_ble_device_handle_factory_reset(void)
 
 void app_ble_device_handle_power_on_rtk_adv(void)
 {
+#if F_APP_GAMING_WIRED_MODE_HANDLE
+    if (app_dongle_get_wired_status())
+    {
+        return;
+    }
+#endif
+
     APP_PRINT_INFO2("app_ble_device_handle_power_on_rtk_adv: timer_ota_adv_timeout %d, enable_power_on_adv_with_timeout %d",
                     app_cfg_const.timer_ota_adv_timeout, app_cfg_const.enable_power_on_adv_with_timeout);
 

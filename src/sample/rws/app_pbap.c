@@ -7,6 +7,7 @@
 #include <string.h>
 #include "os_mem.h"
 #include "trace.h"
+#include "bt_types.h"
 #include "app_timer.h"
 #include "btm.h"
 #include "remote.h"
@@ -115,7 +116,7 @@ static void app_pbap_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t b
                 if (br_link != NULL)
                 {
                     /* Sanity check if BR/EDR TTS session is ongoing */
-                    if (br_link->cmd_set_enable == true &&
+                    if (br_link->cmd.enable == true &&
                         br_link->tts_info.tts_handle != NULL)
                     {
                         break;
@@ -123,7 +124,7 @@ static void app_pbap_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t b
 
                     /* Sanity check if BLE TTS session is ongoing */
                     if (le_link != NULL &&
-                        le_link->cmd_set_enable == true &&
+                        le_link->cmd.enable == true &&
                         le_link->tts_info.tts_handle != NULL)
                     {
                         break;
@@ -146,11 +147,23 @@ static void app_pbap_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t b
                                     data[2] = param->pbap_caller_id_name.name_len;
                                     memcpy(data + 3, param->pbap_caller_id_name.name_ptr, param->pbap_caller_id_name.name_len);
 
-                                    if (br_link->connected_profile & (SPP_PROFILE_MASK | IAP_PROFILE_MASK))
+                                    if (br_link->connected_profile & SPP_PROFILE_MASK)
                                     {
                                         data[0] = br_link->id;
 
                                         app_report_event(CMD_PATH_SPP, EVENT_CALLER_ID, br_link->id, data, len);
+                                    }
+                                    else if (br_link->connected_profile & IAP_PROFILE_MASK)
+                                    {
+                                        data[0] = br_link->id;
+
+                                        app_report_event(CMD_PATH_IAP, EVENT_CALLER_ID, br_link->id, data, len);
+                                    }
+                                    else if (br_link->connected_profile & GATT_PROFILE_MASK)
+                                    {
+                                        data[0] = br_link->id;
+
+                                        app_report_event(CMD_PATH_GATT_OVER_BREDR, EVENT_CALLER_ID, br_link->id, data, len);
                                     }
                                     else if (le_link != NULL)
                                     {
@@ -613,7 +626,7 @@ void app_pbap_init(void)
 {
     if (app_cfg_const.supported_profile_mask & PBAP_PROFILE_MASK)
     {
-        bt_pbap_init(app_cfg_const.pbap_link_number);
+        bt_pbap_init();
         bt_mgr_cback_register(app_pbap_bt_cback);
         app_timer_reg_cb(app_pbap_timeout_cb, &app_pbap_timer_id);
     }

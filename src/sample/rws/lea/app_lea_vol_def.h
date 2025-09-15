@@ -16,6 +16,9 @@ extern "C" {
 #define VOLUME_LEVEL(vol_setting)       (vol_setting * app_dsp_cfg_vol.playback_volume_max  + \
                                          MAX_VOLUME_SETTING / 2 ) / MAX_VOLUME_SETTING
 
+#define MIC_LEVEL(vol_setting)          ((vol_setting + 128) * app_dsp_cfg_vol.voice_volume_in_max  + \
+                                         MAX_VOLUME_SETTING / 2 ) / MAX_VOLUME_SETTING
+
 #ifdef  __cplusplus
 }
 #endif      /*  __cplusplus */

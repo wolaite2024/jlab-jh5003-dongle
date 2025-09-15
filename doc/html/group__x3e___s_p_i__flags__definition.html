@@ -65,6 +65,7 @@ Macros</h2></td></tr>
 <tr class="memitem:ga3f4fc14d018690b6b323d99ef4ffec5b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___s_p_i__flags__definition.html#ga3f4fc14d018690b6b323d99ef4ffec5b">SPI_FLAG_DCOL</a>&#160;&#160;&#160;((uint16_t)0x0040)</td></tr>
 <tr class="separator:ga3f4fc14d018690b6b323d99ef4ffec5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga185441ae57418a8e27e527e393369e4b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___s_p_i__flags__definition.html#ga185441ae57418a8e27e527e393369e4b">IS_SPI_GET_FLAG</a>(FLAG)</td></tr>
+<tr class="memdesc:ga185441ae57418a8e27e527e393369e4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the input parameter is valid.  <a href="#ga185441ae57418a8e27e527e393369e4b">More...</a><br /></td></tr>
 <tr class="separator:ga185441ae57418a8e27e527e393369e4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -80,6 +81,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>SPI Busy flag. Set if it is actively transferring data. Reset if it is idle or disabled. </p>
 
 </div>
 </div>
@@ -94,6 +96,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Transmit FIFO not full flag. Set if transmit FIFO is not full. </p>
 
 </div>
 </div>
@@ -108,6 +111,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Transmit FIFO empty flag. Set if transmit FIFO is empty. </p>
 
 </div>
 </div>
@@ -122,6 +126,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Receive FIFO not empty flag. Set if receive FIFO is not empty. </p>
 
 </div>
 </div>
@@ -136,6 +141,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Receive FIFO full flag. Set if the receive FIFO is completely full. </p>
 
 </div>
 </div>
@@ -150,6 +156,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Transmission error flag. Set if the transmit FIFO is empty when a transfer is started in slave mode. </p>
 
 </div>
 </div>
@@ -164,6 +171,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Data collision error flag. Set if it is actively transmitting in master mode when another master selects this device as a slave. </p>
 
 </div>
 </div>
@@ -182,14 +190,16 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">(((FLAG) == <a class="code" href="group__x3e___s_p_i__flags__definition.html#ga3f4fc14d018690b6b323d99ef4ffec5b">SPI_FLAG_DCOL</a>) || ((FLAG) == <a class="code" href="group__x3e___s_p_i__flags__definition.html#gaf84a1e6af2739a6be58e1b23d9e6b914">SPI_FLAG_TXE</a>) || \</div><div class="line">                                 ((FLAG) == <a class="code" href="group__x3e___s_p_i__flags__definition.html#ga0bdeccd93081064e1ee5adc50b8ef1fb">SPI_FLAG_RFF</a>) || ((FLAG) == <a class="code" href="group__x3e___s_p_i__flags__definition.html#gabd5cd4d581f3ff6a754a92abbd62d106">SPI_FLAG_RFNE</a>) || \</div><div class="line">                                 ((FLAG) == <a class="code" href="group__x3e___s_p_i__flags__definition.html#ga44c39180ace1cfbb71588bbc7babf74e">SPI_FLAG_TFE</a>) || ((FLAG) == <a class="code" href="group__x3e___s_p_i__flags__definition.html#ga45f4fcec7ae7a33c04f6bedbeef8a23f">SPI_FLAG_TFNF</a>) || \</div><div class="line">                                 ((FLAG) == <a class="code" href="group__x3e___s_p_i__flags__definition.html#gafaec3d4a7c1949a99bd3345acfae30cf">SPI_FLAG_BUSY</a>))</div><div class="ttc" id="group__x3e___s_p_i__flags__definition_html_gabd5cd4d581f3ff6a754a92abbd62d106"><div class="ttname"><a href="group__x3e___s_p_i__flags__definition.html#gabd5cd4d581f3ff6a754a92abbd62d106">SPI_FLAG_RFNE</a></div><div class="ttdeci">#define SPI_FLAG_RFNE</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:277</div></div>
-<div class="ttc" id="group__x3e___s_p_i__flags__definition_html_ga44c39180ace1cfbb71588bbc7babf74e"><div class="ttname"><a href="group__x3e___s_p_i__flags__definition.html#ga44c39180ace1cfbb71588bbc7babf74e">SPI_FLAG_TFE</a></div><div class="ttdeci">#define SPI_FLAG_TFE</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:276</div></div>
-<div class="ttc" id="group__x3e___s_p_i__flags__definition_html_ga3f4fc14d018690b6b323d99ef4ffec5b"><div class="ttname"><a href="group__x3e___s_p_i__flags__definition.html#ga3f4fc14d018690b6b323d99ef4ffec5b">SPI_FLAG_DCOL</a></div><div class="ttdeci">#define SPI_FLAG_DCOL</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:280</div></div>
-<div class="ttc" id="group__x3e___s_p_i__flags__definition_html_ga45f4fcec7ae7a33c04f6bedbeef8a23f"><div class="ttname"><a href="group__x3e___s_p_i__flags__definition.html#ga45f4fcec7ae7a33c04f6bedbeef8a23f">SPI_FLAG_TFNF</a></div><div class="ttdeci">#define SPI_FLAG_TFNF</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:275</div></div>
-<div class="ttc" id="group__x3e___s_p_i__flags__definition_html_gafaec3d4a7c1949a99bd3345acfae30cf"><div class="ttname"><a href="group__x3e___s_p_i__flags__definition.html#gafaec3d4a7c1949a99bd3345acfae30cf">SPI_FLAG_BUSY</a></div><div class="ttdeci">#define SPI_FLAG_BUSY</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:274</div></div>
-<div class="ttc" id="group__x3e___s_p_i__flags__definition_html_ga0bdeccd93081064e1ee5adc50b8ef1fb"><div class="ttname"><a href="group__x3e___s_p_i__flags__definition.html#ga0bdeccd93081064e1ee5adc50b8ef1fb">SPI_FLAG_RFF</a></div><div class="ttdeci">#define SPI_FLAG_RFF</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:278</div></div>
-<div class="ttc" id="group__x3e___s_p_i__flags__definition_html_gaf84a1e6af2739a6be58e1b23d9e6b914"><div class="ttname"><a href="group__x3e___s_p_i__flags__definition.html#gaf84a1e6af2739a6be58e1b23d9e6b914">SPI_FLAG_TXE</a></div><div class="ttdeci">#define SPI_FLAG_TXE</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:279</div></div>
+<b>Value:</b><div class="fragment"><div class="line">(((FLAG) == <a class="code" href="group__x3e___s_p_i__flags__definition.html#ga3f4fc14d018690b6b323d99ef4ffec5b">SPI_FLAG_DCOL</a>) || ((FLAG) == <a class="code" href="group__x3e___s_p_i__flags__definition.html#gaf84a1e6af2739a6be58e1b23d9e6b914">SPI_FLAG_TXE</a>) || \</div><div class="line">                                 ((FLAG) == <a class="code" href="group__x3e___s_p_i__flags__definition.html#ga0bdeccd93081064e1ee5adc50b8ef1fb">SPI_FLAG_RFF</a>) || ((FLAG) == <a class="code" href="group__x3e___s_p_i__flags__definition.html#gabd5cd4d581f3ff6a754a92abbd62d106">SPI_FLAG_RFNE</a>) || \</div><div class="line">                                 ((FLAG) == <a class="code" href="group__x3e___s_p_i__flags__definition.html#ga44c39180ace1cfbb71588bbc7babf74e">SPI_FLAG_TFE</a>) || ((FLAG) == <a class="code" href="group__x3e___s_p_i__flags__definition.html#ga45f4fcec7ae7a33c04f6bedbeef8a23f">SPI_FLAG_TFNF</a>) || \</div><div class="line">                                 ((FLAG) == <a class="code" href="group__x3e___s_p_i__flags__definition.html#gafaec3d4a7c1949a99bd3345acfae30cf">SPI_FLAG_BUSY</a>))</div><div class="ttc" id="group__x3e___s_p_i__flags__definition_html_gabd5cd4d581f3ff6a754a92abbd62d106"><div class="ttname"><a href="group__x3e___s_p_i__flags__definition.html#gabd5cd4d581f3ff6a754a92abbd62d106">SPI_FLAG_RFNE</a></div><div class="ttdeci">#define SPI_FLAG_RFNE</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:324</div></div>
+<div class="ttc" id="group__x3e___s_p_i__flags__definition_html_ga44c39180ace1cfbb71588bbc7babf74e"><div class="ttname"><a href="group__x3e___s_p_i__flags__definition.html#ga44c39180ace1cfbb71588bbc7babf74e">SPI_FLAG_TFE</a></div><div class="ttdeci">#define SPI_FLAG_TFE</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:323</div></div>
+<div class="ttc" id="group__x3e___s_p_i__flags__definition_html_ga3f4fc14d018690b6b323d99ef4ffec5b"><div class="ttname"><a href="group__x3e___s_p_i__flags__definition.html#ga3f4fc14d018690b6b323d99ef4ffec5b">SPI_FLAG_DCOL</a></div><div class="ttdeci">#define SPI_FLAG_DCOL</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:327</div></div>
+<div class="ttc" id="group__x3e___s_p_i__flags__definition_html_ga45f4fcec7ae7a33c04f6bedbeef8a23f"><div class="ttname"><a href="group__x3e___s_p_i__flags__definition.html#ga45f4fcec7ae7a33c04f6bedbeef8a23f">SPI_FLAG_TFNF</a></div><div class="ttdeci">#define SPI_FLAG_TFNF</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:322</div></div>
+<div class="ttc" id="group__x3e___s_p_i__flags__definition_html_gafaec3d4a7c1949a99bd3345acfae30cf"><div class="ttname"><a href="group__x3e___s_p_i__flags__definition.html#gafaec3d4a7c1949a99bd3345acfae30cf">SPI_FLAG_BUSY</a></div><div class="ttdeci">#define SPI_FLAG_BUSY</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:321</div></div>
+<div class="ttc" id="group__x3e___s_p_i__flags__definition_html_ga0bdeccd93081064e1ee5adc50b8ef1fb"><div class="ttname"><a href="group__x3e___s_p_i__flags__definition.html#ga0bdeccd93081064e1ee5adc50b8ef1fb">SPI_FLAG_RFF</a></div><div class="ttdeci">#define SPI_FLAG_RFF</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:325</div></div>
+<div class="ttc" id="group__x3e___s_p_i__flags__definition_html_gaf84a1e6af2739a6be58e1b23d9e6b914"><div class="ttname"><a href="group__x3e___s_p_i__flags__definition.html#gaf84a1e6af2739a6be58e1b23d9e6b914">SPI_FLAG_TXE</a></div><div class="ttdeci">#define SPI_FLAG_TXE</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:326</div></div>
 </div><!-- fragment -->
+<p>Check if the input parameter is valid. </p>
+
 </div>
 </div>
 </div><!-- contents -->

@@ -15,7 +15,7 @@
 
 #include "fmc_api.h"
 
-/** @defgroup  87x3e_FMC_EXT    FMC EXT API
+/** @defgroup  87x3ep_FMC_EXT    FMC EXT API
     * @brief fmc ext api wrapper
     * @{
     */
@@ -23,7 +23,7 @@
 /*============================================================================*
  *                                   Types
  *============================================================================*/
-/** @defgroup FMC_EXT_TYPE FMC EXT Exported Types
+/** @defgroup 87x3ep_FMC_EXT_TYPE FMC EXT Exported Types
    * @brief
    * @{
    */
@@ -95,7 +95,7 @@ typedef enum
     FMC_SPIC_DATA_WORD,
 } FMC_SPIC_CFG_DATA_LEN;
 
-/** End of FMC_EXT_TYPE
+/** End of 87x3ep_FMC_EXT_TYPE
     * @}
     */
 
@@ -103,7 +103,7 @@ typedef enum
 /*============================================================================*
   *                                Functions
   *============================================================================*/
-/** @defgroup FMC_EXT_Functions FMC EXT Exported Functions
+/** @defgroup 87x3ep_FMC_EXT_Functions FMC EXT Exported Functions
     * @brief
     * @{
     */
@@ -589,9 +589,9 @@ void fmc_spic_set_dmac_tx_data_lv(FMC_SPIC_ID spic_id, uint32_t tx_data_lv);
  */
 void fmc_spic_set_dmac_rx_data_lv(FMC_SPIC_ID spic_id, uint32_t rx_data_lv);
 
-/** @} */ /* End of group FMC_EXT_Functions */
+/** @} */ /* End of group 87x3ep_FMC_EXT_Functions */
 
-/** @} */ /* End of group 87x3e_FMC_EXT */
+/** @} */ /* End of group 87x3ep_FMC_EXT */
 
 #endif
 

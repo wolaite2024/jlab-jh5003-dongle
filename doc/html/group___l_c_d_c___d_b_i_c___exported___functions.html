@@ -44,9 +44,12 @@ $(function() {
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">LCDC DBIC Exported Functions<div class="ingroups"><a class="el" href="group___l_c_d_c.html">LCDC</a> &raquo; <a class="el" href="group___l_c_d_c___d_b_i_c.html">LCDC DBIC</a></div></div>  </div>
+<div class="title">LCDC DBIC Exported Functions<div class="ingroups"><a class="el" href="group___l_c_d_c.html">LCDC</a> &raquo; <a class="el" href="group___l_c_d_c___s_d_i.html">LCDC DBIC</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Functions provided by the LCDC DBIC driver.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -71,9 +74,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga718f55ba583caf4bcaece69ba8c3432f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d_c___d_b_i_c___exported___functions.html#ga718f55ba583caf4bcaece69ba8c3432f">DBIC_TX_NDF</a> (uint32_t len)</td></tr>
 <tr class="memdesc:ga718f55ba583caf4bcaece69ba8c3432f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the number of data frames in bytes. After transmitting command and address, SPIC transmits data continuously until data frames are equal to the set length.  <a href="#ga718f55ba583caf4bcaece69ba8c3432f">More...</a><br /></td></tr>
 <tr class="separator:ga718f55ba583caf4bcaece69ba8c3432f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gada1615eeb3b14fca2d1188ea9497ec25"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d_c___d_b_i_c___exported___functions.html#gada1615eeb3b14fca2d1188ea9497ec25">DBIC_Init</a> (<a class="el" href="struct_l_c_d_c___d_b_i_c_cfg_type_def.html">LCDC_DBICCfgTypeDef</a> *DBICCfg)</td></tr>
-<tr class="memdesc:gada1615eeb3b14fca2d1188ea9497ec25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes DBIC interface according to the specified parameters in the DBICCfg.  <a href="#gada1615eeb3b14fca2d1188ea9497ec25">More...</a><br /></td></tr>
-<tr class="separator:gada1615eeb3b14fca2d1188ea9497ec25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga35406c286fd372354f3f241e839fa69a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d_c___d_b_i_c___exported___functions.html#ga35406c286fd372354f3f241e839fa69a">DBIC_StructInit</a> (<a class="el" href="struct_l_c_d_c___d_b_i_c_cfg_type_def.html">LCDC_DBICCfgTypeDef</a> *DBIC_InitStruct)</td></tr>
+<tr class="memdesc:ga35406c286fd372354f3f241e839fa69a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the <a class="el" href="struct_l_c_d_c___d_b_i_c_cfg_type_def.html" title="LCDC DBIC init structure definition. ">LCDC_DBICCfgTypeDef</a> structure with default values.  <a href="#ga35406c286fd372354f3f241e839fa69a">More...</a><br /></td></tr>
+<tr class="separator:ga35406c286fd372354f3f241e839fa69a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1e29499becd43476d486fea4645d8917"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d_c___d_b_i_c___exported___functions.html#ga1e29499becd43476d486fea4645d8917">DBIC_Init</a> (<a class="el" href="struct_l_c_d_c___d_b_i_c_cfg_type_def.html">LCDC_DBICCfgTypeDef</a> *DBIC_InitStruct)</td></tr>
+<tr class="memdesc:ga1e29499becd43476d486fea4645d8917"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes DBIC interface according to the specified parameters in the DBICCfg.  <a href="#ga1e29499becd43476d486fea4645d8917">More...</a><br /></td></tr>
+<tr class="separator:ga1e29499becd43476d486fea4645d8917"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabab8b88113ce8334f5b8f69f29c21739"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d_c___d_b_i_c___exported___functions.html#gabab8b88113ce8334f5b8f69f29c21739">DBIC_SendBuf</a> (uint8_t *buf, uint32_t len)</td></tr>
 <tr class="memdesc:gabab8b88113ce8334f5b8f69f29c21739"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send data through DBIC interface.  <a href="#gabab8b88113ce8334f5b8f69f29c21739">More...</a><br /></td></tr>
 <tr class="separator:gabab8b88113ce8334f5b8f69f29c21739"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -82,6 +88,7 @@ Functions</h2></td></tr>
 <tr class="separator:gae08300d6cb5d78b054e92f4f1e39d61c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Functions provided by the LCDC DBIC driver. </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="gaae9745f7cfea88dbca3a5d6475d66e13"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaae9745f7cfea88dbca3a5d6475d66e13">&#9670;&nbsp;</a></span>DBIC_Cmd()</h2>
@@ -100,18 +107,16 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Enable or disable DBIC interface. </p>
-<p><a class="el" href="rtl__lcdc__dbic_8h_source.html" title="The header file of the peripheral DBIB driver. ">rtl_lcdc_dbic.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">NewState</td><td>New state of DBIC interface. This parameter can be one of the following values: <ul>
-<li>ENABLE: Enable DBIC interface. </li>
+    <tr><td class="paramdir">[in]</td><td class="paramname">NewState</td><td>New state of DBIC interface. This parameter can be one of the following values:<ul>
+<li>ENABLE: Enable DBIC interface.</li>
 <li>DISABLE: Disable DBIC interface.</li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
 <p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_lcdc_dbic_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_c___exported___functions.html#gaae9745f7cfea88dbca3a5d6475d66e13">DBIC_Cmd</a>(<a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
@@ -132,18 +137,16 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Switch DBIC interface to user mode or auto mode. It can not be changed while SPIC is busy. </p>
-<p><a class="el" href="rtl__lcdc__dbic_8h_source.html" title="The header file of the peripheral DBIB driver. ">rtl_lcdc_dbic.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">mode</td><td>The mode of DBIC interface. This parameter can be one of the following values: <ul>
-<li>DBIC_AUTO_MODE: Auto mode. User can't push data to FIFO and Enable DBIC interface. SPIC will accept auto read/write command. </li>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mode</td><td>The mode of DBIC interface. This parameter can be one of the following values:<ul>
+<li>DBIC_AUTO_MODE: Auto mode. User can't push data to FIFO and Enable DBIC interface. SPIC will accept auto read/write command.</li>
 <li>DBIC_USER_MODE: User mode. User can push data to FIFO and Enable DBIC interface. SPIC won't accept auto read/write command.</li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
 <p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_lcdc_dbic_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_c___exported___functions.html#ga6feed249643b0ad6ee0c5ac56a2b5216">DBIC_SwitchMode</a>(<a class="code" href="group___l_c_d_c___d_b_i_c___mode.html#gac7ded4d77b75bbcc3fb2f59863a09b3a">DBIC_USER_MODE</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
@@ -164,18 +167,16 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Switch the transfer mode. </p>
-<p><a class="el" href="rtl__lcdc__dbic_8h_source.html" title="The header file of the peripheral DBIB driver. ">rtl_lcdc_dbic.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">dir</td><td>The transmission mode of DBIC. This parameter can be one of the following values: <ul>
-<li>DBIC_TMODE_TX: Transmit mode. </li>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dir</td><td>The transmission mode of DBIC. This parameter can be one of the following values:<ul>
+<li>DBIC_TMODE_TX: Transmit mode.</li>
 <li>DBIC_TMODE_RX: Receive mode.</li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
 <p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_lcdc_dbic_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_c___exported___functions.html#ga16a9b596092bd22b3cb07447386b9e92">DBIC_SwitchDirect</a>(<a class="code" href="group___l_c_d_c___d_b_i_c___t_m_o_d_e.html#ga64ea502ed1c54866cb8e699c9dc28aa7">DBIC_TMODE_TX</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
@@ -196,14 +197,12 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Configure number of bytes in command phase in user mode. </p>
-<p><a class="el" href="rtl__lcdc__dbic_8h_source.html" title="The header file of the peripheral DBIB driver. ">rtl_lcdc_dbic.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of command in bytes.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
 <p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_lcdc_dbic_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_c___exported___functions.html#gaef2d62012f707149a870578aeb20f481">DBIC_CmdLength</a>(1);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
@@ -224,14 +223,12 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Configure number of bytes in address phase (between command phase and write/read phase) in user mode. </p>
-<p><a class="el" href="rtl__lcdc__dbic_8h_source.html" title="The header file of the peripheral DBIB driver. ">rtl_lcdc_dbic.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of address in bytes.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
 <p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_lcdc_dbic_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_c___exported___functions.html#ga53d6569b663816a8f89917f48489097e">DBIC_AddrLength</a>(3);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
@@ -252,14 +249,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Select current SPIC. </p>
-<p><a class="el" href="rtl__lcdc__dbic_8h_source.html" title="The header file of the peripheral DBIB driver. ">rtl_lcdc_dbic.h</a></p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
 <p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_lcdc_dbic_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_c___exported___functions.html#ga0559362f35f42064ab7e4e99da98c185">DBIC_Select</a>();</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
@@ -280,19 +269,58 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Configure the number of data frames in bytes. After transmitting command and address, SPIC transmits data continuously until data frames are equal to the set length. </p>
-<p><a class="el" href="rtl__lcdc__dbic_8h_source.html" title="The header file of the peripheral DBIB driver. ">rtl_lcdc_dbic.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of data frames in bytes.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
 <p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_lcdc_dbic_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_c___exported___functions.html#ga718f55ba583caf4bcaece69ba8c3432f">DBIC_TX_NDF</a>(466);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="gada1615eeb3b14fca2d1188ea9497ec25"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gada1615eeb3b14fca2d1188ea9497ec25">&#9670;&nbsp;</a></span>DBIC_Init()</h2>
+<a id="ga35406c286fd372354f3f241e839fa69a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga35406c286fd372354f3f241e839fa69a">&#9670;&nbsp;</a></span>DBIC_StructInit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DBIC_StructInit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_l_c_d_c___d_b_i_c_cfg_type_def.html">LCDC_DBICCfgTypeDef</a> *&#160;</td>
+          <td class="paramname"><em>DBIC_InitStruct</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize the <a class="el" href="struct_l_c_d_c___d_b_i_c_cfg_type_def.html" title="LCDC DBIC init structure definition. ">LCDC_DBICCfgTypeDef</a> structure with default values. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">DBIC_InitStruct</td><td>Pointer to a <a class="el" href="struct_l_c_d_c___d_b_i_c_cfg_type_def.html" title="LCDC DBIC init structure definition. ">LCDC_DBICCfgTypeDef</a> structure that will be initialized.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Default values for each member: <table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Member  </th><th class="markdownTableHeadNone">Default Value  </th><th class="markdownTableHeadNone">Description   </th></tr>
+<tr class="markdownTableBody" class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">DBIC_SPEED_SEL  </td><td class="markdownTableBodyNone">1  </td><td class="markdownTableBodyNone">Clock divider value   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowEven">
+<td class="markdownTableBodyNone">DBIC_TxThr  </td><td class="markdownTableBodyNone">0  </td><td class="markdownTableBodyNone">TX FIFO threshold   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">DBIC_RxThr  </td><td class="markdownTableBodyNone">0  </td><td class="markdownTableBodyNone">RX FIFO threshold   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowEven">
+<td class="markdownTableBodyNone">SCPOL  </td><td class="markdownTableBodyNone"><a class="el" href="group___l_c_d_c___d_b_i_c___s_c_p_o_l.html#gad7c51fbbb7f9b7120c306d74fba3b0bb">DBIC_SCPOL_LOW</a>  </td><td class="markdownTableBodyNone">Serial clock polarity   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">SCPH  </td><td class="markdownTableBodyNone"><a class="el" href="group___l_c_d_c___d_b_i_c___s_c_p_h___edge.html#ga034b15a72f7538f8f6c76bb5919d927b">DBIC_SCPH_1Edge</a>  </td><td class="markdownTableBodyNone">Serial clock phase   </td></tr>
+</table>
+</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_lcdc_dbic_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="struct_l_c_d_c___d_b_i_c_cfg_type_def.html">LCDC_DBICCfgTypeDef</a> dbic_init;</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_c___exported___functions.html#ga35406c286fd372354f3f241e839fa69a">DBIC_StructInit</a>(&amp;dbic_init);</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_c___exported___functions.html#ga1e29499becd43476d486fea4645d8917">DBIC_Init</a>(&amp;dbic_init);</div><div class="line">}</div></div><!-- fragment --> 
+</div>
+</div>
+<a id="ga1e29499becd43476d486fea4645d8917"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1e29499becd43476d486fea4645d8917">&#9670;&nbsp;</a></span>DBIC_Init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -301,22 +329,20 @@ Functions</h2></td></tr>
           <td class="memname">void DBIC_Init </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_l_c_d_c___d_b_i_c_cfg_type_def.html">LCDC_DBICCfgTypeDef</a> *&#160;</td>
-          <td class="paramname"><em>DBICCfg</em></td><td>)</td>
+          <td class="paramname"><em>DBIC_InitStruct</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Initializes DBIC interface according to the specified parameters in the DBICCfg. </p>
-<p><a class="el" href="rtl__lcdc__dbic_8h_source.html" title="The header file of the peripheral DBIB driver. ">rtl_lcdc_dbic.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">DBICCfg</td><td>Pointer to a <a class="el" href="struct_l_c_d_c___d_b_i_c_cfg_type_def.html" title="LCDC DBIC init structure definition. ">LCDC_DBICCfgTypeDef</a> structure that contains the configuration information for DBIC interface.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">DBIC_InitStruct</td><td>Pointer to a <a class="el" href="struct_l_c_d_c___d_b_i_c_cfg_type_def.html" title="LCDC DBIC init structure definition. ">LCDC_DBICCfgTypeDef</a> structure that contains the configuration information for DBIC interface.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_lcdc_dbic_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="struct_l_c_d_c___d_b_i_c_cfg_type_def.html">LCDC_DBICCfgTypeDef</a> dbic_init = {0};</div><div class="line">    dbic_init.<a class="code" href="struct_l_c_d_c___d_b_i_c_cfg_type_def.html#a327a8649a28e38fed21ef6674ba93f4f">DBIC_SPEED_SEL</a>         = 2;</div><div class="line">    dbic_init.<a class="code" href="struct_l_c_d_c___d_b_i_c_cfg_type_def.html#ae6c270db09b730018737c68f55a3235d">DBIC_TxThr</a>             = 0;</div><div class="line">    dbic_init.<a class="code" href="struct_l_c_d_c___d_b_i_c_cfg_type_def.html#a3509a35256d2a70f94a14f3b8c3380bf">DBIC_RxThr</a>             = 0;</div><div class="line">    dbic_init.<a class="code" href="struct_l_c_d_c___d_b_i_c_cfg_type_def.html#a798f964646dae2ecaa92a49fb40e4f52">SCPOL</a>                  = <a class="code" href="group___l_c_d_c___d_b_i_c___s_c_p_o_l.html#gad7c51fbbb7f9b7120c306d74fba3b0bb">DBIC_SCPOL_LOW</a>;</div><div class="line">    dbic_init.<a class="code" href="struct_l_c_d_c___d_b_i_c_cfg_type_def.html#a4f2dd3137156b978112f055d49d7e415">SCPH</a>                   = <a class="code" href="group___l_c_d_c___d_b_i_c___s_c_p_h___edge.html#ga034b15a72f7538f8f6c76bb5919d927b">DBIC_SCPH_1Edge</a>;</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_c___exported___functions.html#gada1615eeb3b14fca2d1188ea9497ec25">DBIC_Init</a>(&amp;dbic_init);</div><div class="line">}</div></div><!-- fragment --> 
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_lcdc_dbic_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="struct_l_c_d_c___d_b_i_c_cfg_type_def.html">LCDC_DBICCfgTypeDef</a> dbic_init = {0};</div><div class="line">    dbic_init.<a class="code" href="struct_l_c_d_c___d_b_i_c_cfg_type_def.html#a327a8649a28e38fed21ef6674ba93f4f">DBIC_SPEED_SEL</a>         = 2;</div><div class="line">    dbic_init.<a class="code" href="struct_l_c_d_c___d_b_i_c_cfg_type_def.html#ae6c270db09b730018737c68f55a3235d">DBIC_TxThr</a>             = 0;</div><div class="line">    dbic_init.<a class="code" href="struct_l_c_d_c___d_b_i_c_cfg_type_def.html#a3509a35256d2a70f94a14f3b8c3380bf">DBIC_RxThr</a>             = 0;</div><div class="line">    dbic_init.<a class="code" href="struct_l_c_d_c___d_b_i_c_cfg_type_def.html#a798f964646dae2ecaa92a49fb40e4f52">SCPOL</a>                  = <a class="code" href="group___l_c_d_c___d_b_i_c___s_c_p_o_l.html#gad7c51fbbb7f9b7120c306d74fba3b0bb">DBIC_SCPOL_LOW</a>;</div><div class="line">    dbic_init.<a class="code" href="struct_l_c_d_c___d_b_i_c_cfg_type_def.html#a4f2dd3137156b978112f055d49d7e415">SCPH</a>                   = <a class="code" href="group___l_c_d_c___d_b_i_c___s_c_p_h___edge.html#ga034b15a72f7538f8f6c76bb5919d927b">DBIC_SCPH_1Edge</a>;</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_c___exported___functions.html#ga1e29499becd43476d486fea4645d8917">DBIC_Init</a>(&amp;dbic_init);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="gabab8b88113ce8334f5b8f69f29c21739"></a>
@@ -346,7 +372,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send data through DBIC interface. </p>
-<p><a class="el" href="rtl__lcdc__dbic_8h_source.html" title="The header file of the peripheral DBIB driver. ">rtl_lcdc_dbic.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">buf</td><td>Data buffer for sending. </td></tr>
@@ -354,7 +379,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
 <p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_lcdc_dbic_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t buf[100];</div><div class="line">    memset(buf, 100, 0xA5);</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_c___exported___functions.html#gabab8b88113ce8334f5b8f69f29c21739">DBIC_SendBuf</a>(buf, 100);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
@@ -397,17 +421,15 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Read data through DBIC interface. </p>
-<p><a class="el" href="rtl__lcdc__dbic_8h_source.html" title="The header file of the peripheral DBIB driver. ">rtl_lcdc_dbic.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">addr</td><td>The address to be read. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">data_len</td><td>The length of the data to be received. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Data buffer for receiving. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">data</td><td>Data buffer for receiving. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">rd_dummy_len</td><td>Delay cycles for receiving data in user mode.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
 <p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_lcdc_dbic_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t buf[4] = {0, 0, 0, 0};</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_c___exported___functions.html#gae08300d6cb5d78b054e92f4f1e39d61c">DBIC_ReceiveBuf</a>(0x09, 4, buf, 0);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>

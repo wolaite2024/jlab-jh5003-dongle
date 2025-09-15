@@ -207,17 +207,7 @@ static void app_listen_save_bt_cback(T_BT_EVENT event_type, void *event_buf, uin
 
     case BT_EVENT_A2DP_SNIFFING_STARTED:
         {
-            p_link = app_link_find_br_link(param->a2dp_sniffing_started.bd_addr);
-            if (p_link != NULL)
-            {
-                T_BT_EVENT_PARAM_A2DP_SNIFFING_STARTED *cfg = &param->a2dp_sniffing_started;
-                p_link->a2dp_codec_type = param->a2dp_sniffing_started.codec_type;
 
-                LISTEN_SAVE_CODEC_INFO codec_info;
-                memset((uint8_t *)&codec_info, 0, sizeof(LISTEN_SAVE_CODEC_INFO));
-                memcpy((uint8_t *)&codec_info, (uint8_t *)&cfg->codec_info, sizeof(LISTEN_SAVE_CODEC_INFO));
-                app_listen_save_codec_info_print(p_link->a2dp_codec_type, codec_info);
-            }
         }
         break;
 

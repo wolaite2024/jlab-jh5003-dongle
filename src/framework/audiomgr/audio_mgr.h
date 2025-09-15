@@ -215,6 +215,7 @@ typedef enum
     AUDIO_MSG_BUFFER_WRITE              = 0x0800,
     AUDIO_MSG_DSP_PLC                   = 0x0801,
     AUDIO_MSG_BUFFER_RESET              = 0x0804,
+    AUDIO_MSG_BUFFER_LEVEL_LOW          = 0x0805,
     AUDIO_MSG_BUFFER_LEVEL_HIGH         = 0x0806,
     AUDIO_MSG_DSP_DECODE_EMPTY          = 0x0807,
     AUDIO_MSG_BUFFER_STATE_PLAYING      = 0x080a,
@@ -606,7 +607,6 @@ void audio_mgr_exception(T_MEDIA_BUFFER_ENTITY *buffer_ent, T_AUDIO_MGR_EXCEPTIO
 bool audio_mgr_dispatch(T_AUDIO_MSG msg, void *buf);
 bool audio_volume_init(void);
 void audio_volume_deinit(void);
-void audio_report_buffer_high(T_MEDIA_BUFFER_ENTITY *buffer_ent);
 bool audio_track_init(void);
 void audio_track_deinit(void);
 bool audio_track_volume_out_max_set(T_AUDIO_STREAM_TYPE type,
@@ -627,6 +627,9 @@ void audio_track_volume_in_mute_all(T_AUDIO_STREAM_TYPE type);
 void audio_track_volume_in_unmute_all(T_AUDIO_STREAM_TYPE type);
 bool audio_track_volume_balance_set(T_AUDIO_STREAM_TYPE stream_type,
                                     float               scale);
+
+bool audio_route_init(void);
+void audio_route_deinit(void);
 
 bool audio_effect_init(void);
 void audio_effect_deinit(void);

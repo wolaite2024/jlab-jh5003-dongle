@@ -1330,8 +1330,13 @@ bool touch_read_key_value(TOUCH_DATA *p_touch_data)
         return false;
     }
 
+#if FB_DIRECTION_ROTATE
     p_touch_data->x = LCD_WIDTH - cur_point.y;
     p_touch_data->y = cur_point.x;
+#else
+    p_touch_data->x = cur_point.x;
+    p_touch_data->y = cur_point.y;
+#endif
     p_touch_data->t = cur_point.t;
     p_touch_data->is_press = cur_point.is_press;
 

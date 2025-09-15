@@ -41,6 +41,7 @@
 #include "bt_a2dp.h"
 #include "app_sniff_mode.h"
 #include "app_vendor.h"
+#include "usb_host_detect.h"
 
 #if F_APP_GAMING_CONTROLLER_SUPPORT
 #include "app_dongle_controller.h"
@@ -67,6 +68,7 @@
 #include "app_lea_ccp.h"
 #include "transmit_svc_dongle.h"
 #include "app_lea_adv.h"
+#include "app_lea_unicast_audio.h"
 #endif
 
 #if F_APP_BLE_SWIFT_PAIR_SUPPORT
@@ -87,6 +89,10 @@
 #include "app_gfps_device.h"
 #endif
 
+#if F_APP_MUTLILINK_SOURCE_PRIORITY_UI
+#include "app_multilink_customer.h"
+#endif
+
 #define CALCULATE_A2DP_PKT_LOSS_RATE        0
 
 #define DONGLE_DISCONNECT_RSSI_THRESHOLD    -65
@@ -104,7 +110,6 @@ typedef enum
     APP_TIMER_CALL_ILDE_DISC_SCO                     = 0x03,
     APP_TIMER_SWITCH_RF_MODE_DEBOUNCE                = 0x04,
     APP_TIMER_SEND_FIX_CHAN_EXIT_SNIFF               = 0x05,
-    APP_TIMER_DELAY_TO_SYNC_LEA_PHONE_CALL_STATUS    = 0x06,
 } T_APP_DONGLE_TIMER;
 
 typedef enum
@@ -151,7 +156,7 @@ typedef enum
 
 #if F_APP_ALLOW_LEGACY_GAMING_TX_3M
 #define RSSI_THRESHOLD_CHANGE_TO_3M     -50
-#define CHANGE_TO_3M_DETECT_TIME        6
+#define CHANGE_TO_3M_DETECT_TIME        2
 #define CHANGE_TO_2M_DETECT_TIME        2
 #endif
 
@@ -174,15 +179,13 @@ static uint8_t timer_idx_check_change_pkt_type = 0;
 #endif
 static uint8_t timer_idx_switch_rf_mode_debounce = 0;
 
-#if F_APP_LEA_SUPPORT
-static uint8_t timer_idx_delay_to_sync_lea_phone_call_status = 0;
-#endif
-
 #if F_APP_GAMING_LE_AUDIO_24G_STREAM_FIRST
 static bool wait_cis_disc = false;
 #endif
 
-static void app_dongle_phnoe_preempt_call_idle_handler(void);
+#if F_APP_GAMING_WIRED_MODE_HANDLE
+static bool disable_rf_due_to_wired_handle = false;
+#endif
 
 void app_dongle_clear_dongle_status(void)
 {
@@ -193,7 +196,11 @@ void app_dongle_clear_dongle_status(void)
 
 void app_dongle_sync_headset_status(void)
 {
-    if (app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SECONDARY)
+    // sync if not connected, or connected and role is primary
+    bool sync_to_dongle = (app_db.remote_session_state != REMOTE_SESSION_STATE_CONNECTED) ||
+                          (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY);
+
+    if (sync_to_dongle)
     {
         app_dongle_send_cmd(DONGLE_CMD_SYNC_STATUS, (uint8_t *)&headset_status, sizeof(headset_status));
     }
@@ -228,11 +235,9 @@ void app_dongle_update_headset_conn_status(T_HEADSET_CONN_EVENT event)
     bool ble_device_connected = false;
     bool pairing_adv = (dongle_state == DONGLE_STATE_PAIRING) ? true : false;
 
-    if (event == HEADSET_POWER_OFFING)
+    if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_SECONDARY)
     {
-        //headset is pwr offing , set unknown to dongle.
-        headset_status.conn_status = HEADSET_PHONE_STATUS_UNKOWN;
-        goto SYNC_STATUS;
+        return;
     }
 
     for (uint8_t i = 0; i < MAX_BR_LINK_NUM; i++)
@@ -258,9 +263,10 @@ void app_dongle_update_headset_conn_status(T_HEADSET_CONN_EVENT event)
         headset_status.conn_status = HEADSET_PHONE_DISCONNECTED;
     }
 
+    app_relay_async_single(APP_MODULE_TYPE_DONGLE_DUAL_MODE, APP_REMOTE_MSG_SYNC_HEADSET_STATUS);
+
     app_dongle_adv_start(pairing_adv);
 
-SYNC_STATUS:
     APP_PRINT_TRACE3("app_dongle_update_phone_acl_status: event %d legacy_connected %d ble_connected %d",
                      event, legacy_device_connected, ble_device_connected);
 
@@ -272,6 +278,11 @@ static void app_dongle_update_phone_stream_status(T_PHONE_STREAM_EVENT event)
 {
     T_PHONE_STREAM_STATUS pre_status = headset_status.phone_status;
     T_PHONE_STREAM_STATUS new_status = headset_status.phone_status;
+
+    if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_SECONDARY)
+    {
+        return;
+    }
 
     if (event == PHONE_EVENT_A2DP_START)
     {
@@ -330,7 +341,10 @@ static void app_dongle_update_phone_stream_status(T_PHONE_STREAM_EVENT event)
 
         app_dongle_sync_headset_status();
 
-        app_relay_async_single(APP_MODULE_TYPE_DONGLE_DUAL_MODE, APP_REMOTE_MSG_SYNC_HEADSET_STATUS);
+        if (app_db.device_state == APP_DEVICE_STATE_ON)
+        {
+            app_relay_async_single(APP_MODULE_TYPE_DONGLE_DUAL_MODE, APP_REMOTE_MSG_SYNC_HEADSET_STATUS);
+        }
     }
 }
 
@@ -366,6 +380,12 @@ void app_dongle_adjust_gaming_latency(void)
 #endif
 
         latency_value += latency_plus;
+
+        if (dongle_status.usb_host_type == OS_TYPE_PS ||
+            app_db.dongle_is_enable_mic)
+        {
+            latency_value += 5;
+        }
 
         if (headset_status.increase_a2dp_interval)
         {
@@ -444,6 +464,8 @@ static void app_dongle_handle_acl_disc_event(T_BT_EVENT_PARAM *param)
 #else // F_APP_LEGACY_DONGLE_BINDING
     adv_handle = app_dongle_get_legacy_adv_handle();
 #endif
+
+    app_dongle_handle_heaset_adv_interval(ADV_INTERVAL_EVENT_START_FAST_ADV);
 
     /* prevent 2.4g pairing being interrupted when force enter pairing in 2.4g mode only */
     bool curent_is_2_4g_pairing = (dongle_ctrl_data.enable_pairing &&
@@ -536,31 +558,23 @@ static void app_dongle_adv_control(bool dongle_streaming)
 #if F_APP_ALLOW_LEGACY_GAMING_TX_3M
 void app_dongle_enable_tx_3M(bool enable_3M)
 {
-    uint16_t pkt_type = 0;
+    T_BT_ACL_PKT_TYPE pkt_type = BT_ACL_PKT_TYPE_2M;
     uint8_t dongle_addr[6] = {0};
 
     if (enable_3M)
     {
         headset_status.enable_3M = true;
 
-        pkt_type = GAP_PKT_TYPE_DM1 | GAP_PKT_TYPE_DH1 | \
-                   GAP_PKT_TYPE_DM3 | GAP_PKT_TYPE_DH3 | \
-                   GAP_PKT_TYPE_DM5 | GAP_PKT_TYPE_DH5 | \
-                   GAP_PKT_TYPE_NO_2DH1 | GAP_PKT_TYPE_NO_2DH3 | GAP_PKT_TYPE_NO_2DH5;
+        pkt_type = BT_ACL_PKT_TYPE_3M;
     }
     else
     {
         headset_status.enable_3M = false;
-
-        pkt_type = GAP_PKT_TYPE_DM1 | GAP_PKT_TYPE_DH1 | \
-                   GAP_PKT_TYPE_DM3 | GAP_PKT_TYPE_DH3 | \
-                   GAP_PKT_TYPE_DM5 | GAP_PKT_TYPE_DH5 | \
-                   GAP_PKT_TYPE_NO_3DH1 | GAP_PKT_TYPE_NO_3DH3 | GAP_PKT_TYPE_NO_3DH5;
     }
 
     if (app_dongle_get_connected_dongle_addr(dongle_addr))
     {
-        gap_br_cfg_acl_pkt_type(dongle_addr, pkt_type);
+        bt_acl_pkt_type_set(dongle_addr, pkt_type);
     }
     else
     {
@@ -591,7 +605,7 @@ static void app_dongle_check_change_pkt_type(int8_t dongle_rssi)
 
     if (headset_status.enable_3M == false)
     {
-        if (force_tx_3M == false ||
+        if (force_tx_3M ||
             (dongle_rssi > RSSI_THRESHOLD_CHANGE_TO_3M || mic_data_tx_3M))
         {
             if (timer_idx_check_change_pkt_type == 0)
@@ -644,6 +658,15 @@ static void app_dongle_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t
                 app_gaming_sync_set_link_connected(true, param->spp_conn_cmpl.bd_addr);
 
                 app_audio_update_dongle_flag(true);
+
+#if F_APP_MUTLILINK_SOURCE_PRIORITY_UI
+                p_link = app_link_find_br_link(param->spp_conn_cmpl.bd_addr);
+
+                if (p_link)
+                {
+                    app_multilink_customer_set_dongle_priority(p_link->id);
+                }
+#endif
             }
         }
         break;
@@ -706,7 +729,7 @@ static void app_dongle_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t
 
                 if (p_link != NULL)
                 {
-                    p_link->streaming_fg = true;
+                    app_link_update_a2dp_streaming(p_link, true);
                 }
 
                 if (app_cfg_nv.legacy_gaming_support_common_adv)
@@ -735,7 +758,7 @@ static void app_dongle_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t
 
                 if (p_link != NULL)
                 {
-                    p_link->streaming_fg = false;
+                    app_link_update_a2dp_streaming(p_link, false);
                 }
             }
         }
@@ -755,7 +778,8 @@ static void app_dongle_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t
 
     case BT_EVENT_ACL_CONN_DISCONN:
         {
-            if (app_link_check_phone_link(param->acl_conn_disconn.bd_addr))
+            if (app_link_check_phone_link(param->acl_conn_disconn.bd_addr) &&
+                param->acl_conn_disconn.cause != (HCI_ERR | HCI_ERR_CONN_ROLESWAP))
             {
                 app_dongle_update_phone_stream_status(PHONE_EVENT_PHONE_DISC);
 
@@ -796,6 +820,8 @@ static void app_dongle_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t
             if (app_link_check_dongle_link(addr))
             {
                 memcpy(app_cfg_nv.dongle_addr, addr, 6);
+
+                headset_status.enable_3M = false;
             }
 
             if (/* consider the first time connection has no bond flag yet
@@ -988,15 +1014,6 @@ void app_dongle_switch_pairing_mode(void)
 #if F_APP_24G_BT_AUDIO_SOURCE_CTRL_SUPPORT
     if (app_cfg_const.enable_24g_bt_audio_source_switch)
     {
-        if (app_cfg_nv.is_bt_pairing)
-        {
-            app_cfg_nv.allowed_source = ALLOWED_SOURCE_BT;
-        }
-        else
-        {
-            app_cfg_nv.allowed_source = ALLOWED_SOURCE_24G;
-        }
-
         if ((app_cfg_nv.is_bt_pairing && app_cfg_nv.allowed_source == ALLOWED_SOURCE_24G) ||
             (app_cfg_nv.is_bt_pairing == false && app_cfg_nv.allowed_source == ALLOWED_SOURCE_BT))
         {
@@ -1034,6 +1051,13 @@ void app_dongle_handle_rtk_adv(bool enable_adv)
         {
             allow_play_adv = true;
         }
+
+#if F_APP_GAMING_WIRED_MODE_HANDLE
+        if (app_dongle_get_wired_status())
+        {
+            allow_play_adv = false;
+        }
+#endif
 
         if (enable_adv && allow_play_adv)
         {
@@ -1825,21 +1849,6 @@ static void app_dongle_timer_cback(uint8_t timer_evt, uint16_t param)
         }
         break;
 
-#if F_APP_LEA_SUPPORT
-    case APP_TIMER_DELAY_TO_SYNC_LEA_PHONE_CALL_STATUS:
-        {
-            app_stop_timer(&timer_idx_delay_to_sync_lea_phone_call_status);
-
-            app_dongle_update_phone_stream_status(PHONE_EVENT_LEA_CALL_STOP);
-
-            if (app_db.restore_dongle_recording)
-            {
-                app_dongle_phnoe_preempt_call_idle_handler();
-            }
-        }
-        break;
-#endif
-
     default:
         break;
     }
@@ -1879,6 +1888,8 @@ void app_dongle_handle_ble_disconnected(uint8_t *bd_addr)
 
     if (lea_dongle_disconnected)
     {
+        app_dongle_handle_heaset_adv_interval(ADV_INTERVAL_EVENT_START_FAST_ADV);
+
         app_dongle_clear_dongle_status();
 
 #if F_APP_GAMING_LE_AUDIO_24G_STREAM_FIRST
@@ -2365,19 +2376,19 @@ static void app_dongle_phnoe_preempt_call_idle_handler()
 {
     app_db.restore_dongle_recording = false;
     app_dongle_update_is_mic_enable(true);
-    app_dongle_start_recording(app_cfg_nv.dongle_addr);
+    app_dongle_start_recording();
 }
 
 static void app_dongle_phone_preempt_call_active_handler()
 {
     app_db.restore_dongle_recording = true;
     app_dongle_update_is_mic_enable(false);
-    app_dongle_stop_recording(app_cfg_nv.dongle_addr);
+    app_dongle_stop_recording();
 }
 
 void app_dongle_call_status_handler(T_APP_CALL_STATUS call_status, uint8_t idx)
 {
-    if (app_db.dongle_is_enable_mic && (call_status == APP_CALL_ACTIVE))
+    if (app_db.dongle_is_enable_mic && (call_status != APP_CALL_IDLE))
     {
         app_dongle_phone_preempt_call_active_handler();
     }
@@ -2466,38 +2477,41 @@ void app_dongle_streaming_handle(bool streaming)
 
     APP_PRINT_TRACE1("app_dongle_streaming_handle: %d", streaming);
 
-    if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_SINGLE)
+    T_BT_PARAM bt_param;
+
+    memset(&bt_param, 0, sizeof(T_BT_PARAM));
+    bt_param.not_check_addr_flag = true;
+
+    if (streaming)
     {
-        T_BT_PARAM bt_param;
-
-        memset(&bt_param, 0, sizeof(T_BT_PARAM));
-        bt_param.not_check_addr_flag = true;
-
-        if (streaming)
+        if (dongle_streaming == false)
         {
-            if (dongle_streaming == false)
+            app_bt_policy_update_cpu_freq(BP_CPU_FREQ_EVENT_GAMING_STREAMING_START);
+
+            app_bt_policy_state_machine(EVENT_ENTER_GAMING_DONGLE_STREAMING, &bt_param);
+
+            if (app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SECONDARY)
             {
-                app_bt_policy_update_cpu_freq(BP_CPU_FREQ_EVENT_GAMING_STREAMING_START);
-
-                app_bt_policy_state_machine(EVENT_ENTER_GAMING_DONGLE_STREAMING, &bt_param);
-
                 app_dongle_adv_control(true);
-
-                dongle_streaming = true;
             }
+
+            dongle_streaming = true;
         }
-        else
+    }
+    else
+    {
+        if (dongle_streaming)
         {
-            if (dongle_streaming)
+            app_bt_policy_update_cpu_freq(BP_CPU_FREQ_EVENT_GAMING_STREAMING_STOP);
+
+            app_bt_policy_state_machine(EVENT_EXIT_GAMING_DONGLE_STREAMING, &bt_param);
+
+            if (app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SECONDARY)
             {
-                app_bt_policy_update_cpu_freq(BP_CPU_FREQ_EVENT_GAMING_STREAMING_STOP);
-
-                app_bt_policy_state_machine(EVENT_EXIT_GAMING_DONGLE_STREAMING, &bt_param);
-
                 app_dongle_adv_control(false);
-
-                dongle_streaming = false;
             }
+
+            dongle_streaming = false;
         }
     }
 }
@@ -2522,6 +2536,12 @@ bool app_dongle_lea_adv_start_check(void)
         reject_reason = 2;
     }
 #endif
+#if F_APP_GAMING_WIRED_MODE_HANDLE
+    else if (app_dongle_get_wired_status())
+    {
+        reject_reason = 3;
+    }
+#endif
 
     if (reject_reason != 0)
     {
@@ -2544,7 +2564,7 @@ void app_dongle_a2dp_start_handle(void)
         latency = app_dongle_get_gaming_latency();
         app_dongle_set_gaming_latency(p_link->a2dp_track_handle, latency);
 
-        bt_a2dp_stream_delay_report_request(p_link->bd_addr, latency);
+        bt_a2dp_stream_delay_report_req(p_link->bd_addr, latency);
     }
 }
 
@@ -2560,45 +2580,50 @@ static void app_dongle_dual_mode_device_event_cback(uint32_t event, void *msg)
 #if F_APP_LEA_SUPPORT
     case APP_DEVICE_IPC_EVT_LEA_CCP_CALL_STATUS:
         {
+            uint16_t conn_handle = app_lea_ccp_get_active_conn_handle();
+            T_APP_LE_LINK *p_le_link = app_link_find_le_link_by_conn_handle(conn_handle);
             T_APP_CALL_STATUS call_status = app_lea_ccp_get_call_status();
-            uint8_t remote_device_type = *(uint8_t *)msg;
+
+            if (p_le_link == NULL)
+            {
+                APP_PRINT_ERROR0("app_dongle_dual_mode_device_event_cback: Fail to get le link");
+                return;
+            }
 
             APP_PRINT_TRACE3("app_dongle_dual_mode_device_event_cback: device: %d, call_status: %d source: %d",
-                             remote_device_type, call_status, app_cfg_nv.allowed_source);
+                             p_le_link->remote_device_type, call_status, app_cfg_nv.allowed_source);
 
             if ((call_status != APP_CALL_IDLE) &&
-                (remote_device_type != DEVICE_TYPE_DONGLE))
+                (p_le_link->remote_device_type != DEVICE_TYPE_DONGLE))
             {
                 //it meas that LEA phone call on-going.
+                app_dongle_update_phone_stream_status(PHONE_EVENT_LEA_CALL_START);
+
+#if TARGET_LEGACY_AUDIO_GAMING
                 if (app_cfg_nv.allowed_source == ALLOWED_SOURCE_24G)
                 {
-                    if (timer_idx_delay_to_sync_lea_phone_call_status)
-                    {
-                        app_dongle_timer_cback(APP_TIMER_DELAY_TO_SYNC_LEA_PHONE_CALL_STATUS, 0);
-                    }
-
-                    app_dongle_update_phone_stream_status(PHONE_EVENT_LEA_CALL_START);
-
                     if (app_db.dongle_is_enable_mic)
                     {
                         app_dongle_phone_preempt_call_active_handler();
                     }
                 }
+#endif
             }
             else if ((call_status == APP_CALL_IDLE) &&
-                     (remote_device_type != DEVICE_TYPE_DONGLE))
+                     (p_le_link->remote_device_type != DEVICE_TYPE_DONGLE))
             {
                 //it meas that LEA pohne call end.
+                app_dongle_update_phone_stream_status(PHONE_EVENT_LEA_CALL_STOP);
+
+#if TARGET_LEGACY_AUDIO_GAMING
                 if (app_cfg_nv.allowed_source == ALLOWED_SOURCE_24G)
                 {
-                    mtc_ase_release();
-
-                    // delay sync to wait lea free heap
-                    app_start_timer(&timer_idx_delay_to_sync_lea_phone_call_status,
-                                    "delay_to_sync_lea_phone_call_status",
-                                    app_dongle_timer_id, APP_TIMER_DELAY_TO_SYNC_LEA_PHONE_CALL_STATUS, 0, false,
-                                    1000);
+                    if (app_db.restore_dongle_recording)
+                    {
+                        app_dongle_phnoe_preempt_call_idle_handler();
+                    }
                 }
+#endif
             }
         }
         break;
@@ -2681,11 +2706,16 @@ exit:
 }
 
 #if F_APP_GAMING_WIRED_MODE_HANDLE
+bool app_dongle_get_wired_status(void)
+{
+    return disable_rf_due_to_wired_handle;
+}
+
 void app_dongle_wired_mode_handle(T_APP_DONGLE_WIRED_MODE_EVENT event)
 {
     bool is_disconn_bt = false;
     uint8_t stop_adv_cause = 0;
-    bool is_recover_bt = true;
+    bool is_recover_bt = false;
 
     static bool is_usb_audio = false;
     static bool is_line_in = false;
@@ -2728,13 +2758,22 @@ void app_dongle_wired_mode_handle(T_APP_DONGLE_WIRED_MODE_EVENT event)
         break;
     }
 
-    if (app_bt_policy_get_state() != BP_STATE_IDLE && is_disconn_bt)
+    if (is_disconn_bt)
     {
+        disable_rf_due_to_wired_handle = true;
         ble_ext_adv_mgr_disable_all(stop_adv_cause);
-        app_bt_policy_shutdown();
+        gap_write_airplan_mode(1);
+
+        if (app_bt_policy_get_state() != BP_STATE_IDLE)
+        {
+            app_db.bt_wait_shutdown_finish_to_startup = 0;
+            app_bt_policy_shutdown();
+        }
     }
-    else if (app_db.device_state == APP_DEVICE_STATE_ON && app_bt_policy_get_state() == BP_STATE_IDLE)
+    else
     {
+        is_recover_bt = true;
+
 #if F_APP_LINEIN_SUPPORT
         if (is_line_in)
         {
@@ -2751,12 +2790,33 @@ void app_dongle_wired_mode_handle(T_APP_DONGLE_WIRED_MODE_EVENT event)
 
         if (is_recover_bt)
         {
-            app_device_bt_policy_startup(true);
+            disable_rf_due_to_wired_handle = false;
+            gap_write_airplan_mode(0);
+
+            if (app_db.device_state == APP_DEVICE_STATE_ON)
+            {
+                if (app_bt_policy_get_state() == BP_STATE_IDLE)
+                {
+                    if (app_bt_policy_is_shutdown_step_state())
+                    {
+                        app_db.bt_wait_shutdown_finish_to_startup = 1;
+                    }
+                    else
+                    {
+                        app_db.bt_wait_shutdown_finish_to_startup = 0;
+                        app_device_bt_policy_startup(true);
+                    }
+                }
+
+                app_dongle_adv_start(false);
+                app_dongle_handle_rtk_adv(true);
+            }
         }
     }
 
-    APP_PRINT_TRACE5("app_dongle_wired_mode_handle: event %d, line_in %d, usb_audio %d, disconn_bt %d, recover_bt %d",
-                     event, is_line_in, is_usb_audio, is_disconn_bt, is_recover_bt);
+    APP_PRINT_TRACE6("app_dongle_wired_mode_handle: event %d, line_in %d, usb_audio %d, disconn_bt %d, recover_bt %d, delay_start %d",
+                     event, is_line_in, is_usb_audio, is_disconn_bt, is_recover_bt,
+                     app_db.bt_wait_shutdown_finish_to_startup);
 }
 #endif
 

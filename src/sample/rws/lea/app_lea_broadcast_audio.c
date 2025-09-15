@@ -10,6 +10,7 @@
 #include <string.h>
 #include "trace.h"
 #include "os_mem.h"
+#include "audio_probe.h"
 #include "base_data_parse.h"
 #include "bass_mgr.h"
 #include "app_ipc.h"
@@ -17,12 +18,11 @@
 #include "app_lea_broadcast_audio.h"
 #include "app_lea_unicast_audio.h"
 #include "app_cfg.h"
-#include "app_lea_adv.h"
 #include "app_lea_scan.h"
 #include "app_lea_vol_def.h"
 #include "app_sniff_mode.h"
+#include "app_timer.h"
 #include "gap_conn_le.h"
-#include "gap_ext_scan.h"
 #include "app_main.h"
 #include "app_mmi.h"
 #include "app_audio_policy.h"
@@ -36,6 +36,7 @@
 #include "app_lea_profile.h"
 #include "multitopology_ctrl.h"
 #include "app_vendor.h"
+#include "app_lea_vol_policy.h"
 
 #if F_APP_TUYA_SUPPORT
 #include "rtk_tuya_ble_ota.h"
@@ -45,6 +46,12 @@
 #include "app_cmd.h"
 #include "app_lea_realcast.h"
 #endif
+
+#if F_APP_LC3_PLUS_SUPPORT
+#include "app_lea_pacs.h"
+#endif
+
+#include "app_bt_point.h"
 
 /*============================================================================*
  *                              Variables
@@ -67,7 +74,6 @@
 #define APP_LEA_BCA_BIG_INFO_RESET   0xF7
 #define APP_LEA_BCA_BS_RESET         0xEF
 
-#define APP_LEA_BCA_BS_MULTI_CH      0
 #define APP_LEA_BCA_BS_MSE           0
 #define APP_LEA_BCA_BS_SYNC_TO       100
 
@@ -75,8 +81,6 @@
 #define APP_LEA_BCA_PA_TYPE          0
 #define APP_LEA_BCA_PA_SKIP          0
 #define APP_LEA_BCA_PA_SYNC_TO       1000
-
-#define BIS_PD_LOW_LATENCY           10000
 
 typedef enum
 {
@@ -107,10 +111,13 @@ typedef struct
 
 typedef struct
 {
+    uint8_t id;
     uint8_t used;
     uint8_t bis_id;
     uint8_t ch_id;
     uint8_t frame_num;
+    uint8_t bit_depth;
+    T_AUDIO_FORMAT_TYPE codec_type;
     uint16_t bis_conn_handle;
     void *audio_track_handle;
     T_GAP_BIG_SYNC_RECEIVER_SYNC_STATE big_state;
@@ -145,6 +152,11 @@ typedef struct
     T_GAP_BIG_SYNC_RECEIVER_SYNC_STATE big_state;
     T_LEA_BCA_SECTION bis_sec[GAP_BIG_MGR_MAX_BIS_NUM];
     uint8_t broadcast_code[16];
+    uint32_t stream_allocation;
+    uint16_t left_conn_handle;
+    uint16_t right_conn_handle;
+    uint8_t  left_ch_iso_state;
+    uint8_t  right_ch_iso_state;
 } T_APP_LEA_BCA_DB;
 
 typedef struct
@@ -160,6 +172,8 @@ static const uint32_t sample_rate_freq[13] =
     8000, 11000, 16000, 22000, 24000, 32000, 44100, 48000, 88000, 96000, 176000, 192000, 384000
 };
 
+static uint8_t app_lea_bca_timer_id = 0;
+static uint8_t timer_idx_bis_scan = 0;
 static T_APP_LEA_BCA_DB  app_lea_bca_db[APP_LEA_BCA_DB_NUM] = {0};
 static T_APP_LEA_BCA_BS_TGT app_lea_bca_bs_tgt = {0};
 static uint8_t app_lea_bca_bs_idx = APP_LEA_BCA_DB_NUM;
@@ -168,6 +182,14 @@ static uint32_t app_lea_bca_bs_ch_L_db;
 static uint32_t app_lea_bca_bs_ch_R_db;
 static uint32_t app_lea_bca_bs_ch_LR_db;
 static T_APP_LEA_BCA_STATE app_lea_bca_state_machine = LEA_BCA_STATE_IDLE;
+static T_OS_QUEUE app_lea_bca_left_ch_queue;
+static T_OS_QUEUE app_lea_bca_right_ch_queue;
+#if F_APP_ERWS_SUPPORT
+static bool app_lea_bca_local_track_started = false;
+#endif
+static bool app_lea_bca_remote_track_started = false;
+static bool app_lea_bca_ready_to_downstream = false;
+static uint16_t app_lea_bca_playback_resume_cnt = 0;
 
 bool app_lea_bca_sink_add_device(T_LEA_BRS_INFO *src_info);
 uint8_t app_lea_bca_bs_get_active(void);
@@ -180,8 +202,8 @@ T_BLE_AUDIO_SYNC_HANDLE app_lea_bca_get_sd_sync_handle(uint8_t src_id);
 
 // remove these APIs later
 void app_lea_uca_eq_release(T_AUDIO_EFFECT_INSTANCE *eq_instance);
-void app_lea_uca_eq_setting(T_AUDIO_EFFECT_INSTANCE eq_instance,  bool *audio_eq_enabled,
-                            T_AUDIO_TRACK_HANDLE audio_track_handle);
+void app_lea_uca_playback_eq_setting(T_AUDIO_EFFECT_INSTANCE eq_instance,  bool *audio_eq_enabled,
+                                     T_AUDIO_TRACK_HANDLE audio_track_handle);
 T_AUDIO_EFFECT_INSTANCE *app_lea_uca_p_eq_instance(void);
 T_AUDIO_EFFECT_INSTANCE app_lea_uca_get_eq_instance(void);
 bool *app_lea_uca_get_eq_abled(void);
@@ -189,6 +211,131 @@ bool *app_lea_uca_get_eq_abled(void);
 /*============================================================================*
  *                              Functions
  *============================================================================*/
+static void app_lea_bca_timeout_cb(uint8_t timer_evt, uint16_t param)
+{
+    APP_PRINT_TRACE1("app_lea_bca_timeout_cb: timer_evt 0x%02x", timer_evt);
+    switch (timer_evt)
+    {
+#if F_APP_TMAP_BMR_SUPPORT
+    case LEA_BCA_TMR_SCAN:
+        {
+            app_stop_timer(&timer_idx_bis_scan);
+            app_lea_bca_sm(LEA_BCA_SCAN_TIMEOUT, NULL);
+            app_lea_bca_poweroff_check(LEA_BCA_BIS_SCAN_TO);
+        }
+        break;
+
+    case LEA_BCA_TMR_RESYNC:
+        {
+            app_stop_timer(&timer_idx_bis_scan);
+            app_lea_bca_sm(LEA_BCA_SCAN_TIMEOUT, NULL);
+            app_lea_bca_poweroff_check(LEA_BCA_BIS_RESYNC_TO);
+        }
+        break;
+#endif
+
+    default:
+        break;
+    }
+}
+
+bool app_lea_bca_exist_handler(void)
+{
+    if (timer_idx_bis_scan)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+static void app_lea_bca_device_sniff(bool allow_poweroff, bool allow_sniff)
+{
+    if (allow_sniff)
+    {
+        app_sniff_mode_b2s_enable_all(SNIFF_DISABLE_MASK_LEA);
+        app_sniff_mode_b2b_enable(app_cfg_nv.bud_peer_addr, SNIFF_DISABLE_MASK_LEA);
+    }
+    else
+    {
+        app_sniff_mode_b2s_disable_all(SNIFF_DISABLE_MASK_LEA);
+        app_sniff_mode_b2b_disable(app_cfg_nv.bud_peer_addr, SNIFF_DISABLE_MASK_LEA);
+    }
+    if (allow_poweroff)
+    {
+        app_auto_power_off_enable(AUTO_POWER_OFF_MASK_BLE_AUDIO, app_cfg_const.timer_auto_power_off);
+    }
+}
+
+bool app_lea_bca_poweroff_check(T_LEA_BCA_TO event)
+{
+    bool result = true;
+    switch (event)
+    {
+    case LEA_BCA_BIS_SCAN_TO:
+    case LEA_BCA_BIS_RESYNC_TO:
+        {
+            if (app_lea_mgr_is_downstreaming())
+            {
+                app_lea_bca_device_sniff(false, false);
+            }
+            else if (app_link_get_lea_link_num())
+            {
+                app_lea_bca_device_sniff(false, true);
+            }
+            else
+            {
+                app_lea_bca_device_sniff(true, true);
+            }
+
+            if (app_cfg_const.power_off_bis_to &&
+                app_bt_policy_listening_allow_poweroff() &&
+                (app_link_get_b2s_link_num() == 0) &&
+                !app_bt_policy_is_pairing() &&
+                (!app_lea_bca_state() && app_link_get_lea_link_num() == 0) &&
+                !app_lea_mgr_is_downstreaming())
+            {
+                if (app_db.remote_session_state == REMOTE_SESSION_STATE_DISCONNECTED)
+                {
+                    app_db.power_off_cause = POWER_OFF_CAUSE_EXIT_PAIRING_MODE;
+                    app_mmi_handle_action(MMI_DEV_POWER_OFF);
+                }
+                else if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY)
+                {
+                    uint8_t action = MMI_DEV_POWER_OFF;
+                    app_relay_sync_single(APP_MODULE_TYPE_MMI, action, REMOTE_TIMER_HIGH_PRECISION,
+                                          0, false);
+                }
+            }
+            mtc_topology_dm(MTC_TOPO_EVENT_BIS_STOP);
+        }
+        break;
+
+    default:
+        result = false;
+        break;
+    }
+    return result;
+}
+
+void app_lea_bca_scan_start(uint16_t timeout)
+{
+    app_lea_scan_start();
+    if (!app_lea_bca_exist_handler())
+    {
+        app_start_timer(&timer_idx_bis_scan, "bis_scan",
+                        app_lea_bca_timer_id, LEA_BCA_TMR_SCAN, 0, false, timeout);
+    }
+}
+
+void app_lea_bca_scan_stop(void)
+{
+    app_stop_timer(&timer_idx_bis_scan);
+    app_lea_scan_stop();
+}
+
 uint8_t app_lea_bca_tgt(uint8_t flag)
 {
     APP_PRINT_TRACE2("app_lea_bca_tgt: used 0x%x, 0x%02X", app_lea_bca_bs_tgt.find, flag);
@@ -302,7 +449,7 @@ static void app_lea_bca_db_init(void)
         app_lea_bca_db[i].ch_r_idx  = BS_CH_MAX;
         app_lea_bca_db[i].ch_lr_idx = BS_CH_MAX;
     }
-    mtc_if_lbis_reg(app_lea_mgr_bmr_mtc_if_handle);
+    mtc_cback_register(app_lea_mgr_bmr_mtc_if_handle);
 }
 
 
@@ -367,6 +514,16 @@ uint8_t app_lea_bca_ch_policy(T_APP_LEA_BCA_DB **p_bc_source)
             ((T_APP_LEA_BCA_DB *)(*p_bc_source))->bis_idx = ((T_APP_LEA_BCA_DB *)(*p_bc_source))->bis_sec[((
                                                                 T_APP_LEA_BCA_DB *)(
                                                                 *p_bc_source))->ch_lr_idx].bis_id;
+        }
+        else if ((((T_APP_LEA_BCA_DB *)(*p_bc_source))->ch_l_idx != BS_CH_MAX) &&
+                 (((T_APP_LEA_BCA_DB *)(*p_bc_source))->ch_r_idx != BS_CH_MAX))
+        {
+            ((T_APP_LEA_BCA_DB *)(*p_bc_source))->bis_idx = ((T_APP_LEA_BCA_DB *)(*p_bc_source))->bis_sec[((
+                                                                T_APP_LEA_BCA_DB *)(
+                                                                *p_bc_source))->ch_l_idx].bis_id |
+                                                            ((T_APP_LEA_BCA_DB *)(*p_bc_source))->bis_sec[((
+                                                                        T_APP_LEA_BCA_DB *)(
+                                                                        *p_bc_source))->ch_r_idx].bis_id;
         }
         else if (((T_APP_LEA_BCA_DB *)(*p_bc_source))->ch_l_idx != BS_CH_MAX)
         {
@@ -441,17 +598,27 @@ uint8_t app_lea_bca_ch_policy(T_APP_LEA_BCA_DB **p_bc_source)
     return result;
 }
 
+void app_lea_bca_set_downstream_ready(bool state)
+{
+    app_lea_bca_ready_to_downstream = state;
+}
+
 void app_lea_bca_audio_path_reset(T_AUDIO_TRACK_HANDLE audio_track_handle, bool release_track_only)
 {
     if (audio_track_handle != NULL)
     {
+#if F_APP_ERWS_SUPPORT
+        app_lea_bca_local_track_started = false;
+#endif
+        app_lea_bca_remote_track_started = false;
+        app_lea_bca_ready_to_downstream = false;
+        app_lea_bca_playback_resume_cnt = 0;
         app_lea_mgr_set_media_state((uint8_t)ISOCH_DATA_PKT_STATUS_LOST_DATA);
         syncclk_drv_timer_stop(LEA_SYNC_CLK_REF);
         audio_track_release(audio_track_handle);
         app_lea_uca_eq_release(app_lea_uca_p_eq_instance());
     }
 
-    //mtc_resume_a2dp(mtc_get_resume_a2dp_idx());
     if (release_track_only)
     {
         return;
@@ -470,32 +637,6 @@ void app_lea_bca_apply_sync_pera(T_BIG_MGR_SYNC_RECEIVER_BIG_CREATE_SYNC_PARAM *
     sync_param->encryption = encryption;
     sync_param->mse = APP_LEA_BCA_BS_MSE;
     sync_param->big_sync_timeout = APP_LEA_BCA_BS_SYNC_TO;
-
-#if (APP_LEA_BCA_BS_MULTI_CH == 1)
-    uint8_t num_bis = 0;
-    uint8_t i = 0;
-    uint8_t offset = 0;
-
-    num_bis = p_bc_source->num_bis;
-    sync_param->num_bis = num_bis;
-    while (num_bis > 0)
-    {
-        APP_PRINT_TRACE3("app_lea_bca_apply_sync_pera: %d, %d, %d",
-                         num_bis, p_bc_source->bis_msk,, offset);
-
-        if (p_bc_source->bis_msk & (1 << offset))
-        {
-            sync_param->bis[i] = offset;
-            i++;
-            num_bis--;
-        }
-        offset++;
-        if (offset > 7)
-        {
-            num_bis = 0;
-        }
-    }
-#else
     sync_param->num_bis = 1;
     if (app_lea_bca_default_bis())
     {
@@ -510,8 +651,9 @@ void app_lea_bca_apply_sync_pera(T_BIG_MGR_SYNC_RECEIVER_BIG_CREATE_SYNC_PARAM *
             uint8_t result;
 
             result = app_lea_bca_ch_policy(&p_bc_source);
-            APP_PRINT_TRACE1("aapp_bis_mgr_apply_sync_pera: set channel %d", result);
+            APP_PRINT_TRACE1("app_lea_bca_apply_sync_pera: set channel %d", result);
         }
+        sync_param->bis[0] = p_bc_source->bis_idx;
     }
     else
     {
@@ -520,18 +662,32 @@ void app_lea_bca_apply_sync_pera(T_BIG_MGR_SYNC_RECEIVER_BIG_CREATE_SYNC_PARAM *
         {
             APP_PRINT_TRACE1("app_lea_bca_apply_sync_pera: %d", app_lea_bca_bs_tgt.channel);
             p_bc_source->bis_idx = app_lea_bca_bs_tgt.channel;
+            sync_param->bis[0] = p_bc_source->bis_idx;
         }
         else
         {
             uint8_t result;
 
             result = app_lea_bca_ch_policy(&p_bc_source);
-            APP_PRINT_TRACE1("aapp_bis_mgr_apply_sync_pera: According side set channel %d", result);
+            if (__builtin_popcount(p_bc_source->bis_idx) > 1 && p_bc_source->ch_lr_idx == BS_CH_MAX)
+            {
+                sync_param->num_bis = 2;
+                p_bc_source->stream_allocation |=
+                    p_bc_source->bis_sec[p_bc_source->ch_l_idx].bis_codec_cfg.audio_channel_allocation;
+                p_bc_source->stream_allocation |=
+                    p_bc_source->bis_sec[p_bc_source->ch_r_idx].bis_codec_cfg.audio_channel_allocation;
+                sync_param->bis[0] = p_bc_source->bis_sec[p_bc_source->ch_l_idx].bis_id;
+                sync_param->bis[1] = p_bc_source->bis_sec[p_bc_source->ch_r_idx].bis_id;
+            }
+            else
+            {
+                sync_param->bis[0] = p_bc_source->bis_idx;
+            }
+            APP_PRINT_TRACE1("app_lea_bca_apply_sync_pera: According side set channel %d", result);
         }
     }
-    APP_PRINT_TRACE1("app_lea_bca_apply_sync_pera: %d", p_bc_source->bis_idx);
-    sync_param->bis[0] = p_bc_source->bis_idx;
-#endif
+    APP_PRINT_TRACE1("app_lea_bca_apply_sync_pera: bis_idx %d", p_bc_source->bis_idx);
+
     if (encryption)
     {
         uint8_t broadcast_code_zero[BROADCAST_CODE_LEN] = {0};
@@ -611,7 +767,7 @@ void *app_lea_bca_get_track_handle(void)//feature multi trace process
     {
         for (uint8_t i = 0; i < GAP_BIG_MGR_MAX_BIS_NUM; i++)
         {
-            if (p_bc_source->bis_sec[i].bis_id == p_bc_source->bis_idx)
+            if (p_bc_source->bis_sec[i].audio_track_handle != NULL)
             {
                 return (void *) p_bc_source->bis_sec[i].audio_track_handle;
             }
@@ -660,6 +816,19 @@ T_APP_LEA_BCA_DB *app_lea_bca_find_device_by_bs_handle(T_BLE_AUDIO_SYNC_HANDLE s
     {
         if ((app_lea_bca_db[i].used & APP_LEA_BCA_BS) &&
             (app_lea_bca_db[i].sync_handle == sync_handle))
+        {
+            return &app_lea_bca_db[i];
+        }
+    }
+    return NULL;
+}
+
+static T_APP_LEA_BCA_DB *app_lea_bca_find_device_by_source_id(uint8_t source_id)
+{
+    for (uint8_t i = 0; i < APP_LEA_BCA_DB_NUM; i++)
+    {
+        if ((app_lea_bca_db[i].used & APP_LEA_BCA_SD) &&
+            (app_lea_bca_db[i].source_id == source_id))
         {
             return &app_lea_bca_db[i];
         }
@@ -920,6 +1089,7 @@ bool app_lea_bca_bs_clear_device(T_BLE_AUDIO_SYNC_HANDLE handle)
             app_lea_bca_db[i].ch_l_idx  = BS_CH_MAX;
             app_lea_bca_db[i].ch_r_idx  = BS_CH_MAX;
             app_lea_bca_db[i].ch_lr_idx = BS_CH_MAX;
+            app_lea_bca_db[i].stream_allocation = 0;
             memset(app_lea_bca_db[i].broadcast_code, 0x00, BROADCAST_CODE_LEN);
             memset(app_lea_bca_db[i].bis_sec, 0x00, sizeof(T_LEA_BCA_SECTION) * GAP_BIG_MGR_MAX_BIS_NUM);
             return true;
@@ -930,10 +1100,11 @@ bool app_lea_bca_bs_clear_device(T_BLE_AUDIO_SYNC_HANDLE handle)
 }
 
 bool app_lea_bca_set_cap(T_LEA_BCA_SECTION  *p_bc_source,
+                         uint8_t codec_id[CODEC_ID_LEN],
                          T_CODEC_CFG *bis_codec_cfg,
                          uint32_t *presentation_delay)
 {
-    if (p_bc_source == NULL || bis_codec_cfg == NULL)
+    if (p_bc_source == NULL || bis_codec_cfg == NULL || codec_id == NULL)
     {
         return false;
     }
@@ -945,12 +1116,16 @@ bool app_lea_bca_set_cap(T_LEA_BCA_SECTION  *p_bc_source,
     }
 
     p_bc_source->used |= APP_LEA_BCA_CODEC_CFG;
+    p_bc_source->codec_type = AUDIO_FORMAT_TYPE_LC3;
     p_bc_source->bis_codec_cfg.frame_duration = bis_codec_cfg->frame_duration;
     p_bc_source->bis_codec_cfg.sample_frequency = bis_codec_cfg->sample_frequency;
     p_bc_source->bis_codec_cfg.codec_frame_blocks_per_sdu = bis_codec_cfg->codec_frame_blocks_per_sdu;
     p_bc_source->bis_codec_cfg.octets_per_codec_frame = bis_codec_cfg->octets_per_codec_frame;
     p_bc_source->bis_codec_cfg.audio_channel_allocation = bis_codec_cfg->audio_channel_allocation;
     p_bc_source->presentation_delay = *presentation_delay;
+#if F_APP_LC3_PLUS_SUPPORT
+    p_bc_source->codec_type = app_lea_pacs_check_codec_type(codec_id);
+#endif
 
     APP_PRINT_TRACE7("app_lea_bca_set_cap: bis_id %d, ch_id %d, frame_duration: 0x%02X, sample_frequency: 0x%02X, \
 codec_frame_blocks_per_sdu: 0x%02X, octets_per_codec_frame: 0x%02X, audio_channel_allocation: 0x%02X",
@@ -1022,7 +1197,6 @@ void app_lea_bca_remap_bis(T_BASE_DATA_MAPPING *p_base_mapping,
                            T_BLE_AUDIO_SYNC_HANDLE sync_handle)
 {
     uint8_t i, j;
-    uint8_t sec_idx = 0;
     T_APP_LEA_BCA_DB *p_bc_source = app_lea_bca_find_device_by_bs_handle(sync_handle);
 
     APP_PRINT_TRACE6("app_lea_bca_remap_bis: %d, %d, 0x%02X, %d, %d, %d",
@@ -1063,15 +1237,42 @@ void app_lea_bca_remap_bis(T_BASE_DATA_MAPPING *p_base_mapping,
                                  app_cfg_const.bud_side,
                                  p_base_mapping->p_subgroup[i].p_bis_param[j].bis_index);
 
-                if (app_lea_bca_set_cap(&p_bc_source->bis_sec[sec_idx],
-                                        &p_base_mapping->p_subgroup[i].p_bis_param[j].bis_codec_cfg,
-                                        &p_base_mapping->presentation_delay))
+                T_LEA_BCA_SECTION *src_sec = app_lea_bca_find_sec(p_bc_source,
+                                                                  &p_base_mapping->p_subgroup[i].p_bis_param[j].bis_index);
+                if (src_sec == NULL)
                 {
-                    p_bc_source->bis_sec[sec_idx].bis_id = p_base_mapping->p_subgroup[i].p_bis_param[j].bis_index;
-                    p_bc_source->bis_sec[sec_idx].ch_id = temp_ch;
-                    app_lea_bca_set_ch_idx(&temp_ch, &p_bc_source, &sec_idx);
-                    sec_idx++;
-                    APP_PRINT_TRACE1("app_lea_bca_remap_bis: sec_idx %d", sec_idx);
+                    for (uint8_t k = 0; k < GAP_BIG_MGR_MAX_BIS_NUM; k++)
+                    {
+                        if (!p_bc_source->bis_sec[k].used)
+                        {
+                            src_sec = &p_bc_source->bis_sec[k];
+                            src_sec->id = k;
+                            break;
+                        }
+                    }
+                }
+
+                if (src_sec)
+                {
+                    if (app_lea_bca_set_cap(src_sec,
+                                            &p_base_mapping->p_subgroup[i].p_bis_param->codec_id[0],
+                                            &p_base_mapping->p_subgroup[i].p_bis_param[j].bis_codec_cfg,
+                                            &p_base_mapping->presentation_delay))
+                    {
+                        src_sec->bis_id = p_base_mapping->p_subgroup[i].p_bis_param[j].bis_index;
+                        src_sec->ch_id = temp_ch;
+                        app_lea_bca_set_ch_idx(&temp_ch, &p_bc_source, &src_sec->id);
+                        APP_PRINT_TRACE1("app_lea_bca_remap_bis: idx %d", src_sec->id);
+#if F_APP_LC3_PLUS_SUPPORT
+                        src_sec->bit_depth = app_lea_pacs_check_bit_depth(src_sec->codec_type,
+                                                                          p_base_mapping->p_subgroup[i].metadata_len,
+                                                                          p_base_mapping->p_subgroup[i].p_metadata);
+#endif
+                    }
+                }
+                else
+                {
+                    APP_PRINT_ERROR0("app_lea_bca_remap_bis: limited resource!");
                 }
             }
             else
@@ -1087,73 +1288,168 @@ void app_lea_bca_remap_bis(T_BASE_DATA_MAPPING *p_base_mapping,
     }
 }
 
-void app_lea_bca_track(T_CODEC_CFG *codec, uint32_t presentation_delay,
-                       T_AUDIO_TRACK_HANDLE *audio_track_handle, uint8_t *frame_num)
+static bool app_lea_bca_check_track_exist(T_APP_LEA_BCA_DB *p_bc_source, T_LEA_BCA_SECTION *src_sec)
 {
+    if (p_bc_source)
+    {
+        for (uint8_t i = 0; i < GAP_BIG_MGR_MAX_BIS_NUM; i++)
+        {
+            if ((p_bc_source->bis_sec[i].used & APP_LEA_BCA_CODEC_CFG) &&
+                (&p_bc_source->bis_sec[i] != src_sec) &&
+                p_bc_source->bis_sec[i].audio_track_handle)
+            {
+                src_sec->audio_track_handle = p_bc_source->bis_sec[i].audio_track_handle;
+                src_sec->frame_num = p_bc_source->bis_sec[i].frame_num;
+                return true;
+            }
+        }
+    }
+
+    return false;
+
+}
+
+void app_lea_bca_track(T_APP_LEA_BCA_DB *p_bc_source, T_LEA_BCA_SECTION *src_sec)
+{
+    uint8_t ret = 0;
     T_AUDIO_STREAM_TYPE type = AUDIO_STREAM_TYPE_PLAYBACK;
-    uint8_t volume_out = VOLUME_LEVEL(app_cfg_nv.lea_vol_setting);
+    uint8_t volume_out = app_lea_vol_gain_get();
     uint8_t volume_in = 0;
     uint8_t channel_count = 0;
     uint32_t device = AUDIO_DEVICE_OUT_SPK;
     T_AUDIO_FORMAT_INFO format_info;
+    T_CODEC_CFG *codec = &src_sec->bis_codec_cfg;
 
-    channel_count = (codec->audio_channel_allocation == AUDIO_CHANNEL_LOCATION_MONO) ?
-                    1 : __builtin_popcount(codec->audio_channel_allocation);
-    *frame_num = codec->codec_frame_blocks_per_sdu * channel_count;
-
-    format_info.type = AUDIO_FORMAT_TYPE_LC3;
-    format_info.frame_num = FIXED_FRAME_NUM;
-    format_info.attr.lc3.sample_rate = sample_rate_freq[codec->sample_frequency - 1];
-    format_info.attr.lc3.chann_location = codec->audio_channel_allocation;
-    format_info.attr.lc3.frame_length = codec->octets_per_codec_frame;
-    format_info.attr.lc3.frame_duration = (T_AUDIO_LC3_FRAME_DURATION)codec->frame_duration;
-    format_info.attr.lc3.presentation_delay = presentation_delay;
-    if (format_info.attr.lc3.frame_length == 0)
+    if (app_lea_bca_check_track_exist(p_bc_source, src_sec))
     {
-        format_info.attr.lc3.frame_length = 120;
-        format_info.attr.lc3.chann_location = 0x800;
+        ret = 1;
+        goto fail_track_create;
     }
 
-    APP_PRINT_TRACE8("app_lea_bca_track: chann_location 0x%02X, sample_rate 0x%02X, sample_frequency 0x%02X, \
+    format_info.type = src_sec->codec_type;
+    format_info.frame_num = FIXED_FRAME_NUM;
+#if F_APP_LC3_PLUS_SUPPORT
+    if (format_info.type == AUDIO_FORMAT_TYPE_LC3PLUS)
+    {
+        format_info.attr.lc3plus.sample_rate = sample_rate_freq[codec->sample_frequency - 1];
+        if (__builtin_popcount(p_bc_source->stream_allocation) > 1)
+        {
+            format_info.attr.lc3plus.chann_location = p_bc_source->stream_allocation;
+        }
+        else
+        {
+            format_info.attr.lc3plus.chann_location = codec->audio_channel_allocation;
+        }
+        format_info.attr.lc3plus.frame_length = codec->octets_per_codec_frame;
+        format_info.attr.lc3plus.bit_width = src_sec->bit_depth;
+        format_info.attr.lc3plus.presentation_delay = src_sec->presentation_delay;
+        if (codec->frame_duration == FRAME_DURATION_CFG_10_MS)
+        {
+            format_info.attr.lc3plus.frame_duration = AUDIO_LC3PLUS_FRAME_DURATION_10_MS;
+        }
+        else if (codec->frame_duration == FRAME_DURATION_CFG_5_MS)
+        {
+            format_info.attr.lc3plus.frame_duration = AUDIO_LC3PLUS_FRAME_DURATION_5_MS;
+        }
+        else
+        {
+            format_info.attr.lc3plus.frame_duration = AUDIO_LC3PLUS_FRAME_DURATION_2_5_MS;
+        }
+
+        channel_count = (format_info.attr.lc3plus.chann_location == AUDIO_CHANNEL_LOCATION_MONO) ?
+                        1 : __builtin_popcount(format_info.attr.lc3plus.chann_location);
+    }
+    else
+#endif
+    {
+        format_info.attr.lc3.sample_rate = sample_rate_freq[codec->sample_frequency - 1];
+        if (__builtin_popcount(p_bc_source->stream_allocation) > 1)
+        {
+            format_info.attr.lc3.chann_location = p_bc_source->stream_allocation;
+        }
+        else
+        {
+            format_info.attr.lc3.chann_location = codec->audio_channel_allocation;
+        }
+        format_info.attr.lc3.frame_length = codec->octets_per_codec_frame;
+        format_info.attr.lc3.frame_duration = (T_AUDIO_LC3_FRAME_DURATION)codec->frame_duration;
+        format_info.attr.lc3.presentation_delay = src_sec->presentation_delay;
+
+        channel_count = (format_info.attr.lc3.chann_location == AUDIO_CHANNEL_LOCATION_MONO) ?
+                        1 : __builtin_popcount(format_info.attr.lc3.chann_location);
+    }
+
+    APP_PRINT_TRACE8("app_lea_bca_track: chann_location 0x%02X, codec_type 0x%02X, sample_frequency 0x%02X, \
 frame_duration 0x%02X, frame_length 0x%02X, codec_frame_blocks_per_sdu 0x%02X, presentation_delay 0x%02X, volume_out 0x%02X",
-                     format_info.attr.lc3.chann_location,
-                     format_info.attr.lc3.sample_rate,
+                     codec->audio_channel_allocation,
+                     src_sec->codec_type,
                      codec->sample_frequency,
-                     format_info.attr.lc3.frame_duration,
-                     format_info.attr.lc3.frame_length,
+                     codec->frame_duration,
+                     codec->octets_per_codec_frame,
                      codec->codec_frame_blocks_per_sdu,
-                     presentation_delay,
+                     src_sec->presentation_delay,
                      (app_cfg_nv.lea_vol_out_mute << 8 | volume_out));
 
     app_lea_mgr_set_media_state((uint8_t)ISOCH_DATA_PKT_STATUS_LOST_DATA);
-    *audio_track_handle = audio_track_create(type,
-                                             AUDIO_STREAM_MODE_DIRECT,
-                                             AUDIO_STREAM_USAGE_LOCAL,
-                                             format_info,
-                                             volume_out,
-                                             volume_in,
-                                             device,
-                                             NULL,
-                                             NULL);
-    if (*audio_track_handle == NULL)
+    src_sec->frame_num = codec->codec_frame_blocks_per_sdu * channel_count;
+    src_sec->audio_track_handle = audio_track_create(type,
+                                                     AUDIO_STREAM_MODE_DIRECT,
+                                                     AUDIO_STREAM_USAGE_LOCAL,
+                                                     format_info,
+                                                     volume_out,
+                                                     volume_in,
+                                                     device,
+                                                     NULL,
+                                                     NULL);
+    if (src_sec->audio_track_handle == NULL)
     {
-        return;
+        ret = 2;
+        goto fail_track_create;
     }
     else
     {
         syncclk_drv_timer_start(LEA_SYNC_CLK_REF, CONN_HANDLE_TYPE_FREERUN_CLOCK, 0xFF, 0);
     }
 
-    audio_track_start(*audio_track_handle);
+    audio_track_start(src_sec->audio_track_handle);
 
     if (app_cfg_nv.lea_vol_out_mute == true)
     {
-        audio_track_volume_out_mute(*audio_track_handle);
+        audio_track_volume_out_mute(src_sec->audio_track_handle);
     }
     else
     {
-        audio_track_volume_out_unmute(*audio_track_handle);
+        audio_track_volume_out_unmute(src_sec->audio_track_handle);
     }
+
+fail_track_create:
+    if (ret != 0)
+    {
+        APP_PRINT_ERROR1("app_lea_bca_track: failed %d", -ret);
+    }
+}
+
+static void app_lea_bca_remove_data_path(T_APP_LEA_BCA_DB *p_bc_source, void *p_data)
+{
+    T_BLE_AUDIO_BIG_REMOVE_DATA_PATH *p_rmv_path = (T_BLE_AUDIO_BIG_REMOVE_DATA_PATH *)p_data;
+
+    if (p_bc_source)
+    {
+        if (p_bc_source->left_conn_handle == p_rmv_path->bis_conn_handle)
+        {
+            app_lea_mgr_clear_iso_queue(&app_lea_bca_left_ch_queue);
+            p_bc_source->left_conn_handle = 0;
+            p_bc_source->left_ch_iso_state = ISOCH_DATA_PKT_STATUS_LOST_DATA;
+        }
+        else if (p_bc_source->right_conn_handle == p_rmv_path->bis_conn_handle)
+        {
+            app_lea_mgr_clear_iso_queue(&app_lea_bca_right_ch_queue);
+            p_bc_source->right_conn_handle = 0;
+            p_bc_source->right_ch_iso_state = ISOCH_DATA_PKT_STATUS_LOST_DATA;
+        }
+    }
+    APP_PRINT_INFO2("app_lea_bca_remove_data_path: bis_id 0x%x, bis_handle 0x%x",  p_rmv_path->bis_idx,
+                    p_rmv_path->bis_conn_handle);
 }
 
 bool app_lea_bca_release_all(T_APP_LEA_BCA_SYNC_CHECK para)
@@ -1171,10 +1467,10 @@ bool app_lea_bca_release_all(T_APP_LEA_BCA_SYNC_CHECK para)
 
         if (app_lea_bca_state() == LEA_BCA_STATE_WAIT_RETRY)
         {
-            app_lea_scan_stop();
+            app_lea_bca_scan_stop();
             app_lea_bca_state_change(LEA_BCA_STATE_IDLE);
             mtc_set_beep(MTC_PRO_BEEP_NONE);
-            app_lea_mgr_tri_mmi_handle_action(MMI_BIG_START, true);
+            app_lea_mgr_mmi_handle(MMI_BIG_START);
         }
         else
         {
@@ -1205,6 +1501,26 @@ bool app_lea_bca_release_all(T_APP_LEA_BCA_SYNC_CHECK para)
 
         return false;
     }
+}
+
+uint8_t app_lea_bca_count_num(void)
+{
+    uint8_t num = 0;
+
+    for (uint8_t i = 0; i < APP_LEA_BCA_DB_NUM; i++)
+    {
+        if (app_lea_bca_db[i].used)
+        {
+            if (app_lea_bca_db[i].act_num_bis)
+            {
+                num++;
+                APP_PRINT_INFO1("connected: bca, bd_addr %s",
+                                TRACE_BDADDR(app_lea_bca_db[i].advertiser_address));
+            }
+        }
+    }
+
+    return num;
 }
 
 void app_lea_bca_sync_cb(T_BLE_AUDIO_SYNC_HANDLE handle, uint8_t cb_type, void *p_cb_data)
@@ -1260,7 +1576,7 @@ void app_lea_bca_sync_cb(T_BLE_AUDIO_SYNC_HANDLE handle, uint8_t cb_type, void *
                     app_lea_bca_tgt_active(false, (APP_BIS_BIS_CTRL_RESET_ACTIVE & APP_BIS_BIS_CTRL_RESET_SD_ACTIVE));
                     mtc_topology_dm(MTC_TOPO_EVENT_BIS_STOP);
                     mtc_set_beep(MTC_PRO_BEEP_NONE);
-                    app_lea_mgr_tri_mmi_handle_action(MMI_BIG_START, true);
+                    app_lea_mgr_mmi_handle(MMI_BIG_START);
                 }
             }
             else if ((p_sync_cb->p_pa_sync_state->sync_state == GAP_PA_SYNC_STATE_SYNCHRONIZING_WAIT_SCANNING)
@@ -1268,7 +1584,7 @@ void app_lea_bca_sync_cb(T_BLE_AUDIO_SYNC_HANDLE handle, uint8_t cb_type, void *
                      !p_bc_source->is_past)
             {
                 p_bc_source->is_past = 1;
-                app_lea_scan_start(LE_AUDIO_SCAN_TIME);
+                app_lea_bca_scan_start(app_cfg_const.scan_to * 1000);
             }
             else if (((p_sync_cb->p_pa_sync_state->action == BLE_AUDIO_PA_TERMINATE) &&
                       (p_sync_cb->p_pa_sync_state->cause == 0x144) &&
@@ -1284,7 +1600,7 @@ void app_lea_bca_sync_cb(T_BLE_AUDIO_SYNC_HANDLE handle, uint8_t cb_type, void *
                       (p_sync_cb->p_pa_sync_state->cause == 0x116) &&
                       (p_sync_cb->p_pa_sync_state->sync_state == GAP_PA_SYNC_STATE_TERMINATED)))
             {
-                //app_lea_scan_stop();
+                //app_lea_bca_scan_stop();
                 if (app_lea_bca_state() == LEA_BCA_STATE_WAIT_TERM ||
                     app_lea_bca_state() == LEA_BCA_STATE_WAIT_RETRY)
                 {
@@ -1480,6 +1796,7 @@ void app_lea_bca_sync_cb(T_BLE_AUDIO_SYNC_HANDLE handle, uint8_t cb_type, void *
                 {
                     p_bc_source->big_state = p_sync_cb->p_big_sync_state->sync_state;
                     APP_PRINT_TRACE0("app_lea_bca_sync_cb: wait for assistant remove source");
+                    app_lea_bca_state_change(LEA_BCA_STATE_BASS_ADD_SOURCE);
                     break;
                 }
 
@@ -1517,11 +1834,11 @@ void app_lea_bca_sync_cb(T_BLE_AUDIO_SYNC_HANDLE handle, uint8_t cb_type, void *
                     app_audio_tone_type_play(TONE_BIS_LOST, false, false);
                 }
 
-                mtc_start_timer(MTC_TMR_BIS, MTC_BIS_TMR_RESYNC, (app_cfg_const.bis_resync_to * 1000));
+                app_start_timer(&timer_idx_bis_scan, "bis_resync",
+                                app_lea_bca_timer_id, LEA_BCA_TMR_RESYNC, 0, false,
+                                app_cfg_const.bis_resync_to * 1000);
                 mtc_set_beep(MTC_PRO_BEEP_NONE);
-                app_lea_mgr_tri_mmi_handle_action(MMI_BIG_START, true);
-
-
+                app_lea_mgr_mmi_handle(MMI_BIG_START);
             }
             else if (p_sync_cb->p_big_sync_state->sync_state == BIG_SYNC_RECEIVER_SYNC_STATE_SYNCHRONIZED)
             {
@@ -1544,8 +1861,18 @@ void app_lea_bca_sync_cb(T_BLE_AUDIO_SYNC_HANDLE handle, uint8_t cb_type, void *
 
                     codec_id[0] = LC3_CODEC_ID;
 
-                    ble_audio_bis_setup_data_path(handle, p_bc_source->bis_idx, codec_id, controller_delay, 0, NULL);
-                    app_lea_scan_stop();
+                    if (__builtin_popcount(p_bc_source->stream_allocation) > 1)
+                    {
+                        ble_audio_bis_setup_data_path(handle, p_bc_source->bis_sec[p_bc_source->ch_l_idx].bis_id, codec_id,
+                                                      controller_delay, 0, NULL);
+                        ble_audio_bis_setup_data_path(handle, p_bc_source->bis_sec[p_bc_source->ch_r_idx].bis_id, codec_id,
+                                                      controller_delay, 0, NULL);
+                    }
+                    else
+                    {
+                        ble_audio_bis_setup_data_path(handle, p_bc_source->bis_idx, codec_id, controller_delay, 0, NULL);
+                    }
+                    app_lea_bca_scan_stop();
                 }
             }
 
@@ -1607,17 +1934,20 @@ void app_lea_bca_sync_cb(T_BLE_AUDIO_SYNC_HANDLE handle, uint8_t cb_type, void *
                 break;
             }
 
-            if (src_sec->presentation_delay < BIS_PD_LOW_LATENCY)
+            if (src_sec->bis_codec_cfg.audio_channel_allocation & AUDIO_CHANNEL_R)
             {
-                app_lea_mgr_set_gaming_state(true);
+                p_bc_source->right_conn_handle = p_sync_cb->p_setup_data_path->bis_conn_handle;
             }
-
+            else if (src_sec->bis_codec_cfg.audio_channel_allocation & AUDIO_CHANNEL_L)
+            {
+                p_bc_source->left_conn_handle = p_sync_cb->p_setup_data_path->bis_conn_handle;
+            }
             app_sniff_mode_b2s_disable_all(SNIFF_DISABLE_MASK_LEA);
             p_bc_source->act_num_bis ++;
+            app_bt_point_link_num_changed(BP_LINK_TYPE_B2S_BCA, BP_LINK_EVENT_CONNECT,
+                                          p_bc_source->advertiser_address);
             src_sec->bis_conn_handle = p_sync_cb->p_setup_data_path->bis_conn_handle;
-            app_lea_bca_track(&src_sec->bis_codec_cfg, src_sec->presentation_delay,
-                              &src_sec->audio_track_handle,
-                              &src_sec->frame_num);
+            app_lea_bca_track(p_bc_source, src_sec);
             app_lea_bca_sm(LEA_STREAMING, NULL);
             app_link_disallow_legacy_stream(false);
             app_bt_policy_update_cpu_freq(BP_CPU_FREQ_EVENT_LEA_BIG_SETUP_DATA_PATH);
@@ -1633,8 +1963,11 @@ void app_lea_bca_sync_cb(T_BLE_AUDIO_SYNC_HANDLE handle, uint8_t cb_type, void *
 #endif
             app_auto_power_off_disable(AUTO_POWER_OFF_MASK_BLE_AUDIO);
 
+#if F_APP_LEA_SUPPORT && F_APP_ERWS_SUPPORT
+            app_relay_async_single(APP_MODULE_TYPE_BCA, LEA_REMOTE_BCA_SYNC_BIS_STATUS);
 #if F_APP_B2B_HTPOLL_CONTROL
             app_vendor_htpoll_control(B2B_HTPOLL_EVENT_BIS_CONNECTED);
+#endif
 #endif
         }
         break;
@@ -1657,8 +1990,11 @@ void app_lea_bca_sync_cb(T_BLE_AUDIO_SYNC_HANDLE handle, uint8_t cb_type, void *
             }
 
             src_sec->used &= APP_LEA_BCA_CODEC_CFG_RESET;
+            app_lea_bca_remove_data_path(p_bc_source, (void *)p_sync_cb->p_remove_data_path);
 
             p_bc_source->act_num_bis --;
+            app_bt_point_link_num_changed(BP_LINK_TYPE_B2S_BCA, BP_LINK_EVENT_DISCONNECT,
+                                          p_bc_source->advertiser_address);
             if (p_bc_source->act_num_bis)
             {
                 app_lea_bca_audio_path_reset(src_sec->audio_track_handle, true);
@@ -1667,7 +2003,6 @@ void app_lea_bca_sync_cb(T_BLE_AUDIO_SYNC_HANDLE handle, uint8_t cb_type, void *
             {
                 app_lea_bca_audio_path_reset(src_sec->audio_track_handle, false);
             }
-            app_lea_mgr_set_gaming_state(false);
 
 #if F_APP_LEA_REALCAST_SUPPORT
             if (app_lea_realcast_get_cmd_id() == CMD_LEA_SYNC_BIS)
@@ -1682,8 +2017,11 @@ void app_lea_bca_sync_cb(T_BLE_AUDIO_SYNC_HANDLE handle, uint8_t cb_type, void *
 
             src_sec->bis_conn_handle = 0;
 
+#if F_APP_LEA_SUPPORT && F_APP_ERWS_SUPPORT
+            app_relay_async_single(APP_MODULE_TYPE_BCA, LEA_REMOTE_BCA_SYNC_BIS_STATUS);
 #if F_APP_B2B_HTPOLL_CONTROL
             app_vendor_htpoll_control(B2B_HTPOLL_EVENT_BIS_DISCONNECTED);
+#endif
 #endif
         }
         break;
@@ -1971,17 +2309,32 @@ bool app_lea_bca_terminate(void)
         if ((p_bc_source->sync_state == GAP_PA_SYNC_STATE_TERMINATED) &&
             (p_bc_source->big_state == BIG_SYNC_RECEIVER_SYNC_STATE_TERMINATED))
         {
-            app_lea_bca_bs_clear_device(p_bc_source->sync_handle);
-            app_lea_bca_bs_reset();
+            uint8_t conn_id;
+            T_APP_LE_LINK *p_link = NULL;
 
-            if (p_bc_source->sync_handle == 0)
+            le_get_conn_id_by_handle(p_bc_source->conn_handle, &conn_id);
+            p_link = app_link_find_le_link_by_conn_id(conn_id);
+            if (p_link && (p_link->lea_device & APP_LEA_BASS_CCCD_ENABLED))
             {
+                APP_PRINT_TRACE0("app_lea_bca_sync_cb: wait for assistant remove source");
+                app_lea_bca_state_change(LEA_BCA_STATE_BASS_ADD_SOURCE);
                 result = true;
-                goto END_PROCESS;
             }
+            else
+            {
+                app_lea_bca_bs_clear_device(p_bc_source->sync_handle);
+                app_lea_bca_bs_reset();
+                app_lea_bca_state_change(LEA_BCA_STATE_IDLE);
 
-            result = ble_audio_sync_release(&p_bc_source->sync_handle);
-            APP_PRINT_TRACE1("app_lea_bca_terminate: sync release result %d", result);
+                if (p_bc_source->sync_handle == 0)
+                {
+                    result = true;
+                    goto END_PROCESS;
+                }
+
+                result = ble_audio_sync_release(&p_bc_source->sync_handle);
+                APP_PRINT_TRACE1("app_lea_bca_terminate: sync release result %d", result);
+            }
         }
     }
 
@@ -2047,12 +2400,8 @@ static uint16_t app_lea_bca_handle_cccd_msg(T_LE_AUDIO_MSG msg, void *buf)
                 if (p_link && ((p_link->lea_device & APP_LEA_BASS_CCCD_ENABLED) == 0))
                 {
                     p_link->lea_device |= APP_LEA_BASS_CCCD_ENABLED;
-                    if (p_link->lea_link_state == LEA_LINK_IDLE)
+                    if (p_link->lea_link_state == LEA_LINK_IDLE && p_link->conn_handle != 0)
                     {
-                        if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_SINGLE)
-                        {
-                            app_audio_speaker_channel_set(AUDIO_SINGLE_SET, 0);
-                        }
                         app_lea_uca_link_sm(p_link->conn_handle, LEA_CONNECT, NULL);
                     }
                     app_link_reg_le_link_disc_cb(conn_id, app_lea_bca_le_disconnect_cb);
@@ -2167,10 +2516,28 @@ static uint16_t app_lea_bca_handle_bass_msg(T_LE_AUDIO_MSG msg, void *buf)
             case BASS_CP_OP_MODIFY_SOURCE:
                 /* to synchronize to, or to stop synchronization to, a PA and/or a BIS.
                  Add or update Metadata*/
+                if (p_data->p_cp_data->param.modify_source.pa_sync != BASS_PA_NOT_SYNC)
+                {
+                    mtc_term_sd_sniffing();
+                }
                 break;
 
             case BASS_CP_OP_REMOVE_SOURCE:
                 //clear pa info
+                if (app_lea_bca_state() != LEA_BCA_STATE_STREAMING)
+                {
+                    T_APP_LEA_BCA_DB *p_bc_source = app_lea_bca_find_device_by_source_id(
+                                                        p_data->p_cp_data->param.remove_source.source_id);
+
+                    if ((p_bc_source == NULL) || (p_bc_source->sync_handle == NULL))
+                    {
+                        APP_PRINT_ERROR0("BASS_CP_OP_REMOVE_SOURCE remove fail!");
+                        break;
+                    }
+
+                    app_lea_bca_bs_clear_device(p_bc_source->sync_handle);
+                    app_lea_bca_bs_reset();
+                }
                 break;
 
             case BASS_CP_OP_SET_BROADCAST_CODE:
@@ -2234,7 +2601,7 @@ static uint16_t app_lea_bca_handle_bass_msg(T_LE_AUDIO_MSG msg, void *buf)
                 {
                     if (p_data->p_brs_data->big_encryption == BIG_BAD_CODE)
                     {
-                        app_lea_mgr_tri_mmi_handle_action(MMI_BIG_STOP, false);
+                        app_lea_mgr_mmi_handle(MMI_BIG_STOP);
                     }
 
                     APP_PRINT_TRACE6("app_lea_bca_handle_bass_msg: source_address_type 0x%02X, source_adv_sid 0x%02X, \
@@ -2358,6 +2725,31 @@ pa_sync_state %d, bis_sync_state 0x%02X, big_encryption %d, num_subgroups %d",
         }
         break;
 
+    case LE_AUDIO_MSG_BASS_BRS_CHAR_NO_EMPTY:
+        {
+            T_BASS_BRS_CHAR_NO_EMPTY *p_data = (T_BASS_BRS_CHAR_NO_EMPTY *)buf;
+            APP_PRINT_INFO1("LE_AUDIO_MSG_BASS_BRS_CHAR_NO_EMPTY:conn_handle 0x%x",
+                            p_data->conn_handle);
+            if (app_lea_bca_state() != LEA_BCA_STATE_STREAMING)
+            {
+                T_APP_LEA_BCA_DB *p_bc_source = &app_lea_bca_db[app_lea_bca_bs_idx];
+                if ((p_bc_source == NULL) || (p_bc_source->sync_handle == NULL))
+                {
+                    APP_PRINT_ERROR0("LE_AUDIO_MSG_BASS_BRS_CHAR_NO_EMPTY db empty!");
+                    break;
+                }
+
+                if (!ble_audio_sync_release(&p_bc_source->sync_handle))
+                {
+                    APP_PRINT_ERROR0("LE_AUDIO_MSG_BASS_BRS_CHAR_NO_EMPTY release fail");
+                }
+
+                app_lea_bca_bs_clear_device(p_bc_source->sync_handle);
+                app_lea_bca_bs_reset();
+            }
+        }
+        break;
+
     default:
         handle = false;
         break;
@@ -2383,14 +2775,42 @@ static void app_lea_bca_audio_cback(T_AUDIO_EVENT event_type, void *event_buf, u
             {
                 break;
             }
+            APP_PRINT_ERROR1("app_lea_bca_audio_cback: state %d", param->track_state_changed.state);
 
             switch (param->track_state_changed.state)
             {
             case AUDIO_TRACK_STATE_STARTED:
                 {
+#if F_APP_ERWS_SUPPORT
+                    app_lea_bca_local_track_started = true;
+#endif
+
+                    if (remote_session_state_get() == REMOTE_SESSION_STATE_DISCONNECTED)
+                    {
+                        app_lea_bca_ready_to_downstream = true;
+                    }
+                    else
+                    {
+                        if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY)
+                        {
+                            if (app_lea_bca_remote_track_started)
+                            {
+                                app_relay_sync_single(APP_MODULE_TYPE_BCA, LEA_REMOTE_BCA_SYNC_DOWNSTREAM,
+                                                      REMOTE_TIMER_HIGH_PRECISION,
+                                                      0, false);
+                            }
+                        }
+                        else
+                        {
+                            app_relay_async_single(APP_MODULE_TYPE_BCA, LEA_REMOTE_BCA_SYNC_TRACK_STATE);
+                        }
+                    }
+
+                    app_lea_vol_update_track_volume();
+
                     //Attach audio effect
-                    app_lea_uca_eq_setting(app_lea_uca_p_eq_instance(), app_lea_uca_get_eq_abled(),
-                                           param->track_state_changed.handle);
+                    app_lea_uca_playback_eq_setting(app_lea_uca_p_eq_instance(), app_lea_uca_get_eq_abled(),
+                                                    param->track_state_changed.handle);
                 }
                 break;
             }
@@ -2498,7 +2918,7 @@ bool app_lea_bca_state_starting(uint8_t event, void *p_data)
             else
             {
                 app_lea_bca_used();
-                app_lea_scan_start(LE_AUDIO_SCAN_TIME);
+                app_lea_bca_scan_start(app_cfg_const.scan_to * 1000);
                 app_lea_bca_state_change(LEA_BCA_STATE_SCAN);
                 app_bt_policy_update_cpu_freq(BP_CPU_FREQ_EVENT_LEA_BCA_BIS_SYNC);
             }
@@ -2547,7 +2967,7 @@ bool app_lea_bca_state_scan(uint8_t event, void *p_data)
         {
             uint8_t dev_idx = 0;
 
-            app_lea_scan_stop();
+            app_lea_bca_scan_stop();
             // mtc_topology_dm(MTC_TOPO_EVENT_BIS_START);
             app_lea_bca_tgt_active(false, (APP_BIS_BIS_CTRL_RESET_ACTIVE & APP_BIS_BIS_CTRL_RESET_SD_ACTIVE));
 
@@ -2638,7 +3058,7 @@ static bool app_lea_bca_state_wait_retry(uint8_t event, void *p_data)
         {
             uint8_t dev_idx = 0;
 
-            app_lea_scan_stop();
+            app_lea_bca_scan_stop();
 
             app_lea_bca_tgt_active(false, (APP_BIS_BIS_CTRL_RESET_ACTIVE & APP_BIS_BIS_CTRL_RESET_SD_ACTIVE));
             dev_idx = app_lea_bca_bs_get_active();
@@ -2729,9 +3149,94 @@ bool app_lea_bca_sm(uint8_t event, void *p_data)
     return accept;
 }
 
+static bool app_lea_bca_check_combination_iso_data(T_ISO_DATA_IND **p_iso_elem,
+                                                   uint8_t *output_channel,
+                                                   T_BT_DIRECT_CB_DATA *p_data)
+{
+    T_OS_QUEUE *p_mirror_queue = NULL;
+    T_OS_QUEUE *p_insert_queue = NULL;
+    uint16_t output_handle = 0;
+    uint8_t ret = 0;
+    T_APP_LEA_BCA_DB *p_bc_source = NULL;
+
+    *output_channel = AUDIO_LOCATION_MONO;
+
+    p_bc_source = &app_lea_bca_db[app_lea_bca_bs_get_active()];
+    if (p_bc_source->left_conn_handle == p_data->p_bt_direct_iso->conn_handle)
+    {
+        if (p_data->p_bt_direct_iso->pkt_status_flag == ISOCH_DATA_PKT_STATUS_VALID_DATA)
+        {
+            p_bc_source->left_ch_iso_state  = p_data->p_bt_direct_iso->pkt_status_flag;
+        }
+
+        p_mirror_queue = &app_lea_bca_right_ch_queue;
+        p_insert_queue = &app_lea_bca_left_ch_queue;
+        output_handle = p_bc_source->left_conn_handle;
+        *output_channel = AUDIO_LOCATION_FL;
+    }
+    else if (p_bc_source->right_conn_handle ==
+             p_data->p_bt_direct_iso->conn_handle)
+    {
+        if (p_data->p_bt_direct_iso->pkt_status_flag == ISOCH_DATA_PKT_STATUS_VALID_DATA)
+        {
+            p_bc_source->right_ch_iso_state  = p_data->p_bt_direct_iso->pkt_status_flag;
+        }
+
+        p_mirror_queue = &app_lea_bca_left_ch_queue;
+        p_insert_queue = &app_lea_bca_right_ch_queue;
+        output_handle = p_bc_source->right_conn_handle;
+        *output_channel = AUDIO_LOCATION_FR;
+    }
+    else
+    {
+        ret = 1;
+        goto fail_get_iso;
+    }
+
+    if ((p_bc_source->left_ch_iso_state  != ISOCH_DATA_PKT_STATUS_VALID_DATA) ||
+        (p_bc_source->right_ch_iso_state  != ISOCH_DATA_PKT_STATUS_VALID_DATA))
+    {
+        ret = 2;
+        goto fail_get_iso;
+    }
+
+    if (p_mirror_queue->count == 0)
+    {
+        //Wait for the ISO data in another channel to combine a stereo packet
+        app_lea_mgr_enqueue_iso_data(p_insert_queue, p_data->p_bt_direct_iso, output_handle);
+    }
+    else
+    {
+        *p_iso_elem = app_lea_mgr_find_iso_elem(p_mirror_queue, p_data->p_bt_direct_iso);
+        if (*p_iso_elem == NULL)
+        {
+            app_lea_mgr_enqueue_iso_data(p_insert_queue, p_data->p_bt_direct_iso, output_handle);
+            ret = 3;
+            goto fail_get_iso;
+        }
+    }
+
+    return true;
+
+fail_get_iso:
+    APP_PRINT_ERROR7("app_lea_bca_check_combination_iso_data: result %d, left ch %d, right ch %d, \
+left handle 0x%02X, right handle 0x%02X, data handle 0x%02X, output_channel %d",
+                     -ret,
+                     p_bc_source->left_ch_iso_state,
+                     p_bc_source->right_ch_iso_state,
+                     p_bc_source->left_conn_handle,
+                     p_bc_source->right_conn_handle,
+                     p_data->p_bt_direct_iso->conn_handle,
+                     *output_channel);
+
+    return false;
+}
+
 void app_lea_bca_handle_iso_data(T_BT_DIRECT_CB_DATA *p_data)
 {
+    uint8_t ret = 0;
     T_LEA_BCA_SECTION *p_bis_cb = NULL;
+    T_APP_LEA_BCA_DB *p_bc_source = NULL;
 
     if (app_ota_dfu_is_busy()
 #if F_APP_TUYA_SUPPORT
@@ -2740,15 +3245,138 @@ void app_lea_bca_handle_iso_data(T_BT_DIRECT_CB_DATA *p_data)
        )
     {
         //If ota is going on, lea data won't be written to audio track.
-        return;
+        ret = 1;
+        goto fail_track_write;
     }
 
+    p_bc_source = &app_lea_bca_db[app_lea_bca_bs_get_active()];
+
     p_bis_cb = app_lea_bca_find_con_handle(p_data->p_bt_direct_iso->conn_handle);
-    if (p_bis_cb != NULL)
+    if (p_bis_cb == NULL)
     {
+        ret = 2;
+        goto fail_track_write;
+    }
+
+    if (p_bc_source->left_conn_handle != 0 &&
+        p_bc_source->right_conn_handle != 0)
+    {
+        T_OS_QUEUE *p_mirror_queue = NULL;
+        T_ISO_DATA_IND *p_iso_elem = NULL;
+        uint16_t pkt_seq_num;
+        uint32_t pkt_timestamp;
+        uint16_t written_len;
+        T_AUDIO_STREAM_STATUS status;
+        uint8_t *p_send_buf = NULL;
+        uint16_t sdu_len = 0;
+        uint8_t output_channel = AUDIO_LOCATION_MONO;
+        T_AUDIO_TRACK_STATE track_state;
+
+        audio_track_state_get(p_bis_cb->audio_track_handle, &track_state);
+        if (track_state != AUDIO_TRACK_STATE_STARTED)
+        {
+            ret = 3;
+            goto fail_track_write;
+        }
+
+        if (app_lea_bca_check_combination_iso_data(&p_iso_elem, &output_channel, p_data) == false)
+        {
+            ret = 4;
+            goto fail_track_write;
+        }
+
+        if (p_iso_elem != NULL)
+        {
+            sdu_len = p_bis_cb->bis_codec_cfg.octets_per_codec_frame * p_bis_cb->frame_num;
+
+            p_send_buf = audio_probe_media_buffer_malloc(sdu_len);
+
+            if (p_send_buf == NULL)
+            {
+                ret = 5;
+                goto fail_track_write;
+            }
+
+            if (p_data->p_bt_direct_iso->iso_sdu_len != 0 && p_iso_elem->iso_sdu_len != 0)
+            {
+                status = AUDIO_STREAM_STATUS_CORRECT;
+            }
+            else
+            {
+                status = AUDIO_STREAM_STATUS_LOST;
+                sdu_len = 0;
+            }
+
+            if (output_channel == AUDIO_LOCATION_FL)
+            {
+                p_mirror_queue = &app_lea_bca_right_ch_queue;
+                if (status == AUDIO_STREAM_STATUS_CORRECT)
+                {
+                    memcpy(p_send_buf, p_data->p_bt_direct_iso->p_buf + p_data->p_bt_direct_iso->offset,
+                           p_data->p_bt_direct_iso->iso_sdu_len);
+
+                    memcpy(p_send_buf + p_data->p_bt_direct_iso->iso_sdu_len, p_iso_elem->p_buf,
+                           p_iso_elem->iso_sdu_len);
+                }
+
+                pkt_seq_num = p_data->p_bt_direct_iso->pkt_seq_num;
+                pkt_timestamp = p_data->p_bt_direct_iso->time_stamp;
+            }
+            else
+            {
+                p_mirror_queue = &app_lea_bca_left_ch_queue;
+                if (status == AUDIO_STREAM_STATUS_CORRECT)
+                {
+                    memcpy(p_send_buf, p_iso_elem->p_buf,  p_iso_elem->iso_sdu_len);
+                    memcpy(p_send_buf + p_iso_elem->iso_sdu_len,
+                           p_data->p_bt_direct_iso->p_buf + p_data->p_bt_direct_iso->offset,
+                           p_data->p_bt_direct_iso->iso_sdu_len);
+                }
+
+                pkt_seq_num = p_iso_elem->pkt_seq_num;
+                pkt_timestamp = p_iso_elem->time_stamp;
+            }
+
+            audio_track_write(p_bis_cb->audio_track_handle, pkt_timestamp,
+                              pkt_seq_num,
+                              status,
+                              FIXED_FRAME_NUM,
+                              p_send_buf,
+                              sdu_len,
+                              &written_len);
+
+            os_queue_delete(p_mirror_queue, p_iso_elem);
+            audio_probe_media_buffer_free(p_iso_elem);
+            audio_probe_media_buffer_free(p_send_buf);
+        }
+    }
+    else
+    {
+        T_AUDIO_TRACK_STATE track_state;
         T_AUDIO_STREAM_STATUS status;
         uint16_t written_len;
         uint8_t *p_iso_data = p_data->p_bt_direct_iso->p_buf + p_data->p_bt_direct_iso->offset;
+
+        audio_track_state_get(p_bis_cb->audio_track_handle, &track_state);
+        if (track_state != AUDIO_TRACK_STATE_STARTED)
+        {
+            ret = 6;
+            goto fail_track_write;
+        }
+
+        if (app_lea_bca_ready_to_downstream == false)
+        {
+            app_lea_bca_playback_resume_cnt++;
+
+            if (app_lea_bca_playback_resume_cnt == PLAYBACK_RESUME_CNT)
+            {
+                app_lea_bca_ready_to_downstream = true;
+                app_relay_async_single(APP_MODULE_TYPE_BCA, LEA_REMOTE_BCA_SYNC_DOWNSTREAM);
+            }
+
+            ret = 7;
+            goto fail_track_write;
+        }
 
         if (p_data->p_bt_direct_iso->iso_sdu_len != 0)
         {
@@ -2767,6 +3395,12 @@ void app_lea_bca_handle_iso_data(T_BT_DIRECT_CB_DATA *p_data)
                           p_iso_data,
                           p_data->p_bt_direct_iso->iso_sdu_len,
                           &written_len);
+    }
+
+fail_track_write:
+    if (ret != 0)
+    {
+        APP_PRINT_ERROR1("app_lea_bca_handle_iso_data: failed %d", -ret);
     }
 }
 
@@ -2788,8 +3422,8 @@ void app_lea_bca_scan_info(T_LEA_BRS_INFO *src_info)
             {
                 if (app_db.remote_session_state == REMOTE_SESSION_STATE_CONNECTED)
                 {
-                    app_relay_sync_single_with_raw_msg(APP_MODULE_TYPE_LEA,
-                                                       LEA_REMOTE_PA_INFO_SYNC,
+                    app_relay_sync_single_with_raw_msg(APP_MODULE_TYPE_BCA,
+                                                       LEA_REMOTE_BCA_PA_INFO_SYNC,
                                                        (uint8_t *)src_info, sizeof(T_LEA_BRS_INFO), REMOTE_TIMER_HIGH_PRECISION, 0, true);
                 }
                 else
@@ -2807,8 +3441,8 @@ void app_lea_bca_scan_info(T_LEA_BRS_INFO *src_info)
                     app_lea_bca_tgt_addr(false, src_info->adv_addr);
                     if (app_db.remote_session_state == REMOTE_SESSION_STATE_CONNECTED)
                     {
-                        app_relay_sync_single_with_raw_msg(APP_MODULE_TYPE_LEA,
-                                                           LEA_REMOTE_PA_INFO_SYNC,
+                        app_relay_sync_single_with_raw_msg(APP_MODULE_TYPE_BCA,
+                                                           LEA_REMOTE_BCA_PA_INFO_SYNC,
                                                            (uint8_t *)src_info, sizeof(T_LEA_BRS_INFO), REMOTE_TIMER_HIGH_PRECISION, 0, true);
                     }
                     else
@@ -2839,14 +3473,124 @@ void app_lea_bca_bmr_terminate(void)
     }
 }
 
+#if F_APP_ERWS_SUPPORT
+static uint16_t app_lea_bca_relay_cback(uint8_t *buf, uint8_t msg_type, bool total)
+{
+    uint16_t payload_len = 0;
+    uint8_t *msg_ptr = NULL;
+    bool skip = true;
+    bool bis_connected = app_lea_bca_bis_exist();
+
+    switch (msg_type)
+    {
+    case LEA_REMOTE_BCA_SYNC_BIS_STATUS:
+        {
+            payload_len = sizeof(bis_connected);
+            msg_ptr = (uint8_t *)&bis_connected;
+
+            skip = false;
+        }
+        break;
+
+    default:
+        break;
+    }
+
+    return app_relay_msg_pack(buf, msg_type, APP_MODULE_TYPE_BCA, payload_len, msg_ptr, skip, total);
+}
+
+static void app_lea_bca_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t len,
+                                    T_REMOTE_RELAY_STATUS status)
+{
+    APP_PRINT_TRACE2("app_lea_bca_parse_cback: msg_type 0x%02X, status 0x%02X", msg_type, status);
+    switch (msg_type)
+    {
+    case LEA_REMOTE_BCA_PA_INFO_SYNC:
+        {
+            if (status == REMOTE_RELAY_STATUS_SYNC_TOUT ||
+                status == REMOTE_RELAY_STATUS_SYNC_EXPIRED ||
+                status == REMOTE_RELAY_STATUS_SYNC_REF_CHANGED ||
+                status == REMOTE_RELAY_STATUS_ASYNC_RCVD)
+            {
+                if ((app_db.remote_session_state == REMOTE_SESSION_STATE_CONNECTED) &&
+                    app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_SECONDARY)
+                {
+                    app_lea_bca_bs_update_device_info((T_LEA_BRS_INFO *)buf);
+                }
+                else
+                {
+                    app_lea_bca_tgt(APP_BIS_BS_FIND_RECORD_ALIGN);
+                }
+                app_lea_bca_bs_handle_pa_info_sync((T_LEA_BRS_INFO *)buf);
+            }
+        }
+        break;
+
+    case LEA_REMOTE_BCA_SYNC_DOWNSTREAM:
+        {
+            if (status == REMOTE_RELAY_STATUS_SYNC_TOUT ||
+                status == REMOTE_RELAY_STATUS_SYNC_EXPIRED ||
+                status == REMOTE_RELAY_STATUS_SYNC_REF_CHANGED ||
+                status == REMOTE_RELAY_STATUS_ASYNC_RCVD)
+            {
+                app_lea_bca_ready_to_downstream = true;
+            }
+        }
+        break;
+
+    case LEA_REMOTE_BCA_SYNC_TRACK_STATE:
+        {
+            if (status == REMOTE_RELAY_STATUS_ASYNC_RCVD)
+            {
+                app_lea_bca_remote_track_started = true;
+
+                if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY && app_lea_bca_local_track_started)
+                {
+                    app_relay_sync_single(APP_MODULE_TYPE_BCA, LEA_REMOTE_BCA_SYNC_DOWNSTREAM,
+                                          REMOTE_TIMER_HIGH_PRECISION,
+                                          0, false);
+                }
+            }
+        }
+        break;
+
+    case LEA_REMOTE_BCA_SYNC_BIS_STATUS:
+        {
+            if (status == REMOTE_RELAY_STATUS_ASYNC_RCVD)
+            {
+                app_db.remote_bis_connected = buf[0];
+
+#if F_APP_LEA_B2B_HTPOLL_CONTROL
+                app_vendor_htpoll_control(B2B_HTPOLL_EVENT_REMOTE_BIS_STATUS);
+#endif
+            }
+        }
+        break;
+
+    default:
+        break;
+    }
+}
+#endif
+
 void app_lea_bca_init(void)
 {
+    os_queue_init(&app_lea_bca_left_ch_queue);
+    os_queue_init(&app_lea_bca_right_ch_queue);
+
     audio_mgr_cback_register(app_lea_bca_audio_cback);
     ble_audio_cback_register(app_lea_bca_ble_audio_cback);
+#if F_APP_ERWS_SUPPORT
+    app_relay_cback_register(app_lea_bca_relay_cback, app_lea_bca_parse_cback,
+                             APP_MODULE_TYPE_BCA, LEA_REMOTE_BCA_MSG_TOTAL);
+#endif
     app_lea_bca_db_init();
 #if F_APP_LEA_REALCAST_SUPPORT
+#if F_APP_ERWS_SUPPORT
     app_lea_realcast_init();
 #endif
+#endif
+    app_timer_reg_cb(app_lea_bca_timeout_cb, &app_lea_bca_timer_id);
 }
 #else
 

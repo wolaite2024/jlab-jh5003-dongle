@@ -195,6 +195,10 @@ T_APP_CALL_STATUS app_bt_policy_get_call_status(void);
 void app_bt_policy_change_to_sec_and_conn_pri(void);
 #endif
 
+#if F_APP_GAMING_WIRED_MODE_HANDLE
+bool app_bt_policy_is_shutdown_step_state(void);
+#endif
+
 /**
  * app_bt_policy_api.h
  *

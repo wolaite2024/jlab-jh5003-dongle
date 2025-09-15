@@ -88,18 +88,18 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Register service. </p>
-<p><a class="el" href="ccp__mgr_8h_source.html" title="Head file for Call Control Server. ">ccp_mgr.h</a></p>
+<p><a class="el" href="ccp__mgr_8h_source.html" title="Header file for Call Control Server. ">ccp_mgr.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_param</td><td>Point to service registration parameter: <a class="el" href="struct_t___c_c_p___s_e_r_v_e_r___r_e_g___s_r_v___p_a_r_a_m.html">T_CCP_SERVER_REG_SRV_PARAM</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_param</td><td>Point to service registration parameter: <a class="el" href="struct_t___c_c_p___s_e_r_v_e_r___r_e_g___s_r_v___p_a_r_a_m.html">T_CCP_SERVER_REG_SRV_PARAM</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Service ID of service registration operation </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Service ID of service registration operation. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">0xFF</td><td>Service registration operation is failed </td></tr>
-    <tr><td class="paramname">Others</td><td>Service ID of specific service. Service registration operation is successful</td></tr>
+    <tr><td class="paramname">0xFF</td><td>Service registration operation has failed. </td></tr>
+    <tr><td class="paramname">Others</td><td>Service ID of specific service. Service registration operation is successful.</td></tr>
   </table>
   </dd>
 </dl>
@@ -133,19 +133,19 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Set parameter. </p>
-<p><a class="el" href="ccp__mgr_8h_source.html" title="Head file for Call Control Server. ">ccp_mgr.h</a></p>
+<p><a class="el" href="ccp__mgr_8h_source.html" title="Header file for Call Control Server. ">ccp_mgr.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service ID </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_param</td><td>Point to parameter: <a class="el" href="struct_t___c_c_p___s_e_r_v_e_r___s_e_t___p_a_r_a_m.html">T_CCP_SERVER_SET_PARAM</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service ID. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_param</td><td>Point to parameter: <a class="el" href="struct_t___c_c_p___s_e_r_v_e_r___s_e_t___p_a_r_a_m.html">T_CCP_SERVER_SET_PARAM</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of set parameter operation </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of set parameter operation. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Set parameter operation is successful </td></tr>
-    <tr><td class="paramname">false</td><td>Set parameter operation is failed</td></tr>
+    <tr><td class="paramname">true</td><td>Set parameter operation is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Set parameter operation is failed.</td></tr>
   </table>
   </dd>
 </dl>
@@ -185,20 +185,20 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Create a Call State member. </p>
-<p><a class="el" href="ccp__mgr_8h_source.html" title="Head file for Call Control Server. ">ccp_mgr.h</a></p>
+<p><a class="el" href="ccp__mgr_8h_source.html" title="Header file for Call Control Server. ">ccp_mgr.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service ID </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_call_uri</td><td>Point to call URI </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">call_uri_len</td><td>Length of call URI</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service ID. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_call_uri</td><td>Point to call URI. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">call_uri_len</td><td>Length of call URI.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Call index of creation for a Call State member </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Call index of creation for a Call State member. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">0x00</td><td>Creation for a Call State member is failed </td></tr>
-    <tr><td class="paramname">Others</td><td>Call index to identify call. Creation for a Call State member is successful</td></tr>
+    <tr><td class="paramname">0x00</td><td>Creation for a Call State member has failed. </td></tr>
+    <tr><td class="paramname">Others</td><td>Call index to identify call. Creation for a Call State member is successful.</td></tr>
   </table>
   </dd>
 </dl>
@@ -250,26 +250,26 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Update call state by call index. </p>
-<p><a class="el" href="ccp__mgr_8h_source.html" title="Head file for Call Control Server. ">ccp_mgr.h</a></p>
+<p><a class="el" href="ccp__mgr_8h_source.html" title="Header file for Call Control Server. ">ccp_mgr.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service ID </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">call_index</td><td>Call index to identify call </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">call_state</td><td><a class="el" href="group___t___t_b_s___c_a_l_l___s_t_a_t_e.html">Call State of the call</a> </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">call_flags</td><td>A bit field. <a class="el" href="group___t_b_s___c_a_l_l___f_l_a_g_s___b_i_t___def.html">Call_Flags bit definitions</a> </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service ID. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">call_index</td><td>Call index to identify call. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">call_state</td><td><a class="el" href="group___t___t_b_s___c_a_l_l___s_t_a_t_e.html">Call State of the Call</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">call_flags</td><td>A bit field. <a class="el" href="group___t_b_s___c_a_l_l___f_l_a_g_s___b_i_t___def.html">Call Flags Bit Definitions</a>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">send_notification</td><td><ul>
-<li>true : Send notification </li>
-<li>false : Not send notification</li>
+<li>true : Send notification. </li>
+<li>false : Do not send notification.</li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of update operation </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of update operation. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Update operation is successful </td></tr>
-    <tr><td class="paramname">false</td><td>Update operation is failed</td></tr>
+    <tr><td class="paramname">true</td><td>Update operation is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Update operation is failed.</td></tr>
   </table>
   </dd>
 </dl>
@@ -303,19 +303,19 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Terminate a Call State member. </p>
-<p><a class="el" href="ccp__mgr_8h_source.html" title="Head file for Call Control Server. ">ccp_mgr.h</a></p>
+<p><a class="el" href="ccp__mgr_8h_source.html" title="Header file for Call Control Server. ">ccp_mgr.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service ID </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_termination_reason</td><td>Point to parameter: <a class="el" href="struct_t___c_c_p___s_e_r_v_e_r___t_e_r_m_i_n_a_t_i_o_n___r_e_a_s_o_n.html">T_CCP_SERVER_TERMINATION_REASON</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service ID. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_termination_reason</td><td>Point to parameter: <a class="el" href="struct_t___c_c_p___s_e_r_v_e_r___t_e_r_m_i_n_a_t_i_o_n___r_e_a_s_o_n.html">T_CCP_SERVER_TERMINATION_REASON</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of termination for a Call State member </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of termination for a Call State member. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Termination for a Call State member is successful </td></tr>
-    <tr><td class="paramname">false</td><td>Termination for a Call State member is failed</td></tr>
+    <tr><td class="paramname">true</td><td>Termination for a Call State member is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Termination for a Call State member is failed.</td></tr>
   </table>
   </dd>
 </dl>
@@ -343,19 +343,19 @@ Functions</h2></td></tr>
 <li>char_uuid of <a class="el" href="struct_t___c_c_p___s_e_r_v_e_r___r_e_a_d___i_n_d.html">T_CCP_SERVER_READ_IND</a> is <a class="el" href="group___t_b_s___u_u_i_d___c_h_a_r.html#ga6531d49cd020d89862298c58dab1b5f1">TBS_UUID_CHAR_BEARER_PROVIDER_NAME</a> , <a class="el" href="group___t_b_s___u_u_i_d___c_h_a_r.html#ga17063ea3f8aa0e0dbb3d3ef22e174339">TBS_UUID_CHAR_BEARER_TECHNOLOGY</a> , <a class="el" href="group___t_b_s___u_u_i_d___c_h_a_r.html#ga56adabc4efc7510e67dd6fa78cb4b63b">TBS_UUID_CHAR_BEARER_URI_SCHEMES_SUPPORTED_LIST</a> , <a class="el" href="group___t_b_s___u_u_i_d___c_h_a_r.html#gab179f88ee5667b732533f04c2364543d">TBS_UUID_CHAR_BEARER_SIGNAL_STRENGTH</a> , <a class="el" href="group___t_b_s___u_u_i_d___c_h_a_r.html#ga047b0042ab17ea684532dbf5e8b0b553">TBS_UUID_CHAR_STATUS_FLAGS</a> , <a class="el" href="group___t_b_s___u_u_i_d___c_h_a_r.html#gacee3a074fb4eedfa5d7aa8ee72cd4b15">TBS_UUID_CHAR_BEARER_UCI</a> , <a class="el" href="group___t_b_s___u_u_i_d___c_h_a_r.html#ga9839f918d2eeb7dd42192275cbb57a33">TBS_UUID_CHAR_BEARER_SIGNAL_STRENGTH_REPORTING_INTERVAL</a> , or <a class="el" href="group___t_b_s___u_u_i_d___c_h_a_r.html#ga042bff72b9a60008ecc85993fb9cae03">TBS_UUID_CHAR_CONTENT_CONTROL_ID</a> </li>
 <li>return value of callback registered by <a class="el" href="group___l_e_a___l_i_b___exported___functions.html#gae459ea2b839f0a662f20d69aaac0013f">ble_audio_cback_register</a> with msg <a class="el" href="group___l_e_a___l_i_b___exported___types.html#ggabe1a2e587cdc57dc5de8e141de5d1b0ba3fff796552e42f66ffdb4ad1d5d1e9f4">LE_AUDIO_MSG_CCP_SERVER_READ_IND</a> is <a class="el" href="group___b_l_e___a_u_d_i_o___c_b___r_e_s_u_l_t.html#ga8efc495a8f3e1b6d5fe23103a6f7006b">BLE_AUDIO_CB_RESULT_PENDING</a></li>
 </ul>
-<p><a class="el" href="ccp__mgr_8h_source.html" title="Head file for Call Control Server. ">ccp_mgr.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000031">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<p><a class="el" href="ccp__mgr_8h_source.html" title="Header file for Call Control Server. ">ccp_mgr.h</a></p>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000028">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_read_cfm</td><td>Point to parameter: <a class="el" href="struct_t___c_c_p___s_e_r_v_e_r___r_e_a_d___c_f_m.html">T_CCP_SERVER_READ_CFM</a></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of operation </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of operation. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Operation is successful </td></tr>
-    <tr><td class="paramname">false</td><td>Operation is failed</td></tr>
+    <tr><td class="paramname">true</td><td>Operation is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Operation is failed.</td></tr>
   </table>
   </dd>
 </dl>

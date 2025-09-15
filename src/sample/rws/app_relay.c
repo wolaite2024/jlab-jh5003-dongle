@@ -3,8 +3,10 @@
  */
 
 
-#include "string.h"
-#include "stdlib.h"
+#if F_APP_ERWS_SUPPORT
+#include <string.h>
+#include <stdlib.h>
+#endif
 #include "trace.h"
 #include "gap_le.h"
 #include "remote.h"

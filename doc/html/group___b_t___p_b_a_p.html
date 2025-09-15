@@ -57,7 +57,7 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
 <tr class="memitem:group___b_t___p_b_a_p___p_r_o_p_e_r_t_y___m_a_s_k"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___p_b_a_p___p_r_o_p_e_r_t_y___m_a_s_k.html">BT PBAP Property Mask</a></td></tr>
-<tr class="memdesc:group___b_t___p_b_a_p___p_r_o_p_e_r_t_y___m_a_s_k"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define BT PBAP Property Mask. <br /></td></tr>
+<tr class="memdesc:group___b_t___p_b_a_p___p_r_o_p_e_r_t_y___m_a_s_k"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define BT PBAP property mask. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
@@ -95,7 +95,9 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<a class="el" href="group___b_t___p_b_a_p.html#gga7b1c6380843362029b1d007835f7b071ad14a954218e4a0a072abb3187e5322e7">BT_PBAP_PATH_MCH</a> = 0x05, 
 <br />
-&#160;&#160;<a class="el" href="group___b_t___p_b_a_p.html#gga7b1c6380843362029b1d007835f7b071a056908544de7dc0ca34b89707a169506">BT_PBAP_PATH_CCH</a> = 0x06
+&#160;&#160;<a class="el" href="group___b_t___p_b_a_p.html#gga7b1c6380843362029b1d007835f7b071a056908544de7dc0ca34b89707a169506">BT_PBAP_PATH_CCH</a> = 0x06, 
+<br />
+&#160;&#160;<a class="el" href="group___b_t___p_b_a_p.html#gga7b1c6380843362029b1d007835f7b071abfae6f10d96b6665382c21b714577dc8">BT_PBAP_PATH_SIM1</a> = 0x07
 <br />
  }</td></tr>
 <tr class="memdesc:ga7b1c6380843362029b1d007835f7b071"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define BT PBAP path.  <a href="group___b_t___p_b_a_p.html#ga7b1c6380843362029b1d007835f7b071">More...</a><br /></td></tr>
@@ -121,9 +123,9 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga1dfd82bb7d32e17c6591552d3810bccb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___p_b_a_p.html#ga1dfd82bb7d32e17c6591552d3810bccb">bt_pbap_init</a> (uint8_t link_num)</td></tr>
-<tr class="memdesc:ga1dfd82bb7d32e17c6591552d3810bccb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize PBAP profile.  <a href="#ga1dfd82bb7d32e17c6591552d3810bccb">More...</a><br /></td></tr>
-<tr class="separator:ga1dfd82bb7d32e17c6591552d3810bccb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga337d1f28c0e382029976758318f754c5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___p_b_a_p.html#ga337d1f28c0e382029976758318f754c5">bt_pbap_init</a> (void)</td></tr>
+<tr class="memdesc:ga337d1f28c0e382029976758318f754c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize PBAP profile.  <a href="#ga337d1f28c0e382029976758318f754c5">More...</a><br /></td></tr>
+<tr class="separator:ga337d1f28c0e382029976758318f754c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa5c410b4f4ca8781722e66347f44f87c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___p_b_a_p.html#gaa5c410b4f4ca8781722e66347f44f87c">bt_pbap_connect_over_rfc_req</a> (uint8_t bd_addr[6], uint8_t server_chann, bool feat_flag)</td></tr>
 <tr class="memdesc:gaa5c410b4f4ca8781722e66347f44f87c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a PBAP connection over RFCOMM request.  <a href="#gaa5c410b4f4ca8781722e66347f44f87c">More...</a><br /></td></tr>
 <tr class="separator:gaa5c410b4f4ca8781722e66347f44f87c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -149,7 +151,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga78887e783c217a0bf4e47f4e69649bf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a request to set active phone book.  <a href="#ga78887e783c217a0bf4e47f4e69649bf1">More...</a><br /></td></tr>
 <tr class="separator:ga78887e783c217a0bf4e47f4e69649bf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3c5a93f2649a49a502a6da87488300c4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___p_b_a_p.html#ga3c5a93f2649a49a502a6da87488300c4">bt_pbap_vcard_listing_by_number_pull</a> (uint8_t bd_addr[6], char *phone_number)</td></tr>
-<tr class="memdesc:ga3c5a93f2649a49a502a6da87488300c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a request to pull the vCard listing in current phonebook by phone number.  <a href="#ga3c5a93f2649a49a502a6da87488300c4">More...</a><br /></td></tr>
+<tr class="memdesc:ga3c5a93f2649a49a502a6da87488300c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a request to pull the vCard listing in current phone book by phone number.  <a href="#ga3c5a93f2649a49a502a6da87488300c4">More...</a><br /></td></tr>
 <tr class="separator:ga3c5a93f2649a49a502a6da87488300c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae6d95c7bf7837632517c10bb6d1f656b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___p_b_a_p.html#gae6d95c7bf7837632517c10bb6d1f656b">bt_pbap_pull_vcard_entry</a> (uint8_t bd_addr[6], uint8_t *p_name, uint8_t name_len, uint64_t filter)</td></tr>
 <tr class="memdesc:gae6d95c7bf7837632517c10bb6d1f656b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a request to pull an individual vCard entry from the phone book object of interest.  <a href="#gae6d95c7bf7837632517c10bb6d1f656b">More...</a><br /></td></tr>
@@ -171,7 +173,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Define BT PBAP repository. </p>
-<p><a class="el" href="bt__pbap_8h_source.html">bt_pbap.h</a> </p>
 
 </div>
 </div>
@@ -188,7 +189,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Define BT PBAP path. </p>
-<p><a class="el" href="bt__pbap_8h_source.html">bt_pbap.h</a> </p>
 
 </div>
 </div>
@@ -205,7 +205,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Define BT PBAP phone book. </p>
-<p><a class="el" href="bt__pbap_8h_source.html">bt_pbap.h</a> </p>
 
 </div>
 </div>
@@ -223,11 +222,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Define BT PBAP repository. </p>
-<p><a class="el" href="bt__pbap_8h_source.html">bt_pbap.h</a> </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaa8c99ec5f27aefb15d7cd3836dfe32bba6330cb65679874a3c90a1c2ed1ca4e2a"></a>BT_PBAP_REPOSITORY_LOCAL&#160;</td><td class="fielddoc"><p>Phone's local memory </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaa8c99ec5f27aefb15d7cd3836dfe32bba6330cb65679874a3c90a1c2ed1ca4e2a"></a>BT_PBAP_REPOSITORY_LOCAL&#160;</td><td class="fielddoc"><p>Phone's local memory. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaa8c99ec5f27aefb15d7cd3836dfe32bba05f69ee23b14907744de1effbb647b6e"></a>BT_PBAP_REPOSITORY_SIM1&#160;</td><td class="fielddoc"><p>Phone's SIM card </p>
+<tr><td class="fieldname"><a id="ggaa8c99ec5f27aefb15d7cd3836dfe32bba05f69ee23b14907744de1effbb647b6e"></a>BT_PBAP_REPOSITORY_SIM1&#160;</td><td class="fielddoc"><p>Phone's SIM card. </p>
 </td></tr>
 </table>
 
@@ -246,7 +244,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Define BT PBAP path. </p>
-<p><a class="el" href="bt__pbap_8h_source.html">bt_pbap.h</a> </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga7b1c6380843362029b1d007835f7b071a66baa5e3c1677f9392769c144e053ae7"></a>BT_PBAP_PATH_ROOT&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga7b1c6380843362029b1d007835f7b071aa2965012df3f673f1096f3431c61bc75"></a>BT_PBAP_PATH_TELECOM&#160;</td><td class="fielddoc"></td></tr>
@@ -255,6 +252,7 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="gga7b1c6380843362029b1d007835f7b071a4a3cd4ba3cc1fc0de64903dc8cd7ca22"></a>BT_PBAP_PATH_OCH&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga7b1c6380843362029b1d007835f7b071ad14a954218e4a0a072abb3187e5322e7"></a>BT_PBAP_PATH_MCH&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga7b1c6380843362029b1d007835f7b071a056908544de7dc0ca34b89707a169506"></a>BT_PBAP_PATH_CCH&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga7b1c6380843362029b1d007835f7b071abfae6f10d96b6665382c21b714577dc8"></a>BT_PBAP_PATH_SIM1&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>
@@ -272,7 +270,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Define BT PBAP phone book. </p>
-<p><a class="el" href="bt__pbap_8h_source.html">bt_pbap.h</a> </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga84b66e1a1da82a0886b52630fb58235ca46e04db2d194bd4b231e4fe1b2ae6582"></a>BT_PBAP_PHONE_BOOK_PB&#160;</td><td class="fielddoc"><p>Main phone book object </p>
 </td></tr>
@@ -293,8 +290,8 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga1dfd82bb7d32e17c6591552d3810bccb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1dfd82bb7d32e17c6591552d3810bccb">&#9670;&nbsp;</a></span>bt_pbap_init()</h2>
+<a id="ga337d1f28c0e382029976758318f754c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga337d1f28c0e382029976758318f754c5">&#9670;&nbsp;</a></span>bt_pbap_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -302,21 +299,14 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">bool bt_pbap_init </td>
           <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>link_num</em></td><td>)</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Initialize PBAP profile. </p>
-<p><a class="el" href="bt__pbap_8h_source.html">bt_pbap.h</a></p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">link_num</td><td>PBAP maximum connected link number.</td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="section return"><dt>Returns</dt><dd>The status of initializing PBAP profile. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
@@ -361,7 +351,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send a PBAP connection over RFCOMM request. </p>
-<p><a class="el" href="bt__pbap_8h_source.html">bt_pbap.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
@@ -418,12 +407,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send a PBAP connection over L2CAP request. </p>
-<p><a class="el" href="bt__pbap_8h_source.html">bt_pbap.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000089">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000102">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">l2c_psm</td><td>The remote L2CAP psm which can be found from the SDP info. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">l2c_psm</td><td>The remote L2CAP PSM which can be found from the SDP info. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">feat_flag</td><td>The PSE PBAP SupportedFeatures attribute present flag. <ul>
 <li>true The PSE PBAP SupportedFeatures attribute is not present in SDP info. </li>
 <li>false The PSE PBAP SupportedFeatures attribute is present in SDP info.</li>
@@ -460,7 +448,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send a PBAP disconnection request. </p>
-<p><a class="el" href="bt__pbap_8h_source.html">bt_pbap.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address.</td></tr>
@@ -529,7 +516,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send a request to pull the entire phone book. </p>
-<p><a class="el" href="bt__pbap_8h_source.html">bt_pbap.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
@@ -585,7 +571,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send a request to get the number of indexes in the phone book of interest. </p>
-<p><a class="el" href="bt__pbap_8h_source.html">bt_pbap.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
@@ -622,7 +607,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send a request to pull more data from the remote server. </p>
-<p><a class="el" href="bt__pbap_8h_source.html">bt_pbap.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address.</td></tr>
@@ -657,7 +641,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send a request to terminate the ongoing pull operation. </p>
-<p><a class="el" href="bt__pbap_8h_source.html">bt_pbap.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address.</td></tr>
@@ -708,7 +691,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send a request to set active phone book. </p>
-<p><a class="el" href="bt__pbap_8h_source.html">bt_pbap.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
@@ -754,8 +736,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Send a request to pull the vCard listing in current phonebook by phone number. </p>
-<p><a class="el" href="bt__pbap_8h_source.html">bt_pbap.h</a></p>
+<p>Send a request to pull the vCard listing in current phone book by phone number. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
@@ -813,8 +794,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send a request to pull an individual vCard entry from the phone book object of interest. </p>
-<p><a class="el" href="bt__pbap_8h_source.html">bt_pbap.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000090">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000103">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>

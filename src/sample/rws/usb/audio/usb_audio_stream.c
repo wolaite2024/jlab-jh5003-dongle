@@ -2,17 +2,34 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include "hw_tim.h"
 #include "trace.h"
 #include "ring_buffer.h"
 #include "app_timer.h"
 #include "section.h"
 #include "usb_audio.h"
 #include "usb_audio_stream.h"
+#include "usb_audio_config.h"
 #include "usb_msg.h"
 #include "app_io_msg.h"
 #include "app_ipc.h"
 #include "os_queue.h"
 #include "os_sync.h"
+
+#define USB_AUDIO_ACTIVE_DEBOUNCE    1
+#if F_APP_GAMING_DONGLE_SUPPORT
+#define USB_AUDIO_SILENCE_STREAM     1
+#endif
+
+#if USB_AUDIO_SILENCE_STREAM
+#define USB_AUDIO_SILENCE_STREAM_TIME       300                                     // ms
+#define USB_AUDIO_ACTIVE_DEBOUNCE_TIME      (USB_AUDIO_SILENCE_STREAM_TIME + 1000)  // ms
+#define USB_AUDIO_STREAM_DETECT_VARIATION   800                                     // us
+#define USB_AUDIO_DOWNSTREAM_INTERVAL       (USB_AUDIO_DS_INTERVAL * 1000)          // us
+#define USB_AUDIO_STREAM_DETECT_TIMEOUT     (USB_AUDIO_DOWNSTREAM_INTERVAL + USB_AUDIO_STREAM_DETECT_VARIATION)
+#else
+#define USB_AUDIO_ACTIVE_DEBOUNCE_TIME      800                                     // ms
+#endif
 
 #define MONITOR_TIMER_INTERVAL_MS    100
 
@@ -46,6 +63,14 @@ typedef enum
     STREAM_STATE_ACTIVE,
     STREAM_STATE_XMITING,
 } T_AUDIO_STREAM_STATE;
+
+typedef enum
+{
+    UAC1_DOWNSTREAM_DEBOUNCE,
+    UAC1_UPSTREAM_DEBOUNCE,
+    UAC2_DOWNSTREAM_DEBOUNCE,
+    UAC2_UPSTREAM_DEBOUNCE,
+} T_USB_AUDIO_TIME_ID;
 
 typedef enum {PENDING_ACTION_START, PENDING_ACTION_STOP} T_PENDING_ACTION;
 
@@ -129,10 +154,94 @@ typedef struct _usb_audio_stream_db
     T_OS_QUEUE streams[USB_AUDIO_STREAM_TYPE_MAX];
 } T_USB_AUDIO_STREAM_DB;
 
+typedef struct
+{
+    uint8_t label;
+    uint8_t type;
+    uint8_t active;
+    uint8_t timer_id;
+    uint8_t timer_idx;
+    const char *name;
+} T_UAC_DEBOUNCE_INFO;
+
+#if USB_AUDIO_ACTIVE_DEBOUNCE
+static T_UAC_DEBOUNCE_INFO uac_debounce_info[] =
+{
+    {USB_AUDIO_STREAM_LABEL_1, USB_AUDIO_STREAM_TYPE_IN,  false, UAC1_UPSTREAM_DEBOUNCE,   0, "uac1_us_debounce"},
+    {USB_AUDIO_STREAM_LABEL_1, USB_AUDIO_STREAM_TYPE_OUT, false, UAC1_DOWNSTREAM_DEBOUNCE, 0, "uac1_ds_debounce"},
+};
+#endif
+
+static uint8_t usb_audio_timer_queue_id = 0;
+
 T_USB_AUDIO_STREAM_DB uas_db;
 const uint32_t sample_rate_table[8] = {8000, 16000, 32000, 44100, 48000, 88000, 96000, 192000};
 
 static bool usb_audio_stream_ctrl(T_USB_AUDIO_STREAM *stream, uint8_t cmd, void *param);
+
+#if USB_AUDIO_SILENCE_STREAM
+static T_HW_TIMER_HANDLE usb_audio_stream_timer_handle = NULL;
+static uint16_t uac_silence_cnt;
+static T_USB_AUDIO_PIPES *uac_audio_pipe;
+static uint8_t *uac_silence_buf;
+static uint16_t uac_pcm_pkt_size;
+
+static bool usb_audio_stream_xmit_handle(T_USB_AUDIO_PIPES *pipe, void *buf, uint32_t len);
+static void usb_audio_stream_timer_isr_cb(T_HW_TIMER_HANDLE handle)
+{
+    uint32_t period = USB_AUDIO_DOWNSTREAM_INTERVAL;
+
+    if (uac_silence_cnt < USB_AUDIO_SILENCE_STREAM_TIME * 1000 / period)
+    {
+        uac_silence_cnt++;
+
+        if (uac_silence_cnt < 5)
+        {
+            period -= USB_AUDIO_STREAM_DETECT_VARIATION;
+        }
+
+        APP_PRINT_TRACE1("send silence pcm start: cnt %d", uac_silence_cnt);
+        hw_timer_restart(usb_audio_stream_timer_handle, period);
+    }
+    else
+    {
+        APP_PRINT_TRACE0("send silence pcm stop");
+        hw_timer_stop(usb_audio_stream_timer_handle);
+    }
+
+    if (uac_silence_buf != NULL)
+    {
+        usb_audio_stream_xmit_handle(uac_audio_pipe, uac_silence_buf, uac_pcm_pkt_size);
+    }
+}
+
+static void usb_audio_stream_alloc_silence_stream(T_STREAM_ATTR attr)
+{
+    uint16_t sample_rate = attr.sample_rate;
+    uint8_t  chan_num = attr.chann_num;
+    uint8_t  bit_width = attr.bit_width;
+    uint16_t pcm_pkt_size = USB_AUDIO_DOWNSTREAM_INTERVAL * (sample_rate / 1000) *
+                            chan_num * (bit_width / 8) / 1000;
+
+    if (usb_audio_stream_timer_handle == NULL)
+    {
+        usb_audio_stream_timer_handle = hw_timer_create("uac_stream_timer_handle",
+                                                        USB_AUDIO_DS_INTERVAL * 1000, false,
+                                                        usb_audio_stream_timer_isr_cb);
+    }
+
+    if (pcm_pkt_size != uac_pcm_pkt_size)
+    {
+        uac_pcm_pkt_size = pcm_pkt_size;
+
+        if (uac_silence_buf)
+        {
+            free(uac_silence_buf);
+        }
+        uac_silence_buf = calloc(1, uac_pcm_pkt_size);
+    }
+}
+#endif
 
 RAM_TEXT_SECTION
 static void *usb_audio_stream_search(T_USB_AUDIO_STREAM_TYPE type, uint32_t label)
@@ -294,6 +403,10 @@ static bool usb_audio_stream_create(T_USB_AUDIO_STREAM *stream, T_STREAM_ATTR at
         APP_PRINT_ERROR1("usb_audio_stream_create failed ,state:0x%x", stream->state);
         return NULL;
     }
+
+#if USB_AUDIO_SILENCE_STREAM
+    usb_audio_stream_alloc_silence_stream(attr);
+#endif
 
     ret = stream_create_all(stream, attr);
 
@@ -695,24 +808,17 @@ static int trigger_evt_ctrl(T_USB_AUDIO_PIPES *pipe, T_USB_AUDIO_CTRL_EVT evt, u
     return trigger_evt(pipe, stream_evt.d32, param);
 }
 
-#if (F_APP_REDUCE_HEAP_USAGE == 0)
 RAM_TEXT_SECTION
-#endif
-static int usb_audio_stream_pipe_xmit_out(T_USB_AUDIO_PIPES *pipe, void *buf, uint32_t len)
+static bool usb_audio_stream_xmit_handle(T_USB_AUDIO_PIPES *pipe, void *buf, uint32_t len)
 {
     uint32_t label = pipe->label;
     T_USB_AUDIO_STREAM_TYPE stream_type = USB_AUDIO_STREAM_TYPE_OUT;
-    T_USB_AUDIO_STREAM *stream =  usb_audio_stream_search(stream_type, label);
+    T_USB_AUDIO_STREAM *stream = usb_audio_stream_search(stream_type, label);
     T_USB_AUDIO_STREAM_EVT_INFO stream_evt = {.u = {.dir = stream_type}};
     stream_evt.u.evt_type = USB_AUDIO_STREAM_EVT_DATA_XMIT;
-
-    APP_PRINT_INFO5("usb_audio_stream_pipe_xmit_out,stream:0x%x, pool:0x%x, label:%d, 0x%x-0x%x",
-                    stream,
-                    &(stream->pool), label, buf, len);
-
     if (len % (stream->attr.bit_width / 8 * stream->attr.chann_num) != 0)
     {
-        return 0;
+        return false;
     }
 
     if (ring_buffer_get_remaining_space(&(stream->pool)) >= len)
@@ -729,6 +835,135 @@ static int usb_audio_stream_pipe_xmit_out(T_USB_AUDIO_PIPES *pipe, void *buf, ui
     return trigger_evt(pipe, stream_evt.d32, (uint32_t)label);
 }
 
+#if (F_APP_REDUCE_HEAP_USAGE == 0)
+RAM_TEXT_SECTION
+#endif
+static int usb_audio_stream_pipe_xmit_out(T_USB_AUDIO_PIPES *pipe, void *buf, uint32_t len)
+{
+    APP_PRINT_INFO2("usb_audio_stream_pipe_xmit_out: label %d len %d", pipe->label, len);
+
+#if USB_AUDIO_SILENCE_STREAM
+    uac_silence_cnt = 0;
+    uac_audio_pipe = pipe;
+    hw_timer_restart(usb_audio_stream_timer_handle, USB_AUDIO_STREAM_DETECT_TIMEOUT);
+#endif
+
+    return usb_audio_stream_xmit_handle(pipe, buf, len);
+}
+
+#if USB_AUDIO_ACTIVE_DEBOUNCE
+static T_UAC_DEBOUNCE_INFO *usb_audio_get_debounce_info(uint32_t label, uint8_t stream_type)
+{
+    uint8_t i = 0;
+    T_UAC_DEBOUNCE_INFO *info = NULL;
+
+    for (i = 0; i < sizeof(uac_debounce_info) / sizeof(T_UAC_DEBOUNCE_INFO); i++)
+    {
+        if (uac_debounce_info[i].label == label &&
+            uac_debounce_info[i].type  == stream_type)
+        {
+            info = &uac_debounce_info[i];
+            break;
+        }
+    }
+
+    return info;
+}
+
+static bool usb_audio_handle_evt_debounce(uint32_t label, uint8_t evt_type, uint8_t stream_type)
+{
+    T_UAC_DEBOUNCE_INFO *debounce_info = usb_audio_get_debounce_info(label, stream_type);
+    bool ret = false;
+    bool debounce = false;
+
+    APP_PRINT_TRACE3("usb_audio_handle_evt_debounce: label %d evt %d type %d", label, evt_type,
+                     stream_type);
+
+    if (debounce_info != NULL)
+    {
+        if (evt_type == USB_AUDIO_STREAM_EVT_ACTIVE)
+        {
+            debounce_info->active = true;
+
+            if (debounce_info->timer_idx != 0)
+            {
+                app_stop_timer(&debounce_info->timer_idx);
+            }
+        }
+        else // USB_AUDIO_STREAM_EVT_DEACTIVE
+        {
+            debounce = true;
+            debounce_info->active = false;
+        }
+
+        if (debounce)
+        {
+            app_start_timer(&debounce_info->timer_idx, debounce_info->name,
+                            usb_audio_timer_queue_id, debounce_info->timer_id,
+                            0, false, USB_AUDIO_ACTIVE_DEBOUNCE_TIME);
+
+            ret = true;
+        }
+    }
+    else
+    {
+        APP_PRINT_ERROR0("debounce info not found!");
+    }
+
+    return ret;
+}
+#endif
+
+static void usb_audio_stream_deactive_handle(T_USB_AUDIO_STREAM *stream, uint8_t stream_type)
+{
+    usb_audio_stream_ctrl(stream, CTRL_CMD_STOP, 0);
+    T_USB_IPC_EVT usb_ipc_evt = (stream_type == USB_AUDIO_STREAM_TYPE_OUT) ? USB_IPC_EVT_AUDIO_DS_STOP :
+                                \
+                                USB_IPC_EVT_AUDIO_US_STOP;
+    usb_audio_stream_release(stream);
+    app_ipc_publish(USB_IPC_TOPIC, usb_ipc_evt, NULL);
+}
+
+static void usb_audio_timer_cback(uint8_t timer_id, uint16_t timer_chann)
+{
+    switch (timer_id)
+    {
+#if USB_AUDIO_ACTIVE_DEBOUNCE
+    case UAC1_DOWNSTREAM_DEBOUNCE:
+    case UAC1_UPSTREAM_DEBOUNCE:
+        {
+            uint8_t i = 0;
+            T_UAC_DEBOUNCE_INFO *info = NULL;
+
+            for (i = 0; i < sizeof(uac_debounce_info) / sizeof(T_UAC_DEBOUNCE_INFO); i++)
+            {
+                if (uac_debounce_info[i].timer_id == timer_id)
+                {
+                    info = &uac_debounce_info[i];
+                    break;
+                }
+            }
+
+            if (info != NULL)
+            {
+                app_stop_timer(&info->timer_idx);
+
+                if (info->active == false)
+                {
+                    T_USB_AUDIO_STREAM *stream = usb_audio_stream_search((T_USB_AUDIO_STREAM_TYPE)info->type,
+                                                                         info->label);
+
+                    usb_audio_stream_deactive_handle(stream, info->type);
+                }
+            }
+        }
+        break;
+#endif
+
+    default:
+        break;
+    }
+}
 
 void usb_audio_stream_evt_handle(uint8_t evt, uint32_t param)
 {
@@ -740,6 +975,26 @@ void usb_audio_stream_evt_handle(uint8_t evt, uint32_t param)
     T_USB_AUDIO_STREAM *stream = usb_audio_stream_search((T_USB_AUDIO_STREAM_TYPE)stream_type,
                                                          pipe_label);
     T_USB_AUDIO_PIPE_ATTR attr = {.content.d32 = evt_param->opt};
+
+#if USB_AUDIO_ACTIVE_DEBOUNCE
+    if (evt_type == USB_AUDIO_STREAM_EVT_ACTIVE ||
+        evt_type == USB_AUDIO_STREAM_EVT_DEACTIVE)
+    {
+        if (usb_audio_handle_evt_debounce(pipe_label, evt_type, stream_type))
+        {
+            return;
+        }
+    }
+
+    if (evt_type == USB_AUDIO_STREAM_EVT_ACTIVE &&
+        (stream->attr.sample_rate != attr.content.audio.sample_rate ||
+         stream->attr.bit_width != attr.content.audio.bit_width ||
+         stream->attr.chann_num != attr.content.audio.channels))
+    {
+        APP_PRINT_TRACE0("usb audio attr change, deactive first");
+        usb_audio_stream_deactive_handle(stream, stream_type);
+    }
+#endif
 
     switch (evt_type)
     {
@@ -763,12 +1018,7 @@ void usb_audio_stream_evt_handle(uint8_t evt, uint32_t param)
 
     case USB_AUDIO_STREAM_EVT_DEACTIVE:
         {
-            usb_audio_stream_ctrl(stream, CTRL_CMD_STOP, 0);
-            T_USB_IPC_EVT usb_ipc_evt = (stream_type == USB_AUDIO_STREAM_TYPE_OUT) ? USB_IPC_EVT_AUDIO_DS_STOP :
-                                        \
-                                        USB_IPC_EVT_AUDIO_US_STOP;
-            usb_audio_stream_release(stream);
-            app_ipc_publish(USB_IPC_TOPIC, usb_ipc_evt, NULL);
+            usb_audio_stream_deactive_handle(stream, stream_type);
         }
         break;
 
@@ -903,5 +1153,7 @@ void usb_audio_stream_init(void)
 {
     memset(&uas_db, 0, sizeof(uas_db));
     usb_audio_init(&usb_audio_pipe);
+
+    app_timer_reg_cb(usb_audio_timer_cback, &usb_audio_timer_queue_id);
 }
 #endif

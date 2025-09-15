@@ -20,6 +20,7 @@
 #include "app_roleswap.h"
 #include "app_hfp.h"
 #include "app_a2dp.h"
+#include "app_bt_point.h"
 #include "app_multilink.h"
 #include "app_ota.h"
 #include "app_anc.h"
@@ -108,8 +109,9 @@ typedef enum
     ROLESWAP_REJECT_REASON_CALL_COMING,                 //0x16
     ROLESWAP_REJECT_REASON_STOP_LINKBACK_ING,           //0x17
     ROLESWAP_REJECT_REASON_LOCAL_BOOM_MIC_IN,           //0x18
-    ROLESWAP_REJECT_REASON_TUYA_OTA,                    //0x19
-    ROLESWAP_REJECT_REASON_HTPOLL_EXECING,              //0x20
+    ROLESWAP_REJECT_REASON_DATA_CAPTURE_START,          //0x19
+    ROLESWAP_REJECT_REASON_TUYA_OTA,                    //0x1A
+    ROLESWAP_REJECT_REASON_HTPOLL_EXECING,              //0x1B
 } T_APP_ROLESWAP_REJECT_REASON;
 
 typedef enum
@@ -139,19 +141,19 @@ typedef enum
 typedef enum
 {
     /* highest priority */
-    ROLESWAP_SINGLE_BUD_POWER_OFF = 0,          //0x00
-    ROLESWAP_CLOSE_CASE_POWER_OFF,              //0x01
-    ROLESWAP_IN_NON_SMART_CASE,                 //0x02
-    ROLESWAP_IN_CASE_TIMEOUT_POWER_OFF,         //0x03
-    ROLESWAP_DATA_CAPTURE,                      //0x04
-    ROLESWAP_DURIAN_FIX_MIC,                    //0x05
-    ROLESWAP_REMOTE_BOOM_MIC_IN,                //0x06
-    ROLESWAP_CALL_IN_SMART_CASE_WHEN_CALL,      //0x07
-    ROLESWAP_OUT_EAR_WHEN_CALL,                 //0x08
-    ROLESWAP_LEA_2ND_ROLESWAP,                  //0x09
-    ROLESWAP_MMI_TRIGGER,                       //0x0A
-    ROLESWAP_BATTERY_LEVEL,                     //0x0B
-    ROLESWAP_RSSI,                              //0x0C
+    ROLESWAP_MMI_TRIGGER,
+    ROLESWAP_SINGLE_BUD_POWER_OFF,
+    ROLESWAP_CLOSE_CASE_POWER_OFF,
+    ROLESWAP_IN_NON_SMART_CASE,
+    ROLESWAP_IN_CASE_TIMEOUT_POWER_OFF,
+    ROLESWAP_DATA_CAPTURE,
+    ROLESWAP_DURIAN_FIX_MIC,
+    ROLESWAP_REMOTE_BOOM_MIC_IN,
+    ROLESWAP_CALL_IN_SMART_CASE_WHEN_CALL,
+    ROLESWAP_OUT_EAR_WHEN_CALL,
+    ROLESWAP_LEA_2ND_ROLESWAP,
+    ROLESWAP_BATTERY_LEVEL,
+    ROLESWAP_RSSI,
 
     /* Note: this must be in the end */
     ROLESWAP_NONE,
@@ -180,7 +182,7 @@ static T_ROLESWAP_LEA_ADDR_INFO lea_addr_info;
 
 static void app_roleswap_ctrl_set_status(T_APP_ROLESWAP_STATUS status, uint16_t line)
 {
-    APP_PRINT_TRACE2("app_roleswap_ctrl_set_status: status %d line %d", status, line);
+    APP_PRINT_INFO2("app_roleswap_ctrl_set_status: status %d line %d", status, line);
 
     if (status == APP_ROLESWAP_STATUS_BUSY &&
         timer_idx_roleswap_handle_exception == 0)
@@ -252,8 +254,8 @@ static void app_roleswap_ctrl_parse_cback(uint8_t msg_type, uint8_t *buf, uint16
             {
                 memcpy(lea_addr_info.remote_lea_addr, buf, 6);
 
-                APP_PRINT_TRACE2("app_roleswap_ctrl_parse_cback: remote_lea_addr: %s bud_local_addr %s",
-                                 TRACE_BDADDR(lea_addr_info.remote_lea_addr), TRACE_BDADDR(app_cfg_nv.bud_local_addr));
+                APP_PRINT_INFO2("app_roleswap_ctrl_parse_cback: remote_lea_addr: %s bud_local_addr %s",
+                                TRACE_BDADDR(lea_addr_info.remote_lea_addr), TRACE_BDADDR(app_cfg_nv.bud_local_addr));
 
                 app_roleswap_ctrl_check(APP_ROLESWAP_CTRL_EVENT_LEA_SYNC_ADDR_INFO);
             }
@@ -267,7 +269,7 @@ static void app_roleswap_ctrl_parse_cback(uint8_t msg_type, uint8_t *buf, uint16
 
     if (handle)
     {
-        APP_PRINT_TRACE2("app_roleswap_ctrl_parse_cback: msg_type 0x%02X status 0x%02X", msg_type, status);
+        APP_PRINT_INFO2("app_roleswap_ctrl_parse_cback: msg_type 0x%02X status 0x%02X", msg_type, status);
     }
 
 }
@@ -280,7 +282,7 @@ T_APP_ROLESWAP_STATUS app_roleswap_ctrl_get_status(void)
 
 static void app_roleswap_ctrl_exec_roleswap(void)
 {
-    APP_PRINT_TRACE0("app_roleswap_ctrl_exec_roleswap");
+    APP_PRINT_INFO0("app_roleswap_ctrl_exec_roleswap");
 
     if (app_bt_sniffing_roleswap(false))
     {
@@ -361,8 +363,8 @@ static bool app_roleswap_ctrl_media_buffer_enough(void)
         if ((app_db.buffer_level_remote < BUFFER_LEVEL_MINIMUM_THRESHOLD_TO_ENABLE_RSSI_ROLESWAP) ||
             (app_db.buffer_level_local < BUFFER_LEVEL_MINIMUM_THRESHOLD_TO_ENABLE_RSSI_ROLESWAP))
         {
-            APP_PRINT_TRACE2("app_roleswap_ctrl_media_buffer_enough: local %d remote %d",
-                             app_db.buffer_level_local, app_db.buffer_level_remote);
+            APP_PRINT_INFO2("app_roleswap_ctrl_media_buffer_enough: local %d remote %d",
+                            app_db.buffer_level_local, app_db.buffer_level_remote);
 
             ret = false;
         }
@@ -484,8 +486,8 @@ static void app_roleswap_ctrl_bt_cback(T_BT_EVENT event_type, void *event_buf, u
 
             T_BT_ROLESWAP_STATUS roleswap_status = param->remote_roleswap_status.status;
 
-            APP_PRINT_TRACE3("app_roleswap_ctrl_bt_cback: roleswap status 0x%02X, last_bud_loc_event 0x%02X, bud_role %d",
-                             roleswap_status, app_db.last_bud_loc_event, app_cfg_nv.bud_role);
+            APP_PRINT_INFO3("app_roleswap_ctrl_bt_cback: roleswap status 0x%02X, last_bud_loc_event 0x%02X, bud_role %d",
+                            roleswap_status, app_db.last_bud_loc_event, app_cfg_nv.bud_role);
 
             if (roleswap_status == BT_ROLESWAP_STATUS_SUCCESS)
             {
@@ -579,7 +581,7 @@ static void app_roleswap_ctrl_bt_cback(T_BT_EVENT event_type, void *event_buf, u
 
     if (handle)
     {
-        APP_PRINT_TRACE1("app_roleswap_ctrl_bt_cback: event 0x%04X", event_type);
+        APP_PRINT_INFO1("app_roleswap_ctrl_bt_cback: event 0x%04X", event_type);
     }
 }
 
@@ -654,7 +656,8 @@ static bool app_roleswap_ctrl_battery_check(void)
 {
     bool ret = false;
 
-    if ((app_db.remote_batt_level > BUD_BATT_BOTH_ROLESWAP_THRESHOLD) &&
+    if ((app_cfg_const.disable_low_bat_role_swap == 0) &&
+        (app_db.remote_batt_level > BUD_BATT_BOTH_ROLESWAP_THRESHOLD) &&
         (app_db.local_batt_level < BUD_BATT_BOTH_ROLESWAP_THRESHOLD))
     {
         ret = true;
@@ -667,6 +670,16 @@ static bool app_roleswap_ctrl_battery_check(void)
 static bool app_roleswap_ctrl_rssi_check(T_APP_ROLESWAP_CTRL_EVENT event)
 {
     bool ret = false;
+
+    if (app_cfg_const.disable_link_monitor_roleswap == 1)
+    {
+        return ret;
+    }
+
+    if (app_db.local_loc == BUD_LOC_IN_CASE || app_db.remote_loc == BUD_LOC_IN_CASE)
+    {
+        return ret;
+    }
 
     T_APP_BR_LINK *p_link = NULL;
 
@@ -699,9 +712,9 @@ static bool app_roleswap_ctrl_rssi_check(T_APP_ROLESWAP_CTRL_EVENT event)
 
     if (event == APP_ROLESWAP_CTRL_EVENT_BUFFER_LEVEL_CHANGED)
     {
-        APP_PRINT_TRACE6("app_roleswap_ctrl_rssi_check: ret %d rssi local %d remote %d threshold %d buffer local %d remote %d",
-                         ret, app_db.rssi_local, app_db.rssi_remote, app_cfg_const.roleswap_rssi_threshold,
-                         app_db.buffer_level_local, app_db.buffer_level_remote);
+        APP_PRINT_INFO6("app_roleswap_ctrl_rssi_check: ret %d rssi local %d remote %d threshold %d buffer local %d remote %d",
+                        ret, app_db.rssi_local, app_db.rssi_remote, app_cfg_const.roleswap_rssi_threshold,
+                        app_db.buffer_level_local, app_db.buffer_level_remote);
     }
 
     return ret;
@@ -714,12 +727,10 @@ static bool app_roleswap_ctrl_profile_check(void)
     uint32_t connected_profile = app_link_conn_profiles();
     bool ret = false;
 
-    if (/* at least one profile connected (a2dp, hfp, spp) with legacy link*/
-        ((app_db.b2s_connected_num != 0) &&
-         ((connected_profile & A2DP_PROFILE_MASK) || (connected_profile & HFP_PROFILE_MASK) ||
-          (connected_profile & SPP_PROFILE_MASK)))
+    if (/* at least one profile connected with legacy link*/
+        ((app_link_get_b2s_link_num() != 0) && (connected_profile != 0))
 #if F_APP_LEA_SUPPORT
-        || ((app_db.b2s_connected_num == 0) && (app_link_get_lea_link_num() != 0))
+        || ((app_link_get_b2s_link_num() == 0) && (app_link_get_lea_link_num() != 0))
 #endif
     )
     {
@@ -733,10 +744,17 @@ static bool app_roleswap_ctrl_call_triggered(void)
 {
     bool ret = false;
 
-    if (app_bt_policy_get_call_status() != APP_CALL_IDLE)
+    if (app_db.br_link[app_hfp_get_active_idx()].sco_handle != 0)
     {
         ret = true;
     }
+#if F_APP_LEA_SUPPORT
+    else if ((mtc_get_btmode() == MULTI_PRO_BT_CIS) &&
+             (app_bt_policy_get_call_status() != APP_CALL_IDLE))
+    {
+        ret = true;
+    }
+#endif
 #if F_APP_DURIAN_SUPPORT
     /* for voice assistant */
     else if (app_durian_avp_get_opus_status() == AVP_VIOCE_RECOGNITION_ENCODE_START)
@@ -820,7 +838,7 @@ static bool app_roleswap_ctrl_in_smart_box_timeout(void)
     bool ret = false;
 
     if (
-#if F_APP_ADP_CMD_SUPPORT
+#if F_APP_ADP_5V_CMD_SUPPORT || F_APP_ONE_WIRE_UART_SUPPORT
         (app_adp_cmd_in_case_timeout() == true) &&
 #endif
         (app_db.remote_loc != BUD_LOC_IN_CASE))
@@ -946,11 +964,8 @@ static T_APP_ROLESWAP_REJECT_REASON app_roleswap_ctrl_1st_stage_reject_check(voi
         goto exit;
     }
 
-    if ((p_b2b_link->acl_link_role == BT_LINK_ROLE_SLAVE)
-#if F_APP_LEA_SUPPORT
-        && (app_link_get_b2s_link_num() != 0)
-#endif
-       )
+    if (((p_b2b_link != NULL) && (p_b2b_link->acl_link_role == BT_LINK_ROLE_SLAVE))
+        && (app_bt_point_num_get() != 0))
     {
         reject_reason = ROLESWAP_REJECT_REASON_ACL_ROLE_SLAVE;
         goto exit;
@@ -1455,10 +1470,7 @@ void app_roleswap_check_lea_addr_match(T_APP_ROLESWAP_LEA_ADDR_CHECK_EVENT event
             }
             else
             {
-                if (!memcmp(lea_addr_info.local_lea_addr, lea_local_addr, 6))
-                {
-                    memset(lea_addr_info.local_lea_addr, 0, 6);
-                }
+                memset(lea_addr_info.local_lea_addr, 0, 6);
             }
         }
     }
@@ -1477,6 +1489,11 @@ void app_roleswap_check_lea_addr_match(T_APP_ROLESWAP_LEA_ADDR_CHECK_EVENT event
 static bool roleswap_battery_level_trigger(T_APP_ROLESWAP_CTRL_EVENT event)
 {
     bool ret = false;
+
+    if (app_db.local_loc == BUD_LOC_IN_CASE || app_db.remote_loc == BUD_LOC_IN_CASE)
+    {
+        return ret;
+    }
 
     if (app_link_get_b2s_link_num() > 0)
     {
@@ -1534,6 +1551,12 @@ static bool roleswap_rssi_trigger(T_APP_ROLESWAP_CTRL_EVENT event)
 
 static const T_ROLESWAP_CHECK roleswap_check[] =
 {
+    [ROLESWAP_MMI_TRIGGER] = {
+        .trigger_check   = roleswap_mmi_trigger,
+        .violation_check = NULL,
+        .level           = ROLESWAP_TRIGGER_LEVEL_HIGH,
+    },
+
     [ROLESWAP_SINGLE_BUD_POWER_OFF] = {
         .trigger_check   = roleswap_single_bud_power_off_trigger,
         .violation_check = NULL,
@@ -1604,12 +1627,6 @@ static const T_ROLESWAP_CHECK roleswap_check[] =
 #endif
 #endif
 
-    [ROLESWAP_MMI_TRIGGER] = {
-        .trigger_check   = roleswap_mmi_trigger,
-        .violation_check = NULL,
-        .level           = ROLESWAP_TRIGGER_LEVEL_LOW,
-    },
-
 #if (F_APP_POWER_TEST == 0)
     [ROLESWAP_BATTERY_LEVEL] = {
         .trigger_check   = roleswap_battery_level_trigger,
@@ -1678,8 +1695,8 @@ static T_APP_ROLESWAP_LEVEL app_roleswap_ctrl_trigger_check(T_APP_ROLESWAP_CTRL_
 exit:
     if (trigger_level != ROLESWAP_NONE)
     {
-        APP_PRINT_TRACE3("app_roleswap_ctrl_trigger_check: trigger 0x%02x disallow_level 0x%02x actual_trigger 0x%02x",
-                         trigger_level, disallow_level, actual_trigger);
+        APP_PRINT_INFO3("app_roleswap_ctrl_trigger_check: trigger 0x%02x disallow_level 0x%02x actual_trigger 0x%02x",
+                        trigger_level, disallow_level, actual_trigger);
     }
 
     return actual_trigger;
@@ -1717,7 +1734,7 @@ static void app_roleswap_ctrl_update_sys_status(T_APP_ROLESWAP_CTRL_EVENT event)
 {
     bool cancel_power_off_protect = false;
 
-    APP_PRINT_TRACE1("app_roleswap_ctrl_update_sys_status: event 0x%02X", event);
+    APP_PRINT_INFO1("app_roleswap_ctrl_update_sys_status: event 0x%02X", event);
 
     if (event == APP_ROLESWAP_CTRL_EVENT_SINGLE_BUD_TO_POWER_OFF)
     {
@@ -1874,7 +1891,8 @@ bool app_roleswap_ctrl_check(T_APP_ROLESWAP_CTRL_EVENT event)
         }
     }
 
-    if (roleswap_level != ROLESWAP_NONE && both_buds_in_case == false)
+    if ((roleswap_level != ROLESWAP_NONE) && (both_buds_in_case == false ||
+                                              roleswap_sys_status.mmi_trigger_roleswap))
     {
         if (reject_reason == ROLESWAP_REJECT_REASON_NONE ||
             roleswap_check[roleswap_level].level != ROLESWAP_TRIGGER_LEVEL_LOW)
@@ -1899,7 +1917,7 @@ bool app_roleswap_ctrl_check(T_APP_ROLESWAP_CTRL_EVENT event)
         roleswap_trigger_status.roleswap_is_going_to_do = 1;
 
         /* handle restart common adv after role swap */
-        if ((app_link_le_check_rtk_link_exist() == true) ||
+        if ((app_link_le_check_common_link_exist() == true) ||
             (app_ble_common_adv_get_state() == BLE_EXT_ADV_MGR_ADV_ENABLED))
         {
             //ble link or ble adv exist before roleswap, need start ble adv after roleswap
@@ -2002,9 +2020,9 @@ exit:
         // }
     }
 
-    APP_PRINT_TRACE6("app_roleswap_ctrl_check: roleswap_immediately (%d %d) event 0x%02X, level 0x%02X, reject 0x%02X, both_in_case %d",
-                     roleswap_immediately, roleswap_later, event, roleswap_level, reject_reason,
-                     both_buds_in_case);
+    APP_PRINT_INFO6("app_roleswap_ctrl_check: roleswap_immediately (%d %d) event 0x%02X, level 0x%02X, reject 0x%02X, both_in_case %d",
+                    roleswap_immediately, roleswap_later, event, roleswap_level, reject_reason,
+                    both_buds_in_case);
 
     return roleswap_triggered;
 }

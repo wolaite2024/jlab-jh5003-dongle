@@ -1,4 +1,4 @@
-#if F_APP_ADP_CMD_SUPPORT
+#if F_APP_ADP_5V_CMD_SUPPORT
 #include "trace.h"
 #include "stdlib.h"
 #include <string.h>
@@ -8,9 +8,14 @@
 #include "app_io_msg.h"
 #include "section.h"
 #include "hal_adp.h"
-#include "app_adp_cmd.h"
 #include "app_adp_cmd_parse.h"
 #include "app_cfg.h"
+
+// Guard BIT, now we just use(6 bits), Spec define 8 bits.
+#define GUARD_BIT 0x3F
+
+/*40Mhz 40 devide, set 1ms period=1000 */
+#define PERIOD_ADP_TIM      2000000 // 2s
 
 static T_ADP_CMD_PARSE_STRUCT *p_adp_cmd_data = NULL;
 static T_HW_TIMER_HANDLE adp_hw_timer_handle = NULL;
@@ -19,6 +24,32 @@ static P_ADP_CMD_RAW_DATA_PARSE_CBACK adp_cmd_raw_data_parse_callback;
 
 static uint8_t app_adp_cmd_parse_timer_id = 0;
 static uint8_t timer_idx_adp_cmd_protect = 0;
+
+typedef struct
+{
+    uint32_t stop_bit: 1;
+    uint32_t parity_bit: 1;
+    uint32_t cmd_index: 6;
+    uint32_t start_bit: 1;
+    uint32_t reserved_bit: 23;
+} T_APP_ADP_CMDPACK09;
+
+typedef struct
+{
+    uint32_t stop_bit: 1;
+    uint32_t parity_bit: 1;
+    uint32_t payload: 8;
+    uint32_t cmd_index: 4;
+    uint32_t start_bit: 1;
+    uint32_t reserved_bit: 17;
+} T_APP_ADP_CMDPACK15;
+
+typedef union
+{
+    uint32_t bit_data;
+    T_APP_ADP_CMDPACK09 cmdpack09;
+    T_APP_ADP_CMDPACK15 cmdpack15;
+} T_APP_ADP_CMD_DECODE;
 
 typedef enum
 {
@@ -31,6 +62,114 @@ void app_adp_cmd_parse_handle_msg(uint32_t cmd_data)
     {
         adp_cmd_raw_data_parse_callback(cmd_data); // to app_smart_chargerbox_handle_cmd_raw_data
     }
+}
+
+static uint8_t app_adp_cmd_parse_parity_count(uint32_t data, uint8_t bit_num)
+{
+    uint8_t parity_count = 0;
+
+    for (int i = 0; i < bit_num; i++)
+    {
+        if (((data >> i) & BIT(0)) == 1)
+        {
+            parity_count++;
+        }
+    }
+    return parity_count;
+}
+
+/**
+* @brief: Process bit data, currently we use odd parity check
+*
+*   Payload of CMD_9
+*   |bit 8  |bit 7  |bit 6  |bit 5  |bit 4  |bit 3  |bit 2  |bit 1  |bit 0  |
+*   |START  |                     Data(6bits)               |PARITY |END    |
+*
+*   Payload of CMD_15
+*   |bit 14 |bit 13 |               ~               |bit 2  |bit 1  |bit 0  |
+*   |START  |                     Data(12bits)              |PARITY |END    |
+*
+*/
+bool app_adp_cmd_parse_process(uint32_t cmd_data, uint8_t *p_cmd_index, uint8_t *p_cmd_payload)
+{
+    uint8_t cmd_index = 0;
+    uint8_t payload = 0;
+    uint8_t cmd_parity_cnt = 0;
+    uint32_t cmd_guard = 0;
+    bool ret = false;
+
+    /* Handle adp_dat to app cmd here. */
+    switch (app_cfg_const.smart_charger_box_cmd_set)
+    {
+    case CHARGER_BOX_CMD_SET_9BITS:
+        {
+            T_APP_ADP_CMDPACK09 cmd_pack09;
+
+            memcpy(&cmd_pack09, &cmd_data, sizeof(uint32_t));
+
+            cmd_index = cmd_pack09.cmd_index;
+            payload = 0;
+            cmd_parity_cnt += app_adp_cmd_parse_parity_count(cmd_index, 6);
+            cmd_parity_cnt += cmd_pack09.parity_bit;
+
+            if ((cmd_pack09.start_bit == 0) && (cmd_pack09.stop_bit == 0) &&
+                (app_adp_cmd_parse_parity_count(cmd_parity_cnt, 1) == 1))
+            {
+                cmd_guard = (cmd_data >> 9) & GUARD_BIT;
+
+                if (cmd_guard == GUARD_BIT)
+                {
+                    *p_cmd_index = cmd_pack09.cmd_index;
+                    *p_cmd_payload = payload;
+                    ret = true;
+                }
+            }
+        }
+        break;
+
+    case CHARGER_BOX_CMD_SET_15BITS:
+        {
+            T_APP_ADP_CMDPACK15 cmd_pack15;
+
+            memcpy(&cmd_pack15, &cmd_data, sizeof(uint32_t));
+            APP_PRINT_INFO5("app_adp_cmd_parse_process: cmd_pack15: 0x%x, 0x%x, 0x%x, 0x%x, 0x%x",
+                            cmd_pack15.start_bit, cmd_pack15.cmd_index, cmd_pack15.payload,
+                            cmd_pack15.parity_bit, cmd_pack15.stop_bit);
+
+            cmd_index = cmd_pack15.cmd_index;
+            payload = cmd_pack15.payload;
+            cmd_parity_cnt += app_adp_cmd_parse_parity_count(cmd_index, 4);
+            cmd_parity_cnt += app_adp_cmd_parse_parity_count(payload, 8);
+            cmd_parity_cnt += cmd_pack15.parity_bit;
+
+            if ((cmd_pack15.start_bit == 0) && (cmd_pack15.stop_bit == 0) &&
+                (app_adp_cmd_parse_parity_count(cmd_parity_cnt, 1) == 1))
+            {
+                cmd_guard = (cmd_data >> 15) & GUARD_BIT;
+
+                if (cmd_guard == GUARD_BIT)
+                {
+                    *p_cmd_index = cmd_pack15.cmd_index;
+                    *p_cmd_payload = cmd_pack15.payload;
+                    ret = true;
+                }
+            }
+        }
+        break;
+
+    default:
+        break;
+    }
+
+    APP_PRINT_INFO6("app_adp_cmd_parse_process: cmd_bits: 0x%x, cmd_data: 0x%x, cmd_guard: 0x%08x, cmd_index:0x%x payload: 0x%x, ret:%d",
+                    app_cfg_const.smart_charger_box_cmd_set, cmd_data, cmd_guard, *p_cmd_index, *p_cmd_payload, ret);
+
+    if (*p_cmd_index == 0xFF)
+    {
+        ret = false;
+    }
+
+    return ret;
 }
 
 /**
@@ -392,22 +531,72 @@ static void app_adp_cmd_parse_timer_init(void)
     }
 }
 
-void app_adp_cmd_parse_init(void)
+static void app_adp_cmd_parse_para_init(P_ADP_CMD_RAW_DATA_PARSE_CBACK cmd_handle)
 {
-    if (p_adp_cmd_data == NULL)
+    uint8_t cmd_bit_num = 0;
+    uint8_t cmd_bit_length = 0;
+
+    /* bit number */
+    if (app_cfg_const.smart_charger_box_cmd_set == CHARGER_BOX_CMD_SET_9BITS)
     {
-        p_adp_cmd_data = (T_ADP_CMD_PARSE_STRUCT *)calloc(1, sizeof(T_ADP_CMD_PARSE_STRUCT));
+        cmd_bit_num = 9;
+    }
+    else if (app_cfg_const.smart_charger_box_cmd_set == CHARGER_BOX_CMD_SET_15BITS)
+    {
+        cmd_bit_num = 15;
+    }
+
+    /* bit length */
+    if (app_cfg_const.smart_charger_box_bit_length == CHARGER_BOX_BIT_LENGTH_20MS)
+    {
+        cmd_bit_length = 20;
+    }
+    else if (app_cfg_const.smart_charger_box_bit_length == CHARGER_BOX_BIT_LENGTH_40MS)
+    {
+        cmd_bit_length = 40;
+    }
+    app_adp_cmd_parse_para_set(cmd_bit_num, cmd_bit_length, cmd_handle);
+}
+
+static bool app_adp_cmd_parse_enable(void)
+{
+    bool ret = false;
+
+    if (app_cfg_const.enable_rtk_charging_box)
+    {
+        ret = true;
     }
     else
     {
-        memset(p_adp_cmd_data, 0, sizeof(T_ADP_CMD_PARSE_STRUCT));
+#if F_APP_OTA_TOOLING_SUPPORT
+        ret = true;
+#endif
     }
 
-    app_adp_cmd_parse_timer_init();
-    app_adp_cmd_parse_int_init();
-    app_adp_cmd_parse_data_parse_reset(1);
+    return ret;
+}
 
-    app_timer_reg_cb(app_adp_cmd_parse_timeout_cb, &app_adp_cmd_parse_timer_id);
-    app_dlps_enable(APP_DLPS_ENTER_CHECK_CMD_PROTECT);
+void app_adp_cmd_parse_init(P_ADP_CMD_RAW_DATA_PARSE_CBACK cmd_handle)
+{
+    if (app_adp_cmd_parse_enable())
+    {
+        app_adp_cmd_parse_para_init(cmd_handle);
+
+        if (p_adp_cmd_data == NULL)
+        {
+            p_adp_cmd_data = (T_ADP_CMD_PARSE_STRUCT *)calloc(1, sizeof(T_ADP_CMD_PARSE_STRUCT));
+        }
+        else
+        {
+            memset(p_adp_cmd_data, 0, sizeof(T_ADP_CMD_PARSE_STRUCT));
+        }
+
+        app_adp_cmd_parse_timer_init();
+        app_adp_cmd_parse_int_init();
+        app_adp_cmd_parse_data_parse_reset(1);
+
+        app_timer_reg_cb(app_adp_cmd_parse_timeout_cb, &app_adp_cmd_parse_timer_id);
+        app_dlps_enable(APP_DLPS_ENTER_CHECK_CMD_PROTECT);
+    }
 }
 #endif

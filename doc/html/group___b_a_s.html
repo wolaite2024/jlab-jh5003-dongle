@@ -53,14 +53,14 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
+<tr class="memitem:group___b_a_s___c_o_n_f_i_g"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_a_s___c_o_n_f_i_g.html">BAS Config</a></td></tr>
+<tr class="memdesc:group___b_a_s___c_o_n_f_i_g"><td class="mdescLeft">&#160;</td><td class="mdescRight">Battery service configuration file. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___b_a_s___exported___functions"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_a_s___exported___functions.html">BAS Exported Functions</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___b_a_s___exported___macros"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_a_s___exported___macros.html">BAS Exported Macros</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___b_a_s___exported___types"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_a_s___exported___types.html">BAS Exported Types</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group___b_a_s___c_o_n_f_i_g"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_a_s___c_o_n_f_i_g.html">Battery Service Config</a></td></tr>
-<tr class="memdesc:group___b_a_s___c_o_n_f_i_g"><td class="mdescLeft">&#160;</td><td class="mdescRight">Battery service configuration file. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -68,9 +68,9 @@ Modules</h2></td></tr>
 <p>The Battery Service exposes the state of a battery within a device.</p>
 <p>Battery Service generally makes up a profile with some other services, and it can provide the state of a battery within a device.</p>
 <p>The default supported feature provided by BAS is the notify property of battery level characteristic, and the application developers can modify the feature supported by BAS according to their own requirements. The specific configuration process can be achieved by modifying file <a class="el" href="bas__config_8h_source.html">bas_config.h</a>.</p>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#define BAS_BATTERY_LEVEL_NOTIFY_SUPPORT    1</span></div></div><!-- fragment --><p>Application shall register battery service when initialization through <a class="el" href="group___b_a_s___exported___functions.html#ga718af7cba22ef1b332212967d11b0504">bas_add_service</a> function.</p>
-<p>Application can set the battery level of BAS through <a class="el" href="group___b_a_s___exported___functions.html#ga9b26cf59876b3aa6cf1e2d4e793539d8">bas_set_parameter</a> function.</p>
-<p>Application can send the battery level value of BAS to the client with a notification through <a class="el" href="group___b_a_s___exported___functions.html#gac7fc6dfb96aa2a4ed4de142a479c1ec1">bas_battery_level_value_notify</a> function. </p>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#define BAS_BATTERY_LEVEL_NOTIFY_SUPPORT    1</span></div></div><!-- fragment --><p>Applications shall register battery service during initialization through <a class="el" href="group___b_a_s___exported___functions.html#ga718af7cba22ef1b332212967d11b0504">bas_add_service</a> function.</p>
+<p>Applications can set the battery level of BAS through <a class="el" href="group___b_a_s___exported___functions.html#ga9b26cf59876b3aa6cf1e2d4e793539d8">bas_set_parameter</a> function.</p>
+<p>Applications can send the battery level value of BAS to the client with a notification through <a class="el" href="group___b_a_s___exported___functions.html#gac7fc6dfb96aa2a4ed4de142a479c1ec1">bas_battery_level_value_notify</a> function. </p>
 </div><!-- contents -->
 
 <HR SIZE=5>

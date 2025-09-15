@@ -13,6 +13,7 @@
 #include "app_ble_common_adv.h"
 
 #if F_APP_LEA_SUPPORT
+#include "app_ble_gap.h"
 #include "app_lea_mgr.h"
 #include "transmit_svc_dongle.h"
 #endif
@@ -34,19 +35,32 @@
 #if F_APP_LEGACY_DONGLE_BINDING || F_APP_LEA_DONGLE_BINDING
 bool dongle_pairing_non_intentionally = false;
 
-#define HEADSET_ADV_STABLE_TIME                300000 // 300sec
+#define FAST_ADV_TIMEOUT                       300 // sec
 
-#define DONGLE_ADV_INTERVAL_NORMAL             0xA0
-#define DONGLE_ADV_INTERVAL_LONG               0x140 // 200ms 
-#define OTHER_ADV_INTERVAL_NORMAL              0xA0
-#define OTHER_ADV_INTERVAL_LONG                0x280
+typedef struct
+{
+    uint16_t dongle_adv_interval;
+    uint16_t others_adv_interval;
+} T_APP_ADV_INTERVAL_INFO;
 
 typedef enum
 {
-    HEADSET_ADV_STATE_INIT,
-    HEADSET_ADV_STATE_BT_STREAMING,
-    HEADSET_ADV_STATE_STABLE,
+    HEADSET_ADV_STATE_FAST,
+    HEADSET_ADV_STATE_SLOW,
 } T_APP_HEADSET_ADV_STATE;
+
+// adv interval : 0x140 => 320 * 0.625 = 200ms
+static const T_APP_ADV_INTERVAL_INFO adv_interval_info[] =
+{
+#if F_APP_ERWS_SUPPORT && F_APP_LC3_PLUS_SUPPORT
+    [HEADSET_ADV_STATE_FAST] = {.dongle_adv_interval = 0x20, .others_adv_interval = 0xA0},
+#else
+    [HEADSET_ADV_STATE_FAST] = {.dongle_adv_interval = 0x40, .others_adv_interval = 0xA0},
+#endif
+    [HEADSET_ADV_STATE_SLOW] = {.dongle_adv_interval = 0x140, .others_adv_interval = 0x280},
+};
+
+static T_APP_HEADSET_ADV_STATE adv_interval_state = HEADSET_ADV_STATE_FAST;
 
 #if F_APP_LEGACY_DONGLE_BINDING
 static T_LEGACY_DONGLE_BLE_DATA dongle_adv;
@@ -63,11 +77,11 @@ static uint8_t lea_dongle_adv_handle = 0xff;
 
 typedef enum
 {
-    APP_TIMER_INCREASE_HEADSET_ADV_INTERVAL            = 0x00,
+    APP_TIMER_FAST_ADV    = 0x00,
 } T_APP_DONGLE_TIMER;
 
 static uint8_t app_common_dongle_timer_id = 0;
-static uint8_t timer_idx_change_headset_adv_interval = 0;
+static uint8_t timer_idx_start_fast_adv = 0;
 
 static void app_dongle_common_set_ext_eir(void)
 {
@@ -134,6 +148,58 @@ T_APP_BR_LINK *app_dongle_get_connected_dongle_link(void)
 }
 
 #if F_APP_LEA_SUPPORT
+#if F_APP_B2B_ENGAGE_REDUCE_NSE
+uint8_t app_dongle_get_dongle_cis_nse(void)
+{
+    uint8_t i, j;
+    T_APP_LE_LINK *p_link;
+    T_LEA_ASE_ENTRY *p_ase_entry = NULL;
+
+    for (i = 0; i < MAX_BLE_LINK_NUM; i++)
+    {
+        p_link = &app_db.le_link[i];
+
+        if (p_link->used == true && p_link->remote_device_type == DEVICE_TYPE_DONGLE)
+        {
+            for (j = 0; j < ASCS_ASE_ENTRY_NUM; j++)
+            {
+                if (p_link->lea_ase_entry[j].used == true)
+                {
+                    return p_link->lea_ase_entry[i].nse;
+                }
+            }
+        }
+    }
+
+    return 0;
+}
+#endif
+
+uint16_t app_dongle_get_dongle_cis_conn_handle(void)
+{
+    uint8_t i, j;
+    T_APP_LE_LINK *p_link;
+    T_LEA_ASE_ENTRY *p_ase_entry = NULL;
+
+    for (i = 0; i < MAX_BLE_LINK_NUM; i++)
+    {
+        p_link = &app_db.le_link[i];
+
+        if (p_link->used == true && p_link->remote_device_type == DEVICE_TYPE_DONGLE)
+        {
+            for (j = 0; j < ASCS_ASE_ENTRY_NUM; j++)
+            {
+                if (p_link->lea_ase_entry[j].used == true)
+                {
+                    return p_link->lea_ase_entry[i].cis_conn_handle;
+                }
+            }
+        }
+    }
+
+    return 0;
+}
+
 T_APP_LE_LINK *app_dongle_get_connected_lea_phone_link()
 {
     T_APP_LE_LINK *p_lea_link = NULL;
@@ -240,8 +306,8 @@ T_APP_LE_LINK *app_dongle_get_le_audio_dongle_link(void)
     {
         if (app_db.le_link[i].used)
         {
-            if ((app_db.le_link[i].remote_device_type == DEVICE_TYPE_DONGLE) &&
-                (app_db.le_link[i].lea_link_state >= LEA_LINK_CONNECTED))
+            if (app_db.le_link[i].remote_device_type == DEVICE_TYPE_DONGLE &&
+                app_db.le_link[i].state == LE_LINK_STATE_CONNECTED)
             {
                 p_lea_link = &app_db.le_link[i];
                 break;
@@ -419,7 +485,7 @@ static void app_dongle_lea_adv_get(T_DONGLE_LEA_ADV_DATA *adv_data)
 static void app_dongle_lea_dongle_adv_init()
 {
     T_LE_EXT_ADV_LEGACY_ADV_PROPERTY adv_event_prop = LE_EXT_ADV_LEGACY_ADV_CONN_SCAN_UNDIRECTED;
-    uint16_t adv_interval = DONGLE_ADV_INTERVAL_NORMAL;
+    uint16_t adv_interval = adv_interval_info[adv_interval_state].dongle_adv_interval;
     T_GAP_LOCAL_ADDR_TYPE own_address_type = GAP_LOCAL_ADDR_LE_RANDOM;
     T_GAP_REMOTE_ADDR_TYPE peer_address_type = GAP_REMOTE_ADDR_LE_PUBLIC;
     uint8_t  peer_address[6] = {0, 0, 0, 0, 0, 0};
@@ -447,7 +513,7 @@ static void app_dongle_legacy_dongle_adv_init()
 {
     T_LE_EXT_ADV_LEGACY_ADV_PROPERTY adv_event_prop =
         LE_EXT_ADV_LEGACY_ADV_NON_SCAN_NON_CONN_UNDIRECTED;
-    uint16_t adv_interval = DONGLE_ADV_INTERVAL_NORMAL;
+    uint16_t adv_interval = adv_interval_info[adv_interval_state].dongle_adv_interval;
     T_GAP_LOCAL_ADDR_TYPE own_address_type = GAP_LOCAL_ADDR_LE_PUBLIC;
     T_GAP_REMOTE_ADDR_TYPE peer_address_type = GAP_REMOTE_ADDR_LE_PUBLIC;
     uint8_t  peer_address[6] = {0, 0, 0, 0, 0, 0};
@@ -567,6 +633,14 @@ void app_dongle_adv_start(bool enable_pairing)
         goto exit;
     }
 
+#if F_APP_GAMING_WIRED_MODE_HANDLE
+    if (app_dongle_get_wired_status())
+    {
+        disallow_reason = 8;
+        goto exit;
+    }
+#endif
+
 #if F_APP_LEA_DONGLE_BINDING
     app_db.pairing_bit = enable_pairing;
 
@@ -611,7 +685,8 @@ exit:
     APP_PRINT_TRACE3("app_dongle_adv_start: pairing %d reason %d dongle_adv_random_addr %s",
                      enable_pairing, disallow_reason, TRACE_BDADDR(dongle_adv_random_addr));
 #elif F_APP_LEGACY_DONGLE_BINDING
-    APP_PRINT_TRACE2("app_dongle_adv_start: pairing %d reason %d", enable_pairing, disallow_reason);
+    APP_PRINT_TRACE3("app_dongle_adv_start: adv_handle %d pairing %d reason %d",
+                     legacy_dongle_adv_handle, enable_pairing, disallow_reason);
 #endif
 }
 
@@ -628,11 +703,6 @@ void app_dongle_adv_stop(void)
 #if F_APP_GAMING_DONGLE_SUPPORT
     dongle_ctrl_data.enable_pairing = false;
 #endif
-}
-
-uint8_t app_dongle_get_change_headset_adv_timer_idx(void)
-{
-    return timer_idx_change_headset_adv_interval;
 }
 
 static bool app_dongle_need_adv_when_power_on(void)
@@ -682,9 +752,7 @@ static void app_dongle_dm_cback(T_SYS_EVENT event_type, void *event_buf, uint16_
                 app_dongle_adv_start(false);
             }
 
-            app_start_timer(&timer_idx_change_headset_adv_interval, "change_headset_adv_interval",
-                            app_common_dongle_timer_id, APP_TIMER_INCREASE_HEADSET_ADV_INTERVAL, 0, false,
-                            HEADSET_ADV_STABLE_TIME);
+            app_dongle_handle_heaset_adv_interval(ADV_INTERVAL_EVENT_START_FAST_ADV);
 
 #if F_APP_BLE_HID_CONTROLLER_SUPPORT
             if (app_cfg_nv.dongle_rf_mode == DONGLE_RF_MODE_BT)
@@ -721,11 +789,9 @@ static void app_common_dongle_timer_cback(uint8_t timer_evt, uint16_t param)
     switch (timer_evt)
     {
 #if F_APP_LEGACY_DONGLE_BINDING || F_APP_LEA_DONGLE_BINDING
-    case APP_TIMER_INCREASE_HEADSET_ADV_INTERVAL:
+    case APP_TIMER_FAST_ADV:
         {
-            app_stop_timer(&timer_idx_change_headset_adv_interval);
-
-            app_dongle_handle_heaset_adv_interval(ADV_INTERVAL_EVENT_TIMEOUT);
+            app_dongle_handle_heaset_adv_interval(ADV_INTERVAL_EVENT_START_FAST_ADV_TIMEOUT);
         }
         break;
 #endif
@@ -738,52 +804,82 @@ static void app_common_dongle_timer_cback(uint8_t timer_evt, uint16_t param)
 #if F_APP_LEGACY_DONGLE_BINDING || F_APP_LEA_DONGLE_BINDING
 void app_dongle_handle_heaset_adv_interval(T_APP_HEADSET_ADV_EVENT event)
 {
-    static T_APP_HEADSET_ADV_STATE adv_state;
-    T_APP_HEADSET_ADV_STATE old_adv_state = adv_state;
+    static bool bt_is_streaming = false;
+    T_APP_HEADSET_ADV_STATE pre_adv_state = adv_interval_state;
     bool long_adv_interval = false;
-    uint16_t dongle_adv_interval = DONGLE_ADV_INTERVAL_NORMAL;
-    uint16_t other_adv_interval = OTHER_ADV_INTERVAL_NORMAL;
 
-    if (adv_state == HEADSET_ADV_STATE_INIT)
+    if (event == ADV_INTERVAL_EVENT_START_FAST_ADV)
+    {
+        app_start_timer(&timer_idx_start_fast_adv, "start_fast_adv",
+                        app_common_dongle_timer_id, APP_TIMER_FAST_ADV, 0, false,
+                        FAST_ADV_TIMEOUT * 1000);
+    }
+    else if (event == ADV_INTERVAL_EVENT_START_FAST_ADV_TIMEOUT)
+    {
+        app_stop_timer(&timer_idx_start_fast_adv);
+    }
+    else if (event == ADV_INTERVAL_EVENT_BT_STREAMING_START)
+    {
+        bt_is_streaming = true;
+    }
+    else if (event == ADV_INTERVAL_EVENT_BT_STREAMING_STOP)
+    {
+        bt_is_streaming = false;
+    }
+
+    if (adv_interval_state == HEADSET_ADV_STATE_FAST)
     {
         if (event == ADV_INTERVAL_EVENT_BT_STREAMING_START)
         {
-            adv_state = HEADSET_ADV_STATE_BT_STREAMING;
+            adv_interval_state = HEADSET_ADV_STATE_SLOW;
         }
-        else if (event == ADV_INTERVAL_EVENT_TIMEOUT)
+        else if (event == ADV_INTERVAL_EVENT_BT_STREAMING_STOP)
         {
-            adv_state = HEADSET_ADV_STATE_STABLE;
+            if (timer_idx_start_fast_adv == 0)
+            {
+                adv_interval_state = HEADSET_ADV_STATE_SLOW;
+            }
+        }
+        else if (event == ADV_INTERVAL_EVENT_START_FAST_ADV)
+        {
+            if (bt_is_streaming == true)
+            {
+                adv_interval_state = HEADSET_ADV_STATE_SLOW;
+            }
+        }
+        else if (event == ADV_INTERVAL_EVENT_START_FAST_ADV_TIMEOUT)
+        {
+            adv_interval_state = HEADSET_ADV_STATE_SLOW;
         }
     }
-    else if (adv_state == HEADSET_ADV_STATE_BT_STREAMING)
+    else // HEADSET_ADV_STATE_SLOW
     {
         if (event == ADV_INTERVAL_EVENT_BT_STREAMING_STOP)
         {
-            adv_state = HEADSET_ADV_STATE_INIT;
+            if (timer_idx_start_fast_adv)
+            {
+                adv_interval_state = HEADSET_ADV_STATE_FAST;
+            }
         }
-        else if (event == ADV_INTERVAL_EVENT_TIMEOUT)
+        else if (event == ADV_INTERVAL_EVENT_START_FAST_ADV)
         {
-            adv_state = HEADSET_ADV_STATE_STABLE;
+            if (bt_is_streaming == false)
+            {
+                adv_interval_state = HEADSET_ADV_STATE_FAST;
+            }
         }
-    }
-
-    if (adv_state == HEADSET_ADV_STATE_STABLE || adv_state == HEADSET_ADV_STATE_BT_STREAMING)
-    {
-        long_adv_interval = true;
-    }
-
-    if (long_adv_interval)
-    {
-        dongle_adv_interval = DONGLE_ADV_INTERVAL_LONG;
-        other_adv_interval = OTHER_ADV_INTERVAL_LONG;
     }
 
     /* rtk common adv interval */
 #if F_APP_GAMING_DONGLE_SUPPORT
     if (app_cfg_const.rtk_app_adv_support)
     {
-        uint8_t le_common_adv_handle = app_ble_common_adv_get_adv_handle();
-        ble_ext_adv_mgr_change_adv_interval(le_common_adv_handle, other_adv_interval);
+        if (adv_interval_state == HEADSET_ADV_STATE_SLOW)
+        {
+            uint8_t le_common_adv_handle = app_ble_common_adv_get_adv_handle();
+            ble_ext_adv_mgr_change_adv_interval(le_common_adv_handle,
+                                                adv_interval_info[adv_interval_state].others_adv_interval);
+        }
     }
 #endif
 
@@ -797,11 +893,13 @@ void app_dongle_handle_heaset_adv_interval(T_APP_HEADSET_ADV_EVENT event)
     dongle_adv_handle = legacy_dongle_adv_handle;
 #endif
 
-    ble_ext_adv_mgr_change_adv_interval(dongle_adv_handle, dongle_adv_interval);
+    ble_ext_adv_mgr_change_adv_interval(dongle_adv_handle,
+                                        adv_interval_info[adv_interval_state].dongle_adv_interval);
 #endif
 
-    APP_PRINT_TRACE3("app_dongle_handle_heaset_adv_interval: event %d state (%d->%d)", event,
-                     old_adv_state, adv_state);
+    APP_PRINT_TRACE3("app_dongle_handle_heaset_adv_interval: event %d state (%d->%d)",
+                     event,
+                     pre_adv_state, adv_interval_state);
 }
 #endif
 

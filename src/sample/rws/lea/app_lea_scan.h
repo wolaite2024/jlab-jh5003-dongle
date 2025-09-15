@@ -28,7 +28,7 @@ typedef struct
     uint8_t broadcast_id[3];
 } T_LEA_BRS_INFO;
 
-void app_lea_scan_start(uint16_t timeout);
+void app_lea_scan_start(void);
 void app_lea_scan_stop(void);
 
 /** @} */ /* End of group APP_LEA_SCAN_Exported_Functions */

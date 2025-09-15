@@ -1,9 +1,13 @@
 #if (F_APP_SENSOR_JSA1225_SUPPORT == 1) || (F_APP_SENSOR_JSA1227_SUPPORT == 1)
 
 #include "rtl876x_i2c.h"
+#include "pm.h"
 #include "hal_gpio.h"
+#include "io_dlps.h"
 #include "app_cfg.h"
+#include "app_main.h"
 #include "app_dlps.h"
+#include "app_device.h"
 #include "app_sensor.h"
 #include "app_sensor_i2c.h"
 #include "ftl.h"
@@ -22,9 +26,28 @@ static void app_sensor_jsa_reset_default_thresh(void);
 static uint32_t app_sensor_jsa_save_cal(void *p_data);
 static uint32_t app_sensor_jsa_load_cal(void *p_data);
 
+static void app_sensor_jsa_enter_dlps(void)
+{
+    POWERMode lps_mode = power_mode_get();
+
+    if (lps_mode == POWER_DLPS_MODE)
+    {
+        if (app_db.device_state != APP_DEVICE_STATE_OFF)
+        {
+            hal_gpio_irq_change_polarity(app_cfg_const.sensor_detect_pinmux, GPIO_IRQ_ACTIVE_LOW);
+        }
+    }
+    else if (lps_mode == POWER_POWERDOWN_MODE)
+    {
+        hal_gpio_irq_disable(app_cfg_const.sensor_detect_pinmux);
+    }
+}
+
 void app_sensor_jsa1225_init(void)
 {
     I2C_Status status;
+
+    io_dlps_register_enter_cb(app_sensor_jsa_enter_dlps);
 
     //Software reset
     status = app_sensor_i2c_write_8(SENSOR_ADDR_JSA, SENSOR_REG_JSA_SYSM_CTRL, 0x80);
@@ -98,6 +121,8 @@ void app_sensor_jsa1225_init(void)
 void app_sensor_jsa1227_init(void)
 {
     I2C_Status status;
+
+    io_dlps_register_enter_cb(app_sensor_jsa_enter_dlps);
 
     status = app_sensor_i2c_write_8(SENSOR_ADDR_JSA1227, SENSOR_REG_JSA1227_SYSTEM_CONTROL,
                                     0x80); //Software reset

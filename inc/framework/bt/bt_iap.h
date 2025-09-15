@@ -20,8 +20,6 @@ extern "C" {
 
 
 /**
- * bt_iap.h
- *
  * \defgroup BT_IAP_EXTERNAL_PROTOCOL BT iAP External Protocol
  *
  * \brief Define BT iAP external protocol
@@ -37,8 +35,6 @@ extern "C" {
  */
 
 /**
- * bt_iap.h
- *
  * \defgroup BT_IAP_MESSAGE BT iAP Message
  *
  * \brief Define BT iAP message
@@ -57,8 +53,6 @@ extern "C" {
 
 
 /**
- * bt_iap.h
- *
  * \brief Define BT iAP identification information id.
  *
  * \ingroup BT_IAP
@@ -92,8 +86,6 @@ typedef enum t_bt_iap_identification_info_id
 } T_BT_IAP_IDENTIFICATION_INFO_ID;
 
 /**
- * bt_iap.h
- *
  * \brief Define BT iAP transport.
  *
  * \ingroup BT_IAP
@@ -107,8 +99,6 @@ typedef enum t_bt_iap_transport
 } T_BT_IAP_TRANSPORT;
 
 /**
- * bt_iap.h
- *
  * \brief Define BT iAP External Accessory Protocol session status.
  *
  * \ingroup BT_IAP
@@ -120,8 +110,6 @@ typedef enum t_bt_iap_eap_session_status
 } T_BT_IAP_EAP_SESSION_STATUS;
 
 /**
- * bt_iap.h
- *
  * \brief Define BT iAP app launch method.
  *
  * \ingroup BT_IAP
@@ -133,8 +121,6 @@ typedef enum t_bt_iap_app_launch_method
 } T_BT_IAP_APP_LAUNCH_METHOD;
 
 /**
- * bt_iap.h
- *
  * \brief Define BT iAP parameter type
  *
  * \ingroup BT_IAP
@@ -147,6 +133,7 @@ typedef enum t_bt_iap_param_type
     BT_IAP_PARAM_ACC_MAX_OUT_PKT_NUM     = 0x03,
     BT_IAP_PARAM_ACC_MAX_RETRANS_NUM     = 0x04,
     BT_IAP_PARAM_ACC_MAX_CULUMATIVE_ACK  = 0x05,
+    BT_IAP_PARAM_ACC_START_SEQ_NUM       = 0x06,
 
     BT_IAP_PARAM_TX_Q_ELEM_NUM           = 0x80,
 } T_BT_IAP_PARAM_TYPE;
@@ -160,14 +147,11 @@ typedef bool (*P_CP_READ_FUNC)(uint8_t   start_addr,
                                uint16_t  len);
 
 /**
- * bt_iap.h
- *
  * \brief  Initialize iAP profile.
  *
- * \param[in]  link_num            iAP maximum connected link number.
- * \param[in]  rfc_iap_chann_num   RFCOMM channel num used for iAP.
- * \param[in]  p_cp_write          The cp write func.
- * \param[in]  p_cp_read           The cp burst read func.
+ * \param[in]  rfc_chann_num   RFCOMM channel number used for iAP.
+ * \param[in]  cp_write        The cp write func.
+ * \param[in]  cp_read         The cp burst read func.
  *
  * \return          The status of initializing iAP profile.
  * \retval true     iAP profile was initialized successfully.
@@ -175,19 +159,16 @@ typedef bool (*P_CP_READ_FUNC)(uint8_t   start_addr,
  *
  * \ingroup BT_IAP
  */
-bool bt_iap_init(uint8_t         link_num,
-                 uint8_t         rfc_iap_chann_num,
-                 P_CP_WRITE_FUNC p_cp_write,
-                 P_CP_READ_FUNC  p_cp_read);
+bool bt_iap_init(uint8_t         rfc_chann_num,
+                 P_CP_WRITE_FUNC cp_write,
+                 P_CP_READ_FUNC  cp_read);
 
 /**
- * bt_iap.h
- *
  * \brief  Send iAP data to remote device.
  *
  * \param[in]  bd_addr        Remote BT address.
  * \param[in]  session_id     The session identifier used for sending data.
- * \param[in]  p_data         The start address of the data buffer.
+ * \param[in]  data           The start address of the data buffer.
  * \param[in]  data_len       The length of the data.
  *
  * \return         The status of sending data.
@@ -198,12 +179,10 @@ bool bt_iap_init(uint8_t         link_num,
  */
 bool bt_iap_data_send(uint8_t   bd_addr[6],
                       uint16_t  session_id,
-                      uint8_t  *p_data,
+                      uint8_t  *data,
                       uint16_t  data_len);
 
 /**
- * bt_iap.h
- *
  * \brief  Send External Accessory Protocol session status.
  *
  * \param[in]  bd_addr            Remote BT address.
@@ -221,9 +200,7 @@ bool bt_iap_eap_session_status_send(uint8_t                     bd_addr[6],
                                     T_BT_IAP_EAP_SESSION_STATUS status);
 
 /**
- * bt_iap.h
- *
- * \brief  Send a request to launch specific app which has been installed on the apple device.
+ * \brief  Send a request to launch specific app which has been installed on the Apple device.
  *
  * \param[in]  bd_addr            Remote BT address.
  * \param[in]  boundle_id         The start address of the AppBundleID buffer.
@@ -242,16 +219,14 @@ bool bt_iap_app_launch(uint8_t                     bd_addr[6],
                        T_BT_IAP_APP_LAUNCH_METHOD  method);
 
 /**
- * bt_iap.h
- *
  * \brief  Send an iAP connection request.
  *
  * \param[in]  bd_addr            Remote BT address.
- * \param[in]  server_chann       The remote server_channel which can be found from the sdp info.
- * \param[in]  frame_size         The max frame_size supported by local device.
- * \param[in]  init_credits       The number of packet that remote can be send. This para is used for flow control.A sending
- *                                entity may send as many frames on an iAP connection as it has credits;if the credit count
- *                                reaches zero,the sender will stop and wait for further credits from peer.
+ * \param[in]  server_chann       The remote server_channel which can be found from the SDP info.
+ * \param[in]  frame_size         The maximum frame_size supported by local device.
+ * \param[in]  init_credits       The number of packet that remote can be send. This parameter is used for flow control. A sending
+ *                                entity may send as many frames on an iAP connection as it has credits; if the credit count
+ *                                reaches zero, the sender will stop and wait for further credits from peer.
  *
  * \return         The status of sending the iAP connection request.
  * \retval true    iAP connection request was sent successfully.
@@ -265,18 +240,16 @@ bool bt_iap_connect_req(uint8_t  bd_addr[6],
                         uint8_t  init_credits);
 
 /**
- * bt_iap.h
- *
  * \brief  Send an iAP connection confirmation.
  *
  * \param[in]  bd_addr            Remote BT address.
  * \param[in]  accept             Confirmation message.
  * \arg    true    Accept the received iAP connection request.
  * \arg    false   Reject the received iAP connection request.
- * \param[in]  frame_size         The max frame_size supported by local device.
- * \param[in]  init_credits       The number of packet that remote can be send. This para is used for flow control.A sending
- *                                entity may send as many frames on an iAP connection as it has credits;if the credit count
- *                                reaches zero,the sender will stop and wait for further credits from peer.
+ * \param[in]  frame_size         The maximum frame_size supported by local device.
+ * \param[in]  init_credits       The number of packet that remote can be send. This parameter is used for flow control. A sending
+ *                                entity may send as many frames on an iAP connection as it has credits; if the credit count
+ *                                reaches zero, the sender will stop and wait for further credits from peer.
  *
  * \return         The status of sending the iAP connection confirmation.
  * \retval true    iAP connection confirmation was sent successfully.
@@ -290,8 +263,6 @@ bool bt_iap_connect_cfm(uint8_t  bd_addr[6],
                         uint8_t  init_credits);
 
 /**
- * bt_iap.h
- *
  * \brief  Send an iAP disconnection request.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -305,31 +276,27 @@ bool bt_iap_connect_cfm(uint8_t  bd_addr[6],
 bool bt_iap_disconnect_req(uint8_t bd_addr[6]);
 
 /**
- * bt_iap.h
- *
  * \brief  Format the parameter and store in the buffer to be send later.
  *
- * \param[in]  p_param        The start address to store the formatted parameter.
- * \param[in]  param_id       The parameter id \ref BT_IAP_EXTERNAL_PROTOCOL, \ref T_BT_IAP_IDENTIFICATION_INFO_ID, \ref T_BT_IAP_TRANSPORT.
- * \param[in]  p_data         The parameter data to be formatted.
+ * \param[in]  param          The start address to store the formatted parameter.
+ * \param[in]  param_id       The parameter ID \ref BT_IAP_EXTERNAL_PROTOCOL, \ref T_BT_IAP_IDENTIFICATION_INFO_ID, \ref T_BT_IAP_TRANSPORT.
+ * \param[in]  data           The parameter data to be formatted.
  * \param[in]  data_len       Length of the parameter data.
  *
  * \return uint8_t *      The next address of the buffer which is immediately following the end address of the formatted param.
  *
  * \ingroup BT_IAP
  */
-uint8_t *bt_iap2_prep_param(uint8_t  *p_param,
+uint8_t *bt_iap2_prep_param(uint8_t  *param,
                             uint16_t  param_id,
-                            void     *p_data,
+                            void     *data,
                             uint16_t  data_len);
 
 /**
- * bt_iap.h
- *
  * \brief  Send identification information.
  *
  * \param[in]  bd_addr        Remote BT address.
- * \param[in]  p_ident        The start address of the identification information buffer.
+ * \param[in]  ident          The start address of the identification information buffer.
  * \param[in]  ident_len      The length of the identification information.
  *
  * \return         The status of sending identification information.
@@ -339,17 +306,15 @@ uint8_t *bt_iap2_prep_param(uint8_t  *p_param,
  * \ingroup BT_IAP
  */
 bool bt_iap_ident_info_send(uint8_t   bd_addr[6],
-                            uint8_t  *p_ident,
+                            uint8_t  *ident,
                             uint16_t  ident_len);
 
 /**
- * bt_iap.h
- *
  * \brief  Set local iAP parameter.
  *
  * \param[in]  type        Parameter type.
  * \param[in]  len         The length of parameter value.
- * \param[in]  p_value     The start address of the parameter value buffer.
+ * \param[in]  value       The start address of the parameter value buffer.
  *
  * \return         The result of setting local iAP parameter.
  * \retval true    The parameter was set successfully.
@@ -359,11 +324,9 @@ bool bt_iap_ident_info_send(uint8_t   bd_addr[6],
  */
 bool bt_iap_param_set(T_BT_IAP_PARAM_TYPE  type,
                       uint8_t              len,
-                      void                *p_value);
+                      void                *value);
 
 /**
- * bt_iap.h
- *
  * \brief  Send an acknowledge for a specific received packet.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -379,12 +342,10 @@ bool bt_iap_ack_send(uint8_t bd_addr[6],
                      uint8_t ack_seq);
 
 /**
- * bt_iap.h
- *
- * \brief  Send bluetooth component information to remote device.
+ * \brief  Send Bluetooth component information to remote device.
  *
  * \param[in]  bd_addr    Remote BT address.
- * \param[in]  comp_id    The Component identifier.
+ * \param[in]  comp_id    The component identifier.
  * \param[in]  enable     True if the Bluetooth component is ready for connections to the device.
  *
  * \return         The result of sending component information.
@@ -398,12 +359,10 @@ bool bt_iap_comp_info_send(uint8_t  bd_addr[6],
                            bool     enable);
 
 /**
- * bt_iap.h
- *
  * \brief  Send bluetooth connection update start message to remote device.
  *
  * \param[in]  bd_addr    Remote BT address.
- * \param[in]  comp_id    The Component identifier.
+ * \param[in]  comp_id    The component identifier.
  *
  * \return         The result of sending bluetooth connection update start message.
  * \retval true    The message was sent successfully.
@@ -415,8 +374,6 @@ bool bt_iap_conn_update_start(uint8_t  bd_addr[6],
                               uint16_t comp_id);
 
 /**
- * bt_iap.h
- *
  * \brief  Send communications updates start message to remote device.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -432,8 +389,6 @@ bool bt_iap_comm_update_start(uint8_t  bd_addr[6],
                               uint16_t param_id);
 
 /**
- * bt_iap.h
- *
  * \brief  Send mute status message to remote device.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -449,13 +404,11 @@ bool bt_iap_mute_status_update(uint8_t bd_addr[6],
                                bool    status);
 
 /**
- * bt_iap.h
- *
  * \brief  Send iAP message to remote device.
  *
  * \param[in]  bd_addr    Remote BT address.
  * \param[in]  msg_type   The message type.
- * \param[in]  p_param    The start address of the param buffer.
+ * \param[in]  param      The start address of the parameter buffer.
  * \param[in]  param_len  The param length.
  *
  * \return         The result of sending iAP message.
@@ -466,12 +419,10 @@ bool bt_iap_mute_status_update(uint8_t bd_addr[6],
  */
 bool bt_iap_send_cmd(uint8_t   bd_addr[6],
                      uint16_t  msg_type,
-                     uint8_t  *p_param,
+                     uint8_t  *param,
                      uint16_t  param_len);
 
 /**
- * bt_iap.h
- *
  * \brief  Send a request to start using a HID report descriptor over iAP control session.
  *
  * \param[in]  bd_addr                Remote BT address.
@@ -495,8 +446,6 @@ bool bt_iap_hid_start(uint8_t   bd_addr[6],
                       uint16_t  hid_report_desc_len);
 
 /**
- * bt_iap.h
- *
  * \brief  Send an HID report message.
  *
  * \param[in]  bd_addr            Remote BT address.
@@ -516,8 +465,6 @@ bool bt_iap_hid_report_send(uint8_t   bd_addr[6],
                             uint16_t  hid_report_len);
 
 /**
- * bt_iap.h
- *
  * \brief  Send a request to stop using a HID.
  *
  * \param[in]  bd_addr            Remote BT address.

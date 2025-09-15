@@ -61,10 +61,10 @@ Data Structures</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GCS client discovery result.  <a href="struct_t___g_c_s___d_i_s_c_o_v_e_r_y___r_e_s_u_l_t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_t___g_c_s___r_e_a_d___r_e_s_u_l_t.html">T_GCS_READ_RESULT</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GCS client read data, used to inform app read response data.  <a href="struct_t___g_c_s___r_e_a_d___r_e_s_u_l_t.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GCS client read data, used to inform APP read response data.  <a href="struct_t___g_c_s___r_e_a_d___r_e_s_u_l_t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_t___g_c_s___w_r_i_t_e___r_e_s_u_l_t.html">T_GCS_WRITE_RESULT</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GCS client write result, used to inform app write response data.  <a href="struct_t___g_c_s___w_r_i_t_e___r_e_s_u_l_t.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GCS client write result, used to inform APP write response data.  <a href="struct_t___g_c_s___w_r_i_t_e___r_e_s_u_l_t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_t___g_c_s___n_o_t_i_f___i_n_d.html">T_GCS_NOTIF_IND</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GCS client notification/indication.  <a href="struct_t___g_c_s___n_o_t_i_f___i_n_d.html#details">More...</a><br /></td></tr>
@@ -161,10 +161,12 @@ Enumerations</h2></td></tr>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaf3815992ff58fd9d397d400552777b4eaf100b0a9de13e64fc37cc6b32647b488"></a>GCS_CLIENT_CB_TYPE_DISC_RESULT&#160;</td><td class="fielddoc"><p>Discovery procedure state, done or pending. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaf3815992ff58fd9d397d400552777b4ea6e70556169cbd156941213c1758b8c0f"></a>GCS_CLIENT_CB_TYPE_READ_RESULT&#160;</td><td class="fielddoc"><p>Read request's result data, responsed from server. </p>
+<tr><td class="fieldname"><a id="ggaf3815992ff58fd9d397d400552777b4ea6e70556169cbd156941213c1758b8c0f"></a>GCS_CLIENT_CB_TYPE_READ_RESULT&#160;</td><td class="fielddoc"><p>Read request's result data, responded from server. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaf3815992ff58fd9d397d400552777b4eaaf206184708162f0becc82f72b8cc7d7"></a>GCS_CLIENT_CB_TYPE_WRITE_RESULT&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ggaf3815992ff58fd9d397d400552777b4eadc63ac4ea20ca53767bf654d02f33ee9"></a>GCS_CLIENT_CB_TYPE_NOTIF_IND&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ggaf3815992ff58fd9d397d400552777b4eaaf206184708162f0becc82f72b8cc7d7"></a>GCS_CLIENT_CB_TYPE_WRITE_RESULT&#160;</td><td class="fielddoc"><p>Write result, success or fail. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggaf3815992ff58fd9d397d400552777b4eadc63ac4ea20ca53767bf654d02f33ee9"></a>GCS_CLIENT_CB_TYPE_NOTIF_IND&#160;</td><td class="fielddoc"><p>Notification or indication. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="ggaf3815992ff58fd9d397d400552777b4ea5e39c7711f7347ff236abe4ae6a16a04"></a>GCS_CLIENT_CB_TYPE_INVALID&#160;</td><td class="fielddoc"><p>Invalid callback type, no practical usage. </p>
 </td></tr>
 </table>

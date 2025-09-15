@@ -51,14 +51,19 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:gaab502be666b226fbdfb8297b50512d72"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___s_p_i__data__direction.html#gaab502be666b226fbdfb8297b50512d72">SPI_Direction_FullDuplex</a>&#160;&#160;&#160;((uint16_t)0x0000)</td></tr>
+<tr class="memdesc:gaab502be666b226fbdfb8297b50512d72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data can be transmitted and received at the same time.  <a href="#gaab502be666b226fbdfb8297b50512d72">More...</a><br /></td></tr>
 <tr class="separator:gaab502be666b226fbdfb8297b50512d72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8d77402343b5910c7e1f9822f71ca001"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___s_p_i__data__direction.html#ga8d77402343b5910c7e1f9822f71ca001">SPI_Direction_TxOnly</a>&#160;&#160;&#160;((uint16_t)0x0001)</td></tr>
+<tr class="memdesc:ga8d77402343b5910c7e1f9822f71ca001"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data can only be transmitted at a time.  <a href="#ga8d77402343b5910c7e1f9822f71ca001">More...</a><br /></td></tr>
 <tr class="separator:ga8d77402343b5910c7e1f9822f71ca001"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga19233662f665b7627688d80c54efd65c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___s_p_i__data__direction.html#ga19233662f665b7627688d80c54efd65c">SPI_Direction_RxOnly</a>&#160;&#160;&#160;((uint16_t)0x0002)</td></tr>
+<tr class="memdesc:ga19233662f665b7627688d80c54efd65c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data can only be received at a time.  <a href="#ga19233662f665b7627688d80c54efd65c">More...</a><br /></td></tr>
 <tr class="separator:ga19233662f665b7627688d80c54efd65c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7a3d2b432fc393433c3fe84b146ef8b1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___s_p_i__data__direction.html#ga7a3d2b432fc393433c3fe84b146ef8b1">SPI_Direction_EEPROM</a>&#160;&#160;&#160;((uint16_t)0x0003)</td></tr>
+<tr class="memdesc:ga7a3d2b432fc393433c3fe84b146ef8b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send data first to read target numbers of data.  <a href="#ga7a3d2b432fc393433c3fe84b146ef8b1">More...</a><br /></td></tr>
 <tr class="separator:ga7a3d2b432fc393433c3fe84b146ef8b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga536857c68ce1d9806c04046707448b3e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___s_p_i__data__direction.html#ga536857c68ce1d9806c04046707448b3e">IS_SPI_DIRECTION_MODE</a>(MODE)</td></tr>
+<tr class="memdesc:ga536857c68ce1d9806c04046707448b3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the input parameter is valid.  <a href="#ga536857c68ce1d9806c04046707448b3e">More...</a><br /></td></tr>
 <tr class="separator:ga536857c68ce1d9806c04046707448b3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -75,6 +80,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Data can be transmitted and received at the same time. </p>
+
 </div>
 </div>
 <a id="ga8d77402343b5910c7e1f9822f71ca001"></a>
@@ -88,6 +95,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Data can only be transmitted at a time. </p>
 
 </div>
 </div>
@@ -103,6 +112,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Data can only be received at a time. </p>
+
 </div>
 </div>
 <a id="ga7a3d2b432fc393433c3fe84b146ef8b1"></a>
@@ -116,6 +127,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Send data first to read target numbers of data. </p>
 
 </div>
 </div>
@@ -134,11 +147,13 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">(((MODE) == <a class="code" href="group__x3e___s_p_i__data__direction.html#gaab502be666b226fbdfb8297b50512d72">SPI_Direction_FullDuplex</a>) || \</div><div class="line">                                     ((MODE) == <a class="code" href="group__x3e___s_p_i__data__direction.html#ga19233662f665b7627688d80c54efd65c">SPI_Direction_RxOnly</a>) || \</div><div class="line">                                     ((MODE) == <a class="code" href="group__x3e___s_p_i__data__direction.html#ga8d77402343b5910c7e1f9822f71ca001">SPI_Direction_TxOnly</a>) || \</div><div class="line">                                     ((MODE) == <a class="code" href="group__x3e___s_p_i__data__direction.html#ga7a3d2b432fc393433c3fe84b146ef8b1">SPI_Direction_EEPROM</a>))</div><div class="ttc" id="group__x3e___s_p_i__data__direction_html_ga19233662f665b7627688d80c54efd65c"><div class="ttname"><a href="group__x3e___s_p_i__data__direction.html#ga19233662f665b7627688d80c54efd65c">SPI_Direction_RxOnly</a></div><div class="ttdeci">#define SPI_Direction_RxOnly</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:135</div></div>
-<div class="ttc" id="group__x3e___s_p_i__data__direction_html_ga7a3d2b432fc393433c3fe84b146ef8b1"><div class="ttname"><a href="group__x3e___s_p_i__data__direction.html#ga7a3d2b432fc393433c3fe84b146ef8b1">SPI_Direction_EEPROM</a></div><div class="ttdeci">#define SPI_Direction_EEPROM</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:136</div></div>
-<div class="ttc" id="group__x3e___s_p_i__data__direction_html_ga8d77402343b5910c7e1f9822f71ca001"><div class="ttname"><a href="group__x3e___s_p_i__data__direction.html#ga8d77402343b5910c7e1f9822f71ca001">SPI_Direction_TxOnly</a></div><div class="ttdeci">#define SPI_Direction_TxOnly</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:134</div></div>
-<div class="ttc" id="group__x3e___s_p_i__data__direction_html_gaab502be666b226fbdfb8297b50512d72"><div class="ttname"><a href="group__x3e___s_p_i__data__direction.html#gaab502be666b226fbdfb8297b50512d72">SPI_Direction_FullDuplex</a></div><div class="ttdeci">#define SPI_Direction_FullDuplex</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:133</div></div>
+<b>Value:</b><div class="fragment"><div class="line">(((MODE) == <a class="code" href="group__x3e___s_p_i__data__direction.html#gaab502be666b226fbdfb8297b50512d72">SPI_Direction_FullDuplex</a>) || \</div><div class="line">                                     ((MODE) == <a class="code" href="group__x3e___s_p_i__data__direction.html#ga19233662f665b7627688d80c54efd65c">SPI_Direction_RxOnly</a>) || \</div><div class="line">                                     ((MODE) == <a class="code" href="group__x3e___s_p_i__data__direction.html#ga8d77402343b5910c7e1f9822f71ca001">SPI_Direction_TxOnly</a>) || \</div><div class="line">                                     ((MODE) == <a class="code" href="group__x3e___s_p_i__data__direction.html#ga7a3d2b432fc393433c3fe84b146ef8b1">SPI_Direction_EEPROM</a>))</div><div class="ttc" id="group__x3e___s_p_i__data__direction_html_ga19233662f665b7627688d80c54efd65c"><div class="ttname"><a href="group__x3e___s_p_i__data__direction.html#ga19233662f665b7627688d80c54efd65c">SPI_Direction_RxOnly</a></div><div class="ttdeci">#define SPI_Direction_RxOnly</div><div class="ttdoc">Data can only be received at a time. </div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:145</div></div>
+<div class="ttc" id="group__x3e___s_p_i__data__direction_html_ga7a3d2b432fc393433c3fe84b146ef8b1"><div class="ttname"><a href="group__x3e___s_p_i__data__direction.html#ga7a3d2b432fc393433c3fe84b146ef8b1">SPI_Direction_EEPROM</a></div><div class="ttdeci">#define SPI_Direction_EEPROM</div><div class="ttdoc">Send data first to read target numbers of data. </div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:146</div></div>
+<div class="ttc" id="group__x3e___s_p_i__data__direction_html_ga8d77402343b5910c7e1f9822f71ca001"><div class="ttname"><a href="group__x3e___s_p_i__data__direction.html#ga8d77402343b5910c7e1f9822f71ca001">SPI_Direction_TxOnly</a></div><div class="ttdeci">#define SPI_Direction_TxOnly</div><div class="ttdoc">Data can only be transmitted at a time. </div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:144</div></div>
+<div class="ttc" id="group__x3e___s_p_i__data__direction_html_gaab502be666b226fbdfb8297b50512d72"><div class="ttname"><a href="group__x3e___s_p_i__data__direction.html#gaab502be666b226fbdfb8297b50512d72">SPI_Direction_FullDuplex</a></div><div class="ttdeci">#define SPI_Direction_FullDuplex</div><div class="ttdoc">Data can be transmitted and received at the same time. </div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:143</div></div>
 </div><!-- fragment -->
+<p>Check if the input parameter is valid. </p>
+
 </div>
 </div>
 </div><!-- contents -->

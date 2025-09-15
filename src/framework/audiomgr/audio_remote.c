@@ -61,15 +61,10 @@ typedef enum
     AUDIO_REMOTE_BUFFER_SEC_ALIGNING                = 0x0007,
     AUDIO_REMOTE_BUFFER_LOW_LATENCY_SYNC_PLAY       = 0x0008,
     AUDIO_REMOTE_BUFFER_ULTRA_LOW_LATENCY_SYNC_PLAY = 0x0009,
+    AUDIO_REMOTE_BUFFER_SYNC_UNMUTE                 = 0x000A,
 
     AUDIO_REMOTE_BUFFER_MSG_RELAY                   = 0xFFFF,
 } T_AUDIO_REMOTE_BUFFER_RELAY_MSG;
-
-typedef enum
-{
-    AUDIO_TIMER_SEAMLESS_JOIN_FAILED,
-    AUDIO_TIMER_SEAMLESS_JOIN_SEQUENCE_CHECK,
-} T_AUDIO_REMOTE_TIMER;
 
 typedef struct t_audio_remote_instance
 {
@@ -77,8 +72,8 @@ typedef struct t_audio_remote_instance
     void *buffer_ent;
     void *latest_rec;
     void *recs;
-    void *seamless_join_abort_timer_handle;
-    void *seamless_join_seq_contiuity_check_timer;
+    void *join_abort_timer;
+    void *seq_check_timer;
     T_AUDIO_REMOTE_EVT_CBACK cback;
     T_AUDIO_REMOTE_RELAY_CBACK relay_cback;
     T_AUDIO_STREAM_TYPE sync_type;
@@ -163,14 +158,14 @@ static bool audio_remote_handle_delete(T_AUDIO_REMOTE_INSTANCE *handle)
 {
     if (handle != NULL)
     {
-        if (handle->seamless_join_abort_timer_handle != NULL)
+        if (handle->join_abort_timer != NULL)
         {
-            sys_timer_delete(handle->seamless_join_abort_timer_handle);
+            sys_timer_delete(handle->join_abort_timer);
         }
 
-        if (handle->seamless_join_seq_contiuity_check_timer != NULL)
+        if (handle->seq_check_timer != NULL)
         {
-            sys_timer_delete(handle->seamless_join_seq_contiuity_check_timer);
+            sys_timer_delete(handle->seq_check_timer);
         }
         os_queue_delete(&audio_remote_db->remote_db_list, handle);
         os_mem_free(handle);
@@ -212,31 +207,33 @@ fail_alloc_db:
     return false;
 }
 
-bool audio_remote_deinit(void)
+void audio_remote_deinit(void)
 {
-    T_AUDIO_REMOTE_INSTANCE *handle;
-    T_AUDIO_REMOTE_INSTANCE *handle_next;
-
-    handle = os_queue_peek(&audio_remote_db->remote_db_list, 0);
-    while (handle != NULL)
+    if (audio_remote_db != NULL)
     {
-        if (handle->seamless_join_abort_timer_handle != NULL)
-        {
-            sys_timer_delete(handle->seamless_join_abort_timer_handle);
-        }
+        T_AUDIO_REMOTE_INSTANCE *handle;
+        T_AUDIO_REMOTE_INSTANCE *handle_next;
 
-        if (handle->seamless_join_seq_contiuity_check_timer != NULL)
+        handle = os_queue_peek(&audio_remote_db->remote_db_list, 0);
+        while (handle != NULL)
         {
-            sys_timer_delete(handle->seamless_join_seq_contiuity_check_timer);
+            if (handle->join_abort_timer != NULL)
+            {
+                sys_timer_delete(handle->join_abort_timer);
+            }
+
+            if (handle->seq_check_timer != NULL)
+            {
+                sys_timer_delete(handle->seq_check_timer);
+            }
+            os_queue_delete(&audio_remote_db->remote_db_list, handle);
+            handle_next = handle->p_next;
+            os_mem_free(handle);
+            handle = handle_next;
         }
-        os_queue_delete(&audio_remote_db->remote_db_list, handle);
-        handle_next = handle->p_next;
-        os_mem_free(handle);
-        handle = handle_next;
+        remote_relay_unregister(audio_remote_db->relay_handle);
+        os_mem_free(audio_remote_db);
     }
-    remote_relay_unregister(audio_remote_db->relay_handle);
-    os_mem_free(audio_remote_db);
-    return true;
 }
 
 void audio_remote_media_buffer_unregister(T_AUDIO_REMOTE_HANDLE handle)
@@ -293,50 +290,38 @@ T_AUDIO_REMOTE_HANDLE audio_remote_media_buffer_register(T_AUDIO_STREAM_TYPE typ
     return handle;
 }
 
-void audio_remote_timeout_cback(T_SYS_TIMER_HANDLE handle)
+void audio_remote_join_abort_timeout_cback(T_SYS_TIMER_HANDLE handle)
 {
     uint32_t timer_id;
-    uint16_t event;
-    T_MEDIA_BUFFER_ENTITY *buffer_ent;
     T_AUDIO_REMOTE_INSTANCE *remote_instance;
 
     timer_id = sys_timer_id_get(handle);
-    event = timer_id >> 16;
 
-    remote_instance = audio_remote_handle_find(timer_id & 0x0000ffff);
-
-    if (remote_instance == NULL)
+    remote_instance = audio_remote_handle_find(timer_id);
+    if (remote_instance != NULL)
     {
-        return;
+        AUDIO_PRINT_TRACE2("audio_remote_timeout_cback: timer_id 0x%02X handle %p", timer_id, handle);
+        audio_remote_seamless_join_retry(remote_instance, MEDIA_BUFFER_SEAMLESS_TIMEOUT);
+
     }
+}
 
-    buffer_ent = remote_instance->buffer_ent;
+void audio_remote_seq_check_timeout_cback(T_SYS_TIMER_HANDLE handle)
+{
+    uint32_t timer_id;
+    T_AUDIO_REMOTE_INSTANCE *remote_instance;
 
-    AUDIO_PRINT_TRACE3("audio_remote_timeout_cback: timer_id 0x%02X handle %p buffer_id %d", timer_id,
-                       handle, buffer_ent->buffer_id);
+    timer_id = sys_timer_id_get(handle);
 
-    switch (event)
+    remote_instance = audio_remote_handle_find(timer_id);
+    if (remote_instance != NULL)
     {
-    case AUDIO_TIMER_SEAMLESS_JOIN_SEQUENCE_CHECK:
-        {
-            remote_instance->seamless_join_lost_packet_cnt_last =
-                remote_instance->seamless_join_lost_packet_cnt;
-            remote_instance->seamless_join_lost_packet_cnt = 0;
-            sys_timer_start(remote_instance->seamless_join_seq_contiuity_check_timer);
-        }
-        break;
-
-
-    case AUDIO_TIMER_SEAMLESS_JOIN_FAILED:
-        {
-            audio_remote_seamless_join_retry(remote_instance, MEDIA_BUFFER_SEAMLESS_TIMEOUT);
-        }
-        break;
-
-    default:
-        break;
+        AUDIO_PRINT_TRACE2("audio_remote_timeout_cback: timer_id 0x%02X handle %p", timer_id, handle);
+        remote_instance->seamless_join_lost_packet_cnt_last =
+            remote_instance->seamless_join_lost_packet_cnt;
+        remote_instance->seamless_join_lost_packet_cnt = 0;
+        sys_timer_start(remote_instance->seq_check_timer);
     }
-
 }
 
 static bool audio_remote_internal_async_msg_relay(T_AUDIO_REMOTE_INSTANCE *remote_instance,
@@ -820,9 +805,9 @@ void audio_remote_dsp_seamless_join_handle(T_MEDIA_BUFFER_ENTITY *buffer_ent, vo
                                                                     0x10000);
     }
     remote_instance->base_count = framecounter_last;
-    AUDIO_PRINT_TRACE4("audio_remote_dsp_seamless_join_handle: join_clk 0x%x join_frame %u, delta_frame %u->%u",
-                       remote_instance->join_clk, dsp_join_info->join_frame,
-                       dsp_join_info->delta_frame, remote_instance->delta_frame);
+    AUDIO_PRINT_INFO4("audio_remote_dsp_seamless_join_handle: join_clk 0x%x join_frame %u, delta_frame %u->%u",
+                      remote_instance->join_clk, dsp_join_info->join_frame,
+                      dsp_join_info->delta_frame, remote_instance->delta_frame);
     audio_remote_set_state(remote_instance, AUDIO_REMOTE_STATE_SEAMLESS_JOIN);
 }
 
@@ -857,8 +842,8 @@ bool audio_remote_buffer_sync_req_handle(T_AUDIO_REMOTE_INSTANCE *remote_instanc
             {
                 remote_instance->frame_diff = 0;
                 remote_instance->seq_diff = 0;
-                AUDIO_PRINT_TRACE4("media_buffer_sync_req_handle: match local %u(%d) avdtp %u freamcount %u",
-                                   p_rec->local_seq_num, p_rec->seq_offset, p_rec->avdtp_seq_num, p_rec->frame_counter);
+                AUDIO_PRINT_INFO4("media_buffer_sync_req_handle: match local %u(%d) avdtp %u freamcount %u",
+                                  p_rec->local_seq_num, p_rec->seq_offset, p_rec->avdtp_seq_num, p_rec->frame_counter);
                 rec_found = true;
                 break;
             }
@@ -984,9 +969,9 @@ bool audio_remote_find_join_pkt(T_AUDIO_REMOTE_HANDLE handle)
             {
                 p_packet->local_seq_number = local_seq;
                 p_packet->frame_counter = frame_b + remote_instance->base_count;
-                AUDIO_PRINT_TRACE5("audio_remote_find_join_pkt: avdtp %u local %u counter %u base %u, delta %u",
-                                   p_packet->avdtp_seq_number, p_packet->local_seq_number, p_packet->frame_counter,
-                                   remote_instance->base_count, remote_instance->delta_frame);
+                AUDIO_PRINT_INFO5("audio_remote_find_join_pkt: avdtp %u local %u counter %u base %u, delta %u",
+                                  p_packet->avdtp_seq_number, p_packet->local_seq_number, p_packet->frame_counter,
+                                  remote_instance->base_count, remote_instance->delta_frame);
                 found_packet = true;
                 break;
             }
@@ -1124,7 +1109,7 @@ void audio_remote_set_state(T_AUDIO_REMOTE_HANDLE handle, T_AUDIO_REMOTE_STATE s
     {
         return;
     }
-    AUDIO_PRINT_TRACE1("audio_remote_set_state: %u", state);
+    AUDIO_PRINT_INFO1("audio_remote_set_state: %u", state);
     remote_instance->state = state;
 }
 
@@ -1159,7 +1144,7 @@ void audio_remote_reset(T_AUDIO_REMOTE_HANDLE handle)
     {
         return;
     }
-    AUDIO_PRINT_TRACE0("audio_remote_reset");
+    AUDIO_PRINT_INFO0("audio_remote_reset");
     remote_instance->state = AUDIO_REMOTE_STATE_UNSYNC;
     remote_instance->seq_diff = 0;
     remote_instance->frame_diff = 0;
@@ -1229,8 +1214,8 @@ bool audio_remote_align_buffer(T_AUDIO_REMOTE_HANDLE handle)
             }
             psync_cmd->buffer_type = AUDIO_STREAM_TYPE_PLAYBACK;
 
-            AUDIO_PRINT_TRACE4("audio_mgr_align_buffer: media_buffer_sync fst_pkt_seq_req pkt cnt %d tid %d ID: %u->%u",
-                               media_pkt_cnt, psync_cmd->tid, psync_cmd->IDs[0], psync_cmd->IDs[media_pkt_cnt - 1]);
+            AUDIO_PRINT_INFO4("audio_mgr_align_buffer: media_buffer_sync fst_pkt_seq_req pkt cnt %d tid %d ID: %u->%u",
+                              media_pkt_cnt, psync_cmd->tid, psync_cmd->IDs[0], psync_cmd->IDs[media_pkt_cnt - 1]);
         }
         else if (remote_instance->sync_type == AUDIO_STREAM_TYPE_VOICE)
         {
@@ -1241,8 +1226,8 @@ bool audio_remote_align_buffer(T_AUDIO_REMOTE_HANDLE handle)
             }
             psync_cmd->buffer_type = AUDIO_STREAM_TYPE_VOICE;
 
-            AUDIO_PRINT_TRACE4("audio_mgr_align_buffer: media_buffer_sync fst_pkt_seq_req pkt cnt %d tid %d ID: 0x%x->0x%x",
-                               media_pkt_cnt, psync_cmd->tid, psync_cmd->IDs[0], psync_cmd->IDs[media_pkt_cnt - 1]);
+            AUDIO_PRINT_INFO4("audio_mgr_align_buffer: media_buffer_sync fst_pkt_seq_req pkt cnt %d tid %d ID: 0x%x->0x%x",
+                              media_pkt_cnt, psync_cmd->tid, psync_cmd->IDs[0], psync_cmd->IDs[media_pkt_cnt - 1]);
         }
 
         if (audio_remote_internal_async_msg_relay(remote_instance,
@@ -1273,19 +1258,19 @@ bool audio_remote_align_buffer(T_AUDIO_REMOTE_HANDLE handle)
                                                   &remote_instance->sync_type,
                                                   1,
                                                   false);
-            if (remote_instance->seamless_join_abort_timer_handle != NULL)
+            if (remote_instance->join_abort_timer != NULL)
             {
-                sys_timer_delete(remote_instance->seamless_join_abort_timer_handle);
+                sys_timer_delete(remote_instance->join_abort_timer);
             }
-            remote_instance->seamless_join_abort_timer_handle = sys_timer_create("seamless_join_start_protect",
-                                                                                 SYS_TIMER_TYPE_LOW_PRECISION,
-                                                                                 (AUDIO_TIMER_SEAMLESS_JOIN_FAILED << 16) | remote_instance->endpoint,
-                                                                                 RWS_TIME_TO_ABORT_SEAMLESS_JOIN,
-                                                                                 false,
-                                                                                 audio_remote_timeout_cback);
-            if (remote_instance->seamless_join_abort_timer_handle != NULL)
+            remote_instance->join_abort_timer = sys_timer_create("join_abort_timer",
+                                                                 SYS_TIMER_TYPE_LOW_PRECISION,
+                                                                 remote_instance->endpoint,
+                                                                 RWS_TIME_TO_ABORT_SEAMLESS_JOIN,
+                                                                 false,
+                                                                 audio_remote_join_abort_timeout_cback);
+            if (remote_instance->join_abort_timer != NULL)
             {
-                sys_timer_start(remote_instance->seamless_join_abort_timer_handle);
+                sys_timer_start(remote_instance->join_abort_timer);
             }
         }
         ret = true;
@@ -1415,7 +1400,7 @@ void audio_remote_align_buffer_req_handle(T_AUDIO_REMOTE_HANDLE handle, uint8_t 
                                IDs[0], id);
             buffer_ent->ops.flush_fun(buffer_ent, media_buffer_ds_pkt_cnt(buffer_ent),
                                       BUFFER_DIR_DOWNSTREAM);
-
+            return;
         }
     }
     else if (psync_cmd->buffer_type == AUDIO_STREAM_TYPE_VOICE)
@@ -1498,8 +1483,8 @@ void audio_remote_align_buffer_req_handle(T_AUDIO_REMOTE_HANDLE handle, uint8_t 
 
     if (rsp.found == true)
     {
-        AUDIO_PRINT_TRACE1("audio_remote_align_buffer_req_handle: spk2 has find a match pkt. 0x%x",
-                           rsp.match_id);
+        AUDIO_PRINT_INFO1("audio_remote_align_buffer_req_handle: spk2 has find a match pkt. 0x%x",
+                          rsp.match_id);
         audio_remote_set_state(remote_instance, AUDIO_REMOTE_STATE_SYNCED);
         remote_instance->cback(AUDIO_REMOTE_EVENT_ALIGNED, NULL, remote_instance->buffer_ent);
     }
@@ -1544,8 +1529,8 @@ void audio_remote_align_buffer_rsp_handle(T_AUDIO_REMOTE_HANDLE handle, uint8_t 
         }
         if (p_rsp->buffer_type == AUDIO_STREAM_TYPE_PLAYBACK)
         {
-            AUDIO_PRINT_TRACE2("audio_remote_align_buffer_rsp_handle: Sec rsp l2cap_seq %d, pri l2cap_seq = %d"
-                               , match_id, p_local_media_head->avdtp_seq_number);
+            AUDIO_PRINT_INFO2("audio_remote_align_buffer_rsp_handle: Sec rsp l2cap_seq %d, pri l2cap_seq = %d",
+                              match_id, p_local_media_head->avdtp_seq_number);
             while (p_local_media_head != NULL)
             {
                 if (p_local_media_head->avdtp_seq_number == match_id)
@@ -1561,8 +1546,8 @@ void audio_remote_align_buffer_rsp_handle(T_AUDIO_REMOTE_HANDLE handle, uint8_t 
         }
         else if (p_rsp->buffer_type == AUDIO_STREAM_TYPE_VOICE)
         {
-            AUDIO_PRINT_TRACE2("audio_remote_align_buffer_rsp_handle: Sec rsp 0x%x, pri local 0x%x "
-                               , match_id, p_local_media_head->bt_clk);
+            AUDIO_PRINT_INFO2("audio_remote_align_buffer_rsp_handle: Sec rsp 0x%x, pri local 0x%x ",
+                              match_id, p_local_media_head->bt_clk);
             while (p_local_media_head != NULL)
             {
                 if (p_local_media_head->bt_clk == match_id)
@@ -1592,8 +1577,8 @@ void audio_remote_align_buffer_rsp_handle(T_AUDIO_REMOTE_HANDLE handle, uint8_t 
     }
     else
     {
-        AUDIO_PRINT_TRACE1("audio_remote_align_buffer_rsp_handle: media_buffer_sync spk2 can't find a match seq cause %u",
-                           p_rsp->cause);
+        AUDIO_PRINT_INFO1("audio_remote_align_buffer_rsp_handle: media_buffer_sync spk2 can't find a match seq cause %u",
+                          p_rsp->cause);
         if (remote_instance->state != AUDIO_REMOTE_STATE_UNSYNC)
         {
             uint32_t cause;
@@ -1668,25 +1653,39 @@ void audio_mgr_appoint_playtime(T_AUDIO_REMOTE_HANDLE handle, uint32_t set_timin
         }
         else
         {
-            if (set_timing_ms > 50)
+            if (set_timing_ms > 70)
             {
                 timeout_duration = set_timing_ms - 30;
             }
             else
             {
-                timeout_duration = 20;
+                timeout_duration = 40;
             }
         }
     }
     else
     {
-        if (set_timing_ms > 50)
+        if (buffer_ent->p_cfg->stream_type == AUDIO_STREAM_TYPE_PLAYBACK)
         {
-            timeout_duration = set_timing_ms - 30;
+            if (set_timing_ms > 70)
+            {
+                timeout_duration = set_timing_ms - 30;
+            }
+            else
+            {
+                timeout_duration = 40;
+            }
         }
         else
         {
-            timeout_duration = 20;
+            if (set_timing_ms > 80)
+            {
+                timeout_duration = set_timing_ms - 60;
+            }
+            else
+            {
+                timeout_duration = 20;
+            }
         }
     }
 
@@ -1710,8 +1709,8 @@ void audio_mgr_appoint_playtime(T_AUDIO_REMOTE_HANDLE handle, uint32_t set_timin
     }
     msg.sync_clk = bb_clock_slot;
     msg.clk_ref = clk_ref;
-    AUDIO_PRINT_TRACE3("audio_mgr_appoint_playtime: buffer_sync clk %u time ms %u, buffer_type %d",
-                       bb_clock_slot, set_timing_ms, msg.sync_type);
+    AUDIO_PRINT_INFO3("audio_mgr_appoint_playtime: buffer_sync clk %u time ms %u, buffer_type %d",
+                      bb_clock_slot, set_timing_ms, msg.sync_type);
     audio_remote_internal_sync_msg_relay(remote_instance,
                                          AUDIO_REMOTE_BUFFER_SYNC_PLAY,
                                          &msg,
@@ -1740,8 +1739,8 @@ void audio_remote_relay_cback(uint16_t event, T_REMOTE_RELAY_STATUS status,
     if (event != AUDIO_REMOTE_BUFFER_SYNC_REQ &&
         event != AUDIO_REMOTE_BUFFER_MSG_RELAY)
     {
-        AUDIO_PRINT_TRACE3("audio_remote_relay_cback: event 0x%04x, status %u ep %d", event, status,
-                           remote_instance->endpoint);
+        AUDIO_PRINT_INFO3("audio_remote_relay_cback: event 0x%04x, status %u ep %d", event, status,
+                          remote_instance->endpoint);
     }
 
     buf = inter_msg->msg;
@@ -1772,8 +1771,8 @@ void audio_remote_relay_cback(uint16_t event, T_REMOTE_RELAY_STATUS status,
                     break;
                 }
 
-                sys_timer_delete(remote_instance->seamless_join_abort_timer_handle);
-                remote_instance->seamless_join_abort_timer_handle = NULL;
+                sys_timer_delete(remote_instance->join_abort_timer);
+                remote_instance->join_abort_timer = NULL;
                 buffer_ent->media_buffer_fst_sync_tid = p_cmd->tid;
 
                 p_packet = buffer_ent->ops.peek_fun(buffer_ent, -1, NULL, NULL, BUFFER_DIR_DOWNSTREAM);
@@ -1783,8 +1782,8 @@ void audio_remote_relay_cback(uint16_t event, T_REMOTE_RELAY_STATUS status,
                     {
                         if (bt_clk_compare(p_cmd->packet_id, p_packet->bt_clk))
                         {
-                            AUDIO_PRINT_TRACE1("AUDIO_REMOTE_EVT_SEAMLESS_JOIN_INFO: sec has not receives 0x%x",
-                                               p_cmd->packet_id);
+                            AUDIO_PRINT_INFO1("AUDIO_REMOTE_EVT_SEAMLESS_JOIN_INFO: sec has not receives 0x%x",
+                                              p_cmd->packet_id);
                             audio_remote_set_state(remote_instance, AUDIO_REMOTE_STATE_SEAMLESS_JOIN);
                             jitter_buffer_asrc_pid_block(buffer_ent->jitter_buffer_handle);
                             remote_instance->join_clk = p_cmd->join_clk;
@@ -1798,8 +1797,8 @@ void audio_remote_relay_cback(uint16_t event, T_REMOTE_RELAY_STATUS status,
                     {
                         if (cacu_diff_u16((uint16_t)p_cmd->packet_id, p_packet->avdtp_seq_number) > 0)
                         {
-                            AUDIO_PRINT_TRACE1("AUDIO_REMOTE_EVT_SEAMLESS_JOIN_INFO: sec has not receives 0x%x",
-                                               p_cmd->packet_id);
+                            AUDIO_PRINT_INFO1("AUDIO_REMOTE_EVT_SEAMLESS_JOIN_INFO: sec has not receives 0x%x",
+                                              p_cmd->packet_id);
                             audio_remote_set_state(remote_instance, AUDIO_REMOTE_STATE_SEAMLESS_JOIN);
                             jitter_buffer_asrc_pid_block(buffer_ent->jitter_buffer_handle);
                             remote_instance->join_clk = p_cmd->join_clk;
@@ -1842,8 +1841,8 @@ void audio_remote_relay_cback(uint16_t event, T_REMOTE_RELAY_STATUS status,
                 }
 
                 clk_ref = bt_piconet_clk_get(BT_CLK_SNIFFING, &bb_clock_slot, &bb_clock_us);
-                AUDIO_PRINT_TRACE4("AUDIO_REMOTE_EVT_SEAMLESS_JOIN_INFO: seamless_join_info pkt_id %u, join_clk 0x%x, asrc_ppm %d, type %u",
-                                   p_cmd->packet_id, p_cmd->join_clk, p_cmd->asrc_ppm, p_cmd->sync_type);
+                AUDIO_PRINT_INFO4("AUDIO_REMOTE_EVT_SEAMLESS_JOIN_INFO: seamless_join_info pkt_id %u, join_clk 0x%x, asrc_ppm %d, type %u",
+                                  p_cmd->packet_id, p_cmd->join_clk, p_cmd->asrc_ppm, p_cmd->sync_type);
 
                 if (clk_ref != BT_CLK_NONE
                     &&
@@ -1894,8 +1893,8 @@ void audio_remote_relay_cback(uint16_t event, T_REMOTE_RELAY_STATUS status,
         {
             if (status == REMOTE_RELAY_STATUS_ASYNC_RCVD)
             {
-                sys_timer_delete(remote_instance->seamless_join_abort_timer_handle);
-                remote_instance->seamless_join_abort_timer_handle = NULL;
+                sys_timer_delete(remote_instance->join_abort_timer);
+                remote_instance->join_abort_timer = NULL;
             }
         }
         break;
@@ -2213,8 +2212,8 @@ void audio_remote_relay_cback(uint16_t event, T_REMOTE_RELAY_STATUS status,
 
             if (status == REMOTE_RELAY_STATUS_ASYNC_RCVD)
             {
-                AUDIO_PRINT_TRACE4("AUDIO_REMOTE_LOW_LATENCY_SYNC_PLAY: tid %u avdtp_seq %u sync_clk 0x%0x dynamic_latency_on %u",
-                                   p_cmd->tid, p_cmd->avdtp_seq, p_cmd->sync_clk, p_cmd->dynamic_latency_on);
+                AUDIO_PRINT_INFO4("AUDIO_REMOTE_LOW_LATENCY_SYNC_PLAY: tid %u avdtp_seq %u sync_clk 0x%0x dynamic_latency_on %u",
+                                  p_cmd->tid, p_cmd->avdtp_seq, p_cmd->sync_clk, p_cmd->dynamic_latency_on);
                 T_MEDIA_DATA_HDR *p_local_media_head;
 
                 if (audio_path_is_running(buffer_ent->p_cfg->attached_path_handle) == false)
@@ -2328,6 +2327,15 @@ void audio_remote_relay_cback(uint16_t event, T_REMOTE_RELAY_STATUS status,
                         media_buffer_clear_downstream_info(buffer_ent);
                         remote_instance->seq_diff = 0;
                         remote_instance->frame_diff = 0;
+
+                        uint8_t sync_msg = true;
+                        audio_remote_internal_sync_msg_relay(buffer_ent->audio_remote_handle,
+                                                             AUDIO_REMOTE_BUFFER_SYNC_UNMUTE,
+                                                             &sync_msg,
+                                                             sizeof(uint8_t),
+                                                             REMOTE_TIMER_HIGH_PRECISION,
+                                                             150,
+                                                             false);
                         remote_instance->cback(AUDIO_REMOTE_EVENT_SYNC_PLAY_START, &msg, remote_instance->buffer_ent);
                     }
                     else
@@ -2436,6 +2444,15 @@ void audio_remote_relay_cback(uint16_t event, T_REMOTE_RELAY_STATUS status,
         }
         break;
 
+    case AUDIO_REMOTE_BUFFER_SYNC_UNMUTE:
+        {
+            if (status == REMOTE_RELAY_STATUS_SYNC_TOUT || status == REMOTE_RELAY_STATUS_SYNC_EXPIRED)
+            {
+                audio_track_volume_out_unmute_all(AUDIO_STREAM_TYPE_PLAYBACK);
+            }
+        }
+        break;
+
     default:
         break;
     }
@@ -2480,9 +2497,9 @@ void audio_remote_ultra_low_latency_sync_play(T_AUDIO_REMOTE_HANDLE handle, bool
     }
     bb_clock_slot_sync = (bb_clock_slot + (latency_offset_ms + 100) * 1000 * 2 / 625) & 0x0fffffff;
 
-    AUDIO_PRINT_TRACE4("audio_remote_ultra_low_latency_sync_play: sync_clk %u local_clk %u latency offset ms %d dynamic lat %u",
-                       bb_clock_slot_sync,
-                       bb_clock_slot, latency_offset_ms, dynamic_latency_on);
+    AUDIO_PRINT_INFO4("audio_remote_ultra_low_latency_sync_play: sync_clk %u local_clk %u latency offset ms %d dynamic lat %u",
+                      bb_clock_slot_sync,
+                      bb_clock_slot, latency_offset_ms, dynamic_latency_on);
     cmd.sync_clk = bb_clock_slot_sync;
 
     buffer_ent->media_buffer_fst_sync_tid++;
@@ -2540,10 +2557,10 @@ void audio_remote_low_latency_sync_play(T_AUDIO_REMOTE_HANDLE handle, bool dynam
 
     bb_clock_slot_sync = (buffer_ent->last_ts + latency_offset_ms * 1000 * 2 / 625) & 0x0fffffff;
 
-    AUDIO_PRINT_TRACE5("audio_remote_low_latency_sync_play: sync_clk %u local_clk %u latency offset ms %d dynamic lat %u latency_override %u",
-                       bb_clock_slot_sync,
-                       bb_clock_slot, latency_offset_ms, dynamic_latency_on,
-                       buffer_ent->p_cfg->latency_override);
+    AUDIO_PRINT_INFO5("audio_remote_low_latency_sync_play: sync_clk %u local_clk %u latency offset ms %d dynamic lat %u latency_override %u",
+                      bb_clock_slot_sync,
+                      bb_clock_slot, latency_offset_ms, dynamic_latency_on,
+                      buffer_ent->p_cfg->latency_override);
     cmd.sync_clk = bb_clock_slot_sync;
 
     buffer_ent->ops.flush_fun(buffer_ent, media_buffer_ds_pkt_cnt(buffer_ent) - 1,
@@ -2803,9 +2820,9 @@ static bool audio_remote_buffer_PLC_policy_1(T_AUDIO_REMOTE_INSTANCE *remote_ins
         }
     }
 
-    AUDIO_PRINT_TRACE2("media_buffer_plc: remain seq %d frames %d",
-                       remote_instance->seq_diff,
-                       remote_instance->frame_diff);
+    AUDIO_PRINT_INFO2("media_buffer_plc: remain seq %d frames %d",
+                      remote_instance->seq_diff,
+                      remote_instance->frame_diff);
     return ret;
 }
 
@@ -2819,8 +2836,8 @@ static bool audio_remote_buffer_PLC_policy_2(T_AUDIO_REMOTE_INSTANCE *remote_ins
     T_H2D_STREAM_HEADER2 *p_head;
     bool ret = true;
 
-    AUDIO_PRINT_TRACE1("audio_remote_buffer_PLC_policy_2: seq diff 0 frame diff %u",
-                       remote_instance->frame_diff);
+    AUDIO_PRINT_INFO1("audio_remote_buffer_PLC_policy_2: seq diff 0 frame diff %u",
+                      remote_instance->frame_diff);
 
     p_media_packet = buffer_ent->ops.peek_fun(buffer_ent, 0, NULL, NULL, BUFFER_DIR_DOWNSTREAM);
     if (p_media_packet == NULL)
@@ -2892,8 +2909,8 @@ static bool audio_remote_buffer_PLC_policy_3(T_AUDIO_REMOTE_INSTANCE *remote_ins
     T_H2D_STREAM_HEADER2 *p_head;
     bool ret = true;
 
-    AUDIO_PRINT_TRACE1("audio_remote_buffer_PLC_policy_3: seq diff 0 frame diff %u",
-                       remote_instance->frame_diff);
+    AUDIO_PRINT_INFO1("audio_remote_buffer_PLC_policy_3: seq diff 0 frame diff %u",
+                      remote_instance->frame_diff);
     p_media_packet = buffer_ent->ops.peek_fun(buffer_ent, 0, NULL, NULL, BUFFER_DIR_DOWNSTREAM);
     if (p_media_packet == NULL)
     {
@@ -2908,17 +2925,17 @@ static bool audio_remote_buffer_PLC_policy_3(T_AUDIO_REMOTE_INSTANCE *remote_ins
         p_media_packet = buffer_ent->ops.peek_fun(buffer_ent, 0, NULL, NULL, BUFFER_DIR_DOWNSTREAM);
         if (p_media_packet == NULL)
         {
-            AUDIO_PRINT_TRACE1("audio_remote_buffer_PLC_policy_3: no more data remain diff frame %d",
-                               remote_instance->frame_diff);
+            AUDIO_PRINT_INFO1("audio_remote_buffer_PLC_policy_3: no more data remain diff frame %d",
+                              remote_instance->frame_diff);
             return false;
         }
     }
 
     if (remote_instance->frame_diff == 0)
     {
-        AUDIO_PRINT_TRACE2("audio_remote_buffer_PLC_policy_3: remain seq %d frames %d",
-                           remote_instance->seq_diff,
-                           remote_instance->frame_diff);
+        AUDIO_PRINT_INFO2("audio_remote_buffer_PLC_policy_3: remain seq %d frames %d",
+                          remote_instance->seq_diff,
+                          remote_instance->frame_diff);
         return media_buffer_downstream_dsp(buffer_ent, true);
     }
     else
@@ -3018,9 +3035,9 @@ bool audio_remote_buffer_PLC(T_AUDIO_REMOTE_HANDLE handle)
 
         if (remote_instance->frame_diff == 0)
         {
-            AUDIO_PRINT_TRACE2("media_buffer_plc: remain seq %d frames %d",
-                               remote_instance->seq_diff,
-                               remote_instance->frame_diff);
+            AUDIO_PRINT_INFO2("media_buffer_plc: remain seq %d frames %d",
+                              remote_instance->seq_diff,
+                              remote_instance->frame_diff);
             ret = media_buffer_downstream_dsp(buffer_ent, true);
         }
         else
@@ -3112,18 +3129,17 @@ bool audio_remote_seamless_join_seq_contiuity_check(T_AUDIO_REMOTE_HANDLE handle
 
     if (audio_remote_db->force_join)
     {
-        if (remote_instance->seamless_join_seq_contiuity_check_timer == NULL)
+        if (remote_instance->seq_check_timer == NULL)
         {
-            remote_instance->seamless_join_seq_contiuity_check_timer =
-                sys_timer_create("seamless_join_seq_contiuity_check_timer",
-                                 SYS_TIMER_TYPE_LOW_PRECISION,
-                                 (AUDIO_TIMER_SEAMLESS_JOIN_SEQUENCE_CHECK << 16) | remote_instance->endpoint,
-                                 SEQUENCE_CHECK_TIME,
-                                 false,
-                                 audio_remote_timeout_cback);
-            if (remote_instance->seamless_join_seq_contiuity_check_timer != NULL)
+            remote_instance->seq_check_timer = sys_timer_create("seq_check_timer",
+                                                                SYS_TIMER_TYPE_LOW_PRECISION,
+                                                                remote_instance->endpoint,
+                                                                SEQUENCE_CHECK_TIME,
+                                                                false,
+                                                                audio_remote_seq_check_timeout_cback);
+            if (remote_instance->seq_check_timer != NULL)
             {
-                sys_timer_start(remote_instance->seamless_join_seq_contiuity_check_timer);
+                sys_timer_start(remote_instance->seq_check_timer);
             }
             remote_instance->seamless_join_lost_packet_cnt = 0;
             remote_instance->seamless_join_lost_packet_cnt_last = MAX_SEAMLESS_JOIN_CHECK_LOST_COUNT;
@@ -3140,10 +3156,10 @@ bool audio_remote_seamless_join_seq_contiuity_check(T_AUDIO_REMOTE_HANDLE handle
     }
     else
     {
-        if (remote_instance->seamless_join_seq_contiuity_check_timer)
+        if (remote_instance->seq_check_timer)
         {
-            sys_timer_delete(remote_instance->seamless_join_seq_contiuity_check_timer);
-            remote_instance->seamless_join_seq_contiuity_check_timer = NULL;
+            sys_timer_delete(remote_instance->seq_check_timer);
+            remote_instance->seq_check_timer = NULL;
             remote_instance->seamless_join_lost_packet_cnt = 0;
             remote_instance->seamless_join_lost_packet_cnt_last = 0;
         }
@@ -3155,7 +3171,7 @@ void audio_remote_seamless_join_set(bool enable, bool force_join)
 {
     T_AUDIO_REMOTE_INSTANCE *remote_instance;
 
-    AUDIO_PRINT_TRACE2("audio_remote_seamless_join_set: enable %d force %d", enable, force_join);
+    AUDIO_PRINT_INFO2("audio_remote_seamless_join_set: enable %d force %d", enable, force_join);
     audio_remote_db->force_join = force_join;
     audio_remote_db->seamless_join = enable;
     if (force_join)
@@ -3165,18 +3181,17 @@ void audio_remote_seamless_join_set(bool enable, bool force_join)
         {
             if (remote_instance->sync_type == AUDIO_STREAM_TYPE_PLAYBACK)
             {
-                if (remote_instance->seamless_join_seq_contiuity_check_timer == NULL)
+                if (remote_instance->seq_check_timer == NULL)
                 {
-                    remote_instance->seamless_join_seq_contiuity_check_timer =
-                        sys_timer_create("seamless_join_seq_contiuity_check_timer",
-                                         SYS_TIMER_TYPE_LOW_PRECISION,
-                                         (AUDIO_TIMER_SEAMLESS_JOIN_SEQUENCE_CHECK << 16) | remote_instance->endpoint,
-                                         SEQUENCE_CHECK_TIME,
-                                         false,
-                                         audio_remote_timeout_cback);
-                    if (remote_instance->seamless_join_seq_contiuity_check_timer != NULL)
+                    remote_instance->seq_check_timer = sys_timer_create("seq_check_timer",
+                                                                        SYS_TIMER_TYPE_LOW_PRECISION,
+                                                                        remote_instance->endpoint,
+                                                                        SEQUENCE_CHECK_TIME,
+                                                                        false,
+                                                                        audio_remote_seq_check_timeout_cback);
+                    if (remote_instance->seq_check_timer != NULL)
                     {
-                        sys_timer_start(remote_instance->seamless_join_seq_contiuity_check_timer);
+                        sys_timer_start(remote_instance->seq_check_timer);
                     }
                     remote_instance->seamless_join_lost_packet_cnt = 0;
                     remote_instance->seamless_join_lost_packet_cnt_last = 0;
@@ -3194,8 +3209,8 @@ void audio_remote_seamless_join_set(bool enable, bool force_join)
         {
             if (remote_instance->sync_type == AUDIO_STREAM_TYPE_PLAYBACK)
             {
-                sys_timer_delete(remote_instance->seamless_join_seq_contiuity_check_timer);
-                remote_instance->seamless_join_seq_contiuity_check_timer = NULL;
+                sys_timer_delete(remote_instance->seq_check_timer);
+                remote_instance->seq_check_timer = NULL;
                 remote_instance->seamless_join_lost_packet_cnt = 0;
                 remote_instance->seamless_join_lost_packet_cnt_last = 0;
             }
@@ -3213,7 +3228,7 @@ void audio_remote_handle_lost_packet(T_AUDIO_REMOTE_HANDLE handle, uint8_t count
         return;
     }
 
-    if (remote_instance->seamless_join_seq_contiuity_check_timer)
+    if (remote_instance->seq_check_timer)
     {
         remote_instance->seamless_join_lost_packet_cnt += count;
     }

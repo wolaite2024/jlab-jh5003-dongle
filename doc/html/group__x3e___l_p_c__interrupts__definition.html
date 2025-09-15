@@ -44,19 +44,23 @@ $(function() {
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">LPC Interrupts Definition<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___l_p_c.html">LPC</a> &raquo; <a class="el" href="group__x3e___l_p_c___exported__constants.html">LPC Exported Constants</a></div></div>  </div>
+<div class="title">LPC Interrupts Definition<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___l_p_c.html">LPC</a> &raquo; <a class="el" href="group__x3e___l_p_c___exported___constants.html">LPC Exported Constants</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga3040081fd6aa23c8c289efc88409f2b6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___l_p_c__interrupts__definition.html#ga3040081fd6aa23c8c289efc88409f2b6">LPC_INT_VOLTAGE_COMP</a>&#160;&#160;&#160;(LPC_SRC_INT_EN_Msk)</td></tr>
+<tr class="memdesc:ga3040081fd6aa23c8c289efc88409f2b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPC voltage detection interrupt. Triggered when the input voltage is higher or lower than the threshold voltage, depending on the setting of <a class="el" href="group__x3e___l_p_c___edge.html">LPC Output Edge</a>.  <a href="#ga3040081fd6aa23c8c289efc88409f2b6">More...</a><br /></td></tr>
 <tr class="separator:ga3040081fd6aa23c8c289efc88409f2b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1cfe472811bbb403051a914f985b1c8d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___l_p_c__interrupts__definition.html#ga1cfe472811bbb403051a914f985b1c8d">LPC_INT_COUNT_COMP</a>&#160;&#160;&#160;(LPC_EVENT_EN_Msk)</td></tr>
+<tr class="memdesc:ga1cfe472811bbb403051a914f985b1c8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPC counter comparator interrupt. Triggered when the LPC counter value reaches the LPC comparison value.  <a href="#ga1cfe472811bbb403051a914f985b1c8d">More...</a><br /></td></tr>
 <tr class="separator:ga1cfe472811bbb403051a914f985b1c8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga04267529ae41d7ced34e0670ec882cc7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___l_p_c__interrupts__definition.html#ga04267529ae41d7ced34e0670ec882cc7">IS_LPC_CONFIG_INT</a>(INT)</td></tr>
+<tr class="memdesc:ga04267529ae41d7ced34e0670ec882cc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the input parameter is valid.  <a href="#ga04267529ae41d7ced34e0670ec882cc7">More...</a><br /></td></tr>
 <tr class="separator:ga04267529ae41d7ced34e0670ec882cc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga258bf35d4339507a022b7177e8aa507e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___l_p_c__interrupts__definition.html#ga258bf35d4339507a022b7177e8aa507e">IS_LPC_CLEAR_INT</a>(INT)&#160;&#160;&#160;((INT) == <a class="el" href="group__x3e___l_p_c__interrupts__definition.html#ga1cfe472811bbb403051a914f985b1c8d">LPC_INT_COUNT_COMP</a>)</td></tr>
+<tr class="memdesc:ga258bf35d4339507a022b7177e8aa507e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the input parameter is valid.  <a href="#ga258bf35d4339507a022b7177e8aa507e">More...</a><br /></td></tr>
 <tr class="separator:ga258bf35d4339507a022b7177e8aa507e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -73,6 +77,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>LPC voltage detection interrupt. Triggered when the input voltage is higher or lower than the threshold voltage, depending on the setting of <a class="el" href="group__x3e___l_p_c___edge.html">LPC Output Edge</a>. </p>
+
 </div>
 </div>
 <a id="ga1cfe472811bbb403051a914f985b1c8d"></a>
@@ -86,6 +92,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>LPC counter comparator interrupt. Triggered when the LPC counter value reaches the LPC comparison value. </p>
 
 </div>
 </div>
@@ -104,9 +112,11 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">(((INT) == <a class="code" href="group__x3e___l_p_c__interrupts__definition.html#ga3040081fd6aa23c8c289efc88409f2b6">LPC_INT_VOLTAGE_COMP</a>) || \</div><div class="line">                                ((INT) == <a class="code" href="group__x3e___l_p_c__interrupts__definition.html#ga1cfe472811bbb403051a914f985b1c8d">LPC_INT_COUNT_COMP</a>))</div><div class="ttc" id="group__x3e___l_p_c__interrupts__definition_html_ga3040081fd6aa23c8c289efc88409f2b6"><div class="ttname"><a href="group__x3e___l_p_c__interrupts__definition.html#ga3040081fd6aa23c8c289efc88409f2b6">LPC_INT_VOLTAGE_COMP</a></div><div class="ttdeci">#define LPC_INT_VOLTAGE_COMP</div><div class="ttdef"><b>Definition:</b> rtl876x_lpc.h:183</div></div>
-<div class="ttc" id="group__x3e___l_p_c__interrupts__definition_html_ga1cfe472811bbb403051a914f985b1c8d"><div class="ttname"><a href="group__x3e___l_p_c__interrupts__definition.html#ga1cfe472811bbb403051a914f985b1c8d">LPC_INT_COUNT_COMP</a></div><div class="ttdeci">#define LPC_INT_COUNT_COMP</div><div class="ttdef"><b>Definition:</b> rtl876x_lpc.h:184</div></div>
+<b>Value:</b><div class="fragment"><div class="line">(((INT) == <a class="code" href="group__x3e___l_p_c__interrupts__definition.html#ga3040081fd6aa23c8c289efc88409f2b6">LPC_INT_VOLTAGE_COMP</a>) || \</div><div class="line">                                ((INT) == <a class="code" href="group__x3e___l_p_c__interrupts__definition.html#ga1cfe472811bbb403051a914f985b1c8d">LPC_INT_COUNT_COMP</a>))</div><div class="ttc" id="group__x3e___l_p_c__interrupts__definition_html_ga3040081fd6aa23c8c289efc88409f2b6"><div class="ttname"><a href="group__x3e___l_p_c__interrupts__definition.html#ga3040081fd6aa23c8c289efc88409f2b6">LPC_INT_VOLTAGE_COMP</a></div><div class="ttdeci">#define LPC_INT_VOLTAGE_COMP</div><div class="ttdoc">LPC voltage detection interrupt. Triggered when the input voltage is higher or lower than the thresho...</div><div class="ttdef"><b>Definition:</b> rtl876x_lpc.h:198</div></div>
+<div class="ttc" id="group__x3e___l_p_c__interrupts__definition_html_ga1cfe472811bbb403051a914f985b1c8d"><div class="ttname"><a href="group__x3e___l_p_c__interrupts__definition.html#ga1cfe472811bbb403051a914f985b1c8d">LPC_INT_COUNT_COMP</a></div><div class="ttdeci">#define LPC_INT_COUNT_COMP</div><div class="ttdoc">LPC counter comparator interrupt. Triggered when the LPC counter value reaches the LPC comparison val...</div><div class="ttdef"><b>Definition:</b> rtl876x_lpc.h:199</div></div>
 </div><!-- fragment -->
+<p>Check if the input parameter is valid. </p>
+
 </div>
 </div>
 <a id="ga258bf35d4339507a022b7177e8aa507e"></a>
@@ -124,6 +134,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Check if the input parameter is valid. </p>
 
 </div>
 </div>

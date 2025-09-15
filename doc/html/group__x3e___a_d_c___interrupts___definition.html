@@ -51,18 +51,25 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga90f4a6dfb419e031da3a4889af41c49f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___a_d_c___interrupts___definition.html#ga90f4a6dfb419e031da3a4889af41c49f">ADC_INT_FIFO_RD_REQ</a>&#160;&#160;&#160;((uint32_t)(1 &lt;&lt; 0))</td></tr>
+<tr class="memdesc:ga90f4a6dfb419e031da3a4889af41c49f"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC GDMA request interrupt: When the FIFO data level reaches the GDMA threshold level (adcBurstSize), this interrupt is triggered.  <a href="#ga90f4a6dfb419e031da3a4889af41c49f">More...</a><br /></td></tr>
 <tr class="separator:ga90f4a6dfb419e031da3a4889af41c49f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa3d5b13c5e94849e15bb58431897de3d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___a_d_c___interrupts___definition.html#gaa3d5b13c5e94849e15bb58431897de3d">ADC_INT_FIFO_RD_ERR</a>&#160;&#160;&#160;((uint32_t)(1 &lt;&lt; 1))</td></tr>
+<tr class="memdesc:gaa3d5b13c5e94849e15bb58431897de3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC FIFO read error interrupt: This interrupt is triggered when an attempt is made to read from an empty FIFO.  <a href="#gaa3d5b13c5e94849e15bb58431897de3d">More...</a><br /></td></tr>
 <tr class="separator:gaa3d5b13c5e94849e15bb58431897de3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaeee1777cf2cde46d919ad242cfc6be2f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___a_d_c___interrupts___definition.html#gaeee1777cf2cde46d919ad242cfc6be2f">ADC_INT_FIFO_TH</a>&#160;&#160;&#160;((uint32_t)(1 &lt;&lt; 2))</td></tr>
+<tr class="memdesc:gaeee1777cf2cde46d919ad242cfc6be2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC FIFO threshold interrupt: When the FIFO data number is greater than or equal to the threshold level (adcFifoThd), this interrupt is triggered.  <a href="#gaeee1777cf2cde46d919ad242cfc6be2f">More...</a><br /></td></tr>
 <tr class="separator:gaeee1777cf2cde46d919ad242cfc6be2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0e933a9ed4809475e5d5f7ec182917a5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___a_d_c___interrupts___definition.html#ga0e933a9ed4809475e5d5f7ec182917a5">ADC_INT_FIFO_OVERFLOW</a>&#160;&#160;&#160;((uint32_t)(1 &lt;&lt; 3))</td></tr>
+<tr class="memdesc:ga0e933a9ed4809475e5d5f7ec182917a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC FIFO full interrupt: When the FIFO is full, this interrupt is triggered.  <a href="#ga0e933a9ed4809475e5d5f7ec182917a5">More...</a><br /></td></tr>
 <tr class="separator:ga0e933a9ed4809475e5d5f7ec182917a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafceec649c4add8134490dfc4a775d94d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___a_d_c___interrupts___definition.html#gafceec649c4add8134490dfc4a775d94d">ADC_INT_ONE_SHOT_DONE</a>&#160;&#160;&#160;((uint32_t)(1 &lt;&lt; 4))</td></tr>
+<tr class="memdesc:gafceec649c4add8134490dfc4a775d94d"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC one shot mode done interrupt: When the ADC conversion is done, this interrupt is triggered.  <a href="#gafceec649c4add8134490dfc4a775d94d">More...</a><br /></td></tr>
 <tr class="separator:gafceec649c4add8134490dfc4a775d94d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf5f8d35930becff402eeb8220641432f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___a_d_c___interrupts___definition.html#gaf5f8d35930becff402eeb8220641432f">IS_ADC_IT</a>(IT)&#160;&#160;&#160;((((IT) &amp; 0xFFFFFFE0) == 0x00) &amp;&amp; ((IT) != 0x00))</td></tr>
+<tr class="memdesc:gaf5f8d35930becff402eeb8220641432f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether is the ADC interrupt.  <a href="#gaf5f8d35930becff402eeb8220641432f">More...</a><br /></td></tr>
 <tr class="separator:gaf5f8d35930becff402eeb8220641432f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacae69f04de1a0033f065864d868c006e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___a_d_c___interrupts___definition.html#gacae69f04de1a0033f065864d868c006e">IS_ADC_GET_IT</a>(IT)</td></tr>
+<tr class="memdesc:gacae69f04de1a0033f065864d868c006e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether is the ADC interrupt.  <a href="#gacae69f04de1a0033f065864d868c006e">More...</a><br /></td></tr>
 <tr class="separator:gacae69f04de1a0033f065864d868c006e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -79,6 +86,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>ADC GDMA request interrupt: When the FIFO data level reaches the GDMA threshold level (adcBurstSize), this interrupt is triggered. </p>
+
 </div>
 </div>
 <a id="gaa3d5b13c5e94849e15bb58431897de3d"></a>
@@ -92,6 +101,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>ADC FIFO read error interrupt: This interrupt is triggered when an attempt is made to read from an empty FIFO. </p>
 
 </div>
 </div>
@@ -107,6 +118,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>ADC FIFO threshold interrupt: When the FIFO data number is greater than or equal to the threshold level (adcFifoThd), this interrupt is triggered. </p>
+
 </div>
 </div>
 <a id="ga0e933a9ed4809475e5d5f7ec182917a5"></a>
@@ -121,6 +134,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>ADC FIFO full interrupt: When the FIFO is full, this interrupt is triggered. </p>
+
 </div>
 </div>
 <a id="gafceec649c4add8134490dfc4a775d94d"></a>
@@ -134,6 +149,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>ADC one shot mode done interrupt: When the ADC conversion is done, this interrupt is triggered. </p>
 
 </div>
 </div>
@@ -153,6 +170,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Check whether is the ADC interrupt. </p>
+
 </div>
 </div>
 <a id="gacae69f04de1a0033f065864d868c006e"></a>
@@ -170,12 +189,14 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">(((IT) == <a class="code" href="group__x3e___a_d_c___interrupts___definition.html#ga90f4a6dfb419e031da3a4889af41c49f">ADC_INT_FIFO_RD_REQ</a>) || ((IT) == <a class="code" href="group__x3e___a_d_c___interrupts___definition.html#gaa3d5b13c5e94849e15bb58431897de3d">ADC_INT_FIFO_RD_ERR</a>)\</div><div class="line">                           || ((IT) == <a class="code" href="group__x3e___a_d_c___interrupts___definition.html#gaeee1777cf2cde46d919ad242cfc6be2f">ADC_INT_FIFO_TH</a>) || ((IT) == <a class="code" href="group__x3e___a_d_c___interrupts___definition.html#ga0e933a9ed4809475e5d5f7ec182917a5">ADC_INT_FIFO_OVERFLOW</a>)\</div><div class="line">                           || ((IT) == <a class="code" href="group__x3e___a_d_c___interrupts___definition.html#gafceec649c4add8134490dfc4a775d94d">ADC_INT_ONE_SHOT_DONE</a>))</div><div class="ttc" id="group__x3e___a_d_c___interrupts___definition_html_gaeee1777cf2cde46d919ad242cfc6be2f"><div class="ttname"><a href="group__x3e___a_d_c___interrupts___definition.html#gaeee1777cf2cde46d919ad242cfc6be2f">ADC_INT_FIFO_TH</a></div><div class="ttdeci">#define ADC_INT_FIFO_TH</div><div class="ttdef"><b>Definition:</b> rtl876x_adc.h:151</div></div>
-<div class="ttc" id="group__x3e___a_d_c___interrupts___definition_html_gafceec649c4add8134490dfc4a775d94d"><div class="ttname"><a href="group__x3e___a_d_c___interrupts___definition.html#gafceec649c4add8134490dfc4a775d94d">ADC_INT_ONE_SHOT_DONE</a></div><div class="ttdeci">#define ADC_INT_ONE_SHOT_DONE</div><div class="ttdef"><b>Definition:</b> rtl876x_adc.h:153</div></div>
-<div class="ttc" id="group__x3e___a_d_c___interrupts___definition_html_ga90f4a6dfb419e031da3a4889af41c49f"><div class="ttname"><a href="group__x3e___a_d_c___interrupts___definition.html#ga90f4a6dfb419e031da3a4889af41c49f">ADC_INT_FIFO_RD_REQ</a></div><div class="ttdeci">#define ADC_INT_FIFO_RD_REQ</div><div class="ttdef"><b>Definition:</b> rtl876x_adc.h:149</div></div>
-<div class="ttc" id="group__x3e___a_d_c___interrupts___definition_html_gaa3d5b13c5e94849e15bb58431897de3d"><div class="ttname"><a href="group__x3e___a_d_c___interrupts___definition.html#gaa3d5b13c5e94849e15bb58431897de3d">ADC_INT_FIFO_RD_ERR</a></div><div class="ttdeci">#define ADC_INT_FIFO_RD_ERR</div><div class="ttdef"><b>Definition:</b> rtl876x_adc.h:150</div></div>
-<div class="ttc" id="group__x3e___a_d_c___interrupts___definition_html_ga0e933a9ed4809475e5d5f7ec182917a5"><div class="ttname"><a href="group__x3e___a_d_c___interrupts___definition.html#ga0e933a9ed4809475e5d5f7ec182917a5">ADC_INT_FIFO_OVERFLOW</a></div><div class="ttdeci">#define ADC_INT_FIFO_OVERFLOW</div><div class="ttdef"><b>Definition:</b> rtl876x_adc.h:152</div></div>
+<b>Value:</b><div class="fragment"><div class="line">(((IT) == <a class="code" href="group__x3e___a_d_c___interrupts___definition.html#ga90f4a6dfb419e031da3a4889af41c49f">ADC_INT_FIFO_RD_REQ</a>) || ((IT) == <a class="code" href="group__x3e___a_d_c___interrupts___definition.html#gaa3d5b13c5e94849e15bb58431897de3d">ADC_INT_FIFO_RD_ERR</a>)\</div><div class="line">                           || ((IT) == <a class="code" href="group__x3e___a_d_c___interrupts___definition.html#gaeee1777cf2cde46d919ad242cfc6be2f">ADC_INT_FIFO_TH</a>) || ((IT) == <a class="code" href="group__x3e___a_d_c___interrupts___definition.html#ga0e933a9ed4809475e5d5f7ec182917a5">ADC_INT_FIFO_OVERFLOW</a>)\</div><div class="line">                           || ((IT) == <a class="code" href="group__x3e___a_d_c___interrupts___definition.html#gafceec649c4add8134490dfc4a775d94d">ADC_INT_ONE_SHOT_DONE</a>))</div><div class="ttc" id="group__x3e___a_d_c___interrupts___definition_html_gaeee1777cf2cde46d919ad242cfc6be2f"><div class="ttname"><a href="group__x3e___a_d_c___interrupts___definition.html#gaeee1777cf2cde46d919ad242cfc6be2f">ADC_INT_FIFO_TH</a></div><div class="ttdeci">#define ADC_INT_FIFO_TH</div><div class="ttdoc">ADC FIFO threshold interrupt: When the FIFO data number is greater than or equal to the threshold lev...</div><div class="ttdef"><b>Definition:</b> rtl876x_adc.h:142</div></div>
+<div class="ttc" id="group__x3e___a_d_c___interrupts___definition_html_gafceec649c4add8134490dfc4a775d94d"><div class="ttname"><a href="group__x3e___a_d_c___interrupts___definition.html#gafceec649c4add8134490dfc4a775d94d">ADC_INT_ONE_SHOT_DONE</a></div><div class="ttdeci">#define ADC_INT_ONE_SHOT_DONE</div><div class="ttdoc">ADC one shot mode done interrupt: When the ADC conversion is done, this interrupt is triggered...</div><div class="ttdef"><b>Definition:</b> rtl876x_adc.h:144</div></div>
+<div class="ttc" id="group__x3e___a_d_c___interrupts___definition_html_ga90f4a6dfb419e031da3a4889af41c49f"><div class="ttname"><a href="group__x3e___a_d_c___interrupts___definition.html#ga90f4a6dfb419e031da3a4889af41c49f">ADC_INT_FIFO_RD_REQ</a></div><div class="ttdeci">#define ADC_INT_FIFO_RD_REQ</div><div class="ttdoc">ADC GDMA request interrupt: When the FIFO data level reaches the GDMA threshold level (adcBurstSize)...</div><div class="ttdef"><b>Definition:</b> rtl876x_adc.h:140</div></div>
+<div class="ttc" id="group__x3e___a_d_c___interrupts___definition_html_gaa3d5b13c5e94849e15bb58431897de3d"><div class="ttname"><a href="group__x3e___a_d_c___interrupts___definition.html#gaa3d5b13c5e94849e15bb58431897de3d">ADC_INT_FIFO_RD_ERR</a></div><div class="ttdeci">#define ADC_INT_FIFO_RD_ERR</div><div class="ttdoc">ADC FIFO read error interrupt: This interrupt is triggered when an attempt is made to read from an em...</div><div class="ttdef"><b>Definition:</b> rtl876x_adc.h:141</div></div>
+<div class="ttc" id="group__x3e___a_d_c___interrupts___definition_html_ga0e933a9ed4809475e5d5f7ec182917a5"><div class="ttname"><a href="group__x3e___a_d_c___interrupts___definition.html#ga0e933a9ed4809475e5d5f7ec182917a5">ADC_INT_FIFO_OVERFLOW</a></div><div class="ttdeci">#define ADC_INT_FIFO_OVERFLOW</div><div class="ttdoc">ADC FIFO full interrupt: When the FIFO is full, this interrupt is triggered. </div><div class="ttdef"><b>Definition:</b> rtl876x_adc.h:143</div></div>
 </div><!-- fragment -->
+<p>Check whether is the ADC interrupt. </p>
+
 </div>
 </div>
 </div><!-- contents -->

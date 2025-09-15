@@ -119,8 +119,8 @@ Functions</h2></td></tr>
 </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_value</td><td>Pointer to the AICS parameter data. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">set_change_counter</td><td>Whether to set change counter. <ul>
-<li>true Set change counter when param_type is AICS_PARAM_INPUT_STATE. </li>
-<li>false Not set change counter when param_type is AICS_PARAM_INPUT_STATE.</li>
+<li>true Set change counter when param_type is <a class="el" href="group___a_i_c_s___server___exported___types.html#ggae6b88e4d62b76645a5f2f8eb0d03d382a6cd6763bcdfbbcd575087cdc2d729e82">AICS_PARAM_INPUT_STATE</a>. </li>
+<li>false Not set change counter when param_type is <a class="el" href="group___a_i_c_s___server___exported___types.html#ggae6b88e4d62b76645a5f2f8eb0d03d382a6cd6763bcdfbbcd575087cdc2d729e82">AICS_PARAM_INPUT_STATE</a>.</li>
 </ul>
 </td></tr>
   </table>
@@ -129,7 +129,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The result of set AICS service parameter. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Set AICS service parameter success. </td></tr>
+    <tr><td class="paramname">true</td><td>Set AICS service parameter is successful. </td></tr>
     <tr><td class="paramname">false</td><td>Set AICS service parameter failed. </td></tr>
   </table>
   </dd>
@@ -174,16 +174,22 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">srv_instance_id</td><td>Service instance id. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">param_type</td><td>AICS service parameter type: <a class="el" href="group___a_i_c_s___server___exported___types.html#gae6b88e4d62b76645a5f2f8eb0d03d382">T_AICS_PARAM_TYPE</a>, include <a class="el" href="group___a_i_c_s___server___exported___types.html#ggae6b88e4d62b76645a5f2f8eb0d03d382a6cd6763bcdfbbcd575087cdc2d729e82">AICS_PARAM_INPUT_STATE</a>, <a class="el" href="group___a_i_c_s___server___exported___types.html#ggae6b88e4d62b76645a5f2f8eb0d03d382a3140037ec355472aa635daedbfa2a271">AICS_PARAM_GAIN_SETTING_PROP</a>, <a class="el" href="group___a_i_c_s___server___exported___types.html#ggae6b88e4d62b76645a5f2f8eb0d03d382ab21b5c917cbb19b66371e06ae9649bc7">AICS_PARAM_INPUT_TYPE</a>, <a class="el" href="group___a_i_c_s___server___exported___types.html#ggae6b88e4d62b76645a5f2f8eb0d03d382adacf38c8ce825fef311ebd8921566368">AICS_PARAM_INPUT_STATUS</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">param_type</td><td>AICS service parameter type <a class="el" href="group___a_i_c_s___server___exported___types.html#gae6b88e4d62b76645a5f2f8eb0d03d382">T_AICS_PARAM_TYPE</a>, include: <ul>
+<li><a class="el" href="group___a_i_c_s___server___exported___types.html#ggae6b88e4d62b76645a5f2f8eb0d03d382a6cd6763bcdfbbcd575087cdc2d729e82">AICS_PARAM_INPUT_STATE</a> </li>
+<li><a class="el" href="group___a_i_c_s___server___exported___types.html#ggae6b88e4d62b76645a5f2f8eb0d03d382a3140037ec355472aa635daedbfa2a271">AICS_PARAM_GAIN_SETTING_PROP</a> </li>
+<li><a class="el" href="group___a_i_c_s___server___exported___types.html#ggae6b88e4d62b76645a5f2f8eb0d03d382ab21b5c917cbb19b66371e06ae9649bc7">AICS_PARAM_INPUT_TYPE</a> </li>
+<li><a class="el" href="group___a_i_c_s___server___exported___types.html#ggae6b88e4d62b76645a5f2f8eb0d03d382adacf38c8ce825fef311ebd8921566368">AICS_PARAM_INPUT_STATUS</a> </li>
+</ul>
+</td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_value</td><td>Pointer to the parameter value.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of get AICS parameter. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of getting AICS parameter. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Get AICS service parameter success. </td></tr>
-    <tr><td class="paramname">false</td><td>Get AICS parameter failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Getting AICS service parameter is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Getting AICS parameter failed. </td></tr>
   </table>
   </dd>
 </dl>

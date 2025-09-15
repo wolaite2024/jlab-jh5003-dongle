@@ -50,11 +50,8 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga37226202021a82abea1ab5ec85e0d8de"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_a_p___client___exported___functions.html#ga37226202021a82abea1ab5ec85e0d8de">gmas_read_gmap_role</a> (uint16_t conn_handle)</td></tr>
-<tr class="memdesc:ga37226202021a82abea1ab5ec85e0d8de"><td class="mdescLeft">&#160;</td><td class="mdescRight">GMAS client read gmap role. If the read procedure is completed, the Application will receive LE_AUDIO_MSG_GMAS_CLIENT_READ_ROLE_RESULT.  <a href="#ga37226202021a82abea1ab5ec85e0d8de">More...</a><br /></td></tr>
-<tr class="separator:ga37226202021a82abea1ab5ec85e0d8de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga481c3f965e7400af95a102475a1d776c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_a_p___client___exported___functions.html#ga481c3f965e7400af95a102475a1d776c">tmas_read_role</a> (uint16_t conn_handle)</td></tr>
-<tr class="memdesc:ga481c3f965e7400af95a102475a1d776c"><td class="mdescLeft">&#160;</td><td class="mdescRight">TMAS client read TMAP role. If the read procedure is completed, the Application will receive LE_AUDIO_MSG_TMAS_CLIENT_READ_ROLE_RESULT.  <a href="#ga481c3f965e7400af95a102475a1d776c">More...</a><br /></td></tr>
+<tr class="memdesc:ga481c3f965e7400af95a102475a1d776c"><td class="mdescLeft">&#160;</td><td class="mdescRight">TMAS client read TMAP Role.  <a href="#ga481c3f965e7400af95a102475a1d776c">More...</a><br /></td></tr>
 <tr class="separator:ga481c3f965e7400af95a102475a1d776c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga06a716faa2740bd336537b10e5c33629"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_m_a_p___client___exported___functions.html#ga06a716faa2740bd336537b10e5c33629">tmas_client_init</a> (void)</td></tr>
 <tr class="memdesc:ga06a716faa2740bd336537b10e5c33629"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize TMAS client.  <a href="#ga06a716faa2740bd336537b10e5c33629">More...</a><br /></td></tr>
@@ -62,42 +59,6 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga37226202021a82abea1ab5ec85e0d8de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga37226202021a82abea1ab5ec85e0d8de">&#9670;&nbsp;</a></span>gmas_read_gmap_role()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool gmas_read_gmap_role </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>conn_handle</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>GMAS client read gmap role. If the read procedure is completed, the Application will receive LE_AUDIO_MSG_GMAS_CLIENT_READ_ROLE_RESULT. </p>
-<p><a class="el" href="gmas__client_8h_source.html">gmas_client.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000038">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of GMAS client read gmap role. </dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">true</td><td>GMAS client read gmap role request success. </td></tr>
-    <tr><td class="paramname">false</td><td>GMAS client read gmap role request failed. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="ga481c3f965e7400af95a102475a1d776c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga481c3f965e7400af95a102475a1d776c">&#9670;&nbsp;</a></span>tmas_read_role()</h2>
 
@@ -114,19 +75,20 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>TMAS client read TMAP role. If the read procedure is completed, the Application will receive LE_AUDIO_MSG_TMAS_CLIENT_READ_ROLE_RESULT. </p>
+<p>TMAS client read TMAP Role. </p>
 <p><a class="el" href="tmas__client_8h_source.html">tmas_client.h</a></p>
+<p>If the read procedure is completed, the Application will receive <a class="el" href="group___l_e_a___l_i_b___exported___types.html#ggabe1a2e587cdc57dc5de8e141de5d1b0ba4567219cfad33df41f90e42b541e002a">LE_AUDIO_MSG_TMAS_CLIENT_READ_ROLE_RESULT</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of TMAS client read TMAP role. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of TMAS client read TMAP Role. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>TMAS client read TMAP role request success. </td></tr>
-    <tr><td class="paramname">false</td><td>TMAS client read TMAP role request failed. </td></tr>
+    <tr><td class="paramname">true</td><td>TMAS client read TMAP Role request is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>TMAS client read TMAP Role request failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -151,11 +113,11 @@ Functions</h2></td></tr>
 
 <p>Initialize TMAS client. </p>
 <p><a class="el" href="tmas__client_8h_source.html">tmas_client.h</a></p>
-<dl class="section return"><dt>Returns</dt><dd>The result of initialize TMAS client. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of initializing TMAS client. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Initialize TMAS client success. </td></tr>
-    <tr><td class="paramname">false</td><td>Initialize TMAS client failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Initializing TMAS client is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Initializing TMAS client failed. </td></tr>
   </table>
   </dd>
 </dl>

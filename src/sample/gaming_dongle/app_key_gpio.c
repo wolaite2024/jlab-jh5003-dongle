@@ -15,7 +15,6 @@
 #include "app_dlps.h"
 #include "app_main.h"
 #include "section.h"
-#include "vector_table.h"
 #include "app_timer.h"
 //#include "rtl876x_aon_reg.h"
 //#include "app_sensor.h"

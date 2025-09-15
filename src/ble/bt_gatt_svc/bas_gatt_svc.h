@@ -54,7 +54,7 @@ extern "C" {
 /*============================================================================*
  *                         Macros
  *============================================================================*/
-/** @defgroup BAS_Exported_Macros BAS Exported Macros
+/** @defgroup BAS_GATT_Exported_Macros BAS GATT Exported Macros
   * @brief
   * @{
   */
@@ -80,14 +80,14 @@ extern "C" {
 #define GATT_UUID_BATTERY                0x180F
 #define GATT_UUID_CHAR_BAS_LEVEL         0x2A19
 /** @} End of BAS_SVC_UUID */
-/** End of BAS_Exported_Macros
+/** End of BAS_GATT_Exported_Macros
 * @}
 */
 
 /*============================================================================*
  *                         Types
  *============================================================================*/
-/** @defgroup BAS_Exported_Types BAS Exported Types
+/** @defgroup BAS_GATT_Exported_Types BAS GATT Exported Types
   * @brief
   * @{
   */
@@ -117,14 +117,14 @@ typedef struct
     uint16_t cccd_cfg;
 } T_BAS_SERVER_CCCD_UPDATE;
 
-/** End of BAS_Exported_Types
+/** End of BAS_GATT_Exported_Types
 * @}
 */
 
 /*============================================================================*
  *                         Functions
  *============================================================================*/
-/** @defgroup BAS_Exported_Functions BAS Exported Functions
+/** @defgroup BAS_GATT_Exported_Functions BAS GATT Exported Functions
   * @brief
   * @{
   */
@@ -205,7 +205,7 @@ bool bas_send_battery_level_notify(uint16_t conn_handle,
 bool bas_battery_level_read_confirm(uint16_t conn_handle, uint16_t cid,
                                     uint8_t service_id, uint8_t battery_level);
 
-/** @} End of BAS_Exported_Functions */
+/** @} End of BAS_GATT_Exported_Functions */
 
 /** @} End of BAS_GATT_SVC */
 

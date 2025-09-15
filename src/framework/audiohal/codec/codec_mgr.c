@@ -1264,6 +1264,7 @@ static void codec_mgr_mic_enable(T_AUDIO_ROUTE_PHYSICAL_PATH *physical_path,
         tdm_mode = (T_SPORT_TDM_MODE_SEL)rtx_cfg.mode;
         i2s_rx_ch = physical_path->sport_ch;
         codec_drv_config_init(CODEC_CONFIG_SEL_I2S, (void *)&i2s_config);
+        i2s_config.rx_data_format = (T_SPORT_DATA_FORMAT_SEL)rtx_cfg.format;
         i2s_config.rx_tdm_mode = tdm_mode;
         i2s_config.rx_data_len = data_length;
         i2s_config.rx_channel_len = chann_length;
@@ -1534,6 +1535,7 @@ static void codec_mgr_spk_enable(T_AUDIO_ROUTE_PHYSICAL_PATH *physical_path,
     chann_length = chann_len_map[rtx_cfg.chann_len];
     i2s_sel = (T_CODEC_I2S_CHANNEL_SEL)(physical_path->sport_idx);
     codec_drv_config_init(CODEC_CONFIG_SEL_I2S, (void *)&i2s_config);
+    i2s_config.tx_data_format = (T_SPORT_DATA_FORMAT_SEL)rtx_cfg.format;
     i2s_config.tx_data_len = data_length;
     i2s_config.tx_channel_len = chann_length;
     codec_drv_i2s_config_set(i2s_sel, &i2s_config, false);
@@ -1720,6 +1722,7 @@ static void codec_mgr_aux_in_enable(T_AUDIO_ROUTE_PHYSICAL_PATH *physical_path,
 
     i2s_rx_ch = physical_path->sport_ch;
     codec_drv_config_init(CODEC_CONFIG_SEL_I2S, (void *)&i2s_config);
+    i2s_config.rx_data_format = (T_SPORT_DATA_FORMAT_SEL)rtx_cfg.format;
     i2s_config.rx_tdm_mode = tdm_mode;
     i2s_config.tx_data_len = data_length;
     i2s_config.tx_channel_len = chann_length;

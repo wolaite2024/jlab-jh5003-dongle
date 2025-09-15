@@ -9,6 +9,9 @@
 #define MAX(a,b)  (((a) > (b)) ? (a) : (b))
 #define MIN(a,b)  (((a) < (b)) ? (a) : (b))
 
+/* detect the usb src is streaming or not */
+#define USB_SRC_STREAMING_DETECT_TIMEOUT    1000
+
 /**
  * usb_dm.h
  *

@@ -114,7 +114,6 @@ typedef struct
 #if F_APP_GAMING_LEA_A2DP_SWITCH_SUPPORT
 typedef enum
 {
-    HEADSET_POWER_OFFING,
     HEADSET_CONN_EVENT_LEGACY_CONNECTED,
     HEADSET_CONN_EVENT_LEGACY_DISCONNECTED,
     HEADSET_CONN_EVENT_BLE_CONNECTED,
@@ -211,6 +210,7 @@ void app_dongle_handle_cis_disconnected(void);
 #endif
 
 #if F_APP_GAMING_WIRED_MODE_HANDLE
+bool app_dongle_get_wired_status(void);
 void app_dongle_wired_mode_handle(T_APP_DONGLE_WIRED_MODE_EVENT event);
 #endif
 

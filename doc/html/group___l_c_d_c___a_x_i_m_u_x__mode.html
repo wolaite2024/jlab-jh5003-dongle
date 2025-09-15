@@ -42,12 +42,18 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">LCDC AXIMUX Mode<div class="ingroups"><a class="el" href="group___l_c_d_c.html">LCDC</a> &raquo; <a class="el" href="group___l_c_d_c___exported___constants.html">LCDC Exported Constants</a></div></div>  </div>
+<div class="title">LCDC AXIMUX Mode<div class="ingroups"><a class="el" href="group___l_c_d_c.html">LCDC</a> &raquo; <a class="el" href="group___l_c_d_c___b_a_s_e.html">LCDC Base</a> &raquo; <a class="el" href="group___l_c_d_c___exported___constants.html">LCDC Exported Constants</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga8399ea608f82519516207e557adec678"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d_c___a_x_i_m_u_x__mode.html#ga8399ea608f82519516207e557adec678">IS_LCDC_AXI_MUX_MODE</a>(Mode)&#160;&#160;&#160;(((Mode) == <a class="el" href="group___l_c_d_c___a_x_i_m_u_x__mode.html#gga3d610fe6d795b4bb7e1ea415dbf7249faf8d29073d8f2418a4476db1bebbc37ba">LCDC_FW_MODE</a>) || ((Mode) == <a class="el" href="group___l_c_d_c___a_x_i_m_u_x__mode.html#gga3d610fe6d795b4bb7e1ea415dbf7249fa30348eb257aac021d1dfa9f522046b40">LCDC_HW_MODE</a>))</td></tr>
+<tr class="separator:ga8399ea608f82519516207e557adec678"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:ga3d610fe6d795b4bb7e1ea415dbf7249f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d_c___a_x_i_m_u_x__mode.html#ga3d610fe6d795b4bb7e1ea415dbf7249f">LCDC_AXI_MUX_MODE_T</a> { <br />
@@ -59,6 +65,25 @@ Enumerations</h2></td></tr>
 <tr class="separator:ga3d610fe6d795b4bb7e1ea415dbf7249f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ga8399ea608f82519516207e557adec678"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8399ea608f82519516207e557adec678">&#9670;&nbsp;</a></span>IS_LCDC_AXI_MUX_MODE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IS_LCDC_AXI_MUX_MODE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">Mode</td><td>)</td>
+          <td>&#160;&#160;&#160;(((Mode) == <a class="el" href="group___l_c_d_c___a_x_i_m_u_x__mode.html#gga3d610fe6d795b4bb7e1ea415dbf7249faf8d29073d8f2418a4476db1bebbc37ba">LCDC_FW_MODE</a>) || ((Mode) == <a class="el" href="group___l_c_d_c___a_x_i_m_u_x__mode.html#gga3d610fe6d795b4bb7e1ea415dbf7249fa30348eb257aac021d1dfa9f522046b40">LCDC_HW_MODE</a>))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="ga3d610fe6d795b4bb7e1ea415dbf7249f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga3d610fe6d795b4bb7e1ea415dbf7249f">&#9670;&nbsp;</a></span>LCDC_AXI_MUX_MODE_T</h2>
@@ -72,8 +97,10 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga3d610fe6d795b4bb7e1ea415dbf7249faf8d29073d8f2418a4476db1bebbc37ba"></a>LCDC_FW_MODE&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="gga3d610fe6d795b4bb7e1ea415dbf7249fa30348eb257aac021d1dfa9f522046b40"></a>LCDC_HW_MODE&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga3d610fe6d795b4bb7e1ea415dbf7249faf8d29073d8f2418a4476db1bebbc37ba"></a>LCDC_FW_MODE&#160;</td><td class="fielddoc"><p>AXI MUX is used to set the register of SDI through APB interface. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga3d610fe6d795b4bb7e1ea415dbf7249fa30348eb257aac021d1dfa9f522046b40"></a>LCDC_HW_MODE&#160;</td><td class="fielddoc"><p>AXI MUX is used to tranfer data packet from handler to SDI FIFO, user can not access the register of SDI. </p>
+</td></tr>
 </table>
 
 </div>

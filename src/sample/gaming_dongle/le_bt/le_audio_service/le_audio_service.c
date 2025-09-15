@@ -114,7 +114,7 @@ T_LE_AUDIO *ble_audio_find_by_link_id(uint8_t link_id)
     return p_link;
 }
 
-T_LE_AUDIO *ble_audio_find_by_bud_side(uint8_t bud_side)
+T_LE_AUDIO *ble_audio_find_by_bud_side(T_EARBUD_SIDE bud_side)
 {
     T_LE_AUDIO    *p_link = NULL;
     uint8_t        i;

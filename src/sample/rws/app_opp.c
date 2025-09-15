@@ -235,6 +235,6 @@ bool app_opp_connect_req(uint8_t *bd_addr)
 void app_opp_init(void)
 {
     bt_sdp_record_add((void *)opp_sdp_record);
-    bt_opp_init(2, RFC_OPP_CHANN_NUM, L2CAP_OPP_PSM);
+    bt_opp_init(RFC_OPP_CHANN_NUM, L2CAP_OPP_PSM);
     bt_mgr_cback_register(app_opp_bt_cback);
 }

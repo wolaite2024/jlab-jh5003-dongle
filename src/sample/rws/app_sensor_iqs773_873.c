@@ -29,7 +29,6 @@ ISR_TEXT_SECTION void app_psensor_iqs773_873_intr_cb(uint32_t param)
 
     /* Disable GPIO interrupt */
     hal_gpio_irq_disable(pinmux);
-    app_dlps_pad_wake_up_polarity_invert(pinmux);
     io_msg.type = IO_MSG_TYPE_GPIO;
     io_msg.subtype = IO_MSG_GPIO_PSENSOR;
 

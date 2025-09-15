@@ -7,7 +7,6 @@
 #include "app_cfg.h"
 #include "app_main.h"
 #include "app_adp.h"
-#include "app_adp_cmd.h"
 #include "app_rtk_fast_pair_adv.h"
 #include "app_bt_policy_api.h"
 #include "app_bond.h"
@@ -17,6 +16,10 @@
 
 #if F_APP_ERWS_SUPPORT
 #include "app_relay.h"
+#endif
+
+#if F_APP_ADP_5V_CMD_SUPPORT
+#include "app_adp_cmd_parse.h"
 #endif
 
 #define ADV_INTERVAL    (0x640)  //0x30 ~ 0x140
@@ -77,11 +80,10 @@ static void app_rtk_fast_pair_timer_cback(uint8_t timer_evt, uint16_t param)
 static void app_rtk_fast_pair_get_battery_state(uint8_t *p_data)
 {
     uint8_t batt_state[3] = {0};
-    bool local_charging, remote_charging, case_charging;
+    bool local_charging, remote_charging;
 
     local_charging = (app_db.local_loc == BUD_LOC_IN_CASE) ? true : false;
     remote_charging = (app_db.remote_loc == BUD_LOC_IN_CASE) ? true : false;
-    case_charging = ((app_db.case_battery >> 7) == 0) ? true : false;
 
     //byte 5~6: left and right charging and battery state
     //bit7: charging state. 0: no charging; 1:charging.
@@ -115,11 +117,14 @@ static void app_rtk_fast_pair_get_battery_state(uint8_t *p_data)
         batt_state[1] |= app_db.local_batt_level;
     }
 
+#if F_APP_ADP_5V_CMD_SUPPORT
     //byte 7: charger box charging and battery state
     //bit7: charging state. 0: no charging; 1:charging.
     //bit6~0: battery level.
     if (app_cfg_const.smart_charger_box_cmd_set == CHARGER_BOX_CMD_SET_15BITS)
     {
+        bool case_charging = ((app_db.case_battery >> 7) == 0) ? true : false;
+
         if (case_charging)
         {
             batt_state[2] |= BIT(7);
@@ -131,6 +136,7 @@ static void app_rtk_fast_pair_get_battery_state(uint8_t *p_data)
             batt_state[2] |= app_db.case_battery & 0x7f;
         }
     }
+#endif
 
     memcpy(p_data, &batt_state, 3);
 }

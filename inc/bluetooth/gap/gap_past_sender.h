@@ -27,7 +27,7 @@ extern "C"
  *============================================================================*/
 #include "gap_le.h"
 
-/** @addtogroup GAP GAP Module
+/** @addtogroup BT_Host Bluetooth Host
   * @{
   */
 
@@ -36,29 +36,8 @@ extern "C"
   */
 
 /** @addtogroup GAP_LE_PAST_SENDER GAP LE PAST Sender Module
+  * @brief GAP LE PAST Sender Module
   * @{
-  */
-
-/*============================================================================*
- *                         Macros
- *============================================================================*/
-/** @defgroup GAP_LE_PAST_SENDER_Exported_Macros GAP LE PAST Sender Exported Macros
-  * @{
-  */
-
-/** End of GAP_LE_PAST_SENDER_Exported_Macros
-  * @}
-  */
-
-/*============================================================================*
- *                         Types
- *============================================================================*/
-/** @defgroup GAP_LE_PAST_SENDER_Exported_Types GAP LE PAST Sender Exported Types
-  * @{
-  */
-
-/** End of GAP_LE_PAST_SENDER_Exported_Types
-  * @}
   */
 
 /*============================================================================*
@@ -72,7 +51,7 @@ extern "C"
  * @brief       Request the Controller to send synchronization information about the periodic advertising in an advertising set
  *              to a connected device.
  *
- *              If sending request operation is success, the result will be returned by
+ * If sending request operation is successful, the result will be returned by
  *              @ref app_gap_callback with cb_type @ref GAP_MSG_LE_PAST_SENDER_PERIODIC_ADV_SET_INFO_TRANSFER.
  *
  * @param[in]   conn_id        Used to identify a connection.
@@ -116,7 +95,7 @@ T_GAP_CAUSE le_past_sender_periodic_adv_set_info_transfer(uint8_t conn_id, uint1
  * @brief       Request the Controller to send synchronization information about the periodic advertising train identified by sync_id
  *              to a connected device.
  *
- *              If sending request operation is success, the result will be returned by
+ * If sending request operation is successful, the result will be returned by
  *              @ref app_gap_callback with cb_type @ref GAP_MSG_LE_PAST_SENDER_PERIODIC_ADV_SYNC_TRANSFER.
  *
  * @param[in]   conn_id        Used to identify a connection.
@@ -168,7 +147,7 @@ T_GAP_CAUSE le_past_sender_periodic_adv_sync_transfer(uint8_t conn_id, uint16_t 
   * @}
   */
 
-/** End of GAP
+/** End of BT_Host
   * @}
   */
 

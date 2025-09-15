@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>BT AUDIO SDK: RX Trigger Mode</title>
+<title>BT AUDIO SDK: IR RX Trigger Mode</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -44,19 +44,23 @@ $(function() {
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">RX Trigger Mode<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___i_r.html">IR</a> &raquo; <a class="el" href="group__x3e___i_r___exported___constants.html">IR Exported Constants</a></div></div>  </div>
+<div class="title">IR RX Trigger Mode<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___i_r.html">IR</a> &raquo; <a class="el" href="group__x3e___i_r___exported___constants.html">IR Exported Constants</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga3b3a1b7e48f82a2cad8d73cca637aab7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i_r___r_x___trigger___mode.html#ga3b3a1b7e48f82a2cad8d73cca637aab7">IR_RX_FALL_EDGE</a>&#160;&#160;&#160;((uint32_t)((0x0) &lt;&lt; IR_TRIGGER_MODE_Pos))</td></tr>
+<tr class="memdesc:ga3b3a1b7e48f82a2cad8d73cca637aab7"><td class="mdescLeft">&#160;</td><td class="mdescRight">IR RX is triggered by falling edge.  <a href="#ga3b3a1b7e48f82a2cad8d73cca637aab7">More...</a><br /></td></tr>
 <tr class="separator:ga3b3a1b7e48f82a2cad8d73cca637aab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga01b74c9bf80e3a8f629d91c6e653d693"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i_r___r_x___trigger___mode.html#ga01b74c9bf80e3a8f629d91c6e653d693">IR_RX_RISING_EDGE</a>&#160;&#160;&#160;((uint32_t)((0x1) &lt;&lt; IR_TRIGGER_MODE_Pos))</td></tr>
+<tr class="memdesc:ga01b74c9bf80e3a8f629d91c6e653d693"><td class="mdescLeft">&#160;</td><td class="mdescRight">IR RX is triggered by rising edge.  <a href="#ga01b74c9bf80e3a8f629d91c6e653d693">More...</a><br /></td></tr>
 <tr class="separator:ga01b74c9bf80e3a8f629d91c6e653d693"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaef20a9804e7ac5a0eed34145fda09881"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i_r___r_x___trigger___mode.html#gaef20a9804e7ac5a0eed34145fda09881">IR_RX_DOUBLE_EDGE</a>&#160;&#160;&#160;((uint32_t)((0x2) &lt;&lt; IR_TRIGGER_MODE_Pos))</td></tr>
+<tr class="memdesc:gaef20a9804e7ac5a0eed34145fda09881"><td class="mdescLeft">&#160;</td><td class="mdescRight">IR RX is triggered by double edge.  <a href="#gaef20a9804e7ac5a0eed34145fda09881">More...</a><br /></td></tr>
 <tr class="separator:gaef20a9804e7ac5a0eed34145fda09881"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga03aac85bdf65755167f108dcdf9d87b4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i_r___r_x___trigger___mode.html#ga03aac85bdf65755167f108dcdf9d87b4">IS_RX_RX_TRIGGER_EDGE</a>(EDGE)&#160;&#160;&#160;(((EDGE) == <a class="el" href="group__x3e___i_r___r_x___trigger___mode.html#ga3b3a1b7e48f82a2cad8d73cca637aab7">IR_RX_FALL_EDGE</a>) || ((EDGE) == <a class="el" href="group__x3e___i_r___r_x___trigger___mode.html#ga01b74c9bf80e3a8f629d91c6e653d693">IR_RX_RISING_EDGE</a>) || ((EDGE) == <a class="el" href="group__x3e___i_r___r_x___trigger___mode.html#gaef20a9804e7ac5a0eed34145fda09881">IR_RX_DOUBLE_EDGE</a>))</td></tr>
+<tr class="memdesc:ga03aac85bdf65755167f108dcdf9d87b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the input parameter is valid.  <a href="#ga03aac85bdf65755167f108dcdf9d87b4">More...</a><br /></td></tr>
 <tr class="separator:ga03aac85bdf65755167f108dcdf9d87b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -73,6 +77,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>IR RX is triggered by falling edge. </p>
+
 </div>
 </div>
 <a id="ga01b74c9bf80e3a8f629d91c6e653d693"></a>
@@ -87,6 +93,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>IR RX is triggered by rising edge. </p>
+
 </div>
 </div>
 <a id="gaef20a9804e7ac5a0eed34145fda09881"></a>
@@ -100,6 +108,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>IR RX is triggered by double edge. </p>
 
 </div>
 </div>
@@ -118,6 +128,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Check if the input parameter is valid. </p>
 
 </div>
 </div>

@@ -8,7 +8,7 @@
   */
 
 
-/** @defgroup BAS_CONFIG Battery Service Config
+/** @defgroup BAS_CONFIG BAS Config
   * @brief Battery service configuration file
   * @{
   */

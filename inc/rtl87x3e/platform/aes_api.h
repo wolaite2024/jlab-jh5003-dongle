@@ -30,152 +30,127 @@
 #define AES256 1
 #define ECB    1
 #define CBC    1
-#define AES_CMAC128_LSB_MSG_LEN_MAX   (255)
-/** @defgroup 87x3e_AES_API AES API Sets
-  * @brief API sets for aes encryption implementation
+/** @defgroup 87x3E_AES_ECB_API  AES ECB API Sets
+  * @brief API sets for AES ECB encryption and decryption implementation.
   * @{
   */
 
 /*============================================================================*
   *                                Functions
   *============================================================================*/
-/** @defgroup 87x3e_AES_API_Exported_Functions AES API Sets Exported Functions
+/** @defgroup 87x3E_AES_ECB_API_EXPORTED_FUNCTIONS AES ECB API Sets Exported Functions
     * @{
     */
 /**
-    * @brief  byte swap
-    * @param  src          source address
-    * @param  dst          destination address
-    * @param  len          swap size
+    * @brief  Swap bytes for the data buffer.
+    * @param  src          Source address.
+    * @param  dst          Destination address.
+    * @param  len          Swap buffer size.
     */
 
 void swap_buf(const uint8_t *src, uint8_t *dst, uint16_t len);
 
 /**
-    * @brief  128 bit AES ECB encryption on speicified plaintext and keys
-    * @note   least significant octet of encrypted data corresponds to encypted[0]
-    * @param  plaintext    specifed plain text to be encypted
-    * @param  key          keys to encrypt the plaintext
-    * @param  encrypted    output buffer to store encrypted data
-    * @return encryption results
-    * @retval true      successful
-    * @retval false     fail
+    * @brief  Encrypt the speicified 16 bytes plaintext by AES ECB mode with a 128-bit key.
+    * @note   The least significant octet of encrypted data corresponds to encypted[0].
+    * @param  plaintext    Specify the 16 bytes plaintext to be encypted.
+    * @param  key          Specify the 128-bit key to encrypt the plaintext.
+    * @param  encrypted    Specify the output buffer to store the encrypted data.
+    * @return Encryption result.
+    * @retval true      Success.
+    * @retval false     Fail.
     */
 bool aes128_ecb_encrypt(uint8_t plaintext[16], const uint8_t key[16], uint8_t *encrypted);
+
 /**
-    * @brief  128 bit AES ECB encryption on speicified plaintext and keys
-    * @note   most significant octet of encrypted data corresponds to encypted[0]
-    * @param  plaintext    specifed plain text to be encypted
-    * @param  key          keys to encrypt the plaintext
-    * @param  encrypted    output buffer to store encrypted data
-    * @return encryption results
-    * @retval true      successful
-    * @retval false     fail
+    * @brief  Encrypt the speicified 16 bytes plaintext (MSB) by AES ECB mode with a 128-bit key (MSB).
+    * @note   The most significant octet of encrypted data corresponds to encypted[0].
+    * @param  plaintext    Specify the 16 bytes plaintext (MSB) to be encypted.
+    * @param  key          Specify the 128-bit key (MSB) to encrypt the plaintext.
+    * @param  encrypted    Specify the output buffer to store the encrypted data.
+    * @return Encryption result.
+    * @retval true      Success.
+    * @retval false     Fail.
     */
 bool aes128_ecb_encrypt_msb2lsb(uint8_t plaintext[16], const uint8_t key[16],
                                 uint8_t *encrypted);
 
 /**
-    * @brief  128 bit AES ECB decryption on speicified encrypted data and keys
-    * @note   least significant octet of encrypted data corresponds to encypted[0]
-    * @param  input    specifed encypted data to be decypted
-    * @param  key          keys to decrypt the data
-    * @param  output    output buffer to store plain data
-    * @return decryption results
-    * @retval true      successful
-    * @retval false     fail
+    * @brief  Decrypt the speicified 16 bytes encrypted data by AES ECB mode with a 128-bit key.
+    * @note   The least significant octet of decrypted data corresponds to output[0].
+    * @param  input    Specify the 16 bytes encrypted data to be decypted.
+    * @param  key      Specify the 128-bit key to decrypt the data.
+    * @param  output   Specify the output buffer to store the decrypted data.
+    * @return Decryption result.
+    * @retval true      Success.
+    * @retval false     Fail.
     */
 bool aes128_ecb_decrypt(uint8_t *input, const uint8_t *key, uint8_t *output);
+
 /**
-    * @brief  128 bit AES ECB decryption on speicified encrypted data and keys
-    * @note   most significant octet of encrypted data corresponds to encypted[0]
-    * @param  input    specifed encypted data to be decypted
-    * @param  key          keys to decrypt the data
-    * @param  output    output buffer to store plain data
-    * @return decryption results
-    * @retval true      successful
-    * @retval false     fail
+    * @brief  Decrypt the speicified 16 bytes encrypted data (MSB) by AES ECB mode with a 128-bit key (MSB).
+    * @note   The most significant octet of decrypted data corresponds to output[0].
+    * @param  input    Specify the 16 bytes encrypted data (MSB) to be decypted.
+    * @param  key      Specify the 128-bit key (MSB) to decrypt the data.
+    * @param  output   Specify the output buffer to store the decrypted data.
+    * @return Decryption result.
+    * @retval true      Success.
+    * @retval false     Fail.
     */
 bool aes128_ecb_decrypt_msb2lsb(uint8_t *input, const uint8_t *key, uint8_t *output);
 
 /**
-    * @brief  256 bit AES ECB encryption on speicified plaintext and keys
-    * @note   least significant octet of encrypted data corresponds to encypted[0]
-    * @param  plaintext    specifed plain text to be encypted
-    * @param  key          keys to encrypt the plaintext
-    * @param  encrypted    output buffer to store encrypted data
-    * @return encryption results
-    * @retval true      successful
-    * @retval false     fail
+    * @brief  Encrypt the speicified 16 bytes plaintext by AES ECB mode with a 256-bit key.
+    * @note   The least significant octet of encrypted data corresponds to encypted[0].
+    * @param  plaintext    Specify the 16 bytes plaintext to be encypted.
+    * @param  key          Specify the 256-bit key to encrypt the plaintext.
+    * @param  encrypted    Specify the output buffer to store the encrypted data.
+    * @return Encryption result.
+    * @retval true      Success.
+    * @retval false     Fail.
     */
 bool aes256_ecb_encrypt(uint8_t plaintext[16], const uint8_t key[32], uint8_t *encrypted);
+
 /**
-    * @brief  256 bit AES ECB encryption on speicified plaintext and keys
-    * @note   most significant octet of encrypted data corresponds to encypted[0]
-    * @param  plaintext    specifed plain text to be encypted
-    * @param  key          keys to encrypt the plaintext
-    * @param  encrypted    output buffer to store encrypted data
-    * @return encryption results
-    * @retval true      successful
-    * @retval false     fail
+    * @brief  Encrypt the speicified 16 bytes plaintext (MSB) by AES ECB mode with a 256-bit key (MSB).
+    * @note   The most significant octet of encrypted data corresponds to encypted[0].
+    * @param  plaintext    Specify the 16 bytes plaintext (MSB) to be encypted.
+    * @param  key          Specify the 256-bit key (MSB) to encrypt the plaintext.
+    * @param  encrypted    Specify the output buffer to store the encrypted data.
+    * @return Encryption result.
+    * @retval true      Success.
+    * @retval false     Fail.
     */
 bool aes256_ecb_encrypt_msb2lsb(uint8_t plaintext[16], const uint8_t key[32],
                                 uint8_t *encrypted);
+
 /**
-    * @brief  256 bit AES ECB decryption on speicified encrypted data and keys
-    * @note   least significant octet of encrypted data corresponds to encypted[0]
-    * @param  input    specifed encypted data to be decypted
-    * @param  key          keys to decrypt the data
-    * @param  output    output buffer to store plain data
-    * @return decryption results
-    * @retval true      successful
-    * @retval false     fail
+    * @brief  Decrypt the speicified 16 bytes encrypted data by AES ECB mode with a 256-bit key.
+    * @note   The least significant octet of decrypted data corresponds to output[0].
+    * @param  input    Specify the 16 bytes encrypted data to be decypted.
+    * @param  key      Specify the 256-bit key to decrypt the data.
+    * @param  output   Specify the output buffer to store the decrypted data.
+    * @return Decryption result.
+    * @retval true      Success.
+    * @retval false     Fail.
     */
 bool aes256_ecb_decrypt(uint8_t *input, const uint8_t *key, uint8_t *output);
+
 /**
-    * @brief  256 bit AES ECB decryption on speicified encrypted data and keys
-    * @note   most significant octet of encrypted data corresponds to encypted[0]
-    * @param  input    specifed encypted data to be decypted
-    * @param  key          keys to decrypt the data
-    * @param  output    output buffer to store plain data
-    * @return decryption results
-    * @retval true      successful
-    * @retval false     fail
+    * @brief  Decrypt the speicified 16 bytes encrypted data (MSB) by AES ECB mode with a 256-bit key (MSB).
+    * @note   The most significant octet of decrypted data corresponds to output[0].
+    * @param  input    Specify the 16 bytes encrypted data (MSB) to be decypted.
+    * @param  key      Specify the 256-bit key (MSB) to decrypt the data.
+    * @param  output   Specify the output buffer to store the decrypted data.
+    * @return Decryption result.
+    * @retval true      Success.
+    * @retval false     Fail.
     */
 bool aes256_ecb_decrypt_msb2lsb(uint8_t *input, const uint8_t *key, uint8_t *output);
 
-/**
- * Implementation of aes_cmac_msb function.
- *
- * \param key   aes cmac key value.
- * \param input pointer to the msb input data buffer.
- * \param length input data length.
- * \param mac   pointer to the msb output data buffer.
- *
- * @return aes cmac calculation results
- * @retval true      successful
- * @retval false     fail
- */
-bool aes_cmac128_msb(unsigned char *key, unsigned char *input, int length,
-                     unsigned char *mac);
+/** @} */ /* End of group 87x3E_AES_ECB_API_EXPORTED_FUNCTIONS */
 
-/**
- * Implementation of aes_cmac_lsb function.
- *
- * \param key   aes cmac key value.
- * \param input pointer to the lsb input data buffer.
- * \param length input data length,it should be less than AES_CMAC128_LSB_MSG_LEN_MAX.
- * \param mac   pointer to the lsb output data buffer.
- *
- * @return aes cmac calculation results
- * @retval true      successful
- * @retval false     fail
- */
-bool aes_cmac128_lsb(unsigned char key[16], unsigned char *msg,
-                     int msg_len, unsigned char res[16]);
-/** @} */ /* End of group 87x3e_AES_API_Exported_Functions */
-
-/** @} */ /* End of group 87x3e_AES_API */
+/** @} */ /* End of group 87x3E_AES_ECB_API */
 
 
 #endif

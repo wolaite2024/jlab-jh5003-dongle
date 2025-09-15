@@ -22,7 +22,6 @@
 #include "pll.h"
 #include "pm.h"
 #include "rtl876x_gdma.h"
-#include "dma_channel.h"
 #include "rtl876x_nvic.h"
 #include "vector_table.h"
 /** @defgroup  SPI0_HS_DEMO  SPI0 HS Demo
@@ -97,11 +96,14 @@ static void spi_tx_dma_handler(void)
 {
     GDMA_ClearINTPendingBit(SPI_TX_DMA_CHANNEL_NUM, GDMA_INT_Transfer);
     IO_PRINT_INFO0("spi_tx_dma_handler");
+    /* It is recommended to post the os msg to the task thread for data processing. */
 }
 
 static void spi_rx_dma_handler(void)
 {
     GDMA_ClearINTPendingBit(SPI_RX_DMA_CHANNEL_NUM, GDMA_INT_Transfer);
+    /* It is recommended to post the os msg to the task thread for data processing. */
+
     IO_PRINT_INFO0("spi_rx_dma_handler");
     for (uint16_t i = 0; i < READ_BUF_LEN; i++)
     {

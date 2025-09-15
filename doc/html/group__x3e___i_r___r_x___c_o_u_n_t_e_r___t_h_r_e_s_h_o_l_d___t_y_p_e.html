@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>BT AUDIO SDK: IR RX Counter threshold type</title>
+<title>BT AUDIO SDK: IR RX Counter Threshold Type</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -44,17 +44,20 @@ $(function() {
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">IR RX Counter threshold type<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___i_r.html">IR</a> &raquo; <a class="el" href="group__x3e___i_r___exported___constants.html">IR Exported Constants</a></div></div>  </div>
+<div class="title">IR RX Counter Threshold Type<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___i_r.html">IR</a> &raquo; <a class="el" href="group__x3e___i_r___exported___constants.html">IR Exported Constants</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga3db4c6a315a4f417a95592a956df8383"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i_r___r_x___c_o_u_n_t_e_r___t_h_r_e_s_h_o_l_d___t_y_p_e.html#ga3db4c6a315a4f417a95592a956df8383">IR_RX_Count_Low_Level</a>&#160;&#160;&#160;((uint32_t)0 &lt;&lt; IR_RX_CNT_THR_TYPE_Pos)</td></tr>
+<tr class="memdesc:ga3db4c6a315a4f417a95592a956df8383"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="group__x3e___i_r___interrupts___definition.html#ga9107e9107205ee7714c76320f631a2b3">IR_INT_RX_CNT_THR</a> is triggered when low level couner &gt;= threshold.  <a href="#ga3db4c6a315a4f417a95592a956df8383">More...</a><br /></td></tr>
 <tr class="separator:ga3db4c6a315a4f417a95592a956df8383"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga569a151024420953c881ba221f4d5e53"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i_r___r_x___c_o_u_n_t_e_r___t_h_r_e_s_h_o_l_d___t_y_p_e.html#ga569a151024420953c881ba221f4d5e53">IR_RX_Count_High_Level</a>&#160;&#160;&#160;((uint32_t)1 &lt;&lt; IR_RX_CNT_THR_TYPE_Pos)</td></tr>
+<tr class="memdesc:ga569a151024420953c881ba221f4d5e53"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="group__x3e___i_r___interrupts___definition.html#ga9107e9107205ee7714c76320f631a2b3">IR_INT_RX_CNT_THR</a> is triggered when high level couner &gt;= threshold.  <a href="#ga569a151024420953c881ba221f4d5e53">More...</a><br /></td></tr>
 <tr class="separator:ga569a151024420953c881ba221f4d5e53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga926ebfb24ba76f392d452e0865efcb4f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i_r___r_x___c_o_u_n_t_e_r___t_h_r_e_s_h_o_l_d___t_y_p_e.html#ga926ebfb24ba76f392d452e0865efcb4f">IS_IR_RX_COUNT_LEVEL_CTRL</a>(CTRL)&#160;&#160;&#160;(((CTRL) == <a class="el" href="group__x3e___i_r___r_x___c_o_u_n_t_e_r___t_h_r_e_s_h_o_l_d___t_y_p_e.html#ga3db4c6a315a4f417a95592a956df8383">IR_RX_Count_Low_Level</a>) || ((CTRL) == <a class="el" href="group__x3e___i_r___r_x___c_o_u_n_t_e_r___t_h_r_e_s_h_o_l_d___t_y_p_e.html#ga569a151024420953c881ba221f4d5e53">IR_RX_Count_High_Level</a>))</td></tr>
+<tr class="memdesc:ga926ebfb24ba76f392d452e0865efcb4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the input parameter is valid.  <a href="#ga926ebfb24ba76f392d452e0865efcb4f">More...</a><br /></td></tr>
 <tr class="separator:ga926ebfb24ba76f392d452e0865efcb4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -71,6 +74,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p><a class="el" href="group__x3e___i_r___interrupts___definition.html#ga9107e9107205ee7714c76320f631a2b3">IR_INT_RX_CNT_THR</a> is triggered when low level couner &gt;= threshold. </p>
+
 </div>
 </div>
 <a id="ga569a151024420953c881ba221f4d5e53"></a>
@@ -84,6 +89,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p><a class="el" href="group__x3e___i_r___interrupts___definition.html#ga9107e9107205ee7714c76320f631a2b3">IR_INT_RX_CNT_THR</a> is triggered when high level couner &gt;= threshold. </p>
 
 </div>
 </div>
@@ -102,6 +109,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Check if the input parameter is valid. </p>
 
 </div>
 </div>

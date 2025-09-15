@@ -246,7 +246,7 @@ T_APP_RESULT dongle_transmit_client_callback(uint16_t conn_handle, T_GATT_CLIENT
   */
 bool dongle_transmit_client_init(P_FUN_CLIENT_GENERAL_APP_CB app_cb)
 {
-    T_ATTR_UUID srv_uuid;
+    T_ATTR_UUID srv_uuid = {0};
     srv_uuid.is_uuid16 = false;
     memcpy(srv_uuid.p.uuid128, GATT_UUID128_DONGLE_TRANSMIT_SRV, 16);
 

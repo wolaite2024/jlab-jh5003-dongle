@@ -54,7 +54,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:gaf175e3ae434fbd939bcc0ec8bf818c0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a Tx power service parameter.  <a href="#gaf175e3ae434fbd939bcc0ec8bf818c0c">More...</a><br /></td></tr>
 <tr class="separator:gaf175e3ae434fbd939bcc0ec8bf818c0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf1b406acc638f86adb3a5a34c95f63a0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_p_s___exported___functions.html#gaf1b406acc638f86adb3a5a34c95f63a0">tps_add_service</a> (void *p_func)</td></tr>
-<tr class="memdesc:gaf1b406acc638f86adb3a5a34c95f63a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add tx power service to the BLE stack database.  <a href="#gaf1b406acc638f86adb3a5a34c95f63a0">More...</a><br /></td></tr>
+<tr class="memdesc:gaf1b406acc638f86adb3a5a34c95f63a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add tx power service to the Bluetooth Host.  <a href="#gaf1b406acc638f86adb3a5a34c95f63a0">More...</a><br /></td></tr>
 <tr class="separator:gaf1b406acc638f86adb3a5a34c95f63a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -92,11 +92,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Set a Tx power service parameter. </p>
-<p>NOTE: You can call this function with a tx power service parameter type and it will set the tx power service parameter. Tx power service parameters are defined in <a class="el" href="group___t_p_s___application___parameters.html#ga8a67b627484bf680d94ebea6c242c86e">T_TPS_PARAM_TYPE</a>. If the "len" field sets to the size of a "uint16_t" ,the "p_value" field must point to a data with type of "uint16_t".</p>
+<p>This function can be called with a tx power service parameter type and it will set the tx power service parameter. Tx power service parameters are defined in <a class="el" href="group___t_p_s___application___parameters.html#ga8a67b627484bf680d94ebea6c242c86e">T_TPS_PARAM_TYPE</a>. If the "len" field is set to the size of a "uint16_t", the "p_value" field must point to data with the type of "uint16_t".</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">param_type</td><td>Tx power service parameter type: <a class="el" href="group___t_p_s___application___parameters.html#ga8a67b627484bf680d94ebea6c242c86e">T_TPS_PARAM_TYPE</a> </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of data to write </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">param_type</td><td>Tx power service parameter type: <a class="el" href="group___t_p_s___application___parameters.html#ga8a67b627484bf680d94ebea6c242c86e">T_TPS_PARAM_TYPE</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of data to write. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_value</td><td>Pointer to data to write. This is dependent on the parameter type and WILL be cast to the appropriate data type (example: data type of uint16 will be cast to uint16 pointer).</td></tr>
   </table>
   </dd>
@@ -109,7 +109,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t tx_power = 0;</div><div class="line">    <a class="code" href="group___t_p_s___exported___functions.html#gaf175e3ae434fbd939bcc0ec8bf818c0c">tps_set_parameter</a>(<a class="code" href="group___t_p_s___application___parameters.html#gga8a67b627484bf680d94ebea6c242c86ea47b70b73225383427af373da37704ddf">TPS_PARAM_TX_POWER</a>, 1, &amp;tx_power);</div><div class="line">}</div></div><!-- fragment --> 
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keywordtype">bool</span> ret = <a class="code" href="group___t_p_s___exported___functions.html#gaf175e3ae434fbd939bcc0ec8bf818c0c">tps_set_parameter</a>(<a class="code" href="group___t_p_s___application___parameters.html#gga8a67b627484bf680d94ebea6c242c86ea47b70b73225383427af373da37704ddf">TPS_PARAM_TX_POWER</a>, 1, &amp;tx_power);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="gaf1b406acc638f86adb3a5a34c95f63a0"></a>
@@ -128,22 +128,22 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Add tx power service to the BLE stack database. </p>
+<p>Add tx power service to the Bluetooth Host. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_func</td><td>Callback when service attribute was read, write or cccd update. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_func</td><td>Callback when service attribute was read, write or CCCD update. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Service id generated by the BLE stack: <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Service ID generated by the Bluetooth Host: <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a>. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">0xFF</td><td>Operation failure. </td></tr>
-    <tr><td class="paramname">others</td><td>Service id assigned by stack.</td></tr>
+    <tr><td class="paramname">others</td><td>Service ID assigned by Bluetooth Host.</td></tr>
   </table>
   </dd>
 </dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> profile_init()</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga69f3a8c88a1c2d5255f87e69e135311b">server_init</a>(1);</div><div class="line">    tps_id = <a class="code" href="group___t_p_s___exported___functions.html#gaf1b406acc638f86adb3a5a34c95f63a0">tps_add_service</a>(app_handle_profile_message);</div><div class="line">}</div></div><!-- fragment --> 
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> profile_init()</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga69f3a8c88a1c2d5255f87e69e135311b">server_init</a>(service_num);</div><div class="line">    tps_id = <a class="code" href="group___t_p_s___exported___functions.html#gaf1b406acc638f86adb3a5a34c95f63a0">tps_add_service</a>(app_handle_profile_message);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

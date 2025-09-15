@@ -1,8 +1,8 @@
 #define VERSION_MAJOR            3
 #define VERSION_MINOR            13
 #define VERSION_REVISION         4
-#define VERSION_BUILDNUM         231
-#define VERSION_GCID             0x55777c89
+#define VERSION_BUILDNUM         328
+#define VERSION_GCID             0xe81d8114
 #define CUSTOMER_NAME            sdk-v1
 #define CN_1                     's'
 #define CN_2                     'd'
@@ -12,14 +12,14 @@
 #define CN_6                     '1'
 #define CN_7                     '#'
 #define CN_8                     '#'
-#define BUILDING_TIME            Tue Jun 10 16:50:42 2025
+#define BUILDING_TIME            Tue Sep  2 15:33:00 2025
 #define NAME2STR(a)              #a
 #define CUSTOMER_NAME_S          #NAME2STR(CUSTOMER_NAME)
 #define NUM4STR(a,b,c,d)         #a "." #b "." #c "." #d
 #define VERSIONBUILDSTR(a,b,c,d) NUM4STR(a,b,c,d)
 #define VERSION_BUILD_STR        VERSIONBUILDSTR(VERSION_MAJOR,VERSION_MINOR,VERSION_REVISION,VERSION_BUILD)
-#define COMMIT                   55777c89dc99
-#define BUILDING_TIME_STR        Tue_2025_06_10_16_50_42
+#define COMMIT                   e81d8114888e
+#define BUILDING_TIME_STR        Tue_2025_09_02_15_33_00
 #define BUILDER                  btsw1_jenkins_no_reply
 #define BUILDER_STR              btsw1_jenkins_no_reply
 #define TO_STR(R) NAME2STR(R)

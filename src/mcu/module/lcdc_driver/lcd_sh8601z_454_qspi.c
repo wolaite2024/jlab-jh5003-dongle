@@ -11,7 +11,6 @@
 */
 #include "app_gui.h"
 #if (TARGET_LCD_DEVICE == LCD_DEVICE_SH8601Z)
-#include "lcd_sh8601z_454_qspi.h"
 #include "board.h"
 #include "rtl876x.h"
 #include "fmc_api.h"
@@ -19,6 +18,8 @@
 #include "trace.h"
 #include "platform_utils.h"
 #include "os_mem.h"
+#include "hal_gpio.h"
+#include "lcd_sh8601z_454_qspi.h"
 
 #define OUTPUT_PIXEL_BYTES                  2
 #define SH8601A_MAX_PARA_COUNT              300
@@ -31,6 +32,32 @@ typedef struct _SH8601A_CMD_DESC
     uint16_t wordcount;
     uint8_t  payload[SH8601A_MAX_PARA_COUNT];
 } SH8601A_CMD_DESC;
+
+static uint8_t lcd_avdd_en_pin;
+
+void lcd_avdd_en_pin_config(uint8_t lcd_avdd_en)
+{
+    lcd_avdd_en_pin = lcd_avdd_en;
+}
+
+void lcd_avdd_en_init(void)
+{
+    hal_gpio_init();
+    hal_gpio_init_pin(lcd_avdd_en_pin, GPIO_TYPE_AON, GPIO_DIR_OUTPUT, GPIO_PULL_DOWN);
+    hal_gpio_set_level(lcd_avdd_en_pin, GPIO_LEVEL_LOW);
+}
+
+void lcd_set_avdd_en(bool set)
+{
+    if (set)
+    {
+        hal_gpio_set_level(lcd_avdd_en_pin, GPIO_LEVEL_HIGH);
+    }
+    else
+    {
+        hal_gpio_set_level(lcd_avdd_en_pin, GPIO_LEVEL_LOW);
+    }
+}
 
 static void spic3_spi_write(uint8_t *buf, uint32_t len)
 {

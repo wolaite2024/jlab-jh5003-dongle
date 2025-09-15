@@ -145,6 +145,7 @@ typedef enum
     NONE,
     BLE_OTA_MODE,
     SPP_OTA_MODE,
+    ATT_OVER_BREDR_MODE,
 } T_OTA_MODE;
 
 /** @brief  rws ota sync cmd */
@@ -294,9 +295,25 @@ typedef union
         uint8_t aes_en: 1;
         uint8_t aes_mode: 1; /*1:16*N bytes, 0:first 16byte*/
         uint8_t support_multiimage: 1;
-        uint8_t rsvd: 4;
+        uint8_t normal_ota: 1; /*used by watch*/
+        uint8_t vp_update: 2; /*0:not support;1:support seq mode;2:support VPID mode*/
+        uint8_t rsvd: 1;
     };
-} DEVICE_INFO_MODE;
+} BLE_DEVICE_INFO_MODE;
+
+typedef union
+{
+    uint8_t value;
+    struct
+    {
+        uint8_t buffercheck_en: 1;
+        uint8_t aes_en: 1;
+        uint8_t aes_mode: 1; /*1:16*N bytes, 0:first 16byte*/
+        uint8_t support_multiimage: 1;
+        uint8_t vp_update: 2; /*0:not support;1:support seq mode;2:support VPID mode*/
+        uint8_t rsvd: 2;
+    };
+} SPP_DEVICE_INFO_MODE;
 
 typedef union
 {
@@ -313,19 +330,47 @@ typedef union
 
 typedef union
 {
+    uint8_t value;
+    struct
+    {
+        uint8_t chann_type: 2;
+        uint8_t rsvd: 6;
+    };
+} IOS_OTA_TYPE;
+
+typedef union
+{
     uint8_t value[12];
     struct
     {
         uint8_t ic_type;
         uint8_t spec_ver;
-        DEVICE_INFO_MODE mode;
+        BLE_DEVICE_INFO_MODE mode;
+        DEVICE_INFO_BUD_STATUS status;
+        uint8_t ota_temp_size;
+        uint8_t banknum;
+        uint16_t mtu_size;
+        uint8_t boot_patch_num;
+        IOS_OTA_TYPE type;
+        uint8_t rsvd[2];
+    };
+} BLE_DEVICE_INFO;
+
+typedef union
+{
+    uint8_t value[12];
+    struct
+    {
+        uint8_t ic_type;
+        uint8_t spec_ver;
+        SPP_DEVICE_INFO_MODE mode;
         DEVICE_INFO_BUD_STATUS status;
         uint8_t ota_temp_size;
         uint8_t banknum;
         uint16_t mtu_size;
         uint8_t rsvd[4];
     };
-} DEVICE_INFO;
+} SPP_DEVICE_INFO;
 
 typedef union
 {
@@ -400,7 +445,7 @@ void app_ota_init(void);
     * @param    p_data point to device information
     * @return   address of the device information buffer
     */
-void app_ota_get_device_info(DEVICE_INFO *p_data);
+void app_ota_get_device_info(SPP_DEVICE_INFO *p_data);
 
 /**
     * @brief    used to get image section size

@@ -63,11 +63,11 @@ Modules</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Heart Rate Service. </p>
 <p>The Heart Rate Service exposes heart rate and other data related to a heart rate sensor intended for fitness applications.</p>
-<p>Application shall register heart rate service when initialization through <a class="el" href="group___h_r_s___exported___functions.html#ga8a588190f2071303624ea0328ba7f406">hrs_add_service</a> function.</p>
-<p>The Heart Rate Measurement characteristic is used to send a heart rate measurement. Included in the characteristic are a Flags field (for showing the presence of optional fields and features supported), a heart rate measurement value field and, depending upon the contents of the Flags field, an Energy Expended field and an RR-Interval field. The RR-Interval represents the time between two consecutive R waves in an Electrocardiogram (ECG) waveform. Application can send heart rate measurement value through <a class="el" href="group___h_r_s___exported___functions.html#ga9a99682479c63c3f613384e2498a9903">hrs_heart_rate_measurement_value_notify</a> function.</p>
+<p>Applications shall register heart rate service during initialization through <a class="el" href="group___h_r_s___exported___functions.html#ga8a588190f2071303624ea0328ba7f406">hrs_add_service</a> function.</p>
+<p>The Heart Rate Measurement characteristic is used to send a heart rate measurement. Included in the characteristic are a Flags field (for showing the presence of optional fields and features supported), a heart rate measurement value field and, depending upon the contents of the Flags field, an Energy Expended field and an RR-Interval field. The RR-Interval represents the time between two consecutive R waves in an Electrocardiogram (ECG) waveform. Applications can send heart rate measurement value through <a class="el" href="group___h_r_s___exported___functions.html#ga8319aa80f9422f444a6942fc5ad1d473">hrs_heart_rate_measurement_value_notify</a> function.</p>
 <p>The Body Sensor Location characteristic of the device is used to describe the intended location of the heart rate measurement for the device. The value of the Body Sensor Location characteristic is static while in a connection.</p>
 <p>The Heart Rate Control Point characteristic is used to enable a Client to write control points to a Server to control behavior. Support for this characteristic is mandatory if the Server supports the Energy Expended feature.</p>
-<p>Application can set heart rate measurement parameter and location of the heart rate measurement for the device through <a class="el" href="group___h_r_s___exported___functions.html#gae5df308c5a114a28caa4398f27b0341f">hrs_set_parameter</a> function. </p>
+<p>Applications can set heart rate measurement parameters and the location of the heart rate measurement for the device through hrs_set_parameter function. </p>
 </div><!-- contents -->
 
 <HR SIZE=5>

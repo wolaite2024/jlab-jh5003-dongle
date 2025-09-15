@@ -11,8 +11,6 @@
 *********************************************************************************************************
 */
 
-#include <stdlib.h>
-#include <math.h>
 #include "rtl876x_i2s.h"
 #include "rtl876x_gdma.h"
 #include "rtl876x_nvic.h"
@@ -126,10 +124,10 @@ static void driver_i2s_init(void)
     I2S_InitStruct.I2S_DeviceMode       = I2S_DeviceMode_Master;
     I2S_InitStruct.I2S_TxChannelType    = I2S_Channel_Mono;
     I2S_InitStruct.I2S_RxChannelType    = I2S_Channel_Mono;
-    I2S_InitStruct.I2S_TxDataWidth      = I2S_Width_24Bits;
-    I2S_InitStruct.I2S_RxDataWidth      = I2S_Width_24Bits;
-    I2S_InitStruct.I2S_TxChannelWidth   = I2S_Width_32Bits;
-    I2S_InitStruct.I2S_RxChannelWidth   = I2S_Width_32Bits;
+    I2S_InitStruct.I2S_TxDataWidth      = I2S_Data_Width_24Bits;
+    I2S_InitStruct.I2S_RxDataWidth      = I2S_Data_Width_24Bits;
+    I2S_InitStruct.I2S_TxChannelWidth   = I2S_Channel_Width_32Bits;
+    I2S_InitStruct.I2S_RxChannelWidth   = I2S_Channel_Width_32Bits;
     I2S_InitStruct.I2S_TxDataFormat     = I2S_Mode;
     I2S_InitStruct.I2S_RxDataFormat     = I2S_Mode;
     I2S_InitStruct.I2S_DMACmd           = I2S_DMA_ENABLE;

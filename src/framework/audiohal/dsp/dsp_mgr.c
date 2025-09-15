@@ -21,8 +21,8 @@
 #include "sport_driver.h"
 #include "dsp_shm.h"
 #include "fmc_api.h"
-#include "patch_header_check.h"
 #include "sys_cfg.h"
+#include "remote.h"
 #include "bt_mgr.h"
 #include "audio_type.h"
 #include "section.h"
@@ -2821,6 +2821,21 @@ static bool record_encode_set(T_DSP_MGR_SESSION *session, T_AUDIO_FORMAT_INFO *f
             encoder->samples_per_frame = audio_codec_frame_size_get(format_type, lc3_attr);
         }
         break;
+
+    case AUDIO_FORMAT_TYPE_CVSD:
+        {
+            T_AUDIO_CVSD_ATTR *cvsd_attr;
+
+            cvsd_attr = &(format_info->attr.cvsd);
+
+            encoder->algorithm = ALGORITHM_CVSD;
+            encoder->sub_type = AAC_TYPE_LATM_NORMAL;
+            encoder->chann_mode = STREAM_CHANNEL_OUTPUT_MONO;
+            encoder->sample_rate = cvsd_attr->sample_rate;
+            encoder->bit_res = 0;
+            encoder->samples_per_frame = audio_codec_frame_size_get(format_type, cvsd_attr);
+        }
+        break;
     }
 
     return true;
@@ -3140,6 +3155,38 @@ static bool dsp_mgr_encoder_set(T_DSP_MGR_SESSION *owner)
     return true;
 }
 
+bool dsp_mgr_session_decoder_effect_control(T_DSP_MGR_SESSION_HANDLE handle,
+                                            uint8_t                  action)
+{
+    T_DSP_MGR_SESSION *session;
+    bool ret = false;
+
+    session = (T_DSP_MGR_SESSION *)handle;
+
+    if (os_queue_search(&dsp_mgr_db.session_queue, session))
+    {
+        ret = dipc_decoder_effect_control(session->type, action);
+    }
+
+    return ret;
+}
+
+bool dsp_mgr_session_encoder_effect_control(T_DSP_MGR_SESSION_HANDLE handle,
+                                            uint8_t                  action)
+{
+    T_DSP_MGR_SESSION *session;
+    bool ret = false;
+
+    session = (T_DSP_MGR_SESSION *)handle;
+
+    if (os_queue_search(&dsp_mgr_db.session_queue, session))
+    {
+        ret = dipc_encoder_effect_control(session->type, action);
+    }
+
+    return ret;
+}
+
 bool dsp_mgr_session_enable(T_DSP_MGR_SESSION_HANDLE handle)
 {
     T_SYS_EVENT_GROUP_HANDLE event_group;
@@ -3255,7 +3302,7 @@ static void dsp_record_cfg_setting(T_DSP_MGR_SESSION_HANDLE handle)
         dsp_ipc_set_sbc_encoder_hdr_config(*(session->sbc_param));
     }
 
-    dsp_ipc_set_stream_channel_out_config(dsp_mgr_db.sport0_da_chann, false);
+    dsp_ipc_set_stream_channel_in_config(dsp_mgr_db.sport0_ad_chann);
 }
 
 #if 0

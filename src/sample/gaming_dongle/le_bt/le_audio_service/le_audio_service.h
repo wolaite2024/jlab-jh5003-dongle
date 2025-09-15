@@ -19,6 +19,7 @@
 #include "bass_client.h"
 #include "bap.h"
 #include "ble_audio.h"
+#include "app_ctrl_pkt_policy.h"
 
 #define LE_AUDIO_PACS_FLAG         0x0001
 #define LE_AUDIO_ASCS_FLAG         0x0002
@@ -147,10 +148,11 @@ typedef struct
     uint16_t            supported_services;
     T_UALIST_HEAD       list;
     uint8_t             cap_disc_done;
+    uint8_t             bap_disc_all_done;
 #if DONGLE_TRANSMIT_CLIENT_SUPPORT
     uint8_t                tx_event_seqn;
     uint8_t                link_id;
-    uint8_t                bud_side;
+    T_EARBUD_SIDE          bud_side;
 #endif
 } T_LE_AUDIO;
 

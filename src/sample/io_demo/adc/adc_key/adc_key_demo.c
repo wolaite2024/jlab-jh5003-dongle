@@ -74,7 +74,7 @@ static void lpc_handler(void);
   */
 static void board_adc_init(void)
 {
-    Pad_Config(ADC_SAMPLE_PIN, PAD_SW_MODE, PAD_IS_PWRON, PAD_PULL_NONE, PAD_OUT_DISABLE, PAD_OUT_LOW);
+    Pad_Config(ADC_SAMPLE_PIN, PAD_SW_MODE, PAD_SHUTDOWN, PAD_PULL_NONE, PAD_OUT_DISABLE, PAD_OUT_LOW);
     Pinmux_Config(ADC_SAMPLE_PIN, IDLE_MODE);
 }
 

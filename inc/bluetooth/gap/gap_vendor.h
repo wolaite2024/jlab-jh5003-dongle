@@ -25,11 +25,12 @@ extern "C"
 {
 #endif
 
-/** @addtogroup GAP GAP Module
+/** @addtogroup BT_Host Bluetooth Host
   * @{
   */
 
 /** @addtogroup GAP_VENDOR GAP Vendor
+  * @brief GAP Vendor
   * @{
   */
 
@@ -80,7 +81,7 @@ typedef enum
 {
     GAP_VENDOR_NOT_SET_LINK_PRIORITY,       //!< Not set priority of link
     GAP_VENDOR_SET_SPECIFIC_LINK_PRIORITY,  //!< Set priority of specific links
-    GAP_VENDOR_SET_ALL_LINK_PRIORITY,       //!< Set priority of all link
+    GAP_VENDOR_SET_ALL_LINK_PRIORITY,       //!< Set priority of all links
 } T_GAP_VENDOR_SET_LINK_PRIORITY_MODE;
 
 /** @brief Definition of common priority. */
@@ -110,7 +111,7 @@ typedef struct
                                                           (@ref T_GAP_VENDOR_COMMON_PRIORITY). */
     T_GAP_VENDOR_SET_LINK_PRIORITY_MODE link_priority_mode;/**< Mode of setting link priority.
                                                                   (@ref T_GAP_VENDOR_SET_LINK_PRIORITY_MODE). */
-    T_GAP_VENDOR_PRIORITY_LEVEL link_priority_level;/**< Priority of all link is valid
+    T_GAP_VENDOR_PRIORITY_LEVEL link_priority_level;/**< Priority of all links is valid
                                                            if link_priority_mode is GAP_VENDOR_SET_ALL_LINK_PRIORITY. */
     uint8_t num_conn_ids;/**< Number of specific links is valid if link_priority_mode is GAP_VENDOR_SET_SPECIFIC_LINK_PRIORITY. */
     T_GAP_VENDOR_CONN_PRIORITY p_conn_id_list[1];/**< List of connection priority is valid
@@ -125,13 +126,13 @@ typedef struct
  *                         Functions
  *============================================================================*/
 
-/** @defgroup GAP_VENDOR_Exported_Functions GAP vendor command Exported Functions
+/** @defgroup GAP_VENDOR_Exported_Functions GAP Vendor Exported Functions
   * @brief GAP vendor command Exported Functions
   * @{
   */
 
 /**
- * @brief  Used for APP send vendor command to stack.
+ * @brief  Used for APP to send vendor command to Bluetooth Host.
  * @param[in] op       Opcode of command.
  * @param[in] len      Length of parameters.
  * @param[in] p_param  Pointer to parameters to write. p_param[0] is subcode.
@@ -169,7 +170,7 @@ typedef struct
     {
         T_GAP_CB_DATA cb_data;
         memcpy(&cb_data, p_cb_data, sizeof(T_GAP_CB_DATA));
-        APP_PRINT_INFO1("app_gap_common_callback: cb_type = %d", cb_type);
+        APP_PRINT_INFO1("app_gap_common_callback: cb_type %d", cb_type);
 
         switch (cb_type)
         {
@@ -189,11 +190,11 @@ typedef struct
 bool gap_vendor_cmd_req(uint16_t op, uint8_t len, uint8_t *p_param);
 
 /**
- * @brief  Register callback to vendor command, when messages in @ref GAP_VENDOR_MSG_TYPE happens, it will callback to app.
+ * @brief  Register callback to vendor command, when messages in @ref GAP_VENDOR_MSG_TYPE happens, it will callback to APP.
  * @param[in] vendor_callback Callback function provided by the APP to handle @ref GAP_VENDOR_MSG_TYPE messages sent from the GAP.
  *              @arg NULL -> Not send @ref GAP_VENDOR_MSG_TYPE messages to APP.
  *              @arg Other -> Use application defined callback function.
- * @return void
+ * @return void.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -223,21 +224,20 @@ bool gap_vendor_cmd_req(uint16_t op, uint8_t len, uint8_t *p_param);
 void gap_vendor_register_cb(P_FUN_GAP_APP_CB vendor_callback);
 
 /**
- * @brief   Set ext adv handle priority,the result will be notified by callback regisgtered
+ * @brief   Set ext ADV handle priority, the result will be notified by callback registered
             by @ref le_register_app_cb.
- * @param[0] subcode @ref HCI_EXT_SUB_SET_EXT_ADV_HANDLE_PRIORITY
- * @param[1] handle_bitmap if want to set handle 0 priority, handle_bitmap bit0 set 1,
- *           if want to set handle 1 priority, handle_bitmap bit1 set 1
- *           You can set multiple bits at the same time
- * @param[2] priority_levels Used to store the priority of all handles,unit 10
- *           priority_levels[0] The handle priority level of the first pull 1 in handle_bitmap
- *           priority_levels[1] The handle priority level of the second pull 1 in handle_bitmap,if it exists.
- *           if it does not exist, set priority_levels[1] to 0.
- *           priority_levels[2] The handle priority level of the third pull 1 in handle_bitmap,if it exists.
- *           if it does not exist, set priority_levels[2] to 0.
- *           priority_levels[3] The handle priority level of the forth pull 1 in handle_bitmap,if it exists.
- *           if it does not exist, set priority_levels[3] to 0.
- * @param[3] num  The number of elements in priority_levels ,the default num is 4, and must be no greater than 4
+ * @param[in] handle_bitmap If wanting to set handle 0 priority, handle_bitmap bit0 set 1,
+ *           if wanting to set handle 1 priority, handle_bitmap bit1 set 1. \n
+ *           Multiple bits can be set at the same time.
+ * @param[in] priority_levels Used to store the priority of all handles, unit 10. \n
+ *           priority_levels[0] The handle priority level of the first pull 1 in handle_bitmap. \n
+ *           priority_levels[1] The handle priority level of the second pull 1 in handle_bitmap, if it exists.
+ *           If it does not exist, set priority_levels[1] to 0. \n
+ *           priority_levels[2] The handle priority level of the third pull 1 in handle_bitmap, if it exists.
+ *           If it does not exist, set priority_levels[2] to 0. \n
+ *           priority_levels[3] The handle priority level of the fourth pull 1 in handle_bitmap, if it exists.
+ *           If it does not exist, set priority_levels[3] to 0.
+ * @param[in] num  The number of elements in priority_levels, the default num is 4, and must be no greater than 4.
  * @return Operation result.
  * @retval GAP_CAUSE_SUCCESS Operation success.
  * @retval Others Operation failure.
@@ -248,11 +248,11 @@ void gap_vendor_register_cb(P_FUN_GAP_APP_CB vendor_callback);
     {
         //for example: Set the priority of handle 2 to 100
         T_GAP_CAUSE cause;
-        uint8_t handle_bitmap = 0x04;// if want to set handle 2 priority, handle_bitmap bit2 set 1
+        uint8_t handle_bitmap = 0x04;// if wanting to set handle 2 priority, handle_bitmap bit2 set 1
         uint8_t priority_levels[4] = [10,0,0,0];//priority_levels[0]:The handle priority level of the first pull 1 in handle_bitmap, the unit is 10, priority_levels[0]* 10 = 100
         uit8_t num = 4;//The number of elements in priority_levels
 
-        cause = gap_vendor_ext_adv_handle_priority_set(handle_bitmap,priority_levels,num);
+        cause = gap_vendor_ext_adv_handle_priority_set(handle_bitmap, priority_levels, num);
         return (T_USER_CMD_PARSE_RESULT)cause;
     }
 
@@ -262,7 +262,7 @@ void gap_vendor_register_cb(P_FUN_GAP_APP_CB vendor_callback);
     {
         T_GAP_CB_DATA cb_data;
         memcpy(&cb_data, p_cb_data, sizeof(T_GAP_CB_DATA));
-        APP_PRINT_INFO1("app_ble_gap_cb: cb_type = %d", cb_type);
+        APP_PRINT_INFO1("app_ble_gap_cb: cb_type %d", cb_type);
         switch (cb_type)
         {
         case GAP_MSG_EXT_ADV_HANDLE_PRIORITY_SET:
@@ -281,20 +281,20 @@ T_GAP_CAUSE gap_vendor_ext_adv_handle_priority_set(uint8_t handle_bitmap, uint8_
 
 /**
  *
- * \brief  Set vendor feature of LE Host
+ * \brief  Set vendor feature of LE Host.
  *
  * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
  *
  * \param[in]  bit_number
- * \arg    0  : Only be configured when scan is idle. Whether optimize process about extended advertising report. Disabled by default.
- * \arg    1  : Only be configured when scan is idle. Whether optimize process about legacy advertising report. Disabled by default.
+ * \arg    0  : Only be configured when scan is idle. Whether to optimize process about extended advertising report. Disabled by default.
+ * \arg    1  : Only be configured when scan is idle. Whether to optimize process about legacy advertising report. Disabled by default.
  * \param[in]  bit_value
- * \arg    0  : Disable
- * \arg    1  : Enable
+ * \arg    0  : Disable.
+ * \arg    1  : Enable.
  *
- * \return         The result of set parameter request
- * \retval true    Set parameter request is successful
- * \retval false   Set parameter request is failed
+ * \return         The result of set parameter request.
+ * \retval true    Set parameter request is successful.
+ * \retval false   Set parameter request is failed.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -314,7 +314,7 @@ bool gap_vendor_le_set_host_feature(uint16_t bit_number, uint8_t bit_value);
   * @}
   */
 
-/** End of GAP
+/** End of BT_Host
   * @}
   */
 

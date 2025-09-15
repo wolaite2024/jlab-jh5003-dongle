@@ -966,7 +966,7 @@ void app_data_capture_mode_ctl(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_p
                                uint8_t app_idx, uint8_t *ack_pkt)
 {
     uint8_t dsp_data_capture_scenario = cmd_ptr[0];
-    uint8_t report_data[2];
+    uint8_t report_data[2] = {0};
     uint8_t report_mask = 0;
 
     app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);

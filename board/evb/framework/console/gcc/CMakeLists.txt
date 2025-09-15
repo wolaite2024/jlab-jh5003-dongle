@@ -9,3 +9,8 @@ set_target_properties(consoleLib PROPERTIES
 target_link_libraries(consoleLib PUBLIC romLib)
 target_precompile_headers(consoleLib PUBLIC  ${kconfig_header_dir_path}/config.h)
 target_include_directories(consoleLib PUBLIC ${kconfig_header_dir_path})
+
+add_custom_command(TARGET consoleLib POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:consoleLib>  ${lib_output_path_temp_dirt}
+    COMMENT "Copying consoleLib to  ${lib_output_path}/../temp"
+)

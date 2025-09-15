@@ -13,37 +13,69 @@ extern "C" {
 #endif /* __cplusplus */
 
 /**
- * \defgroup    BT_AVRCP BT AVRCP Profile
+ * \defgroup    BT_AVRCP BT Audio/Video Remote Control Profile (AVRCP)
  *
  * \brief   Provide BT AVRCP profile interfaces.
  */
 
 /**
- * bt_avrcp.h
+ * \defgroup    BT_AVRCP_SUPPORTED_FEATURES BT AVRCP Supported Features
  *
- * \brief  BT AVRCP supported features.
+ * \brief   BT AVRCP supported features.
  *
  * \ingroup BT_AVRCP
+ * @{
  */
 #define BT_AVRCP_FEATURE_CATEGORY_1  (1 << 0)
 #define BT_AVRCP_FEATURE_CATEGORY_2  (1 << 1)
 #define BT_AVRCP_FEATURE_CATEGORY_3  (1 << 2)
 #define BT_AVRCP_FEATURE_CATEGORY_4  (1 << 3)
+/**
+  * @}
+  */
 
 /**
- * bt_avrcp.h
+ * \defgroup    BT_AVRCP_FOLDER_ITEM_TYPE BT AVRCP Folder Item Type
  *
- * \brief  BT AVRCP Folder Item Type.
+ * \brief  BT AVRCP folder item type.
  *
  * \ingroup BT_AVRCP
+ * @{
  */
 #define BT_AVRCP_ITEM_TYPE_MEDIA_PLAYER    0x01
 #define BT_AVRCP_ITEM_TYPE_FOLDER          0x02
 #define BT_AVRCP_ITEM_TYPE_MEDIA_ELEMENT   0x03
+/**
+  * @}
+  */
 
 /**
- * bt_avrcp.h
+ * \defgroup    BT_AVRCP_EVENT_ID BT AVRCP Event ID
  *
+ * \brief  BT AVRCP event ID.
+ *
+ * \ingroup BT_AVRCP
+ * @{
+ */
+
+#define BT_AVRCP_EVENT_ID_PLAYBACK_STATUS_CHANGED             0x01 /**< Change in playback status of the current track. */
+#define BT_AVRCP_EVENT_ID_TRACK_CHANGED                       0x02 /**< Change of current track. */
+#define BT_AVRCP_EVENT_ID_TRACK_REACHED_END                   0x03 /**< Reached end of a track. */
+#define BT_AVRCP_EVENT_ID_TRACK_REACHED_START                 0x04 /**< Reached start of a track. */
+#define BT_AVRCP_EVENT_ID_PLAYBACK_POS_CHANGED                0x05 /**< Change in playback position. */
+#define BT_AVRCP_EVENT_ID_BATT_STATUS_CHANGED                 0x06 /**< Change in battery status. */
+#define BT_AVRCP_EVENT_ID_SYSTEM_STATUS_CHANGED               0x07 /**< Change in system status. */
+#define BT_AVRCP_EVENT_ID_PLAYER_APPLICATION_SETTING_CHANGED  0x08 /**< Change in player application setting. */
+#define BT_AVRCP_EVENT_ID_NOW_PLAYING_CONTENT_CHANGED         0x09 /**< The content of the now playing list has changed. */
+#define BT_AVRCP_EVENT_ID_AVAILABLE_PLAYERS_CHANGED           0x0a /**< The available players have changed. */
+#define BT_AVRCP_EVENT_ID_ADDRESSED_PLAYER_CHANGED            0x0b /**< The addressed player has been changed. */
+#define BT_AVRCP_EVENT_ID_UIDS_CHANGED                        0x0c /**< The UIDs have changed. */
+#define BT_AVRCP_EVENT_ID_VOLUME_CHANGED                      0x0d /**< The volume has been changed locally on the TG. */
+/**
+  * @}
+  */
+
+/**
  * \brief  BT AVRCP command type.
  *
  * \ingroup BT_AVRCP
@@ -58,8 +90,6 @@ typedef enum t_bt_avrcp_ctype
 } T_BT_AVRCP_CTYPE;
 
 /**
- * bt_avrcp.h
- *
  * \brief  BT AVRCP scope id.
  *
  * \ingroup BT_AVRCP
@@ -73,8 +103,6 @@ typedef enum
 } T_BT_AVRCP_SCOPE_ID;
 
 /**
- * bt_avrcp.h
- *
  * \brief  BT AVRCP major player type.
  *
  * \ingroup BT_AVRCP
@@ -88,9 +116,7 @@ typedef enum
 } T_BT_AVRCP_MAJOR_PLAYER_TYPE;
 
 /**
- * bt_avrcp.h
- *
- * \brief  BT AVRCP player sub type.
+ * \brief  BT AVRCP player subtype.
  *
  * \ingroup BT_AVRCP
  */
@@ -102,8 +128,6 @@ typedef enum
 } T_BT_AVRCP_PLAYER_SUB_TYPE;
 
 /**
- * bt_avrcp.h
- *
  * \brief  BT AVRCP response code.
  *
  * \ingroup BT_AVRCP
@@ -120,72 +144,70 @@ typedef enum t_bt_avrcp_response
 } T_BT_AVRCP_RESPONSE;
 
 /**
- * bt_avrcp.h
- *
  * \brief  BT AVRCP response status and error codes.
  *
  * \ingroup BT_AVRCP
  */
-typedef enum
+typedef enum t_bt_avrcp_rsp_error_status
 {
-    /* Sent if TG received a PDU that it did not understand */
+    /* Sent if TG received a PDU that it did not understand. */
     BT_AVRCP_RSP_STATUS_INVALID_COMMAND           = 0x00,
 
-    /* Sent if the TG received a PDU with a parameter ID that it did not understand */
+    /* Sent if the TG received a PDU with a parameter ID that it did not understand. */
     BT_AVRCP_RSP_STATUS_INVALID_PARAMETER         = 0x01,
 
-    /* Sent if the parameter ID is understood, but content is wrong or corrupted */
+    /* Sent if the parameter ID is understood, but content is wrong or corrupted. */
     BT_AVRCP_RSP_STATUS_PARAMETER_CONTENT_ERROR   = 0x02,
 
-    /* Sent if there are error conditions not covered by a more specific error code */
+    /* Sent if there are error conditions not covered by a more specific error code. */
     BT_AVRCP_RSP_STATUS_INTERNAL_ERROR            = 0x03,
 
-    /* This is the status that should be returned if the operation was successful */
+    /* This is the status that should be returned if the operation was successful. */
     BT_AVRCP_RSP_STATUS_SUCCESS                   = 0x04,
 
-    /* The UIDs on the device have changed */
+    /* The UIDs on the device have changed. */
     BT_AVRCP_RSP_STATUS_UID_CHANGED               = 0x05,
 
-    /* The Direction parameter is invalid */
+    /* The direction parameter is invalid. */
     BT_AVRCP_RSP_STATUS_INVALID_DIRECTION         = 0x07,
 
-    /* The UID provided does not refer to a folder item */
+    /* The UID provided does not refer to a folder item. */
     BT_AVRCP_RSP_STATUS_NOT_DIRECTORY             = 0x08,
 
-    /* The UID provided does not refer to any currently valid item */
+    /* The UID provided does not refer to any currently valid item. */
     BT_AVRCP_RSP_STATUS_NOT_EXIST                 = 0x09,
 
-    /* The scope parameter is invalid */
+    /* The scope parameter is invalid. */
     BT_AVRCP_RSP_STATUS_INVALID_SCOPE             = 0x0a,
 
-    /* The start of range provided is not valid */
+    /* The start of range provided is not valid. */
     BT_AVRCP_RSP_STATUS_OUT_OF_BOUNDS             = 0x0b,
 
-    /* The UID provided refers to a folder item which cannot be handled by this media player */
+    /* The UID provided refers to a folder item which cannot be handled by this media player. */
     BT_AVRCP_RSP_STATUS_NOT_PLAYABLE              = 0x0c,
 
-    /* The media is not able to be used for this operation at this time */
+    /* The media is not able to be used for this operation at this time. */
     BT_AVRCP_RSP_STATUS_MEDIA_IN_USE              = 0x0d,
 
-    /* No more items can be added to the Now Playing List */
+    /* No more items can be added to the now playing list. */
     BT_AVRCP_RSP_STATUS_PLAYING_LIST_FULL         = 0x0e,
 
-    /* The Browsed Media Player does not support search */
+    /* The browsed media player does not support search. */
     BT_AVRCP_RSP_STATUS_SEARCH_NOT_SUPPORTED      = 0x0f,
 
-    /* A search operation is already in progress */
+    /* A search operation is already in progress. */
     BT_AVRCP_RSP_STATUS_SEARCH_IN_PROGRESS        = 0x10,
 
-    /* The specified Player Id does not refer to a valid player */
+    /* The specified player Id does not refer to a valid player. */
     BT_AVRCP_RSP_STATUS_INVALID_PLAYER_ID         = 0x11,
 
-    /* The Player Id supplied refers to a Media Player which does not support browsing */
+    /* The player Id supplied refers to a media player which does not support browsing. */
     BT_AVRCP_RSP_STATUS_PLAYER_NOT_BROWSABLE      = 0x12,
 
-    /* The Player Id supplied refers to a player which is not currently addressed */
+    /* The player Id supplied refers to a player which is not currently addressed. */
     BT_AVRCP_RSP_STATUS_PLAYER_NOT_ADDRESSED      = 0x13,
 
-    /* The Search result list does not contain valid entries */
+    /* The search result list does not contain valid entries. */
     BT_AVRCP_RSP_STATUS_NO_VALID_SEARCH_RESULTS   = 0x14,
 
     BT_AVRCP_RSP_STATUS_NO_AVAILABLE_PLAYERS      = 0x15,
@@ -194,8 +216,6 @@ typedef enum
 } T_BT_AVRCP_RSP_ERROR_STATUS;
 
 /**
- * bt_avrcp.h
- *
  * \brief  BT AVRCP element attribute.
  *
  * \ingroup BT_AVRCP
@@ -213,8 +233,6 @@ typedef enum t_bt_avrcp_elem_attr
 } T_BT_AVRCP_ELEM_ATTR;
 
 /**
- * bt_avrcp.h
- *
  * \brief  BT AVRCP play status.
  *
  * \ingroup BT_AVRCP
@@ -232,8 +250,6 @@ typedef enum t_bt_avrcp_play_status
 } T_BT_AVRCP_PLAY_STATUS;
 
 /**
- * bt_avrcp.h
- *
  * \brief  BT AVRCP element attribute.
  *
  * \ingroup BT_AVRCP
@@ -247,8 +263,6 @@ typedef struct t_bt_avrcp_element_attr
 } T_BT_AVRCP_ELEMENT_ATTR;
 
 /**
- * bt_avrcp.h
- *
  * \brief  BT AVRCP app setting attribute value pair.
  *
  * \ingroup BT_AVRCP
@@ -260,8 +274,6 @@ typedef struct t_bt_avrcp_app_setting
 } T_BT_AVRCP_APP_SETTING;
 
 /**
- * bt_avrcp.h
- *
  * \brief  BT AVRCP item attribute.
  *
  * \ingroup BT_AVRCP
@@ -275,15 +287,13 @@ typedef struct t_bt_avrcp_item_attr
 } T_BT_AVRCP_ITEM_ATTR;
 
 /**
- * bt_avrcp.h
- *
  * \brief  BT AVRCP media player item.
  *
  * \ingroup BT_AVRCP
  */
 typedef struct t_bt_avrcp_media_player_item
 {
-    uint8_t   item_type;
+    uint8_t   item_type; /**< See \ref BT_AVRCP_FOLDER_ITEM_TYPE. */
     uint16_t  item_length;
     uint16_t  player_id;
     uint8_t   major_type;
@@ -292,51 +302,45 @@ typedef struct t_bt_avrcp_media_player_item
     uint8_t   feature_bitmask[16];
     uint16_t  character_set_id;
     uint16_t  display_name_length;
-    uint8_t  *p_display_name;
+    uint8_t  *display_name;
 } T_BT_AVRCP_MEDIA_PLAYER_ITEM;
 
 /**
- * bt_avrcp.h
- *
  * \brief  BT AVRCP folder item.
  *
  * \ingroup BT_AVRCP
  */
 typedef struct t_bt_avrcp_folder_item
 {
-    uint8_t   item_type;
+    uint8_t   item_type; /**< See \ref BT_AVRCP_FOLDER_ITEM_TYPE. */
     uint16_t  item_length;
     uint64_t  folder_uid;
     uint8_t   folder_type;
     uint8_t   is_playable;
     uint16_t  character_set_id;
     uint16_t  display_name_length;
-    uint8_t  *p_display_name;
+    uint8_t  *display_name;
 } T_BT_AVRCP_FOLDER_ITEM;
 
 /**
- * bt_avrcp.h
- *
  * \brief  BT AVRCP media element item.
  *
  * \ingroup BT_AVRCP
  */
 typedef struct t_bt_avrcp_media_element_item
 {
-    uint8_t                  item_type;
+    uint8_t                  item_type; /**< See \ref BT_AVRCP_FOLDER_ITEM_TYPE. */
     uint16_t                 item_length;
     uint64_t                 media_element_uid;
     uint8_t                  media_type;
     uint16_t                 character_set_id;
     uint16_t                 display_name_length;
-    uint8_t                 *p_display_name;
+    uint8_t                 *display_name;
     uint8_t                  num_of_attr;
     T_BT_AVRCP_ELEMENT_ATTR *p_attr;
 } T_BT_AVRCP_MEDIA_ELEMENT_ITEM;
 
 /**
- * bt_avrcp.h
- *
  * \brief  BT AVRCP folder.
  *
  * \ingroup BT_AVRCP
@@ -348,11 +352,10 @@ typedef struct t_bt_avrcp_folder
 } T_BT_AVRCP_FOLDER;
 
 /**
- * bt_avrcp.h
- *
  * \brief   Initialize AVRCP profile.
  *
- * \param[in]  link_num    AVRCP maximum connected link number.
+ * \param[in]  ct_features   The supported features of controller \ref BT_AVRCP_SUPPORTED_FEATURES.
+ * \param[in]  tg_features   The supported features of target \ref BT_AVRCP_SUPPORTED_FEATURES.
  *
  * \return          The status of initializing AVRCP profile.
  * \retval true     AVRCP profile was initialized successfully.
@@ -360,28 +363,10 @@ typedef struct t_bt_avrcp_folder
  *
  * \ingroup BT_AVRCP
  */
-bool bt_avrcp_init(uint8_t link_num);
+bool bt_avrcp_init(uint8_t ct_features,
+                   uint8_t tg_features);
 
 /**
- * bt_avrcp.h
- *
- * \brief   Set AVRCP supported features.
- *
- * \param[in]  ct_features   The supported features of controller.
- * \param[in]  tg_features   The supported features of target.
- *
- * \return          The status of setting AVRCP supported features.
- * \retval true     AVRCP supported features was set successfully.
- * \retval false    AVRCP supported features was failed to set.
- *
- * \ingroup BT_AVRCP
- */
-bool bt_avrcp_supported_features_set(uint8_t ct_features,
-                                     uint8_t tg_features);
-
-/**
- * bt_avrcp.h
- *
  * \brief   Send an AVRCP connection request.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -395,8 +380,6 @@ bool bt_avrcp_supported_features_set(uint8_t ct_features,
 bool bt_avrcp_connect_req(uint8_t bd_addr[6]);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Send an AVRCP disconnection request.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -410,14 +393,12 @@ bool bt_avrcp_connect_req(uint8_t bd_addr[6]);
 bool bt_avrcp_disconnect_req(uint8_t bd_addr[6]);
 
 /**
- * bt_avrcp.h
- *
  * \brief   Send an AVRCP connection confirmation.
  *
  * \param[in]  bd_addr    Remote BT address.
  * \param[in]  accept     Accept or reject the connection indication.
  * \arg    true     Accept the connection indication.
- * \arg    false    Reject the connection indication
+ * \arg    false    Reject the connection indication.
  *
  * \return         The status of sending the AVRCP connection confirmation.
  * \retval true    AVRCP connection confirmation was sent successfully.
@@ -429,8 +410,6 @@ bool bt_avrcp_connect_cfm(uint8_t bd_addr[6],
                           bool    accept);
 
 /**
- * bt_avrcp.h
- *
  * \brief   Send an AVRCP browsing connection request.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -444,8 +423,6 @@ bool bt_avrcp_connect_cfm(uint8_t bd_addr[6],
 bool bt_avrcp_browsing_connect_req(uint8_t bd_addr[6]);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Send an AVRCP browsing disconnection request.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -459,8 +436,6 @@ bool bt_avrcp_browsing_connect_req(uint8_t bd_addr[6]);
 bool bt_avrcp_browsing_disconnect_req(uint8_t bd_addr[6]);
 
 /**
- * bt_avrcp.h
- *
  * \brief   Send an AVRCP browsing connection confirmation.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -478,12 +453,27 @@ bool bt_avrcp_browsing_connect_cfm(uint8_t bd_addr[6],
                                    bool    accept);
 
 /**
- * bt_avrcp.h
+ * \brief  Send an AVRCP register notification command.
  *
+ * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
+ *
+ * \param[in]  bd_addr    Remote BT address.
+ * \param[in]  event_id   Event ID \ref BT_AVRCP_EVENT_ID.
+ *
+ * \return         The status of sending the AVRCP register notification command.
+ * \retval true    AVRCP register notification command was sent successfully.
+ * \retval false   AVRCP register notification command was failed to send.
+ *
+ * \ingroup BT_AVRCP
+ */
+bool bt_avrcp_register_notification_req(uint8_t bd_addr[6],
+                                        uint8_t event_id);
+
+/**
  * \brief  Send an AVRCP volume change response after received register notification volume change command.
  *
  * \param[in]  bd_addr    Remote BT address.
- * \param[in]  vol        Relative volume at local, 0 as Min and 0x7F as Maximum.
+ * \param[in]  vol        Relative volume at local, 0 as minimum and 0x7F as maximum.
  *
  * \return         The status of sending the AVRCP volume change response.
  * \retval true    AVRCP volume change response was sent successfully.
@@ -495,12 +485,10 @@ bool bt_avrcp_volume_change_register_rsp(uint8_t bd_addr[6],
                                          uint8_t vol);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Send an AVRCP volume change request to remote TG device.
  *
  * \param[in]  bd_addr    Remote BT address.
- * \param[in]  vol        Relative volume at local, 0 as Min and 0x7F as Maximum.
+ * \param[in]  vol        Relative volume at local, 0 as minimum and 0x7F as maximum.
  *
  * \return         The status of sending the AVRCP volume change request.
  * \retval true    AVRCP volume change request was sent successfully.
@@ -516,12 +504,10 @@ bool bt_avrcp_volume_change_req(uint8_t bd_addr[6],
                                 uint8_t vol);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Send an AVRCP play status change response after received register notification play status change command.
  *
  * \param[in]  bd_addr       Remote BT address.
- * \param[in]  play_status   The current status of playback.
+ * \param[in]  play_status   The current status of playback \ref T_BT_AVRCP_PLAY_STATUS.
  *
  * \return         The status of sending the AVRCP play status change response.
  * \retval true    AVRCP play status change response was sent successfully.
@@ -533,12 +519,10 @@ bool bt_avrcp_play_status_change_register_rsp(uint8_t                bd_addr[6],
                                               T_BT_AVRCP_PLAY_STATUS play_status);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Send an AVRCP play status change request to remote CT device.
  *
  * \param[in]  bd_addr       Remote BT address.
- * \param[in]  play_status   The current status of playback.
+ * \param[in]  play_status   The current status of playback \ref T_BT_AVRCP_PLAY_STATUS.
  *
  * \return         The status of sending the AVRCP play status change request.
  * \retval true    AVRCP play status change request was sent successfully.
@@ -554,8 +538,6 @@ bool bt_avrcp_play_status_change_req(uint8_t                bd_addr[6],
                                      T_BT_AVRCP_PLAY_STATUS play_status);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Send an AVRCP track change response after received register notification track change command.
  *
  * \xrefitem Added_API_2_13_0_0 "Added Since 2.13.0.0" "Added API"
@@ -573,8 +555,6 @@ bool bt_avrcp_track_change_register_rsp(uint8_t  bd_addr[6],
                                         uint64_t track_id);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Send an AVRCP track change request to remote CT device.
  *
  * \xrefitem Added_API_2_13_0_0 "Added Since 2.13.0.0" "Added API"
@@ -596,13 +576,11 @@ bool bt_avrcp_track_change_req(uint8_t  bd_addr[6],
                                uint64_t track_id);
 
 /**
- * bt_avrcp.h
- *
  * \brief   Send an AVRCP get element attribute request.
  *
  * \param[in]  bd_addr    Remote BT address.
  * \param[in]  attr_num   The number of attribute.
- * \param[in]  p_attr     The requested attribute list.
+ * \param[in]  attr       The requested attribute list.
  *
  * \return         The status of sending the AVRCP get element attribute request.
  * \retval true    AVRCP get element attribute request was sent successfully.
@@ -612,18 +590,16 @@ bool bt_avrcp_track_change_req(uint8_t  bd_addr[6],
  */
 bool bt_avrcp_get_element_attr_req(uint8_t  bd_addr[6],
                                    uint8_t  attr_num,
-                                   uint8_t *p_attr);
+                                   uint8_t *attr);
 
 /**
- * bt_avrcp.h
- *
  * \brief   Send an AVRCP get element attribute response.
  *
  * \xrefitem Added_API_2_13_0_0 "Added Since 2.13.0.0" "Added API"
  *
  * \param[in]  bd_addr    Remote BT address.
  * \param[in]  attr_num   The number of element attribute.
- * \param[in]  p_attr     The responded element attribute list.
+ * \param[in]  attr       The responded element attribute list \ref T_BT_AVRCP_ELEMENT_ATTR.
  *
  * \return         The status of sending the AVRCP get element attribute response.
  * \retval true    AVRCP get element attribute response was sent successfully.
@@ -633,11 +609,9 @@ bool bt_avrcp_get_element_attr_req(uint8_t  bd_addr[6],
  */
 bool bt_avrcp_get_element_attr_rsp(uint8_t                  bd_addr[6],
                                    uint8_t                  attr_num,
-                                   T_BT_AVRCP_ELEMENT_ATTR *p_attr);
+                                   T_BT_AVRCP_ELEMENT_ATTR *attr);
 
 /**
- * bt_avrcp.h
- *
  * \brief   Send an AVRCP get play status request.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -651,8 +625,6 @@ bool bt_avrcp_get_element_attr_rsp(uint8_t                  bd_addr[6],
 bool bt_avrcp_get_play_status_req(uint8_t bd_addr[6]);
 
 /**
- * bt_avrcp.h
- *
  * \xrefitem Added_API_2_13_0_0 "Added Since 2.13.0.0" "Added API"
  *
  * \brief   Send an AVRCP get play status response.
@@ -660,7 +632,7 @@ bool bt_avrcp_get_play_status_req(uint8_t bd_addr[6]);
  * \param[in]  bd_addr      Remote BT address.
  * \param[in]  song_length  The total length of the playing song in milliseconds.
  * \param[in]  song_pos     The current position of the playing in milliseconds elapsed.
- * \param[in]  play_status  Current status of playing.
+ * \param[in]  play_status  Current status of playing \ref T_BT_AVRCP_PLAY_STATUS.
  *
  * \return         The status of sending the AVRCP get play status response.
  * \retval true    AVRCP get play status response was sent successfully.
@@ -674,8 +646,6 @@ bool bt_avrcp_get_play_status_rsp(uint8_t                bd_addr[6],
                                   T_BT_AVRCP_PLAY_STATUS play_status);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Send a command that simulates keystrokes to start playing an item on remote device.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -689,8 +659,6 @@ bool bt_avrcp_get_play_status_rsp(uint8_t                bd_addr[6],
 bool bt_avrcp_play(uint8_t bd_addr[6]);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Send a command that simulates keystrokes to pause an item on remote device.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -704,8 +672,6 @@ bool bt_avrcp_play(uint8_t bd_addr[6]);
 bool bt_avrcp_pause(uint8_t bd_addr[6]);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Send a command that simulates keystrokes to stop an item on remote device.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -719,8 +685,6 @@ bool bt_avrcp_pause(uint8_t bd_addr[6]);
 bool bt_avrcp_stop(uint8_t bd_addr[6]);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Send a command that simulates keystrokes to change the media which is playing to next one on remote device.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -734,8 +698,6 @@ bool bt_avrcp_stop(uint8_t bd_addr[6]);
 bool bt_avrcp_forward(uint8_t bd_addr[6]);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Send a command that simulates keystrokes to change the media which is playing to last one on remote device.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -749,8 +711,6 @@ bool bt_avrcp_forward(uint8_t bd_addr[6]);
 bool bt_avrcp_backward(uint8_t bd_addr[6]);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Send a command that simulates keystrokes to mute remote device.
  *
  * \xrefitem Added_API_2_13_0_0 "Added Since 2.13.0.0" "Added API"
@@ -766,8 +726,6 @@ bool bt_avrcp_backward(uint8_t bd_addr[6]);
 bool bt_avrcp_mute(uint8_t *bd_addr);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Send a command that simulates keystrokes to power on/off remote device.
  *
  * \xrefitem Added_API_2_13_0_0 "Added Since 2.13.0.0" "Added API"
@@ -783,8 +741,6 @@ bool bt_avrcp_mute(uint8_t *bd_addr);
 bool bt_avrcp_power(uint8_t *bd_addr);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Send a command that simulates keystrokes to start rewind the media which is playing on remote device.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -798,8 +754,6 @@ bool bt_avrcp_power(uint8_t *bd_addr);
 bool bt_avrcp_rewind_start(uint8_t bd_addr[6]);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Send a command that simulates keystrokes to stop rewind the media which is playing on remote device.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -813,8 +767,6 @@ bool bt_avrcp_rewind_start(uint8_t bd_addr[6]);
 bool bt_avrcp_rewind_stop(uint8_t bd_addr[6]);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Send a command that simulates keystrokes to start fast forward the media which is playing on remote device.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -828,8 +780,6 @@ bool bt_avrcp_rewind_stop(uint8_t bd_addr[6]);
 bool bt_avrcp_fast_forward_start(uint8_t bd_addr[6]);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Send a command that simulates keystrokes to stop fast forward the media which is playing on remote device.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -843,8 +793,6 @@ bool bt_avrcp_fast_forward_start(uint8_t bd_addr[6]);
 bool bt_avrcp_fast_forward_stop(uint8_t bd_addr[6]);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Request TG to provide target supported player application setting attributes.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -858,8 +806,6 @@ bool bt_avrcp_fast_forward_stop(uint8_t bd_addr[6]);
 bool bt_avrcp_app_setting_attrs_list(uint8_t bd_addr[6]);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Request TG to list the set of possible values for the requested player application setting attribute.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -875,8 +821,6 @@ bool bt_avrcp_app_setting_values_list(uint8_t bd_addr[6],
                                       uint8_t attr_id);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Request TG to provide the current set values for the provided player application setting attributes list.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -894,13 +838,11 @@ bool bt_avrcp_app_setting_value_get(uint8_t  bd_addr[6],
                                     uint8_t *attr_list);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Set the player application setting list of player application setting values on TG.
  *
  * \param[in]  bd_addr         Remote BT address.
  * \param[in]  attr_num        The number of attributes.
- * \param[in]  attr_list       The attribute ID/value pair list.
+ * \param[in]  attr_list       The attribute ID/value pair list \ref T_BT_AVRCP_APP_SETTING.
  *
  * \return         The status of sending the command.
  * \retval true    Command was sent successfully.
@@ -908,13 +850,11 @@ bool bt_avrcp_app_setting_value_get(uint8_t  bd_addr[6],
  *
  * \ingroup BT_AVRCP
  */
-bool bt_avrcp_app_setting_value_set(uint8_t  bd_addr[6],
-                                    uint8_t  attr_num,
-                                    uint8_t *attr_list);
+bool bt_avrcp_app_setting_value_set(uint8_t                  bd_addr[6],
+                                    uint8_t                  attr_num,
+                                    T_BT_AVRCP_APP_SETTING  *attr_list);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Request for continuing response packets for the sent PDU command that has not completed.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -928,8 +868,6 @@ bool bt_avrcp_app_setting_value_set(uint8_t  bd_addr[6],
 bool bt_avrcp_continuing_rsp_req(uint8_t bd_addr[6]);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Send a command to abort continuing response.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -943,12 +881,10 @@ bool bt_avrcp_continuing_rsp_req(uint8_t bd_addr[6]);
 bool bt_avrcp_continuing_rsp_abort(uint8_t bd_addr[6]);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Set an absolute volume to be used by the rendering device.
  *
  * \param[in]  bd_addr    Remote BT address.
- * \param[in]  volume     Absolute Volume.
+ * \param[in]  volume     Absolute volume level that ranges from 0x00 to 0x7F.
  *
  * \return         The status of sending the command.
  * \retval true    Command was sent successfully.
@@ -960,12 +896,10 @@ bool bt_avrcp_absolute_volume_set(uint8_t bd_addr[6],
                                   uint8_t volume);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Inform the TG of which media player the CT wishes to control.
  *
  * \param[in]  bd_addr      Remote BT address.
- * \param[in]  player_id    Unique Media Player Id.
+ * \param[in]  player_id    Unique media player Id.
  *
  * \return         The status of sending the command.
  * \retval true    Command was sent successfully.
@@ -977,14 +911,12 @@ bool bt_avrcp_addressed_player_set(uint8_t  bd_addr[6],
                                    uint16_t player_id);
 
 /**
- * bt_avrcp.h
- *
  * \xrefitem Added_API_2_13_0_0 "Added Since 2.13.0.0" "Added API"
  *
  * \brief  Used by the TG to respond to set addressed player request received from the CT.
  *
  * \param[in]  bd_addr      Remote BT address.
- * \param[in]  status       BT AVRCP response status and error codes.
+ * \param[in]  status       BT AVRCP response status and error codes \ref T_BT_AVRCP_RSP_ERROR_STATUS.
  *
  * \return         The status of sending the response.
  * \retval true    Response was sent successfully.
@@ -996,15 +928,13 @@ bool bt_avrcp_addressed_player_set_rsp(uint8_t                     bd_addr[6],
                                        T_BT_AVRCP_RSP_ERROR_STATUS status);
 
 /**
- * bt_avrcp.h
- *
- * \brief  Send an addressed player change response after the CT register for the event avrcp_event_addressed_player_changed.
+ * \brief  Send an addressed player change response after the CT registers notification for addressed player change.
  *
  * \xrefitem Added_API_2_13_0_0 "Added Since 2.13.0.0" "Added API"
  *
  * \param[in]  bd_addr       Remote BT address.
- * \param[in]  player_id     Unique Media Player Id.
- * \param[in]  uid_counter   UID Counter.
+ * \param[in]  player_id     Unique media player Id.
+ * \param[in]  uid_counter   UID counter.
  *
  * \return         The status of sending the AVRCP addressed player change response.
  * \retval true    AVRCP addressed player change response was sent successfully.
@@ -1017,15 +947,13 @@ bool bt_avrcp_addressed_player_change_register_rsp(uint8_t  bd_addr[6],
                                                    uint16_t uid_counter);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Send an AVRCP addressed player change request to remote CT device.
  *
  * \xrefitem Added_API_2_13_0_0 "Added Since 2.13.0.0" "Added API"
  *
  * \param[in]  bd_addr       Remote BT address.
- * \param[in]  player_id     Unique Media Player Id.
- * \param[in]  uid_counter   UID Counter.
+ * \param[in]  player_id     Unique media player Id.
+ * \param[in]  uid_counter   UID counter.
  *
  * \return         The status of sending the AVRCP addressed player change request.
  * \retval true    AVRCP addressed player change request was sent successfully.
@@ -1042,14 +970,12 @@ bool bt_avrcp_addressed_player_change_req(uint8_t  bd_addr[6],
                                           uint16_t uid_counter);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Send a command to start playing an item indicated by the UID.
  *
  * \param[in]  bd_addr        Remote BT address.
  * \param[in]  scope          The scope in which the UID of the media element item or folder item.
  * \param[in]  uid            The UID of the media element item or folder item.
- * \param[in]  uid_counter    UID Counter.
+ * \param[in]  uid_counter    UID counter.
  *
  * \return         The status of sending the command.
  * \retval true    Command was sent successfully.
@@ -1063,8 +989,6 @@ bool bt_avrcp_item_play(uint8_t  bd_addr[6],
                         uint16_t uid_counter);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Move to next or previous groups on TG.
  *
  * \param[in]  bd_addr          Remote BT address.
@@ -1082,14 +1006,12 @@ bool bt_avrcp_group_navigate(uint8_t bd_addr[6],
                              bool    next);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Send a vendor specific command to the peer entity.
  *
  * \param[in]  bd_addr        Remote BT address.
- * \param[in]  ctype          The command type.
+ * \param[in]  ctype          The command type \ref T_BT_AVRCP_CTYPE.
  * \param[in]  company_id     24-bit unique ID obtained from IEEE RAC.
- * \param[in]  p_pdu          The command data.
+ * \param[in]  pdu            The command data.
  * \param[in]  pdu_length     Length of the command data.
  *
  * \return         The status of sending the command.
@@ -1101,18 +1023,16 @@ bool bt_avrcp_group_navigate(uint8_t bd_addr[6],
 bool bt_avrcp_vendor_cmd_send(uint8_t           bd_addr[6],
                               T_BT_AVRCP_CTYPE  ctype,
                               uint32_t          company_id,
-                              uint8_t          *p_pdu,
+                              uint8_t          *pdu,
                               uint16_t          pdu_length);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Send a vendor specific response to the peer entity.
  *
  * \param[in]  bd_addr        Remote BT address.
- * \param[in]  response       The response code.
+ * \param[in]  response       The response code \ref T_BT_AVRCP_RESPONSE.
  * \param[in]  company_id     24-bit unique ID obtained from IEEE RAC.
- * \param[in]  p_pdu          The response data.
+ * \param[in]  pdu            The response data.
  * \param[in]  pdu_length     Length of the response data.
  *
  * \return         The status of sending the response.
@@ -1124,24 +1044,22 @@ bool bt_avrcp_vendor_cmd_send(uint8_t           bd_addr[6],
 bool bt_avrcp_vendor_rsp_send(uint8_t              bd_addr[6],
                               T_BT_AVRCP_RESPONSE  response,
                               uint32_t             company_id,
-                              uint8_t             *p_pdu,
+                              uint8_t             *pdu,
                               uint16_t             pdu_length);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Send a command to retrieve a listing of the contents of a folder.
  *
  * \param[in]  bd_addr       Remote BT address.
  * \param[in]  scope         The scope.
- * \arg    0         Media Player List.
- * \arg    1         Media Player Virtual Filesystem.
+ * \arg    0         Media player list.
+ * \arg    1         Media player virtual filesystem.
  * \arg    2         Search.
- * \arg    3         Now Playing.
+ * \arg    3         Now playing.
  * \param[in]  start_item    The offset within the listing of the item which should be the first returned item.
  * \param[in]  end_item      The offset within the listing of the item which should be the final returned item..
  * \param[in]  attr_num      The number of attribute.
- * \param[in]  p_attr        The requested attribute list.
+ * \param[in]  attr          The requested attribute list.
  *
  * \return         The status of sending the command.
  * \retval true    Command was sent successfully.
@@ -1154,20 +1072,18 @@ bool bt_avrcp_browsing_folder_items_get(uint8_t   bd_addr[6],
                                         uint32_t  start_item,
                                         uint32_t  end_item,
                                         uint8_t   attr_num,
-                                        uint8_t  *p_attr);
+                                        uint32_t *attr);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Used by the TG to respond to get folder items request received from the CT.
  *
  * \xrefitem Added_API_2_13_0_0 "Added Since 2.13.0.0" "Added API"
  *
  * \param[in]  bd_addr       Remote BT address.
- * \param[in]  status        BT AVRCP response status and error codes.
- * \param[in]  uid_counter   UID Counter.
+ * \param[in]  status        BT AVRCP response status and error codes \ref T_BT_AVRCP_RSP_ERROR_STATUS.
+ * \param[in]  uid_counter   UID counter.
  * \param[in]  num_of_items  The number of items in this folder/scope.
- * \param[in]  p_items       The requested folder items list. The supported folder items are
+ * \param[in]  items         The requested folder items list. The supported folder items are
  *                           \ref T_BT_AVRCP_MEDIA_PLAYER_ITEM
  *                           \ref T_BT_AVRCP_FOLDER_ITEM
  *                           \ref T_BT_AVRCP_MEDIA_ELEMENT_ITEM
@@ -1182,18 +1098,16 @@ bool bt_avrcp_browsing_folder_items_get_rsp(uint8_t                      bd_addr
                                             T_BT_AVRCP_RSP_ERROR_STATUS  status,
                                             uint16_t                     uid_counter,
                                             uint16_t                     num_of_items,
-                                            void                        *p_items);
+                                            void                        *items);
 
 /**
- * bt_avrcp.h
- *
  * \brief  Used by the TG to respond to get total number of items request received from the CT.
  *
  * \xrefitem Added_API_2_13_0_0 "Added Since 2.13.0.0" "Added API"
  *
  * \param[in]  bd_addr       Remote BT address.
- * \param[in]  status        BT AVRCP response status and error codes.
- * \param[in]  uid_counter   UID Counter.
+ * \param[in]  status        BT AVRCP response status and error codes \ref T_BT_AVRCP_RSP_ERROR_STATUS.
+ * \param[in]  uid_counter   UID counter.
  * \param[in]  num_of_items  The number of items in this folder/scope.
  *
  * \return         The status of sending the response.
@@ -1208,16 +1122,14 @@ bool bt_avrcp_browsing_total_num_of_items_get_rsp(uint8_t                     bd
                                                   uint32_t                    num_of_items);
 
 /**
- * bt_avrcp.h
- *
  * \brief   Retrieve the metadata attributes for a particular media element item or folder item.
  *
  * \param[in]  bd_addr           Remote BT address.
  * \param[in]  scope             The scope in which the UID of the media element item or folder item is valid.
  * \param[in]  uid               The UID of the media element item or folder item.
- * \param[in]  uid_counter       UID Counter.
+ * \param[in]  uid_counter       UID counter.
  * \param[in]  attr_num          The number of attribute.
- * \param[in]  p_attr            The requested attribute list.
+ * \param[in]  attr              The requested attribute list.
  *
  * \return         The status of sending the command.
  * \retval true    Command was sent successfully.
@@ -1230,16 +1142,14 @@ bool bt_avrcp_browsing_item_attrs_get(uint8_t   bd_addr[6],
                                       uint64_t  uid,
                                       uint16_t  uid_counter,
                                       uint8_t   attr_num,
-                                      uint8_t  *p_attr);
+                                      uint32_t *attr);
 
 /**
- * bt_avrcp.h
- *
  * \brief   Send an AVRCP search request.
  *
  * \param[in]  bd_addr        Remote BT address.
  * \param[in]  length         Length of search string.
- * \param[in]  p_search_str   The search string.
+ * \param[in]  search_str     The search string.
  *
  * \return         The status of sending the command.
  * \retval true    Command was sent successfully.
@@ -1249,15 +1159,13 @@ bool bt_avrcp_browsing_item_attrs_get(uint8_t   bd_addr[6],
  */
 bool bt_avrcp_browsing_search(uint8_t   bd_addr[6],
                               uint16_t  length,
-                              uint8_t  *p_search_str);
+                              uint8_t  *search_str);
 
 /**
- * bt_avrcp.h
- *
  * \brief   Send a command to control to which player browsing commands should be routed.
  *
  * \param[in]  bd_addr     Remote BT address.
- * \param[in]  player_id   Unique Media Player Id.
+ * \param[in]  player_id   Unique media player Id.
  *
  * \return         The status of sending the command.
  * \retval true    Command was sent successfully.
@@ -1269,15 +1177,13 @@ bool bt_avrcp_browsing_browsed_player_set(uint8_t  bd_addr[6],
                                           uint16_t player_id);
 
 /**
- * bt_avrcp.h
- *
  * \brief   Send a command to navigate one level up or down in the virtual filesystem.
  *
  * \param[in]  bd_addr         Remote BT address.
- * \param[in]  uid_counter     UID Counter.
+ * \param[in]  uid_counter     UID counter.
  * \param[in]  direction       Direction.
- * \arg    0         Folder Up.
- * \arg    1         Folder Down.
+ * \arg    0         Folder up.
+ * \arg    1         Folder down.
  * \param[in]  folder_uid      The UID of the folder to navigate to.
  *
  * \return         The status of sending the command.
@@ -1292,8 +1198,6 @@ bool bt_avrcp_browsing_path_change(uint8_t  bd_addr[6],
                                    uint64_t folder_uid);
 
 /**
- * bt_avrcp.h
- *
  * \brief   Send an AVRCP cover art connection request.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -1309,13 +1213,11 @@ bool bt_avrcp_cover_art_connect_req(uint8_t  bd_addr[6],
                                     uint16_t l2c_psm);
 
 /**
- * bt_avrcp.h
- *
- * \brief  Send an AVRCP cover art disconnec request.
+ * \brief  Send an AVRCP cover art disconnect request.
  *
  * \param[in]  bd_addr    Remote BT address.
  *
- * \return         The status of sending the AVRCP cover art disconnec request.
+ * \return         The status of sending the AVRCP cover art disconnect request.
  * \retval true    AVRCP cover art disconnection request was sent successfully.
  * \retval false   AVRCP cover art disconnection request was failed to send.
  *
@@ -1324,8 +1226,6 @@ bool bt_avrcp_cover_art_connect_req(uint8_t  bd_addr[6],
 bool bt_avrcp_cover_art_disconnect_req(uint8_t bd_addr[6]);
 
 /**
- * bt_avrcp.h
- *
  * \brief   Get cover art image.
  *
  * \param[in]  bd_addr         Remote BT address.

@@ -24,6 +24,7 @@
 #define USB_HID_MSG_TYPE_ASP                        REPORT_ID_ASP_FEATURE
 #define USB_HID_MSG_TYPE_HID_IN_REQUEST             0xF2
 #define USB_HID_MSG_TYPE_HID_IN_COMPLETE            0xF3
+#define USB_HID_MSG_TYPE_HID_BUFFERED_REPORT        0xFA
 
 #define BUTTON_VOL_PLAY_CTRL_HID_DESC_ATTRIB_2  \
     0x05, 0x0C,                         /* Usage Page (Consumer)            */ \

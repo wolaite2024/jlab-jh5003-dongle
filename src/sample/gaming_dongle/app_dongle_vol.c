@@ -39,6 +39,7 @@
 #include "app_le_audio.h"
 #endif
 #include "app_usb_layer.h"
+#include "app_usb_hid_report.h"
 #include "usb_host_detect.h"
 /*============================================================================*
  *                         Macros
@@ -58,7 +59,7 @@
 #define     INIT_U2A_VOL_TIMEROUT       (1000)
 #define     HID_VALID_CHECK_BEGIN_TIMEOUT (100)
 #define     UA2_VOL_FEEDBACK_CHECK_TIMEOUT (500)
-#define     HID_RELEASE_CMD_BEGIN_TIMEOUT (50)
+#define     HID_RELEASE_CMD_BEGIN_TIMEOUT (30)
 
 #define     HID_VOL_INCREMENT_CMD       (0x01)
 #define     HID_VOL_DECREMENT_CMD       (0x02)
@@ -134,8 +135,6 @@ static uint8_t  timer_idx_hid_release_cmd_begin = 0;
 /*============================================================================*
  *                         Functions
  *============================================================================*/
-
-extern bool app_usb_hid_interrupt_in(uint8_t *data, uint8_t data_size);
 
 static bool hid_interrupt_in_queue(uint8_t *data, uint8_t len);
 
@@ -242,7 +241,7 @@ static bool hid_queue_out(void)
     {
         hid_send_queue.cur_cmd = hid_send_queue.hid_cmd[1];
     }
-    app_usb_hid_interrupt_in(hid_send_queue.hid_cmd, 3);
+    usb_hid_report_buffered_send(hid_send_queue.hid_cmd, 3);
     hid_send_queue.len = 0;
 
     /* send interval?? */
@@ -294,7 +293,7 @@ void app_dongle_hid_send_cmpl(void)
         if (hid_send_queue.cur_cmd)
         {
             hid_send_queue.cur_cmd = 0;
-            app_usb_hid_interrupt_in(data, sizeof(data));
+            usb_hid_report_buffered_send(data, sizeof(data));
         }
 #ifndef HID_SEND_INTERVAL_ENABLE
         else
@@ -679,11 +678,11 @@ static void init_u2a_vol_timeout_proc(void)
     APP_PRINT_INFO0("init_u2a_vol_timeout_proc, send HID_VOL_INCREMENT_CMD");
     g_dongle_vol.host_state = DONGLE_HOST_STATE_CHECKING;
 
-    app_usb_hid_interrupt_in(vol_up_data, 3);
-    app_usb_hid_interrupt_in(vol_release_data, 3);
+    usb_hid_report_buffered_send(vol_up_data, 3);
+    usb_hid_report_buffered_send(vol_release_data, 3);
 
-    app_usb_hid_interrupt_in(vol_down_data, 3);
-    app_usb_hid_interrupt_in(vol_release_data, 3);
+    usb_hid_report_buffered_send(vol_down_data, 3);
+    usb_hid_report_buffered_send(vol_release_data, 3);
 }
 
 static void hid_valid_check_begin_timeout_proc(void)
@@ -806,7 +805,7 @@ static void app_dongle_vol_timeout_cb(uint8_t timer_evt, uint16_t param)
             if (hid_send_queue.cur_cmd)
             {
                 hid_send_queue.cur_cmd = 0;
-                app_usb_hid_interrupt_in(data, sizeof(data));
+                usb_hid_report_buffered_send(data, sizeof(data));
             }
 #ifndef HID_SEND_INTERVAL_ENABLE
             else

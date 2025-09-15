@@ -275,19 +275,15 @@ void app_wb_opi_psram_read_write_test(void)
 
 void app_psram_enter_dlps(void)
 {
-    fmc_psram_enter_lpm(FMC_SPIC_ID_1, FMC_PSRAM_LPM_DEEP_POWER_DOWN_MODE);
+    fmc_psram_enter_lpm(FMC_SPIC_ID_1, FMC_PSRAM_LPM_HALF_SLEEP_MODE);
 }
 
 void app_psram_exit_dlps(void)
 {
-    fmc_psram_exit_lpm(FMC_SPIC_ID_1, FMC_PSRAM_LPM_DEEP_POWER_DOWN_MODE);
+    fmc_psram_exit_lpm(FMC_SPIC_ID_1, FMC_PSRAM_LPM_HALF_SLEEP_MODE);
 }
 
 void app_psram_init(void)
 {
-#if APM_PSRAM_SUPPORT
-    app_apm_opi_psram_init();
-#elif WB_PSRAM_SUPPORT
     app_wb_opi_psram_init();
-#endif
 }

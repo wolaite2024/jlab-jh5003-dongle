@@ -20,9 +20,7 @@ extern "C" {
  */
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route sport index.
+ * \brief Define the Audio Route SPORT index.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -36,9 +34,7 @@ typedef enum t_audio_route_sport_idx
 } T_AUDIO_ROUTE_SPORT_IDX;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route sport role.
+ * \brief Define the Audio Route SPORT role.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -50,9 +46,7 @@ typedef enum t_audio_route_sport_role
 } T_AUDIO_ROUTE_SPORT_ROLE;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route sport bridge.
+ * \brief Define the Audio Route SPORT bridge.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -64,9 +58,7 @@ typedef enum t_audio_route_sport_bridge
 } T_AUDIO_ROUTE_SPORT_BRIDGE;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route sport direction.
+ * \brief Define the Audio Route SPORT direction.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -78,9 +70,7 @@ typedef enum t_audio_route_sport_ch_dir
 } T_AUDIO_ROUTE_SPORT_CH_DIR;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route sport mode.
+ * \brief Define the Audio Route SPORT mode.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -94,9 +84,7 @@ typedef enum t_audio_route_sport_mode
 } T_AUDIO_ROUTE_SPORT_MODE;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route sport format.
+ * \brief Define the Audio Route SPORT format.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -110,9 +98,7 @@ typedef enum t_audio_route_sport_format
 } T_AUDIO_ROUTE_SPORT_FORMAT;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route sport data length.
+ * \brief Define the Audio Route SPORT data length.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -126,9 +112,7 @@ typedef enum t_audio_route_sport_data_len
 } T_AUDIO_ROUTE_SPORT_DATA_LEN;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route sport channel length.
+ * \brief Define the Audio Route SPORT channel length.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -142,9 +126,7 @@ typedef enum t_audio_route_sport_channel_len
 } T_AUDIO_ROUTE_SPORT_CH_LEN;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route sport channel index.
+ * \brief Define the Audio Route SPORT channel index.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -161,9 +143,7 @@ typedef enum t_audio_route_sport_channel
 } T_AUDIO_ROUTE_SPORT_CH;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route sport sample rate.
+ * \brief Define the Audio Route SPORT sample rate.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -187,9 +167,7 @@ typedef enum t_audio_route_sport_sample_rate
 } T_AUDIO_ROUTE_SPORT_SAMPLE_RATE;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route mclk rate.
+ * \brief Define the Audio Route MCLK rate.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -214,9 +192,7 @@ typedef enum t_audio_route_mclk_rate
 } T_AUDIO_ROUTE_MCLK_RATE;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route logic IO type.
+ * \brief Define the Audio Route Logical IO type.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -242,9 +218,7 @@ typedef enum t_audio_route_logic_io_type
 } T_AUDIO_ROUTE_LOGIC_IO_TYPE;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route physical IO type.
+ * \brief Define the Audio Route Physical IO type.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -257,9 +231,7 @@ typedef enum t_audio_route_physical_io_type
 } T_AUDIO_ROUTE_PHYSICAL_IO_TYPE;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route ADC channel.
+ * \brief Define the Audio Route ADC channel.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -275,9 +247,7 @@ typedef enum t_audio_route_adc_channel
 } T_AUDIO_ROUTE_ADC_CHANNEL;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route DAC channel.
+ * \brief Define the Audio Route DAC channel.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -291,9 +261,7 @@ typedef enum t_audio_route_dac_channel
 } T_AUDIO_ROUTE_DAC_CHANNEL;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route DAC mix point.
+ * \brief Define the Audio Route DAC mix point.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -305,9 +273,7 @@ typedef enum t_audio_route_dac_mix_point
 } T_AUDIO_ROUTE_DAC_MIX_POINT;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route SPK.
+ * \brief Define the Audio Route SPK index.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -319,9 +285,7 @@ typedef enum t_audio_route_spk_sel
 } T_AUDIO_ROUTE_SPK_SEL;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route MIC.
+ * \brief Define the Audio Route MIC index.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -338,9 +302,7 @@ typedef enum t_audio_route_mic_sel
 } T_AUDIO_ROUTE_MIC_SEL;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route MIC type.
+ * \brief Define the Audio Route MIC type.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -354,9 +316,7 @@ typedef enum t_audio_route_mic_type
 } T_AUDIO_ROUTE_MIC_TYPE;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route MIC class.
+ * \brief Define the Audio Route MIC class.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -369,9 +329,7 @@ typedef enum t_audio_route_mic_class
 } T_AUDIO_ROUTE_MIC_CLASS;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route physical MIC.
+ * \brief Define the Audio Route Physical MIC.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -389,9 +347,7 @@ typedef struct t_audio_route_physical_mic
 } T_AUDIO_ROUTE_PHYSICAL_MIC;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route SPK type.
+ * \brief Define the Audio Route SPK type.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -404,9 +360,7 @@ typedef enum t_audio_route_spk_type
 } T_AUDIO_ROUTE_SPK_TYPE;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route SPK Class.
+ * \brief Define the Audio Route SPK class.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -418,9 +372,7 @@ typedef enum t_audio_route_spk_class
 } T_AUDIO_ROUTE_SPK_CLASS;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route physical SPK.
+ * \brief Define the Audio Route physical SPK.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -438,9 +390,7 @@ typedef struct t_audio_route_physical_spk
 } T_AUDIO_ROUTE_PHYSICAL_SPK;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route physical AUX in.
+ * \brief Define the Audio Route physical AUX in.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -458,9 +408,7 @@ typedef struct  t_audio_route_physical_aux_in
 } T_AUDIO_ROUTE_PHYSICAL_AUX_IN;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route ADC digital gain.
+ * \brief Define the Audio Route ADC digital gain.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -470,9 +418,7 @@ typedef struct t_audio_route_adc_gain
 } T_AUDIO_ROUTE_ADC_GAIN;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route DAC digital gain.
+ * \brief Define the Audio Route DAC digital gain.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -488,9 +434,7 @@ typedef struct t_audio_route_sidetone_info
 } T_AUDIO_ROUTE_SIDETONE_INFO;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route sport rtx config.
+ * \brief Define the Audio Route SPORT configuration group.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -506,9 +450,7 @@ typedef struct t_audio_route_sport_cfg
 } T_AUDIO_ROUTE_SPORT_CFG;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route physical IO attribute.
+ * \brief Define the Audio Route Physical IO attribute.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -520,9 +462,7 @@ typedef union t_audio_route_physical_io_attr
 } T_AUDIO_ROUTE_PHYSICAL_IO_ATTR;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route IO polarity.
+ * \brief Define the Audio Route Logical IO polarity.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -533,9 +473,7 @@ typedef enum t_audio_route_io_polarity
 } T_AUDIO_ROUTE_IO_POLARITY;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route physical path.
+ * \brief Define the Audio Route physical path.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -551,9 +489,7 @@ typedef struct t_audio_route_physical_path
 } T_AUDIO_ROUTE_PHYSICAL_PATH;
 
 /**
- * audio_route.h
- *
- * \brief Define Audio route physical path group.
+ * \brief Define the Audio Route physical path group.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -563,51 +499,51 @@ typedef struct t_audio_route_physical_path_group
     T_AUDIO_ROUTE_PHYSICAL_PATH *physical_path;
 } T_AUDIO_ROUTE_PHYSICAL_PATH_GROUP;
 
+/**
+ * \brief   Define the Audio Route DAC gain get callback.
+ *
+ * \param[in]  category   The Audio Category \ref T_AUDIO_CATEGORY.
+ * \param[in]  level      The DAC digital gain level.
+ * \param[out] gain       The DAC gain value \ref T_AUDIO_ROUTE_DAC_GAIN.
+ *
+ * \return  The status of getting the DAC gain of Audio Category.
+ * \retval  true    The Audio Category DAC gain was got successfully.
+ * \retval  false   The Audio Category DAC gain was failed to get.
+ *
+ * \ingroup AUDIO_ROUTE
+ */
 typedef bool (*P_AUDIO_ROUTE_DAC_GAIN_CBACK)(T_AUDIO_CATEGORY        category,
                                              uint32_t                level,
                                              T_AUDIO_ROUTE_DAC_GAIN *gain);
 
+/**
+ * \brief   Define the Audio Route ADC gain get callback.
+ *
+ * \param[in]  category   The Audio Category \ref T_AUDIO_CATEGORY.
+ * \param[in]  level      The ADC digital gain level.
+ * \param[out] gain       The ADC gain value \ref T_AUDIO_ROUTE_ADC_GAIN.
+ *
+ * \return  The status of getting the ADC gain of Audio Category.
+ * \retval  true    The Audio Category ADC gain was got successfully.
+ * \retval  false   The Audio Category ADC gain was failed to get.
+ *
+ * \ingroup AUDIO_ROUTE
+ */
 typedef bool (*P_AUDIO_ROUTE_ADC_GAIN_CBACK)(T_AUDIO_CATEGORY        category,
                                              uint32_t                level,
                                              T_AUDIO_ROUTE_ADC_GAIN *gain);
 typedef bool (*P_AUDIO_ROUTE_SIDETONE_CBACK)(T_AUDIO_ROUTE_SIDETONE_INFO *info);
 
 /**
- * audio_route.h
+ * \brief   Register the Audio Route ADC and DAC gain get callback.
  *
- * \brief   Initialize the audio route management.
+ * \param[in] category    Audio Category \ref T_AUDIO_CATEGORY.
+ * \param[in] dac_cback   Audio Route DAC gain callback \ref P_AUDIO_ROUTE_DAC_GAIN_CBACK.
+ * \param[in] adc_cback   Audio Route ADC gain callback \ref P_AUDIO_ROUTE_ADC_GAIN_CBACK.
  *
- * \param[in] void
- *
- * \return  The status of initializing the audio route.
- * \retval  true    Audio route was initialized successfully.
- * \retval  false   Audio route was failed to initialized.
- *
- * \ingroup AUDIO_ROUTE
- */
-bool audio_route_init(void);
-
-/**
- * audio_route.h
- *
- * \brief   Deinitialize the audio route managerment.
- *
- * \ingroup AUDIO_ROUTE
- */
-void audio_route_deinit(void);
-
-/**
- * audio_route.h
- *
- * \brief   Register the audio route ADC and DAC gain get callback.
- *
- * \param[in] category    Audio category \ref T_AUDIO_CATEGORY.
- * \param[in] dac_cback   Audio route DAC gain cback \ref P_AUDIO_ROUTE_DAC_GAIN_CBACK.
- * \param[in] adc_cback   Audio route ADC gain cback \ref P_AUDIO_ROUTE_ADC_GAIN_CBACK.
- *
- * \return  The status of registering the ADC and DAC gain cback of audio route.
- * \retval  true    Audio route gain cback was registered successfully.
- * \retval  false   Audio route gain cback was failed to registered.
+ * \return  The status of registering the ADC and DAC gain callback of Audio Route.
+ * \retval  true    Audio Route gain callback was registered successfully.
+ * \retval  false   Audio Route gain callback was failed to registered.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -616,11 +552,9 @@ bool audio_route_gain_register(T_AUDIO_CATEGORY             category,
                                P_AUDIO_ROUTE_ADC_GAIN_CBACK adc_cback);
 
 /**
- * audio_route.h
+ * \brief   Unregister the Audio Route ADC and DAC callback.
  *
- * \brief   Unregister the audio route ADC and DAC callback.
- *
- * \param[in] category    Audio category \ref T_AUDIO_CATEGORY.
+ * \param[in] category    Audio Category \ref T_AUDIO_CATEGORY.
  *
  * \return  void.
  *
@@ -629,7 +563,7 @@ bool audio_route_gain_register(T_AUDIO_CATEGORY             category,
 void audio_route_gain_unregister(T_AUDIO_CATEGORY category);
 
 /**
- * audio_route.h
+ * \brief   Set the Audio Route Record device.
  *
  * \brief   Register the audio route sidetone get callback.
  *
@@ -659,31 +593,27 @@ void audio_route_sidetone_unregister(void);
  *
  * \brief   Set the audio route record device.
  *
- * \param[in] dev Record device
+ * \param[in] dev The Record device.
  *
  * \ingroup AUDIO_ROUTE
  */
 void audio_route_record_dev_set(uint32_t dev);
 
 /**
- * audio_route.h
+ * \brief   Get the Audio Route Record device.
  *
- * \brief   Get the audio route record device.
- *
- * \return  The record device.
+ * \return  The Record device.
  *
  * \ingroup AUDIO_ROUTE
  */
 uint32_t audio_route_record_dev_get(void);
 
 /**
- * audio_route.h
+ * \brief   Get the Audio Route ADC gain.
  *
- * \brief   Get the audio route ADC gain.
- *
- * \param[in]  category Audio category \ref T_AUDIO_CATEGORY.
- * \param[in]  level    The ADC digital gain level of the audio category.
- * \param[out] gain     The ADC digital gain value of the audio category.
+ * \param[in]  category The Audio Category \ref T_AUDIO_CATEGORY.
+ * \param[in]  level    The ADC digital gain level of the Audio Category.
+ * \param[out] gain     The ADC digital gain value of the Audio Category.
  *
  * \return  The status of getting ADC gain.
  *
@@ -694,13 +624,11 @@ bool audio_route_adc_gain_get(T_AUDIO_CATEGORY        category,
                               T_AUDIO_ROUTE_ADC_GAIN *gain);
 
 /**
- * audio_route.h
+ * \brief   Get the Audio Route DAC gain.
  *
- * \brief   Get the audio route DAC gain.
- *
- * \param[in]  category Audio category \ref T_AUDIO_CATEGORY.
- * \param[in]  level    The DAC digital gain level of the audio category.
- * \param[out] gain     The DAC digital gain value of the audio category.
+ * \param[in]  category The Audio Category \ref T_AUDIO_CATEGORY.
+ * \param[in]  level    The DAC digital gain level of the Audio Category.
+ * \param[out] gain     The DAC digital gain value of the Audio Category.
  *
  * \return  The status of getting DAC gain.
  *
@@ -723,39 +651,33 @@ bool audio_route_dac_gain_get(T_AUDIO_CATEGORY        category,
 bool audio_route_sidetone_info_get(T_AUDIO_ROUTE_SIDETONE_INFO *info);
 
 /**
- * audio_route.h
+ * \brief   Get the Audio Route physical path.
  *
- * \brief   Get the audio route physical path.
+ * \param[in] category    The Audio Category \ref T_AUDIO_CATEGORY.
  *
- * \param[in] category    Audio category \ref T_AUDIO_CATEGORY.
- *
- * \return The physical group of audio category.
+ * \return The physical path group of Audio Category.
  *
  * \ingroup AUDIO_ROUTE
  */
 T_AUDIO_ROUTE_PHYSICAL_PATH_GROUP audio_route_physical_path_take(T_AUDIO_CATEGORY category);
 
 /**
- * audio_route.h
+ * \brief   Free the Audio Route physical path.
  *
- * \brief   Free the audio route physical path.
- *
- * \param[in] physical_path_group    Audio route physical_path_group \ref T_AUDIO_ROUTE_PHYSICAL_PATH_GROUP.
+ * \param[in] physical_path_group    The Audio Route physical path group \ref T_AUDIO_ROUTE_PHYSICAL_PATH_GROUP.
  *
  * \ingroup AUDIO_ROUTE
  */
 void audio_route_physical_path_give(T_AUDIO_ROUTE_PHYSICAL_PATH_GROUP *physical_path_group);
 
 /**
- * audio_route.h
+ * \brief   Register the Audio Route physical path.
  *
- * \brief   Register the audio route physical path.
+ * \param[in] category              The Audio Category \ref T_AUDIO_CATEGORY.
+ * \param[in] physical_path         The Audio Route physical path \ref T_AUDIO_ROUTE_PHYSICAL_PATH.
+ * \param[in] physical_path_num     The Audio Route physical path num .
  *
- * \param[in] category              Audio category \ref T_AUDIO_CATEGORY.
- * \param[in] physical_path         Audio route physical path \ref T_AUDIO_ROUTE_PHYSICAL_PATH.
- * \param[in] physical_path_num     Audio route physical path num .
- *
- * \return The status of registering audio route physical path.
+ * \return The status of registering Audio Route physical path.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -764,13 +686,11 @@ bool audio_route_category_path_register(T_AUDIO_CATEGORY             category,
                                         uint8_t                      physical_path_num);
 
 /**
- * audio_route.h
+ * \brief   Unregister the Audio Route physical path.
  *
- * \brief   Unregister the audio route physical path.
+ * \param[in] category   The Audio Category \ref T_AUDIO_CATEGORY.
  *
- * \param[in] category   Audio category \ref T_AUDIO_CATEGORY.
- *
- * \return The status of unregistering audio route physical path.
+ * \return The status of unregistering Audio Route physical path.
  *
  * \ingroup AUDIO_ROUTE
  */
@@ -779,12 +699,12 @@ bool audio_route_category_path_unregister(T_AUDIO_CATEGORY category);
 /**
 * audio_route.h
 *
-* \brief   Get the SPORT rtx config.
+* \brief   Get the SPORT configuration group.
 *
-* \param[in] sport_id   SPORT ID \ref T_AUDIO_ROUTE_SPORT_IDX.
-* \param[in] direction  direction \ref T_AUDIO_ROUTE_SPORT_CH_DIR.
+* \param[in] sport_id   The SPORT index \ref T_AUDIO_ROUTE_SPORT_IDX.
+* \param[in] direction  The SPORT direction \ref T_AUDIO_ROUTE_SPORT_CH_DIR.
 *
-* \return The SPORT rtx config.
+* \return The SPORT configuration group.
 *
 * \ingroup AUDIO_ROUTE
 */
@@ -792,11 +712,9 @@ T_AUDIO_ROUTE_SPORT_CFG audio_route_sport_cfg_get(T_AUDIO_ROUTE_SPORT_IDX sport_
                                                   T_AUDIO_ROUTE_SPORT_CH_DIR direction);
 
 /**
- * audio_route.h
- *
  * \brief   Get the ramp gain.
  *
- * \param[in] category   Audio category \ref T_AUDIO_CATEGORY.
+ * \param[in] category   The Audio Category \ref T_AUDIO_CATEGORY.
  *
  * \return The ramp gain.
  *
@@ -805,32 +723,28 @@ T_AUDIO_ROUTE_SPORT_CFG audio_route_sport_cfg_get(T_AUDIO_ROUTE_SPORT_IDX sport_
 int16_t audio_route_ramp_gain_get(T_AUDIO_CATEGORY category);
 
 /**
- * audio_route.h
+ * \brief   Enable the Logical IO for the specific Audio Category.
  *
- * \brief   Enable the logical IO for the specific category.
+ * \param[in] category   The Audio Category \ref T_AUDIO_CATEGORY.
+ * \param[in] io         The Logical IO type \ref T_AUDIO_ROUTE_LOGIC_IO_TYPE.
  *
- * \param[in] category   Audio category \ref T_AUDIO_CATEGORY.
- * \param[in] io         logic IO \ref T_AUDIO_ROUTE_LOGIC_IO_TYPE.
- *
- * \return          The status of enabling the logical IO.
- * \retval true     Logical IO was enabled successfully.
- * \retval false    Logical IO was failed to enable.
+ * \return          The status of enabling the Logical IO.
+ * \retval true     The Logical IO was enabled successfully.
+ * \retval false    The Logical IO was failed to enable.
  *
  * \ingroup AUDIO_ROUTE
  */
 bool audio_route_logic_io_enable(T_AUDIO_CATEGORY category, T_AUDIO_ROUTE_LOGIC_IO_TYPE io);
 
 /**
- * audio_route.h
+ * \brief   Disable the Logical IO for the specific Audio Category.
  *
- * \brief   Disable the logical IO for the specific category.
+ * \param[in] category   The Audio Category \ref T_AUDIO_CATEGORY.
+ * \param[in] io         The Logical IO \ref T_AUDIO_ROUTE_LOGIC_IO_TYPE.
  *
- * \param[in] category   Audio category \ref T_AUDIO_CATEGORY.
- * \param[in] io         logic IO \ref T_AUDIO_ROUTE_LOGIC_IO_TYPE.
- *
- * \return          The status of disabling the logical IO.
- * \retval true     Logical IO was disabled successfully.
- * \retval false    Logical IO was failed to disable.
+ * \return          The status of disabling the Logical IO.
+ * \retval true     The Logical IO was disabled successfully.
+ * \retval false    The Logical IO was failed to disable.
  *
  * \ingroup AUDIO_ROUTE
  */

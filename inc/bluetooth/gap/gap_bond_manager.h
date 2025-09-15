@@ -3,7 +3,7 @@
 *     Copyright(c) 2021, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * @file    gap_bond_manager.h
-  * @brief   This file contains all the functions prototypes for the GAP bond manager
+  * @brief   This file contains all the function prototypes for the GAP bond manager
   *          related functions.
   * @details
   * @author
@@ -34,11 +34,6 @@ extern "C"
   * @{
   */
 
-/** @defgroup GAP_CB_MSG_MODULE GAP Callback Message
-  * @brief GAP Callback Message
-  * @{
-  */
-
 /*============================================================================*
  *                         Macros
  *============================================================================*/
@@ -57,19 +52,19 @@ extern "C"
 /** @defgroup APP_BOND_MANAGER_MSG_Opcodes APP Bond Manager Msg Opcodes
   * @{
   */
-#define APP_BOND_MGR_SIGN_COUNTER_RESULT_INFO                   0x0001   /* no confirm */
-#define APP_BOND_MGR_SET_REMOTE_CLIENT_SUPPORTED_FEATURES_INFO  0x0002   /* return value of callback. @ref T_APP_RESULT */
-#define APP_BOND_MGR_SET_CCCD_DATA_PENDING_INFO                 0x0003   /* return value of callback. @ref T_APP_RESULT */
+#define APP_BOND_MGR_SIGN_COUNTER_RESULT_INFO                   0x0001   //!< No confirm.
+#define APP_BOND_MGR_SET_REMOTE_CLIENT_SUPPORTED_FEATURES_INFO  0x0002   //!< Return value of callback. @ref T_APP_RESULT.
+#define APP_BOND_MGR_SET_CCCD_DATA_PENDING_INFO                 0x0003   //!< Return value of callback. @ref T_APP_RESULT.
 
-#define APP_BOND_MGR_GATT_SERVER_STORE_IND                      0x0020   /* GATT_STORE_OP_GET_CCC_BITS: gap_update_cccd_info; GATT_STORE_OP_SET_CCC_BITS: no confirm */
+#define APP_BOND_MGR_GATT_SERVER_STORE_IND                      0x0020   //!< GATT_STORE_OP_GET_CCC_BITS: gap_update_cccd_info; GATT_STORE_OP_SET_CCC_BITS: no confirm.
 
-#define APP_BOND_MGR_GET_REMOTE_CLIENT_SUPPORTED_FEATURES_IND   0x0040   /* gap_acl_update_remote_client_supported_features */
+#define APP_BOND_MGR_GET_REMOTE_CLIENT_SUPPORTED_FEATURES_IND   0x0040   //!< gap_acl_update_remote_client_supported_features.
 
-#define APP_BOND_MGR_LE_ACL_STATUS_INFO                         0x0060   /* no confirm */
+#define APP_BOND_MGR_LE_ACL_STATUS_INFO                         0x0060   //!< No confirm.
 
-#define APP_BOND_MGR_LE_AUTHEN_RESULT_IND                       0x0080   /* le_bond_authen_result_confirm */
+#define APP_BOND_MGR_LE_AUTHEN_RESULT_IND                       0x0080   //!< le_bond_authen_result_confirm.
 
-#define APP_BOND_MGR_LE_AUTHEN_KEY_REQ_IND                      0x00A0  /* le_bond_authen_key_req_confirm */
+#define APP_BOND_MGR_LE_AUTHEN_KEY_REQ_IND                      0x00A0  //!< le_bond_authen_key_req_confirm.
 /** End of APP_BOND_MANAGER_MSG_Opcodes
   * @}
   */
@@ -87,8 +82,8 @@ extern "C"
 
 typedef enum
 {
-    GATT_STORE_OP_GET_CCC_BITS,            /**< get CCC Bits for one <bd_addr,bdtype> */
-    GATT_STORE_OP_SET_CCC_BITS,            /**< set CCC Bits for one <bd_addr,bdtype> */
+    GATT_STORE_OP_GET_CCC_BITS,            /**< Get CCC Bits for one <bd_addr,bdtype>. */
+    GATT_STORE_OP_SET_CCC_BITS,            /**< Set CCC Bits for one <bd_addr,bdtype>. */
 } T_GATT_STORE_OPCODE;
 
 typedef enum
@@ -160,7 +155,7 @@ typedef struct
 typedef union
 {
     T_LE_ACL_STATUS_PARAM_AUTHEN        authen;       /**< Parameter for authentication status. */
-    T_LE_ACL_STATUS_PARAM_RESOLVE       resolve;      /**< Address resolvable paramter. */
+    T_LE_ACL_STATUS_PARAM_RESOLVE       resolve;      /**< Address resolvable parameter. */
 } T_LE_ACL_STATUS_PARAM;
 
 typedef struct
@@ -222,16 +217,61 @@ typedef struct
   * @{
   */
 
+/**
+ * @brief   Check whether GAP Bond Manager is enabled.
+ *
+ * @return Check result.
+ * @retval true     GAP Bond Manager is enabled.
+ * @retval false    GAP Bond Manager is disabled.
+ */
 bool gap_get_gap_bond_manager(void);
 
+/**
+ * @brief   When receiving @ref APP_BOND_MGR_LE_AUTHEN_RESULT_IND,
+ *          APP can call this API to confirm authentication result.
+ *
+ * @param[in] bd_addr          Remote bluetooth device address.
+ * @param[in] remote_addr_type Remote bluetooth device address type.
+ * @param[in] key_type         Key type.
+ * @param[in] cause            User confirm result.
+ * @return Operation result.
+ * @retval GAP_CAUSE_SUCCESS    Operation success.
+ * @retval GAP_CAUSE_NON_CONN   Operation failure. No connection.
+ */
 T_GAP_CAUSE le_bond_authen_result_confirm(uint8_t *bd_addr, T_GAP_REMOTE_ADDR_TYPE remote_addr_type,
                                           T_GAP_KEY_TYPE key_type, T_GAP_CFM_CAUSE cause);
 
+/**
+ * @brief   When receiving @ref APP_BOND_MGR_LE_AUTHEN_KEY_REQ_IND,
+ *          APP can call this API to confirm authentication key request.
+ *
+ * @param[in] bd_addr          Remote bluetooth device address.
+ * @param[in] remote_addr_type Remote bluetooth device address type.
+ * @param[in] key_len          Key length to set.
+ * @param[in] p_key            Pointer to key to set.
+ * @param[in] key_type         Key type.
+ * @param[in] cause            User confirm result.
+ * @return Operation result.
+ * @retval GAP_CAUSE_SUCCESS    Operation success.
+ * @retval GAP_CAUSE_NON_CONN   Operation failure. No connection.
+ */
 T_GAP_CAUSE le_bond_authen_key_req_confirm(uint8_t *bd_addr,
                                            T_GAP_REMOTE_ADDR_TYPE remote_addr_type,
                                            uint8_t key_len, uint8_t *p_key, T_GAP_KEY_TYPE key_type,
                                            T_GAP_CFM_CAUSE cause);
 
+/**
+ * @brief   When receiving @ref APP_BOND_MGR_GATT_SERVER_STORE_IND,
+ *          and the parameter op is @ref GATT_STORE_OP_GET_CCC_BITS,
+ *          APP shall call this API to update the CCCD information.
+ *
+ * @param[in]  conn_handle   Connection handle of the ACL link.
+ * @param[in]  data_len      The length of the updated CCCD data.
+ * @param[in,out] data       Point to the updated CCCD data.
+ * @return Operation result.
+ * @retval true     Operation success.
+ * @retval false    Operation failure.
+ */
 bool gap_update_cccd_info(uint16_t conn_handle, uint8_t data_len, uint8_t *data);
 /** End of GAP_BOND_MANAGER_Exported_Functions
   * @}

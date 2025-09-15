@@ -40,6 +40,7 @@
 #include "gaming_bt.h"
 #include "app_dongle_transmit_client.h"
 
+/* detect usb stream before send out */
 #if F_APP_USB_HIGH_SPEED_0_5MS
 #define USB_STREAM_DETECT_TIMEOUT      300
 #else
@@ -366,9 +367,6 @@ RAM_TEXT_SECTION static void uac_silence_stream_handle(T_UAC_LABEL uac_label)
 
         if (uac1_streaming == false && uac2_streaming == false)
         {
-            /* tell app usb stream stop */
-            app_usb_other_trigger_evt(USB_OTHER_EVT_AUDIO_USB_SRC_STREAM_STATE, false);
-
             app_usb_other_trigger_evt(USB_OTHER_EVT_AUDIO_USB_STREAM_READY_TO_TX, false);
         }
     }
@@ -425,12 +423,6 @@ RAM_TEXT_SECTION static void app_usb_stream_detect(T_UAC_LABEL uac_label)
     else
     {
         uac2_streaming = true;
-    }
-
-    if (dongle_status.usb_is_streaming == false)
-    {
-        /* tell app usb streaming start */
-        app_usb_other_trigger_evt(USB_OTHER_EVT_AUDIO_USB_SRC_STREAM_STATE, true);
     }
 
     if (uac_label == USB_AUDIO_STREAM_LABEL_1)
@@ -540,6 +532,25 @@ RAM_TEXT_SECTION static bool app_usb_audio_pre_handle(T_UAC_LABEL label, uint8_t
 {
     bool ret = true;
 
+#if F_APP_USB_AUDIO_FEEDBACK_SUPPORT
+    if (uac_feedback_state == USB_FEEDBACK_DETECT)
+    {
+        APP_PRINT_TRACE0("app_usb_audio_data_xmit_out: feedback detect");
+
+        if (length != usb_pcm_size_per_interval)
+        {
+            feedback_detect_cnt++;
+
+            if (feedback_detect_cnt >= 3)
+            {
+                app_usb_other_trigger_evt(USB_OTHER_EVT_FEEDBACK_SUPPORT, 0);
+            }
+        }
+
+        return false;
+    }
+#endif
+
 #if F_APP_USB_SILENCE_STREAM_DETECT
     uint32_t pcm_abs = app_usb_calc_average_after_abs(data, length);
     bool prev_pcm_silence = silence_pcm_detect;
@@ -599,7 +610,10 @@ RAM_TEXT_SECTION static bool app_usb_audio_pre_handle(T_UAC_LABEL label, uint8_t
 RAM_TEXT_SECTION
 void app_usb_audio_sample_rate_adjust(int16_t freq_diff)
 {
-    APP_PRINT_TRACE1("app_usb_audio_sample_rate_adjust: %d", freq_diff);
+    if (freq_diff != 0)
+    {
+        APP_PRINT_TRACE1("app_usb_audio_sample_rate_adjust: %d", freq_diff);
+    }
 
     uac_sample_freq_diff = freq_diff;
 }
@@ -620,8 +634,12 @@ bool app_usb_audio_feedback_ds(uint8_t *data, uint16_t length, uint32_t label)
     }
 
     memcpy(data, &freq, length);
-    APP_PRINT_TRACE3("app_usb_audio_feedback_ds, len %d, label %d, freq %d",
-                     length, label, freq);
+
+    if (freq != USB_AUDIO_DS_SAMPLE_RATE)
+    {
+        APP_PRINT_TRACE3("app_usb_audio_feedback_ds, len %d, label %d, freq %d",
+                         length, label, freq);
+    }
 
     return ret;
 }
@@ -675,9 +693,13 @@ bool app_usb_audio_data_xmit_out(uint8_t *data, uint16_t length, T_UAC_LABEL lab
     uint8_t bytes_per_sample = (UAC_SPK_BIT_RES / 8) * UAC_SPK_CHAN_NUM;
 #endif
 
-    if (!app_usb_check_disallow_usb_stream())
+    uint32_t curr_time = sys_timestamp_get();
+    static uint32_t last_time;
+
+    if (curr_time - last_time > (USB_SRC_STREAMING_DETECT_TIMEOUT - 200))
     {
-        app_usb_stream_detect(label);
+        app_usb_other_trigger_evt(USB_OTHER_EVT_USB_SRC_STREAMING, 0);
+        last_time = curr_time;
     }
 
     if (length != usb_pcm_size_per_interval
@@ -710,29 +732,12 @@ bool app_usb_audio_data_xmit_out(uint8_t *data, uint16_t length, T_UAC_LABEL lab
         length = usb_pcm_size_per_interval;
     }
 
-#if F_APP_USB_AUDIO_FEEDBACK_SUPPORT
-    if (uac_feedback_state == USB_FEEDBACK_DETECT)
-    {
-        APP_PRINT_TRACE0("app_usb_audio_data_xmit_out: feedback detect");
-
-        if (length != usb_pcm_size_per_interval)
-        {
-            feedback_detect_cnt++;
-
-            if (feedback_detect_cnt >= 3)
-            {
-                app_usb_other_trigger_evt(USB_OTHER_EVT_FEEDBACK_SUPPORT, 0);
-            }
-        }
-
-        return false;
-    }
-#endif
-
     if (app_usb_audio_pre_handle(label, data, length) == false)
     {
         return false;
     }
+
+    app_usb_stream_detect(label);
 
     if (app_get_usb_stream_ready_to_tx() == false)
     {
@@ -933,14 +938,28 @@ uint16_t app_usb_get_dac_gain_by_level(uint8_t level)
 
 void app_usb_set_usb_src_streaming(bool streaming)
 {
-    APP_PRINT_TRACE1("app_usb_set_usb_src_streaming: %d", streaming);
-
     if (dongle_status.usb_is_streaming != streaming)
     {
+        APP_PRINT_TRACE1("app_usb_set_usb_src_streaming: %d", streaming);
+
         dongle_status.usb_is_streaming = streaming;
 
 #if F_APP_LEA_DONGLE_BINDING
         app_gaming_sync_dongle_status();
+#endif
+
+#if F_APP_USB_AUDIO_FEEDBACK_SUPPORT
+        if (streaming)
+        {
+            if (app_usb_audio_get_feedback_state() == USB_FEEDBACK_DETECT)
+            {
+                app_usb_feedback_detect_start();
+            }
+        }
+        else
+        {
+            app_usb_feedback_detect_stop();
+        }
 #endif
     }
 }

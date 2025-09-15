@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2018, Realsil Semiconductor Corporation. All rights reserved.
  */
-
+#if (F_APP_QDECODE_SUPPORT == 1)
 #include "string.h"
 #include "rtl876x_nvic.h"
 #include "rtl876x_qdec.h"
@@ -23,7 +23,12 @@
 #endif
 #endif
 
-#if (F_APP_QDECODE_SUPPORT == 1)
+/*
+    For bb2 series, not support initphase function, the following issue mey occur:
+    pin status is 01 or 10 -> do driver init -> pin status not change but interrupt happens
+    Software needs identify this situation and avoid misoperations.
+*/
+#define QDEC_NOT_SUPPORT_PHASE_INIT_SOLUTION    1
 
 #define QDEC_Y_PHA_PIN app_cfg_const.qdec_y_pha_pinmux
 #define QDEC_Y_PHB_PIN app_cfg_const.qdec_y_phb_pinmux
@@ -51,6 +56,11 @@ static uint8_t pre_a_status = 0;
 static uint8_t pre_b_status = 0;
 
 static bool wakeup_2phase = false;
+
+#if QDEC_NOT_SUPPORT_PHASE_INIT_SOLUTION
+static bool wait_reverse_interrupt_after_init = false;
+static bool wait_forward_interrupt_after_init = false;
+#endif
 
 static void app_qdec_ctx_clear(void)
 {
@@ -111,6 +121,22 @@ void app_qdec_driver_init(void)
     NVIC_Init(&nvic_init_struct);
 
     app_qdec_ctx_clear();
+
+#if QDEC_NOT_SUPPORT_PHASE_INIT_SOLUTION
+    if ((qdecoder_a_status == 1) && (qdecoder_b_status == 0))
+    {
+        wait_reverse_interrupt_after_init = true;
+    }
+    else if ((qdecoder_a_status == 0) && (qdecoder_b_status == 1))
+    {
+        wait_forward_interrupt_after_init = true;
+    }
+    else
+    {
+        wait_reverse_interrupt_after_init = false;
+        wait_forward_interrupt_after_init = false;
+    }
+#endif
 }
 
 void app_qdec_init(void)
@@ -153,13 +179,19 @@ void app_qdec_pad_enter_dlps_config(void)
         app_dlps_set_pad_wake_up(QDEC_Y_PHB_PIN, PAD_WAKEUP_POL_HIGH);
     }
 
-    //DBG_DIRECT("qdecoder_a_status %d  qdecoder_b_status %d  ", qdecoder_a_status,
+    RCC_PeriphClockCmd(APBPeriph_QDEC, APBPeriph_QDEC_CLOCK, DISABLE);
+
+    //DBG_DIRECT("qdecoder_a_status %d, qdecoder_b_status %d", qdecoder_a_status,
     //           qdecoder_b_status);
 }
 
 void app_qdec_pad_exit_dlps_config(void)
 {
     app_qdec_init_status_read();
+
+    //APP_PRINT_INFO2("exit qdecoder_a_status %d  qdecoder_b_status %d  ", qdecoder_a_status,
+    //           qdecoder_b_status);
+
     app_qdec_driver_init();
 }
 
@@ -261,6 +293,34 @@ RAM_TEXT_SECTION void QDEC_Handler(void)
         qdec_ctx.dir = QDEC_GetAxisDirection(QDEC, QDEC_AXIS_Y);
         qdec_ctx.cur_ct = QDEC_GetAxisCount(QDEC, QDEC_AXIS_Y);
 
+#if QDEC_NOT_SUPPORT_PHASE_INIT_SOLUTION
+        bool need_action = true;
+
+        if (qdec_ctx.dir == 0)
+        {
+            if (wait_reverse_interrupt_after_init)
+            {
+                wait_reverse_interrupt_after_init = false;
+                if (qdec_ctx.cur_ct == -1)
+                {
+                    qdec_ctx.pre_ct = qdec_ctx.cur_ct;
+                    need_action = false;
+                }
+            }
+        }
+        else if (qdec_ctx.dir == 1)
+        {
+            if (wait_forward_interrupt_after_init)
+            {
+                wait_forward_interrupt_after_init = false;
+                if (qdec_ctx.cur_ct == 1)
+                {
+                    qdec_ctx.pre_ct = qdec_ctx.cur_ct;
+                    need_action = false;
+                }
+            }
+        }
+#endif
         T_IO_MSG qdec_msg;
 
         qdec_msg.type = IO_MSG_TYPE_GPIO;
@@ -270,18 +330,23 @@ RAM_TEXT_SECTION void QDEC_Handler(void)
         APP_PRINT_INFO3("QDEC_Handler: pre_ct %d , cur_ct %d  wakeup_2phase %d", qdec_ctx.pre_ct,
                         qdec_ctx.cur_ct, wakeup_2phase);
 
-        if (qdec_ctx.pre_ct == 0)
+#if QDEC_NOT_SUPPORT_PHASE_INIT_SOLUTION
+        if (need_action)
+#endif
         {
-            if (wakeup_2phase == false)
+            if (qdec_ctx.pre_ct == 0)
+            {
+                if (wakeup_2phase == false)
+                {
+                    app_io_msg_send(&qdec_msg);
+                    qdec_ctx.pre_ct = qdec_ctx.cur_ct;
+                }
+            }
+            else if ((qdec_ctx.cur_ct - qdec_ctx.pre_ct >= 2) || (qdec_ctx.cur_ct - qdec_ctx.pre_ct <= -2))
             {
                 app_io_msg_send(&qdec_msg);
                 qdec_ctx.pre_ct = qdec_ctx.cur_ct;
             }
-        }
-        else if ((qdec_ctx.cur_ct - qdec_ctx.pre_ct >= 2) || (qdec_ctx.cur_ct - qdec_ctx.pre_ct <= -2))
-        {
-            app_io_msg_send(&qdec_msg);
-            qdec_ctx.pre_ct = qdec_ctx.cur_ct;
         }
 
         /* clear qdec interrupt flags */

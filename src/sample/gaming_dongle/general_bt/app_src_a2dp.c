@@ -24,7 +24,7 @@ static void app_src_a2dp_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
             p_link = app_find_br_link(param->a2dp_conn_ind.bd_addr);
             if (p_link != NULL)
             {
-                bt_a2dp_connect_cfm(p_link->bd_addr, true);
+                bt_a2dp_connect_cfm(p_link->bd_addr, 0, true);
             }
         }
         break;
@@ -36,6 +36,11 @@ static void app_src_a2dp_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
             {
                 T_BT_EVENT_PARAM_A2DP_CONFIG_CMPL *cfg = &param->a2dp_config_cmpl;
                 p_link->a2dp_codec_type = param->a2dp_config_cmpl.codec_type;
+
+                if (param->a2dp_config_cmpl.role == BT_A2DP_ROLE_SNK)
+                {
+                    bt_a2dp_stream_delay_report_req(param->a2dp_config_cmpl.bd_addr, A2DP_LATENCY_MS);
+                }
 
                 if (p_link->a2dp_codec_type == BT_A2DP_CODEC_TYPE_SBC)
                 {
@@ -152,8 +157,7 @@ static void app_src_a2dp_profile_init(void)
         //sep2.u.codec_aac.vbr_supported = true;
         //sep2.u.codec_aac.bit_rate = 0;
 
-        bt_a2dp_init(2, A2DP_LATENCY_MS,
-                     BT_A2DP_CAPABILITY_MEDIA_TRANSPORT | BT_A2DP_CAPABILITY_MEDIA_CODEC |
+        bt_a2dp_init(BT_A2DP_CAPABILITY_MEDIA_TRANSPORT | BT_A2DP_CAPABILITY_MEDIA_CODEC |
                      BT_A2DP_CAPABILITY_DELAY_REPORTING);
         bt_a2dp_stream_endpoint_add(sep1);
         //bt_a2dp_stream_end_point_set(sep2);

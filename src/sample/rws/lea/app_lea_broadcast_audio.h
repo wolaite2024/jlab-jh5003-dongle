@@ -7,7 +7,6 @@ extern "C" {
 #include "bt_direct_msg.h"
 #include "app_lea_scan.h"
 
-
 #define APP_LEA_BCA_GET                     0xFF
 #define APP_LEA_BCA_CLR                     0x00
 #define APP_BIS_BS_FIND_RECORD              0x01
@@ -30,6 +29,20 @@ extern "C" {
 
 typedef enum
 {
+    LEA_BCA_TMR_SCAN,
+    LEA_BCA_TMR_RESYNC,
+    LEA_BCA_TMR_MAX,
+} T_LEA_BCA_TMR;
+
+typedef enum
+{
+    LEA_BCA_BIS_SCAN_TO,
+    LEA_BCA_BIS_RESYNC_TO,
+    LEA_BCA_TO_MAX,
+} T_LEA_BCA_TO;
+
+typedef enum
+{
     LEA_BCA_MMI              = 0x01,
     LEA_BCA_BIS_SYNC         = 0x02,
     LEA_BCA_BIS_TERMINATE    = 0x03,
@@ -47,6 +60,19 @@ typedef enum
     LEA_BCA_STATE_WAIT_RETRY       = 0x06,
 } T_APP_LEA_BCA_STATE;
 
+typedef enum
+{
+    LEA_REMOTE_BCA_PA_INFO_SYNC       = 0x01,
+    LEA_REMOTE_BCA_SYNC_DOWNSTREAM    = 0x02,
+    LEA_REMOTE_BCA_SYNC_TRACK_STATE   = 0x03,
+    LEA_REMOTE_BCA_SYNC_BIS_STATUS    = 0x04,
+    LEA_REMOTE_BCA_MSG_TOTAL
+} T_LEA_REMOTE_BCA_MSG;
+
+bool app_lea_bca_poweroff_check(T_LEA_BCA_TO event);
+void app_lea_bca_scan_start(uint16_t timeout);
+void app_lea_bca_scan_stop(void);
+uint8_t app_lea_bca_count_num(void);
 bool app_lea_bca_bis_exist(void);
 bool app_lea_bca_bs_update_device_info(T_LEA_BRS_INFO *src_info);
 bool app_lea_bca_pa_sync(uint8_t dev_idx);
@@ -70,6 +96,7 @@ T_APP_LEA_BCA_STATE app_lea_bca_state(void);
 void app_lea_bca_scan_info(T_LEA_BRS_INFO *src_info);
 void app_lea_bca_bmr_terminate(void);
 void app_lea_bca_init(void);
+void app_lea_bca_set_downstream_ready(bool state);
 #ifdef  __cplusplus
 }
 #endif      /*  __cplusplus */

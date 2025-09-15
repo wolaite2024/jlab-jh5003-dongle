@@ -50,16 +50,16 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Test, analyze and make profilings on the Audio subsystem.  
+<p>Test, analyze and make profiling on the Audio Subsystem.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:ga817f413e3947be75a71f6e52610cc73f"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga817f413e3947be75a71f6e52610cc73f">P_AUDIO_PROBE_DSP_CABCK</a>) (<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga61d7634d22ee248f600ca358769060c1">T_AUDIO_PROBE_EVENT</a> event, void *buf)</td></tr>
-<tr class="memdesc:ga817f413e3947be75a71f6e52610cc73f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define DSP probe callback prototype.  <a href="#ga817f413e3947be75a71f6e52610cc73f">More...</a><br /></td></tr>
+<tr class="memdesc:ga817f413e3947be75a71f6e52610cc73f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define Audio Probe callback prototype.  <a href="#ga817f413e3947be75a71f6e52610cc73f">More...</a><br /></td></tr>
 <tr class="separator:ga817f413e3947be75a71f6e52610cc73f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga72c272ce100605be97df13bc5ee29fda"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga72c272ce100605be97df13bc5ee29fda">P_AUDIO_PROBE_DSP_EVENT_CABCK</a>) (uint32_t event, void *msg)</td></tr>
-<tr class="memdesc:ga72c272ce100605be97df13bc5ee29fda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define DSP ststus probe callback prototype.  <a href="#ga72c272ce100605be97df13bc5ee29fda">More...</a><br /></td></tr>
+<tr class="memdesc:ga72c272ce100605be97df13bc5ee29fda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define Audio Probe callback prototype of DSP status.  <a href="#ga72c272ce100605be97df13bc5ee29fda">More...</a><br /></td></tr>
 <tr class="separator:ga72c272ce100605be97df13bc5ee29fda"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
@@ -82,8 +82,52 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gga61d7634d22ee248f600ca358769060c1a814af6e1fade666962bd4dac7a1ef86e">PROBE_SYNC_REF_REQUEST</a> = 0x07
 <br />
  }</td></tr>
-<tr class="memdesc:ga61d7634d22ee248f600ca358769060c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define probe event from DSP.  <a href="group___a_u_d_i_o___p_r_o_b_e.html#ga61d7634d22ee248f600ca358769060c1">More...</a><br /></td></tr>
+<tr class="memdesc:ga61d7634d22ee248f600ca358769060c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define Audio Probe event from DSP.  <a href="group___a_u_d_i_o___p_r_o_b_e.html#ga61d7634d22ee248f600ca358769060c1">More...</a><br /></td></tr>
 <tr class="separator:ga61d7634d22ee248f600ca358769060c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga66d94794a1756c368839f2c6574cb149"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga66d94794a1756c368839f2c6574cb149">T_AUDIO_PROBE_DSP_EVENT</a> { <br />
+&#160;&#160;<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gga66d94794a1756c368839f2c6574cb149a61c6e0e42781a4e0dfb64522cb70f196">AUDIO_PROBE_DSP_EVT_INIT_FINISH</a> = 0x00, 
+<br />
+&#160;&#160;<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gga66d94794a1756c368839f2c6574cb149a0bc45abd2d1683cbd08a524c0ccb7c02">AUDIO_PROBE_DSP_EVT_POWER_OFF</a> = 0x01, 
+<br />
+&#160;&#160;<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gga66d94794a1756c368839f2c6574cb149a4342fd473b9168e19343edfad3239d02">AUDIO_PROBE_DSP_EVT_POWER_ON</a> = 0x02, 
+<br />
+&#160;&#160;<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gga66d94794a1756c368839f2c6574cb149ae12909b50923f317a1ef789c5560997a">AUDIO_PROBE_DSP_EVT_EXCEPTION</a> = 0x03, 
+<br />
+&#160;&#160;<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gga66d94794a1756c368839f2c6574cb149ac62bca29d948a2a168cd0e0b7f8a9fb3">AUDIO_PROBE_DSP_EVT_REQ</a> = 0x04, 
+<br />
+&#160;&#160;<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gga66d94794a1756c368839f2c6574cb149a95ef0b970fbb75fdb4d5af291c1b18be">AUDIO_PROBE_DSP_EVT_READY</a> = 0x05, 
+<br />
+&#160;&#160;<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gga66d94794a1756c368839f2c6574cb149ae3dd9b615791accded25035e3ac4dd0b">AUDIO_PROBE_DSP_EVT_REQUEST_EFFECT</a> = 0x06, 
+<br />
+&#160;&#160;<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gga66d94794a1756c368839f2c6574cb149ac0754b06d9b72f48ece319bd54b60ca0">AUDIO_PROBE_DSP_EVT_FADE_OUT_FINISH</a> = 0x07, 
+<br />
+&#160;&#160;<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gga66d94794a1756c368839f2c6574cb149a4b4d0014ed6c36d4080d9e3e85ca625e">AUDIO_PROBE_DSP_EVT_SPORT0_READY</a> = 0x08, 
+<br />
+&#160;&#160;<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gga66d94794a1756c368839f2c6574cb149ad88445777f3598a7e6c4c383d47319da">AUDIO_PROBE_DSP_EVT_SPORT0_STOP</a> = 0x09, 
+<br />
+&#160;&#160;<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gga66d94794a1756c368839f2c6574cb149a711d794763310f85e79d862329423638">AUDIO_PROBE_DSP_EVT_SPORT1_READY</a> = 0x0a, 
+<br />
+&#160;&#160;<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gga66d94794a1756c368839f2c6574cb149ae2e437ba2dc3d99ec418e84cb081e8e5">AUDIO_PROBE_DSP_EVT_SPORT1_STOP</a> = 0x0b, 
+<br />
+&#160;&#160;<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gga66d94794a1756c368839f2c6574cb149a999c73d52d7cd0797765bcc4e2a6e804">AUDIO_PROBE_DSP_EVT_SPORT_STOP_FAKE</a> = 0x0c, 
+<br />
+&#160;&#160;<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gga66d94794a1756c368839f2c6574cb149a0213a1b6e040e3ea0184136990d1ff62">AUDIO_PROBE_DSP_EVT_SPORT_START_FAKE</a> = 0x0d, 
+<br />
+&#160;&#160;<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gga66d94794a1756c368839f2c6574cb149a3e42ca81ec8ce21cb3bcb6ad1e3b9d01">AUDIO_PROBE_DSP_EVT_CODEC_STATE</a> = 0x0e, 
+<br />
+&#160;&#160;<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gga66d94794a1756c368839f2c6574cb149a357a27bb623266bb8c74f1e5bde19f9f">AUDIO_PROBE_DSP_MGR_EVT_FW_READY</a> = 0x0f, 
+<br />
+&#160;&#160;<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gga66d94794a1756c368839f2c6574cb149afdd5ec8007d52a5fa153e692f1b4279b">AUDIO_PROBE_DSP_MGR_EVT_FW_STOP</a> = 0x10, 
+<br />
+&#160;&#160;<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gga66d94794a1756c368839f2c6574cb149a70fea44915482a457dc8fe38e4e95454">AUDIO_PROBE_DSP_EVT_MAILBOX_DSP_DATA</a> = 0x11, 
+<br />
+&#160;&#160;<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gga66d94794a1756c368839f2c6574cb149ad89d58895263578ce6e2601113873740">AUDIO_PROBE_DSP_MGR_EVT_NOTIFICATION_FINISH</a> = 0x12, 
+<br />
+&#160;&#160;<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gga66d94794a1756c368839f2c6574cb149a636965953d6b5bec49e916b5c8b86e0a">AUDIO_PROBE_DSP_MGR_EVT_OPEN_AIR_AVC</a> = 0x21
+<br />
+ }</td></tr>
+<tr class="memdesc:ga66d94794a1756c368839f2c6574cb149"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define Audio Probe event from DSP.  <a href="group___a_u_d_i_o___p_r_o_b_e.html#ga66d94794a1756c368839f2c6574cb149">More...</a><br /></td></tr>
+<tr class="separator:ga66d94794a1756c368839f2c6574cb149"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad625705151e644c3410a6295ebb6cae3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gad625705151e644c3410a6295ebb6cae3">T_AUDIO_PROBE_DSP_CMD</a> { <br />
 &#160;&#160;<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ggad625705151e644c3410a6295ebb6cae3a91ac5e484e200515ad0610b6f2f25b3e">AUDIO_PROBE_TEST_MODE</a> = 0x02, 
 <br />
@@ -94,61 +138,61 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ggad625705151e644c3410a6295ebb6cae3ab821b1bd181c4aca9c7a8b5e487f29a5">AUDIO_PROBE_HA_PARA</a> = 0x70
 <br />
  }</td></tr>
-<tr class="memdesc:gad625705151e644c3410a6295ebb6cae3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define probe cmd id to DSP.  <a href="group___a_u_d_i_o___p_r_o_b_e.html#gad625705151e644c3410a6295ebb6cae3">More...</a><br /></td></tr>
+<tr class="memdesc:gad625705151e644c3410a6295ebb6cae3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define Audio Probe command id for DSP.  <a href="group___a_u_d_i_o___p_r_o_b_e.html#gad625705151e644c3410a6295ebb6cae3">More...</a><br /></td></tr>
 <tr class="separator:gad625705151e644c3410a6295ebb6cae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:gac131542b2a4cfe1e3d76f3052b689828"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gac131542b2a4cfe1e3d76f3052b689828">audio_probe_dsp_cback_register</a> (<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga817f413e3947be75a71f6e52610cc73f">P_AUDIO_PROBE_DSP_CABCK</a> cback)</td></tr>
-<tr class="memdesc:gac131542b2a4cfe1e3d76f3052b689828"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register DSP probe callback.  <a href="#gac131542b2a4cfe1e3d76f3052b689828">More...</a><br /></td></tr>
+<tr class="memdesc:gac131542b2a4cfe1e3d76f3052b689828"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register Audio Probe DSP callback.  <a href="#gac131542b2a4cfe1e3d76f3052b689828">More...</a><br /></td></tr>
 <tr class="separator:gac131542b2a4cfe1e3d76f3052b689828"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga582658706464c8b1c2103a94ae84f103"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga582658706464c8b1c2103a94ae84f103">audio_probe_dsp_cback_unregister</a> (<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga817f413e3947be75a71f6e52610cc73f">P_AUDIO_PROBE_DSP_CABCK</a> cback)</td></tr>
-<tr class="memdesc:ga582658706464c8b1c2103a94ae84f103"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unregister DSP probe callback.  <a href="#ga582658706464c8b1c2103a94ae84f103">More...</a><br /></td></tr>
+<tr class="memdesc:ga582658706464c8b1c2103a94ae84f103"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unregister Audio Probe DSP callback.  <a href="#ga582658706464c8b1c2103a94ae84f103">More...</a><br /></td></tr>
 <tr class="separator:ga582658706464c8b1c2103a94ae84f103"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga692a7daca44ab2d3cbedc39073b39c88"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga692a7daca44ab2d3cbedc39073b39c88">audio_probe_dsp_send</a> (uint8_t *buf, uint16_t len)</td></tr>
-<tr class="memdesc:ga692a7daca44ab2d3cbedc39073b39c88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send probe data to DSP.  <a href="#ga692a7daca44ab2d3cbedc39073b39c88">More...</a><br /></td></tr>
+<tr class="memdesc:ga692a7daca44ab2d3cbedc39073b39c88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send Audio Probe data to DSP.  <a href="#ga692a7daca44ab2d3cbedc39073b39c88">More...</a><br /></td></tr>
 <tr class="separator:ga692a7daca44ab2d3cbedc39073b39c88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4268e9fa03f727993e03a9380b642055"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga4268e9fa03f727993e03a9380b642055">audio_probe_codec_hw_eq_set</a> (uint8_t eq_type, uint8_t eq_chann, uint8_t *buf, uint16_t len)</td></tr>
-<tr class="memdesc:ga4268e9fa03f727993e03a9380b642055"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set codec hardware EQ.  <a href="#ga4268e9fa03f727993e03a9380b642055">More...</a><br /></td></tr>
+<tr class="memdesc:ga4268e9fa03f727993e03a9380b642055"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Codec hardware Equalizer (EQ).  <a href="#ga4268e9fa03f727993e03a9380b642055">More...</a><br /></td></tr>
 <tr class="separator:ga4268e9fa03f727993e03a9380b642055"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafd005c31e6ff1f82eeabb1d77f14f9d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gafd005c31e6ff1f82eeabb1d77f14f9d1">audio_probe_set_voice_primary_mic</a> (uint8_t mic_sel, uint8_t mic_type)</td></tr>
-<tr class="memdesc:gafd005c31e6ff1f82eeabb1d77f14f9d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set voice primary mic.  <a href="#gafd005c31e6ff1f82eeabb1d77f14f9d1">More...</a><br /></td></tr>
+<tr class="memdesc:gafd005c31e6ff1f82eeabb1d77f14f9d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Voice Primary MIC.  <a href="#gafd005c31e6ff1f82eeabb1d77f14f9d1">More...</a><br /></td></tr>
 <tr class="separator:gafd005c31e6ff1f82eeabb1d77f14f9d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab915279b48c110d24b00e7b1fdc6f86b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gab915279b48c110d24b00e7b1fdc6f86b">auido_probe_set_voice_secondary_mic</a> (uint8_t mic_sel, uint8_t mic_type)</td></tr>
-<tr class="memdesc:gab915279b48c110d24b00e7b1fdc6f86b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set voice secondary mic.  <a href="#gab915279b48c110d24b00e7b1fdc6f86b">More...</a><br /></td></tr>
+<tr class="memdesc:gab915279b48c110d24b00e7b1fdc6f86b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Voice Secondary MIC.  <a href="#gab915279b48c110d24b00e7b1fdc6f86b">More...</a><br /></td></tr>
 <tr class="separator:gab915279b48c110d24b00e7b1fdc6f86b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5bad94573f6de1a893ff7476c0de7170"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga5bad94573f6de1a893ff7476c0de7170">audio_probe_get_voice_primary_mic_sel</a> (void)</td></tr>
-<tr class="memdesc:ga5bad94573f6de1a893ff7476c0de7170"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get voice primary mic selection.  <a href="#ga5bad94573f6de1a893ff7476c0de7170">More...</a><br /></td></tr>
+<tr class="memdesc:ga5bad94573f6de1a893ff7476c0de7170"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Voice Primary MIC selection.  <a href="#ga5bad94573f6de1a893ff7476c0de7170">More...</a><br /></td></tr>
 <tr class="separator:ga5bad94573f6de1a893ff7476c0de7170"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3c2a3d00cff1c7b8d2eafc21e1eaa936"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga3c2a3d00cff1c7b8d2eafc21e1eaa936">audio_probe_get_voice_primary_mic_type</a> (void)</td></tr>
-<tr class="memdesc:ga3c2a3d00cff1c7b8d2eafc21e1eaa936"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get voice primary mic type.  <a href="#ga3c2a3d00cff1c7b8d2eafc21e1eaa936">More...</a><br /></td></tr>
+<tr class="memdesc:ga3c2a3d00cff1c7b8d2eafc21e1eaa936"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Voice Primary MIC type.  <a href="#ga3c2a3d00cff1c7b8d2eafc21e1eaa936">More...</a><br /></td></tr>
 <tr class="separator:ga3c2a3d00cff1c7b8d2eafc21e1eaa936"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9275f4abab929f11e3f28e46a66a4c12"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga9275f4abab929f11e3f28e46a66a4c12">audio_probe_get_voice_secondary_mic_sel</a> (void)</td></tr>
-<tr class="memdesc:ga9275f4abab929f11e3f28e46a66a4c12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get voice secondary mic selection.  <a href="#ga9275f4abab929f11e3f28e46a66a4c12">More...</a><br /></td></tr>
+<tr class="memdesc:ga9275f4abab929f11e3f28e46a66a4c12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Voice Secondary MIC selection.  <a href="#ga9275f4abab929f11e3f28e46a66a4c12">More...</a><br /></td></tr>
 <tr class="separator:ga9275f4abab929f11e3f28e46a66a4c12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5201d4aa05a77e464546f0c3d791d607"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga5201d4aa05a77e464546f0c3d791d607">audio_probe_get_voice_secondary_mic_type</a> (void)</td></tr>
-<tr class="memdesc:ga5201d4aa05a77e464546f0c3d791d607"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get voice secondary mic type.  <a href="#ga5201d4aa05a77e464546f0c3d791d607">More...</a><br /></td></tr>
+<tr class="memdesc:ga5201d4aa05a77e464546f0c3d791d607"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Voice Secondary MIC type.  <a href="#ga5201d4aa05a77e464546f0c3d791d607">More...</a><br /></td></tr>
 <tr class="separator:ga5201d4aa05a77e464546f0c3d791d607"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga93ce483dd647d78339f6094b0ba194ec"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga93ce483dd647d78339f6094b0ba194ec">audio_probe_dsp_evt_cback_register</a> (<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga72c272ce100605be97df13bc5ee29fda">P_AUDIO_PROBE_DSP_EVENT_CABCK</a> cback)</td></tr>
-<tr class="memdesc:ga93ce483dd647d78339f6094b0ba194ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register DSP status probe callback.  <a href="#ga93ce483dd647d78339f6094b0ba194ec">More...</a><br /></td></tr>
+<tr class="memdesc:ga93ce483dd647d78339f6094b0ba194ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register Audio Probe DSP status callback.  <a href="#ga93ce483dd647d78339f6094b0ba194ec">More...</a><br /></td></tr>
 <tr class="separator:ga93ce483dd647d78339f6094b0ba194ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9080463a21d0df688303a42191267eff"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga9080463a21d0df688303a42191267eff">audio_probe_dsp_evt_cback_unregister</a> (<a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga72c272ce100605be97df13bc5ee29fda">P_AUDIO_PROBE_DSP_EVENT_CABCK</a> cback)</td></tr>
-<tr class="memdesc:ga9080463a21d0df688303a42191267eff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unregister DSP status callback.  <a href="#ga9080463a21d0df688303a42191267eff">More...</a><br /></td></tr>
+<tr class="memdesc:ga9080463a21d0df688303a42191267eff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unregister Audio Probe DSP status callback.  <a href="#ga9080463a21d0df688303a42191267eff">More...</a><br /></td></tr>
 <tr class="separator:ga9080463a21d0df688303a42191267eff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf63c3d821b642ddccb755c8ba20d8057"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#gaf63c3d821b642ddccb755c8ba20d8057">audio_probe_media_buffer_malloc</a> (uint16_t buf_size)</td></tr>
-<tr class="memdesc:gaf63c3d821b642ddccb755c8ba20d8057"><td class="mdescLeft">&#160;</td><td class="mdescRight">malloc ram from playback buffer.  <a href="#gaf63c3d821b642ddccb755c8ba20d8057">More...</a><br /></td></tr>
+<tr class="memdesc:gaf63c3d821b642ddccb755c8ba20d8057"><td class="mdescLeft">&#160;</td><td class="mdescRight">Malloc RAM from playback buffer.  <a href="#gaf63c3d821b642ddccb755c8ba20d8057">More...</a><br /></td></tr>
 <tr class="separator:gaf63c3d821b642ddccb755c8ba20d8057"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9941d1c1af5c8f2d3d572385d69061b7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga9941d1c1af5c8f2d3d572385d69061b7">audio_probe_media_buffer_free</a> (void *p_buf)</td></tr>
-<tr class="memdesc:ga9941d1c1af5c8f2d3d572385d69061b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">free ram to playback buffer.  <a href="#ga9941d1c1af5c8f2d3d572385d69061b7">More...</a><br /></td></tr>
+<tr class="memdesc:ga9941d1c1af5c8f2d3d572385d69061b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free RAM to playback buffer.  <a href="#ga9941d1c1af5c8f2d3d572385d69061b7">More...</a><br /></td></tr>
 <tr class="separator:ga9941d1c1af5c8f2d3d572385d69061b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8499d199f5014f337311860db6a54280"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga8499d199f5014f337311860db6a54280">audio_probe_dsp_test_bin_set</a> (bool enable)</td></tr>
 <tr class="memdesc:ga8499d199f5014f337311860db6a54280"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control loading DSP test bin.  <a href="#ga8499d199f5014f337311860db6a54280">More...</a><br /></td></tr>
 <tr class="separator:ga8499d199f5014f337311860db6a54280"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga45eeefbafd09366773e2a55b2a8466dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga45eeefbafd09366773e2a55b2a8466dd">audio_probe_disable_dsp_powerdown</a> (void)</td></tr>
-<tr class="memdesc:ga45eeefbafd09366773e2a55b2a8466dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">disable dsp power down.  <a href="#ga45eeefbafd09366773e2a55b2a8466dd">More...</a><br /></td></tr>
+<tr class="memdesc:ga45eeefbafd09366773e2a55b2a8466dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Power down DSP.  <a href="#ga45eeefbafd09366773e2a55b2a8466dd">More...</a><br /></td></tr>
 <tr class="separator:ga45eeefbafd09366773e2a55b2a8466dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga74818ba91f009d0c1cbcf765161edc74"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga74818ba91f009d0c1cbcf765161edc74">audio_probe_codec_bias_mode_set</a> (uint8_t mode)</td></tr>
-<tr class="memdesc:ga74818ba91f009d0c1cbcf765161edc74"><td class="mdescLeft">&#160;</td><td class="mdescRight">set codec bias mode.  <a href="#ga74818ba91f009d0c1cbcf765161edc74">More...</a><br /></td></tr>
+<tr class="memdesc:ga74818ba91f009d0c1cbcf765161edc74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the engine communication with DSP2.  <a href="#ga74818ba91f009d0c1cbcf765161edc74">More...</a><br /></td></tr>
 <tr class="separator:ga74818ba91f009d0c1cbcf765161edc74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6850be203d93c300074e281d0067deff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga6850be203d93c300074e281d0067deff">audio_probe_codec_bias_pad_set</a> (bool enable)</td></tr>
 <tr class="memdesc:ga6850be203d93c300074e281d0067deff"><td class="mdescLeft">&#160;</td><td class="mdescRight">set codec bias pad.  <a href="#ga6850be203d93c300074e281d0067deff">More...</a><br /></td></tr>
@@ -160,13 +204,13 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga1c57656bca46aaf246b08bc398b7aa6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">start the engine communication w/ DSP2.  <a href="#ga1c57656bca46aaf246b08bc398b7aa6d">More...</a><br /></td></tr>
 <tr class="separator:ga1c57656bca46aaf246b08bc398b7aa6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5fa1c861f51fd1788e2a0ccff600e839"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga5fa1c861f51fd1788e2a0ccff600e839">engine_stop</a> (uint32_t instance)</td></tr>
-<tr class="memdesc:ga5fa1c861f51fd1788e2a0ccff600e839"><td class="mdescLeft">&#160;</td><td class="mdescRight">stop the engine communication w/ DSP2.  <a href="#ga5fa1c861f51fd1788e2a0ccff600e839">More...</a><br /></td></tr>
+<tr class="memdesc:ga5fa1c861f51fd1788e2a0ccff600e839"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop the engine communication with DSP2.  <a href="#ga5fa1c861f51fd1788e2a0ccff600e839">More...</a><br /></td></tr>
 <tr class="separator:ga5fa1c861f51fd1788e2a0ccff600e839"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Test, analyze and make profilings on the Audio subsystem. </p>
-<p>Audio Probe provides the testing or profiling interfaces, which applications can analyze the Audio subsystem.</p>
-<dl class="section note"><dt>Note</dt><dd>Probe interfaces are used only for testing and profiling. Applications shall not use Probe interfaces in any formal product scenarios. </dd></dl>
+<p>Test, analyze and make profiling on the Audio Subsystem. </p>
+<p>Audio Probe provides the testing or profiling interfaces, which application can analyze the Audio Subsystem.</p>
+<dl class="section note"><dt>Note</dt><dd>Audio Probe interfaces are used only for testing and profiling. Application shall not use Audio Probe interfaces in any formal product scenarios. </dd></dl>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="ga817f413e3947be75a71f6e52610cc73f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga817f413e3947be75a71f6e52610cc73f">&#9670;&nbsp;</a></span>P_AUDIO_PROBE_DSP_CABCK</h2>
@@ -180,12 +224,11 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Define DSP probe callback prototype. </p>
-<p><a class="el" href="audio__probe_8h_source.html">audio_probe.h</a></p>
-<dl class="section note"><dt>Note</dt><dd>Do <b>NOT</b> touch this interface in any product scenarios.</dd></dl>
+<p>Define Audio Probe callback prototype. </p>
+<dl class="section note"><dt>Note</dt><dd>Do <b>not</b> touch this interface in any product scenarios.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">event</td><td>event for dsp <a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga61d7634d22ee248f600ca358769060c1">T_AUDIO_PROBE_EVENT</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">event</td><td>The event for DSP <a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga61d7634d22ee248f600ca358769060c1">T_AUDIO_PROBE_EVENT</a>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">buf</td><td>The buffer that holds the DSP probe data. </td></tr>
   </table>
   </dd>
@@ -205,13 +248,12 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Define DSP ststus probe callback prototype. </p>
-<p><a class="el" href="audio__probe_8h_source.html">audio_probe.h</a></p>
-<dl class="section note"><dt>Note</dt><dd>Do <b>NOT</b> touch this interface in any product scenarios.</dd></dl>
+<p>Define Audio Probe callback prototype of DSP status. </p>
+<dl class="section note"><dt>Note</dt><dd>Do <b>not</b> touch this interface in any product scenarios.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">event</td><td>event for dsp <a class="el" href="struct_t___a_u_d_i_o___p_r_o_b_e___d_s_p___e_v_e_n_t___m_s_g.html">T_AUDIO_PROBE_DSP_EVENT_MSG</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">msg</td><td>The msg that holds the DSP status. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">event</td><td>The event for DSP <a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga66d94794a1756c368839f2c6574cb149">T_AUDIO_PROBE_DSP_EVENT</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">msg</td><td>The message that holds the DSP status. </td></tr>
   </table>
   </dd>
 </dl>
@@ -231,9 +273,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Define probe event from DSP. </p>
-<p><a class="el" href="audio__probe_8h_source.html">audio_probe.h</a></p>
-<dl class="section note"><dt>Note</dt><dd>Only provide PROBE event for APP using. </dd></dl>
+<p>Define Audio Probe event from DSP. </p>
+<dl class="section note"><dt>Note</dt><dd>Only provide Audio Probe event for application using. </dd></dl>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga61d7634d22ee248f600ca358769060c1a3678b4584fb416172aa2bc8f9b7084fe"></a>PROBE_SCENARIO_STATE&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga61d7634d22ee248f600ca358769060c1a116a2a4659d2a8edd145c5f0957c990b"></a>PROBE_EAR_FIT_RESULT&#160;</td><td class="fielddoc"></td></tr>
@@ -243,6 +284,45 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="gga61d7634d22ee248f600ca358769060c1a41b8573c60908be0a144ca4cad56749a"></a>PROBE_SEG_SEND_REQ_DATA&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga61d7634d22ee248f600ca358769060c1afec05dfa629ab7f1961905179664b706"></a>PROBE_SEG_SEND_ERROR&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga61d7634d22ee248f600ca358769060c1a814af6e1fade666962bd4dac7a1ef86e"></a>PROBE_SYNC_REF_REQUEST&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga66d94794a1756c368839f2c6574cb149"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga66d94794a1756c368839f2c6574cb149">&#9670;&nbsp;</a></span>T_AUDIO_PROBE_DSP_EVENT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga66d94794a1756c368839f2c6574cb149">T_AUDIO_PROBE_DSP_EVENT</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define Audio Probe event from DSP. </p>
+<dl class="section note"><dt>Note</dt><dd>Only provide Audio Probe event for application using. </dd></dl>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga66d94794a1756c368839f2c6574cb149a61c6e0e42781a4e0dfb64522cb70f196"></a>AUDIO_PROBE_DSP_EVT_INIT_FINISH&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga66d94794a1756c368839f2c6574cb149a0bc45abd2d1683cbd08a524c0ccb7c02"></a>AUDIO_PROBE_DSP_EVT_POWER_OFF&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga66d94794a1756c368839f2c6574cb149a4342fd473b9168e19343edfad3239d02"></a>AUDIO_PROBE_DSP_EVT_POWER_ON&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga66d94794a1756c368839f2c6574cb149ae12909b50923f317a1ef789c5560997a"></a>AUDIO_PROBE_DSP_EVT_EXCEPTION&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga66d94794a1756c368839f2c6574cb149ac62bca29d948a2a168cd0e0b7f8a9fb3"></a>AUDIO_PROBE_DSP_EVT_REQ&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga66d94794a1756c368839f2c6574cb149a95ef0b970fbb75fdb4d5af291c1b18be"></a>AUDIO_PROBE_DSP_EVT_READY&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga66d94794a1756c368839f2c6574cb149ae3dd9b615791accded25035e3ac4dd0b"></a>AUDIO_PROBE_DSP_EVT_REQUEST_EFFECT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga66d94794a1756c368839f2c6574cb149ac0754b06d9b72f48ece319bd54b60ca0"></a>AUDIO_PROBE_DSP_EVT_FADE_OUT_FINISH&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga66d94794a1756c368839f2c6574cb149a4b4d0014ed6c36d4080d9e3e85ca625e"></a>AUDIO_PROBE_DSP_EVT_SPORT0_READY&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga66d94794a1756c368839f2c6574cb149ad88445777f3598a7e6c4c383d47319da"></a>AUDIO_PROBE_DSP_EVT_SPORT0_STOP&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga66d94794a1756c368839f2c6574cb149a711d794763310f85e79d862329423638"></a>AUDIO_PROBE_DSP_EVT_SPORT1_READY&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga66d94794a1756c368839f2c6574cb149ae2e437ba2dc3d99ec418e84cb081e8e5"></a>AUDIO_PROBE_DSP_EVT_SPORT1_STOP&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga66d94794a1756c368839f2c6574cb149a999c73d52d7cd0797765bcc4e2a6e804"></a>AUDIO_PROBE_DSP_EVT_SPORT_STOP_FAKE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga66d94794a1756c368839f2c6574cb149a0213a1b6e040e3ea0184136990d1ff62"></a>AUDIO_PROBE_DSP_EVT_SPORT_START_FAKE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga66d94794a1756c368839f2c6574cb149a3e42ca81ec8ce21cb3bcb6ad1e3b9d01"></a>AUDIO_PROBE_DSP_EVT_CODEC_STATE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga66d94794a1756c368839f2c6574cb149a357a27bb623266bb8c74f1e5bde19f9f"></a>AUDIO_PROBE_DSP_MGR_EVT_FW_READY&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga66d94794a1756c368839f2c6574cb149afdd5ec8007d52a5fa153e692f1b4279b"></a>AUDIO_PROBE_DSP_MGR_EVT_FW_STOP&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga66d94794a1756c368839f2c6574cb149a70fea44915482a457dc8fe38e4e95454"></a>AUDIO_PROBE_DSP_EVT_MAILBOX_DSP_DATA&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga66d94794a1756c368839f2c6574cb149ad89d58895263578ce6e2601113873740"></a>AUDIO_PROBE_DSP_MGR_EVT_NOTIFICATION_FINISH&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga66d94794a1756c368839f2c6574cb149a636965953d6b5bec49e916b5c8b86e0a"></a>AUDIO_PROBE_DSP_MGR_EVT_OPEN_AIR_AVC&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>
@@ -259,8 +339,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Define probe cmd id to DSP. </p>
-<p><a class="el" href="audio__probe_8h_source.html">audio_probe.h</a></p>
+<p>Define Audio Probe command id for DSP. </p>
 <dl class="section note"><dt>Note</dt><dd>Should be referenced to h2d_cmd. </dd></dl>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggad625705151e644c3410a6295ebb6cae3a91ac5e484e200515ad0610b6f2f25b3e"></a>AUDIO_PROBE_TEST_MODE&#160;</td><td class="fielddoc"></td></tr>
@@ -288,20 +367,19 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Register DSP probe callback. </p>
-<p><a class="el" href="audio__probe_8h_source.html">audio_probe.h</a></p>
-<dl class="section note"><dt>Note</dt><dd>Do <b>NOT</b> touch this interface in any product scenarios.</dd></dl>
+<p>Register Audio Probe DSP callback. </p>
+<dl class="section note"><dt>Note</dt><dd>Do <b>not</b> touch this interface in any product scenarios.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">cback</td><td>The DSP probe callback <a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga817f413e3947be75a71f6e52610cc73f">P_AUDIO_PROBE_DSP_CABCK</a>.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cback</td><td>The Audio Probe DSP callback <a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga817f413e3947be75a71f6e52610cc73f">P_AUDIO_PROBE_DSP_CABCK</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The status of registering DSP probe callback. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of registering Audio Probe DSP callback. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>DSP probe data was registered successfully. </td></tr>
-    <tr><td class="paramname">false</td><td>DSP probe data was failed to register. </td></tr>
+    <tr><td class="paramname">true</td><td>Audio Probe DSP callback was registered successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>Audio Probe DSP callback was failed to register. </td></tr>
   </table>
   </dd>
 </dl>
@@ -324,20 +402,19 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Unregister DSP probe callback. </p>
-<p><a class="el" href="audio__probe_8h_source.html">audio_probe.h</a></p>
-<dl class="section note"><dt>Note</dt><dd>Do <b>NOT</b> touch this interface in any product scenarios.</dd></dl>
+<p>Unregister Audio Probe DSP callback. </p>
+<dl class="section note"><dt>Note</dt><dd>Do <b>not</b> touch this interface in any product scenarios.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">cback</td><td>The DSP probe callback <a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga817f413e3947be75a71f6e52610cc73f">P_AUDIO_PROBE_DSP_CABCK</a>.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cback</td><td>The Audio Probe DSP callback <a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga817f413e3947be75a71f6e52610cc73f">P_AUDIO_PROBE_DSP_CABCK</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The status of unregistering DSP probe callback. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of unregistering Audio Probe DSP callback. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>DSP probe data was unregistered successfully. </td></tr>
-    <tr><td class="paramname">false</td><td>DSP probe data was failed to unregister. </td></tr>
+    <tr><td class="paramname">true</td><td>Audio Probe DSP callback was unregistered successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>Audio Probe DSP callback was failed to unregister. </td></tr>
   </table>
   </dd>
 </dl>
@@ -370,21 +447,20 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Send probe data to DSP. </p>
-<p><a class="el" href="audio__probe_8h_source.html">audio_probe.h</a></p>
-<dl class="section note"><dt>Note</dt><dd>Do <b>NOT</b> touch this interface in any product scenarios.</dd></dl>
+<p>Send Audio Probe data to DSP. </p>
+<dl class="section note"><dt>Note</dt><dd>Do <b>not</b> touch this interface in any product scenarios.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">buf</td><td>The probing data buffer address. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>The probing data buffer length.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buf</td><td>The probe data buffer address. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>The probe data buffer length.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The status of sending DSP probe data. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of sending Audio Probe DSP data. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>DSP probe data was sent successfully. </td></tr>
-    <tr><td class="paramname">false</td><td>DSP probe data was failed to send. </td></tr>
+    <tr><td class="paramname">true</td><td>Audio Probe DSP data was sent successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>Audio Probe DSP data was failed to send. </td></tr>
   </table>
   </dd>
 </dl>
@@ -429,9 +505,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set codec hardware EQ. </p>
-<p><a class="el" href="audio__probe_8h_source.html">audio_probe.h</a></p>
-<dl class="section note"><dt>Note</dt><dd>Do <b>NOT</b> touch this interface in any product scenarios.</dd></dl>
+<p>Set Codec hardware Equalizer (EQ). </p>
+<dl class="section note"><dt>Note</dt><dd>Do <b>not</b> touch this interface in any product scenarios.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">eq_type</td><td>Hardware EQ type. </td></tr>
@@ -441,7 +516,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The status of setting codec hardware EQ. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of setting Codec hardware EQ. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">true</td><td>Codec hardware EQ was setting successfully. </td></tr>
@@ -478,13 +553,12 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set voice primary mic. </p>
-<p><a class="el" href="audio__probe_8h_source.html">audio_probe.h</a></p>
-<dl class="section note"><dt>Note</dt><dd>Do <b>NOT</b> touch this interface in any product scenarios.</dd></dl>
+<p>Set Voice Primary MIC. </p>
+<dl class="section note"><dt>Note</dt><dd>Do <b>not</b> touch this interface in any product scenarios.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">mic_sel</td><td>mic selection(0: Dmic 1, 1: Dmic 2, 2: Amic 1, 3: Amic 2, 4: Amic 3, 5: Amic 4, 6: Dmic 3, 7: Mic sel disable). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">mic_type</td><td>mic type(0: single-end AMIC/falling DMIC, 1: differential AMIC/raising DMIC). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mic_sel</td><td>MIC selection (0: DMIC1, 1: DMIC2, 2: AMIC1, 3: AMIC2, 4: AMIC3, 5: AMIC4, 6: DMIC3, 7: MIC sel disable). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mic_type</td><td>MIC type (0: single-end AMIC/falling DMIC, 1: differential AMIC/raising DMIC). </td></tr>
   </table>
   </dd>
 </dl>
@@ -517,13 +591,12 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set voice secondary mic. </p>
-<p><a class="el" href="audio__probe_8h_source.html">audio_probe.h</a></p>
-<dl class="section note"><dt>Note</dt><dd>Do <b>NOT</b> touch this interface in any product scenarios.</dd></dl>
+<p>Set Voice Secondary MIC. </p>
+<dl class="section note"><dt>Note</dt><dd>Do <b>not</b> touch this interface in any product scenarios.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">mic_sel</td><td>mic selection(0: Dmic 1, 1: Dmic 2, 2: Amic 1, 3: Amic 2, 4: Amic 3, 5: Amic 4, 6: Dmic 3, 7: Mic sel disable). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">mic_type</td><td>mic type(0: single-end AMIC/falling DMIC, 1: differential AMIC/raising DMIC). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mic_sel</td><td>MIC selection (0: DMIC1, 1: DMIC2, 2: AMIC1, 3: AMIC2, 4: AMIC3, 5: AMIC4, 6: DMIC3, 7: MIC sel disable). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mic_type</td><td>MIC type (0: single-end AMIC/falling DMIC, 1: differential AMIC/raising DMIC). </td></tr>
   </table>
   </dd>
 </dl>
@@ -546,9 +619,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get voice primary mic selection. </p>
-<p><a class="el" href="audio__probe_8h_source.html">audio_probe.h</a></p>
-<dl class="section note"><dt>Note</dt><dd>Do <b>NOT</b> touch this interface in any product scenarios. </dd></dl>
+<p>Get Voice Primary MIC selection. </p>
+<dl class="section note"><dt>Note</dt><dd>Do <b>not</b> touch this interface in any product scenarios. </dd></dl>
 
 </div>
 </div>
@@ -568,9 +640,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get voice primary mic type. </p>
-<p><a class="el" href="audio__probe_8h_source.html">audio_probe.h</a></p>
-<dl class="section note"><dt>Note</dt><dd>Do <b>NOT</b> touch this interface in any product scenarios. </dd></dl>
+<p>Get Voice Primary MIC type. </p>
+<dl class="section note"><dt>Note</dt><dd>Do <b>not</b> touch this interface in any product scenarios. </dd></dl>
 
 </div>
 </div>
@@ -590,9 +661,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get voice secondary mic selection. </p>
-<p><a class="el" href="audio__probe_8h_source.html">audio_probe.h</a></p>
-<dl class="section note"><dt>Note</dt><dd>Do <b>NOT</b> touch this interface in any product scenarios. </dd></dl>
+<p>Get Voice Secondary MIC selection. </p>
+<dl class="section note"><dt>Note</dt><dd>Do <b>not</b> touch this interface in any product scenarios. </dd></dl>
 
 </div>
 </div>
@@ -612,9 +682,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get voice secondary mic type. </p>
-<p><a class="el" href="audio__probe_8h_source.html">audio_probe.h</a></p>
-<dl class="section note"><dt>Note</dt><dd>Do <b>NOT</b> touch this interface in any product scenarios. </dd></dl>
+<p>Get Voice Secondary MIC type. </p>
+<dl class="section note"><dt>Note</dt><dd>Do <b>not</b> touch this interface in any product scenarios. </dd></dl>
 
 </div>
 </div>
@@ -634,20 +703,19 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Register DSP status probe callback. </p>
-<p><a class="el" href="audio__probe_8h_source.html">audio_probe.h</a></p>
-<dl class="section note"><dt>Note</dt><dd>Do <b>NOT</b> touch this interface in any product scenarios.</dd></dl>
+<p>Register Audio Probe DSP status callback. </p>
+<dl class="section note"><dt>Note</dt><dd>Do <b>not</b> touch this interface in any product scenarios.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">cback</td><td>The DSP probe callback <a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga72c272ce100605be97df13bc5ee29fda">P_AUDIO_PROBE_DSP_EVENT_CABCK</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The status of registering DSP probe callback. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of registering Audio Probe DSP status callback. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>DSP probe data was registered successfully. </td></tr>
-    <tr><td class="paramname">false</td><td>DSP probe data was failed to register. </td></tr>
+    <tr><td class="paramname">true</td><td>Audio Probe DSP status callback was registered successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>Audio Probe DSP status callback was failed to register. </td></tr>
   </table>
   </dd>
 </dl>
@@ -670,20 +738,19 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Unregister DSP status callback. </p>
-<p><a class="el" href="audio__probe_8h_source.html">audio_probe.h</a></p>
-<dl class="section note"><dt>Note</dt><dd>Do <b>NOT</b> touch this interface in any product scenarios.</dd></dl>
+<p>Unregister Audio Probe DSP status callback. </p>
+<dl class="section note"><dt>Note</dt><dd>Do <b>not</b> touch this interface in any product scenarios.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">cback</td><td>The DSP probe callback <a class="el" href="group___a_u_d_i_o___p_r_o_b_e.html#ga72c272ce100605be97df13bc5ee29fda">P_AUDIO_PROBE_DSP_EVENT_CABCK</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The status of unregistering DSP probe callback. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of unregistering Audio Probe DSP status callback. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>DSP probe data was unregistered successfully. </td></tr>
-    <tr><td class="paramname">false</td><td>DSP probe data was failed to unregister. </td></tr>
+    <tr><td class="paramname">true</td><td>Audio Probe DSP status callback was unregistered successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>Audio Probe DSP status callback was failed to unregister. </td></tr>
   </table>
   </dd>
 </dl>
@@ -706,9 +773,13 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>malloc ram from playback buffer. </p>
-<p><a class="el" href="audio__probe_8h_source.html">audio_probe.h</a></p>
-<dl class="section note"><dt>Note</dt><dd></dd></dl>
+<p>Malloc RAM from playback buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">buf_size</td><td>The buffer size need to malloc from playback buffer. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -728,9 +799,15 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>free ram to playback buffer. </p>
-<p><a class="el" href="audio__probe_8h_source.html">audio_probe.h</a></p>
-<dl class="section note"><dt>Note</dt><dd></dd></dl>
+<p>Free RAM to playback buffer. </p>
+<dl class="section return"><dt>Returns</dt><dd>The status of freeing playback buffer. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The playback buffer was freed successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>The playback buffer was failed to free. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -751,7 +828,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Control loading DSP test bin. </p>
-<p><a class="el" href="audio__probe_8h_source.html">audio_probe.h</a></p>
 <dl class="Added_API_2_13_0_0"><dt><b><a class="el" href="_added__a_p_i_2_13_0_0.html#_Added_API_2_13_0_0000017">Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -778,17 +854,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>disable dsp power down. </p>
-<p><a class="el" href="audio__probe_8h_source.html">audio_probe.h</a></p>
-<dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">zero</td><td></td></tr>
-    <tr><td class="paramname">non-zero</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Power down DSP. </p>
 
 </div>
 </div>
@@ -808,9 +874,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>set codec bias mode. </p>
-<p><a class="el" href="audio__probe_8h_source.html">audio_probe.h</a></p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Start the engine communication with DSP2. </p>
+<p>set codec bias mode. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">mode</td><td>bias_mode(0:normal mode 1: always on mode 2:user mode) </td></tr>
   </table>
@@ -919,11 +984,11 @@ Functions</h2></td></tr>
 <p>start the engine communication w/ DSP2. </p>
 <p><a class="el" href="audio__probe_8h_source.html">audio_probe.h</a></p>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>engine instance ID </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The engine instance id. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">zero</td><td>engine start fail </td></tr>
-    <tr><td class="paramname">non-zero</td><td>engine start success </td></tr>
+    <tr><td class="paramname">zero</td><td>The engine was failed to start. </td></tr>
+    <tr><td class="paramname">non-zero</td><td>The engine was started successfully. </td></tr>
   </table>
   </dd>
 </dl>
@@ -946,14 +1011,12 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>stop the engine communication w/ DSP2. </p>
-<p><a class="el" href="audio__probe_8h_source.html">audio_probe.h</a></p>
-<dl class="section note"><dt>Note</dt><dd></dd></dl>
+<p>Stop the engine communication with DSP2. </p>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">zero</td><td>engine stop success </td></tr>
-    <tr><td class="paramname">non-zero</td><td>engine stop fail, the retval is error code </td></tr>
+    <tr><td class="paramname">zero</td><td>The engine was stopped successfully. </td></tr>
+    <tr><td class="paramname">non-zero</td><td>The engine was failed to stop. </td></tr>
   </table>
   </dd>
 </dl>

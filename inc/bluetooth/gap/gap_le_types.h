@@ -3,9 +3,9 @@
 *     Copyright(c) 2016, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * @file    gap_le_types.h
-  * @brief   This file contains all the constants and functions prototypes for GAP protocol.
-  * @details This file is used both bredr and le.
-  * @author  jane
+  * @brief   This file contains all the constants and function prototypes for the GAP protocol.
+  * @details This file is used for both BR/EDR and LE.
+  * @author  Jane
   * @date    2016-02-18
   * @version v1.0
   * *************************************************************************************
@@ -37,7 +37,7 @@ extern "C"
 /*============================================================================*
  *                         Macros
  *============================================================================*/
-/** @addtogroup GAP_LE_TYPES_Exported_Macros
+/** @addtogroup GAP_LE_TYPES_Exported_Macros    GAP LE Types Exported Macros
   * @{
   */
 #define GAP_LE_SUPPORTED_FEATURES_LEN           8 //!< LE supported feature length.
@@ -45,10 +45,10 @@ extern "C"
 /** @defgroup RANDOM_ADDR_MASK Random Address Mask
  * @{
  */
-#define RANDOM_ADDR_MASK_STATIC                 0xC0 /**< Random address mask for static random address  */
-#define RANDOM_ADDR_MASK_RESOLVABLE             0x40 /**< Random address mask for resolvable random address  */
-#define RANDOM_ADDR_MASK_NON_RESOLVABLE         0x00 /**< Random address mask for non-resolvable random address  */
-#define RANDOM_ADDR_MASK                        0xC0 /**< Mask for random address */
+#define RANDOM_ADDR_MASK_STATIC                 0xC0 /**< Random address mask for static random address. */
+#define RANDOM_ADDR_MASK_RESOLVABLE             0x40 /**< Random address mask for resolvable random address. */
+#define RANDOM_ADDR_MASK_NON_RESOLVABLE         0x00 /**< Random address mask for non-resolvable random address. */
+#define RANDOM_ADDR_MASK                        0xC0 /**< Mask for random address. */
 /** End of RANDOM_ADDR_MASK
   * @}
   */
@@ -82,7 +82,7 @@ extern "C"
 #define GAP_ADTYPE_OOB_SIMPLE_PAIRING_HASHC     0x0E //!< Simple Pairing OOB Tag: Simple Pairing Hash C (16 octets)
 #define GAP_ADTYPE_OOB_SIMPLE_PAIRING_RANDR     0x0F //!< Simple Pairing OOB Tag: Simple Pairing Randomizer R (16 octets)
 #define GAP_ADTYPE_SM_TK                        0x10 //!< Security Manager TK Value
-#define GAP_ADTYPE_SM_OOB_FLAG                  0x11 //!< Secutiry Manager OOB Flags
+#define GAP_ADTYPE_SM_OOB_FLAG                  0x11 //!< Security Manager OOB Flags
 #define GAP_ADTYPE_SLAVE_CONN_INTERVAL_RANGE    0x12 //!< Min and Max values of the connection interval (2 octets Min, 2 octets Max) (0xFFFF indicates no conn interval min or max)
 #define GAP_ADTYPE_SIGNED_DATA                  0x13 //!< Signed Data field
 #define GAP_ADTYPE_SERVICES_LIST_16BIT          0x14 //!< Service Solicitation: list of 16-bit Service UUIDs
@@ -115,7 +115,7 @@ extern "C"
   * @}
   */
 
-/** @defgroup ADV_TYPE_FLAGS The Flags data type
+/** @defgroup ADV_TYPE_FLAGS Flags Data Type
  * @{
  */
 #define GAP_ADTYPE_FLAGS_LIMITED                            0x01 //!< Discovery Mode: LE Limited Discoverable Mode
@@ -125,13 +125,17 @@ extern "C"
 #define GAP_ADTYPE_FLAGS_SIMULTANEOUS_LE_BREDR_HOST         0x10 //!< Discovery Mode: Simultaneous LE and BR/EDR Host Supported
 /** @} End ADV_TYPE_FLAGS */
 
+/** @defgroup GAP_PHYS_PREFER Preference among the PHYs
+ * @{
+ */
 #define GAP_PHYS_PREFER_ALL           0
-#define GAP_PHYS_NO_PREFER_TX_BIT     0x01 /**< The Host has no preference among the transmitter PHYs supported by the Controller */
-#define GAP_PHYS_NO_PREFER_RX_BIT     0x02 /**< The Host has no preference among the receiver PHYs supported by the Controller */
+#define GAP_PHYS_NO_PREFER_TX_BIT     0x01 /**< The Host has no preference among the transmitter PHYs supported by the Controller. */
+#define GAP_PHYS_NO_PREFER_RX_BIT     0x02 /**< The Host has no preference among the receiver PHYs supported by the Controller. */
 
-#define GAP_PHYS_PREFER_1M_BIT        0x01 /**< The Host prefers to use the LE 1M transmitter PHY (possibly among others)  */
-#define GAP_PHYS_PREFER_2M_BIT        0x02 /**< The Host prefers to use the LE 2M transmitter PHY (possibly among others)  */
-#define GAP_PHYS_PREFER_CODED_BIT     0x04 /**< The Host prefers to use the LE Coded transmitter PHY (possibly among others)  */
+#define GAP_PHYS_PREFER_1M_BIT        0x01 /**< The Host prefers to use the LE 1M PHY (possibly among others). */
+#define GAP_PHYS_PREFER_2M_BIT        0x02 /**< The Host prefers to use the LE 2M PHY (possibly among others). */
+#define GAP_PHYS_PREFER_CODED_BIT     0x04 /**< The Host prefers to use the LE Coded PHY (possibly among others). */
+/** @} End GAP_PHYS_PREFER */
 
 /** @defgroup GAP_PHYS_CONN_INIT Connection Initiating PHYs
  * @{
@@ -152,11 +156,11 @@ parameters for the LE Coded PHY are provided.*/
 /*============================================================================*
  *                         Types
  *============================================================================*/
-/** @addtogroup GAP_LE_TYPES_Exported_Types
+/** @addtogroup GAP_LE_TYPES_Exported_Types GAP LE Types Exported Types
   * @{
   */
 
-/** @brief define local adress type */
+/** @brief Define local address type */
 typedef enum
 {
     GAP_LOCAL_ADDR_LE_PUBLIC           = 0x00,    /**<  Bluetooth low energy public address. */
@@ -168,29 +172,29 @@ IRK from the resolving list. If the resolving list contains no matching entry, t
                                          /** @} End GAP_LE_LOCAL_ADDR_TYPE_DEFINES */
 } T_GAP_LOCAL_ADDR_TYPE;
 
-/** @brief Define random adress type */
+/** @brief Define random address type */
 typedef enum
 {
     GAP_RAND_ADDR_STATIC            = 0x00,/**<  Static random device address. */
-    GAP_RAND_ADDR_NON_RESOLVABLE    = 0x01,/**<  Non resolvable random device address. */
+    GAP_RAND_ADDR_NON_RESOLVABLE    = 0x01,/**<  Non-resolvable random device address. */
     GAP_RAND_ADDR_RESOLVABLE        = 0x02 /**<  Resolvable random device address. */
 } T_GAP_RAND_ADDR_TYPE;
 
-/** @brief Define indentify address type */
+/** @brief Define identity address type */
 typedef enum
 {
-    GAP_IDENT_ADDR_PUBLIC      = 0x00,    /*  low energy public address. */
-    GAP_IDENT_ADDR_RAND        = 0x01,    /*  low energy random address. */
+    GAP_IDENT_ADDR_PUBLIC      = 0x00,    /**<  Low energy public address. */
+    GAP_IDENT_ADDR_RAND        = 0x01,    /**<  Low energy random address. */
 } T_GAP_IDENT_ADDR_TYPE;
 
 /** @brief  Definition of LE direct address type.*/
 typedef enum
 {
-    GAP_DIRECT_ADDR_LE_PUBLIC              = 0x00, /**<  Public Device Address (default) */
-    GAP_DIRECT_ADDR_LE_RAND                = 0x01, /**<  Random Device Address */
-    GAP_DIRECT_ADDR_LE_PUBLIC_IDENT        = 0x02, /**<  Public Identity Address (Corresponds to Resolved Private Address ) */
-    GAP_DIRECT_ADDR_LE_RAND_IDENT          = 0x03, /**<  Random (static) Identity Address (Corresponds to Resolved Private Address) */
-    GAP_DIRECT_ADDR_LE_RAND_UNABLE_RESOLV  = 0xFE  /**<  No address provided (anonymous advertisement) */
+    GAP_DIRECT_ADDR_LE_PUBLIC              = 0x00, /**<  Public Device Address (default). */
+    GAP_DIRECT_ADDR_LE_RAND                = 0x01, /**<  Random Device Address. */
+    GAP_DIRECT_ADDR_LE_PUBLIC_IDENT        = 0x02, /**<  Public Identity Address (Corresponds to Resolved Private Address). */
+    GAP_DIRECT_ADDR_LE_RAND_IDENT          = 0x03, /**<  Random (static) Identity Address (Corresponds to Resolved Private Address). */
+    GAP_DIRECT_ADDR_LE_RAND_UNABLE_RESOLV  = 0xFE  /**<  No address provided (anonymous advertisement). */
 } T_GAP_DIRECT_ADDR_TYPE;
 
 /** @brief  Definition of LE white list operation.*/
@@ -238,15 +242,15 @@ addressed to this device (default). */
 address is in the White List. Directed advertising packets which are not
 addressed to this device shall be ignored. */
     GAP_SCAN_FILTER_ANY_RPA = 0x02,    /**<  Accept all advertising packets except directed advertising packets
-where the initiator's identity address does not address this device.
-Note: Directed advertising packets where the initiator's address is a
+where the initiator's identity address does not address this device. \n
+Directed advertising packets where the initiator's address is a
 resolvable private address that cannot be resolved are also accepted. */
     GAP_SCAN_FILTER_WHITE_LIST_RPA = 0x03,/**<  Accept all advertising packets except:
-1) advertising packets where the advertiser's identity address is not in
-the White List; and
-2) directed advertising packets where the initiator's identity address
-does not address this device
-Note: Directed advertising packets where the initiator's address is a
+@arg advertising packets where the advertiser's identity address is not in
+the White List;
+@arg directed advertising packets where the initiator's identity address
+does not address this device. \n
+Directed advertising packets where the initiator's address is a
 resolvable private address that cannot be resolved are also accepted. */
 } T_GAP_SCAN_FILTER_POLICY;
 
@@ -258,12 +262,12 @@ typedef enum
     GAP_SCAN_FILTER_DUPLICATE_ENABLED_RESET_FOR_EACH_PERIOD = 0x02,    /**<  Duplicate filtering enabled, reset for each scan period. */
 } T_GAP_SCAN_FILTER_DUPLICATE;
 
-/** This enum type describes adv type for T_GAP_ADV_EVT_TYPE. */
+/** This enum type describes ADV type for T_GAP_ADV_EVT_TYPE. */
 typedef enum
 {
     GAP_ADV_EVT_TYPE_UNDIRECTED = 0x00,    /**<  Connectable  undirected advertising. */
     GAP_ADV_EVT_TYPE_DIRECTED   = 0x01,    /**<  Connectable directed advertising. */
-    GAP_ADV_EVT_TYPE_SCANNABLE  = 0x02,    /**<  Scanable undirected advertising. */
+    GAP_ADV_EVT_TYPE_SCANNABLE  = 0x02,    /**<  Scannable undirected advertising. */
     GAP_ADV_EVT_TYPE_NON_CONNECTABLE = 0x03,   /**<  Nonconnectable undirected advertising. */
     GAP_ADV_EVT_TYPE_SCAN_RSP = 0x04           /**<  scan response. */
 } T_GAP_ADV_EVT_TYPE;
@@ -274,7 +278,7 @@ typedef enum
     GAP_SEC_LEVEL_NO          = 0x00,/**< No security (No authentication and no encryption).*/
     GAP_SEC_LEVEL_UNAUTHEN    = 0x04,/**< Unauthenticated pairing with encryption.*/
     GAP_SEC_LEVEL_AUTHEN      = 0x05,/**< Authenticated pairing with encryption.*/
-    GAP_SEC_LEVEL_SC_UNAUTHEN = 0x07,/**< Unuthenticated LE Secure Connections pairing with encryption using a 128-
+    GAP_SEC_LEVEL_SC_UNAUTHEN = 0x07,/**< Unauthenticated LE Secure Connections pairing with encryption using a 128-
 bit strength encryption key.*/
     GAP_SEC_LEVEL_SC_AUTHEN   = 0x08/**<  Authenticated LE Secure Connections pairing with encryption using a 128-
 bit strength encryption key.*/
@@ -300,43 +304,43 @@ typedef enum
 {
     GAP_PHYS_1M       = 0x01,    /**< LE PHY 1M used. */
     GAP_PHYS_2M       = 0x02,    /**< LE PHY 2M used. */
-    GAP_PHYS_CODED    = 0x03     /**< LE Coded PHY  used. */
+    GAP_PHYS_CODED    = 0x03     /**< LE Coded PHY used. */
 } T_GAP_PHYS_TYPE;
 
 /** @brief  Definition of LE primary advertising PHY type.*/
 typedef enum
 {
-    GAP_PHYS_PRIM_ADV_1M      = 0x01, /**<  Primary advertisement PHY is LE 1M */
-    GAP_PHYS_PRIM_ADV_CODED   = 0x03  /**<  Primary advertisement PHY is LE Coded */
+    GAP_PHYS_PRIM_ADV_1M      = 0x01, /**<  Primary advertisement PHY is LE 1M. */
+    GAP_PHYS_PRIM_ADV_CODED   = 0x03  /**<  Primary advertisement PHY is LE Coded. */
 } T_GAP_PHYS_PRIM_ADV_TYPE;
 
 /** @brief  Definition of LE Coded PHY preference options.*/
 typedef enum
 {
-    GAP_PHYS_OPTIONS_CODED_PREFER_NO   = 0x00,/**< Host has no preferred coding when transmitting on the LE Coded PHY */
-    GAP_PHYS_OPTIONS_CODED_PREFER_S2   = 0x01,/**< Host prefers that S=2 coding be used when transmitting on the LE Coded PHY */
-    GAP_PHYS_OPTIONS_CODED_PREFER_S8   = 0x02 /**< Host prefers that S=8 coding be used when transmitting on the LE Coded PHY */
+    GAP_PHYS_OPTIONS_CODED_PREFER_NO   = 0x00,/**< Host has no preferred coding when transmitting on the LE Coded PHY. */
+    GAP_PHYS_OPTIONS_CODED_PREFER_S2   = 0x01,/**< Host prefers that S=2 coding be used when transmitting on the LE Coded PHY. */
+    GAP_PHYS_OPTIONS_CODED_PREFER_S8   = 0x02 /**< Host prefers that S=8 coding be used when transmitting on the LE Coded PHY. */
 } T_GAP_PHYS_OPTIONS;
 
 typedef enum
 {
-    GAP_EXT_ADV_EVT_DATA_STATUS_COMPLETE  = 0x00, /**< Data status: Complete */
-    GAP_EXT_ADV_EVT_DATA_STATUS_MORE      = 0x01, /**< Data status: Incomplete, more data to come */
-    GAP_EXT_ADV_EVT_DATA_STATUS_TRUNCATED = 0x02, /**< Data status: Incomplete, data truncated, no more to come */
-    GAP_EXT_ADV_EVT_DATA_STATUS_RFU       = 0x03  /**< Data status: Reserved for future use */
+    GAP_EXT_ADV_EVT_DATA_STATUS_COMPLETE  = 0x00, /**< Data status: Complete. */
+    GAP_EXT_ADV_EVT_DATA_STATUS_MORE      = 0x01, /**< Data status: Incomplete, more data to come. */
+    GAP_EXT_ADV_EVT_DATA_STATUS_TRUNCATED = 0x02, /**< Data status: Incomplete, data truncated, no more to come. */
+    GAP_EXT_ADV_EVT_DATA_STATUS_RFU       = 0x03  /**< Data status: Reserved for future use. */
 } T_GAP_EXT_ADV_EVT_DATA_STATUS;
 
 typedef enum
 {
-    GAP_CTE_TYPE_AOA               = 0x00,            /**< AoA Constant Tone Extension */
-    GAP_CTE_TYPE_AOD_1US_SLOT      = 0x01,            /**< AoD Constant Tone Extension with 1 us slots */
-    GAP_CTE_TYPE_AOD_2US_SLOT      = 0x02,            /**< AoD Constant Tone Extension with 2 us slots */
+    GAP_CTE_TYPE_AOA               = 0x00,            /**< AoA Constant Tone Extension. */
+    GAP_CTE_TYPE_AOD_1US_SLOT      = 0x01,            /**< AoD Constant Tone Extension with 1 us slots. */
+    GAP_CTE_TYPE_AOD_2US_SLOT      = 0x02,            /**< AoD Constant Tone Extension with 2 us slots. */
 } T_GAP_CTE_TYPE;
 
 typedef enum
 {
-    GAP_SLOT_DURATIONS_SWITCH_SAMPLE_1US = 0x01,       /**<Switching and sampling slots are 1 us each */
-    GAP_SLOT_DURATIONS_SWITCH_SAMPLE_2US = 0x02,       /**<Switching and sampling slots are 2 us each */
+    GAP_SLOT_DURATIONS_SWITCH_SAMPLE_1US = 0x01,       /**<Switching and sampling slots are 1 us each. */
+    GAP_SLOT_DURATIONS_SWITCH_SAMPLE_2US = 0x02,       /**<Switching and sampling slots are 2 us each. */
 } T_GAP_SLOT_DUATIONS_TYPE;
 
 /** @brief  Definition of LE Periodic Advertiser list operation. */

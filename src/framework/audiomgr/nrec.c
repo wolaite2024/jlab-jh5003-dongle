@@ -48,6 +48,7 @@ static bool nrec_effect_enable(T_AUDIO_EFFECT_INSTANCE instance)
     switch (nrec->type)
     {
     case NREC_CONTENT_TYPE_VOICE:
+    case NREC_CONTENT_TYPE_RECORD:
         {
             if (dsp_ipc_voice_nrec_set(1) == false)
             {
@@ -106,6 +107,7 @@ static bool nrec_effect_disable(T_AUDIO_EFFECT_INSTANCE instance)
     switch (nrec->type)
     {
     case NREC_CONTENT_TYPE_VOICE:
+    case NREC_CONTENT_TYPE_RECORD:
         {
             if (dsp_ipc_voice_nrec_set(0) == false)
             {

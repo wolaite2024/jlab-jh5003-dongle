@@ -8,21 +8,19 @@
 #include "gap_br.h"
 #include "gap_handover_br.h"
 #include "rfc.h"
-#include "spp.h"
-#include "a2dp.h"
-#include "avrcp.h"
-#include "hfp.h"
-#include "pbap.h"
-#include "hid_device.h"
-#include "hid_host.h"
-#include "iap.h"
-#include "avp.h"
-#include "att_br.h"
-#include "bt_rfc_int.h"
-#include "rdtp.h"
 #include "bt_mgr.h"
 #include "bt_roleswap.h"
 #include "bt_mgr_int.h"
+#include "bt_a2dp_int.h"
+#include "bt_hfp_int.h"
+#include "bt_avrcp_int.h"
+#include "bt_hid_int.h"
+#include "bt_spp_int.h"
+#include "bt_iap_int.h"
+#include "bt_pbap_int.h"
+#include "bt_rfc_int.h"
+#include "bt_avp_int.h"
+#include "bt_att_int.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -171,10 +169,8 @@ typedef enum
 
 typedef enum
 {
-    ROLESWAP_AVP_CONTROL_CONN,
-    ROLESWAP_AVP_CONTROL_DISCONN,
-    ROLESWAP_AVP_AUDIO_CONN,
-    ROLESWAP_AVP_AUDIO_DISCONN,
+    ROLESWAP_AVP_CONN,
+    ROLESWAP_AVP_DISCONN,
     ROLESWAP_AVP_TRANSACT,
 } T_ROLESWAP_AVP_SUBMODULE;
 
@@ -238,7 +234,7 @@ typedef struct
 
 typedef struct t_roleswap_data
 {
-    struct t_roleswap_data *p_next;
+    struct t_roleswap_data *next;
     uint16_t                type;
     uint16_t                length;
     union
@@ -272,7 +268,7 @@ typedef void (*P_BT_ROLESWAP_PROFILE_CONN)(uint8_t  bd_addr[6],
                                            uint8_t  param);
 
 typedef void (*P_BT_ROLESWAP_PROFILE_DISCONN)(uint8_t                           bd_addr[6],
-                                              T_ROLESWAP_PROFILE_DISCONN_PARAM *p_param);
+                                              T_ROLESWAP_PROFILE_DISCONN_PARAM *param);
 
 typedef void (*P_BT_ROLESWAP_SCO_DISCONN)(uint8_t  bd_addr[6],
                                           uint16_t cause);
@@ -284,15 +280,10 @@ typedef void (*P_BT_ROLESWAP_BT_RFC_DISCONN)(uint8_t  bd_addr[6],
                                              uint8_t  server_chann,
                                              uint16_t cause);
 
-typedef void (*P_BT_ROLESWAP_BT_AVP_CONTROL_CONN)(uint8_t bd_addr[6]);
+typedef void (*P_BT_ROLESWAP_BT_AVP_CONN)(uint8_t bd_addr[6]);
 
-typedef void (*P_BT_ROLESWAP_BT_AVP_CONTROL_DISCONN)(uint8_t  bd_addr[6],
-                                                     uint16_t cause);
-
-typedef void (*P_BT_ROLESWAP_BT_AVP_AUDIO_CONN)(uint8_t bd_addr[6]);
-
-typedef void (*P_BT_ROLESWAP_BT_AVP_AUDIO_DISCONN)(uint8_t  bd_addr[6],
-                                                   uint16_t cause);
+typedef void (*P_BT_ROLESWAP_BT_AVP_DISCONN)(uint8_t  bd_addr[6],
+                                             uint16_t cause);
 
 typedef void (*P_BT_ROLESWAP_BT_ATT_CONN)(uint8_t bd_addr[6]);
 
@@ -301,10 +292,10 @@ typedef void (*P_BT_ROLESWAP_BT_ATT_DISCONN)(uint8_t  bd_addr[6],
 
 typedef void (*P_BT_ROLESWAP_CRTL_CONN)(void);
 
-typedef void (*P_BT_ROLESWAP_RECV)(uint8_t  *p_data,
+typedef void (*P_BT_ROLESWAP_RECV)(uint8_t  *data,
                                    uint16_t  data_len);
 
-typedef void (*P_BT_ROLESWAP_CBACK)(void                       *p_buf,
+typedef void (*P_BT_ROLESWAP_CBACK)(void                       *buf,
                                     T_GAP_BR_HANDOVER_MSG_TYPE  msg);
 
 typedef bool (*P_BT_ROLESWAP_START)(uint8_t                      bd_addr[6],
@@ -333,10 +324,8 @@ typedef struct
     P_BT_ROLESWAP_SCO_DISCONN               sco_disconn;
     P_BT_ROLESWAP_BT_RFC_CONN               bt_rfc_conn;
     P_BT_ROLESWAP_BT_RFC_DISCONN            bt_rfc_disconn;
-    P_BT_ROLESWAP_BT_AVP_CONTROL_CONN       bt_avp_control_conn;
-    P_BT_ROLESWAP_BT_AVP_CONTROL_DISCONN    bt_avp_control_disconn;
-    P_BT_ROLESWAP_BT_AVP_AUDIO_CONN         bt_avp_audio_conn;
-    P_BT_ROLESWAP_BT_AVP_AUDIO_DISCONN      bt_avp_audio_disconn;
+    P_BT_ROLESWAP_BT_AVP_CONN               bt_avp_conn;
+    P_BT_ROLESWAP_BT_AVP_DISCONN            bt_avp_disconn;
     P_BT_ROLESWAP_BT_ATT_CONN               bt_att_conn;
     P_BT_ROLESWAP_BT_ATT_DISCONN            bt_att_disconn;
     P_BT_ROLESWAP_CRTL_CONN                 ctrl_conn;
@@ -352,178 +341,103 @@ typedef struct
 extern const T_BT_ROLESWAP_PROTO bt_relay_proto;
 extern const T_BT_ROLESWAP_PROTO bt_sniffing_proto;
 
-T_ROLESWAP_INFO *bt_find_roleswap_info_base(uint8_t bd_addr[6]);
+T_ROLESWAP_INFO *bt_roleswap_info_base_find(uint8_t bd_addr[6]);
 
-T_ROLESWAP_INFO *bt_alloc_roleswap_info_base(uint8_t bd_addr[6]);
+T_ROLESWAP_INFO *bt_roleswap_info_base_alloc(uint8_t bd_addr[6]);
 
-bool bt_roleswap_get_sco_info(uint8_t              bd_addr[6],
-                              T_ROLESWAP_SCO_INFO *p_info);
+bool bt_roleswap_info_base_free(T_ROLESWAP_INFO *info);
 
-bool bt_roleswap_get_a2dp_info(uint8_t               bd_addr[6],
-                               T_ROLESWAP_A2DP_INFO *p_info);
+bool bt_roleswap_sco_info_get(uint8_t              bd_addr[6],
+                              T_ROLESWAP_SCO_INFO *info);
 
-bool bt_roleswap_get_avrcp_info(uint8_t                bd_addr[6],
-                                T_ROLESWAP_AVRCP_INFO *p_info);
-
-bool bt_roleswap_get_hfp_info(uint8_t              bd_addr[6],
-                              T_ROLESWAP_HFP_INFO *p_info);
-
-bool bt_roleswap_get_pbap_info(uint8_t               bd_addr[6],
-                               T_ROLESWAP_PBAP_INFO *p_info);
-
-bool bt_roleswap_get_hid_device_info(uint8_t                     bd_addr[6],
-                                     T_ROLESWAP_HID_DEVICE_INFO *p_info);
-
-bool bt_roleswap_get_hid_host_info(uint8_t                     bd_addr[6],
-                                   T_ROLESWAP_HID_HOST_INFO   *p_info);
-
-bool bt_roleswap_get_iap_info(uint8_t              bd_addr[6],
-                              T_ROLESWAP_IAP_INFO *p_info);
-
-bool bt_roleswap_get_avp_info(uint8_t              bd_addr[6],
-                              T_ROLESWAP_AVP_INFO *p_info);
-
-bool bt_roleswap_get_att_info(uint8_t              bd_addr[6],
-                              T_ROLESWAP_ATT_INFO *p_info);
-
-bool bt_roleswap_get_spp_info(uint8_t              bd_addr[6],
-                              uint8_t              local_server_chann,
-                              T_ROLESWAP_SPP_INFO *p_info);
-
-bool bt_roleswap_get_rfc_info(uint8_t                   bd_addr[6],
-                              uint8_t                   dlci,
-                              T_ROLESWAP_RFC_DATA_INFO *p_data,
-                              T_ROLESWAP_RFC_CTRL_INFO *p_ctrl);
-
-bool bt_roleswap_get_bt_rfc_info(uint8_t                 bd_addr[6],
-                                 uint8_t                 local_server_chann,
-                                 T_ROLESWAP_BT_RFC_INFO *p_info);
-
-bool bt_roleswap_info_send(uint8_t  module,
-                           uint8_t  submodule,
-                           uint8_t  *p_info,
+bool bt_roleswap_info_send(uint8_t   module,
+                           uint8_t   submodule,
+                           uint8_t  *info,
                            uint16_t  len);
 
-bool bt_roleswap_alloc_info(uint8_t  bd_addr[6],
-                            uint8_t  type,
-                            uint8_t  *p_info,
+bool bt_roleswap_info_alloc(uint8_t   bd_addr[6],
+                            uint8_t   type,
+                            uint8_t  *info,
                             uint16_t  len);
 
-void bt_get_roleswap_rfc_info(uint8_t  bd_addr[6],
+void bt_roleswap_rfc_info_get(uint8_t  bd_addr[6],
                               uint8_t  dlci,
                               uint16_t uuid);
 
-bool bt_roleswap_free_info(uint8_t          bd_addr[6],
-                           T_ROLESWAP_DATA *p_data);
+bool bt_roleswap_info_free(uint8_t          bd_addr[6],
+                           T_ROLESWAP_DATA *data);
 
-void bt_roleswap_free_acl_info(uint8_t bd_addr[6]);
-
-void bt_roleswap_free_spp_info(uint8_t bd_addr[6],
+void bt_roleswap_spp_info_free(uint8_t bd_addr[6],
                                uint8_t local_server_chann);
 
-void bt_roleswap_free_a2dp_info(uint8_t bd_addr[6]);
+void bt_roleswap_a2dp_info_free(uint8_t bd_addr[6]);
 
-void bt_roleswap_free_avrcp_info(uint8_t bd_addr[6]);
+void bt_roleswap_avrcp_info_free(uint8_t bd_addr[6]);
 
-void bt_roleswap_free_hfp_info(uint8_t bd_addr[6]);
+void bt_roleswap_hfp_info_free(uint8_t bd_addr[6]);
 
-void bt_roleswap_free_pbap_info(uint8_t bd_addr[6]);
+void bt_roleswap_pbap_info_free(uint8_t bd_addr[6]);
 
-void bt_roleswap_free_hid_device_info(uint8_t bd_addr[6]);
+void bt_roleswap_hid_device_info_free(uint8_t bd_addr[6]);
 
-void bt_roleswap_free_hid_host_info(uint8_t bd_addr[6]);
+void bt_roleswap_hid_host_info_free(uint8_t bd_addr[6]);
 
-void bt_roleswap_free_att_info(uint8_t bd_addr[6]);
+void bt_roleswap_att_info_free(uint8_t bd_addr[6]);
 
-void bt_roleswap_free_iap_info(uint8_t bd_addr[6]);
+void bt_roleswap_iap_info_free(uint8_t bd_addr[6]);
 
-void bt_roleswap_free_avp_control_info(uint8_t bd_addr[6]);
+void bt_roleswap_avp_info_free(uint8_t bd_addr[6]);
 
-void bt_roleswap_free_avp_audio_info(uint8_t bd_addr[6]);
-
-void bt_roleswap_free_bt_rfc_info(uint8_t bd_addr[6],
+void bt_roleswap_bt_rfc_info_free(uint8_t bd_addr[6],
                                   uint8_t local_server_chann);
 
 void bt_roleswap_transfer(uint8_t bd_addr[6]);
 
 void bt_roleswap_sync(uint8_t bd_addr[6]);
 
-T_ROLESWAP_DATA *bt_find_roleswap_data(uint8_t bd_addr[6],
+T_ROLESWAP_DATA *bt_roleswap_data_find(uint8_t bd_addr[6],
                                        uint8_t type);
 
-T_ROLESWAP_DATA *bt_find_roleswap_l2c(uint8_t  bd_addr[6],
+T_ROLESWAP_DATA *bt_roleswap_l2c_find(uint8_t  bd_addr[6],
                                       uint16_t cid);
 
-T_ROLESWAP_DATA *bt_find_roleswap_rfc_ctrl(uint8_t  bd_addr[6],
+T_ROLESWAP_DATA *bt_roleswap_rfc_ctrl_find(uint8_t  bd_addr[6],
                                            uint16_t cid);
 
-T_ROLESWAP_DATA *bt_find_roleswap_rfc_data(uint8_t bd_addr[6],
+T_ROLESWAP_DATA *bt_roleswap_rfc_data_find(uint8_t bd_addr[6],
                                            uint8_t dlci);
 
 T_ROLESWAP_DATA *bt_find_roleswap_rfc_data_by_cid(uint8_t  bd_addr[6],
                                                   uint16_t cid);
 
-T_ROLESWAP_DATA *bt_find_roleswap_bt_rfc(uint8_t bd_addr[6],
+T_ROLESWAP_DATA *bt_roleswap_bt_rfc_find(uint8_t bd_addr[6],
                                          uint8_t local_server_chann);
 
 T_ROLESWAP_DATA *bt_find_roleswap_bt_rfc_by_dlci(uint8_t bd_addr[6],
                                                  uint8_t dlci);
 
-T_ROLESWAP_DATA *bt_find_roleswap_spp(uint8_t bd_addr[6],
+T_ROLESWAP_DATA *bt_roleswap_spp_find(uint8_t bd_addr[6],
                                       uint8_t local_server_chann);
 
 T_ROLESWAP_DATA *bt_find_roleswap_spp_by_dlci(uint8_t bd_addr[6],
                                               uint8_t dlci);
 
-bool bt_roleswap_check_l2c_cid(uint8_t  bd_addr[6],
+bool bt_roleswap_l2c_cid_check(uint8_t  bd_addr[6],
                                uint16_t cid);
 
-void bt_roleswap_free_l2c_info(uint8_t  bd_addr[6],
+void bt_roleswap_l2c_info_free(uint8_t  bd_addr[6],
                                uint16_t cid);
 
-bool bt_roleswap_set_acl_info(T_ROLESWAP_ACL_INFO *p_info);
+bool bt_roleswap_acl_info_set(T_ROLESWAP_ACL_INFO *info);
 
-bool bt_roleswap_set_sco_info(uint8_t              bd_addr[6],
-                              T_ROLESWAP_SCO_INFO *p_info);
+bool bt_roleswap_sco_info_set(uint8_t              bd_addr[6],
+                              T_ROLESWAP_SCO_INFO *info);
 
-bool bt_roleswap_set_rfc_ctrl_info(uint8_t                   bd_addr[6],
-                                   T_ROLESWAP_RFC_CTRL_INFO *p_info);
+bool bt_roleswap_rfc_ctrl_info_set(uint8_t                   bd_addr[6],
+                                   T_ROLESWAP_RFC_CTRL_INFO *info);
 
-bool bt_roleswap_set_rfc_data_info(uint8_t                   bd_addr[6],
-                                   T_ROLESWAP_RFC_DATA_INFO *p_info);
-
-bool bt_roleswap_set_spp_info(uint8_t              bd_addr[6],
-                              T_ROLESWAP_SPP_INFO *p_info);
-
-bool bt_roleswap_set_a2dp_info(uint8_t               bd_addr[6],
-                               T_ROLESWAP_A2DP_INFO *p_info);
-
-bool bt_roleswap_set_avrcp_info(uint8_t                bd_addr[6],
-                                T_ROLESWAP_AVRCP_INFO *p_info);
-
-bool bt_roleswap_set_hfp_info(uint8_t              bd_addr[6],
-                              T_ROLESWAP_HFP_INFO *p_info);
-
-bool bt_roleswap_set_pbap_info(uint8_t               bd_addr[6],
-                               T_ROLESWAP_PBAP_INFO *p_info);
-
-bool bt_roleswap_set_hid_device_info(uint8_t                     bd_addr[6],
-                                     T_ROLESWAP_HID_DEVICE_INFO *p_info);
-
-bool bt_roleswap_set_hid_host_info(uint8_t                     bd_addr[6],
-                                   T_ROLESWAP_HID_HOST_INFO   *p_info);
-
-bool bt_roleswap_set_iap_info(uint8_t              bd_addr[6],
-                              T_ROLESWAP_IAP_INFO *p_info);
-
-bool bt_roleswap_set_avp_info(uint8_t              bd_addr[6],
-                              T_ROLESWAP_AVP_INFO *p_info);
-
-bool bt_roleswap_set_att_info(uint8_t              bd_addr[6],
-                              T_ROLESWAP_ATT_INFO *p_info);
-
-bool bt_roleswap_set_bt_rfc_info(uint8_t                 bd_addr[6],
-                                 T_ROLESWAP_BT_RFC_INFO *p_info);
+bool bt_roleswap_rfc_data_info_set(uint8_t                   bd_addr[6],
+                                   T_ROLESWAP_RFC_DATA_INFO *info);
 
 #ifdef __cplusplus
 }

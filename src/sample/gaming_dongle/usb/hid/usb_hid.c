@@ -12,6 +12,7 @@
 #include "app_hid_report_desc.h"
 #include "errno.h"
 #include "app_usb_vol_control.h"
+#include "app_usb_hid_report.h"
 
 uint32_t *hid_inst_0 = NULL;
 #if (F_APP_SS_REVISE_HID == 1)
@@ -90,7 +91,6 @@ typedef struct _t_hid_ual
 } T_HID_UAL;
 
 T_OS_QUEUE ual_list;
-static void *hid_mmi_handle = NULL;
 
 static T_USB_INTERFACE_DESC hid_std_if_desc0 =
 {
@@ -240,7 +240,7 @@ static const T_USB_ENDPOINT_DESC int_ep_desc_hs2 =
 #endif
 #endif
 
-static const void *hid_if_descs_fs0[] =
+static void *const hid_if_descs_fs0[] =
 {
     (void *) &hid_std_if_desc0,
     (void *) &hid_cs_if_desc0,
@@ -248,7 +248,7 @@ static const void *hid_if_descs_fs0[] =
     NULL,
 };
 
-static const void *hid_if_descs_hs0[] =
+static void *const hid_if_descs_hs0[] =
 {
     (void *) &hid_std_if_desc0,
     (void *) &hid_cs_if_desc0,
@@ -257,7 +257,7 @@ static const void *hid_if_descs_hs0[] =
 };
 
 #if (F_APP_SS_REVISE_HID == 1)
-static const void *hid_if_descs_fs1[] =
+static void *const hid_if_descs_fs1[] =
 {
     (void *) &hid_std_if_desc1,
     (void *) &hid_cs_if_desc1,
@@ -265,7 +265,7 @@ static const void *hid_if_descs_fs1[] =
     NULL,
 };
 
-static const void *hid_if_descs_hs1[] =
+static void *const hid_if_descs_hs1[] =
 {
     (void *) &hid_std_if_desc1,
     (void *) &hid_cs_if_desc1,
@@ -274,7 +274,7 @@ static const void *hid_if_descs_hs1[] =
 };
 
 #if F_APP_USB_AUDIO_FEEDBACK_SUPPORT == 0
-static const void *hid_if_descs_fs2[] =
+static void *const hid_if_descs_fs2[] =
 {
     (void *) &hid_std_if_desc2,
     (void *) &hid_cs_if_desc2,
@@ -282,7 +282,7 @@ static const void *hid_if_descs_fs2[] =
     NULL,
 };
 
-static const void *hid_if_descs_hs2[] =
+static void *const hid_if_descs_hs2[] =
 {
     (void *) &hid_std_if_desc2,
     (void *) &hid_cs_if_desc2,
@@ -359,53 +359,31 @@ int32_t usb_hid_set_report(T_HID_DRIVER_REPORT_REQ_VAL req_value, void *buf, uin
 }
 
 #if F_APP_USB_AUDIO_SUPPORT
-static uint32_t app_usb_hid_interrupt_pipe_send_complete(void *handle, void *buf, uint32_t result,
-                                                         int status)
-{
-    extern void app_usb_hid_interrupt_in_complete_result(int result, uint8_t *buf);
-    if (result <= 3) // optimize loading
-    {
-        app_usb_hid_interrupt_in_complete_result(result, (uint8_t *)buf);
-    }
-    return 0;
-}
-
 void usb_hid_pipe_open(void)
 {
-    if (hid_mmi_handle == NULL)
-    {
-        T_USB_HID_ATTR attr =
-        {
-            .zlp = 0,
-            .high_throughput = 0,
-            .congestion_ctrl = HID_CONGESTION_CTRL_DROP_CUR,
-            .rsv = 0,
-            .mtu = CONSUMER_CTRL_MAX_TRANSMISSION_UNIT
-        };
-        hid_mmi_handle = usb_hid_data_pipe_open(HID_INT_IN_EP_1, attr,
-                                                CONSUMER_CTRL_MAX_PENDING_REQ_NUM,
-                                                app_usb_hid_interrupt_pipe_send_complete);
-    }
+    return;
 }
 
 void usb_hid_volume_up(void)
 {
     uint8_t report[] = {REPORT_ID_CONSUMER_HOT_KEY_INPUT, 0x01, 0x00};
-    usb_hid_data_pipe_send(hid_mmi_handle, report, sizeof(report));
+
+    usb_hid_report_buffered_send(report, sizeof(report));
 }
 
 void usb_hid_volume_down(void)
 {
     uint8_t report[] = {REPORT_ID_CONSUMER_HOT_KEY_INPUT, 0x02, 0x00};
-    usb_hid_data_pipe_send(hid_mmi_handle, report, sizeof(report));
+
+    usb_hid_report_buffered_send(report, sizeof(report));
 }
 
 void usb_hid_volume_release(void)
 {
     uint8_t report[] = {REPORT_ID_CONSUMER_HOT_KEY_INPUT, 0x00, 0x00};
-    usb_hid_data_pipe_send(hid_mmi_handle, report, sizeof(report));
-}
 
+    usb_hid_report_buffered_send(report, sizeof(report));
+}
 #endif
 
 void usb_hid_init(void)

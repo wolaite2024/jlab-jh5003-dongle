@@ -41,13 +41,14 @@ bool app_lea_ascs_cis_exist(void);
     * @brief  Allocate ase entry by LE entry connection handle and update ase id, codec parameters
     * @param  conn_handle LE entry connection handle
     * @param  ase_id    audio stream endpoint identifier
+    * @param  codec_id  codec identifier
     * @param  codec_cfg codec parameters
     * @return The status of allocate ase
     * @retval true  success
     * @retval false fail
     */
 bool app_lea_ascs_alloc_ase_entry(uint16_t conn_handle, uint8_t ase_id,
-                                  T_CODEC_CFG codec_cfg);
+                                  uint8_t codec_id[CODEC_ID_LEN], T_CODEC_CFG codec_cfg);
 
 /**
     * @brief  Free ase entry

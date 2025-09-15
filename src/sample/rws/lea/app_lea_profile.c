@@ -6,9 +6,15 @@
 #include "bap.h"
 #include "cap.h"
 #include "mcp_client.h"
+#if F_APP_AICS_SUPPORT
+#include "app_lea_aics.h"
+#endif
 #include "app_lea_ascs.h"
 #include "app_lea_ccp.h"
 #include "app_lea_csis.h"
+#if F_APP_HAS_SUPPORT
+#include "app_lea_has.h"
+#endif
 #include "app_lea_mcp.h"
 #include "app_lea_mgr.h"
 #if F_APP_MICS_SUPPORT
@@ -23,8 +29,13 @@
 #include "app_cfg.h"
 
 #if F_APP_TMAP_CT_SUPPORT || F_APP_TMAP_UMR_SUPPORT
+#if F_APP_ERWS_SUPPORT
 #define APP_SNK_ASE_NUM     2
+#define APP_SRC_ASE_NUM     1
+#else
+#define APP_SNK_ASE_NUM     4
 #define APP_SRC_ASE_NUM     2
+#endif
 #endif
 
 #if F_APP_CCP_SUPPORT
@@ -126,6 +137,10 @@ void app_lea_profile_init(void)
     app_lea_mics_init();
 #endif
 
+#if F_APP_AICS_SUPPORT
+    app_lea_aics_init();
+#endif
+
     app_lea_uca_init();
 
 #if F_APP_TMAP_BMR_SUPPORT
@@ -142,6 +157,10 @@ void app_lea_profile_init(void)
 
 #if F_APP_TMAS_SUPPORT
     app_lea_profile_tmas_init();
+#endif
+
+#if F_APP_HAS_SUPPORT
+    app_lea_has_init(false);
 #endif
 
     app_lea_vol_init();

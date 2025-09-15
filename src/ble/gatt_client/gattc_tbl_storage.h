@@ -20,6 +20,7 @@ extern "C" {
 
 void gattc_tbl_storage_init(void);
 void gattc_tbl_storage_handle_bond_modify(T_LE_BOND_MODIFY_INFO *p_info);
+bool gattc_tbl_storage_del(uint16_t conn_handle);
 
 #endif
 

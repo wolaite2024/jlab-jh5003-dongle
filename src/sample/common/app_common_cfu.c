@@ -43,10 +43,17 @@
 #ifdef USER_DATA1_ADDR
 #include "app_ota.h"
 #endif
+#include "rtl876x_wdg.h"
+#include "aon_wdg_ext.h"
+#if CONFIG_REALTEK_APP_BT_AUDIO_TRI_DONGLE
+#include "app_tri_dongle_cmd.h"
+#endif
 
 #define READ_BACK_BUFFER_SIZE           64
 #define NOT_READY_OFFSET                308
 #define CFU_PACKET_SIZE                 52
+#define WDG_TIMEOUT_TIME_MS             64000
+
 typedef enum t_cfu_timer
 {
     APP_TIMER_CFU_CONTENT_TRANS,
@@ -55,169 +62,6 @@ typedef enum t_cfu_timer
     APP_TIMER_CFU_B2X_SYNC,
     APP_TIMER_CFU_DISC_B2S,
 } T_CFU_TIMER;
-
-typedef enum t_component_firmware_update
-{
-    COMPONENT_FIRMWARE_UPDATE_FLAG_DEFAULT = 0x00,
-    COMPONENT_FIRMWARE_UPDATE_FLAG_FIRST_BLOCK = 0x80,        // Denotes the first block of a firmware payload.
-    COMPONENT_FIRMWARE_UPDATE_FLAG_LAST_BLOCK = 0x40,         // Denotes the last block of a firmware payload.
-    COMPONENT_FIRMWARE_UPDATE_FLAG_VERIFY = 0x08,             // If set, the firmware verifies the byte array in the upper block at the specified address.
-} T_COMPONENT_FIRMWARE_UPDATE;
-
-typedef enum t_fw_offer_status
-{
-    // The offer needs to be skipped at this time indicating to
-    // the host to please offer again during next applicable period.
-    FIRMWARE_UPDATE_OFFER_SKIP = 0x00,
-
-    // Once FIRMWARE_UPDATE_FLAG_LAST_BLOCK has been issued,
-    // the accessory can then determine if the offer contents
-    // apply to it.
-    FIRMWARE_UPDATE_OFFER_ACCEPT = 0x01,
-
-    // Once FIRMWARE_UPDATE_FLAG_LAST_BLOCK has been issued,
-    // the accessory can then determine if the offer block contents apply to it.
-    FIRMWARE_UPDATE_OFFER_REJECT = 0x02,
-
-    // The offer needs to be delayed at this time.  The device has
-    // nowhere to put the incoming blob.
-    FIRMWARE_UPDATE_OFFER_BUSY = 0x03,
-
-    // Used with the Offer Other response for the OFFER_NOTIFY_ON_READY
-    // request, when the Accessory is ready to accept additional Offers.
-    FIRMWARE_UPDATE_OFFER_COMMAND_READY = 0x04,
-
-    // Response applicable to when the Offer request is not recognized.
-    FIRMWARE_UPDATE_CMD_NOT_SUPPORTED = 0xFF
-} T_FW_OFFER_STATUS;
-
-typedef enum t_fw_update_offer_reject_reason
-{
-    // The offer was rejected by the product due to the offer
-    // version being older than the currently downloaded / existing firmware.
-    FIRMWARE_OFFER_REJECT_OLD_FW = 0x00, //The offer was rejected by the product due to the offer version being older than the currently downloaded / existing firmware.
-
-    // The offer was rejected due to it not being applicable to
-    // the product?s primary MCU(Component ID).
-    FIRMWARE_OFFER_REJECT_INV_COMPONENT = 0x01,
-
-    // MCU Firmware has been updated and a swap is currently pending.
-    // No further Firmware Update processing can occur until the
-    // target has been reset.
-    FIRMWARE_UPDATE_OFFER_SWAP_PENDING = 0x02,
-
-    // The offer was rejected due to a Version mismatch(Debug / Release for example)
-    FIRMWARE_OFFER_REJECT_MISMATCH = 0x03,
-
-    // The bank being offered for the component is currently in use.
-    FIRMWARE_OFFER_REJECT_BANK = 0x04,
-
-    // The offer's Platform ID does not correlate to the receiving
-    // hardware product.
-    FIRMWARE_OFFER_REJECT_PLATFORM = 0x05,
-
-    // The offer's Milestone does not correlate to the receiving
-    // hardware's Build ID.
-    FIRMWARE_OFFER_REJECT_MILESTONE = 0x06,
-
-    // The offer indicates an interface Protocol Revision that
-    // the receiving product does not support.
-    FIRMWARE_OFFER_REJECT_INV_PCOL_REV = 0x07,
-
-    // The combination of Milestone & Compatibility Variants Mask did
-    // not match the HW.
-    FIRMWARE_OFFER_REJECT_VARIANT = 0x08
-} T_FW_UPDATE_OFFER_REJECT_REASON;
-
-typedef enum t_component_firmware_update_payload_response
-{
-    COMPONENT_FIRMWARE_UPDATE_SUCCESS = 0x00,                             // No Error, the requested function(s) succeeded.
-    COMPONENT_FIRMWARE_UPDATE_ERROR_PREPARE = 0x01,                       // Could not either: 1) Erase the upper block; 2) Initialize the swap command scratch block; 3) Copy the configuration data to the upper block.
-    COMPONENT_FIRMWARE_UPDATE_ERROR_WRITE = 0x02,                         // Could not write the bytes.
-    COMPONENT_FIRMWARE_UPDATE_ERROR_COMPLETE = 0x03,                      // Could not set up the swap, in response to COMPONENT_FIRMWARE_UPDATE_FLAG_LAST_BLOCK.
-    COMPONENT_FIRMWARE_UPDATE_ERROR_VERIFY = 0x04,                        // Verification of the DWord failed, in response to COMPONENT_FIRMWARE_UPDATE_FLAG_VERIFY.
-    COMPONENT_FIRMWARE_UPDATE_ERROR_CRC = 0x05,                           // CRC of the image failed, in response to COMPONENT_FIRMWARE_UPDATE_FLAG_LAST_BLOCK.
-    COMPONENT_FIRMWARE_UPDATE_ERROR_SIGNATURE = 0x06,                     // Firmware signature verification failed, in response to COMPONENT_FIRMWARE_UPDATE_FLAG_LAST_BLOCK.
-    COMPONENT_FIRMWARE_UPDATE_ERROR_VERSION = 0x07,                       // Firmware version verification failed, in response to COMPONENT_FIRMWARE_UPDATE_FLAG_LAST_BLOCK.
-    COMPONENT_FIRMWARE_UPDATE_ERROR_SWAP_PENDING = 0x08,                  // Firmware has already been updated and a swap is pending.  No further Firmware Update commands can be accepted until the device has been reset.
-    COMPONENT_FIRMWARE_UPDATE_ERROR_INVALID_ADDR = 0x09,                  // Firmware has detected an invalid destination address within the message data content.
-    COMPONENT_FIRMWARE_UPDATE_ERROR_NO_OFFER = 0x0A,                      // The Firmware Update Content Command was received without first receiving a valid & accepted FW Update Offer.
-    COMPONENT_FIRMWARE_UPDATE_ERROR_INVALID = 0x0B                        // General error for the Firmware Update Content command, such as an invalid applicable Data Length.
-} T_COMPONENT_FIRMWARE_UPDATE_PAYLOAD_RESPONSE;
-
-typedef enum t_content_status
-{
-    CFU_CONTENT_IDLE,
-    CFU_CONTENT_RECEIVE_CFU_HEADER,
-    CFU_CONTENT_RECEIVE_IMG_HEADER,
-    CFU_CONTENT_RECEIVE_IMG_BLOCKS,
-} T_CONTENT_STATUS;
-
-typedef enum t_cfu_remote_msg
-{
-    APP_REMOTE_MSG_CFU_ACK                    = 0x00,
-    APP_REMOTE_MSG_CFU_P2S_OFFER              = 0x01,
-    APP_REMOTE_MSG_CFU_P2S_CONTENT            = 0x02,
-    APP_REMOTE_MSG_CFU_S2P_OFFER_RSP          = 0x03,
-    APP_REMOTE_MSG_CFU_S2P_CONTENT_RSP        = 0x04,
-
-    APP_REMOTE_MSG_CFU_TOTAL                  = 0x05,
-} T_CFU_REMOTE_MSG;
-
-typedef union t_cfu_offer_version
-{
-    uint8_t value[4];
-    struct
-    {
-        uint8_t signer: 2;
-        uint8_t build_type: 2;
-        uint8_t rsvd0: 3;
-        uint8_t official: 1;
-        uint8_t minor_ver[2];
-        uint8_t major_ver;
-    } ver;
-} T_CFU_OFFER_VERSION;
-
-typedef struct t_fw_update_standard_offer
-{
-    uint8_t rsvd0;
-    uint8_t rsvd1: 6;
-    uint8_t force_reset: 1;
-    uint8_t force_ignore: 1;
-    uint8_t component_id;
-    uint8_t token;
-    T_CFU_OFFER_VERSION version;
-    uint16_t last_image_id;
-    uint8_t bud_role: 2;
-    uint8_t force_ignore_platform_id: 1;
-    uint8_t rsvd2: 5;
-    uint8_t rsvd3;
-    uint8_t cfu_ver: 4;
-    uint8_t bank: 2;
-    uint8_t rsvd4: 2;
-    uint8_t milestone: 4;
-    uint8_t sfua_ver: 4;
-    uint16_t platform_id;
-} T_FW_UPDATE_STANDARD_OFFER;
-
-typedef struct t_fw_update_special_offer
-{
-    uint8_t cmdCode;
-    uint8_t rsvd0;
-    uint8_t component_id;
-    uint8_t token;
-    uint8_t rsvd1[12];
-} T_FW_UPDATE_SPECIAL_OFFER;
-
-
-typedef struct t_fw_update_content_command
-{
-    uint8_t flags;
-    uint8_t length;
-    uint16_t seq_num;
-    uint8_t offset[4];
-    uint8_t data[52];
-} T_FW_UPDATE_CONTENT_COMMAND;
 
 static uint8_t timer_idx_cfu_reset = 0;
 static uint8_t timer_idx_cfu_content_trans = 0;
@@ -385,6 +229,9 @@ static bool app_cfu_checksum(IMG_ID image_id, uint32_t offset)
 {
     uint32_t base_addr = 0;
     bool ret = false;
+    bool wdg_en = false;
+    bool aon_wdg_en = false;
+    T_WATCH_DOG_TIMER_REG wdg_ctrl_value;
 
 #ifdef USER_DATA1_ADDR
     base_addr = app_trx_get_inactive_bank_addr(image_id);
@@ -398,7 +245,30 @@ static bool app_cfu_checksum(IMG_ID image_id, uint32_t offset)
     }
 
     base_addr += offset ;
+    wdg_ctrl_value.d32 = WDG->WDG_CTL;
+    wdg_en = wdg_ctrl_value.b.en_byte == 0xA5;
+    aon_wdg_en = aon_wdg_is_enable(AON_WDG2);
+    if (wdg_en)
+    {
+        wdg_start(WDG_TIMEOUT_TIME_MS, (T_WDG_MODE)wdg_ctrl_value.b.wdg_mode);
+    }
+    if (aon_wdg_en)
+    {
+        aon_wdg_disable(AON_WDG2);
+    }
+
     ret = check_image_sum(base_addr);
+
+    if (wdg_en)
+    {
+        WDG_Config(wdg_ctrl_value.b.div_factor, wdg_ctrl_value.b.cnt_limit,
+                   (T_WDG_MODE)wdg_ctrl_value.b.wdg_mode);
+    }
+    if (aon_wdg_en)
+    {
+        aon_wdg_kick(AON_WDG2);
+        aon_wdg_enable(AON_WDG2);
+    }
 
     if (ret == true && !is_ota_support_bank_switch())
     {
@@ -439,9 +309,15 @@ static void app_cfu_error_handle(void)
 #if F_APP_TEAMS_CFU_SUPPORT
     memset((uint8_t *)&cfu_header, 0, CFU_HEADER_LEN);
 #endif
-    memset(ms_cfu, 0, sizeof(T_CFU_STRUCT));
-    free(ms_cfu);
-    ms_cfu = NULL;
+    if (ms_cfu)
+    {
+        memset(ms_cfu, 0, sizeof(T_CFU_STRUCT));
+        free(ms_cfu);
+        ms_cfu = NULL;
+#if CONFIG_REALTEK_APP_BT_AUDIO_TRI_DONGLE
+        app_tri_dongle_set_busy_state(APP_TRI_DONGLE_BUSY_EVENT_CFU_DISABLE);
+#endif
+    }
 }
 
 static void app_cfu_content_update_init(void)
@@ -452,6 +328,9 @@ static void app_cfu_content_update_init(void)
 #endif
     app_cfu_clear_local();
     ms_cfu->flag.cfu_in_process = 1;
+#if CONFIG_REALTEK_APP_BT_AUDIO_TRI_DONGLE
+    app_tri_dongle_set_busy_state(APP_TRI_DONGLE_BUSY_EVENT_CFU_ENABLE);
+#endif
 }
 
 static uint8_t app_cfu_get_bank_index(void)
@@ -658,11 +537,13 @@ static void app_cfu_standard_offer_parse(uint8_t *data, FW_UPDATE_OFFER_RESPONSE
     ms_cfu->flag.force_reset = offer_cmd->force_reset;
     ms_cfu->signing = offer_cmd->version.ver.signer;
 #else
-    ms_cfu->flag.force_reset = offer_cmd->force_reset;
+    // ms_cfu->flag.force_reset = offer_cmd->force_reset;
     ms_cfu->flag.ignore_ver = offer_cmd->force_ignore;
     if ((offer_cmd->force_ignore == 0) &&
         (*(uint32_t *)version.value >= *(uint32_t *)offer_cmd->version.value))
     {
+        APP_PRINT_ERROR2("app_cfu_standard_offer_parse old fw SOC 0x%x pack 0x%x",
+                         *(uint32_t *)version.value, *(uint32_t *)offer_cmd->version.value);
         rsp->status = FIRMWARE_UPDATE_OFFER_REJECT;
         rsp->rejectReason = FIRMWARE_OFFER_REJECT_OLD_FW;
         return;
@@ -720,6 +601,7 @@ static void app_cfu_timeout_cb(uint8_t timer_evt, uint16_t param)
     case APP_TIMER_CFU_OFFER_TO_CONTENT:
         {
             app_stop_timer(&timer_idx_cfu_offer_to_content);
+            app_stop_timer(&timer_idx_cfu_content_trans);
             app_cfu_error_handle();
         }
         break;
@@ -872,6 +754,7 @@ T_CFU_RSP_TYPE app_cfu_offer_parse(uint8_t *data, uint16_t length,
 T_CFU_RSP_TYPE app_cfu_content_parse(uint8_t *data, uint8_t length,
                                      FW_UPDATE_CONTENT_RESPONSE *content_rsp)
 {
+    bool ret_check = false;
     T_FW_UPDATE_CONTENT_COMMAND *content_cmd = (T_FW_UPDATE_CONTENT_COMMAND *)data;
 #if APP_TEAMS_CFU_SUPPORT_EXTERNAL_DSP
     else if (ms_cfu->cur_component_id == CFU_DSP_COMPONENT_ID)
@@ -1016,7 +899,20 @@ T_CFU_RSP_TYPE app_cfu_content_parse(uint8_t *data, uint8_t length,
 
             if (ms_cfu->cur_img_offset == ms_cfu->cur_img_total_len)
             {
-                if (app_cfu_checksum((IMG_ID)ms_cfu->cur_img_id, 0) == true)
+                app_stop_timer(&timer_idx_cfu_content_trans);
+
+#ifdef USER_DATA1_ADDR
+                if (ms_cfu->cur_img_id >= IMG_USER_DATA8)
+                {
+                    ret_check = true;
+                }
+                else
+#endif
+                {
+                    ret_check = app_cfu_checksum((IMG_ID)ms_cfu->cur_img_id, 0);
+                }
+
+                if (ret_check)
                 {
                     APP_PRINT_TRACE1("app_cfu_content_parse: valid success img_id: %x", ms_cfu->cur_img_id);
 
@@ -1034,8 +930,6 @@ T_CFU_RSP_TYPE app_cfu_content_parse(uint8_t *data, uint8_t length,
 
                     if (content_cmd->flags & COMPONENT_FIRMWARE_UPDATE_FLAG_LAST_BLOCK)
                     {
-                        app_stop_timer(&timer_idx_cfu_content_trans);
-
 #if APP_TEAMS_SUPPORT_SIGNED_IMAGE
                         CfuHashFinalize(&hash_context, digest);
                         if (VerifyHash(digest, sizeof(digest), cfu_header + sizeof(CFU_HEADER)) != CERT_STATUS_SUCCESS)
@@ -1057,7 +951,6 @@ T_CFU_RSP_TYPE app_cfu_content_parse(uint8_t *data, uint8_t length,
 #endif
 
                         ms_cfu->flag.bank_swap_pending = true;
-                        ms_cfu->flag.cfu_in_process = 0;
                         ms_cfu->content_state = CFU_CONTENT_IDLE;
 
                         if (ms_cfu->flag.ignore_ver)
@@ -1069,7 +962,9 @@ T_CFU_RSP_TYPE app_cfu_content_parse(uint8_t *data, uint8_t length,
                             base_addr = get_header_addr_by_img_id(IMG_SBL);
                             dfu_erase_img_flash_area(base_addr, DEFAULT_HEADER_SIZE);
                         }
-
+#if CONFIG_REALTEK_APP_BT_AUDIO_TRI_DONGLE
+                        app_tri_dongle_set_busy_state(APP_TRI_DONGLE_BUSY_EVENT_CFU_DISABLE);
+#endif
 #if (F_APP_CFU_HID_SUPPORT || F_APP_TEAMS_HID_SUPPORT || F_APP_CFU_SPP_SUPPORT || F_APP_CFU_BLE_CHANNEL_SUPPORT)
                         if (app_cfg_store_all() != 0)
                         {
@@ -1081,22 +976,24 @@ T_CFU_RSP_TYPE app_cfu_content_parse(uint8_t *data, uint8_t length,
                             fmc_flash_nor_set_bp_lv(flash_partition_addr_get(PARTITION_FLASH_OTA_BANK_0),
                                                     ms_cfu->bp_level);
                         }
-                        if (ms_cfu->flag.force_reset)
-                        {
+                        // if (ms_cfu->flag.force_reset)
+                        // {
 #if (F_APP_CFU_HID_SUPPORT || F_APP_TEAMS_HID_SUPPORT || F_APP_CFU_SPP_SUPPORT || F_APP_CFU_BLE_CHANNEL_SUPPORT)
-                            app_start_timer(&timer_idx_cfu_disc_b2s, "cfu_disc_b2s",
-                                            cfu_timer_id, APP_TIMER_CFU_DISC_B2S, 0, 0,
-                                            3000);
+                        app_start_timer(&timer_idx_cfu_disc_b2s, "cfu_disc_b2s",
+                                        cfu_timer_id, APP_TIMER_CFU_DISC_B2S, 0, 0,
+                                        3000);
 #else
-                            app_start_timer(&timer_idx_cfu_reset, "cfu_reset",
-                                            cfu_timer_id, APP_TIMER_CFU_RESET, 0, 0,
-                                            3000);
+                        app_start_timer(&timer_idx_cfu_reset, "cfu_reset",
+                                        cfu_timer_id, APP_TIMER_CFU_RESET, 0, 0,
+                                        3000);
 #endif
-                        }
+                        // }
                     }
                     else
                     {
                         ms_cfu->content_state = CFU_CONTENT_RECEIVE_CFU_HEADER;
+                        app_start_timer(&timer_idx_cfu_content_trans, "cfu_content_trans", cfu_timer_id,
+                                        APP_TIMER_CFU_CONTENT_TRANS, 0, false, 5000);
                     }
                 }
                 else
@@ -1132,6 +1029,10 @@ void app_cfu_save_link_info(uint8_t *bd_addr)
 
 bool app_cfu_is_process_check(T_APP_BR_LINK **p_link)
 {
+    if (ms_cfu == NULL)
+    {
+        return false;
+    }
     *p_link = ms_cfu->p_link;
     return ms_cfu->flag.cfu_in_process;
 }
@@ -1139,6 +1040,10 @@ bool app_cfu_is_process_check(T_APP_BR_LINK **p_link)
 
 bool app_cfu_is_in_process(void)
 {
+    if (ms_cfu == NULL)
+    {
+        return false;
+    }
     return ms_cfu->flag.cfu_in_process;
 }
 

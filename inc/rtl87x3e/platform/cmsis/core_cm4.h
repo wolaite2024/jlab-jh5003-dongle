@@ -207,9 +207,14 @@ extern "C" {
 
 #endif
 
+#if defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+#include "cmsis_armclang.h"
+#include "cmsis_compiler.h"
+#else
 #include "core_cmInstr.h"                /* Core Instruction Access */
 #include "core_cmFunc.h"                 /* Core Function Access */
 #include "core_cmSimd.h"                 /* Compiler specific SIMD Intrinsics */
+#endif
 
 #ifdef __cplusplus
 }

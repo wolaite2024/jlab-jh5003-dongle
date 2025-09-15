@@ -61,6 +61,8 @@ Data Structures</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structt__audio__eq__report__data.html">t_audio_eq_report_data</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structt__eq__enable__info.html">t_eq_enable_info</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -89,6 +91,8 @@ Typedefs</h2></td></tr>
 <tr class="separator:ga8b676f48c6e64a244eb574952c88c4f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa4e1c5f8eab569f3ea187d9eee957b7b"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structt__audio__eq__report__data.html">t_audio_eq_report_data</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___e_q.html#gaa4e1c5f8eab569f3ea187d9eee957b7b">T_AUDIO_EQ_REPORT_DATA</a></td></tr>
 <tr class="separator:gaa4e1c5f8eab569f3ea187d9eee957b7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5743d76ba92d4a4af412d3901267a5e5"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structt__eq__enable__info.html">t_eq_enable_info</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___e_q.html#ga5743d76ba92d4a4af412d3901267a5e5">T_EQ_ENABLE_INFO</a></td></tr>
+<tr class="separator:ga5743d76ba92d4a4af412d3901267a5e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -122,6 +126,12 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf1112c41b1a9daa94ef4b70945b661a8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___e_q.html#gaf1112c41b1a9daa94ef4b70945b661a8">app_eq_param_set</a> (uint8_t eq_mode, uint8_t index, void *data, uint16_t len)</td></tr>
 <tr class="memdesc:gaf1112c41b1a9daa94ef4b70945b661a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the specific EQ index parameter.  <a href="#gaf1112c41b1a9daa94ef4b70945b661a8">More...</a><br /></td></tr>
 <tr class="separator:gaf1112c41b1a9daa94ef4b70945b661a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab2c39c6ad7c677b29f1cf4dff3690c5e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___e_q.html#gab2c39c6ad7c677b29f1cf4dff3690c5e">app_eq_media_eq_enable</a> (<a class="el" href="group___a_p_p___e_q.html#ga5743d76ba92d4a4af412d3901267a5e5">T_EQ_ENABLE_INFO</a> *enable_info)</td></tr>
+<tr class="memdesc:gab2c39c6ad7c677b29f1cf4dff3690c5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the media eq.  <a href="#gab2c39c6ad7c677b29f1cf4dff3690c5e">More...</a><br /></td></tr>
+<tr class="separator:gab2c39c6ad7c677b29f1cf4dff3690c5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga003cce08ae0f6c42ecdfb6c697f84db8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___e_q.html#ga003cce08ae0f6c42ecdfb6c697f84db8">app_eq_enable_info_get</a> (uint8_t eq_mode, <a class="el" href="group___a_p_p___e_q.html#ga5743d76ba92d4a4af412d3901267a5e5">T_EQ_ENABLE_INFO</a> *enable_info)</td></tr>
+<tr class="memdesc:ga003cce08ae0f6c42ecdfb6c697f84db8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the specific EQ enable info.  <a href="#ga003cce08ae0f6c42ecdfb6c697f84db8">More...</a><br /></td></tr>
+<tr class="separator:ga003cce08ae0f6c42ecdfb6c697f84db8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf22bd477451f3eead1015bebdad23fdb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___e_q.html#gaf22bd477451f3eead1015bebdad23fdb">app_eq_report_eq_param</a> (uint8_t cmd_path, uint8_t app_idx)</td></tr>
 <tr class="memdesc:gaf22bd477451f3eead1015bebdad23fdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Report EQ parameter.  <a href="#gaf22bd477451f3eead1015bebdad23fdb">More...</a><br /></td></tr>
 <tr class="separator:gaf22bd477451f3eead1015bebdad23fdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -317,6 +327,20 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ga5743d76ba92d4a4af412d3901267a5e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5743d76ba92d4a4af412d3901267a5e5">&#9670;&nbsp;</a></span>T_EQ_ENABLE_INFO</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="structt__eq__enable__info.html">t_eq_enable_info</a>  <a class="el" href="group___a_p_p___e_q.html#ga5743d76ba92d4a4af412d3901267a5e5">T_EQ_ENABLE_INFO</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="gaf07f7a25127074d57938a559a051aaa5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaf07f7a25127074d57938a559a051aaa5">&#9670;&nbsp;</a></span>T_EQ_DATA_UPDATE_EVENT</h2>
@@ -485,6 +509,69 @@ Functions</h2></td></tr>
   <table class="retval">
     <tr><td class="paramname">true</td><td>EQ parameter was set successfully. </td></tr>
     <tr><td class="paramname">false</td><td>EQ parameter was failed to set. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gab2c39c6ad7c677b29f1cf4dff3690c5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab2c39c6ad7c677b29f1cf4dff3690c5e">&#9670;&nbsp;</a></span>app_eq_media_eq_enable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void app_eq_media_eq_enable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___a_p_p___e_q.html#ga5743d76ba92d4a4af412d3901267a5e5">T_EQ_ENABLE_INFO</a> *&#160;</td>
+          <td class="paramname"><em>enable_info</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable the media eq. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">enable_info</td><td>EQ enable info. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga003cce08ae0f6c42ecdfb6c697f84db8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga003cce08ae0f6c42ecdfb6c697f84db8">&#9670;&nbsp;</a></span>app_eq_enable_info_get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void app_eq_enable_info_get </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>eq_mode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___a_p_p___e_q.html#ga5743d76ba92d4a4af412d3901267a5e5">T_EQ_ENABLE_INFO</a> *&#160;</td>
+          <td class="paramname"><em>enable_info</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the specific EQ enable info. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">eq_mode</td><td>EQ mode. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">enable_info</td><td>EQ enable info. </td></tr>
   </table>
   </dd>
 </dl>

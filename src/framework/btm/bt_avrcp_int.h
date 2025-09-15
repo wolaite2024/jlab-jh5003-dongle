@@ -13,24 +13,6 @@
 extern "C" {
 #endif /* __cplusplus */
 
-typedef enum
-{
-    BT_SYNC_VOL_TYPE_AVRCP_UP           = 0x00,
-    BT_SYNC_VOL_TYPE_AVRCP_DOWN         = 0x01,
-    BT_SYNC_VOL_TYPE_AVRCP_ABSOLUTE_VOL = 0x02,
-} T_BT_AVRCP_SYNC_VOL_TYPE;
-
-typedef struct t_avrcp_link_data
-{
-    bool     vol_change_registered;
-    bool     play_status_change_registered;
-    bool     track_change_registered;
-    bool     addressed_player_change_registered;
-    uint8_t  play_status;
-    bool     browsing_chann_connected;
-    bool     cover_art_chann_connected;
-} T_AVRCP_LINK_DATA;
-
 typedef struct
 {
     uint8_t  state;
@@ -39,10 +21,10 @@ typedef struct
     uint8_t  play_status;
 } T_BT_AVRCP_RSP_GET_PLAY_STATUS;
 
-typedef struct
+typedef struct t_bt_avrcp_req_get_element_attr
 {
-    uint8_t     num_of_attr;
-    uint32_t    attr_id[8];
+    uint8_t    attr_num;
+    uint32_t   attr_id[8];
 } T_BT_AVRCP_REQ_GET_ELEMENT_ATTR;
 
 typedef struct
@@ -51,6 +33,13 @@ typedef struct
     uint8_t                  num_of_attr;
     T_BT_AVRCP_ELEMENT_ATTR *attr;
 } T_BT_AVRCP_RSP_GET_ELEMENT_ATTR;
+
+typedef struct t_bt_avrcp_rsp_get_capabilities
+{
+    uint8_t  state;
+    uint8_t  capability_count;
+    uint8_t *capabilities;
+} T_BT_AVRCP_RSP_GET_CAPABILITIES;
 
 typedef T_BT_AVRCP_RSP_GET_ELEMENT_ATTR T_BT_AVRCP_RSP_GET_ITEM_ATTR;
 
@@ -81,13 +70,13 @@ typedef struct
     T_BT_AVRCP_APP_SETTING  *p_app_setting;
 } T_BT_AVRCP_RSP_GET_APP_SETTING_VALUE;
 
-typedef struct t_bt_avrcp_cmd_get_folder_items
+typedef struct t_bt_avrcp_req_get_folder_items
 {
-    uint8_t     scope_id;
-    uint32_t    start_item;
-    uint32_t    end_item;
-    uint8_t     attr_count;
-    uint32_t    attr_id[8];
+    uint8_t   scope;
+    uint32_t  start_item;
+    uint32_t  end_item;
+    uint8_t   attr_count;
+    uint32_t  attr_id[8];
 } T_BT_AVRCP_REQ_GET_FOLDER_ITEMS;
 
 typedef struct
@@ -161,6 +150,40 @@ typedef struct
     uint8_t  *p_rsp;
     uint16_t  rsp_len;
 } T_BT_AVRCP_VENDOR_RSP;
+
+typedef struct
+{
+    uint8_t     bd_addr[6];
+    uint16_t    l2c_cid;
+    uint16_t    remote_mtu;
+    uint8_t     data_offset;
+    uint8_t     avctp_state;
+    uint8_t     state;
+    uint8_t     play_status;
+    uint8_t     cmd_credits;
+    uint8_t     transact_label;
+    uint8_t     vol_change_pending_transact;
+    uint8_t     vendor_cmd_transact;
+} T_ROLESWAP_AVRCP_INFO;
+
+typedef struct
+{
+    uint8_t     bd_addr[6];
+    uint8_t     avctp_state;
+    uint8_t     state;
+    uint8_t     play_status;
+    uint8_t     cmd_credits;
+    uint8_t     transact_label;
+    uint8_t     vol_change_pending_transact;
+} T_ROLESWAP_AVRCP_TRANSACT;
+
+bool bt_avrcp_roleswap_info_get(uint8_t                bd_addr[6],
+                                T_ROLESWAP_AVRCP_INFO *info);
+
+bool bt_avrcp_roleswap_info_set(uint8_t                bd_addr[6],
+                                T_ROLESWAP_AVRCP_INFO *info);
+
+bool bt_avrcp_roleswap_info_del(uint8_t bd_addr[6]);
 
 #ifdef __cplusplus
 }

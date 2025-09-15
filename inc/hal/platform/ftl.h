@@ -3,11 +3,10 @@
 *               Copyright(c) 2016, Realtek Semiconductor Corporation. All rights reserved.
 ****************************************************************************************************
 * @file      ftl.h
-* @brief     flash transport layer is used as abstraction layer for user application to save read/write
+* @brief     Flash transport layer is used as an abstraction layer for user applications to save read/write
 *            parameters in flash.
-* @note      ftl is dedicate block in flash, only used for save read/write value, and offset here is
-*            logical offset which is defined for whole ftl section.If value is only for one time read,
-*            refer to fs_load_app_data_8 or other APIs in flash_device.h
+* @note      FTL is a dedicated block in flash, used for saving data. If the value is only for one-time read,
+*            refer to fmc APIs.
 * @author    Brenda_li
 * @date      2016-12-27
 * @version   v1.0
@@ -28,7 +27,7 @@ extern  "C" {
 
 
 /** @defgroup  HAL_FTL    Flash Transport Layer
-    * @brief simple implementation of file system for flash
+    * @brief Simple implementation of file system for flash.
     * @{
     */
 
@@ -39,19 +38,8 @@ extern  "C" {
     * @brief
     * @{
     */
-#define FTL_PARTITION_NAME "FTL"
 
-#define FTL_POOL_ENABLE 1
-
-#define FTL_IN_HAL
-
-/** @defgroup FTL_IO_CTL_CODE Flash Transport Layer ioctrl code
- * @{
- */
-
-/**
-  * @}
-  */
+#define FTL_POOL_ENABLE 1    /**< Indicate that the current version supports FTL POOL, to facilitate compatibility handling for users. */
 
 
 /** End of FTL_Exported_Macros
@@ -70,105 +58,86 @@ extern  "C" {
     * @{
     */
 /**
-    * @brief    Save specified value to specified ftl offset
-    * @param    pdata  specify data buffer
-    * @param    offset specify FTL offset to store
-    * @param    size   size to store
-    * @return   status
-    * @retval   0  status successful
-    * @retval   otherwise fail
-    * @note     FTL offset is pre-defined and no confict with ROM
+    * @brief    Save specified value to specified FTL offset.
+    * @param    pdata  Specify data buffer.
+    * @param    offset Specify FTL offset to store.
+    * @param    size   Size to store.
+    * @return   Refer to errno.h.
+    * @note     FTL offset is pre-defined and no conflict with ROM.
     */
-extern uint32_t(*ftl_save_to_storage)(void *pdata_tmp, uint16_t offset, uint16_t size);
+extern uint32_t(*ftl_save_to_storage)(void *pdata, uint16_t offset, uint16_t size);
 
 /**
-    * @brief    Load specified ftl offset parameter to specified buffer
-    * @param    pdata  specify data buffer
-    * @param    offset specify FTL offset to load
-    * @param    size   size to load
-    * @return   status
-    * @retval   0  status successful
-    * @retval   otherwise fail
-    * @note     FTL offset is pre-defined and no confict with ROM
+    * @brief    Load specified FTL offset parameter to specified buffer.
+    * @param    pdata  Specify data buffer.
+    * @param    offset Specify FTL offset to load.
+    * @param    size   Size to load.
+    * @return   Refer to errno.h.
+    * @note     FTL offset is pre-defined and no conflict with ROM.
     */
-extern uint32_t(*ftl_load_from_storage)(void *pdata_tmp, uint16_t offset, uint16_t size);
+extern uint32_t(*ftl_load_from_storage)(void *pdata, uint16_t offset, uint16_t size);
 
 /**
-    * @brief    Init ftl
-    * @param    info  ftl info
-    * @return   status
-    * @retval   0  status successful
-    * @retval   otherwise fail
+    * @brief    Init FTL.
+    * @param    info  FTL partition info.
+    * @return   Refer to errno.h.
     */
 int ftl_init(const T_STORAGE_PARTITION_INFO *info);
 
 /**
-    * @brief    Init a ext ftl module
-    * @param    module_name  specify ftl ext name, the first 4byte can't be the same
-    * @param    malloc_size  ftl module logical size
-    * @param    block_len    minimum access unit. Must be an integral multiple of 4 and cannot exceed 128
-    * @return   status
-    * @retval   0  status successful
-    * @retval   otherwise fail
-    * @note     Up to 6 modules can be applied
+    * @brief    Init an ext FTL module.
+    * @param    module_name  Specify FTL module name, and the first 4 bytes must be unique.
+    * @param    malloc_size  FTL module logical size.
+    * @param    block_len    The minimum access unit for the FTL module must be an integral multiple of 4 and cannot exceed 128.
+    * @return   Refer to errno.h.
+    * @note     Up to 6 modules can be applied.
     */
 int32_t ftl_init_module(char *module_name, uint16_t malloc_size, uint8_t block_len);
 
 /**
-    * @brief    Set V1 ftl module info
-    * @param    module_name  V1 ext FTL name
-    * @param    u32PageStartAddr  V1 FTL ext start address
-    * @param    pagenum  V1 ext FTL pagenum
-    * @param    value_size  V1 ext FTL value size
-    * @param    offset_min  V1 ext FTL min offset
-    * @return   status
-    * @retval   0 status successful
-    * @retval   otherwise fail
+    * @brief    Set V1 FTL information for the FTL upgrade.
+    * @param    module_name  V1 ext FTL name.
+    * @param    u32PageStartAddr  V1 FTL ext start address.
+    * @param    pagenum  V1 ext FTL pagenum.
+    * @param    value_size  V1 ext FTL value size.
+    * @param    offset_min  V1 ext FTL min offset.
     */
 void ftl_v1_module_info(char *module_name, uint32_t u32PageStartAddr, uint8_t pagenum,
                         uint32_t value_size, uint16_t offset_min);
 
 /**
-    * @brief    Save specified value to ftl module
-    * @param    module_name  specify ftl module name
-    * @param    pdata specify data buffer
-    * @param    offset FTL offset to store
-    * @param    size   size to store, need to be an integer multiple of block_len in ftl_init_module
-    * @return   status
-    * @retval   0  status successful
-    * @retval   otherwise fail
+    * @brief    Save specified value to FTL module.
+    * @param    module_name  Specify FTL module name.
+    * @param    pdata  Specify data buffer.
+    * @param    offset  FTL offset to store.
+    * @param    size   Size to store, needs to be an integer multiple of block_len in ftl_init_module.
+    * @return   Refer to errno.h.
     */
 int32_t ftl_save_to_module(char *module_name, void *pdata, uint16_t offset, uint16_t size);
 
 /**
-    * @brief    Load specified ftl module offset parameter to specified buffer
-    * @param    module_name  specify ftl module name
-    * @param    pdata  specify data buffer
-    * @param    offset specify FTL offset to load, need to be an integer multiple of block_len in ftl_init_module
-    * @param    size   size to load
-    * @return   status
-    * @retval   0  status successful
-    * @retval   otherwise fail
+    * @brief    Load specified FTL module offset parameter to specified buffer.
+    * @param    module_name  Specify FTL module name.
+    * @param    pdata  Specify data buffer.
+    * @param    offset  Specify FTL offset to load, needs to be an integer multiple of block_len in ftl_init_module.
+    * @param    size   Size to load.
+    * @return   Refer to errno.h.
     */
 int32_t ftl_load_from_module(char *module_name, void *pdata, uint16_t offset, uint16_t size);
 
 /**
-    * @brief    Init ftl cache and set ftl cache enable
-    * @param    cache_size  ftl cache size
-    * @return   status
-    * @retval   true: ftl cache init successfully
-    * @retval   otherwise fail
+    * @brief    Init FTL cache and set FTL cache enable.
+    * @param    cache_size  FTL cache size.
+    * @return   True if init is successful, otherwise false.
     */
 bool ftl_cache_init(uint16_t cache_size);
 
 /**
-    * @brief    Set rom ftl module size
-    * @param    rom_size  ftl module logic size
-    * @return   status
-    * @retval   0 status successful
-    * @retval   otherwise fail
+    * @brief    Set ROM FTL module size.
+    * @param    rom_size  FTL module logic size.
+    * @return   Refer to errno.h.
     */
-int32_t ftl_set_rom_mudule_size(uint16_t rom_size);
+int32_t ftl_set_rom_module_size(uint16_t rom_size);
 
 /** @} */ /* End of group FTL_Exported_Functions */
 
@@ -179,3 +148,6 @@ int32_t ftl_set_rom_mudule_size(uint16_t rom_size);
 #endif // __cplusplus
 
 #endif // _FTL_H_
+
+
+

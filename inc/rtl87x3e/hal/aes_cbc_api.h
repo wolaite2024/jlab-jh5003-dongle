@@ -3,7 +3,7 @@
 *               Copyright(c) 2015, Realtek Semiconductor Corporation. All rights reserved.
 **********************************************************************************************************
 * @file     aes_cbc_api.c
-* @brief    This file provides aes cbc api wrapper for sdk customer.
+* @brief    This file provides aes cbc API wrapper for sdk customer.
 * @details
 * @author   jane_zhang
 * @date
@@ -21,10 +21,9 @@
 *============================================================================*/
 #include <stdbool.h>
 #include <stdint.h>
-#include "rtl876x_hw_aes.h"
 
-/** @defgroup  HAL_87x3e_AES_CBC    AES CBC
-    * @brief aes cbc api
+/** @defgroup  HAL_87x3E_AES_CBC    AES CBC
+    * @brief AES CBC.
     * @{
     */
 /*============================================================================*
@@ -35,7 +34,7 @@
 /*============================================================================*
  *                              Functions
 *============================================================================*/
-/** @defgroup HAL_87x3e_AES_CBC_Exported_Functions AES CBC Exported Functions
+/** @defgroup HAL_87x3E_AES_CBC_EXPORTED_FUNCTIONS AES CBC Exported Functions
     * @brief
     * @{
     */
@@ -43,125 +42,121 @@
 extern "C" {
 #endif
 /**
-    * @brief  128 bit AES CBC encryption on speicified plaintext and keys
-    * @param  plaintext    specifed plain text to be encypted
-    * @param  key          keys to encrypt the plaintext
-    * @param  encrypted    output buffer to store encrypted data
-    * @param  p_iv         initialization vector (IV) for CBC mode
-    * @param  data_word_len    word length of the data to be descrypted, must be multiples of 4
-    * @return encryption results
-    * @retval true      successful
-    * @retval false     fail
-    * @note   least significant octet of encrypted data corresponds to encypted[0]
+    * @brief  Encrypt the speicified plaintext by AES CBC mode with a 128-bit key.
+    * @param  plaintext    Specify the plaintext to be encypted.
+    * @param  key          Specify the 128-bit key to encrypt the plaintext.
+    * @param  encrypted    Specify the output buffer to store the encrypted data.
+    * @param  p_iv         Specify the initialization vector (IV) for AES CBC mode.
+    * @param  data_word_len  Specify the word length of the data. The data length must be a multiple of 4.
+    * @return Encryption result.
+    * @retval true      Success.
+    * @retval false     Fail.
+    * @note   The least significant octet of encrypted data corresponds to encypted[0].
     */
 bool aes128_cbc_encrypt(uint8_t *plaintext, const uint8_t key[16], uint8_t *encrypted,
                         uint32_t *p_iv, uint32_t data_word_len);
 /**
-    * @brief  128 bit AES CBC decryption on speicified plaintext and keys
-    * @param  input    specifed encypted data to be decypted
-    * @param  key          keys to decrypt the data
-    * @param  output    output buffer to store plain data
-    * @param  p_iv         initialization vector (IV) for CBC mode
-    * @param  data_word_len    word length of the data to be descrypted, must be multiples of 4
-    * @return encryption results
-    * @retval true      successful
-    * @retval false     fail
-    * @note   least significant octet of encrypted data corresponds to encypted[0]
+    * @brief  Decrypt the speicified data by AES CBC mode with a 128-bit key.
+    * @param  input    Specify the encypted data to be decypted.
+    * @param  key      Specify the 128-bit key to decrypt the data.
+    * @param  output   Specify the output buffer to store the plain data.
+    * @param  p_iv     Specify the initialization vector (IV) for AES CBC mode.
+    * @param  data_word_len  Specify the word length of the data. The data length must be a multiple of 4.
+    * @return Decryption result.
+    * @retval true      Success.
+    * @retval false     Fail.
+    * @note   The least significant octet of decrypted data corresponds to output[0].
     */
 bool aes128_cbc_decrypt(uint8_t *input, const uint8_t key[16], uint8_t *output, uint32_t *p_iv,
                         uint32_t data_word_len);
 /**
-    * @brief  128 bit AES CBC encryption on speicified plaintext and keys
-    * @param  plaintext    specifed plain text to be encypted
-    * @param  key          keys to encrypt the plaintext
-    * @param  encrypted    output buffer to store encrypted data
-    * @param  p_iv         initialization vector (IV) for CBC mode
-    * @param  data_word_len    word length of the data to be descrypted, must be multiples of 4
-    * @return encryption results
-    * @retval true      successful
-    * @retval false     fail
-    * @note   most significant octet of encrypted data corresponds to encypted[0]
+    * @brief  Encrypt the speicified plaintext (MSB) by AES CBC mode with a 128-bit key.
+    * @param  plaintext    Specify the plaintext (MSB) to be encypted.
+    * @param  key          Specify the 128-bit key to encrypt the plaintext.
+    * @param  encrypted    Specify the output buffer to store the encrypted data.
+    * @param  p_iv         Specify the initialization vector (IV) for AES CBC mode.
+    * @param  data_word_len  Specify the word length of the data. The data length must be a multiple of 4.
+    * @return Encryption result.
+    * @retval true      Success
+    * @retval false     Fail.
+    * @note   The most significant octet of encrypted data corresponds to encypted[0].
     */
 bool aes128_cbc_encrypt_msb2lsb(uint8_t plaintext[16], const uint8_t key[16], uint8_t *encrypted,
                                 uint32_t *p_iv, uint32_t data_word_len);
 
 /**
-    * @brief  128 bit AES CBC decryption on speicified plaintext and keys
-    * @param  input    specifed encypted data to be decypted
-    * @param  key          keys to decrypt the data
-    * @param  output    output buffer to store plain data
-    * @param  p_iv         initialization vector (IV) for CBC mode
-    * @param  data_word_len    word length of the data to be descrypted, must be multiples of 4
-    * @return encryption results
-    * @retval true      successful
-    * @retval false     fail
-    * @note   most significant octet of encrypted data corresponds to encypted[0]
+    * @brief  Decrypt the speicified data (MSB) by AES CBC mode with a 128-bit key.
+    * @param  input    Specify the encypted data (MSB) to be decypted.
+    * @param  key      Specify the 128-bit key to decrypt the data.
+    * @param  output   Specify the output buffer to store the plain data.
+    * @param  p_iv     Specify the initialization vector (IV) for AES CBC mode.
+    * @param  data_word_len  Specify the word length of the data. The data length must be a multiple of 4.
+    * @return Decryption result.
+    * @retval true      Success.
+    * @retval false     Fail.
+    * @note   The most significant octet of encrypted data corresponds to output[0].
     */
 bool aes128_cbc_decrypt_msb2lsb(uint8_t *input, const uint8_t key[16], uint8_t *output,
                                 uint32_t *p_iv, uint32_t data_word_len);
 
 /**
-    * @brief  256 bit AES CBC encryption on speicified plaintext and keys
-    * @param  plaintext    specifed plain text to be encypted
-    * @param  key          keys to encrypt the plaintext
-    * @param  encrypted    output buffer to store encrypted data
-    * @param  p_iv         initialization vector (IV) for CBC mode
-    * @param  data_word_len    word length of the data to be descrypted, must be multiples of 4
-    * @return encryption results
-    * @retval true      successful
-    * @retval false     fail
-    * @note   least significant octet of encrypted data corresponds to encypted[0]
+    * @brief  Encrypt the speicified plaintext by AES CBC mode with a 256-bit key.
+    * @param  plaintext    Specify the plaintext to be encypted.
+    * @param  key          Specify the 256-bit key to encrypt the plaintext.
+    * @param  encrypted    Specify the output buffer to store the encrypted data.
+    * @param  p_iv         Specify the initialization vector (IV) for AES CBC mode.
+    * @param  data_word_len  Specify the word length of the data. The data length must be a multiple of 4.
+    * @return Encryption result.
+    * @retval true      Success.
+    * @retval false     Fail.
+    * @note   The least significant octet of encrypted data corresponds to encypted[0].
     */
 bool aes256_cbc_encrypt(uint8_t *plaintext, const uint8_t key[32], uint8_t *encrypted,
                         uint32_t *p_iv, uint32_t data_word_len);
 
 /**
-    * @brief  256 bit AES CBC decryption on speicified plaintext and keys
-    * @param  input    specifed encypted data to be decypted
-    * @param  key          keys to decrypt the data
-    * @param  output    output buffer to store plain data
-    * @param  p_iv         initialization vector (IV) for CBC mode
-    * @param  data_word_len    word length of the data to be descrypted, must be multiples of 4
-    * @return encryption results
-    * @retval true      successful
-    * @retval false     fail
-    * @note   least significant octet of encrypted data corresponds to encypted[0]
+    * @brief  Decrypt the speicified data by AES CBC mode with a 256-bit key.
+    * @param  input    Specify the encypted data to be decypted.
+    * @param  key      Specify the 256-bit key to decrypt the data.
+    * @param  output   Specify the output buffer to store the plain data.
+    * @param  p_iv     Specify the initialization vector (IV) for AES CBC mode.
+    * @param  data_word_len  Specify the word length of the data. The data length must be a multiple of 4.
+    * @return Decryption result.
+    * @retval true      Success.
+    * @retval false     Fail.
+    * @note   The least significant octet of decrypted data corresponds to output[0].
     */
 bool aes256_cbc_decrypt(uint8_t *input, const uint8_t key[32], uint8_t *output, uint32_t *p_iv,
                         uint32_t data_word_len);
 /**
-    * @brief  it's called when 128 bit AES CBC used on flash data by dma has finished
+    * @brief  it's called when the decryption for AES CBC mode by DMA with 128-bit key has finished.
     * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Added API"
-    * @param  rx_dma_ch pointer to the rx dma channel variable
-    * @param  tx_dma_ch pointer to the tx dma channel variable
+    * @param  parameter Specify the HW AES callback parameter.
     * @return void
+    * @note RX DMA channel and TX DMA channel are released in this function.
     */
-void aes128_cbc_flash_dma_done(uint8_t *rx_dma_ch, uint8_t *tx_dma_ch);
+void aes128_cbc_dma_done(uint32_t parameter);
 /**
-    * @brief  128 bit AES CBC decryption by dma on flash data
+    * @brief  Decrypt data by AES CBC DMA mode with 128-bit key.
     * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Added API"
-    * @param  input    specifed flash address of the data to be decypted
-    * @param  output    output buffer to store plain data
-    * @param  data_word_len    word length of the data to be decrypted, must be multiples of 4
-    * @param  key       keys to decrypt the data
-    * @param  p_iv      initialization vector (IV) for CBC mode
-    * @param  rx_dma_ch pointer to the rx dma channel variable, rx dma channel will be requested in
-    *                   this api, don't call dma channel request before calling this api.
-    * @param  tx_dma_ch pointer to the tx dma channel variable, tx dma channel will be requested in
-    *                   this api, don't call dma channel request before calling this api.
-    * @param  cb      register the callback function when the total aes dma operation has been finished.
-    * @return aes dma operation trigger result
-    * @retval true      successful
-    * @retval false     fail
+    * @param  input     Specify the source address of the data to be decypted.
+    * @param  output    Specify the output buffer to store the plain data.
+    * @param  data_word_len  Specify the word length of the data. The data length must be a multiple of 4.
+    * @param  key       Specify the 128-bit key to decrypt the data.
+    * @param  p_iv      Specify the initialization vector (IV) for AES CBC mode.
+    * @param  cback     Register the callback function when the total AES DMA operation has been finished.
+    * @return The AES CBC decryption result by DMA mode.
+    * @retval true      Success.
+    * @retval false     Fail.
+    * @note   The RX DMA channel and TX DMA channel are requested and used by HW AES DMA operation.
+    *         The RX DMA channel and TX DMA channel should be released in the HW AES DMA done callback.
     */
-bool aes128_cbc_decrypt_flash_data_by_dma(uint32_t *input, uint32_t *output, uint32_t data_word_len,
-                                          const uint8_t key[16], uint32_t *p_iv,
-                                          uint8_t *rx_dma_ch, uint8_t *tx_dma_ch,
-                                          AES_DMA_CB cb);
-
+bool aes128_cbc_decrypt_by_dma(uint32_t *input, uint32_t *output, uint32_t data_word_len,
+                               const uint8_t key[16], uint32_t *p_iv,
+                               void (*cback)(void *));
 #ifdef __cplusplus
 }
 #endif  // __cplusplus
-/** @} */ /* End of group HAL_87x3e_AES_CBC_Exported_Functions */
-/** @} */ /* End of group HAL_87x3e_AES_CBC */
+/** @} */ /* End of group HAL_87x3E_AES_CBC_EXPORTED_FUNCTIONS */
+/** @} */ /* End of group HAL_87x3E_AES_CBC */
 #endif //__AES_CBC_API_H_

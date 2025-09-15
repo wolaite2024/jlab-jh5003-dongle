@@ -8,14 +8,13 @@
 #include "app_dongle_dual_mode.h"
 #include "app_bt_policy_api.h"
 #include "app_link_util.h"
-#include "app_bond.h"
 #include "app_audio_policy.h"
 #include "app_dongle_spp.h"
 #include "multitopology_ctrl.h"
 #include "app_lea_adv.h"
-#include "app_lea_mgr.h"
 #include "app_dongle_record.h"
 #include "app_timer.h"
+#include "audio.h"
 
 #define STREAM_ZERO_GAIN                               0xD300
 #define NO_DOGNLE_AUTO_SWITCH_TO_BT_TIMER          600 * 1000
@@ -426,7 +425,7 @@ void app_dongle_source_ctrl_evt_handler(T_SOURCE_CTRL_EVENT event)
                 {
                     app_db.restore_dongle_recording = true;
                     app_dongle_update_is_mic_enable(false);
-                    app_dongle_stop_recording(app_cfg_nv.dongle_addr);
+                    app_dongle_stop_recording();
                 }
             }
         }
@@ -459,7 +458,7 @@ void app_dongle_source_ctrl_evt_handler(T_SOURCE_CTRL_EVENT event)
                 if (app_db.restore_dongle_recording)
                 {
                     app_dongle_update_is_mic_enable(true);
-                    app_dongle_start_recording(app_cfg_nv.dongle_addr);
+                    app_dongle_start_recording();
                 }
             }
         }
@@ -483,6 +482,56 @@ static void app_dongle_source_ctrl_audio_policy_cback(T_AUDIO_EVENT event_type, 
 static void app_dongle_source_ctrl_bt_cback(T_BT_EVENT event_type, void *event_buf,
                                             uint16_t buf_len)
 {
+    T_APP_BR_LINK *p_phone_link = app_dongle_get_connected_phone_link();
+
+    T_BT_EVENT_PARAM *param = event_buf;
+    bool handle = true;
+
+    switch (event_type)
+    {
+    case BT_EVENT_ACL_CONN_DISCONN:
+        {
+            uint32_t bond_flag;
+
+            bt_bond_flag_get(param->acl_conn_disconn.bd_addr, &bond_flag);
+        }
+        break;
+
+    case BT_EVENT_ACL_AUTHEN_SUCCESS:
+        {
+            uint32_t bond_flag;
+
+            bt_bond_flag_get(param->acl_authen_success.bd_addr, &bond_flag);
+        }
+        break;
+
+    case BT_EVENT_HFP_CONN_CMPL:
+        {
+            T_APP_BR_LINK *p_link = app_link_find_br_link(param->hfp_conn_cmpl.bd_addr);
+
+            if (p_link && !app_link_check_dongle_link(p_link->bd_addr))
+            {
+                uint32_t plan_profs = (A2DP_PROFILE_MASK | AVRCP_PROFILE_MASK);
+
+                if (app_cfg_nv.allowed_source == ALLOWED_SOURCE_24G && (p_link->connected_profile & plan_profs))
+                {
+                    app_bt_policy_disconnect(p_link->bd_addr, plan_profs);
+                }
+            }
+        }
+        break;
+
+    default:
+        {
+            handle = false;
+        }
+        break;
+    }
+
+    if (handle == true)
+    {
+        APP_PRINT_INFO1("app_dongle_source_ctrl_bt_cback: event_type 0x%04x", event_type);
+    }
 }
 
 void app_dongle_source_ctrl_init(void)

@@ -55,6 +55,8 @@
 0x0201c9ed T gap_register_direct_cb
 0x0201d595 T gap_iso_send_data
 0x0201d791 T gap_iso_data_cfm
+0x02025e7f T sm_le_sc_local_oob_init
+0x02025e95 T sm_le_sc_peer_oob_init
 0x0202a69b T sm_find_link_by_handle
 0x0202bdaf T att_send_mtu_req
 0x0202ecc3 T gatt_find_chann_by_handle
@@ -91,6 +93,7 @@
 0x020334cd T btif_handover_info_set_req
 0x020334ef T btif_handover_info_del_req
 0x02033951 T btif_send_event
+0x0203a855 T bt_crypto_f4
 0x0203aa95 T vli_test_bit
 0x0203aacd T vli_num_bits
 0x0203aafd T vli_set
@@ -104,6 +107,7 @@
 0x0203b4b5 T xycz_add_c
 0x0203b6b9 T ecc_bytes2native
 0x0203b709 T ecc_native2bytes
+0x0203b761 T ecc_make_key
 0x0203cbad T gap_register_extend_cb
 0x0203cc09 T gap_start_bt_stack
 0x0203cdef T gap_set_pairable_mode
@@ -376,6 +380,7 @@
 0x02045dd9 T le_ext_adv_gap_msg_info_way
 0x02045e0f T le_ext_adv_init
 0x02045e51 T le_ext_adv_get_param
+0x02045f79 T le_ext_adv_find_by_conn_handle
 0x02045fc9 T le_ext_adv_create_adv_handle
 0x02045fd9 T le_ext_adv_get_conn_id_by_adv_handle
 0x02046007 T le_ext_adv_get_adv_handle_by_conn_id

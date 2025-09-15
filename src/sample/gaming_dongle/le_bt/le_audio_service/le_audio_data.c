@@ -14,6 +14,7 @@
 #include "codec_qos.h"
 #include "app_cyclic_buffer.h"
 #include "le_unicast_src_service.h"
+#include "gap_cig_mgr.h"
 
 #include "rtl876x_tim.h"
 #include "app_audio_path.h"
@@ -239,6 +240,8 @@ void handle_cis_data_path_setup_cmplt_msg(T_CIS_SETUP_DATA_PATH *p_data)
         }
         iso_cb->path_direction = p_data->path_direction;
         iso_cb->iso_mode = CIG_ISO_MODE;
+        cig_mgr_get_isoch_info(p_data->cis_conn_handle, &iso_cb->isoch_info);
+
         if (p_data->path_direction == DATA_PATH_INPUT_FLAG)
         {
             os_queue_in(&p_audio_co_db->input_path_queue, (void *)iso_cb);
@@ -496,6 +499,18 @@ void le_audio_set_audio_path(uint8_t audio_path)
 uint8_t le_audio_get_audio_path(void)
 {
     return p_audio_co_db->audio_path;
+}
+
+bool le_audio_check_cis_exist(void)
+{
+    bool ret = false;
+
+    if (p_audio_co_db->input_path_queue.count > 0 || p_audio_co_db->output_path_queue.count > 0)
+    {
+        ret = true;
+    }
+
+    return ret;
 }
 
 void le_audio_data_start_encode_path(T_CODEC_CFG *p_codec, uint32_t pd_delay)

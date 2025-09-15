@@ -69,6 +69,8 @@
 #include "app_bud_loc.h"
 #include "app_ble_common_adv.h"
 #include "app_roleswap_control.h"
+#include "app_ble_service.h"
+#include "app_vendor.h"
 
 #if (F_APP_AIRPLANE_SUPPORT == 1)
 #include "app_airplane.h"
@@ -135,10 +137,12 @@
 
 #if CONFIG_REALTEK_GFPS_FEATURE_SUPPORT
 #include "app_gfps_device.h"
+#include "app_gfps_finder.h"
+#include "app_dult_device.h"
+#include "app_dult.h"
 #endif
 
 #if F_APP_LEA_SUPPORT
-#include "app_lea_adv.h"
 #include "app_lea_mgr.h"
 #endif
 
@@ -154,9 +158,7 @@
 
 #include "app_ipc.h"
 
-#ifdef F_APP_DEBUG_TASK_PROFILING
 #include "hal_debug.h"
-#endif
 
 #if F_APP_COMMON_DONGLE_SUPPORT
 #include "stdlib.h"
@@ -172,6 +174,10 @@
 
 #if F_APP_DISCHARGER_NTC_DETECT_PROTECT
 #include "app_adc.h"
+#endif
+
+#if (F_APP_PERIODIC_WAKEUP == 1)
+#include "rtl876x_rtc.h"
 #endif
 
 static bool linkback_disable_power_off_fg = false;
@@ -300,7 +306,7 @@ void app_device_factory_reset(void)
 
     if (app_cfg_const.enable_rtk_charging_box)
     {
-#if F_APP_ADP_CMD_SUPPORT
+#if F_APP_ADP_5V_CMD_SUPPORT || F_APP_ONE_WIRE_UART_SUPPORT
         app_adp_cmd_case_bat_check(&app_db.case_battery, &app_cfg_nv.case_battery);
 #endif
     }
@@ -399,6 +405,16 @@ static void app_device_link_policy_ind(T_BP_EVENT event, T_BP_EVENT_PARAM *event
         {
             if (event_param->is_shut_down)
             {
+#if F_APP_GAMING_WIRED_MODE_HANDLE
+                if (app_db.bt_wait_shutdown_finish_to_startup)
+                {
+                    app_db.bt_wait_shutdown_finish_to_startup = 0;
+                    app_device_bt_policy_startup(true);
+                    app_dongle_adv_start(false);
+                    app_dongle_handle_rtk_adv(true);
+                }
+#endif
+
                 if (app_db.device_state == APP_DEVICE_STATE_OFF_ING)
                 {
                 }
@@ -411,20 +427,6 @@ static void app_device_link_policy_ind(T_BP_EVENT event, T_BP_EVENT_PARAM *event
 
                     pairing_disable_power_off_fg = true;
 
-#if F_APP_LEA_SUPPORT && F_APP_GAMING_DONGLE_SUPPORT == 0
-                    uint8_t is_legacy = 0;
-
-                    is_legacy = app_lea_mgr_dev_ctrl(LEA_DEV_CTRL_GET_LEGACY, NULL);
-                    if (is_legacy)
-                    {
-                        app_auto_power_off_disable(AUTO_POWER_OFF_MASK_PAIRING_MODE);
-                    }
-
-                    if (!app_key_is_enter_pairing() && !event_param->is_ignore && is_legacy)
-                    {
-                        app_audio_tone_type_play(TONE_PAIRING, false, false);
-                    }
-#else
                     app_auto_power_off_disable(AUTO_POWER_OFF_MASK_PAIRING_MODE);
 
                     /*If press key0 from power off --> power on -->enter pairing mode, then release, will not play tone here*/
@@ -432,7 +434,6 @@ static void app_device_link_policy_ind(T_BP_EVENT event, T_BP_EVENT_PARAM *event
                     {
                         app_audio_tone_type_play(TONE_PAIRING, false, false);
                     }
-#endif
                     app_key_reset_enter_pairing();
                 }
                 else
@@ -684,6 +685,16 @@ static void app_device_link_policy_ind(T_BP_EVENT event, T_BP_EVENT_PARAM *event
 
     case BP_EVENT_SRC_AUTH_SUC:
         {
+            T_APP_BR_LINK *p_link = NULL;
+            p_link = app_link_find_br_link(event_param->bd_addr);
+            if (p_link != NULL)
+            {
+                p_link->cmd.tx_mask |= TX_ENABLE_AUTHEN_BIT;
+#if F_APP_GATT_OVER_BREDR_SUPPORT
+                p_link->cmd.tx_mask |= TX_ENABLE_CCCD_BIT;
+#endif
+            }
+
 #if F_APP_IAP_RTK_SUPPORT
             app_iap_rtk_create(event_param->bd_addr);
 #endif
@@ -1022,9 +1033,6 @@ static void app_device_link_policy_ind(T_BP_EVENT event, T_BP_EVENT_PARAM *event
                 if (event_param->prof == A2DP_PROFILE_MASK)
                 {
                     app_audio_set_avrcp_status(BT_AVRCP_PLAY_STATUS_STOPPED);
-#if F_APP_LISTENING_MODE_SUPPORT
-                    app_listening_judge_a2dp_event(APPLY_LISTENING_MODE_AVRCP_PLAY_STATUS_CHANGE);
-#endif
                     app_relay_async_single(APP_MODULE_TYPE_AUDIO_POLICY, APP_REMOTE_MSG_SYNC_PLAY_STATUS);
 
                     if (app_hfp_get_call_status() == APP_CALL_IDLE)
@@ -1135,7 +1143,7 @@ static void app_device_link_policy_ind(T_BP_EVENT event, T_BP_EVENT_PARAM *event
 
             if (p_link && event_param->prof == A2DP_PROFILE_MASK)
             {
-                p_link->streaming_fg = false;
+                app_link_update_a2dp_streaming(p_link, false);
                 p_link->avrcp_ready_to_pause = false;
                 if (app_link_get_a2dp_start_num() == 0)
                 {
@@ -1166,13 +1174,6 @@ void app_device_state_change(T_APP_DEVICE_STATE state)
     {
         app_report_event(CMD_PATH_UART, EVENT_DEVICE_STATE, 0, &report_data, sizeof(report_data));
     }
-
-#if F_APP_GAMING_DONGLE_SUPPORT && F_APP_GAMING_LEA_A2DP_SWITCH_SUPPORT
-    if (state == APP_DEVICE_STATE_OFF_ING)
-    {
-        app_dongle_update_headset_conn_status(HEADSET_POWER_OFFING);
-    }
-#endif
 }
 
 static void app_device_dm_cback(T_SYS_EVENT event_type, void *event_buf, uint16_t buf_len)
@@ -1185,6 +1186,11 @@ static void app_device_dm_cback(T_SYS_EVENT event_type, void *event_buf, uint16_
     {
     case SYS_EVENT_POWER_ON:
         {
+            if (app_cfg_const.open_dbg_log_for_system_busy == 1)
+            {
+                hal_debug_init();
+                hal_debug_task_time_proportion_init(100);
+            }
 #if F_APP_DEBUG_TASK_PROFILING
             hal_debug_init();
             hal_debug_task_time_proportion_init(5000);
@@ -1198,6 +1204,8 @@ static void app_device_dm_cback(T_SYS_EVENT event_type, void *event_buf, uint16_
                             app_key_is_enter_pairing(), app_cfg_const.enable_multi_link);
 
             app_device_state_change(APP_DEVICE_STATE_ON);
+
+            app_vendor_enable_send_tx_right_away();
 
             app_sniff_mode_startup();
 
@@ -1346,7 +1354,7 @@ static void app_device_dm_cback(T_SYS_EVENT event_type, void *event_buf, uint16_
                 app_bt_policy_enter_pairing_mode(false, true);
             }
 
-#if (F_APP_ADP_CMD_SUPPORT == 1) && (F_APP_OTA_TOOLING_SUPPORT == 1)
+#if (F_APP_ADP_5V_CMD_SUPPORT == 1) && (F_APP_OTA_TOOLING_SUPPORT == 1)
             if (app_db.ota_tooling_start)
             {
                 app_adp_cmd_special_cmd_handle(app_db.jig_subcmd, app_db.jig_dongle_id);
@@ -1594,7 +1602,7 @@ static bool app_device_boot_up_directly(void)
                 app_db.power_on_by_cmd = true;
                 app_db.local_loc = app_loc_mgr_local_detect();
 
-#if F_APP_ADP_CMD_SUPPORT
+#if F_APP_ADP_5V_CMD_SUPPORT || F_APP_ONE_WIRE_UART_SUPPORT
                 app_adp_cmd_case_bat_check(&app_cfg_nv.case_battery, &app_db.case_battery);
 #endif
 
@@ -1861,6 +1869,57 @@ static void app_device_bt_and_ble_ready_check(void)
         }
 #endif
 
+#if F_APP_PERIODIC_WAKEUP
+        if (app_db.wake_up_reason & WAKE_UP_RTC)
+        {
+            app_cfg_nv.rtc_wakeup_count++;
+            DBG_DIRECT("app_device_bt_and_ble_ready_check: Wakeup, rtc_counter %d",
+                       app_cfg_nv.rtc_wakeup_count);
+            app_cfg_store(&app_cfg_nv.rtc_wakeup_count, 4);
+        }
+#endif
+
+#if CONFIG_REALTEK_GFPS_FEATURE_SUPPORT
+        /*Resolvable private address can only be successfully generate after BLE stack ready,
+        app_gfps_adv_init() and app_gfps_finder_init() need to generate RPA, so we call them here*/
+        if (extend_app_cfg_const.gfps_support)
+        {
+            app_gfps_adv_init();
+#if CONFIG_REALTEK_GFPS_FINDER_SUPPORT
+            if (extend_app_cfg_const.gfps_finder_support)
+            {
+                app_gfps_finder_init();
+                app_dult_device_init();
+                app_dult_handle_power_on();
+
+#if F_APP_PERIODIC_WAKEUP
+                if (!extend_app_cfg_const.disable_finder_adv_when_power_off
+                    && app_gfps_finder_provisioned())
+                {
+                    uint32_t clock_value_delayed = 0;
+                    uint32_t rtc_counter = 0;
+
+                    rtc_counter = RTC_GetCounter();
+                    clock_value_delayed = RTC_COUNTER_TO_SECOND(rtc_counter);
+
+                    DBG_DIRECT("app_device_bt_and_ble_ready_check: Wakeup, rtc_counter %d, clock_value_delayed %d, rtc_wakeup_count %d",
+                               rtc_counter, clock_value_delayed, app_cfg_nv.rtc_wakeup_count);
+
+                    RTC_RunCmd(DISABLE);
+                    power_mode_set(POWER_POWERDOWN_MODE);
+                    app_gfps_finder_update_clock_value(clock_value_delayed);
+                    if (app_db.wake_up_reason & WAKE_UP_RTC)
+                    {
+                        power_mode_set(POWER_DLPS_MODE);
+                        app_gfps_finder_handle_event_wakeup_by_rtc();
+                    }
+                }
+#endif
+            }
+#endif
+        }
+#endif
+
         if ((app_cfg_const.key_gpio_support) &&
             (app_cfg_const.key_power_on_interval == 0) &&
             (app_db.wake_up_reason & WAKE_UP_MFB))
@@ -2076,7 +2135,7 @@ static void app_device_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t
                         if ((app_db.dongle_is_enable_mic) &&
                             (app_link_check_dongle_link(param->acl_conn_disconn.bd_addr)))
                         {
-                            app_dongle_stop_recording(param->acl_conn_disconn.bd_addr);
+                            app_dongle_stop_recording();
                             app_dongle_update_is_mic_enable(false);
                         }
 #endif //endif for F_APP_GAMING_DONGLE_SUPPORT
@@ -2278,6 +2337,11 @@ uint8_t app_device_get_bud_channel(void)
     return bud_channel;
 }
 
+uint8_t *app_device_get_factory_addr(void)
+{
+    return app_db.factory_addr;
+}
+
 void app_device_bt_policy_startup(bool at_once_trigger)
 {
     app_bt_policy_startup(app_device_link_policy_ind, at_once_trigger);
@@ -2443,31 +2507,28 @@ static void app_device_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t len,
 
     case APP_REMOTE_MSG_REMOTE_SPK2_PLAY_SYNC:
         {
-            if ((status == REMOTE_RELAY_STATUS_ASYNC_SENT_OUT) || (status == REMOTE_RELAY_STATUS_ASYNC_RCVD))
+            if (status == REMOTE_RELAY_STATUS_ASYNC_SENT_OUT)
             {
-                if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY)
+                if (app_cfg_const.rws_connected_show_channel_vp &&
+                    (app_cfg_const.couple_speaker_channel == RWS_SPK_CHANNEL_RIGHT))
                 {
-                    if (app_cfg_const.rws_connected_show_channel_vp &&
-                        (app_cfg_const.couple_speaker_channel == RWS_SPK_CHANNEL_RIGHT))
-                    {
-                        app_audio_tone_type_play(TONE_REMOTE_ROLE_SECONDARY, false, false);
-                    }
-                    else
-                    {
-                        app_audio_tone_type_play(TONE_REMOTE_ROLE_PRIMARY, false, false);
-                    }
+                    app_audio_tone_type_play(TONE_REMOTE_ROLE_SECONDARY, false, false);
                 }
                 else
                 {
-                    if (app_cfg_const.rws_connected_show_channel_vp &&
-                        (app_cfg_const.couple_speaker_channel == RWS_SPK_CHANNEL_LEFT))
-                    {
-                        app_audio_tone_type_play(TONE_REMOTE_ROLE_PRIMARY, false, false);
-                    }
-                    else
-                    {
-                        app_audio_tone_type_play(TONE_REMOTE_ROLE_SECONDARY, false, false);
-                    }
+                    app_audio_tone_type_play(TONE_REMOTE_ROLE_PRIMARY, false, false);
+                }
+            }
+            else if (status == REMOTE_RELAY_STATUS_ASYNC_RCVD)
+            {
+                if (app_cfg_const.rws_connected_show_channel_vp &&
+                    (app_cfg_const.couple_speaker_channel == RWS_SPK_CHANNEL_LEFT))
+                {
+                    app_audio_tone_type_play(TONE_REMOTE_ROLE_PRIMARY, false, false);
+                }
+                else
+                {
+                    app_audio_tone_type_play(TONE_REMOTE_ROLE_SECONDARY, false, false);
                 }
             }
         }

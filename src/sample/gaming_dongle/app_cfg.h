@@ -374,7 +374,6 @@ typedef struct
 
     uint8_t led_brightness_percentage : 7;
     uint8_t rsv_9_10 : 1;
-    uint8_t dongle_plug_in_times;
 } T_APP_CFG_NV;
 
 /** @brief  Read only configurations for inbox audio application */

@@ -44,7 +44,7 @@ $(function() {
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">T_BIG_MGR_SYNC_RECEIVER_BIG_CREATE_SYNC_PARAM Struct Reference<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___b_l_u_e_t_o_o_t_h.html">Bluetooth</a> &raquo; <a class="el" href="group___g_a_p.html">GAP</a> &raquo; <a class="el" href="group___g_a_p___l_e.html">GAP LE Module</a> &raquo; <a class="el" href="group___g_a_p___l_e___b_i_g___m_g_r.html">GAP LE BIG Mgr Module</a> &raquo; <a class="el" href="group___g_a_p___l_e___b_i_g___m_g_r___exported___types.html">GAP LE BIG Mgr Exported Types</a></div></div>  </div>
+<div class="title">T_BIG_MGR_SYNC_RECEIVER_BIG_CREATE_SYNC_PARAM Struct Reference<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___b_l_u_e_t_o_o_t_h.html">Bluetooth</a> &raquo; <a class="el" href="group___g_a_p.html">GAP</a> &#124; <a class="el" href="group___b_t___host.html">Bluetooth Host</a> &raquo; <a class="el" href="group___g_a_p___l_e.html">GAP LE Module</a> &raquo; <a class="el" href="group___g_a_p___l_e___b_i_g___m_g_r.html">GAP LE BIG Mgr Module</a> &raquo; <a class="el" href="group___g_a_p___l_e___b_i_g___m_g_r___exported___types.html">GAP LE BIG Mgr Exported Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -77,7 +77,10 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Identify the encryption mode of the BIG. 0x00: Unencrypted 0x01: Encrypted </p>
+<p>Identify the encryption mode of the BIG. </p><ul>
+<li>0x00: Unencrypted. </li>
+<li>0x01: Encrypted. </li>
+</ul>
 
 </div>
 </div>
@@ -107,7 +110,10 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The maximum number of subevents that a Controller should use to receive data payloads in each interval for a BIS. 0x00: The Controller can schedule reception of any number of subevents up to NSE. 0x01 to 0x1F: Maximum number of subevents that should be used to receive data payloads in each BIS event </p>
+<p>The maximum number of subevents that a Controller should use to receive data payloads in each interval for a BIS. </p><ul>
+<li>0x00: The Controller can schedule reception of any number of subevents up to NSE. </li>
+<li>0x01 to 0x1F: Maximum number of subevents that should be used to receive data payloads in each BIS event. </li>
+</ul>
 
 </div>
 </div>
@@ -122,7 +128,11 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specify the maximum permitted time between successful receptions of BIS PDUs. Range: 0x000A to 0x4000 Time = N*10 ms Time Range: 100 ms to 163.84 s </p>
+<p>Specify the maximum permitted time between successful receptions of BIS PDUs. </p><ul>
+<li>Range: 0x000A to 0x4000. </li>
+<li>Time = N*10 ms. </li>
+<li>Time Range: 100 ms to 163.84 s. </li>
+</ul>
 
 </div>
 </div>

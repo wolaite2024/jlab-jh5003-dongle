@@ -45,8 +45,12 @@
 #include "app_data_capture.h"
 #endif
 
+#if F_APP_CHATGPT_SUPPORT
+#include "app_chatgpt.h"
+#endif
+
 #define UART_TX_QUEUE_NO                    16
-#define DT_QUEUE_NO                         16
+#define DT_QUEUE_NO                         32
 
 #define DT_STATUS_IDLE                      0
 #define DT_STATUS_ACTIVE                    1
@@ -114,6 +118,24 @@ static uint8_t uart_resend_count;              /**<uart resend count*/
 static uint8_t *uart_rx_dt_pkt_ptr = NULL;
 static uint16_t uart_rx_dt_pkt_len;
 
+static uint16_t app_transfer_get_event_id(uint8_t *data)
+{
+    uint16_t event_id = 0;
+
+#if F_APP_CHATGPT_SUPPORT
+    if (app_chatgpt_transport_head_check(data))
+    {
+        event_id = (data[7] | (data[6] << 8));
+    }
+#else
+    {
+        event_id = (data[4] | (data[5] << 8));
+    }
+#endif
+
+    return event_id;
+}
+
 bool app_transfer_start_for_le(uint8_t le_link_id, uint16_t data_len, uint8_t *p_data)
 {
     uint8_t idx = 0;
@@ -146,9 +168,9 @@ bool app_transfer_start_for_le(uint8_t le_link_id, uint16_t data_len, uint8_t *p
         return false;
     }
 
-    p_le_link->tx_event_seqn++;
+    p_le_link->cmd.tx_seqn++;
     p_transmit_data[idx++] = CMD_SYNC_BYTE;
-    p_transmit_data[idx++] = p_le_link->tx_event_seqn;
+    p_transmit_data[idx++] = p_le_link->cmd.tx_seqn;
     p_transmit_data[idx++] = len;
     p_transmit_data[idx++] = len >> 8;
     p_transmit_data[idx++] = opcode;
@@ -199,15 +221,18 @@ void app_transfer_queue_recv_ack_check(uint16_t event_id, uint8_t cmd_path)
     }
 #endif
 
-    tx_queue_id = ((dt_queue[dt_queue_ctrl.dt_queue_r_idx].pkt_ptr[4]) |
-                   (dt_queue[dt_queue_ctrl.dt_queue_r_idx].pkt_ptr[5] << 8));
+    tx_queue_id = app_transfer_get_event_id(dt_queue[dt_queue_ctrl.dt_queue_r_idx].pkt_ptr);
+
     move_to_next = (event_id == tx_queue_id) ? true : false;
     app_transfer_pop_data_queue(cmd_path, move_to_next);
 }
 
 void app_transfer_queue_reset(uint8_t cmd_path)
 {
-    if (cmd_path == CMD_PATH_SPP || cmd_path == CMD_PATH_LE || cmd_path == CMD_PATH_IAP)
+    if (cmd_path == CMD_PATH_SPP ||
+        cmd_path == CMD_PATH_LE  ||
+        cmd_path == CMD_PATH_IAP ||
+        cmd_path == CMD_PATH_GATT_OVER_BREDR)
     {
         app_stop_timer(&timer_idx_data_transfer);
 
@@ -371,13 +396,13 @@ void app_transfer_pop_data_queue(uint8_t cmd_path, bool next_flag)
         app_idx = dt_queue[dt_queue_ctrl.dt_queue_r_idx].link_idx;
         pkt_ptr = dt_queue[dt_queue_ctrl.dt_queue_r_idx].pkt_ptr;
         pkt_len = dt_queue[dt_queue_ctrl.dt_queue_r_idx].pkt_len;
-        event_id = ((dt_queue[dt_queue_ctrl.dt_queue_r_idx].pkt_ptr[4]) |
-                    (dt_queue[dt_queue_ctrl.dt_queue_r_idx].pkt_ptr[5] << 8));
+        event_id = app_transfer_get_event_id(dt_queue[dt_queue_ctrl.dt_queue_r_idx].pkt_ptr);
 
-        APP_PRINT_INFO7("app_transfer_pop_data_queue: dt_status %d, active %d, connected_profile 0x%x, rfc_credit %d, pkt_len:%d, event_id:0x%x, r idx:%d",
+        APP_PRINT_INFO8("app_transfer_pop_data_queue: dt_status %d, active %d, connected_profile 0x%x, tx_mask %d, rfc_credit %d, pkt_len 0x%x, event_id %d, dt_queue_r_idx %d",
                         dt_queue_ctrl.dt_status,
                         dt_queue[dt_queue_ctrl.dt_queue_r_idx].active,
                         app_db.br_link[app_idx].connected_profile,
+                        app_db.br_link[app_idx].cmd.tx_mask,
                         app_db.br_link[app_idx].rfc_credit,
                         pkt_len, event_id, dt_queue_ctrl.dt_queue_r_idx);
 
@@ -599,7 +624,7 @@ void app_transfer_pop_data_queue(uint8_t cmd_path, bool next_flag)
                 {
                     if (app_db.le_link[app_idx].remote_device_type == DEVICE_TYPE_DONGLE)
                     {
-                        if (app_db.le_link[app_idx].transmit_srv_dongle_tx_enable_fg == TX_ENABLE_READY)
+                        if (app_db.le_link[app_idx].cmd.dongle_tx_mask == TX_ENABLE_READY)
                         {
                             if (transmit_srv_dongle_tx_data(le_get_conn_handle(app_db.le_link[app_idx].conn_id), pkt_len,
                                                             pkt_ptr) == true)
@@ -628,16 +653,15 @@ void app_transfer_pop_data_queue(uint8_t cmd_path, bool next_flag)
                     }
                     else
                     {
-                        if (app_db.le_link[app_idx].transmit_srv_tx_enable_fg == TX_ENABLE_READY)
+                        if (app_db.le_link[app_idx].cmd.tx_mask == TX_ENABLE_READY)
                         {
                             uint16_t cid;
                             uint8_t cid_num;
 
                             gap_chann_get_cid(app_db.le_link[app_idx].conn_handle, 1, &cid, &cid_num);
 
-                            if (transmit_srv_tx_data(app_db.le_link[app_idx].conn_handle, cid, pkt_len, pkt_ptr) == true)
+                            if (transmit_srv_tx_data(app_db.le_link[app_idx].conn_handle, cid, pkt_len, pkt_ptr))
                             {
-                                dt_queue_ctrl.dt_status = DT_STATUS_ACTIVE;
                                 if (app_cfg_const.enable_rtk_vendor_cmd)
                                 {
                                     if (event_id != EVENT_ACK)
@@ -653,6 +677,25 @@ void app_transfer_pop_data_queue(uint8_t cmd_path, bool next_flag)
                                 wait_ms = 100;
                             }
                         }
+#if F_APP_CHATGPT_SUPPORT
+                        else if (app_chatgpt_ble_tx_ready())
+                        {
+                            if (app_chatgpt_transmit_srv_tx_data(app_db.le_link[app_idx].conn_id, pkt_len, pkt_ptr))
+                            {
+                                if ((event_id != TRANS_CHAT_VOICE_ID) &&
+                                    (event_id != TRANS_CHAT_BUFF_CTRL) && (pkt_len != TRANS_CHAT_ACK_LEN))
+                                {
+                                    need_wait = true;
+                                    wait_ms = 500;
+                                }
+                            }
+                            else
+                            {
+                                need_wait = true;
+                                wait_ms = 100;
+                            }
+                        }
+#endif
                         else
                         {
                             need_wait = true;
@@ -671,6 +714,7 @@ void app_transfer_pop_data_queue(uint8_t cmd_path, bool next_flag)
 
                     if (need_wait)
                     {
+                        dt_queue_ctrl.dt_status = DT_STATUS_ACTIVE;
                         app_start_timer(&timer_idx_data_transfer, "data_transfer",
                                         app_transfer_timer_id, APP_TIMER_DATA_TRANSFER, 0x00, false,
                                         wait_ms);
@@ -678,6 +722,94 @@ void app_transfer_pop_data_queue(uint8_t cmd_path, bool next_flag)
                     else
                     {
                         app_transfer_pop_data_queue(CMD_PATH_LE, true);
+                    }
+                }
+                else
+                {
+                    free(dt_queue[dt_queue_ctrl.dt_queue_r_idx].pkt_ptr);
+                    dt_queue[dt_queue_ctrl.dt_queue_r_idx].pkt_ptr = NULL;
+                    dt_queue[dt_queue_ctrl.dt_queue_r_idx].active = 0;
+                    dt_queue_ctrl.dt_queue_r_idx++;
+                    if (dt_queue_ctrl.dt_queue_r_idx == DT_QUEUE_NO)
+                    {
+                        dt_queue_ctrl.dt_queue_r_idx = 0;
+                    }
+                    dt_queue_ctrl.dt_resend_count = 0;
+                    //set timer to pop queue
+                    app_start_timer(&timer_idx_data_transfer, "data_transfer",
+                                    app_transfer_timer_id, APP_TIMER_DATA_TRANSFER, 0x00, false,
+                                    1);
+                }
+            }
+            else if (dt_queue[dt_queue_ctrl.dt_queue_r_idx].active == CMD_PATH_GATT_OVER_BREDR)
+            {
+                bool need_wait = false;
+                uint16_t wait_ms = 0;
+
+                if (app_db.br_link[app_idx].connected_profile & GATT_PROFILE_MASK)
+                {
+                    if (app_db.br_link[app_idx].cmd.tx_mask == TX_ENABLE_READY)
+                    {
+                        uint16_t cid;
+                        uint8_t cid_num;
+
+                        gap_chann_get_cid(app_db.br_link[app_idx].acl_handle, 1, &cid, &cid_num);
+                        APP_PRINT_INFO1("GATT_PROFILE_MASK: 1, enable_rtk_vendor_cmd %d",
+                                        app_cfg_const.enable_rtk_vendor_cmd);
+
+                        if (transmit_srv_tx_data(app_db.br_link[app_idx].acl_handle, cid, pkt_len, pkt_ptr) == true)
+                        {
+                            if (app_cfg_const.enable_rtk_vendor_cmd)
+                            {
+                                if (event_id != EVENT_ACK)
+                                {
+                                    need_wait = true;
+                                    wait_ms = 2000;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            APP_PRINT_INFO0("GATT_PROFILE_MASK: 2");
+                            need_wait = true;
+                            wait_ms = 100;
+                        }
+                    }
+#if 0 //F_APP_CHATGPT_SUPPORT   // not ready for chatgpt over bredr
+                    else if (app_chatgpt_ble_tx_ready())
+                    {
+                        if (app_chatgpt_transmit_srv_tx_data(app_db.le_link[app_idx].conn_id, pkt_len, pkt_ptr))
+                        {
+                            if ((event_id != TRANS_CHAT_VOICE_ID) &&
+                                (event_id != TRANS_CHAT_BUFF_CTRL) && (pkt_len != TRANS_CHAT_ACK_LEN))
+                            {
+                                need_wait = true;
+                                wait_ms = 500;
+                            }
+                        }
+                        else
+                        {
+                            need_wait = true;
+                            wait_ms = 100;
+                        }
+                    }
+#endif
+                    else
+                    {
+                        need_wait = true;
+                        wait_ms = 1000;
+                    }
+
+                    if (need_wait)
+                    {
+                        dt_queue_ctrl.dt_status = DT_STATUS_ACTIVE;
+                        app_start_timer(&timer_idx_data_transfer, "data_transfer",
+                                        app_transfer_timer_id, APP_TIMER_DATA_TRANSFER, 0x00, false,
+                                        wait_ms);
+                    }
+                    else
+                    {
+                        app_transfer_pop_data_queue(CMD_PATH_GATT_OVER_BREDR, true);
                     }
                 }
                 else
@@ -811,6 +943,9 @@ static void app_transfer_timeout_cb(uint8_t timer_evt, uint16_t param)
         {
             /* don't retry ack and switch to UART Rx*/
             uart_resend_count = app_cfg_const.dt_resend_num;
+#if F_APP_ONE_WIRE_UART_TX_MODE_PUSH_PULL
+            app_one_wire_uart_switch_pinmux(ONE_WIRE_UART_RX);
+#endif
         }
 #endif
         uart_resend_count++;
@@ -900,7 +1035,8 @@ static void app_transfer_bt_data(uint8_t *cmd_ptr, uint8_t cmd_path, uint8_t app
 
     if (((cmd_id == CMD_LEGACY_DATA_TRANSFER) &&
          ((app_db.br_link[idx].connected_profile & SPP_PROFILE_MASK) ||
-          (app_db.br_link[idx].connected_profile & IAP_PROFILE_MASK))) ||
+          (app_db.br_link[idx].connected_profile & IAP_PROFILE_MASK) ||
+          (app_db.br_link[idx].connected_profile & GATT_PROFILE_MASK))) ||
         ((cmd_id == CMD_LE_DATA_TRANSFER) && (app_db.le_link[idx].state == LE_LINK_STATE_CONNECTED)))
     {
         if (cmd_path == CMD_PATH_UART)
@@ -912,8 +1048,10 @@ static void app_transfer_bt_data(uint8_t *cmd_ptr, uint8_t cmd_path, uint8_t app
                     if ((cmd_id == CMD_LEGACY_DATA_TRANSFER) &&
                         (((app_db.br_link[idx].connected_profile & SPP_PROFILE_MASK) &&
                           (!app_transfer_check_active(CMD_PATH_SPP))) ||
-                         (((app_db.br_link[idx].connected_profile & IAP_PROFILE_MASK) &&
-                           (!app_transfer_check_active(CMD_PATH_IAP))))))
+                         ((app_db.br_link[idx].connected_profile & IAP_PROFILE_MASK) &&
+                          (!app_transfer_check_active(CMD_PATH_IAP))) ||
+                         ((app_db.br_link[idx].connected_profile & GATT_PROFILE_MASK) &&
+                          (!app_transfer_check_active(CMD_PATH_GATT_OVER_BREDR)))))
                     {
                         if (app_db.br_link[idx].uart_rx_dt_pkt_ptr)
                         {
@@ -982,7 +1120,7 @@ static void app_transfer_bt_data(uint8_t *cmd_ptr, uint8_t cmd_path, uint8_t app
                                 if (app_transfer_check_active(CMD_PATH_SPP))
                                 {
                                     ack_pkt[2] = CMD_SET_STATUS_BUSY;
-                                    app_db.br_link[idx].resume_fg = 0x01;
+                                    app_db.br_link[idx].cmd.resume = 0x01;
                                 }
                             }
                             else if (app_db.br_link[idx].connected_profile & IAP_PROFILE_MASK)
@@ -996,7 +1134,7 @@ static void app_transfer_bt_data(uint8_t *cmd_ptr, uint8_t cmd_path, uint8_t app
                                 if (app_transfer_check_active(CMD_PATH_IAP))
                                 {
                                     ack_pkt[2] = CMD_SET_STATUS_BUSY;
-                                    app_db.br_link[idx].resume_fg = 0x01;
+                                    app_db.br_link[idx].cmd.resume = 0x01;
                                 }
                             }
                         }

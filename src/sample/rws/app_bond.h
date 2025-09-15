@@ -28,7 +28,9 @@ extern "C" {
 #define BOND_FLAG_AMA                   0x00000040
 #define BOND_FLAG_HID                   0x00000080
 #define BOND_FLAG_DONGLE                0x00000100 /* keeping dongle link record */
+#define BOND_FLAG_GATT                  0x00000200
 #define BOND_FLAG_COMPUTER              0x00001000 /* device computer*/
+#define BOND_FLAG_UCA                   0x01000000
 
 /** bitmask of le bond flag */
 #define BOND_FLAG_LEA                   0x0001

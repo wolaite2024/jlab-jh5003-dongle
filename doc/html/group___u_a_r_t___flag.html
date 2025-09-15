@@ -70,6 +70,8 @@ Macros</h2></td></tr>
 <tr class="separator:ga0dc5acc56c9e5975cecfc2853f2eff64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3b23374a31fc004d9075cab4fcbc1b5d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t___flag.html#ga3b23374a31fc004d9075cab4fcbc1b5d">UART_FLAG_RX_IDLE</a>&#160;&#160;&#160;((uint16_t)(1 &lt;&lt; 8))</td></tr>
 <tr class="separator:ga3b23374a31fc004d9075cab4fcbc1b5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabd6fe1b7a4db44998669f0e2dd88e66a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t___flag.html#gabd6fe1b7a4db44998669f0e2dd88e66a">UART_FLAG_TX_DONE</a>&#160;&#160;&#160;((uint16_t)(1 &lt;&lt; 10))</td></tr>
+<tr class="separator:gabd6fe1b7a4db44998669f0e2dd88e66a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafc4ce80c809375ff0c96d39afd022ebd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t___flag.html#gafc4ce80c809375ff0c96d39afd022ebd">IS_UART_GET_FLAG</a>(FLAG)</td></tr>
 <tr class="separator:gafc4ce80c809375ff0c96d39afd022ebd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -215,6 +217,20 @@ Macros</h2></td></tr>
 
 </div>
 </div>
+<a id="gabd6fe1b7a4db44998669f0e2dd88e66a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabd6fe1b7a4db44998669f0e2dd88e66a">&#9670;&nbsp;</a></span>UART_FLAG_TX_DONE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define UART_FLAG_TX_DONE&#160;&#160;&#160;((uint16_t)(1 &lt;&lt; 10))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="gafc4ce80c809375ff0c96d39afd022ebd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gafc4ce80c809375ff0c96d39afd022ebd">&#9670;&nbsp;</a></span>IS_UART_GET_FLAG</h2>
 
@@ -230,9 +246,10 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">(((FLAG) == <a class="code" href="group___u_a_r_t___flag.html#ga68870bf3dca64331449b45d08f41ba17">UART_FLAG_RX_DATA_RDY</a>)   || ((FLAG) == <a class="code" href="group___u_a_r_t___flag.html#ga3f19476e549afc4ebb742560b0b453b5">UART_FLAG_RX_OVERRUN</a>)\</div><div class="line">                                || ((FLAG) == <a class="code" href="group___u_a_r_t___flag.html#ga4f4d60566be584a080af3ab87349b030">UART_FLAG_PARTY_ERR</a>) || ((FLAG) == <a class="code" href="group___u_a_r_t___flag.html#ga95d2abf20168c036fae1d682c17e43e6">UART_FLAG_FRAME_ERR</a>)\</div><div class="line">                                || ((FLAG) == <a class="code" href="group___u_a_r_t___flag.html#gae6005b35323ca84d5448769672358ca5">UART_FLAG_BREAK_ERR</a>) || ((FLAG) == <a class="code" href="group___u_a_r_t___flag.html#ga43b197a06bc6b8f382cec6c7c51172a7">UART_FLAG_THR_EMPTY</a>)\</div><div class="line">                                || ((FLAG) == <a class="code" href="group___u_a_r_t___flag.html#ga6aab5b085ce30691878161be1ef02afc">UART_FLAG_THR_TSR_EMPTY</a>) || ((FLAG) == <a class="code" href="group___u_a_r_t___flag.html#ga0dc5acc56c9e5975cecfc2853f2eff64">UART_FLAG_RX_FIFO_ERR</a>)\</div><div class="line">                                || ((FLAG) == <a class="code" href="group___u_a_r_t___flag.html#ga3b23374a31fc004d9075cab4fcbc1b5d">UART_FLAG_RX_IDLE</a>))</div><div class="ttc" id="group___u_a_r_t___flag_html_ga6aab5b085ce30691878161be1ef02afc"><div class="ttname"><a href="group___u_a_r_t___flag.html#ga6aab5b085ce30691878161be1ef02afc">UART_FLAG_THR_TSR_EMPTY</a></div><div class="ttdeci">#define UART_FLAG_THR_TSR_EMPTY</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:165</div></div>
+<b>Value:</b><div class="fragment"><div class="line">(((FLAG) == <a class="code" href="group___u_a_r_t___flag.html#ga68870bf3dca64331449b45d08f41ba17">UART_FLAG_RX_DATA_RDY</a>)   || ((FLAG) == <a class="code" href="group___u_a_r_t___flag.html#ga3f19476e549afc4ebb742560b0b453b5">UART_FLAG_RX_OVERRUN</a>)\</div><div class="line">                                || ((FLAG) == <a class="code" href="group___u_a_r_t___flag.html#ga4f4d60566be584a080af3ab87349b030">UART_FLAG_PARTY_ERR</a>) || ((FLAG) == <a class="code" href="group___u_a_r_t___flag.html#ga95d2abf20168c036fae1d682c17e43e6">UART_FLAG_FRAME_ERR</a>)\</div><div class="line">                                || ((FLAG) == <a class="code" href="group___u_a_r_t___flag.html#gae6005b35323ca84d5448769672358ca5">UART_FLAG_BREAK_ERR</a>) || ((FLAG) == <a class="code" href="group___u_a_r_t___flag.html#ga43b197a06bc6b8f382cec6c7c51172a7">UART_FLAG_THR_EMPTY</a>)\</div><div class="line">                                || ((FLAG) == <a class="code" href="group___u_a_r_t___flag.html#ga6aab5b085ce30691878161be1ef02afc">UART_FLAG_THR_TSR_EMPTY</a>) || ((FLAG) == <a class="code" href="group___u_a_r_t___flag.html#ga0dc5acc56c9e5975cecfc2853f2eff64">UART_FLAG_RX_FIFO_ERR</a>)\</div><div class="line">                                || ((FLAG) == <a class="code" href="group___u_a_r_t___flag.html#ga3b23374a31fc004d9075cab4fcbc1b5d">UART_FLAG_RX_IDLE</a>) || ((FLAG) == <a class="code" href="group___u_a_r_t___flag.html#gabd6fe1b7a4db44998669f0e2dd88e66a">UART_FLAG_TX_DONE</a>))</div><div class="ttc" id="group___u_a_r_t___flag_html_ga6aab5b085ce30691878161be1ef02afc"><div class="ttname"><a href="group___u_a_r_t___flag.html#ga6aab5b085ce30691878161be1ef02afc">UART_FLAG_THR_TSR_EMPTY</a></div><div class="ttdeci">#define UART_FLAG_THR_TSR_EMPTY</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:165</div></div>
 <div class="ttc" id="group___u_a_r_t___flag_html_ga3f19476e549afc4ebb742560b0b453b5"><div class="ttname"><a href="group___u_a_r_t___flag.html#ga3f19476e549afc4ebb742560b0b453b5">UART_FLAG_RX_OVERRUN</a></div><div class="ttdeci">#define UART_FLAG_RX_OVERRUN</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:160</div></div>
 <div class="ttc" id="group___u_a_r_t___flag_html_ga3b23374a31fc004d9075cab4fcbc1b5d"><div class="ttname"><a href="group___u_a_r_t___flag.html#ga3b23374a31fc004d9075cab4fcbc1b5d">UART_FLAG_RX_IDLE</a></div><div class="ttdeci">#define UART_FLAG_RX_IDLE</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:167</div></div>
+<div class="ttc" id="group___u_a_r_t___flag_html_gabd6fe1b7a4db44998669f0e2dd88e66a"><div class="ttname"><a href="group___u_a_r_t___flag.html#gabd6fe1b7a4db44998669f0e2dd88e66a">UART_FLAG_TX_DONE</a></div><div class="ttdeci">#define UART_FLAG_TX_DONE</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:168</div></div>
 <div class="ttc" id="group___u_a_r_t___flag_html_ga95d2abf20168c036fae1d682c17e43e6"><div class="ttname"><a href="group___u_a_r_t___flag.html#ga95d2abf20168c036fae1d682c17e43e6">UART_FLAG_FRAME_ERR</a></div><div class="ttdeci">#define UART_FLAG_FRAME_ERR</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:162</div></div>
 <div class="ttc" id="group___u_a_r_t___flag_html_gae6005b35323ca84d5448769672358ca5"><div class="ttname"><a href="group___u_a_r_t___flag.html#gae6005b35323ca84d5448769672358ca5">UART_FLAG_BREAK_ERR</a></div><div class="ttdeci">#define UART_FLAG_BREAK_ERR</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:163</div></div>
 <div class="ttc" id="group___u_a_r_t___flag_html_ga0dc5acc56c9e5975cecfc2853f2eff64"><div class="ttname"><a href="group___u_a_r_t___flag.html#ga0dc5acc56c9e5975cecfc2853f2eff64">UART_FLAG_RX_FIFO_ERR</a></div><div class="ttdeci">#define UART_FLAG_RX_FIFO_ERR</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:166</div></div>

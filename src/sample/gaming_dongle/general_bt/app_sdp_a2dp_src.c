@@ -934,8 +934,8 @@ static const uint8_t hsp_ag_sdp_record[] =
     SDP_DATA_ELEM_SEQ_HDR,      //0x35
     0x06,                               //6 bytes
     SDP_UUID16_HDR,                     //0x19
-    (uint8_t)(UUID_HEADSET_AUDIO_GATEWAY >> 8),   //0x1112
-    (uint8_t)(UUID_HEADSET_AUDIO_GATEWAY),
+    (uint8_t)(UUID_HEADSET >> 8),   //0x1108
+    (uint8_t)(UUID_HEADSET),
     SDP_UNSIGNED_TWO_BYTE,               //0x09
     (uint8_t)(0x0102 >> 8),         //version number default hs1.2
     (uint8_t)(0x0102)

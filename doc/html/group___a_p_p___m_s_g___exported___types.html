@@ -199,7 +199,9 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<a class="el" href="group___a_p_p___m_s_g___exported___types.html#gga468a59751cf5bb96e120b43fea01e074ac3e848f532d27d89039a636a58aa5624">IO_MSG_TYPE_DS_PCM_ENCODE</a>, 
 <br />
-&#160;&#160;<a class="el" href="group___a_p_p___m_s_g___exported___types.html#gga468a59751cf5bb96e120b43fea01e074a5071eb6ede4b06a197e66040844f4582">IO_MSG_TYPE_CONTROLLER</a>
+&#160;&#160;<a class="el" href="group___a_p_p___m_s_g___exported___types.html#gga468a59751cf5bb96e120b43fea01e074a5071eb6ede4b06a197e66040844f4582">IO_MSG_TYPE_CONTROLLER</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___m_s_g___exported___types.html#gga468a59751cf5bb96e120b43fea01e074afb6862a9e49833c8803c2c7565a1f78d">IO_MSG_TYPE_BUFFERED_HID_REPORT</a>
 <br />
  }</td></tr>
 <tr class="memdesc:ga468a59751cf5bb96e120b43fea01e074"><td class="mdescLeft">&#160;</td><td class="mdescRight">IO type definitions for IO message, may extend as requested.  <a href="group___a_p_p___m_s_g___exported___types.html#ga468a59751cf5bb96e120b43fea01e074">More...</a><br /></td></tr>
@@ -304,7 +306,7 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:gac53061b3924b56c44eacd7e43a711f10"><td class="mdescLeft">&#160;</td><td class="mdescRight">IO subtype definitions for <a class="el" href="group___a_p_p___m_s_g___exported___types.html#gga468a59751cf5bb96e120b43fea01e074af11ba4096588dc277d9bd604f1007024">IO_MSG_TYPE_GPIO</a> type.  <a href="group___a_p_p___m_s_g___exported___types.html#gac53061b3924b56c44eacd7e43a711f10">More...</a><br /></td></tr>
 <tr class="separator:gac53061b3924b56c44eacd7e43a711f10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae90927548e8f992167d79ec0ea9ffb57"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___m_s_g___exported___types.html#gae90927548e8f992167d79ec0ea9ffb57">T_IO_MSG_LEA</a> { <a class="el" href="group___a_p_p___m_s_g___exported___types.html#ggae90927548e8f992167d79ec0ea9ffb57a18172a3dc4516d996acb9ac569b06668">IO_MSG_LEA_ISO_DATA_DOWNSTREAM</a> = 0x01
+<tr class="memitem:gae90927548e8f992167d79ec0ea9ffb57"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___m_s_g___exported___types.html#gae90927548e8f992167d79ec0ea9ffb57">T_IO_MSG_LEA</a> { <a class="el" href="group___a_p_p___m_s_g___exported___types.html#ggae90927548e8f992167d79ec0ea9ffb57aeccee430b6a3fbf7e0d0dc103b4d7f13">IO_MSG_LEA_ISO_SYNC_DOWNSTREAM</a> = 0x01
  }</td></tr>
 <tr class="separator:gae90927548e8f992167d79ec0ea9ffb57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga134907d4ffbebb9e75af1fa9954854de"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___m_s_g___exported___types.html#ga134907d4ffbebb9e75af1fa9954854de">T_IO_MSG_CAP_TOUCH</a> { <br />
@@ -384,7 +386,15 @@ Enumerations</h2></td></tr>
 <tr class="memitem:ga5929bec95f25c817f4f7da3ba0f5776a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___m_s_g___exported___types.html#ga5929bec95f25c817f4f7da3ba0f5776a">T_IO_MSG_TYPE_FINDMY</a> { <br />
 &#160;&#160;<a class="el" href="group___a_p_p___m_s_g___exported___types.html#gga5929bec95f25c817f4f7da3ba0f5776aa67d8f2a8bae8d0f1b85190d1d9779b0f">IO_MSG_FINDMY_KEYROLL</a>, 
 <br />
-&#160;&#160;<a class="el" href="group___a_p_p___m_s_g___exported___types.html#gga5929bec95f25c817f4f7da3ba0f5776aa69ec07986b47ef62edffee97bb81960f">IO_MSG_FINDMY_EVENT</a>
+&#160;&#160;<a class="el" href="group___a_p_p___m_s_g___exported___types.html#gga5929bec95f25c817f4f7da3ba0f5776aa69ec07986b47ef62edffee97bb81960f">IO_MSG_FINDMY_EVENT</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___m_s_g___exported___types.html#gga5929bec95f25c817f4f7da3ba0f5776aa246d7225a8347634c8d66ef58358030f">IO_MSG_FINDMY_DISCONNECT</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___m_s_g___exported___types.html#gga5929bec95f25c817f4f7da3ba0f5776aa7df4b9b98cecec7cc9587b784c230d1c">IO_MSG_FINDMY_RECONNECT_TIMEOUT</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___m_s_g___exported___types.html#gga5929bec95f25c817f4f7da3ba0f5776aa1b78931891901f0353fa5d0656b32d2e">IO_MSG_FINDMY_UT_START</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___m_s_g___exported___types.html#gga5929bec95f25c817f4f7da3ba0f5776aaa5632b7540c2e730d9e463d0b12fe31d">IO_MSG_FINDMY_MT</a>
 <br />
  }</td></tr>
 <tr class="memdesc:ga5929bec95f25c817f4f7da3ba0f5776a"><td class="mdescLeft">&#160;</td><td class="mdescRight">IO subtype definitions for <a class="el" href="group___a_p_p___m_s_g___exported___types.html#gga468a59751cf5bb96e120b43fea01e074a21201e653f06501425dae28ab7b46a77">IO_MSG_TYPE_FINDMY</a> type.  <a href="group___a_p_p___m_s_g___exported___types.html#ga5929bec95f25c817f4f7da3ba0f5776a">More...</a><br /></td></tr>
@@ -503,7 +513,7 @@ Enumerations</h2></td></tr>
 
 <p>IO type definitions for IO message, may extend as requested. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga468a59751cf5bb96e120b43fea01e074a79100fd91a7425e96a85a7db3a7f308e"></a>IO_MSG_TYPE_BT_STATUS&#160;</td><td class="fielddoc"><p>BT status change with subtype <a class="el" href="group___g_a_p___m_s_g___t_y_p_e.html">GAP BT Message Type Definitions</a> </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga468a59751cf5bb96e120b43fea01e074a79100fd91a7425e96a85a7db3a7f308e"></a>IO_MSG_TYPE_BT_STATUS&#160;</td><td class="fielddoc"><p>BT status change with subtype <a class="el" href="group___g_a_p___m_s_g___t_y_p_e.html">GAP Bluetooth Message Type Definitions</a> </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga468a59751cf5bb96e120b43fea01e074a85dbaa70be4f8a01a7758e77c2952f79"></a>IO_MSG_TYPE_KEYSCAN&#160;</td><td class="fielddoc"><p>Key scan message with subtype <a class="el" href="group___a_p_p___m_s_g___exported___types.html#ga53480343dbad6f542a9f67cc37e62ade">T_IO_MSG_KEYSCAN</a> </p>
 </td></tr>
@@ -568,6 +578,7 @@ Enumerations</h2></td></tr>
 <tr><td class="fieldname"><a id="gga468a59751cf5bb96e120b43fea01e074a5b92520d80f903c8367c6b358276244c"></a>IO_MSG_TYPE_US_PKT_DECODE&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga468a59751cf5bb96e120b43fea01e074ac3e848f532d27d89039a636a58aa5624"></a>IO_MSG_TYPE_DS_PCM_ENCODE&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga468a59751cf5bb96e120b43fea01e074a5071eb6ede4b06a197e66040844f4582"></a>IO_MSG_TYPE_CONTROLLER&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga468a59751cf5bb96e120b43fea01e074afb6862a9e49833c8803c2c7565a1f78d"></a>IO_MSG_TYPE_BUFFERED_HID_REPORT&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>
@@ -731,7 +742,7 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggae90927548e8f992167d79ec0ea9ffb57a18172a3dc4516d996acb9ac569b06668"></a>IO_MSG_LEA_ISO_DATA_DOWNSTREAM&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggae90927548e8f992167d79ec0ea9ffb57aeccee430b6a3fbf7e0d0dc103b4d7f13"></a>IO_MSG_LEA_ISO_SYNC_DOWNSTREAM&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>
@@ -851,6 +862,10 @@ Enumerations</h2></td></tr>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga5929bec95f25c817f4f7da3ba0f5776aa67d8f2a8bae8d0f1b85190d1d9779b0f"></a>IO_MSG_FINDMY_KEYROLL&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga5929bec95f25c817f4f7da3ba0f5776aa69ec07986b47ef62edffee97bb81960f"></a>IO_MSG_FINDMY_EVENT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga5929bec95f25c817f4f7da3ba0f5776aa246d7225a8347634c8d66ef58358030f"></a>IO_MSG_FINDMY_DISCONNECT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga5929bec95f25c817f4f7da3ba0f5776aa7df4b9b98cecec7cc9587b784c230d1c"></a>IO_MSG_FINDMY_RECONNECT_TIMEOUT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga5929bec95f25c817f4f7da3ba0f5776aa1b78931891901f0353fa5d0656b32d2e"></a>IO_MSG_FINDMY_UT_START&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga5929bec95f25c817f4f7da3ba0f5776aaa5632b7540c2e730d9e463d0b12fe31d"></a>IO_MSG_FINDMY_MT&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>

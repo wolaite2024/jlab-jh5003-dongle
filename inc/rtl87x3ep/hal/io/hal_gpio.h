@@ -164,8 +164,6 @@ T_GPIO_STATUS gpio_deinit_pin(uint8_t pin_index);
  *     hal_gpio_change_direction(TEST_PIN_2, GPIO_DIR_INPUT);
  * }
  * \endcode
- *
- * \ingroup  HAL_GPIO_Exported_Functions
  */
 T_GPIO_STATUS hal_gpio_change_direction(uint8_t pin_index, T_GPIO_DIRECTION direction);
 

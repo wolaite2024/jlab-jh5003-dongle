@@ -36,10 +36,10 @@
 #define GPIO_DEMO_INPUT_PIN2                      P2_1
 #define GPIO_DEMO_INPUT_PIN3                      P2_2
 
-static uint8_t pin_0_state = 0;
-static uint8_t pin_1_state = 0;
-static uint8_t pin_2_state = 0;
-static uint8_t pin_3_state = 0;
+static uint8_t pin_0_state = 1;
+static uint8_t pin_1_state = 1;
+static uint8_t pin_2_state = 1;
+static uint8_t pin_3_state = 1;
 
 
 /** @} */ /* End of group Gpio_Interrupt_Exported_Macros */

@@ -58,7 +58,7 @@ extern "C" {
 /*============================================================================*
  *                         Macros
  *============================================================================*/
-/** @addtogroup BAS_CLIENT_Exported_Macros BAS Client Exported Macros
+/** @addtogroup BAS_GATT_CLIENT_Exported_Macros BAS GATT Client Exported Macros
   * @brief
   * @{
   */
@@ -72,14 +72,14 @@ extern "C" {
 #define GATT_MSG_BAS_CLIENT_BATTERY_LEVEL_NOTIFY       0x02
 #define GATT_MSG_BAS_CLIENT_CCCD_CFG_RESULT            0x03
 /** @} End of BAS_CLT_CB_MSG */
-/** End of BAS_CLIENT_Exported_Macros
+/** End of BAS_GATT_CLIENT_Exported_Macros
 * @}
 */
 
 /*============================================================================*
  *                         Types
  *============================================================================*/
-/** @defgroup BAS_CLIENT_Exported_Types BAS Client Exported Types
+/** @defgroup BAS_GATT_CLIENT_Exported_Types BAS GATT Client Exported Types
   * @brief
   * @{
   */
@@ -128,7 +128,7 @@ typedef struct
     uint16_t   cause;
     bool       enable;
 } T_BAS_CLIENT_CCCD_CFG_RESULT;
-/** End of BAS_CLIENT_Exported_Types
+/** End of BAS_GATT_CLIENT_Exported_Types
 * @}
 */
 
@@ -136,7 +136,7 @@ typedef struct
 /*============================================================================*
  *                         Functions
  *============================================================================*/
-/** @defgroup BAS_CLIENT_Exported_Functions BAS Client Exported Functions
+/** @defgroup BAS_GATT_CLIENT_Exported_Functions BAS GATT Client Exported Functions
   * @brief
   * @{
   */
@@ -203,7 +203,7 @@ bool bas_client_cfg_cccd(uint16_t conn_handle, uint8_t srv_instance_id, bool ena
   */
 bool bas_client_read_battery_level(uint16_t conn_handle, uint8_t srv_instance_id);
 
-/** @} End of BAS_CLIENT_Exported_Functions */
+/** @} End of BAS_GATT_CLIENT_Exported_Functions */
 
 /** @} End of BAS_GATT_CLIENT */
 

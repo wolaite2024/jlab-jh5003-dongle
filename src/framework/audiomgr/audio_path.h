@@ -160,6 +160,10 @@ void audio_path_latency_rpt_set(bool enable, uint8_t num);
 
 void audio_path_plc_notify_set(uint16_t interval, uint32_t threshold, bool enable);
 
+bool audio_path_decoder_effect_control(T_AUDIO_PATH_HANDLE handle, uint8_t action);
+
+bool audio_path_encoder_effect_control(T_AUDIO_PATH_HANDLE handle, uint8_t action);
+
 bool audio_path_hw_sidetone_enable(int16_t gain, uint8_t level);
 
 bool audio_path_hw_sidetone_disable(void);

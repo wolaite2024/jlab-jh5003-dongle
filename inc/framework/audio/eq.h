@@ -17,14 +17,12 @@ extern "C" {
 /**
  * \defgroup AUDIO_EQ Equalizer
  *
- * \brief   Control and customize the Equalizer engine in the audio framework.
+ * \brief   Control and customize the Equalizer (EQ) engine in the Audio Subsystem.
  * \details Application can use predefined EQ sets, or customize each EQ set's frequency bands
  *          controlled by the Equalizer engine.
  */
 
 /**
- * eq.h
- *
  * \brief Define the supported EQ content types.
  *
  * \ingroup AUDIO_EQ
@@ -38,8 +36,6 @@ typedef enum t_eq_content_type
 } T_EQ_CONTENT_TYPE;
 
 /**
- * eq.h
- *
  * \brief   Create an EQ instance.
  *
  * \param[in] type      EQ content type \ref T_EQ_CONTENT_TYPE.
@@ -54,8 +50,6 @@ typedef enum t_eq_content_type
 T_AUDIO_EFFECT_INSTANCE eq_create(T_EQ_CONTENT_TYPE type, void *info_buf, uint16_t info_len);
 
 /**
- * eq.h
- *
  * \brief   Enable the specific EQ instance.
  *
  * \param[in] instance  EQ instance \ref T_AUDIO_EFFECT_INSTANCE.
@@ -69,8 +63,6 @@ T_AUDIO_EFFECT_INSTANCE eq_create(T_EQ_CONTENT_TYPE type, void *info_buf, uint16
 bool eq_enable(T_AUDIO_EFFECT_INSTANCE instance);
 
 /**
- * eq.h
- *
  * \brief   Disable the specific EQ instance.
  *
  * \param[in] instance  EQ instance \ref T_AUDIO_EFFECT_INSTANCE.
@@ -84,8 +76,6 @@ bool eq_enable(T_AUDIO_EFFECT_INSTANCE instance);
 bool eq_disable(T_AUDIO_EFFECT_INSTANCE instance);
 
 /**
- * eq.h
- *
  * \brief   Set the specific EQ instance band parameter.
  *
  * \param[in] instance  EQ instance \ref T_AUDIO_EFFECT_INSTANCE.
@@ -101,8 +91,6 @@ bool eq_disable(T_AUDIO_EFFECT_INSTANCE instance);
 bool eq_set(T_AUDIO_EFFECT_INSTANCE instance, void *info_buf, uint16_t info_len);
 
 /**
- * eq.h
- *
  * \brief   Release the specific EQ instance.
  *
  * \param[in] instance  EQ instance \ref T_AUDIO_EFFECT_INSTANCE.

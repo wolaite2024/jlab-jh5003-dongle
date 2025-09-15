@@ -3,8 +3,8 @@
 *     Copyright(c) 2016, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * @file     profile_server_ext.h
-  * @brief    Head file for server structure.
-  * @details  This file can use when parameter use_ext of the server_cfg_use_ext_api is true.
+  * @brief    Header file for server structure.
+  * @details  This file can be used when the parameter use_ext of the server_cfg_use_ext_api is true.
   * @author
   * @date     2021-04-07
   * @version  v1.0
@@ -32,8 +32,8 @@ extern "C" {
   * @{
   */
 
-/** @defgroup GATT_SERVER_EXT_API GATT Extension Server API
-  * @brief The GATT Server APIs can use when parameter use_ext of the server_cfg_use_ext_api is true.
+/** @defgroup GATT_SERVER_EXT_API GATT Server Extension API
+  * @brief The GATT Server APIs can be used when the parameter use_ext of the server_cfg_use_ext_api is true.
   * @{
   */
 /*============================================================================*
@@ -43,11 +43,11 @@ extern "C" {
   * @brief
   * @{
   */
-/** @defgroup GATT_SERVER_EXT_CB_DATA Server Extension Callback data
-  * @brief data for profile to inform application.
+/** @defgroup GATT_SERVER_EXT_CB_DATA Server Extension Callback Data
+  * @brief Data for profile to inform application.
   * @{
   */
-/** @brief The callback data of PROFILE_EVT_SEND_DATA_COMPLETE */
+/** @brief The callback data of PROFILE_EVT_SEND_DATA_COMPLETE. */
 typedef struct
 {
     uint16_t        credits;
@@ -58,7 +58,7 @@ typedef struct
     uint16_t        cause;
 } T_EXT_SEND_DATA_RESULT;
 
-/** @brief Service callback data */
+/** @brief Service callback data. */
 typedef union
 {
     T_SERVER_RESULT     service_reg_result;
@@ -70,13 +70,13 @@ typedef union
 
 typedef struct
 {
-    T_SERVER_CB_TYPE   eventId;    /**<  @brief EventId defined upper */
-    T_SERVER_EXT_CB_DATA   event_data; /**<  @brief Event data */
+    T_SERVER_CB_TYPE   eventId;
+    T_SERVER_EXT_CB_DATA   event_data;
 } T_SERVER_EXT_APP_CB_DATA;
 /** @} End of GATT_SERVER_EXT_CB_DATA */
 
 /** @defgroup P_FUN_EXT_WRITE_IND_POST_PROC Write Post Function Point Definition
-  * @brief Call back function to execute some post procedure after handle write request from client.
+  * @brief Callback function to execute some post procedure after handling a write request from the client.
   * @{
   */
 typedef void (* P_FUN_EXT_WRITE_IND_POST_PROC)(uint16_t conn_handle, uint16_t cid,
@@ -86,7 +86,7 @@ typedef void (* P_FUN_EXT_WRITE_IND_POST_PROC)(uint16_t conn_handle, uint16_t ci
 /** @} End of P_FUN_EXT_WRITE_IND_POST_PROC */
 
 /** @defgroup P_FUN_SERVER_EXT_SPECIFIC_CB Specific Service Callback Function Point Definition
-  * @{ Function pointer used in each specific service module, to send events to specific service module.
+  * @{ Function pointer used in each specific service module, to send events to the specific service module.
   */
 typedef T_APP_RESULT(*P_FUN_GATT_EXT_READ_ATTR_CB)(uint16_t conn_handle, uint16_t cid,
                                                    T_SERVER_ID service_id,
@@ -104,7 +104,7 @@ typedef void (*P_FUN_GATT_EXT_CCCD_UPDATE_CB)(uint16_t conn_handle, uint16_t cid
   */
 
 /** @defgroup P_FUN_SERVER_EXT_GENERAL_CB General Server Callback Function Point Definition
-  * @brief function pointer Type used to generate Call back, to send events to application.
+  * @brief Function pointer type used to generate callback, to send events to the application.
   * @{
   */
 typedef T_APP_RESULT(*P_FUN_EXT_SERVER_GENERAL_CB)(T_SERVER_ID service_id, void *p_para);
@@ -118,7 +118,7 @@ typedef struct
                                                    Return value: @ref T_APP_RESULT. */
     P_FUN_GATT_EXT_WRITE_ATTR_CB write_attr_cb;   /**< Write callback function pointer.
                                                    Return value: @ref T_APP_RESULT. */
-    P_FUN_GATT_EXT_CCCD_UPDATE_CB cccd_update_cb; /**< Update cccd callback function pointer. */
+    P_FUN_GATT_EXT_CCCD_UPDATE_CB cccd_update_cb; /**< Update CCCD callback function pointer. */
 } T_FUN_GATT_EXT_SERVICE_CBS;
 
 /** End of GATT_SERVER_EXT_Exported_Types
@@ -133,16 +133,16 @@ typedef struct
   * @{
   */
 /**
- * @brief Register specific service without start handle
+ * @brief Register specific service without start handle.
  *
- * Add specific service infomation to gatt_svc_table struct, will be registered to GATT later.
+ * Add specific service information to gatt_svc_table struct, will be registered to GATT later.
  *
  * @param[in,out] p_out_service_id  Service ID of specific service.
  * @param[in] p_database            Database pointer of specific service.
  * @param[in] length                Length of Database of specific service.
  * @param[in] p_srv_ext_cbs         Service callback functions of specific service.
- * @retval true Add service success
- * @retval false Add service failed
+ * @retval true Add service successfully.
+ * @retval false Add service failed.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -166,17 +166,17 @@ bool server_ext_add_service(T_SERVER_ID *p_out_service_id, uint8_t *p_database, 
                             const T_FUN_GATT_EXT_SERVICE_CBS *p_srv_ext_cbs);
 
 /**
- * @brief Register specific service with start handle
+ * @brief Register specific service with start handle.
  *
- * Add specific service infomation to gatt_svc_table struct, will be registered to GATT later.
+ * Add specific service information to gatt_svc_table struct, will be registered to GATT later.
  *
  * @param[in,out] p_out_service_id  Service ID of specific service.
  * @param[in] p_database            Database pointer of specific service.
  * @param[in] length                Length of Database of specific service.
  * @param[in] p_srv_ext_cbs         Service callback functions of specific service.
  * @param[in] start_handle          Start handle of this service.
- * @retval true Add service success
- * @retval false Add service failed
+ * @retval true Add service successfully.
+ * @retval false Add service failed.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -200,16 +200,16 @@ bool server_ext_add_service_by_start_handle(uint8_t *p_out_service_id, uint8_t *
                                             uint16_t length,
                                             T_FUN_GATT_EXT_SERVICE_CBS *p_srv_ext_cbs, uint16_t start_handle);
 /**
- * @brief Register callback function to send events to application.
+ * @brief Register callback function to send events to the application.
  *
  * @param[in] p_fun_cb          Callback function.
- * @retval None
+ * @return void.
  *
  * <b>Example usage</b>
  * \code{.c}
     void app_le_profile_init(void)
     {
-        server_init(1);
+        server_init(service_num);
         simp_srv_id = simp_ble_service_ext_add_service(app_ext_profile_callback);
         server_ext_register_app_cb(app_ext_profile_callback);
     }
@@ -218,57 +218,58 @@ bool server_ext_add_service_by_start_handle(uint8_t *p_out_service_id, uint8_t *
 void server_ext_register_app_cb(P_FUN_EXT_SERVER_GENERAL_CB p_fun_cb);
 
 /**
-  * @brief  Confirm from application when receive read Request from client.
+  * @brief  Confirm from the application when receiving a read request from the client.
   * @param[in]  conn_handle   Connection handle of the ACL link.
-  * @param[in]  cid           Local CID. The value shall be get from \ref P_FUN_GATT_EXT_READ_ATTR_CB callback.
+  * @param[in]  cid           Local Channel Identifier. The value shall be gotten from \ref P_FUN_GATT_EXT_READ_ATTR_CB callback.
   * @param[in]  service_id    Service ID.
-  * @param[in]  attrib_index  Attribute index of attribute to read confirm from application.
-  * @param[in]  p_data        Point to the readed value.
-  * @param[in]  length        The length of the data.
-  * @param[in]  cause         Cause for read confirm. @ref T_APP_RESULT
-  * @retval true: confirm from app OK.
-  * @retval false: confirm from app failed.
+  * @param[in]  attrib_index  Attribute index of the attribute to read confirmation from the application.
+  * @param[in]  p_data        Pointer to the read value.
+  * @param[in]  data_len      The length of the data.
+  * @param[in]  total_len     Total length.
+  * @param[in]  cause         Cause for read confirmation. @ref T_APP_RESULT.
+  * @retval true: Confirmation from the APP was successful.
+  * @retval false: Confirmation from the APP failed.
   */
 bool server_ext_attr_read_confirm(uint16_t conn_handle, uint16_t cid, T_SERVER_ID service_id,
                                   uint16_t attrib_index, uint8_t *p_data, uint16_t data_len,
                                   uint16_t total_len, T_APP_RESULT cause);
 /**
-  * @brief  Confirm from application when receive Execute Write Request from client.
+  * @brief  Confirm from the application when receiving an execute write request from the client.
   * @param[in]  conn_handle Connection handle of the ACL link.
-  * @param[in]  cid         Local CID. The value shall be get from \ref P_FUN_GATT_EXT_WRITE_ATTR_CB callback.
-  * @param[in]  cause       Cause for execute write confirm. @ref T_APP_RESULT
-  * @param[in]  handle      Gatt attribute handle.
-  * @retval true: confirm from app OK.
-  * @retval false: confirm from app failed.
+  * @param[in]  cid         Local Channel Identifier. The value shall be gotten from \ref P_FUN_GATT_EXT_WRITE_ATTR_CB callback.
+  * @param[in]  cause       Cause for execute write confirmation. @ref T_APP_RESULT.
+  * @param[in]  handle      GATT attribute handle.
+  * @retval true: Confirmation from the APP was successful.
+  * @retval false: Confirmation from the APP failed.
   */
 bool server_ext_exec_write_confirm(uint16_t conn_handle, uint16_t cid, uint16_t cause,
                                    uint16_t handle);
 
 /**
-  * @brief  Confirm from application when receive Write Request from client.
+  * @brief  Confirm from the application when receiving a write request from the client.
   * @param[in]  conn_handle  Connection handle of the ACL link.
-  * @param[in]  cid          Local CID. The value shall be get from \ref P_FUN_GATT_EXT_WRITE_ATTR_CB callback.
+  * @param[in]  cid          Local Channel Identifier. The value shall be gotten from \ref P_FUN_GATT_EXT_WRITE_ATTR_CB callback.
   * @param[in]  service_id   Service ID.
-  * @param[in]  attrib_index Attribute index of attribute to write confirm from application.
-  * @param[in]  cause        Write request app handle result, APP_RESULT_SUCCESS or other. @ref T_APP_RESULT
-  * @retval true: confirm from app OK.
-  * @retval false: confirm from app failed.
+  * @param[in]  attrib_index Attribute index of the attribute to write confirmation from the application.
+  * @param[in]  cause        Write request APP handle result, APP_RESULT_SUCCESS or other. @ref T_APP_RESULT.
+  * @retval true: Confirmation from the APP was successful.
+  * @retval false: Confirmation from the APP failed.
   */
 bool server_ext_attr_write_confirm(uint16_t conn_handle, uint16_t cid, T_SERVER_ID service_id,
                                    uint16_t attrib_index, T_APP_RESULT cause);
 
 /**
- * @brief Send characteristic value to peer device.
+ * @brief Send characteristic value to the peer device.
  *
  * @param[in] conn_handle     Connection handle of the ACL link.
- * @param[in] cid             Local CID assigned by Bluetooth stack. Shall use the GAP_CHANNEL_STATE_CONNECTED state channel.
+ * @param[in] cid             Local Channel Identifier assigned by Bluetooth Host. Shall use the GAP_CHANNEL_STATE_CONNECTED state channel.
  * @param[in] service_id      Service ID.
- * @param[in] attrib_index    Attribute index of characteristic.
- * @param[in] p_data          Point to data to be sent.
+ * @param[in] attrib_index    Attribute index of the characteristic.
+ * @param[in] p_data          Pointer to data to be sent.
  * @param[in] data_len        Length of value to be sent, range: 0~(mtu_size - 3).
-                              uint16_t mtu_size is acquired by le_get_conn_param(GAP_PARAM_CONN_MTU_SIZE, &mtu_size, conn_id).
- * @param[in] type            GATT pdu type.
- * @return Data sent result
+                              uint16_t mtu_size is acquired by gap_chann_get_info(conn_handle, cid, p_info).
+ * @param[in] type            GATT PDU type.
+ * @return Data sent result.
  * @retval true Success.
  * @retval false Failed.
  *
@@ -292,15 +293,15 @@ bool server_ext_send_data(uint16_t conn_handle, uint16_t cid, T_SERVER_ID servic
                           uint8_t *p_data, uint16_t data_len, T_GATT_PDU_TYPE type);
 
 /**
- * @brief Get the header point of the write command data buffer.
- * This function is used to get the buffer point of the write command data.
+ * @brief Get the header pointer of the write command data buffer.
+ * This function is used to get the buffer pointer of the write command data.
  * This function only can be called in write_attr_cb.
  *
  * @param[in]  conn_handle    Connection handle of the ACL link.
- * @param[in]  cid            Local CID. The value shall be get from \ref P_FUN_GATT_EXT_WRITE_ATTR_CB callback.
+ * @param[in]  cid            Local Channel Identifier. The value shall be gotten from \ref P_FUN_GATT_EXT_WRITE_ATTR_CB callback.
  * @param[in,out] pp_buffer   Pointer to the address of the buffer.
  * @param[in,out] p_offset    Pointer to the offset of the data.
- * @return Buffer get result
+ * @return Buffer get result.
  * @retval true Success.
  * @retval false Failed.
  *
@@ -331,13 +332,13 @@ bool server_ext_get_write_cmd_data_buffer(uint16_t conn_handle, uint16_t cid, ui
                                           uint16_t *p_offset);
 
 /**
- * @brief  Send the multiple variable notification.
+ * @brief  Send the multiple variable notifications.
  * @param[in] conn_handle   Connection handle of the ACL link.
- * @param[in] cid           Local CID assigned by Bluetooth stack. Shall use the GAP_CHANNEL_STATE_CONNECTED state channel.
- * @param[in] p_data        Point to data to be sent.
+ * @param[in] cid           Local Channel Identifier assigned by Bluetooth Host. Shall use the GAP_CHANNEL_STATE_CONNECTED state channel.
+ * @param[in] p_data        Pointer to data to be sent.
  * @param[in] data_len      Length of value to be sent, range: 0~(mtu_size - 1).
-                            uint16_t mtu_size is acquired by le_get_conn_param(GAP_PARAM_CONN_MTU_SIZE, &mtu_size, conn_id).
- * @return Data sent result
+                            uint16_t mtu_size is acquired by gap_chann_get_info(conn_handle, cid, p_info).
+ * @return Data sent result.
  * @retval true Success.
  * @retval false Failed.
  *

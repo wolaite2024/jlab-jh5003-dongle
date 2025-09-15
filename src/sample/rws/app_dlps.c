@@ -8,7 +8,6 @@
 #include "dlps_util.h"
 #include "system_status_api.h"
 #include "section.h"
-#include "rtl876x_nvic.h"
 #include "os_timer.h"
 #include "os_sync.h"
 #include "io_dlps.h"
@@ -29,16 +28,10 @@
 #include "app_one_wire_uart.h"
 #include "dlps_util.h"
 
-#if F_APP_SENSOR_PX318J_SUPPORT
-#include "app_sensor_px318j.h"
-#endif
-#if F_APP_SENSOR_MEMS_SUPPORT
-#include "app_sensor_mems.h"
-#endif
 #if F_APP_QDECODE_SUPPORT
 #include "app_qdec.h"
 #endif
-#if F_APP_PERIODIC_WAKEUP_RECHARGE
+#if F_APP_PERIODIC_WAKEUP
 #include "rtl876x_rtc.h"
 #include "hal_adp.h"
 #endif
@@ -49,6 +42,10 @@
 
 #if F_APP_EXT_MIC_SWITCH_SUPPORT && F_APP_EXT_MIC_PLUG_IN_ADC_DETECT
 #include "app_adc.h"
+#endif
+
+#if CONFIG_REALTEK_GFPS_FINDER_SUPPORT
+#include "app_gfps_finder.h"
 #endif
 
 typedef enum
@@ -70,7 +67,7 @@ static uint8_t timer_idx_power_down_wdg = 0;
 static uint8_t timer_idx_profiling_dlps = 0;
 static uint32_t pd_wdg_chk_times = 0;
 
-#if F_APP_PERIODIC_WAKEUP_RECHARGE
+#if F_APP_PERIODIC_WAKEUP
 static bool app_dlps_need_to_wakeup_by_rtc(void)
 {
     bool ret = false;
@@ -87,17 +84,28 @@ static bool app_dlps_need_to_wakeup_by_rtc(void)
 
 static uint32_t app_dlps_get_system_wakeup_time(void)
 {
-    uint32_t wakeup_time = 2 * 24 * 60 * 60; /* 2days */
+#if CONFIG_REALTEK_GFPS_FINDER_SUPPORT
+    if (extend_app_cfg_const.gfps_finder_support &&
+        !extend_app_cfg_const.disable_finder_adv_when_power_off)
+    {
+        uint32_t wakeup_time = extend_app_cfg_const.gfps_power_off_start_finder_adv_timer_timeout_value;
+    }
+    else
+#endif
+    {
+        // uint32_t wakeup_time = 2 * 24 * 60 * 60; /* 2days */
+        uint32_t wakeup_time = 60; /* 60s */
+    }
 
     return wakeup_time;
 }
 
 static void app_dlps_system_wakeup_by_rtc(uint32_t wakeup_time)
 {
-    uint8_t comparator_index = 4; /* compat0gt */
-    uint32_t prescaler_value = 4095; /* 1 counter : (prescaler_value + 1)/32000  sec*/
+    uint8_t comparator_index = COMP0GT_INDEX;
+    uint32_t prescaler_value = RTC_PRESCALER_VALUE; /* 1 counter : (prescaler_value + 1)/32000  sec*/
+
     uint32_t comparator_value = (uint32_t)(((uint64_t)wakeup_time * 32000) / (prescaler_value + 1));
-    uint32_t current_value = 0;
 
     RTC_DeInit();
     RTC_SetPrescaler(prescaler_value);
@@ -106,6 +114,8 @@ static void app_dlps_system_wakeup_by_rtc(uint32_t wakeup_time)
 
     RTC_SystemWakeupConfig(ENABLE);
     RTC_RunCmd(ENABLE);
+
+    uint32_t current_value = 0;
 
     current_value = RTC_GetCounter();
     RTC_SetComp(comparator_index, current_value + comparator_value);
@@ -118,7 +128,15 @@ void app_dlps_system_wakeup_clear_rtc_int(void)
         RTC_ClearINTStatus(RTC_CMP0GT_INT);
     }
 
-    RTC_RunCmd(DISABLE);
+    if (0)
+    {
+        // Debug
+        uint32_t rtc_counter = 0;
+        rtc_counter = RTC_GetCounter();
+        APP_PRINT_INFO1("app_dlps_system_wakeup_clear_rtc_int: RTC wakeup, rtc_counter %d", rtc_counter);
+    }
+
+    // RTC_RunCmd(DISABLE);
 }
 #endif
 
@@ -183,19 +201,20 @@ RAM_TEXT_SECTION bool app_dlps_check_callback(void)
 
     io_dlps_set_vio_power(is_keep_hq);
 
-#if F_APP_PERIODIC_WAKEUP_RECHARGE
-    if (lps_mode == POWER_POWERDOWN_MODE)
+#if F_APP_PERIODIC_WAKEUP
+    if (lps_mode == POWER_POWERDOWN_MODE && dlps_enter_en)
     {
         extern void (*set_clk_32k_power_in_powerdown)(bool);
+        set_clk_32k_power_in_powerdown(true);
 
-        if (app_dlps_need_to_wakeup_by_rtc())
+#if CONFIG_REALTEK_GFPS_FINDER_SUPPORT
+        if (extend_app_cfg_const.gfps_finder_support &&
+            !extend_app_cfg_const.disable_finder_adv_when_power_off)
         {
-            set_clk_32k_power_in_powerdown(true);
+            //save some information into flash
+            app_gfps_finder_rtc_wakeup_save_info();
         }
-        else
-        {
-            set_clk_32k_power_in_powerdown(false);
-        }
+#endif
     }
 #endif
 
@@ -233,12 +252,21 @@ void app_dlps_enter_callback(void)
         {
             app_led_reset_pad_config();
         }
+
+#if CONFIG_REALTEK_GFPS_FINDER_SUPPORT
+        if (extend_app_cfg_const.gfps_finder_support &&
+            !extend_app_cfg_const.disable_finder_adv_when_power_off)
+        {
+            //save some information into flash
+            app_gfps_finder_rtc_wakeup_save_info();
+        }
+#endif
     }
 
-#if F_APP_PERIODIC_WAKEUP_RECHARGE
-    if (lps_mode == POWER_POWERDOWN_MODE && app_dlps_need_to_wakeup_by_rtc())
+#if F_APP_PERIODIC_WAKEUP
+    if (lps_mode == POWER_POWERDOWN_MODE)
     {
-        uint32_t wakeup_time = app_dlps_get_system_wakeup_time();;
+        uint32_t wakeup_time = app_dlps_get_system_wakeup_time();
 
         app_dlps_system_wakeup_by_rtc(wakeup_time);
 
@@ -269,45 +297,8 @@ void app_dlps_enter_callback(void)
     {
         if (app_db.device_state != APP_DEVICE_STATE_OFF)
         {
-
-#if F_APP_SENSOR_SUPPORT
-            if ((app_cfg_const.gsensor_support) || (app_cfg_const.psensor_support))
-            {
-                if (app_cfg_const.gsensor_int_pinmux != 0xFF)
-                {
-                    app_dlps_pad_wake_up_enable(app_cfg_const.gsensor_int_pinmux);
-                }
-            }
-
-            if (app_cfg_const.sensor_support)
-            {
-                if (app_cfg_const.sensor_vendor == SENSOR_LD_VENDOR_JSA1225 ||
-                    app_cfg_const.sensor_vendor == SENSOR_LD_VENDOR_JSA1227)
-                {
-                    app_dlps_set_pad_wake_up(app_cfg_const.sensor_detect_pinmux, PAD_WAKEUP_POL_LOW);
-                }
-                else if (app_cfg_const.sensor_vendor == SENSOR_LD_VENDOR_IO)
-                {
-                    app_dlps_pad_wake_up_enable(app_cfg_const.sensor_detect_pinmux);
-                }
-#if F_APP_SENSOR_PX318J_SUPPORT
-                else if (app_cfg_const.sensor_vendor == SENSOR_LD_VENDOR_PX)
-                {
-                    app_sensor_px318j_enter_dlps();
-                }
-#endif
-            }
-#endif
-
 #if F_APP_EXT_MIC_SWITCH_SUPPORT && F_APP_EXT_MIC_PLUG_IN_GPIO_DETECT
             app_ext_mic_gpio_detect_enter_dlps_pad_set();
-#endif
-
-#if F_APP_SENSOR_MEMS_SUPPORT
-            if (app_cfg_const.mems_support)
-            {
-                // app_sensor_mems_dlps_enter();
-            }
 #endif
 
 #if F_APP_QDECODE_SUPPORT
@@ -320,13 +311,6 @@ void app_dlps_enter_callback(void)
     }
     else if (power_mode_get() == POWER_POWERDOWN_MODE)
     {
-
-#if F_APP_SENSOR_SL7A20_SUPPORT
-        if (app_cfg_const.gsensor_support)
-        {
-            app_sensor_gsensor_vendor_sl_disable();
-        }
-#endif
 
 #if F_APP_QDECODE_SUPPORT
         if (app_cfg_const.wheel_support)
@@ -377,32 +361,6 @@ void app_dlps_exit_callback(void)
     //POWER_POWERDOWN_MODE and LPM_HIBERNATE_MODE will reboot directly and not execute exit callback
     if ((power_mode_get() == POWER_DLPS_MODE))
     {
-
-#if F_APP_SENSOR_SUPPORT
-        if ((app_cfg_const.gsensor_support) || (app_cfg_const.psensor_support))
-        {
-            if (app_cfg_const.gsensor_int_pinmux != 0xFF)
-            {
-                /*gsensor triggle when enter in dlps shoud deal  */
-                app_dlps_restore_pad(app_cfg_const.gsensor_int_pinmux);
-            }
-        }
-
-        if (app_cfg_const.sensor_support)
-        {
-            if (app_cfg_const.sensor_vendor == SENSOR_LD_VENDOR_JSA1225
-                || app_cfg_const.sensor_vendor == SENSOR_LD_VENDOR_JSA1227
-                || app_cfg_const.sensor_vendor == SENSOR_LD_VENDOR_IO
-#if F_APP_SENSOR_PX318J_SUPPORT
-                || app_cfg_const.sensor_vendor == SENSOR_LD_VENDOR_PX
-#endif
-               )
-            {
-                app_dlps_restore_pad(app_cfg_const.sensor_detect_pinmux);
-            }
-        }
-#endif
-
 #if F_APP_EXT_MIC_SWITCH_SUPPORT && F_APP_EXT_MIC_PLUG_IN_GPIO_DETECT
         app_ext_mic_gpio_detect_exit_dlps_pad_set();
 #endif
@@ -423,13 +381,6 @@ void app_dlps_exit_callback(void)
             {
                 app_adp_io_wakeup_pol_set();
             }
-        }
-#endif
-
-#if F_APP_SENSOR_MEMS_SUPPORT
-        if (app_cfg_const.mems_support)
-        {
-            // app_sensor_mems_dlps_exit();
         }
 #endif
 
@@ -474,7 +425,7 @@ static void app_dlps_timeout_cb(uint8_t timer_evt, uint16_t param)
             if (pd_wdg_chk_times == POWER_DOWN_WDG_CHK_TIMES)
             {
                 app_auto_power_off_disable(AUTO_POWER_OFF_MASK_ALREADY_POWER_OFF);
-                app_dlps_enable(0xFFFF);
+                app_dlps_enable(0xFFFFFFFF);
             }
 
             if (app_dlps_platform_pm_check() && app_db.device_state == APP_DEVICE_STATE_OFF)
@@ -526,27 +477,23 @@ void app_dlps_power_mode_set(void)
     bool force_shipping_mode = false;
 
     if (force_shipping_mode ||
-        (app_cfg_const.enter_shipping_mode_if_outcase_power_off && (app_device_is_in_the_box() == false)))
+        app_cfg_const.enter_shipping_mode_if_outcase_power_off
+        && (app_device_is_in_the_box() == false)
+#if (F_APP_PERIODIC_WAKEUP == 1)
+        && !app_dlps_need_to_wakeup_by_rtc()
+#endif
+       )
     {
         power_mode_set(POWER_SHIP_MODE);
     }
     else
     {
-        power_mode_set(POWER_POWERDOWN_MODE);
+        power_mode_set(POWER_POWERDOWN_MODE); // POWER_DLPS_MODE
     }
 }
 
 void app_dlps_power_off(void)
 {
-#if CONFIG_REALTEK_GFPS_FINDER_SUPPORT
-    if (extend_app_cfg_const.gfps_finder_support)
-    {
-        APP_PRINT_INFO0("app_dlps_power_off: gfps finder power off enter dlps");
-        power_mode_set(POWER_DLPS_MODE);
-        return;
-    }
-#endif
-
     if (app_cfg_const.enable_power_off_to_dlps_mode)
     {
         power_mode_set(POWER_DLPS_MODE);

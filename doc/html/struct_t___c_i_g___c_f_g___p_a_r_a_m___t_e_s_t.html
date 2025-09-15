@@ -44,7 +44,7 @@ $(function() {
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">T_CIG_CFG_PARAM_TEST Struct Reference<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___b_l_u_e_t_o_o_t_h.html">Bluetooth</a> &raquo; <a class="el" href="group___g_a_p.html">GAP</a> &raquo; <a class="el" href="group___g_a_p___l_e.html">GAP LE Module</a> &raquo; <a class="el" href="group___g_a_p___l_e___c_i_g___m_g_r.html">GAP LE CIG Mgr Module</a> &raquo; <a class="el" href="group___g_a_p___l_e___c_i_g___m_g_r___exported___types.html">GAP LE CIG Mgr Exported Types</a></div></div>  </div>
+<div class="title">T_CIG_CFG_PARAM_TEST Struct Reference<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___b_l_u_e_t_o_o_t_h.html">Bluetooth</a> &raquo; <a class="el" href="group___g_a_p.html">GAP</a> &#124; <a class="el" href="group___b_t___host.html">Bluetooth Host</a> &raquo; <a class="el" href="group___g_a_p___l_e.html">GAP LE Module</a> &raquo; <a class="el" href="group___g_a_p___l_e___c_i_g___m_g_r.html">GAP LE CIG Mgr Module</a> &raquo; <a class="el" href="group___g_a_p___l_e___c_i_g___m_g_r___exported___types.html">GAP LE CIG Mgr Exported Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -81,7 +81,9 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The interval, in microseconds, of periodic SDUs from the Central's Host. Range: 0x0000FF to 0x0FFFFF </p>
+<p>The interval, in microseconds, of periodic SDUs from the Central's Host. </p><ul>
+<li>Range: 0x0000FF to 0x0FFFFF. </li>
+</ul>
 
 </div>
 </div>
@@ -96,7 +98,9 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The interval, in microseconds, of periodic SDUs from the Peripheral's Host. Range: 0x0000FF to 0x0FFFFF </p>
+<p>The interval, in microseconds, of periodic SDUs from the Peripheral's Host. </p><ul>
+<li>Range: 0x0000FF to 0x0FFFFF. </li>
+</ul>
 
 </div>
 </div>
@@ -111,7 +115,9 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The flush timeout in multiples of ISO_Interval for each payload sent from the Central to Peripheral. Range: 0x01 to 0xFF </p>
+<p>The flush timeout in multiples of ISO_Interval for each payload sent from the Central to Peripheral. </p><ul>
+<li>Range: 0x01 to 0xFF. </li>
+</ul>
 
 </div>
 </div>
@@ -126,7 +132,9 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The flush timeout in multiples of ISO_Interval for each payload sent from the Peripheral to Central. Range: 0x01 to 0xFF </p>
+<p>The flush timeout in multiples of ISO_Interval for each payload sent from the Peripheral to Central. </p><ul>
+<li>Range: 0x01 to 0xFF. </li>
+</ul>
 
 </div>
 </div>
@@ -141,7 +149,11 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Time between consecutive CIS anchor points. Range: 0x0004 to 0x0C80 Time = N * 1.25 ms Time Range: 5 ms to 4 s </p>
+<p>Time between consecutive CIS anchor points. </p><ul>
+<li>Range: 0x0004 to 0x0C80. </li>
+<li>Time = N * 1.25 ms. </li>
+<li>Time Range: 5 ms to 4 s. </li>
+</ul>
 
 </div>
 </div>
@@ -156,7 +168,16 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The worst-case sleep clock accuracy of all the Peripherals that will participate in the CIG. 0x00: 251 ppm to 500 ppm 0x01: 151 ppm to 250 ppm 0x02: 101 ppm to 150 ppm 0x03: 76 ppm to 100 ppm 0x04: 51 ppm to 75 ppm 0x05: 31 ppm to 50 ppm 0x06: 21 ppm to 30 ppm 0x07: 0 ppm to 20 ppm </p>
+<p>The worst-case sleep clock accuracy of all the Peripherals that will participate in the CIG. </p><ul>
+<li>0x00: 251 ppm to 500 ppm. </li>
+<li>0x01: 151 ppm to 250 ppm. </li>
+<li>0x02: 101 ppm to 150 ppm. </li>
+<li>0x03: 76 ppm to 100 ppm. </li>
+<li>0x04: 51 ppm to 75 ppm. </li>
+<li>0x05: 31 ppm to 50 ppm. </li>
+<li>0x06: 21 ppm to 30 ppm. </li>
+<li>0x07: 0 ppm to 20 ppm. </li>
+</ul>
 
 </div>
 </div>
@@ -171,7 +192,10 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Indicate the preferred method of arranging subevents of multiple CISes. 0x00: Sequential 0x01: Interleaved </p>
+<p>Indicate the preferred method of arranging subevents of multiple CISes. </p><ul>
+<li>0x00: Sequential. </li>
+<li>0x01: Interleaved. </li>
+</ul>
 
 </div>
 </div>
@@ -186,7 +210,10 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Indicate the format of the CIS Data PDUs. 0x00: Unframed 0x01: Framed </p>
+<p>Indicate the format of the CIS Data PDUs. </p><ul>
+<li>0x00: Unframed. </li>
+<li>0x01: Framed. </li>
+</ul>
 
 </div>
 </div>

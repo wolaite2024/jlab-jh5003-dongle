@@ -13,7 +13,7 @@ extern "C" {
 #endif
 
 /**
- * \defgroup    OS_87x3e_Queue   List Queue
+ * \addtogroup    OS_87x3e_Queue   List Queue
  *
  * \brief   Initialize and manage List Queue functions.
  * \details List Queue is designed as a FIFO-like list, which can enqueue, dequeue and peek
@@ -22,15 +22,24 @@ extern "C" {
  *
  * \image html OS-queue-overview.jpg "List Queue Overview" width=466px height=256px
  *
+ * @{
  */
 
+/*============================================================================*
+ *                         Types
+ *============================================================================*/
+
+
+/** @defgroup OS_87x3e_Queue_Exported_Types List Queue Exported Types
+ * @{
+ */
 
 /**
  * os_queue.h
  *
  * \brief   The element structure of List Queue.
  *
- * \ingroup  OS_87x3e_Queue
+ *
  */
 typedef struct t_os_queue_elem
 {
@@ -42,7 +51,7 @@ typedef struct t_os_queue_elem
  *
  * \brief   The header structure of List Queue.
  *
- * \ingroup  OS_87x3e_Queue
+ *
  */
 typedef struct
 {
@@ -52,12 +61,24 @@ typedef struct
     uint16_t         flags;     /**< The flags for customer usage. */
 } T_OS_QUEUE;
 
+/** End of group OS_87x3e_Queue_Exported_Types
+  * @}
+  */
+
+/*============================================================================*
+ *                         Functions
+ *============================================================================*/
+
+/** @defgroup OS_87x3e_Queue_Exported_functions List Queue Exported Functions
+ * @{
+ */
+
 /**
  * os_queue.h
  *
  * \brief   Initialize the list queue.
  *
- * \param[in]   p_queue  Pointer to the list queue header.
+ * \param   p_queue  Pointer to the list queue header.
  *
  * \return      None.
  *
@@ -72,7 +93,7 @@ typedef struct
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Queue
+ *
  */
 extern void (*os_queue_init)(T_OS_QUEUE *p_queue);
 
@@ -81,9 +102,9 @@ extern void (*os_queue_init)(T_OS_QUEUE *p_queue);
  *
  * \brief   Enqueue an element to the back of the list queue.
  *
- * \param[in]   p_queue Pointer to the list queue header.
+ * \param   p_queue Pointer to the list queue header.
  *
- * \param[in]   p_elem  The list queue element being enqueued.
+ * \param   p_elem  The list queue element being enqueued.
  *
  * \return      None.
  *
@@ -110,7 +131,7 @@ extern void (*os_queue_init)(T_OS_QUEUE *p_queue);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Queue
+ *
  */
 extern void (*os_queue_in)(T_OS_QUEUE *p_queue, void *p_elem);
 
@@ -119,7 +140,7 @@ extern void (*os_queue_in)(T_OS_QUEUE *p_queue, void *p_elem);
  *
  * \brief   Dequeue an element from the front of the list queue.
  *
- * \param[in]   p_queue  Pointer to the list queue header.
+ * \param   p_queue  Pointer to the list queue header.
  *
  * \return  The first element from the list queue. If the returned address is
  *          NULL, the list queue is empty.
@@ -152,7 +173,7 @@ extern void (*os_queue_in)(T_OS_QUEUE *p_queue, void *p_elem);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Queue
+ *
  */
 extern void *(*os_queue_out)(T_OS_QUEUE *p_queue);
 
@@ -161,9 +182,9 @@ extern void *(*os_queue_out)(T_OS_QUEUE *p_queue);
  *
  * \brief  Peek an element from the list queue.
  *
- * \param[in]   p_queue Pointer to the list queue header.
+ * \param   p_queue Pointer to the list queue header.
  *
- * \param[in]   index   The index of the peeked element.
+ * \param   index   The index of the peeked element.
  *                      When index is a zero or positive number, it refers to the (index+1)th element.
  *                      When index is a negative number, it refers to |index|th last element.
  *
@@ -198,7 +219,7 @@ extern void *(*os_queue_out)(T_OS_QUEUE *p_queue);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Queue
+ *
  */
 extern void *(*os_queue_peek)(T_OS_QUEUE *p_queue, int32_t index);
 
@@ -207,9 +228,9 @@ extern void *(*os_queue_peek)(T_OS_QUEUE *p_queue, int32_t index);
  *
  * \brief   Search an element from the list queue.
  *
- * \param[in]   p_queue     Pointer to the list queue header.
+ * \param   p_queue     Pointer to the list queue header.
  *
- * \param[in]   p_elem      The element to be searched.
+ * \param   p_elem      The element to be searched.
  *
  * \return          The status of queue element searching.
  * \retval true     Queue element was found successfully.
@@ -252,7 +273,7 @@ extern void *(*os_queue_peek)(T_OS_QUEUE *p_queue, int32_t index);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Queue
+ *
  */
 extern bool (*os_queue_search)(T_OS_QUEUE *p_queue, void *p_elem);
 
@@ -261,11 +282,11 @@ extern bool (*os_queue_search)(T_OS_QUEUE *p_queue, void *p_elem);
  *
  * \brief   Insert an element to the list queue.
  *
- * \param[in]   p_queue     Pointer to the list queue header.
+ * \param   p_queue     Pointer to the list queue header.
  *
- * \param[in]   p_elem      The element which the new element to be inserted behind.
+ * \param   p_elem      The element which the new element to be inserted behind.
  *
- * \param[in]   p_new_elem  The inserted element.
+ * \param   p_new_elem  The inserted element.
  *
  * \return      None.
  *
@@ -302,7 +323,7 @@ extern bool (*os_queue_search)(T_OS_QUEUE *p_queue, void *p_elem);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Queue
+ *
  */
 extern void (*os_queue_insert)(T_OS_QUEUE *p_queue, void *p_elem, void *p_new_elem);
 
@@ -311,9 +332,9 @@ extern void (*os_queue_insert)(T_OS_QUEUE *p_queue, void *p_elem, void *p_new_el
  *
  * \brief   Delete an element from the list queue.
  *
- * \param[in]   p_queue  Pointer to the list queue header.
+ * \param   p_queue  Pointer to the list queue header.
  *
- * \param[in]   p_elem   The element to be deleted from the list queue.
+ * \param   p_elem   The element to be deleted from the list queue.
  *
  * \return          The status of queue element deletion.
  * \retval true     Queue element was deleted successfully.
@@ -356,9 +377,12 @@ extern void (*os_queue_insert)(T_OS_QUEUE *p_queue, void *p_elem, void *p_new_el
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Queue
+ *
  */
 extern bool (*os_queue_delete)(T_OS_QUEUE *p_queue, void *p_elem);
+
+/** @} */ /* End of group OS_87x3e_Queue_Exported_Functions */
+/** @} */ /* End of group OS_87x3e_Queue */
 
 #ifdef __cplusplus
 }

@@ -20,6 +20,9 @@
 #include "app_sdp.h"
 #include "app_relay.h"
 #include "app_flags.h"
+#include "bt_types.h"
+#include "gap.h"
+
 
 #if AMA_FEATURE_SUPPORT
 #include "app_ama_transport.h"
@@ -1008,15 +1011,7 @@ void app_iap_init(void)
 
     if (app_cfg_const.supported_profile_mask & IAP_PROFILE_MASK)
     {
-        if (app_cfg_const.enable_multi_link)
-        {
-            bt_iap_init(2, RFC_IAP_CHANN_NUM, app_iap_cp_write, app_iap_cp_burst_read);//max support 2 iap links
-        }
-        else
-        {
-            bt_iap_init(1, RFC_IAP_CHANN_NUM, app_iap_cp_write, app_iap_cp_burst_read);
-        }
-
+        bt_iap_init(RFC_IAP_CHANN_NUM, app_iap_cp_write, app_iap_cp_burst_read);
         bt_mgr_cback_register(app_iap_bt_cback);
 #if F_APP_ERWS_SUPPORT
         app_relay_cback_register(NULL, (P_APP_PARSE_CBACK)app_iap_parse_cback, APP_MODULE_TYPE_APP_IAP,

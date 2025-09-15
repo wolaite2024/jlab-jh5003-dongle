@@ -93,7 +93,7 @@ extern "C" {
 #define DIPC_H2D_ENCODER_STOP                     (DIPC_OIF_CURRENT | DIPC_ODF_UNSPECIFIED | DIPC_OGF_CODER | 0x83)
 #define DIPC_H2D_ENCODER_GAIN_SET                 (DIPC_OIF_CURRENT | DIPC_ODF_UNSPECIFIED | DIPC_OGF_CODER | 0x84)
 #define DIPC_H2D_ENCODER_SIGNAL_MONITORING_START  (DIPC_OIF_CURRENT | DIPC_ODF_UNSPECIFIED | DIPC_OGF_CODER | 0x85)
-#define DIPC_H2D_ENCODER_SIGNAL_MONITORING_STOP   (DIPC_OIF_CURRENT | DIPC_ODF_UNSPECIFIED | DIPC_OGF_CODER | 0x85)
+#define DIPC_H2D_ENCODER_SIGNAL_MONITORING_STOP   (DIPC_OIF_CURRENT | DIPC_ODF_UNSPECIFIED | DIPC_OGF_CODER | 0x86)
 
 /* DIPC H2D Notification Command Codes */
 #define DIPC_H2D_RINGTONE_SET                   (DIPC_OIF_CURRENT | DIPC_ODF_UNSPECIFIED | DIPC_OGF_NOTIFICATION | 0x00)
@@ -136,6 +136,7 @@ extern "C" {
 #define DIPC_H2D_RECORD_EQ_CLEAR                (DIPC_OIF_CURRENT | DIPC_ODF_UNSPECIFIED | DIPC_OGF_AUDIO_EFFECT | 0x05)
 #define DIPC_H2D_APT_EQ_SET                     (DIPC_OIF_CURRENT | DIPC_ODF_UNSPECIFIED | DIPC_OGF_AUDIO_EFFECT | 0x06)
 #define DIPC_H2D_APT_EQ_CLEAR                   (DIPC_OIF_CURRENT | DIPC_ODF_UNSPECIFIED | DIPC_OGF_AUDIO_EFFECT | 0x07)
+#define DIPC_H2D_EFFECT_CONTROL                 (DIPC_OIF_CURRENT | DIPC_ODF_UNSPECIFIED | DIPC_OGF_AUDIO_EFFECT | 0x0A)
 #define DIPC_H2D_SIDETONE_SET                   (DIPC_OIF_CURRENT | DIPC_ODF_UNSPECIFIED | DIPC_OGF_AUDIO_EFFECT | 0x10)
 #define DIPC_H2D_SIDETONE_CLEAR                 (DIPC_OIF_CURRENT | DIPC_ODF_UNSPECIFIED | DIPC_OGF_AUDIO_EFFECT | 0x11)
 #define DIPC_H2D_VOICE_NREC_SET                 (DIPC_OIF_CURRENT | DIPC_ODF_UNSPECIFIED | DIPC_OGF_AUDIO_EFFECT | 0x20)
@@ -535,8 +536,8 @@ bool dipc_codec_pipe_destroy(uint32_t session_id);
 bool dipc_codec_pipe_start(uint32_t session_id);
 bool dipc_codec_pipe_stop(uint32_t session_id);
 bool dipc_codec_pipe_gain_set(uint32_t session_id,
-                              uint16_t gain_step_left,
-                              uint16_t gain_step_right);
+                              int16_t  gain_step_left,
+                              int16_t  gain_step_right);
 bool dipc_codec_pipe_pre_mixer_add(uint32_t prime_session_id,
                                    uint32_t auxiliary_session_id);
 bool dipc_codec_pipe_post_mixer_add(uint32_t prime_session_id,
@@ -1398,7 +1399,6 @@ typedef enum
         1 Word:
           Byte[0] : Codec gain
     */
-
     H2D_DECODER_SET2 = 0x38, //command id: 0x38
     H2D_DECODER_ACTION = 0x39,
     H2D_RESERVED3 = 0x3A, //command id: 0x3A
@@ -1678,6 +1678,8 @@ typedef enum
      *   uint8_t: enable (1) or disable (0) PLC
      *   uint16_t: interval for PLC Notify, unit: ms
      */
+
+    H2D_EFFECT_CONTROL = 0x84,
 
     H2D_STREAM_CHANNEL_OUT_CONFIG = 0xD0,
     /*
@@ -2014,6 +2016,10 @@ bool dsp_ipc_line_in_action(T_ACTION_CONFIG action, T_DSP_IPC_LOGIC_IO *logic_io
 
 bool dsp_ipc_init_dsp_sdk(bool flush, uint8_t scenario);
 bool dsp_ipc_sidetone_set(uint8_t enable, int16_t gain, uint8_t level);
+
+bool dipc_decoder_effect_control(uint8_t category, uint8_t action);
+
+bool dipc_encoder_effect_control(uint8_t category, uint8_t action);
 
 bool dsp_ipc_wdrc_effect_set(uint8_t *payload_data,
                              uint16_t payload_len);

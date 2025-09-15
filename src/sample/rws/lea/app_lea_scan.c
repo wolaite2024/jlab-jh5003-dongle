@@ -1,4 +1,6 @@
+#if F_APP_LEA_REALCAST_SUPPORT || F_APP_PBP_SUPPORT
 #include "string.h"
+#endif
 #include "trace.h"
 #include "ble_audio_def.h"
 #include "ble_scan.h"
@@ -174,6 +176,7 @@ static bool app_lea_scan_report(T_LE_EXT_ADV_REPORT_INFO *p_report)
     }
 #endif
 
+#if F_APP_PBP_SUPPORT
     adv_info.uuid = PUBIC_BROADCAST_ANNOUNCEMENT_SRV_UUID;
     if (app_lea_scan_filter_service_data(adv_info, &p_pba_data, &pba_data_len))
     {
@@ -193,6 +196,7 @@ static bool app_lea_scan_report(T_LE_EXT_ADV_REPORT_INFO *p_report)
             }
         }
     }
+#endif
 
 bmr_scan:
     if ((app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_SINGLE) ||
@@ -228,7 +232,7 @@ static void app_lea_scan_cb(BLE_SCAN_EVT state, BLE_SCAN_EVT_DATA *data)
     }
 }
 
-void app_lea_scan_start(uint16_t timeout)
+void app_lea_scan_start(void)
 {
     BLE_SCAN_PARAM param;
 
@@ -251,17 +255,11 @@ void app_lea_scan_start(uint16_t timeout)
 
     /* Enable extended scan */
     ble_scan_start(&app_lea_scan_handle, app_lea_scan_cb, &param, NULL);
-
-    if (!mtc_exist_handler(MTC_TMR_BIS))
-    {
-        mtc_start_timer(MTC_TMR_BIS, MTC_BIS_TMR_SCAN, (app_cfg_const.scan_to * 1000));
-    }
 }
 
 void app_lea_scan_stop()
 {
     APP_PRINT_INFO0("app_lea_scan_stop"); //For HRP test
-    mtc_stop_timer(MTC_TMR_BIS);
     ble_scan_stop(&app_lea_scan_handle);
 }
 #endif

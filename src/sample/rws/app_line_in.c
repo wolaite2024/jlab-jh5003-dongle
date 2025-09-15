@@ -615,7 +615,7 @@ static void app_line_in_dm_cback(T_SYS_EVENT event_type, void *event_buf, uint16
 
 void app_line_in_init(void)
 {
-    line_in_create(48000);
+    line_in_create(AUDIO_DEVICE_IN_AUX | AUDIO_DEVICE_OUT_SPK, 48000);
 
     line_in_volume_out_max_set(app_dsp_cfg_vol.line_in_volume_out_max);
     line_in_volume_out_min_set(app_dsp_cfg_vol.line_in_volume_out_min);
@@ -854,7 +854,7 @@ static void app_line_in_dual_audio_channel_set(bool is_playing)
 {
     if (is_playing)
     {
-        app_dual_audio_lr_info(MODE_INFO_LINE_IN, false, app_cfg_const.solo_speaker_channel);
+        app_dual_audio_lr_info(MODE_INFO_LINE_IN, app_cfg_const.solo_speaker_channel);
     }
     else
     {
@@ -862,16 +862,16 @@ static void app_line_in_dual_audio_channel_set(bool is_playing)
         {
             if (app_cfg_const.bud_side == DEVICE_BUD_SIDE_LEFT)
             {
-                app_dual_audio_lr_info(MODE_INFO_L, false, app_cfg_const.couple_speaker_channel);
+                app_dual_audio_lr_info(MODE_INFO_L, app_cfg_const.couple_speaker_channel);
             }
             else
             {
-                app_dual_audio_lr_info(MODE_INFO_R, false, app_cfg_const.couple_speaker_channel);
+                app_dual_audio_lr_info(MODE_INFO_R, app_cfg_const.couple_speaker_channel);
             }
         }
         else
         {
-            app_dual_audio_lr_info(MODE_INFO_L_R_DIV2, false, app_cfg_const.solo_speaker_channel);
+            app_dual_audio_lr_info(MODE_INFO_L_R_DIV2, app_cfg_const.solo_speaker_channel);
         }
     }
 }

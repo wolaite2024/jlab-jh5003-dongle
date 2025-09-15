@@ -18,7 +18,7 @@
 #define     HID_CONGESTION_CTRL_DROP_CUR    HID_DRIVER_CONGESTION_CTRL_DROP_CUR
 #define     HID_CONGESTION_CTRL_DROP_FIRST  HID_DRIVER_CONGESTION_CTRL_DROP_FIRST
 
-#define     USB_HID_MAX_PENDING_REQ_NUM         0x05
+#define     USB_HID_MAX_PENDING_REQ_NUM     0x05
 
 typedef uint32_t (*USB_HID_DATA_PIPE_CB)(void *handle, void *buf, uint32_t len, int status);
 
@@ -113,6 +113,18 @@ int usb_hid_data_pipe_close(void *handle);
  * \ingroup USB_HID
  */
 int usb_hid_ual_register(T_HID_CBS cbs);
+
+/**
+ * usb_hid.h
+ *
+ * \brief   send usb hid data to usb host
+ *
+ * \param[in]  data: hid data
+ * \param[in]  size: data size
+ *
+ * \ingroup USB_HID
+ */
+bool usb_hid_interrupt_in(uint8_t *data, uint8_t size);
 
 /**
  * usb_hid.h

@@ -4,6 +4,7 @@
 #if F_APP_DURIAN_SUPPORT
 #include "trace.h"
 #include "bt_bond.h"
+#include "bt_att.h"
 #include "app_durian.h"
 #include "app_main.h"
 #include "app_cfg.h"
@@ -86,12 +87,12 @@ bool app_durian_link_disconn_req(uint8_t *bd_addr)
     {
         if (p_link->connected_profile & GATT_PROFILE_MASK)
         {
-            bt_avp_audio_disconnect_req(bd_addr);
+            bt_att_disconnect_req(bd_addr);
         }
 
         if (p_link->connected_profile & AVP_PROFILE_MASK)
         {
-            bt_avp_control_disconnect_req(bd_addr);
+            bt_avp_disconnect_req(bd_addr);
         }
 
         return true;

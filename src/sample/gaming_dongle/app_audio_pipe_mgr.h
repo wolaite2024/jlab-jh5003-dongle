@@ -104,6 +104,7 @@ typedef struct
 } T_PIPE_FORMAT_INFO;
 
 uint16_t app_pipe_get_codec_frame_size(T_GAMING_CODEC codec_type);
+T_APP_PIPE_STATE app_pipe_get_state(T_APP_AUDIO_PIPE_TYPE type);
 int32_t app_pipe_get_asrc_ratio(T_APP_AUDIO_PIPE_TYPE type);
 bool app_pipe_asrc_set(T_APP_AUDIO_PIPE_TYPE type, int32_t ratio);
 bool app_pipe_gain_set(T_APP_AUDIO_PIPE_TYPE type, uint16_t gain);

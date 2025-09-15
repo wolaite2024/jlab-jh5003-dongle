@@ -44,52 +44,68 @@ $(function() {
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">T_WATCH_DOG_TIMER_REG Union Reference<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3d.html">rtl87x3d</a> &raquo; <a class="el" href="group__x3d___w_a_t_c_h___d_o_g.html">Watch Dog</a> &raquo; <a class="el" href="group___w_a_t_c_h___d_o_g___types.html">Watch Dog Exported Types</a><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___w_a_t_c_h___d_o_g.html">Watch Dog</a> &raquo;  &#124; <a class="el" href="group__x3e___w_a_t_c_h___d_o_g___types.html">Watch Dog Exported Types</a></div></div>  </div>
+<div class="title">T_WATCH_DOG_TIMER_REG Union Reference<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3d.html">rtl87x3d</a> &raquo; <a class="el" href="group__x3d___w_a_t_c_h___d_o_g.html">Watch Dog</a> &raquo; <a class="el" href="group__x3d___w_a_t_c_h___d_o_g___exported___types.html">Watch Dog Exported Types</a><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___w_a_t_c_h___d_o_g.html">Watch Dog</a> &raquo;  &#124; <a class="el" href="group__x3e___w_a_t_c_h___d_o_g___exported___types.html">Watch Dog Exported Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Watch Dog Mode structure definition.  
+<p>Watch Dog timer register definition.  
  <a href="union_t___w_a_t_c_h___d_o_g___t_i_m_e_r___r_e_g.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="rtl87x3d_2io_2rtl876x__wdg_8h_source.html">rtl876x_wdg.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
+<tr class="memitem:a9554f4b75c4de1f8852f47631d88d1f9"><td class="memItemLeft" >struct {</td></tr>
+<tr class="memitem:aca89715f75a98c358a442a2d36eb935d"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="union_t___w_a_t_c_h___d_o_g___t_i_m_e_r___r_e_g.html#aca89715f75a98c358a442a2d36eb935d">div_factor</a>: 16</td></tr>
+<tr class="memdesc:aca89715f75a98c358a442a2d36eb935d"><td class="mdescLeft">&#160;</td><td class="mdescRight">R/W Dividing factor[15:0](at least set 1).  <a href="#aca89715f75a98c358a442a2d36eb935d">More...</a><br /></td></tr>
+<tr class="separator:aca89715f75a98c358a442a2d36eb935d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af74418258474ea312b35016e66840a5f"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="union_t___w_a_t_c_h___d_o_g___t_i_m_e_r___r_e_g.html#af74418258474ea312b35016e66840a5f">en_byte</a>: 8</td></tr>
+<tr class="memdesc:af74418258474ea312b35016e66840a5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">R/WSet 0xA5 to enable watch dog timer[23:16].  <a href="#af74418258474ea312b35016e66840a5f">More...</a><br /></td></tr>
+<tr class="separator:af74418258474ea312b35016e66840a5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f7c24c06557dd9b897f74f257b9b454"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="union_t___w_a_t_c_h___d_o_g___t_i_m_e_r___r_e_g.html#a5f7c24c06557dd9b897f74f257b9b454">clear</a>: 1</td></tr>
+<tr class="memdesc:a5f7c24c06557dd9b897f74f257b9b454"><td class="mdescLeft">&#160;</td><td class="mdescRight">W Write 1 to clear timer[24].  <a href="#a5f7c24c06557dd9b897f74f257b9b454">More...</a><br /></td></tr>
+<tr class="separator:a5f7c24c06557dd9b897f74f257b9b454"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00fdf4139c6b92a42fd145ee5ff330d6"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="union_t___w_a_t_c_h___d_o_g___t_i_m_e_r___r_e_g.html#a00fdf4139c6b92a42fd145ee5ff330d6">cnt_limit</a>: 4</td></tr>
+<tr class="memdesc:a00fdf4139c6b92a42fd145ee5ff330d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">R/W [28:25] 0: 0x001 1: 0x003 .... 10: 0x7FF 11~15: 0xFFF.  <a href="#a00fdf4139c6b92a42fd145ee5ff330d6">More...</a><br /></td></tr>
+<tr class="separator:a00fdf4139c6b92a42fd145ee5ff330d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e36a4cdadc5783bb295c50b7ab764f7"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="union_t___w_a_t_c_h___d_o_g___t_i_m_e_r___r_e_g.html#a9e36a4cdadc5783bb295c50b7ab764f7">wdg_mode</a>: 2</td></tr>
+<tr class="memdesc:a9e36a4cdadc5783bb295c50b7ab764f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">R/W Select watch dog mode[29:30].  <a href="#a9e36a4cdadc5783bb295c50b7ab764f7">More...</a><br /></td></tr>
+<tr class="separator:a9e36a4cdadc5783bb295c50b7ab764f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5627d8d8b095c198e2523c44ca380ac"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="union_t___w_a_t_c_h___d_o_g___t_i_m_e_r___r_e_g.html#ab5627d8d8b095c198e2523c44ca380ac">timeout</a>: 1</td></tr>
+<tr class="memdesc:ab5627d8d8b095c198e2523c44ca380ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">R/W1C Watch dog timer timeout[31] 1 cycle pulse.  <a href="#ab5627d8d8b095c198e2523c44ca380ac">More...</a><br /></td></tr>
+<tr class="separator:ab5627d8d8b095c198e2523c44ca380ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9554f4b75c4de1f8852f47631d88d1f9"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="union_t___w_a_t_c_h___d_o_g___t_i_m_e_r___r_e_g.html#a9554f4b75c4de1f8852f47631d88d1f9">b</a></td></tr>
+<tr class="separator:a9554f4b75c4de1f8852f47631d88d1f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Union members</div></td></tr>
 <tr class="memitem:a134240bc6149d901e426171a82068094"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="union_t___w_a_t_c_h___d_o_g___t_i_m_e_r___r_e_g.html#a134240bc6149d901e426171a82068094">d32</a></td></tr>
+<tr class="memdesc:a134240bc6149d901e426171a82068094"><td class="mdescLeft">&#160;</td><td class="mdescRight">The word member in the union.  <a href="#a134240bc6149d901e426171a82068094">More...</a><br /></td></tr>
 <tr class="separator:a134240bc6149d901e426171a82068094"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54a8f9298472ff7bbe1f2327df3b473c"><td class="memItemLeft" >struct {</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Bit field structure</div></td></tr>
+<tr class="memitem:ae42af7de4d8875e5d2220d97e2b58386"><td class="memItemLeft" >struct {</td></tr>
 <tr class="memitem:aca89715f75a98c358a442a2d36eb935d"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="union_t___w_a_t_c_h___d_o_g___t_i_m_e_r___r_e_g.html#aca89715f75a98c358a442a2d36eb935d">div_factor</a>: 16</td></tr>
+<tr class="memdesc:aca89715f75a98c358a442a2d36eb935d"><td class="mdescLeft">&#160;</td><td class="mdescRight">R/W Dividing factor[15:0](at least set 1).  <a href="#aca89715f75a98c358a442a2d36eb935d">More...</a><br /></td></tr>
 <tr class="separator:aca89715f75a98c358a442a2d36eb935d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af74418258474ea312b35016e66840a5f"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="union_t___w_a_t_c_h___d_o_g___t_i_m_e_r___r_e_g.html#af74418258474ea312b35016e66840a5f">en_byte</a>: 8</td></tr>
+<tr class="memdesc:af74418258474ea312b35016e66840a5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">R/WSet 0xA5 to enable watch dog timer[23:16].  <a href="#af74418258474ea312b35016e66840a5f">More...</a><br /></td></tr>
 <tr class="separator:af74418258474ea312b35016e66840a5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f7c24c06557dd9b897f74f257b9b454"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="union_t___w_a_t_c_h___d_o_g___t_i_m_e_r___r_e_g.html#a5f7c24c06557dd9b897f74f257b9b454">clear</a>: 1</td></tr>
+<tr class="memdesc:a5f7c24c06557dd9b897f74f257b9b454"><td class="mdescLeft">&#160;</td><td class="mdescRight">W Write 1 to clear timer[24].  <a href="#a5f7c24c06557dd9b897f74f257b9b454">More...</a><br /></td></tr>
 <tr class="separator:a5f7c24c06557dd9b897f74f257b9b454"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00fdf4139c6b92a42fd145ee5ff330d6"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="union_t___w_a_t_c_h___d_o_g___t_i_m_e_r___r_e_g.html#a00fdf4139c6b92a42fd145ee5ff330d6">cnt_limit</a>: 4</td></tr>
+<tr class="memdesc:a00fdf4139c6b92a42fd145ee5ff330d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">R/W [28:25] 0: 0x001 1: 0x003 .... 10: 0x7FF 11~15: 0xFFF.  <a href="#a00fdf4139c6b92a42fd145ee5ff330d6">More...</a><br /></td></tr>
 <tr class="separator:a00fdf4139c6b92a42fd145ee5ff330d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e36a4cdadc5783bb295c50b7ab764f7"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="union_t___w_a_t_c_h___d_o_g___t_i_m_e_r___r_e_g.html#a9e36a4cdadc5783bb295c50b7ab764f7">wdg_mode</a>: 2</td></tr>
+<tr class="memdesc:a9e36a4cdadc5783bb295c50b7ab764f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">R/W Select watch dog mode[29:30].  <a href="#a9e36a4cdadc5783bb295c50b7ab764f7">More...</a><br /></td></tr>
 <tr class="separator:a9e36a4cdadc5783bb295c50b7ab764f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5627d8d8b095c198e2523c44ca380ac"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="union_t___w_a_t_c_h___d_o_g___t_i_m_e_r___r_e_g.html#ab5627d8d8b095c198e2523c44ca380ac">timeout</a>: 1</td></tr>
+<tr class="memdesc:ab5627d8d8b095c198e2523c44ca380ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">R/W1C Watch dog timer timeout[31] 1 cycle pulse.  <a href="#ab5627d8d8b095c198e2523c44ca380ac">More...</a><br /></td></tr>
 <tr class="separator:ab5627d8d8b095c198e2523c44ca380ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54a8f9298472ff7bbe1f2327df3b473c"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="union_t___w_a_t_c_h___d_o_g___t_i_m_e_r___r_e_g.html#a54a8f9298472ff7bbe1f2327df3b473c">b</a></td></tr>
-<tr class="separator:a54a8f9298472ff7bbe1f2327df3b473c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad00470eba0ee393babfeb4bdbe8aa3e2"><td class="memItemLeft" >struct {</td></tr>
-<tr class="memitem:aca89715f75a98c358a442a2d36eb935d"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="union_t___w_a_t_c_h___d_o_g___t_i_m_e_r___r_e_g.html#aca89715f75a98c358a442a2d36eb935d">div_factor</a>: 16</td></tr>
-<tr class="separator:aca89715f75a98c358a442a2d36eb935d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af74418258474ea312b35016e66840a5f"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="union_t___w_a_t_c_h___d_o_g___t_i_m_e_r___r_e_g.html#af74418258474ea312b35016e66840a5f">en_byte</a>: 8</td></tr>
-<tr class="separator:af74418258474ea312b35016e66840a5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f7c24c06557dd9b897f74f257b9b454"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="union_t___w_a_t_c_h___d_o_g___t_i_m_e_r___r_e_g.html#a5f7c24c06557dd9b897f74f257b9b454">clear</a>: 1</td></tr>
-<tr class="separator:a5f7c24c06557dd9b897f74f257b9b454"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00fdf4139c6b92a42fd145ee5ff330d6"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="union_t___w_a_t_c_h___d_o_g___t_i_m_e_r___r_e_g.html#a00fdf4139c6b92a42fd145ee5ff330d6">cnt_limit</a>: 4</td></tr>
-<tr class="separator:a00fdf4139c6b92a42fd145ee5ff330d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e36a4cdadc5783bb295c50b7ab764f7"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="union_t___w_a_t_c_h___d_o_g___t_i_m_e_r___r_e_g.html#a9e36a4cdadc5783bb295c50b7ab764f7">wdg_mode</a>: 2</td></tr>
-<tr class="separator:a9e36a4cdadc5783bb295c50b7ab764f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5627d8d8b095c198e2523c44ca380ac"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="union_t___w_a_t_c_h___d_o_g___t_i_m_e_r___r_e_g.html#ab5627d8d8b095c198e2523c44ca380ac">timeout</a>: 1</td></tr>
-<tr class="separator:ab5627d8d8b095c198e2523c44ca380ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad00470eba0ee393babfeb4bdbe8aa3e2"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="union_t___w_a_t_c_h___d_o_g___t_i_m_e_r___r_e_g.html#ad00470eba0ee393babfeb4bdbe8aa3e2">b</a></td></tr>
-<tr class="separator:ad00470eba0ee393babfeb4bdbe8aa3e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae42af7de4d8875e5d2220d97e2b58386"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="union_t___w_a_t_c_h___d_o_g___t_i_m_e_r___r_e_g.html#ae42af7de4d8875e5d2220d97e2b58386">b</a></td></tr>
+<tr class="memdesc:ae42af7de4d8875e5d2220d97e2b58386"><td class="mdescLeft">&#160;</td><td class="mdescRight">The struct member in the union.  <a href="#ae42af7de4d8875e5d2220d97e2b58386">More...</a><br /></td></tr>
+<tr class="separator:ae42af7de4d8875e5d2220d97e2b58386"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Watch Dog Mode structure definition. </p>
+<div class="textblock"><p>Watch Dog timer register definition. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a id="a134240bc6149d901e426171a82068094"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a134240bc6149d901e426171a82068094">&#9670;&nbsp;</a></span>d32</h2>
@@ -102,6 +118,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The word member in the union. </p>
 
 </div>
 </div>
@@ -117,6 +135,8 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>R/W Dividing factor[15:0](at least set 1). </p>
+
 </div>
 </div>
 <a id="af74418258474ea312b35016e66840a5f"></a>
@@ -130,6 +150,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>R/WSet 0xA5 to enable watch dog timer[23:16]. </p>
 
 </div>
 </div>
@@ -145,6 +167,8 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>W Write 1 to clear timer[24]. </p>
+
 </div>
 </div>
 <a id="a00fdf4139c6b92a42fd145ee5ff330d6"></a>
@@ -158,6 +182,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>R/W [28:25] 0: 0x001 1: 0x003 .... 10: 0x7FF 11~15: 0xFFF. </p>
 
 </div>
 </div>
@@ -173,6 +199,8 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>R/W Select watch dog mode[29:30]. </p>
+
 </div>
 </div>
 <a id="ab5627d8d8b095c198e2523c44ca380ac"></a>
@@ -187,10 +215,12 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>R/W1C Watch dog timer timeout[31] 1 cycle pulse. </p>
+
 </div>
 </div>
-<a id="a54a8f9298472ff7bbe1f2327df3b473c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a54a8f9298472ff7bbe1f2327df3b473c">&#9670;&nbsp;</a></span>b <span class="overload">[1/2]</span></h2>
+<a id="a9554f4b75c4de1f8852f47631d88d1f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9554f4b75c4de1f8852f47631d88d1f9">&#9670;&nbsp;</a></span>b <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -203,8 +233,8 @@ Data Fields</h2></td></tr>
 
 </div>
 </div>
-<a id="ad00470eba0ee393babfeb4bdbe8aa3e2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad00470eba0ee393babfeb4bdbe8aa3e2">&#9670;&nbsp;</a></span>b <span class="overload">[2/2]</span></h2>
+<a id="ae42af7de4d8875e5d2220d97e2b58386"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae42af7de4d8875e5d2220d97e2b58386">&#9670;&nbsp;</a></span>b <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -214,6 +244,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The struct member in the union. </p>
 
 </div>
 </div>

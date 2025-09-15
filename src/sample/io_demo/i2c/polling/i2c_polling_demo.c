@@ -15,10 +15,8 @@
  *                              Header Files
  *============================================================================*/
 #include "rtl876x_pinmux.h"
-#include "rtl876x_nvic.h"
 #include "rtl876x_rcc.h"
 #include "rtl876x_i2c.h"
-#include "string.h"
 #include "trace.h"
 
 /** @defgroup  I2C_REPEAT_READ_DEMO  I2C REPEAT READ DEMO

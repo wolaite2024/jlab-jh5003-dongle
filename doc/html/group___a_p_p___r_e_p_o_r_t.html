@@ -87,6 +87,8 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<a class="el" href="group___a_p_p___r_e_p_o_r_t.html#gga5d33818623af7687eff8863825004c35a5196da6e7fb4d98e42ed39ce67d82341">CMD_PATH_IAP</a> = 0x04, 
 <br />
+&#160;&#160;<a class="el" href="group___a_p_p___r_e_p_o_r_t.html#gga5d33818623af7687eff8863825004c35ada30e1f26f2d7c3b59f9756adef974e1">CMD_PATH_GATT_OVER_BREDR</a> = 0x05, 
+<br />
 &#160;&#160;<a class="el" href="group___a_p_p___r_e_p_o_r_t.html#gga5d33818623af7687eff8863825004c35ab71baf197d5abda3ac9e753623b45a7f">CMD_PATH_RWS_ASYNC</a> = 0x10, 
 <br />
 &#160;&#160;<a class="el" href="group___a_p_p___r_e_p_o_r_t.html#gga5d33818623af7687eff8863825004c35ac001b3488b1fdd21a9e43cfa94aee42b">CMD_PATH_RWS_SYNC</a> = 0x11
@@ -295,6 +297,8 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="group___a_p_p___r_e_p_o_r_t.html#gga7726a52eb69945b78d3a5a1463a839c7a73d50371c037416534c414a3ef588203">EVENT_HFP_AG_ENHANCED_SAFETY_STATUS</a> = 0x0398, 
 <br />
 &#160;&#160;<a class="el" href="group___a_p_p___r_e_p_o_r_t.html#gga7726a52eb69945b78d3a5a1463a839c7ad0f6c5829ca600b3fcb83dbebdb794ed">EVENT_RING_IND</a> = 0x040C, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___r_e_p_o_r_t.html#gga7726a52eb69945b78d3a5a1463a839c7ac194addcf563d296097a4bcc94d25111">EVENT_AVRCP_REPORT_ELEMENT_ATTR</a> = 0x0414, 
 <br />
 &#160;&#160;<a class="el" href="group___a_p_p___r_e_p_o_r_t.html#gga7726a52eb69945b78d3a5a1463a839c7a0d780a1e57a6e42f19c0bef6bbf53a96">EVENT_OTA_DEV_INFO</a> = 0x0600, 
 <br />
@@ -726,9 +730,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga0dd8e2c8be8f122a8eaed3e6797198a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___r_e_p_o_r_t.html#ga0dd8e2c8be8f122a8eaed3e6797198a2">app_report_get_bud_info</a> (uint8_t *data)</td></tr>
 <tr class="memdesc:ga0dd8e2c8be8f122a8eaed3e6797198a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get bud info.  <a href="#ga0dd8e2c8be8f122a8eaed3e6797198a2">More...</a><br /></td></tr>
 <tr class="separator:ga0dd8e2c8be8f122a8eaed3e6797198a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1ac3698526c0fb37d2d972c90c10e94e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___r_e_p_o_r_t.html#ga1ac3698526c0fb37d2d972c90c10e94e">app_report_gaming_mode_info</a> (void)</td></tr>
-<tr class="memdesc:ga1ac3698526c0fb37d2d972c90c10e94e"><td class="mdescLeft">&#160;</td><td class="mdescRight">report gaming mode info  <a href="#ga1ac3698526c0fb37d2d972c90c10e94e">More...</a><br /></td></tr>
-<tr class="separator:ga1ac3698526c0fb37d2d972c90c10e94e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga07ba22941b657e0bf62c7108f9c042fe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___r_e_p_o_r_t.html#ga07ba22941b657e0bf62c7108f9c042fe">app_report_gaming_mode_info</a> (bool gaming_mode)</td></tr>
+<tr class="memdesc:ga07ba22941b657e0bf62c7108f9c042fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">report gaming mode info  <a href="#ga07ba22941b657e0bf62c7108f9c042fe">More...</a><br /></td></tr>
+<tr class="separator:ga07ba22941b657e0bf62c7108f9c042fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>App Report. </p>
@@ -877,6 +881,7 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="gga5d33818623af7687eff8863825004c35a2cfe9880e07a8da7b6433b13ee5639b4"></a>CMD_PATH_LE&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga5d33818623af7687eff8863825004c35ad02df31c353532bddcf4743ad9d7725b"></a>CMD_PATH_SPP&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga5d33818623af7687eff8863825004c35a5196da6e7fb4d98e42ed39ce67d82341"></a>CMD_PATH_IAP&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga5d33818623af7687eff8863825004c35ada30e1f26f2d7c3b59f9756adef974e1"></a>CMD_PATH_GATT_OVER_BREDR&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga5d33818623af7687eff8863825004c35ab71baf197d5abda3ac9e753623b45a7f"></a>CMD_PATH_RWS_ASYNC&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga5d33818623af7687eff8863825004c35ac001b3488b1fdd21a9e43cfa94aee42b"></a>CMD_PATH_RWS_SYNC&#160;</td><td class="fielddoc"></td></tr>
 </table>
@@ -996,6 +1001,7 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="gga7726a52eb69945b78d3a5a1463a839c7ad192271e91868b6ba681ac3fc9d9ce58"></a>EVENT_HFP_AG_CURR_OPERATOR_QUERY&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga7726a52eb69945b78d3a5a1463a839c7a73d50371c037416534c414a3ef588203"></a>EVENT_HFP_AG_ENHANCED_SAFETY_STATUS&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga7726a52eb69945b78d3a5a1463a839c7ad0f6c5829ca600b3fcb83dbebdb794ed"></a>EVENT_RING_IND&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga7726a52eb69945b78d3a5a1463a839c7ac194addcf563d296097a4bcc94d25111"></a>EVENT_AVRCP_REPORT_ELEMENT_ATTR&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga7726a52eb69945b78d3a5a1463a839c7a0d780a1e57a6e42f19c0bef6bbf53a96"></a>EVENT_OTA_DEV_INFO&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga7726a52eb69945b78d3a5a1463a839c7a942b5d293389ac4c9088cbd1a0e03fc9"></a>EVENT_OTA_ACTIVE_BANK_VER&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga7726a52eb69945b78d3a5a1463a839c7ac163720f5972d102eeb9c24efc401ba2"></a>EVENT_OTA_START&#160;</td><td class="fielddoc"></td></tr>
@@ -1518,8 +1524,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ga1ac3698526c0fb37d2d972c90c10e94e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1ac3698526c0fb37d2d972c90c10e94e">&#9670;&nbsp;</a></span>app_report_gaming_mode_info()</h2>
+<a id="ga07ba22941b657e0bf62c7108f9c042fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga07ba22941b657e0bf62c7108f9c042fe">&#9670;&nbsp;</a></span>app_report_gaming_mode_info()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1527,8 +1533,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void app_report_gaming_mode_info </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>gaming_mode</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1537,7 +1543,7 @@ Functions</h2></td></tr>
 <p>report gaming mode info </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">none</td><td></td></tr>
+    <tr><td class="paramname">bool</td><td>true is gaming mode and false is not gaming mode </td></tr>
   </table>
   </dd>
 </dl>

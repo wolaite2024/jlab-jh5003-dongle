@@ -20,23 +20,12 @@
 
 static T_SD_STATE g_sd_cur_state = SD_POWER_OFF;
 
-static void disk_enter_dlps(bool disk_powerdown)
+static void disk_enter_dlps(void)
 {
-    if (disk_powerdown)
+    if (g_sd_cur_state != SD_POWER_OFF)
     {
-        if (g_sd_cur_state != SD_POWER_OFF)
-        {
-            sd_deinit();
-            g_sd_cur_state = SD_POWER_OFF;
-        }
-    }
-    else
-    {
-        if (g_sd_cur_state == SD_POWER_ON)
-        {
-            sd_sdh_clk_cmd(false);
-            g_sd_cur_state = SD_CLOCK_OFF;
-        }
+        sd_deinit();
+        g_sd_cur_state = SD_POWER_OFF;
     }
 }
 
@@ -45,12 +34,6 @@ static void disk_exit_dlps(void)
     if (g_sd_cur_state == SD_POWER_OFF)
     {
         sd_init();
-        sd_sdh_clk_cmd(true);
-        g_sd_cur_state = SD_POWER_ON;
-    }
-    else if (g_sd_cur_state == SD_CLOCK_OFF)
-    {
-        sd_sdh_clk_cmd(true);
         g_sd_cur_state = SD_POWER_ON;
     }
 }
@@ -78,7 +61,6 @@ DSTATUS disk_status(
                 APP_PRINT_INFO2("reinit once: disk_status:0x%x, cardStatus:0x%x", sdStatus, cardStatus);
                 stat = disk_initialize(pdrv);
             }
-            disk_enter_dlps(false);
         }
         break;
     }
@@ -185,8 +167,6 @@ DRESULT disk_read(
 //                            status, sector, count, TRACE_BINARY(10, (uint8_t *)pReadBuf));
             os_mem_free(pReadBuf);
             pReadBuf = NULL;
-
-            disk_enter_dlps(false);
         }
         break;
     }
@@ -276,8 +256,6 @@ DRESULT disk_write(
 //                            status, sector, count, TRACE_BINARY(10, (uint8_t *)pWriteBuf));
             os_mem_free(pWriteBuf);
             pWriteBuf = NULL;
-
-            disk_enter_dlps(false);
         }
         break;
     }
@@ -357,7 +335,7 @@ DRESULT disk_ioctl(
 
             case CTRL_POWER_OFF:
                 {
-                    disk_enter_dlps(true);
+                    disk_enter_dlps();
                 }
                 break;
 

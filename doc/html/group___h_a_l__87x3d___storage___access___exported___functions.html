@@ -51,7 +51,7 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga580418db850170faebc902971009da5b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___h_a_l__87x3d___storage___access___exported___functions.html#ga580418db850170faebc902971009da5b">storage_partition_init</a> (const <a class="el" href="group___h_a_l__87x3d___t___s_t_o_r_a_g_e___p_a_r_t_i_t_i_o_n___i_n_f_o.html#ga6a7e24a0e27fdec0eed1d0bb1434672e">T_STORAGE_PARTITION_INFO</a> *table, size_t size)</td></tr>
-<tr class="memdesc:ga580418db850170faebc902971009da5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize storage partition table.  <a href="#ga580418db850170faebc902971009da5b">More...</a><br /></td></tr>
+<tr class="memdesc:ga580418db850170faebc902971009da5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register storage partition table.  <a href="#ga580418db850170faebc902971009da5b">More...</a><br /></td></tr>
 <tr class="separator:ga580418db850170faebc902971009da5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga36671e3ac66ce4498621a62647eaea9d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___h_a_l__87x3d___storage___access___exported___functions.html#ga36671e3ac66ce4498621a62647eaea9d">storage_partition_deinit</a> (const <a class="el" href="group___h_a_l__87x3d___t___s_t_o_r_a_g_e___p_a_r_t_i_t_i_o_n___i_n_f_o.html#ga6a7e24a0e27fdec0eed1d0bb1434672e">T_STORAGE_PARTITION_INFO</a> *info)</td></tr>
 <tr class="memdesc:ga36671e3ac66ce4498621a62647eaea9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitialize storage partition table.  <a href="#ga36671e3ac66ce4498621a62647eaea9d">More...</a><br /></td></tr>
@@ -97,7 +97,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initialize storage partition table. </p>
+<p>Register storage partition table. </p>
 <p>storage.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -106,7 +106,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>refer to errno.h. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Refer to errno.h. </dd></dl>
 
 </div>
 </div>
@@ -134,7 +134,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>refer to errno.h. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Refer to errno.h. </dd></dl>
 
 </div>
 </div>
@@ -162,7 +162,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>the info refers to T_STORAGE_PARTITION_INFO. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The info refers to <a class="el" href="group___h_a_l__87x3e___t___s_t_o_r_a_g_e___p_a_r_t_i_t_i_o_n___i_n_f_o.html#ga6a7e24a0e27fdec0eed1d0bb1434672e">T_STORAGE_PARTITION_INFO</a>. </dd></dl>
 
 </div>
 </div>
@@ -221,15 +221,15 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>Storage partition name. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>Storage read from offset of the partition </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Storage read bytes length </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">buf</td><td>Storage read buffer </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">callback</td><td>NULL for synchronous operation and callback fucntion for asynchronous </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">context</td><td>input paramter for callback funciton</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>Storage read from offset of the partition. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Storage read bytes length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buf</td><td>Storage read buffer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">callback</td><td>NULL for synchronous operation and callback function for asynchronous. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">context</td><td>Input parameter for callback function.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>refer to errno.h. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Refer to errno.h. </dd></dl>
 
 </div>
 </div>
@@ -288,11 +288,11 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>Storage partition name. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>Storage write offset of the partition </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Storage write bytes length </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">buf</td><td>Storage write buffer </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">callback</td><td>NULL for synchronous operation and callback fucntion for asynchronous </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">context</td><td>input paramter for callback funciton</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>Storage write offset of the partition. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Storage write bytes length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buf</td><td>Storage write buffer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">callback</td><td>NULL for synchronous operation and callback function for asynchronous. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">context</td><td>Input parameter for callback function.</td></tr>
   </table>
   </dd>
 </dl>
@@ -349,14 +349,14 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>Storage partition name. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>Storage erase offset of the partition </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Storage erase bytes length </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">callback</td><td>NULL for synchronous operation and callback fucntion for asynchronous </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">context</td><td>input parameter for callback funciton</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>Storage erase offset of the partition. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Storage erase bytes length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">callback</td><td>NULL for synchronous operation and callback function for asynchronous. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">context</td><td>Input parameter for callback function.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>refer to errno.h. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Refer to errno.h. </dd></dl>
 
 </div>
 </div>

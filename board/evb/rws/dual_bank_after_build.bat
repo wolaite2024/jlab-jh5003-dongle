@@ -30,6 +30,14 @@ mkdir "bin\%IC_TYPE%\%TARGET_DIR%\%TARGET_BANK%"
 
 rem generate bin and disasm from axf
 %FROMELF_EXE%  --bin -o "bin/%IC_TYPE%/%TARGET_DIR%/%TARGET_BANK%/" %AXF_FILE%
+REM ---------------------------------------------
+REM Optional: Generate a disassembly file for debugging.
+REM To enable, remove the "::" at the beginning of the command.
+REM Note: The "--interleave=source" flag interleaves source code with disassembled code.
+REM This helps in correlating the source with its machine code, but the file will
+REM contain your source code. Make sure to protect its confidentiality.
+REM ---------------------------------------------
+::%FROMELF_EXE%  -acd --interleave=source -o "bin\%IC_TYPE%\%TARGET_DIR%\%TARGET_BANK%\%TARGET_NAME%_%TARGET_BANK%.disasm" %AXF_FILE%
 copy "bin\%IC_TYPE%\%TARGET_DIR%\%TARGET_BANK%\%TARGET_NAME%.bin" "bin\%IC_TYPE%\%TARGET_DIR%\%TARGET_BANK%\%TARGET_NAME%_%TARGET_BANK%.bin"
 copy "bin\%IC_TYPE%\%TARGET_DIR%\%TARGET_BANK%\%TARGET_NAME%.trace" "bin\%IC_TYPE%\%TARGET_DIR%\%TARGET_BANK%\%TARGET_NAME%_%TARGET_BANK%.trace"
 del "bin\%IC_TYPE%\%TARGET_DIR%\%TARGET_BANK%\%TARGET_NAME%.bin"
@@ -73,8 +81,8 @@ echo Output Image for Keil Download: "%TARGET_OBJ_PATH%\%HEX_IMAGE%"
 echo Build Bank: %TARGET_BANK%
 echo Download Address: %APP_ADDR_CFG%
 
-for /f "tokens=1, 2, 3,4" %%i in ('dir /a-d bin\%IC_TYPE%\%TARGET_DIR%\%TARGET_BANK%\%TARGET_NAME%_%TARGET_BANK%.bin') do (
-    if %%l == %TARGET_NAME%_%TARGET_BANK%.bin echo %%i %%j %%k %%l
-)
+rem for /f "tokens=1, 2, 3,4" %%i in ('dir /a-d bin\%IC_TYPE%\%TARGET_DIR%\%TARGET_BANK%\%TARGET_NAME%_%TARGET_BANK%.bin') do (
+rem    if %%l == %TARGET_NAME%_%TARGET_BANK%.bin echo %%i %%j %%k %%l
+rem )
 
 echo on

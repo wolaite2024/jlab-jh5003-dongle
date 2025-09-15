@@ -5,6 +5,7 @@
 #include "gap.h"
 #include "audio_type.h"
 #include "legacy_gaming.h"
+#include "app_gaming_sync.h"
 
 #include "ring_buffer.h"
 
@@ -26,7 +27,7 @@ extern "C" {
 #define CONFIG_FIX_BITPOOL
 
 #ifdef CONFIG_FIX_BITPOOL
-#define FIXED_BITPOOL   37
+#define FIXED_BITPOOL   GAMING_SBC_BITPOOL
 #endif
 
 #define AVDTP_STREAM_DATA_FLUSH_TIMEOUT          (10)

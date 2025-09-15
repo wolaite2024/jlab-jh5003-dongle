@@ -3,9 +3,9 @@
 *     Copyright(c) 2015, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * @file     gatt_builtin_services.h
-  * @brief    Head file for using builtin services, including GAP service and GATT service.
-  * @details  GAPS data structs and external functions declaration.
-  * @author   jane
+  * @brief    Header file for using built-in services, including GAP service and GATT service.
+  * @details  GAPS data structures and external functions declaration.
+  * @author   Jane
   * @date     2015-5-12
   * @version  v0.1
   * *************************************************************************************
@@ -71,22 +71,22 @@ extern "C" {
 /** @brief GAPS parameter type */
 typedef enum
 {
-    GAPS_PARAM_DEVICE_NAME = 0x00,
-    GAPS_PARAM_APPEARANCE  = 0x01,
-    GAPS_PARAM_CENTRAL_ADDRESS_RESOLUTION = 0x02,
-    GAPS_PARAM_DEVICE_NAME_PROPERTY = 0x03,
-    GAPS_PARAM_APPEARANCE_PROPERTY = 0x04,
+    GAPS_PARAM_DEVICE_NAME = 0x00,                  //!< GAPS parameter device name, range of value length is from 0 to (GAP_DEVICE_NAME_LEN - 1).
+    GAPS_PARAM_APPEARANCE  = 0x01,                  //!< GAPS parameter appearance, value length is 2.
+    GAPS_PARAM_CENTRAL_ADDRESS_RESOLUTION = 0x02,   //!< GAPS parameter central address resolution, value length is 1.
+    GAPS_PARAM_DEVICE_NAME_PROPERTY = 0x03,         //!< GAPS parameter device name property, value length is 1.
+    GAPS_PARAM_APPEARANCE_PROPERTY = 0x04,          //!< GAPS parameter appearance property, value length is 1.
 } T_GAPS_PARAM_TYPE;
 
 /** @brief Builtin services data struct for notification data to application. */
 typedef struct
 {
-    uint8_t  opcode; //!< ref: @ref GAPS_WRITE_TYPE
+    uint8_t  opcode; //!<  @ref GAPS_WRITE_TYPE.
     uint16_t len;
     uint8_t  *p_value;
 } T_GAPS_UPSTREAM_MSG_DATA;
 
-/** @brief Builtin services callback data to inform application */
+/** @brief Builtin services callback data to inform application. */
 typedef struct
 {
     T_SERVICE_CALLBACK_TYPE     msg_type;
@@ -115,8 +115,8 @@ typedef struct
 /**
  * @brief  Register callback to builtin services.
  *
- * @param[in] p_func   Callback to notify app.
- * @return none.
+ * @param[in] p_func   Callback to notify APP.
+ * @return void.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -132,7 +132,7 @@ typedef struct
     {
         T_APP_RESULT  result = APP_RESULT_SUCCESS;
         T_GAPS_CALLBACK_DATA *p_gap_data = (T_GAPS_CALLBACK_DATA *)p_para;
-        APP_PRINT_INFO2("gap_service_callback conn_id = %d msg_type = %d\n", p_gap_data->conn_id,
+        APP_PRINT_INFO2("gap_service_callback conn_id %d msg_type %d", p_gap_data->conn_id,
                         p_gap_data->msg_type);
         if (p_gap_data->msg_type == SERVICE_CALLBACK_TYPE_WRITE_CHAR_VALUE)
         {
@@ -178,12 +178,12 @@ void gatt_register_callback(void *p_func);
 /**
  * @brief  Set GAP service parameter.
  *
- * @param[in] param_type   parameter type to set: @ref T_GAPS_PARAM_TYPE
- * @param[in] length       value length to be set.
- * @param[in] p_value      value to set.
- * @return parameter set result.
- * @retval 0 false
- * @retval 1 true
+ * @param[in] param_type   Parameter type to set: @ref T_GAPS_PARAM_TYPE.
+ * @param[in] length       Value length to be set.
+ * @param[in] p_value      Value to set.
+ * @return The result of set parameter operation.
+ * @retval true Set parameter operation is successful.
+ * @retval false Set parameter operation is failed.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -193,7 +193,6 @@ void gatt_register_callback(void *p_func);
         uint8_t device_name_prop = GAPS_PROPERTY_WRITE_ENABLE;
         gaps_set_parameter(GAPS_PARAM_APPEARANCE_PROPERTY, sizeof(appearance_prop), &appearance_prop);
         gaps_set_parameter(GAPS_PARAM_DEVICE_NAME_PROPERTY, sizeof(device_name_prop), &device_name_prop);
-        gatt_register_callback(gap_service_callback);
     }
  * \endcode
  */
@@ -205,31 +204,31 @@ bool gaps_set_parameter(T_GAPS_PARAM_TYPE param_type, uint8_t length, void *p_va
   *
   * @param[in] conn_interval_min   Defines minimum value for the connection interval in the
                                     following manner:
-                                    connIntervalmin = Conn_Interval_Min * 1.25 ms
-                                    Conn_Interval_Min range: 0x0006 to 0x0C80
+                                    connIntervalmin = Conn_Interval_Min * 1.25 ms.
+                                    Conn_Interval_Min range: 0x0006 to 0x0C80.
                                     Value of 0xFFFF indicates no specific minimum.
                                     Values outside the range (except 0xFFFF) are reserved for
                                     future use.
   * @param[in] conn_interval_max   Defines maximum value for the connection interval in the
                                     following manner:
-                                    connIntervalmax = Conn_Interval_Max * 1.25 ms
-                                    Conn_Interval_Max range: 0x0006 to 0x0C80
+                                    connIntervalmax = Conn_Interval_Max * 1.25 ms.
+                                    Conn_Interval_Max range: 0x0006 to 0x0C80.
                                     Shall be equal to or greater than the Conn_Interval_Min.
                                     Value of 0xFFFF indicates no specific maximum.
                                     Values outside the range (except 0xFFFF) are reserved for
                                     future use.
   * @param[in] slave_latency        Defines the slave latency for the connection in number of
                                     connection events.
-                                    Slave latency range: 0x0000 to 0x01F3
+                                    Slave latency range: 0x0000 to 0x01F3.
                                     Values outside the range are reserved for future use.
-  * @param[in] supervision_timeout  Defines the connection supervisor timeout multiplier as amultiple of 10ms.
-                                    Range: 0xFFFF indicates no specific value requested.
-                                    Range: 0x000A to 0x0C80
-                                    Time = N * 10 ms
-                                    Time Range: 100 ms to 32 seconds
+  * @param[in] supervision_timeout  Defines the connection supervisor timeout multiplier as a multiple of 10ms.
+                                    @arg Range: 0xFFFF indicates no specific value requested.
+                                    @arg Range: 0x000A to 0x0C80.
+                                    @arg Time = N * 10 ms.
+                                    @arg Time Range: 100 ms to 32 seconds.
                                     Values outside the range (except 0xFFFF) are reserved for
                                     future use.
-  * @return none
+  * @return void.
   */
 void gaps_set_peripheral_preferred_conn_param(uint16_t conn_interval_min,
                                               uint16_t conn_interval_max,
@@ -237,24 +236,75 @@ void gaps_set_peripheral_preferred_conn_param(uint16_t conn_interval_min,
                                               uint16_t supervision_timeout);
 
 /**
+  * @brief    Get service handle range of GAP service.
+  *
+  * Applications can only call this API after the Bluetooth Host is ready. \n
+  *                  Explanation: If the Bluetooth Host is ready, the application will be notified by message @ref GAP_MSG_LE_DEV_STATE_CHANGE
+  *                               with new_state about gap_init_state, which is configured as @ref GAP_INIT_STATE_STACK_READY.
+  *
+  * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
+  *
+  * @param[in,out] p_starting_handle      Pointer to location to get starting handle.
+  * @param[in,out] p_ending_handle        Pointer to location to get ending handle.
+  *
+  * @return Get result.
+  * @retval true Success.
+  * @retval false Get failed.
+  *
+  * <b>Example usage</b>
+  * \code{.c}
+    void test(void)
+    {
+        bool ret = gaps_get_service_handle_range(&starting_handle, &ending_handle);
+    }
+  * \endcode
+  */
+bool gaps_get_service_handle_range(uint16_t *p_starting_handle, uint16_t *p_ending_handle);
+
+/**
+  * @brief    Get service handle range of GATT service.
+  *
+  * Applications can only call this API after the Bluetooth Host is ready. \n
+  *                  Explanation: If the Bluetooth Host is ready, the application will be notified by message @ref GAP_MSG_LE_DEV_STATE_CHANGE
+  *                               with new_state about gap_init_state, which is configured as @ref GAP_INIT_STATE_STACK_READY.
+  *
+  * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
+  *
+  * @param[in,out] p_starting_handle      Pointer to location to get starting handle.
+  * @param[in,out] p_ending_handle        Pointer to location to get ending handle.
+  *
+  * @return Get result.
+  * @retval true Success.
+  * @retval false Get failed.
+  *
+  * <b>Example usage</b>
+  * \code{.c}
+    void test(void)
+    {
+        bool ret = gatts_get_service_handle_range(&starting_handle, &ending_handle);
+    }
+  * \endcode
+  */
+bool gatts_get_service_handle_range(uint16_t *p_starting_handle, uint16_t *p_ending_handle);
+
+/**
  * @brief  Send service changed indication.
- *         Application can use this API when parameter use_ext of the server_cfg_use_ext_api is false.
+ *         Applications can use this API when parameter use_ext of the server_cfg_use_ext_api is false.
  *
- * @param[in] conn_id      Connection id
- * @param[in] start_handle Start of Affected Attribute Handle Range
- * @param[in] end_handle   End of Affected Attribute Handle Range
- * @return parameter set result.
- * @retval 0 false
- * @retval 1 true
+ * @param[in] conn_id      Connection ID.
+ * @param[in] start_handle Start of Affected Attribute Handle Range.
+ * @param[in] end_handle   End of Affected Attribute Handle Range.
+ * @return The result of sending operation.
+ * @retval true Sending request is successful.
+ * @retval false Sending request is failed.
  *
  * <b>Example usage</b>
  * \code{.c}
     void test(void)
     {
-        uint8_t  conn_id = 0;
-        uint16_t start_handle = 0x05;
-        uint16_t end_handle = 0xFF;
-        gatts_service_changed_indicate(conn_id, start_handle, end_handle);
+        uint16_t start_handle = 0x0001;
+        uint16_t end_handle = 0xFFFF;
+        bool ret = gatts_service_changed_indicate(conn_id, start_handle, end_handle);
     }
  * \endcode
  */
@@ -262,25 +312,23 @@ bool gatts_service_changed_indicate(uint8_t conn_id, uint16_t start_handle, uint
 
 /**
  * @brief  Send service changed indication.
- *         Application can use this API when parameter use_ext of the server_cfg_use_ext_api is true.
+ *         Applications can use this API when parameter use_ext of the server_cfg_use_ext_api is true.
  *
  * @param[in] conn_handle  Connection handle of the ACL link.
- * @param[in] cid          Local CID assigned by Bluetooth stack.
- * @param[in] start_handle Start of Affected Attribute Handle Range
- * @param[in] end_handle   End of Affected Attribute Handle Range
- * @return parameter set result.
- * @retval 0 false
- * @retval 1 true
+ * @param[in] cid          Local Channel Identifier assigned by Bluetooth Host.
+ * @param[in] start_handle Start of Affected Attribute Handle Range.
+ * @param[in] end_handle   End of Affected Attribute Handle Range.
+ * @return The result of sending operation.
+ * @retval true Sending request is successful.
+ * @retval false Sending request is failed.
  *
  * <b>Example usage</b>
  * \code{.c}
     void test(void)
     {
-        uint8_t  conn_id = 0;
-        uint16_t start_handle = 0x05;
-        uint16_t end_handle = 0xFF;
-        uint16_t cid = 0;
-        gatts_ext_service_changed_indicate(le_get_conn_handle(conn_id), start_handle, end_handle);
+        uint16_t start_handle = 0x0001;
+        uint16_t end_handle = 0xFFFF;
+        bool ret = gatts_ext_service_changed_indicate(conn_handle, cid, start_handle, end_handle);
     }
  * \endcode
  */

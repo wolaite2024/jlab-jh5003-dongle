@@ -9,6 +9,7 @@
 #include "app_mmi.h"
 #include "app_usb_audio.h"
 #include "app_usb_vol_control.h"
+#include "app_usb_hid_report.h"
 
 #define BIT_POS_VOL_UP        0
 #define BIT_POS_VOL_DOWN      1
@@ -136,10 +137,10 @@ int32_t app_usb_mmi_handle_action(uint8_t action)
 #endif
     {
         report[1] = 1 << bit_pos;
-        usb_hid_data_pipe_send(hid_mmi_handle, report, 2);
+        usb_hid_report_buffered_send(report, 2);
 
         report[1] = 0;
-        usb_hid_data_pipe_send(hid_mmi_handle, report, 2);
+        usb_hid_report_buffered_send(report, 2);
     }
 
     return ret;
@@ -150,19 +151,6 @@ void app_usb_mmi_game_pad_test(void)
 {
     static uint8_t s_cnt = 0;
     s_cnt++;
-
-    if (hid_mmi_handle == NULL)
-    {
-        T_USB_HID_ATTR attr =
-        {
-            .zlp = 1,
-            .high_throughput = 0,
-            .rsv = 0,
-            .mtu = HID_MAX_TRANSMISSION_UNIT
-        };
-        hid_mmi_handle = usb_hid_data_pipe_open(HID_INT_IN_EP_1, attr, HID_MAX_PENDING_REQ_NUM,
-                                                NULL);
-    }
 
     GAME_PAD_HID_INPUT_REPORT gd_data;
     memset(&gd_data, 0, sizeof(GAME_PAD_HID_INPUT_REPORT));
@@ -175,7 +163,7 @@ void app_usb_mmi_game_pad_test(void)
         gd_data.Rz = 0x7F;
         gd_data.hat_switch = 8;
         gd_data.button_1 = 1;
-        usb_hid_data_pipe_send(hid_mmi_handle, (uint8_t *)&gd_data, sizeof(gd_data));
+        usb_hid_interrupt_in((uint8_t *)&gd_data, sizeof(gd_data));
     }
     else if (s_cnt == 2)
     {
@@ -188,7 +176,7 @@ void app_usb_mmi_game_pad_test(void)
         gd_data.hat_switch = 6;
         gd_data.button_3 = 1;
         gd_data.button_5 = 1;
-        usb_hid_data_pipe_send(hid_mmi_handle, (uint8_t *)&gd_data, sizeof(gd_data));
+        usb_hid_interrupt_in((uint8_t *)&gd_data, sizeof(gd_data));
     }
     else
     {
@@ -198,7 +186,7 @@ void app_usb_mmi_game_pad_test(void)
         gd_data.Rz = 0x72;
         gd_data.Rx = 0x72;
         gd_data.Ry = 0x78;
-        usb_hid_data_pipe_send(hid_mmi_handle, (uint8_t *)&gd_data, sizeof(gd_data));
+        usb_hid_interrupt_in((uint8_t *)&gd_data, sizeof(gd_data));
         s_cnt = 0;
     }
 

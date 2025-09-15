@@ -884,6 +884,12 @@ uint8_t app_usb_hid_handle_gaming_cmd(uint8_t *p_data, uint16_t len)
                 }
                 else
                 {
+                    if ((t_gaming_ctrl[0].conn_state == GAMING_BT_STATE_CONNECTED) &&
+                        (memcmp(recv_id, app_cfg_nv.saved_id, 3) != 0))
+                    {
+                        gaming_bt_disconnect_by_id(0);
+                    }
+
                     // recv_id is not empty, enter link back mode
                     app_device_save_pairing_id(recv_id, 3);
 

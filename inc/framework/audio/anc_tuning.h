@@ -15,10 +15,14 @@ extern "C" {
 /**
  * \defgroup    AUDIO_ANC_TUNING
  *
- * \brief   Provide ANC control tools.
+ * \brief   Provide Active Noise Cancellation (ANC) control tools.
  */
 
-/**  \brief  ANC response measurement mode */
+/**
+ * \brief ANC response measurement mode.
+ *
+ * \ingroup AUDIO_ANC_TUNING
+ */
 typedef enum t_anc_resp_meas_mode
 {
     ANC_RESP_MEAS_MODE_NONE,
@@ -27,49 +31,41 @@ typedef enum t_anc_resp_meas_mode
 } T_ANC_RESP_MEAS_MODE;
 
 /**
- * anc_tuning.h
+ * \brief   Start to load ANC scenario image.
  *
- * \brief   Enable active noise cancellation.
+ * \param[in]  image_sub_type    ANC image sub-type, only available for LLAPT image.
+ * \param[in]  scenario_id       Scenario id for ANC image type.
  *
- * \parameter  image_sub_type   ANC image sub-type, only available for LL-APT image.
- * \parameter  scenario_id      Scenario id for ANC image type.
- *
- * \return          The status of load ANC scenario image.
- * \retval  always true
+ * \return  The status of starting to load ANC scenario image.
+ * \retval  true     Loading was started successfully.
+ * \retval  false    Loading was fail to start.
  *
  * \ingroup AUDIO_ANC_TUNING
  */
 bool anc_tool_load_scenario(uint8_t image_sub_type, uint8_t scenario_id);
 
 /**
- * anc_tuning.h
- *
- * \brief   Set ANC feature map for ANC control.
+ * \brief   Set ANC feature map for control.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
- * \parameter  feature_map      ANC control option feature map.
+ * \param[in]  feature_map    ANC control feature map.
  *
  * \ingroup AUDIO_ANC_TUNING
  */
 void anc_tool_set_feature_map(uint32_t feature_map);
 
 /**
- * anc_tuning.h
- *
  * \brief   Get ANC feature map for ANC control.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
- * \return
- * \retval  any     ANC feature map.
+ * \return  Feature map of ANC control.
  *
  * \ingroup AUDIO_ANC_TUNING
  */
 uint32_t anc_tool_get_feature_map(void);
 
 /**
- * anc_tuning.h
- *
- * \brief   Apply enable ANC setting directly.
+ * \brief   Apply enable ANC settings directly.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
  * \ingroup AUDIO_ANC_TUNING
@@ -77,9 +73,7 @@ uint32_t anc_tool_get_feature_map(void);
 void anc_tool_enable(void);
 
 /**
- * anc_tuning.h
- *
- * \brief   Apply disable ANC setting directly.
+ * \brief   Apply disable ANC settings directly.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
  * \ingroup AUDIO_ANC_TUNING
@@ -87,67 +81,58 @@ void anc_tool_enable(void);
 void anc_tool_disable(void);
 
 /**
- * anc_tuning.h
- *
  * \brief   Set ANC register or PALU register.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
- * \parameter  anc_cmd_ptr      ANC command which follow HCI cmd format.
- *                              This command will indicate register offset and content,
- *                              and parse by anc driver.
+ * \param[in]  anc_cmd_ptr    ANC command which follow HCI CMD format.
+ *                            This command will indicate register offset and content,
+ *                             and parse by ANC driver.
  *
- * \return
- * \retval  true    ANC/PALU register write success.
- * \retval  false   ANC/PALU register write fail.
+ * \return  The error code.
+ * \retval  0x00      ANC/PALU register was written successfully.
+ * \retval  others    ANC/PALU register was failed to be written.
  *
  * \ingroup AUDIO_ANC_TUNING
  */
 uint8_t anc_tool_set_para(void *anc_cmd_ptr);
 
 /**
- * anc_tuning.h
- *
  * \brief   Get ANC/PALU register content.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
- * \parameter  reg_addr         Target register address by word.
+ * \param[in]  reg_addr    The register address by word.
  *
- * \return
- * \retval  0xDEADBEEF          Cannot get content by target reg addr.
- * \retval  others              Content by target reg addr.
+ * \return  The value of the register.
+ * \retval  0xDEADBEEF          Cannot get content by target register address.
+ * \retval  others              Content by target register address.
  *
  * \ingroup AUDIO_ANC_TUNING
  */
 uint32_t anc_tool_read_reg(uint32_t reg_addr);
 
 /**
- * anc_tuning.h
- *
- * \brief   Get data log length from ANC reg.
+ * \brief   Get the length of ANC data log.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
- * \return
- * \retval  any     Data log length by word.
+ * \return  The length of ANC data log.
  *
  * \ingroup AUDIO_ANC_TUNING
  */
 uint32_t anc_tool_get_data_log_length(void);
 
 /**
- * anc_tuning.h
- *
- * \brief   Enable MCU play tone by specific frequencies and amp_ratio
+ * \brief   Enable/Disable playing ringtone by MCU.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
- * \parameter  enable           Enable/Disable MCU play tone.
- * \parameter  ch_sel           L/R channel select for measurement.
- * \parameter  tx_freq          User specific frequencies.
- * \parameter  freq_num         Number of frequencies.
- * \parameter  amp_ratio        Tone Amplitude, must be 0 ~ 128.
+ * \param[in]  enable       Enable/Disable MCU play ringtone.
+ * \param[in]  ch_sel       L/R channel select for measurement.
+ * \param[in]  tx_freq      User specific frequencies.
+ * \param[in]  freq_num     Number of frequencies.
+ * \param[in]  amp_ratio    Tone Amplitude, must be 0 ~ 128.
  *
- * \return
- * \retval  true    MCU play tone success.
- * \retval  false   MCU play tone fail.
+ * \return  The status of settings.
+ * \retval  true    The ringtone was played successfully.
+ * \retval  false   The ringtone was failed to play.
  *
  * \ingroup AUDIO_ANC_TUNING
  */
@@ -155,23 +140,19 @@ bool anc_tool_response_measure_enable(uint8_t enable, uint8_t ch_sel, uint32_t *
                                       uint8_t freq_num, uint8_t amp_ratio);
 
 /**
- * anc_tuning.h
- *
  * \brief   Set ANC data log configuration and dump log.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
- * \parameter  src0_sel         Log source 0 selection.
- * \parameter  src1_sel         Log source 1 selection.
- * \parameter  log_len          Log length(by word).
+ * \param[in]  src0_sel         Log source 0 selection.
+ * \param[in]  src1_sel         Log source 1 selection.
+ * \param[in]  log_len          Log length (by word).
  *
  * \ingroup AUDIO_ANC_TUNING
  */
 void anc_tool_config_data_log(uint8_t src0_sel, uint8_t src1_sel, uint16_t log_len);
 
 /**
- * anc_tuning.h
- *
- * \brief   Unlock ram setting to read log directly.
+ * \brief   Unlock RAM settings to read log directly.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
  * \ingroup AUDIO_ANC_TUNING
@@ -179,71 +160,61 @@ void anc_tool_config_data_log(uint8_t src0_sel, uint8_t src1_sel, uint16_t log_l
 void anc_tool_load_data_log(void);
 
 /**
- * anc_tuning.h
- *
- * \brief   convert data log dest addr.
+ * \brief   Convert destination address of ANC data log.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
  * \xrefitem Added_API_2_13_0_0 "Added Since 2.13.0.0" "Added API"
  *
- * \parameter  log_dest_addr    Destination address of ANC data log.
+ * \param[out]  log_dest_addr    Destination address of ANC data log.
  *
  * \ingroup AUDIO_ANC_TUNING
  */
 void anc_tool_convert_data_log_addr(uint32_t *log_dest_addr);
+
 /**
- * anc_tuning.h
- *
  * \brief   Get current response measurement mode.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
- * \return
- * \retval  any     Response measurement mode.
+ * \return  The mode of response measurement \ref T_ANC_RESP_MEAS_MODE.
  *
  * \ingroup AUDIO_ANC_TUNING
  */
 T_ANC_RESP_MEAS_MODE anc_tool_check_resp_meas_mode(void);
 
 /**
- * anc_tuning.h
- *
- * \brief   Enter specific response measurement mode.
+ * \brief   Set specific response measurement mode.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
- * \parameter  resp_meas_mode   Response measurement mode.
+ * \param[in]  resp_meas_mode    Response measurement mode \ref T_ANC_RESP_MEAS_MODE.
  *
  * \ingroup AUDIO_ANC_TUNING
  */
 void anc_tool_set_resp_meas_mode(T_ANC_RESP_MEAS_MODE resp_meas_mode);
 
 /**
- * anc_tuning.h
- *
- * \brief   Set gain mismatch to ram.
+ * \brief   Set gain mismatch to RAM.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
- * \parameter  gain_src   Gain source selection, 0: external mic, 2: internal mic.
- * \parameter  l_gain     Gain value for Lch.
- * \parameter  r_gain     Gain value for Rch.
+ * \param[in]  gain_src    Gain source selection, 0: external MIC, 2: internal MIC.
+ * \param[in]  l_gain      Gain value for Lch.
+ * \param[in]  r_gain      Gain value for Rch.
  *
  * \ingroup AUDIO_ANC_TUNING
  */
 void anc_tool_set_gain_mismatch(uint8_t gain_src, uint32_t l_gain, uint32_t r_gain);
 
 /**
- * anc_tuning.h
- *
- * \brief   Read gain mismatch from ram or flash.
+ * \brief   Read gain mismatch from RAM or Flash.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
- * \parameter  gain_src   Gain source selection, 0: external mic, 1: internal mic.
- * \parameter  read_flash Read from flash or not, 0: from ram, 1: from flash.
- * \parameter  l_gain     Buffer to store Lch gain value.
- * \parameter  r_gain     Buffer to store Rch gain value.
+ * \param[in]   gain_src      Gain source selection, 0: external MIC, 1: internal MIC.
+ * \param[in]   read_flash    Read from Flash or not, 0: from RAM, 1: from Flash.
+ * \param[out]  l_gain        Buffer to store Lch gain value.
+ * \param[out]  r_gain        Buffer to store Rch gain value.
  *
- * \return
- * \retval  true    Read gain mismatch success.
- * \retval  false   Read gain mismatch fail.
+ * \return  The status of reading gain mismatch.
+ * \retval  true    The gain mismatch was read successfully.
+ * \retval  false   The gain mismatch was failed to read.
  *
  * \ingroup AUDIO_ANC_TUNING
  */
@@ -251,47 +222,41 @@ bool anc_tool_read_gain_mismatch(uint8_t gain_src, uint8_t read_flash,
                                  uint32_t *l_gain, uint32_t *r_gain);
 
 /**
- * anc_tuning.h
- *
- * \brief   Read MP extend data from flash.
+ * \brief   Read MP extend data from Flash.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
- * \parameter  mp_ext_data   Buffer to store MP extend data.
+ * \param[out]  mp_ext_data    Buffer to store MP extend data.
  *
- * \return
- * \retval  true    Read MP extend data success.
- * \retval  false   Read MP extend data fail.
+ * \return  The status of reading extend data.
+ * \retval  true    MP extend data was read successfully.
+ * \retval  false   MP extend data was failed to read.
  *
  * \ingroup AUDIO_ANC_TUNING
  */
 bool anc_tool_read_mp_ext_data(uint32_t *mp_ext_data);
 
 /**
- * anc_tuning.h
+ * \brief   Read LLAPT extend data from Flash.
  *
- * \brief   Read LLAPT extend data from flash.
+ * \param[out]  llapt_ext_data    Buffer to store LLAPT extend data.
  *
- * \parameter  llapt_ext_data   Buffer to store LLAPT extend data.
- *
- * \return
- * \retval  true    Read LLAPT extend data success.
- * \retval  false   Read LLAPT extend data fail.
+ * \return  The status of reading extend LLAPT extend data.
+ * \retval  true    LLAPT extend data was read successfully.
+ * \retval  false   LLAPT extend data was failed to read.
  *
  * \ingroup AUDIO_ANC_TUNING
  */
 bool anc_tool_read_llapt_ext_data(uint32_t *llapt_ext_data);
 
 /**
- * anc_tuning.h
- *
- * \brief   Burn gain mismatch and MP extend data from ram to flash.
+ * \brief   Burn gain mismatch and MP extend data from RAM to Flash.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
- * \parameter  mp_ext_data   MP extend data.
+ * \param[in]  mp_ext_data   MP extend data.
  *
- * \return
- * \retval  true    Burn MP extend data success.
- * \retval  false   Burn MP extend data fail.
+ * \return  The status of burn gain.
+ * \retval  true    MP extend data was burned successfully.
+ * \retval  false   MP extend data was failed to burn.
  *
  * \ingroup AUDIO_ANC_TUNING
  */
@@ -301,12 +266,11 @@ bool anc_tool_burn_gain_mismatch(uint32_t mp_ext_data);
 /**
 * anc_tuning.h
 *
-* \brief   get ANC scenario info
+* \brief   Get ANC scenario mode.
 *
-* \parameter  scenario_mode    Get ANC scenario mode.
+* \param[out]  scenario_mode    Get ANC scenario mode.
 *
-* \return
-* \retval  any     ANC scenario num
+* \return  The number of ANC scenarios.
 *
 * \ingroup AUDIO_ANC_TUNING
 */
@@ -315,67 +279,59 @@ uint8_t anc_tool_get_anc_scenario_info(uint8_t *scenario_mode);
 /**
 * anc_tuning.h
 *
-* \brief   get LLAPT scenario info
+* \brief   Get LLAPT scenario information.
 *
-* \parameter  scenario_mode    Get LLAPT scenario mode.
+* \param[out]  scenario_mode          Get LLAPT scenario mode.
+* \param[out]  scenario_apt_effect    Get LLAPT effect.
 *
-* \return
-* \retval  any     LLAPT scenario num
+* \return   The number of ANC scenarios.
 *
 * \ingroup AUDIO_ANC_TUNING
 */
 uint8_t anc_tool_get_llapt_scenario_info(uint8_t *scenario_mode, uint8_t *scenario_apt_effect);
 
 /**
- * anc_tuning.h
- *
- * \brief   Set LLAPT gain mismatch to ram.
+ * \brief   Set LLAPT gain mismatch to RAM.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
- * \parameter  l_gain     Gain value for Lch.
- * \parameter  r_gain     Gain value for Rch.
+ * \param[in]  l_gain    Gain value for Lch.
+ * \param[in]  r_gain    Gain value for Rch.
  *
  * \ingroup AUDIO_ANC_TUNING
  */
 void anc_tool_set_llapt_gain_mismatch(uint32_t l_gain, uint32_t r_gain);
 
 /**
- * anc_tuning.h
- *
- * \brief   Read LLAPT gain mismatch from ram or flash.
+ * \brief   Read LLAPT gain mismatch from RAM or Flash.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
- * \parameter  read_flash Read from flash or not, 0: from ram, 1: from flash.
- * \parameter  l_gain     Buffer to store Lch gain value.
- * \parameter  r_gain     Buffer to store Rch gain value.
+ * \param[in]   read_flash Read from Flash or not, 0: from RAM, 1: from Flash.
+ * \param[out]  l_gain     Buffer to store Lch gain value.
+ * \param[out]  r_gain     Buffer to store Rch gain value.
  *
- * \return
- * \retval  true    Read LLAPT gain mismatch success.
- * \retval  false   Read LLAPT gain mismatch fail.
+ * \return  The status of reading LLAPT gain.
+ * \retval  true    LLAPT gain mismatch was read successfully.
+ * \retval  false   LLAPT gain mismatch was failed to read.
  *
  * \ingroup AUDIO_ANC_TUNING
  */
 bool anc_tool_read_llapt_gain_mismatch(uint8_t read_flash, uint32_t *l_gain, uint32_t *r_gain);
 
 /**
- * anc_tuning.h
- *
- * \brief   Burn LLAPT gain mismatch from ram to flash.
+ * \brief   Burn LLAPT gain mismatch from RAM to Flash.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
- * \parameter  llapt_ext_data   LLAPT extend data.
+ * \param[in]  llapt_ext_data    LLAPT extend data.
  *
- * \return
- * \retval  true    Burn LLAPT gain mismatch success.
- * \retval  false   Burn LLAPT gain mismatch fail.
+ * \return  The status of burn LLAPT gain.
+ * \retval  true    LLAPT gain mismatch was burned successfully.
+ * \retval  false   LLAPT gain mismatch was failed to burn.
  *
  * \ingroup AUDIO_ANC_TUNING
  */
 bool anc_tool_burn_llapt_gain_mismatch(uint32_t llapt_ext_data);
 
 /**
- * anc_tuning.h
- *
  * \brief   Switch ANC/LLAPT limiter WNS on/off depend on feature map.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
@@ -384,46 +340,39 @@ bool anc_tool_burn_llapt_gain_mismatch(uint32_t llapt_ext_data);
 void anc_tool_limiter_wns_switch(void);
 
 /**
- * anc_tuning.h
+ * \brief   Set ANC MP backup buffer.
  *
- * \brief   set anc MP backup buffer
- *
- * \parameter  param1, param2 control parameters.
+ * \param[in]  param1    Control parameters.
+ * \param[in]  param2    Control parameters.
  *
  * \ingroup AUDIO_ANC_TUNING
  */
 void anc_tool_anc_mp_bak_buf_config(uint32_t param1, uint32_t param2);
 
 /**
- * anc_tuning.h
+ * \brief   Ramp data write for ramp tool.
  *
- * \brief   ramp data write for ramp tool
- *
- * \parameter  wdata, data to be written.
+ * \param[in]  wdata    Data to be written.
  *
  * \ingroup AUDIO_ANC_TUNING
  */
 void anc_tool_ramp_data_write(uint32_t wdata);
 
 /**
- * anc_tuning.h
+ * \brief   Get ramp scenario address for ramp tool.
  *
- * \brief   get ramp scenario address for ramp tool
- *
- * \parameter  param, command buffer address send to driver.
+ * \param[in]  param    Command buffer address send to driver.
  *
  * \ingroup AUDIO_ANC_TUNING
  */
 void anc_tool_get_scenario_addr(uint32_t param);
 
 /**
- * anc_tuning.h
- *
- * \brief   Set scenario img to anc module
+ * \brief   Set scenario image to ANC module.
  *
  * \xrefitem Added_API_2_13_0_0 "Added Since 2.13.0.0" "Added API"
  *
- * \parameter sub image scenario.
+ * \param[in] image_buf    Image scenario.
  *
  * \ingroup AUDIO_ANC_TUNING
  */
@@ -432,15 +381,15 @@ void anc_tool_set_scenario(void *image_buf);
 /**
 * anc_tuning.h
 *
-* \brief   Get scenario img
+* \brief   Get scenario image.
 *
 * \xrefitem Added_API_2_13_0_0 "Added Since 2.13.0.0" "Added API"
 *
-* \parameter  Sub_type      ANC or LLAPT type.
-* \parameter  Scenario_id   scenario index .
-* \parameter  Length        ANC or LLAPT length .
-* \return
-* \retval anc img buffer ptr.
+* \param[in]    sub_type       ANC or LLAPT type.
+* \param[in]    scenario_id    Scenario index.
+* \param[out]   length         ANC or LLAPT length.
+*
+* \return The buffer of scenario image.
 *
 * \ingroup AUDIO_ANC_TUNING
 */
@@ -449,13 +398,13 @@ void *anc_tool_get_scenario_img(uint8_t sub_type, uint8_t scenario_id, uint32_t 
 /**
 * anc_tuning.h
 *
-* \brief   Get PALU filter info
+* \brief   Get PALU filter information.
 *
 * \xrefitem Added_API_2_13_0_0 "Added Since 2.13.0.0" "Added API"
 *
-* \parameter  Length        filter info length .
-* \return
-* \retval  anc img buffer ptr.
+* \param[out]  length    The filter information length.
+*
+* \return   The buffer of filter information.
 *
 * \ingroup AUDIO_ANC_TUNING
 */
@@ -464,133 +413,116 @@ void *anc_tool_get_filter_info_img(uint32_t *length);
 /**
 * anc_tuning.h
 *
-* \brief   Encrypt img
+* \brief   Encrypt image.
 *
 * \xrefitem Added_API_2_13_0_0 "Added Since 2.13.0.0" "Added API"
 *
-* \parameter  scenario_img      scenario image
-* \parameter  length            scenario length
-* \return
-* \retval  anc img buffer ptr.
+* \param[in]  scenario_img    Scenario image.
+* \param[in]  length          The length of image.
 *
 * \ingroup AUDIO_ANC_TUNING
 */
 void anc_tool_para_aes_encrypt(uint32_t scenario_img, uint32_t length);
 
 /**
- * anc_tuning.h
- *
- * \brief   query ADSP para
+ * \brief   Query ADSP information.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
- * \parameter  mtu_size: mtu size information
+ * \param[out]  adsp_info   The information of ADSP.
  *
- * \return
- * \retval  true    config success.
- * \retval  false   config fail.
+ * \return  The status of getting ADSP information.
+ * \retval  0x00     The information was got successfully.
+ * \retval  others   The information was failed to get.
  *
- * \ingroup AUDIO_ANC
+ * \ingroup AUDIO_ANC_TUNING
  */
 uint8_t anc_tool_query_para(uint8_t *adsp_info);
 
 /**
- * anc_tuning.h
- *
- * \brief   config ADSP para transfer parameters
+ * \brief   Config ADSP transfer parameters.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
- * \parameter  crc_check: CRC16 checksum for all ADSP para payload
- *             adsp_para_len: length of adsp para payload
- *             seqment_total: total number of segment, each segment has mtusize as set in
- *                            CMD_ANC_GET_ADSP_INFO
+ * \param[in]  crc_check        The CRC16 checksum for all ADSP parameter payload.
+ * \param[in]  adsp_para_len    The length of adsp parameter payload.
+ * \param[in]  segment_total    The total number of segment.
  *
- * \return
- * \retval  true    config success.
- * \retval  false   config fail.
+ * \return  The status of config.
+ * \retval  0x00    The config was got successfully.
+ * \retval  others  The config was failed to get.
  *
- * \ingroup AUDIO_ANC
+ * \ingroup AUDIO_ANC_TUNING
  */
 uint8_t anc_tool_config_adsp_para(uint16_t crc_check, uint32_t adsp_para_len,
                                   uint8_t segment_total);
 
 /**
- * anc_tuning.h
- *
- * \brief   config turn on ADSP
+ * \brief   Enable or disable ADSP.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
- * \parameter  enable: 1: enable ADSP 0: disable ADSP
+ * \param[in]  enable    1: enable ADSP, 0: disable ADSP.
  *
- * \return
- * \retval  true    config success.
- * \retval  false   config fail.
+ * \return  The status of config.
+ * \retval  0x00    Enabled or disabled ADSP successfully.
+ * \retval  others  ADSP was fail to enable or disable.
  *
- * \ingroup AUDIO_ANC
+ * \ingroup AUDIO_ANC_TUNING
  */
 uint8_t anc_tool_turn_on_adsp(uint8_t enable);
 
 /**
- * anc_tuning.h
- *
- * \brief   Set ADSP para
+ * \brief   Set ADSP paramters.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
- * \parameter  para_ptr: ADSP para array
- *             segment index: maximun is adsp_para_len/mtusize + 1
+ * \param[in]  para_ptr         ADSP paramters array.
+ * \param[in]  segment_index    The maximun is (adsp_para_len / mtusize + 1).
  *
- * \return
- * \retval  true    ADSP para register write success.
- * \retval  false   ADSP para register write fail.
+ * \return  The status of setting ADSP paramters.
+ * \retval  0x00    ADSP register was written successfully.
+ * \retval  others  ADSP register was failed to write.
  *
- * \ingroup AUDIO_ANC
+ * \ingroup AUDIO_ANC_TUNING
  */
 uint8_t anc_tool_load_adsp_para(uint8_t *para_ptr, uint8_t segment_index);
 
 /**
- * anc_tuning.h
- *
- * \brief   Set adaptive ANC enable or disable
+ * \brief   Set adaptive ANC enable or disable.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
- * \parameter  enable 1:enable 0: disable
+ * \param[in]  enable  1:enable, 0: disable.
  *
- * \return
- * \retval  true    ANC/PALU register write success.
- * \retval  false   ANC/PALU register write fail.
+ * \return  The status of adaptive ANC enable or disable.
+ * \retval  0x00    ANC/PALU register enabled or disabled successfully.
+ * \retval  others  ANC/PALU register was failed to enabled or disabled.
  *
- * \ingroup AUDIO_ANC
+ * \ingroup AUDIO_ANC_TUNING
  */
 uint8_t anc_tool_enable_adaptive_anc(uint8_t enable, uint8_t grp_idx);
 
 /**
- * anc_tuning.h
- *
- * \brief   load adsp image
+ * \brief   Start to load ADSP image.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
- * \parameter  encode from tool to indicate which image should be loaded
+ * \param[in]  encode  The config from tool to indicate which image should be loaded.
  *
- * \return
- * \retval  true    success.
- * \retval  false   fail.
+ * \return  The status of starting to load ADSP image.
+ * \retval  0x00     The ADSP image loading was started successfully.
+ * \retval  others   The ADSP image loading was failed to start.
  *
- * \ingroup AUDIO_ANC
+ * \ingroup AUDIO_ANC_TUNING
  */
 uint8_t anc_tool_load_adsp_image(uint32_t encode);
 
 /**
- * anc_tuning.h
- *
- * \brief   get adsp image load done
+ * \brief   Check ADSP image load done.
  *          Only provided for tool usage, cannot invoke in normal uasge.
  *
- * \parameter  encode from tool to indicate which image should be loaded
+ * \param[in]  encode The config from tool to indicate which image should be loaded
  *
- * \return
- * \retval  true    success.
- * \retval  false   fail.
+ * \return  The status of ADSP image loading.
+ * \retval  0x01   The ADSP image was loaded successfully.
+ * \retval  0x00   The ADSP image wad failed to load.
  *
- * \ingroup AUDIO_ANC
+ * \ingroup AUDIO_ANC_TUNING
  */
 uint8_t anc_tool_get_adsp_image_load_done(void);
 

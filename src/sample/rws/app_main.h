@@ -9,7 +9,6 @@
 #include "app_link_util.h"
 #include "app_device.h"
 #include "voice_prompt.h"
-#include "engage.h"
 #include "remote.h"
 #include "app_charger.h"
 #include "app_bt_policy_api.h"
@@ -101,7 +100,8 @@ typedef struct
     T_ANC_APT_STATE             current_listening_state;
     T_ANC_APT_STATE             remote_current_listening_state;
     bool                        delay_apply_listening_mode;
-    bool                        delay_open_apt_when_power_on;
+    bool                        power_on_delay_opening_anc;
+    bool                        power_on_delay_opening_apt;
     T_ANC_APT_STATE             last_listening_state;       /*Last state in listening mode cycle*/
     T_ANC_APT_STATE             last_anc_apt_on_state;
 
@@ -135,7 +135,9 @@ typedef struct
     bool                        detect_suspend_by_out_ear;
 
     uint8_t                     release_cis_later : 1;
-    uint8_t                     rsv_bit0 : 7;
+    uint8_t                     bt_wait_shutdown_finish_to_startup : 1;
+    uint8_t                     resume_a2dp_track_later : 1;
+    uint8_t                     rsv_bit0 : 5;
 
     T_MMI_ACTION                key_action_disallow_too_close;
 
@@ -176,6 +178,7 @@ typedef struct
     bool                        sec_is_power_off;
     bool                        force_enter_dut_mode_when_acl_connected;
     bool                        remote_cis_connected;
+    uint8_t                     remote_le_acl_interval;
     uint8_t                     spk_eq_mode;
     uint8_t                     remote_bis_connected;
     bool                        disallow_sniff;
@@ -239,7 +242,7 @@ typedef struct
     uint8_t                     mic_mp_verify_sec_sel_ori : 3;
 
     uint8_t                     mic_mp_verify_sec_type_ori : 2;
-    uint8_t                     is_tone_cis_connected_played : 1;
+    uint8_t                     rsv4 : 1;
     uint8_t                     eq_ctrl_by_src : 1;
     uint8_t                     last_bud_loc_event : 4;
 
@@ -264,9 +267,9 @@ typedef struct
 
 #if F_APP_LEA_SUPPORT
     bool                        remote_cis_link_is_streaming;
+    uint8_t                     remote_lea_link_num;
 #endif
 
-    uint8_t                     b2s_connected_num;
     uint8_t                     b2s_connected_num_max;
     bool                        pairing_bit;
 

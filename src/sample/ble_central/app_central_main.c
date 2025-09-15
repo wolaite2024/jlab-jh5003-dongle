@@ -27,7 +27,7 @@
 
 #include <app_central_link_mgr.h>
 #include "pm.h"
-#if F_BT_DLPS_EN
+#if F_DLPS_EN
 #include "data_uart_dlps.h"
 #endif
 /** @defgroup  CENTRAL_DEMO_MAIN Central Main
@@ -68,7 +68,7 @@ void driver_init(void)
  */
 void pwr_mgr_init(void)
 {
-#if F_BT_DLPS_EN
+#if F_DLPS_EN
     data_uart_dlps_init();
     bt_power_mode_set(BTPOWER_DEEP_SLEEP);
     power_mode_set(POWER_DLPS_MODE);

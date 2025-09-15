@@ -21,7 +21,7 @@
 #include "dma_channel.h"
 #include "console_uart.h"
 
-#if (F_APP_ONE_WIRE_UART_SUPPORT == 1)
+#if F_APP_ONE_WIRE_UART_SUPPORT && F_APP_ONE_WIRE_UART_TX_MODE_PUSH_PULL
 #include "app_one_wire_uart.h"
 #endif
 
@@ -95,7 +95,7 @@ RAM_TEXT_SECTION void Data_Uart_Handler(void)
     if (UART_GetFlagState(UART0, UART_FLAG_RX_IDLE) == SET)
     {
         //clear Flag
-        UART_INTConfig(UART0, UART_INT_IDLE, DISABLE);
+        UART_ClearINT(UART0, UART_FLAG_RX_IDLE);
 
         if (g_console_uart.uart_rx_dma_enable)
         {
@@ -116,11 +116,11 @@ RAM_TEXT_SECTION void Data_Uart_Handler(void)
             GDMA_SetDestinationAddress(UART_RX_DMA_CHANNEL, (uint32_t)uart_rx_buf_addr);
             GDMA_SuspendCmd(UART_RX_DMA_CHANNEL, DISABLE);
             GDMA_Cmd(UART_RX_DMA_CHANNEL_NUM, ENABLE);
-            UART_INTConfig(UART0, UART_INT_IDLE, ENABLE);
         }
     }
+
 #if F_APP_ONE_WIRE_UART_SUPPORT
-    if (UART_GetFlagState(UART0, UART_FLAG_TX_DONE) == SET)
+    if (g_console_uart.one_wire_uart_support && (UART_GetFlagState(UART0, UART_FLAG_TX_DONE) == SET))
     {
         UART_INTConfig(UART0, UART_INT_TX_DONE, DISABLE);
 #if F_APP_ONE_WIRE_UART_TX_MODE_PUSH_PULL
@@ -162,7 +162,7 @@ RAM_TEXT_SECTION void Data_Uart_Handler(void)
         }
     }
 #if F_APP_ONE_WIRE_UART_SUPPORT
-    else if (int_status == UART_INT_ID_LINE_STATUS)
+    else if (g_console_uart.one_wire_uart_support && (int_status == UART_INT_ID_LINE_STATUS))
     {
         uint8_t line_status = UART_GetLineStatus(UART0);
 
@@ -320,8 +320,12 @@ bool console_uart_dma_write(uint8_t *buf, uint32_t len)
     uint32_t s;
 
 #if F_APP_ONE_WIRE_UART_SUPPORT
-    UART_INTConfig(UART0, UART_INT_TX_DONE, ENABLE);
+    if (g_console_uart.one_wire_uart_support)
+    {
+        UART_INTConfig(UART0, UART_INT_TX_DONE, ENABLE);
+    }
 #endif
+
     GDMA_SetSourceAddress(UART_TX_DMA_CHANNEL, (uint32_t)buf);
     GDMA_SetBufferSize(UART_TX_DMA_CHANNEL, len);
     s = os_lock();
@@ -341,11 +345,12 @@ RAM_TEXT_SECTION bool uart_send_by_cpu_action(uint8_t *buf, uint32_t len)
     uint32_t tx_len = len > UART_TX_FIFO_SIZE ? UART_TX_FIFO_SIZE : len;
 
 #if F_APP_ONE_WIRE_UART_SUPPORT
-    if (tx_len == len)
+    if (g_console_uart.one_wire_uart_support && (tx_len == len))
     {
         UART_INTConfig(UART0, UART_INT_TX_DONE, ENABLE);
     }
 #endif
+
     UART_SendData(UART0, buf, tx_len);
 
     uart_tx_curr_addr = buf + tx_len;
@@ -371,8 +376,16 @@ bool console_uart_write(uint8_t *buf, uint32_t len)
     app_dlps_disable(APP_DLPS_ENTER_CHECK_UART_TX);
 
 #if F_APP_ONE_WIRE_UART_SUPPORT
-    // disable uart RX interrupter
-    UART_INTConfig(UART0, UART_INT_RD_AVA | UART_INT_IDLE | UART_INT_LINE_STS, DISABLE);
+    if (g_console_uart.one_wire_uart_support)
+    {
+#if F_APP_ONE_WIRE_UART_TX_MODE_PUSH_PULL
+        /* Switch to UART Tx before send data */
+        app_one_wire_uart_switch_pinmux(ONE_WIRE_UART_TX);
+#else
+        // disable uart RX interrupter
+        UART_INTConfig(UART0, UART_INT_RD_AVA | UART_INT_IDLE | UART_INT_LINE_STS, DISABLE);
+#endif
+    }
 #endif
 
     if (g_console_uart.uart_tx_dma_enable)
@@ -418,6 +431,16 @@ void console_uart_driver_init(void)
     UART_InitTypeDef uart_init;
     NVIC_InitTypeDef uart_nvic;
 
+#if F_APP_ONE_WIRE_UART_SUPPORT
+    if (g_console_uart.one_wire_uart_support)
+    {
+#if F_APP_ONE_WIRE_UART_TX_MODE_PUSH_PULL
+        UART_OneWireConfig(UART0, false);
+#else
+        UART_OneWireConfig(UART0, true);
+#endif
+    }
+#endif
     /* Turn on UART clock */
     RCC_PeriphClockCmd(APBPeriph_UART0, APBPeriph_UART0_CLOCK, ENABLE);
     RamVectorTableUpdate(UART0_VECTORn, Data_Uart_Handler);
@@ -694,13 +717,8 @@ bool console_uart_init(P_CONSOLE_CALLBACK p_callback)
         return false;
     }
 
-    if (g_console_uart.one_wire_uart_support)
+    if (!g_console_uart.one_wire_uart_support)
     {
-        UART_OneWireConfig(UART0, true);
-    }
-    else
-    {
-        UART_OneWireConfig(UART0, false);
         console_uart_driver_init();
     }
 

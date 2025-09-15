@@ -16,7 +16,7 @@
 #include <stdint.h>
 #include "storage.h"
 
-/** @defgroup  87x3e_FMC    FMC API
+/** @defgroup  87x3ep_FMC    FMC API
     * @brief fmc api wrapper
     * @{
     */
@@ -24,7 +24,7 @@
 /*============================================================================*
   *                                   Macros
   *============================================================================*/
-/** @defgroup FMC_Exported_Macros FMC Exported Macros
+/** @defgroup 87x3ep_FMC_Exported_Macros FMC Exported Macros
     * @brief
     * @{
     */
@@ -32,14 +32,14 @@
 #define FMC_SEC_BLOCK_LEN   0x10000
 
 #define IS_FLASH_SIZE_LARGER_THAN_2MB()            (fmc_flash_get_flash_size(0) > (1 << 21))
-/** End of FMC_Exported_Macros
+/** End of 87x3ep_FMC_Exported_Macros
     * @}
     */
 
 /*============================================================================*
   *                                   Types
   *============================================================================*/
-/** @defgroup FMC_TYPE FMC Exported Types
+/** @defgroup 87x3ep_FMC_TYPE FMC Exported Types
    * @brief
    * @{
    */
@@ -108,14 +108,14 @@ typedef enum
     FMC_SPIC_ID_MAX,
 } FMC_SPIC_ID;
 
-/** End of FMC_TYPE
+/** End of 87x3ep_FMC_TYPE
     * @}
     */
 
 /*============================================================================*
   *                                Functions
   *============================================================================*/
-/** @defgroup FMC_Exported_Flash_Functions FMC Exported Flash Functions
+/** @defgroup 87x3ep_FMC_Exported_Flash_Functions FMC Exported Flash Functions
     * @brief
     * @{
     */
@@ -319,9 +319,9 @@ bool fmc_spic_clock_switch(FMC_SPIC_ID spic_id, uint32_t required_mhz, uint32_t 
 
 //bool fmc_psram_clock_switch(CLK_FREQ_TYPE clk);
 
-/** @} */ /* End of group FMC_Exported_PSRAM_Functions */
+/** @} */ /* End of group 87x3ep_FMC_Exported_PSRAM_Functions */
 
-/** @} */ /* End of group 87x3e_FMC */
+/** @} */ /* End of group 87x3ep_FMC */
 
 #endif  // __FMC_API_H_
 

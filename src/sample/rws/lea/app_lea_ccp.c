@@ -53,17 +53,11 @@ static uint16_t app_lea_ccp_ble_audio_cback(T_LE_AUDIO_MSG msg, void *buf)
                                          CCP_CLIENT_CFG_CCCD_FLAG_STATUS_FLAGS |
                                          CCP_CLIENT_CFG_CCCD_FLAG_INCOMING_CALL_TARGET_BEARER_URI | CCP_CLIENT_CFG_CCCD_FLAG_CALL_STATE |
                                          CCP_CLIENT_CFG_CCCD_FLAG_CALL_CONTROL_POINT | CCP_CLIENT_CFG_CCCD_FLAG_TERMINATION_REASON |
-                                         CCP_CLIENT_CFG_CCCD_FLAG_INCOMING_CALL;
+                                         CCP_CLIENT_CFG_CCCD_FLAG_INCOMING_CALL | CCP_CLIENT_CFG_CCCD_FLAG_CALL_FRIENDLY_NAME;
 
                     ccp_client_cfg_cccd(p_dis_done->conn_handle, 0, cfg_flags, true, p_dis_done->gtbs);
                     ccp_client_read_char_value(p_dis_done->conn_handle, 0, TBS_UUID_CHAR_CALL_STATE, p_dis_done->gtbs);
                     p_link->gtbs = p_dis_done->gtbs;
-
-                    // If CCP discovery is done before ASCS/PACS CCCD event, app_link_get_lea_link_num() will be 0
-                    if (app_link_get_lea_link_num() <= 1)
-                    {
-                        app_lea_ccp_set_active_conn_handle(p_link->conn_handle);
-                    }
                 }
             }
         }
@@ -76,7 +70,7 @@ static uint16_t app_lea_ccp_ble_audio_cback(T_LE_AUDIO_MSG msg, void *buf)
             T_CCP_CLIENT_READ_RESULT *p_read_result = (T_CCP_CLIENT_READ_RESULT *)buf;
 
 #if (F_APP_GAMING_LE_AUDIO_24G_STREAM_FIRST == 0)
-            if (mtc_if_fm_lcis(LCIS_TO_MTC_ASCS_CP_ENABLE, NULL, &need_return) == MTC_RESULT_SUCCESS)
+            if (mtc_if_fm_lcis_handle(LCIS_TO_MTC_ASCS_CP_ENABLE, NULL, &need_return) == MTC_RESULT_SUCCESS)
             {
                 if (need_return)
                 {
@@ -148,7 +142,7 @@ static uint16_t app_lea_ccp_ble_audio_cback(T_LE_AUDIO_MSG msg, void *buf)
             T_CCP_CLIENT_NOTIFY *p_notify_data = (T_CCP_CLIENT_NOTIFY *)buf;
 
 #if (F_APP_GAMING_LE_AUDIO_24G_STREAM_FIRST == 0)
-            if (mtc_if_fm_lcis(LCIS_TO_MTC_ASCS_CP_ENABLE, NULL, &need_return) == MTC_RESULT_SUCCESS)
+            if (mtc_if_fm_lcis_handle(LCIS_TO_MTC_ASCS_CP_ENABLE, NULL, &need_return) == MTC_RESULT_SUCCESS)
             {
                 if (need_return)
                 {
@@ -244,7 +238,7 @@ bool app_lea_ccp_set_active_conn_handle(uint16_t conn_handle)
         app_lea_ccp_active_voice_conn_handle = conn_handle;
         ret = true;
     }
-    APP_PRINT_TRACE2("app_lea_ccp_set_active_conn_handle: active_voice_conn_handle %02X, ret %02X",
+    APP_PRINT_TRACE2("app_lea_ccp_set_active_conn_handle: active_voice_conn_handle 0x%02X, ret 0x%02X",
                      app_lea_ccp_active_voice_conn_handle, ret);
     return ret;
 }
@@ -468,9 +462,6 @@ void app_lea_ccp_update_call_status(void)
     uint8_t active_link_exist = true;
     T_APP_CALL_STATUS active_call_status = APP_CALL_IDLE;
     T_APP_CALL_STATUS inactive_call_status = APP_CALL_IDLE;
-#if F_APP_GAMING_DONGLE_SUPPORT
-    uint8_t msg[1] = {0};
-#endif
 
     conn_handle = app_lea_ccp_get_active_conn_handle();
     p_active_link = app_link_find_le_link_by_conn_handle(conn_handle);
@@ -514,27 +505,42 @@ void app_lea_ccp_update_call_status(void)
         {
             active_link_exist = true;
             p_active_link = p_inactive_link;
+            active_call_status = p_active_link->call_status;
             inactive_call_status = APP_CALL_IDLE;
             app_lea_ccp_set_active_conn_handle(p_active_link->conn_handle);
         }
     }
     else
     {
-        if (active_call_status < APP_CALL_ACTIVE)
+        bool exchange_call_link = false;
+
+        if (active_call_status == APP_CALL_IDLE)
+        {
+            if (inactive_call_status != APP_CALL_IDLE)
+            {
+                exchange_call_link = true;
+            }
+        }
+        else if (active_call_status < APP_CALL_ACTIVE)
         {
             if ((inactive_call_status >= APP_CALL_ACTIVE) &&
                 (inactive_call_status <= APP_CALL_ACTIVE_WITH_CALL_HELD))
             {
-                T_APP_LE_LINK *p_temp_link = NULL;
-
-                p_temp_link = p_inactive_link;
-                p_inactive_link = p_active_link;
-                p_active_link = p_temp_link;
-
-                active_call_status = p_active_link->call_status;
-                inactive_call_status = p_inactive_link->call_status;
-                app_lea_ccp_set_active_conn_handle(p_active_link->conn_handle);
+                exchange_call_link = true;
             }
+        }
+
+        if (exchange_call_link == true)
+        {
+            T_APP_LE_LINK *p_temp_link = NULL;
+
+            p_temp_link = p_inactive_link;
+            p_inactive_link = p_active_link;
+            p_active_link = p_temp_link;
+
+            active_call_status = p_active_link->call_status;
+            inactive_call_status = p_inactive_link->call_status;
+            app_lea_ccp_set_active_conn_handle(p_active_link->conn_handle);
         }
     }
 
@@ -577,13 +583,7 @@ void app_lea_ccp_update_call_status(void)
         app_lea_ccp_call_status = APP_CALL_IDLE;
     }
 
-#if F_APP_GAMING_DONGLE_SUPPORT
-    msg[0] = p_active_link->remote_device_type;
-
-    app_ipc_publish(APP_DEVICE_IPC_TOPIC, APP_DEVICE_IPC_EVT_LEA_CCP_CALL_STATUS, &msg);
-#else
     app_ipc_publish(APP_DEVICE_IPC_TOPIC, APP_DEVICE_IPC_EVT_LEA_CCP_CALL_STATUS, NULL);
-#endif
 }
 
 static void app_lea_ccp_parse_payload(T_APP_LE_LINK *p_link, T_CCP_CLIENT_NOTIFY *p_notify_data)
@@ -961,6 +961,22 @@ T_LEA_CALL_ENTRY *app_lea_ccp_find_call_entry_by_idx(uint8_t conn_id, uint8_t ca
     }
 
     return p_call_entry;
+}
+
+void app_lea_ccp_read_all_links_state(void)
+{
+    uint8_t i;
+    T_APP_LE_LINK *p_link = NULL;
+
+    for (i = 0; i < MAX_BLE_LINK_NUM; i++)
+    {
+        p_link = &app_db.le_link[i];
+
+        if (p_link->used == true && p_link->lea_link_state != LEA_LINK_IDLE)
+        {
+            ccp_client_read_char_value(p_link->conn_handle, 0, TBS_UUID_CHAR_CALL_STATE, p_link->gtbs);
+        }
+    }
 }
 
 void app_lea_ccp_init(void)

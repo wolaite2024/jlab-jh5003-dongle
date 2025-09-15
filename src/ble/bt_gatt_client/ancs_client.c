@@ -14,7 +14,6 @@
 /** Add Includes here **/
 #include <string.h>
 #include "ancs_client.h"
-#include <os_mem.h>
 #include "os_queue.h"
 #include <trace.h>
 
@@ -331,11 +330,6 @@ static T_APP_RESULT client_cb(uint16_t conn_handle, T_GATT_CLIENT_EVENT type,
         cb_data.cb_type = ANCS_CLIENT_CB_TYPE_DISCONNECT_INFO;
         break;
 
-    case GATT_CLIENT_EVENT_DIS_ALL_STATE:
-
-        break;
-    case GATT_CLIENT_EVENT_GATT_SERVICE_INFO:
-        break;
     default:
         break;
     }

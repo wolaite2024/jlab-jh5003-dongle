@@ -39,7 +39,7 @@ extern "C" {
     @note  SUM OF APP_GLOBAL_SIZE PLUS HEAP_DATA_OFF_SIZE SHOULD BE SMALLER THAN DTCM1_SIZE.
     APP_RAM_TEXT_SIZE SHOULD BE SMALLER THAN (ITCM1_END_ADDR - APP_RAM_TEXT_ADDR).
     */
-#define APP_RAM_TEXT_SIZE           (11*1024)
+#define APP_RAM_TEXT_SIZE           (10*1024)
 #define APP_GLOBAL_SIZE             (11*1024)
 #define HEAP_DATA_OFF_SIZE          (17 * 1024)
 
@@ -85,7 +85,7 @@ example:
 #endif
 /** @} */ /* End of group MEM_CONFIG_Exported_Constents */
 
-#define DSP_SHM_GLOBAL_ADDR    0x536000
+#define DSP_SHM_GLOBAL_ADDR    0x300000
 
 #define DSP_SHM_TOTAl_SIZE     80 * 1024
 #define DSP_SHM_GLOBAL_SIZE    10 * 1024

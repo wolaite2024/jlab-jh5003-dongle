@@ -27,16 +27,15 @@
 #include "app_audio_policy.h"
 #include "app_bt_policy_int.h"
 #include "app_bt_policy_api.h"
+#include "app_bt_point.h"
 #include "app_bt_sniffing.h"
 #include "audio_volume.h"
 #include "audio_track.h"
 #include "app_relay.h"
-#include "app_ble_gap.h"
 #include "app_auto_power_off.h"
 #include "app_device.h"
 #include "app_sensor.h"
 #include "app_report.h"
-#include "app_cmd.h"
 
 #if F_APP_GAMING_DONGLE_SUPPORT
 #include "app_dongle_dual_mode.h"
@@ -66,14 +65,14 @@
 #include "app_durian.h"
 #endif
 
-#if F_APP_POWER_TEST
-#include "power_debug.h"
-#endif
-
 #if CONFIG_REALTEK_GFPS_SASS_SUPPORT
 #include "app_gfps_msg.h"
 #include "app_sass_policy.h"
 #include "bt_gfps.h"
+#endif
+
+#if F_APP_LEA_SUPPORT
+#include "multitopology_ctrl.h"
 #endif
 
 #define ERWS_MULTILINK_SUPPORT
@@ -119,7 +118,7 @@ bool app_multi_check_accept_sco_conn(void)
 #if (F_APP_LEA_SUPPORT && !F_APP_GAMING_LE_AUDIO_24G_STREAM_FIRST)
     bool need_return = false;
 
-    if (mtc_if_fm_ml(ML_TO_MTC_CH_LEA_CALL, NULL, &need_return) == MTC_RESULT_SUCCESS)
+    if (mtc_if_fm_ml_handle(ML_TO_MTC_CH_LEA_CALL, NULL, &need_return) == MTC_RESULT_SUCCESS)
     {
         if (need_return)
         {
@@ -1356,7 +1355,8 @@ void app_multi_judge_active_a2dp_idx_and_qos(uint8_t app_idx, T_APP_JUDGE_A2DP_E
 #endif
 
 #if F_APP_LEA_SUPPORT
-            if ((mtc_if_fm_ml(ML_TO_MTC_CH_SNIFFING, NULL, &need_return) == MTC_RESULT_SUCCESS) && need_return)
+            if ((mtc_if_fm_ml_handle(ML_TO_MTC_CH_SNIFFING, NULL, &need_return) == MTC_RESULT_SUCCESS) &&
+                need_return)
             {
                 APP_PRINT_TRACE0("JUDGE_EVENT_SNIFFING_STOP: STOP SNIFFING");
                 le_sniffing_stop = true;
@@ -1631,6 +1631,7 @@ static void app_multi_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
                         if (app_db.br_link[p_link->id].call_status != APP_CALL_INCOMING &&
                             p_link->id != active_hfp_transfer)
                         {
+                            APP_PRINT_TRACE1("app_multi_bt_cback: dis inactive sco link %s", TRACE_BDADDR(p_link->bd_addr));
                             bt_hfp_audio_disconnect_req(p_link->bd_addr);
                             if (app_cfg_const.enable_multi_link)
                             {
@@ -1652,9 +1653,6 @@ static void app_multi_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
 #endif
 #endif
 #endif
-#if F_APP_POWER_TEST
-                    power_test_dump_register(POWER_DEBUG_STAGE_HFP_START);
-#endif
                 }
                 else
                 {
@@ -1672,7 +1670,9 @@ static void app_multi_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
 
             app_bt_policy_primary_engage_action_adjust();
 
+#if F_APP_ROLESWITCH_WHEN_SCO_CHANGE
             app_bt_policy_roleswitch_when_sco(app_db.br_link[app_multi_find_inacitve(active_hf_idx)].bd_addr);
+#endif
         }
         break;
 
@@ -1750,9 +1750,6 @@ static void app_multi_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
                     pending_va_sniffing_type = 0xFF;
                 }
 #endif
-#if F_APP_POWER_TEST
-                power_test_dump_register(POWER_DEBUG_STAGE_HFP_STOP);
-#endif
             }
             if (app_cfg_const.always_play_hf_incoming_tone_when_incoming_call)
             {
@@ -1760,7 +1757,9 @@ static void app_multi_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
             }
             app_bt_policy_primary_engage_action_adjust();
 
+#if F_APP_ROLESWITCH_WHEN_SCO_CHANGE
             app_bt_policy_roleswitch_when_sco(app_db.br_link[app_multi_find_inacitve(active_hf_idx)].bd_addr);
+#endif
         }
         break;
 
@@ -1897,7 +1896,7 @@ static void app_multi_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
 #endif
                             {
                                 bt_a2dp_stream_start_cfm(param->a2dp_stream_start_ind.bd_addr, true);
-                                p_link->streaming_fg = true;
+                                app_link_update_a2dp_streaming(p_link, true);
                                 p_link->avrcp_ready_to_pause = true;
                                 app_multi_judge_active_a2dp_idx_and_qos(p_link->id, JUDGE_EVENT_A2DP_START);
                             }
@@ -1910,7 +1909,7 @@ static void app_multi_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
                         else
                         {
                             bt_a2dp_stream_start_cfm(param->a2dp_stream_start_ind.bd_addr, true);
-                            p_link->streaming_fg = true;
+                            app_link_update_a2dp_streaming(p_link, true);
                             p_link->avrcp_ready_to_pause = true;
                             app_multi_judge_active_a2dp_idx_and_qos(p_link->id, JUDGE_EVENT_A2DP_START);
                         }
@@ -1924,7 +1923,7 @@ static void app_multi_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
                                                               !app_bt_sniffing_start(param->a2dp_stream_start_ind.bd_addr, BT_SNIFFING_TYPE_A2DP)))
                         {
                             bt_a2dp_stream_start_cfm(param->a2dp_stream_start_ind.bd_addr, true);
-                            p_link->streaming_fg = true;
+                            app_link_update_a2dp_streaming(p_link, true);
                             p_link->avrcp_ready_to_pause = true;
                             app_multi_judge_active_a2dp_idx_and_qos(p_link->id, JUDGE_EVENT_A2DP_START);
                         }
@@ -1933,15 +1932,12 @@ static void app_multi_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
                             !app_bt_sniffing_start(param->a2dp_stream_start_ind.bd_addr, BT_SNIFFING_TYPE_A2DP))
                         {
                             bt_a2dp_stream_start_cfm(param->a2dp_stream_start_ind.bd_addr, true);
-                            p_link->streaming_fg = true;
+                            app_link_update_a2dp_streaming(p_link, true);
                             p_link->avrcp_ready_to_pause = true;
                             app_multi_judge_active_a2dp_idx_and_qos(p_link->id, JUDGE_EVENT_A2DP_START);
                         }
 #endif
                     }
-#if F_APP_POWER_TEST
-                    power_test_dump_register(POWER_DEBUG_STAGE_A2DP_START);
-#endif
                 }
             }
             else
@@ -1951,7 +1947,7 @@ static void app_multi_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
                 {
                     if (bt_a2dp_stream_start_cfm(param->a2dp_stream_start_ind.bd_addr, true))
                     {
-                        p_link->streaming_fg = true;
+                        app_link_update_a2dp_streaming(p_link, true);
                         p_link->avrcp_ready_to_pause = true;
                     }
                     app_multi_judge_active_a2dp_idx_and_qos(p_link->id, JUDGE_EVENT_A2DP_START);
@@ -1970,7 +1966,7 @@ static void app_multi_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
             p_link = app_link_find_br_link(param->a2dp_stream_start_rsp.bd_addr);
             if (p_link != NULL)
             {
-                p_link->streaming_fg = true;
+                app_link_update_a2dp_streaming(p_link, true);
                 p_link->avrcp_ready_to_pause = true;
                 app_multi_judge_active_a2dp_idx_and_qos(p_link->id, JUDGE_EVENT_A2DP_START);
             }
@@ -1987,7 +1983,7 @@ static void app_multi_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
             p_link = app_link_find_br_link(param->a2dp_stream_stop.bd_addr);
             if (p_link != NULL)
             {
-                p_link->streaming_fg = false;
+                app_link_update_a2dp_streaming(p_link, false);
                 p_link->avrcp_ready_to_pause = false;
                 app_multi_judge_active_a2dp_idx_and_qos(p_link->id, JUDGE_EVENT_A2DP_STOP);
             }
@@ -2008,9 +2004,6 @@ static void app_multi_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
 
             app_bt_policy_primary_engage_action_adjust();
             app_bt_policy_update_cpu_freq(BP_CPU_FREQ_EVENT_A2DP_STREAM);
-#if F_APP_POWER_TEST
-            power_test_dump_register(POWER_DEBUG_STAGE_A2DP_STOP);
-#endif
 #if F_APP_DYNAMIC_ADJUST_B2B_TX_POWER
             app_bt_policy_dynamic_adjust_b2b_tx_power(BP_TX_POWER_A2DP_STOP);
 #endif
@@ -2253,7 +2246,8 @@ static void app_multi_timeout_cb(uint8_t timer_evt, uint16_t param)
             app_stop_timer(&timer_idx_multilink_silence_packet_judge);
 #if F_APP_LEA_SUPPORT
             bool need_return = false;
-            if ((mtc_if_fm_ml(ML_TO_MTC_CH_SNIFFING, NULL, &need_return) == MTC_RESULT_SUCCESS) && need_return)
+            if ((mtc_if_fm_ml_handle(ML_TO_MTC_CH_SNIFFING, NULL, &need_return) == MTC_RESULT_SUCCESS) &&
+                need_return)
             {
                 APP_PRINT_TRACE0("APP_TIMER_MULTILINK_SILENCE_PACKET_JUDGE: STOP SNIFFING");
                 le_sniffing_stop = true;
@@ -2305,8 +2299,10 @@ uint16_t app_multi_relay_cback(uint8_t *buf, uint8_t msg_type, bool total)
 
     case APP_REMOTE_MSG_PHONE_CONNECTED:
         {
+            static uint8_t num = 0;
+            num = app_link_get_b2s_link_num();
             payload_len = 1;
-            msg_ptr = (uint8_t *)&app_db.b2s_connected_num;
+            msg_ptr = &num;
         }
         break;
 
@@ -2452,10 +2448,11 @@ static void app_multi_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t len,
             if (status == REMOTE_RELAY_STATUS_ASYNC_RCVD &&
                 app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_SECONDARY)
             {
-                app_db.b2s_connected_num = *((uint8_t *)buf);
-                APP_PRINT_TRACE1("app_multi_parse_cback: b2s_connected_num %d", app_db.b2s_connected_num);
+                uint8_t num = *((uint8_t *)buf);
+                app_link_set_b2s_link_num(num);
+                APP_PRINT_TRACE1("app_multi_parse_cback: b2s_connected_num %d", num);
 #if F_APP_LEA_SUPPORT
-                if (app_link_is_b2s_link_num_full())
+                if (app_bt_point_lea_link_is_full())
                 {
                     app_lea_adv_stop();
                 }
@@ -2604,7 +2601,7 @@ void app_multi_init(void)
                              APP_MODULE_TYPE_MULTI_LINK, APP_REMOTE_MSG_MULTILINK_TOTAL);
 #endif
 #if F_APP_LEA_SUPPORT
-    mtc_if_ml_reg(app_multi_mtc_if_handle);
+    mtc_cback_register(app_multi_mtc_if_handle);
 #endif
 }
 

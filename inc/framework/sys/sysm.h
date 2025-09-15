@@ -21,14 +21,15 @@ extern "C" {
  */
 
 /**
- * sysm.h
- *
  * \brief  System manager event type for \ref P_SYS_MGR_CBACK.
  *
  * \ingroup SYSTEM_MANAGER
  */
 typedef enum t_sys_event
 {
+    /**
+     * \brief Indicate system unknown event.
+     */
     SYS_EVENT_UNKNOWN                               = 0x0000,
 
     /**
@@ -43,8 +44,6 @@ typedef enum t_sys_event
 } T_SYS_EVENT;
 
 /**
- * sysm.h
- *
  * \brief  System manager event parameter power on.
  *
  * \ingroup SYSTEM_MANAGER
@@ -55,8 +54,6 @@ typedef struct t_sys_event_param_power_on
 } T_SYS_EVENT_PARAM_POWER_ON;
 
 /**
- * sysm.h
- *
  * \brief  System manager event parameter power off.
  *
  * \ingroup SYSTEM_MANAGER
@@ -67,8 +64,6 @@ typedef struct t_sys_event_param_power_off
 } T_SYS_EVENT_PARAM_POWER_OFF;
 
 /**
- * sysm.h
- *
  * \brief  System manager event.
  *
  * \ingroup SYSTEM_MANAGER
@@ -80,8 +75,6 @@ typedef union t_sys_event_param
 } T_SYS_EVENT_PARAM;
 
 /**
- * sysm.h
- *
  * \brief  System manager event callback prototype.
  *
  * \param[in] event_type   System manager event type.
@@ -93,8 +86,6 @@ typedef union t_sys_event_param
 typedef void (*P_SYS_MGR_CBACK)(T_SYS_EVENT event_type, void *event_buf, uint16_t buf_len);
 
 /**
- * sysm.h
- *
  * \brief       System manager initialization.
  *
  * \param[in] evt_handle  Event handle registered by upper layer.
@@ -108,8 +99,6 @@ typedef void (*P_SYS_MGR_CBACK)(T_SYS_EVENT event_type, void *event_buf, uint16_
 bool sys_mgr_init(void *evt_handle);
 
 /**
- * sysm.h
- *
  * \brief   Get system manager version information.
  *
  * \param[in] ver           Passed back the '\0' terminated release version string at 10-char maximum length.
@@ -133,8 +122,6 @@ bool sys_mgr_version_get(char ver[],
                          size_t date_len);
 
 /**
- * sysm.h
- *
  * \brief   System manager register.
  *
  * \param[in] cback       Callback function \ref P_SYS_MGR_CBACK
@@ -148,8 +135,6 @@ bool sys_mgr_version_get(char ver[],
 bool sys_mgr_cback_register(P_SYS_MGR_CBACK cback);
 
 /**
- * sysm.h
- *
  * \brief   System manager unregister.
  *
  * \param[in] cback       Callback function \ref P_SYS_MGR_CBACK
@@ -163,8 +148,6 @@ bool sys_mgr_cback_register(P_SYS_MGR_CBACK cback);
 bool sys_mgr_cback_unregister(P_SYS_MGR_CBACK cback);
 
 /**
- * sysm.h
- *
  * \brief  System manager power on.
  *
  * \ingroup  SYSTEM_MANAGER
@@ -172,8 +155,6 @@ bool sys_mgr_cback_unregister(P_SYS_MGR_CBACK cback);
 void sys_mgr_power_on(void);
 
 /**
- * sysm.h
- *
  * \brief  System manager power off.
  *
  * \ingroup  SYSTEM_MANAGER
@@ -181,8 +162,6 @@ void sys_mgr_power_on(void);
 void sys_mgr_power_off(void);
 
 /**
- * sysm.h
- *
  * \brief  System manager handle event.
  *
  * \param[in] event    Event id.

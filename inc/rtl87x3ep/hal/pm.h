@@ -110,6 +110,8 @@ typedef bool (*POWERCheckFunc)();
 typedef void (*POWERStageFunc)();
 
 typedef bool (*PMDVFSCheckFunc)(void);
+
+typedef void (*PMCPUFREQCbFunc)(uint32_t);
 /** @} */ /* End of group HAL_87x3e_PM_Exported_Variables */
 
 /*============================================================================*
@@ -288,6 +290,13 @@ int32_t pm_cpu_freq_init(void);
     * @return Status of Operation
 */
 int32_t pm_cpu_freq_req(uint8_t *handle, uint32_t required_mhz, uint32_t *actual_mhz);
+
+/**
+    * @brief  Used for register cpu freq cb for user.
+    * @param  Cb:the cb register to cpu manager.
+    * @return Status of Operation.
+*/
+int32_t pm_cpu_freq_cb_register(PMCPUFREQCbFunc cb);
 
 /**
     * @brief  Used for recovery cpu freq.

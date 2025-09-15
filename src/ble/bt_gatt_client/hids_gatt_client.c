@@ -27,7 +27,7 @@
 typedef struct hids_report
 {
     uint8_t report_id;
-    T_HID_REPORT_TYPE report_type;
+    T_HIDS_REPORT_TYPE report_type;
 } T_HIDS_REPORT;
 
 /**
@@ -94,7 +94,6 @@ T_HIDS_LINK *hids_client_alloc_link(uint16_t conn_handle)
 
 void hids_client_report_init(T_HIDS_SERVICE *p_service_info, uint8_t report_num)
 {
-    T_HIDS_REPORT  *p_report_info = NULL;
     PROTOCOL_PRINT_TRACE1("hids_client_report_init: report_num %d", report_num);
 
     if (!report_num)
@@ -162,7 +161,6 @@ T_HIDS_REPORT  *hids_client_find_report(uint16_t conn_handle, uint8_t srv_instan
 {
     T_HIDS_REPORT  *p_hids_report = NULL;
     T_HIDS_SERVICE  *p_hids_service = NULL;
-    uint8_t i = 0;
 
     PROTOCOL_PRINT_TRACE2("hids_client_find_report: srv_id %d, report id %d", srv_instance_id,
                           report_instance_id);
@@ -185,11 +183,10 @@ T_HIDS_REPORT  *hids_client_find_report(uint16_t conn_handle, uint8_t srv_instan
 }
 
 bool hids_client_read_report(uint8_t conn_handle, uint8_t srv_instance_id, uint8_t report_id,
-                             T_HID_REPORT_TYPE report_type)
+                             T_HIDS_REPORT_TYPE report_type)
 {
     T_HIDS_SERVICE *p_hids_service = NULL;
     T_HIDS_REPORT  *p_hids_report = NULL;
-    uint16_t handle = 0;
     T_ATTR_UUID srv_uuid = {0};
     T_ATTR_UUID char_uuid = {0};
     T_GAP_CAUSE ret = GAP_CAUSE_ERROR_UNKNOWN;
@@ -237,7 +234,7 @@ bool hids_client_read_report(uint8_t conn_handle, uint8_t srv_instance_id, uint8
 }
 
 bool hids_client_write_report(uint16_t conn_handle, uint8_t srv_instance_id, uint8_t report_id,
-                              T_HID_REPORT_TYPE report_type, uint16_t length,
+                              T_HIDS_REPORT_TYPE report_type, uint16_t length,
                               uint8_t *p_data)
 {
     T_HIDS_SERVICE *p_hids_service = NULL;
@@ -317,8 +314,8 @@ T_APP_RESULT hids_client_read_report_reference(uint16_t conn_handle, T_GATT_CLIE
             if (p_hids_report && (p_client_cb_data->read_result.value_size == 2))
             {
                 p_hids_report->report_id = *p_client_cb_data->read_result.p_value;
-                p_hids_report->report_type = (T_HID_REPORT_TYPE) * (p_client_cb_data->read_result.p_value +
-                                                                    1);
+                p_hids_report->report_type = (T_HIDS_REPORT_TYPE) * (p_client_cb_data->read_result.p_value +
+                                                                     1);
             }
 
             if (p_client_cb_data->read_result.char_uuid.instance_id == p_hids_service->hids_report_num - 1)
@@ -349,6 +346,39 @@ uint8_t hids_client_get_service_num(uint16_t conn_handle)
     return p_hids_link->hids_service_num;
 }
 
+bool hids_client_read_protocol_mode(uint16_t conn_handle, uint8_t srv_instance_id)
+{
+    T_HIDS_LINK *p_hids_link = NULL;
+    p_hids_link = hids_client_find_link_by_conn_handle(conn_handle);
+    T_ATTR_UUID srv_uuid;
+    T_ATTR_UUID char_uuid;
+    T_GAP_CAUSE cause = GAP_CAUSE_INVALID_PARAM;
+    uint16_t handle = 0;
+    srv_uuid.is_uuid16 = true;
+    srv_uuid.instance_id = srv_instance_id;
+    srv_uuid.p.uuid16 = GATT_UUID_HIDS;
+    char_uuid.is_uuid16 = true;
+    char_uuid.instance_id = 0;
+    char_uuid.p.uuid16 = GATT_UUID_CHAR_PROTOCOL_MODE;
+
+    if (p_hids_link == NULL)
+    {
+        return false;
+    }
+
+    if (gatt_client_find_char_handle(conn_handle, &srv_uuid, &char_uuid, &handle))
+    {
+        cause = gatt_client_read(conn_handle, handle, NULL);
+    }
+    else
+    {
+        return false;
+    }
+
+    return (cause == GAP_CAUSE_SUCCESS) ? true : false;
+}
+
+
 bool hids_client_read_report_map_value(uint16_t conn_handle, uint8_t srv_instance_id)
 {
     T_HIDS_LINK *p_hids_link = NULL;
@@ -372,6 +402,10 @@ bool hids_client_read_report_map_value(uint16_t conn_handle, uint8_t srv_instanc
     if (gatt_client_find_char_handle(conn_handle, &srv_uuid, &char_uuid, &handle))
     {
         cause = gatt_client_read(conn_handle, handle, NULL);
+    }
+    else
+    {
+        return false;
     }
 
     return (cause == GAP_CAUSE_SUCCESS) ? true : false;
@@ -497,6 +531,12 @@ T_APP_RESULT hids_client_cbs(uint16_t conn_handle, T_GATT_CLIENT_EVENT type, voi
                             read_result.data.hids_report.hids_report_value_len = p_client_cb_data->read_result.value_size;
                             read_result.data.hids_report.p_hids_report_value = p_client_cb_data->read_result.p_value;
                         }
+                    }
+                    break;
+
+                case GATT_UUID_CHAR_PROTOCOL_MODE:
+                    {
+                        read_result.data.protocol_mode = (T_HIDS_PROTOCOL_MODE)p_client_cb_data->read_result.p_value[0];
                     }
                     break;
 

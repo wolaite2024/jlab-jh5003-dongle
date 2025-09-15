@@ -57,7 +57,7 @@ typedef struct t_anc_mgr_db
     uint8_t anc_mgr_scenario_id_record;
     T_ANC_MGR_STATE anc_mgr_state;
     P_ANC_MGR_CBACK anc_mgr_cback;
-    T_BIN_LOADER_SESSION_HANDLE *anc_load_session;
+    T_BIN_LOADER_SESSION_HANDLE anc_load_session;
     uint8_t pending_action;
     T_ANC_MGR_PENDING_RECORD pending_record;
 } T_ANC_MGR_DB;

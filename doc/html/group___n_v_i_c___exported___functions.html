@@ -73,19 +73,15 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Initializes the NVIC peripheral according to the specified parameters in the NVIC_InitStruct. </p>
+<p>rtl876x_nvic.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">NVIC_InitStruct</td><td>pointer to a <a class="el" href="struct_n_v_i_c___init_type_def.html" title="NVIC Init Structure definition. ">NVIC_InitTypeDef</a> structure that contains the configuration information for the specified NVIC peripheral. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">NVIC_InitStruct</td><td>pointer to a <a class="el" href="struct_n_v_i_c___init_type_def.html" title="NVIC Init Structure definition. ">NVIC_InitTypeDef</a> structure that contains the configuration information for the specified NVIC peripheral.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> i2c0_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">//add code here.</span></div><div class="line">    <a class="code" href="group___h_a_l___vector_table___exported___functions.html#ga1ddcc6c785e2655f5de7b7edf1f4302d">RamVectorTableUpdate</a>(<a class="code" href="group__x3e___vector___table___exported__types.html#gga4702e995194cb49ac8e5b176904beb40aee6f9512fbcfd6af812f30b2be98661d">I2C0_VECTORn</a>, (<a class="code" href="group__x3d___vector___table___exported__types.html#ga3b8d9481d30a62118911e773f4c6d4d7">IRQ_Fun</a>)I2C0_Handler);</div><div class="line"></div><div class="line">    <a class="code" href="struct_n_v_i_c___init_type_def.html">NVIC_InitTypeDef</a> NVIC_InitStruct;</div><div class="line">    NVIC_InitStruct.<a class="code" href="struct_n_v_i_c___init_type_def.html#a921af0ab04e071d7d276c003e0048123">NVIC_IRQChannel</a> = <a class="code" href="group__x3e___r_t_l876x___exported__types.html#gga666eb0caeb12ec0e281415592ae89083a0f1945c7372a6de732306ea3801c8e2a">I2C0_IRQn</a>;</div><div class="line">    NVIC_InitStruct.<a class="code" href="struct_n_v_i_c___init_type_def.html#acd582bc2edce30e9d7ab5e0ede400f36">NVIC_IRQChannelPriority</a> = 3;</div><div class="line">    NVIC_InitStruct.<a class="code" href="struct_n_v_i_c___init_type_def.html#a3c5567ef024a0489884083c88f17b4d5">NVIC_IRQChannelCmd</a> = <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>;</div><div class="line">    <a class="code" href="group__x3e___n_v_i_c___exported___functions.html#ga4e06b4f5c9109d6bc8990adf77e5f8d3">NVIC_Init</a>(&amp;NVIC_InitStruct);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

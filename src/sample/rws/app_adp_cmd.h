@@ -12,15 +12,11 @@
 extern "C" {
 #endif
 
+#if F_APP_ADP_5V_CMD_SUPPORT || F_APP_ONE_WIRE_UART_SUPPORT
 /** @defgroup APP_ADP_CMD APP Adaptor Command
   * @brief APP Adaptor Command
   * @{
   */
-
-/*usb in out */
-#define ADP_USB_IN_PLAYLOAD         0x05
-#define ADP_USB_OUT                 0x0a70
-#define ADP_USB_IN_PRAR             0x0a05
 
 /**  @brief CHARGERBOX_SPECIAL_COMMAND type */
 typedef enum
@@ -34,20 +30,6 @@ typedef enum
     APP_ADP_SPECIAL_CMD_RSV_6               = 0x06,
     APP_ADP_SPECIAL_CMD_RSV_7               = 0x07,
 } T_APP_ADP_SPECIAL_CMD;
-
-typedef enum
-{
-    CHARGER_BOX_CMD_SET_9BITS   = 0,
-    CHARGER_BOX_CMD_SET_15BITS  = 1,
-    CHARGER_BOX_CMD_SET_RSV1    = 2,
-    CHARGER_BOX_CMD_SET_RSV2    = 3,
-} CHARGER_BOX_CMD_SET;
-
-typedef enum
-{
-    CHARGER_BOX_BIT_LENGTH_40MS = 0,
-    CHARGER_BOX_BIT_LENGTH_20MS = 1,
-} CHARGER_BOX_BIT_LENGTH;
 
 /*============================================================================*
  *                              Types
@@ -118,6 +100,7 @@ void app_adp_cmd_bud_loc_change_handle(T_BUD_LOCATION_EVENT evt, bool from_remot
 bool app_adp_cmd_in_case_timeout(void);
 
 void app_adp_cmd_init(void);
+void app_adp_cmd_check_disable_charger_timer_stop(void);
 
 /**
     * @brief enter pcba shipping mode
@@ -125,11 +108,16 @@ void app_adp_cmd_init(void);
     */
 void app_adp_cmd_enter_pcba_shipping_mode(void);
 
-#if F_APP_ONE_WIRE_UART_SUPPORT
+/**
+    * @brief  adp 1 wire uart cmd handle
+    * @param  cmd_exec_index
+    * @param  pay_load
+    * @return none
+    */
 void app_adp_one_wire_cmd_handle_msg(uint32_t cmd_exec_index, uint8_t pay_load);
-#endif
 
 /** @} */ /* End of group APP_ADP_CMD */
+#endif
 
 #ifdef __cplusplus
 }

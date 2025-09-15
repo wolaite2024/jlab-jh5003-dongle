@@ -1,12 +1,12 @@
 #ifndef _STDLIB_CORECRT_H
 #define _STDLIB_CORECRT_H
 #include <stdlib.h>
-/** @defgroup  HAL_87x3e_STDLIB_CORECRT    stdlib corecrt api
-    * @brief stdlib corecrt api
+/** @defgroup  HAL_87x3e_STDLIB_CORECRT    Stdlib Corecrt
+    * @brief Some C standard library corecrt functions.
     * @{
     */
 
-/** @defgroup HAL_87x3e_Stdlib_Corecrt_Exported_Functions stdlib corecrt Exported Functions
+/** @defgroup HAL_87x3e_Stdlib_Corecrt_Exported_Functions Stdlib Corecrt Exported Functions
     * @brief
     * @{
     */
@@ -14,27 +14,27 @@
 extern "C" {
 #endif
 /**
-    * @brief  memcpy_s with security check mechanism
-    * @param  dest destination buffer pointer
-    * @param  destsz the size of destination buffer
-    * @param  src   source buffer pointer
-    * @param  count source data size to memcpy
-    * @return the error code
-    * @retval 0      success
-    * @retval != 0   error code
+    * @brief  Security check mechanism.
+    * @param  dest Destination buffer pointer.
+    * @param  destsz The size of destination buffer.
+    * @param  src   Source buffer pointer.
+    * @param  count Source data size to memcpy.
+    * @return The error code.
+    * @retval 0      Success.
+    * @retval others   Error code.
     */
-extern int memcpy_s(void *restrict dest, size_t destsz, const void *restrict src, size_t count);
+extern int memcpy_s(void *dest, size_t destsz, const void *src, size_t count);
 /**
-    * @brief  memset_s with security check mechanism
-    * @param  dest destination buffer pointer
-    * @param  destsz the size of destination buffer
-    * @param  ch   memory set value
-    * @param  count data size to memset with ch
-    * @return the error code
-    * @retval 0      success
-    * @retval != 0   error code
+    * @brief  Security check mechanism.
+    * @param  dest Destination buffer pointer.
+    * @param  destsz The size of destination buffer.
+    * @param  ch   Memory set value.
+    * @param  count Data size to memset with ch.
+    * @return The error code.
+    * @retval 0      Success.
+    * @retval others   Error code.
     */
-int memset_s(void *restrict dest, size_t destsz, int ch, size_t count);
+int memset_s(void *dest, size_t destsz, int ch, size_t count);
 #ifdef __cplusplus
 }
 #endif

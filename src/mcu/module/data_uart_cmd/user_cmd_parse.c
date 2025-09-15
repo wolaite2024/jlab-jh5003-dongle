@@ -13,7 +13,7 @@
 #include <string.h>
 #include <data_uart.h>
 #include <user_cmd_parse.h>
-#if F_BT_DLPS_EN
+#if F_DLPS_EN
 #include <data_uart_dlps.h>
 #endif
 
@@ -436,7 +436,7 @@ bool user_cmd_collect(T_USER_CMD_IF *p_user_cmd_if, uint8_t *p_data, int32_t len
             case '\r':                  /* end of line */
                 data_uart_print("\r\n");
                 p_user_cmd_if->history_cur = USER_CMD_MAX_HISTORY_LINE;
-#if F_BT_DLPS_EN
+#if F_DLPS_EN
                 data_uart_can_enter_dlps(true);
 #endif
                 if (p_user_cmd_if->accum_cmd_len > 0)  /* at least one character in command line ? */

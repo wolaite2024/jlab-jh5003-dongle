@@ -3,9 +3,9 @@
 *               Copyright(c) 2016, Realtek Semiconductor Corporation. All rights reserved.
 *********************************************************************************************************
 * @file      bt_bond_common.h
-* @brief     key storage function.
+* @brief     Key storage function.
 * @details
-* @author    jane
+* @author    Jane
 * @date      2016-02-18
 * @version   v0.1
 * *********************************************************************************************************
@@ -21,32 +21,32 @@ extern "C"
 {
 #endif
 
-/** @defgroup BT_BOND_COMMON BT Bond Common
-  * @brief BT Bond Common Module
+/** @defgroup BT_BOND_LE Bluetooth Bond LE
+  * @brief Bluetooth Bond LE Module
   * @{
   */
 
 /*============================================================================*
  *                         Macros
  *============================================================================*/
-/** @defgroup BT_BOND_COMMON_Exported_Macros BT BOND Common Exported Macros
+/** @defgroup BT_BOND_LE_Exported_Macros Bluetooth Bond LE Exported Macros
   * @{
   */
 
-/** @defgroup BT_BOND_INFO_FLAG BT Bond Info Flag Bits
+/** @defgroup BT_BOND_INFO_FLAG Bluetooth Bond Info Flag Bits
 * @{
  */
-/*bond state: indicate bond information exist or not*/
+/*Bond state: indicate bond information exist or not. */
 #define BT_BOND_INFO_EXIST_FLAG 0x01
-/*bond state: indicate bond information need update or not*/
+/*Bond state: indicate bond information need update or not. */
 #define BT_BOND_INFO_NEED_UPDATE_FLAG 0x02
-/*bond state: indicate re-pair or not*/
+/*Bond state: indicate re-pair or not. */
 #define BT_BOND_INFO_REPAIR_FLAG      0x04
 /**
   * @}
   */
 
-/** @defgroup BT_BOND_MSG_TYPE BT Bond Message Types
+/** @defgroup BT_BOND_MSG_TYPE Bluetooth Bond Message Types
 * @{
  */
 #define BT_BOND_MSG_LE_BOND_ADD       0x00
@@ -61,14 +61,14 @@ extern "C"
   * @}
   */
 
-/** End of BT_BOND_COMMON_Exported_Macros
+/** End of BT_BOND_LE_Exported_Macros
   * @}
   */
 
 /*============================================================================*
  *                         Types
  *============================================================================*/
-/** @defgroup BT_BOND_COMMON_Exported_Types BT Bond Common Exported Types
+/** @defgroup BT_BOND_LE_Exported_Types Bluetooth Bond LE Exported Types
   * @{
   */
 typedef struct
@@ -84,7 +84,7 @@ typedef struct
 
 typedef void(*P_FUN_BT_BOND_CB)(uint8_t cb_type, void *p_cb_data);
 
-/** End of BT_BOND_COMMON_Exported_Types
+/** End of BT_BOND_LE_Exported_Types
   * @}
   */
 
@@ -92,21 +92,25 @@ typedef void(*P_FUN_BT_BOND_CB)(uint8_t cb_type, void *p_cb_data);
  *                         Functions
  *============================================================================*/
 /**
- * @defgroup BT_BOND_COMMON_EXPORT_Functions BT Bond Common Exported Functions
+ * @defgroup BT_BOND_LE_Exported_Functions Bluetooth Bond LE Exported Functions
  *
  * @{
  */
 
 /**
  * @brief bt_bond_register_app_cb
- * APP can call bt_bond_register_app_cb to register callback to get bt bond modify information.
+ *
+ * APP can call bt_bond_register_app_cb to register callback to get Bluetooth Bond modify information.
  * APP can register more than one callback function using bt_bond_register_app_cb.
  * APP will not send message BT_BOND_MSG_LE_BOND_GET.
  *
  * @param app_callback Callback function: @ref P_FUN_BT_BOND_CB.
- * @return true
- * @return false
-* \code{.c}
+ * @return   Operation result.
+ * @retval   true   Success.
+ * @retval   false  Failed.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
     void ble_bond_sync_init(void)
     {
         ......
@@ -154,12 +158,14 @@ bool bt_bond_register_app_cb(P_FUN_BT_BOND_CB app_callback);
 
 /**
  * @brief bt_bond_unregister_app_cb
- * APP can call bt_bond_unregister_app_cb to unregister callback to get bt bond modify information.
+ *
+ * APP can call bt_bond_unregister_app_cb to unregister callback to get Bluetooth Bond modify information.
  *
  * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
  * @param app_callback Callback function: @ref P_FUN_BT_BOND_CB.
- * @return true
- * @return false
+ * @return   Operation result.
+ * @retval   true   Success.
+ * @retval   false  Failed.
  */
 bool bt_bond_unregister_app_cb(P_FUN_BT_BOND_CB app_callback);
 
@@ -167,13 +173,16 @@ bool bt_bond_unregister_app_cb(P_FUN_BT_BOND_CB app_callback);
  * @brief bt_bond_cfg_send_bond_full
  *
  * APP can call bt_bond_cfg_send_bond_full to configure whether to send BT_BOND_MSG_LE_BOND_FULL when the number of bonds is full.
- * If the APP deletes unnecessary bond information When APP receives the message BT_BOND_MSG_LE_BOND_FULL, the current pairing procedure can continue.
- * If the APP does not delete bond information When APP receives the message BT_BOND_MSG_LE_BOND_FULL, the current pairing procedure will fail.
+ * If the APP deletes unnecessary bond information when APP receives the message BT_BOND_MSG_LE_BOND_FULL, the current pairing procedure can continue.
+ * If the APP does not delete bond information when APP receives the message BT_BOND_MSG_LE_BOND_FULL, the current pairing procedure will fail.
+ *
  * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
  * @param enable Whether to send BT_BOND_MSG_LE_BOND_FULL when the number of bonds is full.
- * \arg    true    When the number of bonds is full, BT BOND module will send BT_BOND_MSG_LE_BOND_FULL.
- * \arg    false   When the number of bonds is full, BT BOND module will auto delete low priority bond information.
- * @return void
+ * \arg    true    When the number of bonds is full, Bluetooth Bond module will send BT_BOND_MSG_LE_BOND_FULL.
+ * \arg    false   When the number of bonds is full, Bluetooth Bond module will auto delete low priority bond information.
+ * @return void.
+ *
+ * <b>Example usage</b>
  * \code{.c}
     void ble_bond_sync_init(void)
     {
@@ -210,14 +219,19 @@ void bt_bond_cfg_send_bond_full(bool enable);
 
 /**
  * @brief bt_bond_register_bond_get_cb
+ *
  * APP can call bt_bond_register_bond_get_cb to register callback to handle message BT_BOND_MSG_LE_BOND_GET.
  * APP can only register one callback function.
  * APP will send message BT_BOND_MSG_LE_BOND_GET when no matching key entry is found.
+ *
  * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
  * @param app_callback Callback function: @ref P_FUN_BT_BOND_CB.
- * @return true
- * @return false
-* \code{.c}
+ * @return   Operation result.
+ * @retval   true   Success.
+ * @retval   false  Failed.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
     void test(void)
     {
         ......
@@ -264,10 +278,10 @@ void bt_bond_cfg_send_bond_full(bool enable);
  * \endcode
  */
 bool bt_bond_register_bond_get_cb(P_FUN_BT_BOND_CB app_callback);
-/** End of BT_BOND_COMMON_EXPORT_Functions
+/** End of BT_BOND_LE_Exported_Functions
   * @}
   */
-/** End of BT_BOND_COMMON
+/** End of BT_BOND_LE
   * @}
   */
 

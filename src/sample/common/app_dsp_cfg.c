@@ -49,10 +49,6 @@
 #endif
 #endif
 
-#if F_APP_SIDETONE_SUPPORT
-#include "app_sidetone.h"
-#endif
-
 #define DSP_DATA_SYNC_WORD 0xAA55
 
 typedef enum
@@ -212,8 +208,8 @@ static void app_dsp_cfg_restart_audio_track(void)
 
         if (app_dongle_get_connected_dongle_addr(bd_addr))
         {
-            app_dongle_stop_recording(bd_addr);
-            app_dongle_start_recording(bd_addr);
+            app_dongle_stop_recording();
+            app_dongle_start_recording();
         }
     }
 #endif

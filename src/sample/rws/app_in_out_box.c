@@ -77,7 +77,8 @@ static void app_in_out_box_handle(T_CASE_LOCATION_STATUS local)
         if (app_cfg_const.enable_rtk_charging_box)
         {
             app_dlps_stop_power_down_wdg_timer();
-#if F_APP_ADP_CMD_SUPPORT
+
+#if F_APP_ADP_5V_CMD_SUPPORT
             app_adp_cmd_clear_pending();
 #endif
         }
@@ -128,7 +129,7 @@ static void app_in_out_box_handle(T_CASE_LOCATION_STATUS local)
         {
             if (app_cfg_const.enable_rtk_charging_box)
             {
-#if F_APP_ADP_CMD_SUPPORT
+#if F_APP_ADP_5V_CMD_SUPPORT || F_APP_ONE_WIRE_UART_SUPPORT
                 app_adp_cmd_power_on_when_out_case();
 #endif
             }
@@ -146,7 +147,7 @@ static void app_in_out_box_handle(T_CASE_LOCATION_STATUS local)
     {
         if (app_cfg_const.enable_rtk_charging_box)
         {
-#if F_APP_ADP_CMD_SUPPORT
+#if F_APP_ADP_5V_CMD_SUPPORT
             app_adp_cmd_pending_exec();
 #endif
         }
@@ -155,6 +156,7 @@ static void app_in_out_box_handle(T_CASE_LOCATION_STATUS local)
             if (app_cfg_const.enable_inbox_power_off)
             {
                 app_auto_power_off_disable(AUTO_POWER_OFF_MASK_IN_BOX);
+                app_cfg_nv.app_is_power_on = 0;
             }
         }
 

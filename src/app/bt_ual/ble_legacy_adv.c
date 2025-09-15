@@ -8,7 +8,6 @@
 #include "gap.h"
 #include "gap_adv.h"
 #include "os_mem.h"
-#include "gap_vendor.h"
 #include "gap_conn_le.h"
 #include "ual_types.h"
 #include "ual_list.h"

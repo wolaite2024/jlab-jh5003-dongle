@@ -8,7 +8,7 @@
 extern "C" {
 #endif /* __cplusplus */
 
-#if F_APP_GAMING_B2S_HTPOLL_SUPPORT || F_APP_B2B_HTPOLL_CONTROL
+#if F_APP_B2S_HTPOLL_SUPPORT || F_APP_B2B_HTPOLL_CONTROL
 typedef enum
 {
     B2S_HTPOLL_EVENT_ACL_DISC                = 0x00,
@@ -20,7 +20,7 @@ typedef enum
     B2S_HTPOLL_EVENT_LINKBACK_STOP           = 0x06,
     B2S_HTPOLL_EVENT_SCO_CONNECTED           = 0x07,
     B2S_HTPOLL_EVENT_SCO_DISCONNECTED        = 0x08,
-    B2S_HTPOLL_EVENT_ACTIVE_A2DP_IDX_CHANGED = 0x09,
+    B2S_HTPOLL_EVENT_A2DP_STREAMING_CHANGE   = 0x09,
     B2S_HTPOLL_EVENT_BLE_CONNECTED           = 0x0a,
     B2S_HTPOLL_EVENT_BLE_DISCONNECTED        = 0x0b,
     B2S_HTPOLL_EVENT_COMMON_ADV_ENABLE       = 0x0c,
@@ -29,6 +29,7 @@ typedef enum
     B2S_HTPOLL_EVENT_DONGLE_MIC_STATUS_CHANGED = 0x0f,
     B2S_HTPOLL_EVENT_LEA_SET_PREFER_QOS      = 0x10,
     B2S_HTPOLL_EVENT_LEA_SET_QOS_TIMEOUT     = 0x11,
+    B2S_HTPOLL_EVENT_QOS_CMPL                = 0x12,
 
     B2B_HTPOLL_EVENT_B2B_CONNECTED           = 0x20,
     B2B_HTPOLL_EVENT_B2B_DISCONNECTED        = 0x21,
@@ -68,6 +69,31 @@ void app_vendor_htpoll_control(T_APP_HTPOLL_EVENT event);
  */
 bool app_vendor_htpoll_execing(void);
 #endif
+#endif
+
+#if F_APP_B2B_ENGAGE_REDUCE_NSE
+/**@brief     set cis max nse
+ *
+ * @param     conn_handle: ble connection handle
+ * @param     nse: number of subevent
+ * @return    true if success.
+ */
+bool app_vendor_set_cis_nse(uint16_t conn_handle, uint8_t nse);
+
+/**@brief     set report legacy acl connection event
+ *
+ * @param     enable: enable report event
+ * @return    true if success.
+ */
+bool app_vendor_set_report_conn_event(bool enable);
+
+/**@brief     handle ble gap callback msg
+ *
+ * @param     cb_type: callback type
+ * @param     cb_data: callback data
+ * @return    void.
+ */
+void app_vendor_ble_gap_handle(uint8_t cb_type, T_GAP_CB_DATA *cb_data);
 #endif
 
 /**@brief     init vendor process
@@ -121,6 +147,23 @@ void app_vendor_rf_xtak_k(uint8_t channel, uint8_t upperbound, uint8_t lowerboun
  * @return void
  */
 void app_vendor_get_xtak_k_result(void);
+
+/**
+ * @brief Write RF XTAL K result command
+ *
+ * @param xtal_val RF XTAL K result
+ * @return void
+ */
+void app_vendor_write_xtak_k_result(uint8_t xtal_val);
+
+/**
+ * @brief Set Enable TX Right Away Command
+ *
+ * @param void
+ * @return true  success
+ * @return false fail
+ */
+bool app_vendor_enable_send_tx_right_away(void);
 
 #ifdef __cplusplus
 }

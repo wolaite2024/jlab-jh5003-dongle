@@ -19,8 +19,6 @@ extern "C" {
  */
 
 /**
- * bt_hid_host.h
- *
  * \brief  BT HID protocol mode.
  *
  * \ingroup BT_HID_HOST
@@ -32,8 +30,6 @@ typedef enum t_bt_hid_host_protocol_mode
 } T_BT_HID_HOST_PROTOCOL_MODE;
 
 /**
- * bt_hid_host.h
- *
  * \brief  BT HID report type.
  *
  * \ingroup BT_HID_HOST
@@ -47,9 +43,7 @@ typedef enum t_bt_hid_host_report_type
 } T_BT_HID_HOST_REPORT_TYPE;
 
 /**
- * bt_hid_host.h
- *
- * \brief  BT HID Control Operation.
+ * \brief  BT HID control operation.
  *
  * \ingroup BT_HID_HOST
  */
@@ -64,13 +58,10 @@ typedef enum t_bt_hid_host_control_operation
 } T_BT_HID_HOST_CONTROL_OPERATION;
 
 /**
- * bt_hid_host.h
- *
  * \brief  Initialize HID profile.
  *
  * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
  *
- * \param[in] link_num          HID maximum connected link number.
  * \param[in] boot_proto_mode   Support boot protocol mode.
  *
  * \return          The status of initializing HID profile.
@@ -79,16 +70,14 @@ typedef enum t_bt_hid_host_control_operation
  *
  * \ingroup BT_HID_HOST
  */
-bool bt_hid_host_init(uint8_t link_num,
-                      bool    boot_proto_mode);
+bool bt_hid_host_init(bool boot_proto_mode);
 
 /**
- * bt_hid_host.h
- *
  * \brief  Set HID descriptor.
  *
  * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
  *
+ * \param[in] bd_addr             Remote BT address.
  * \param[in] descriptor          HID report descriptor.
  * \param[in] len                 The length of HID report descriptor.
  *
@@ -98,12 +87,11 @@ bool bt_hid_host_init(uint8_t link_num,
  *
  * \ingroup BT_HID_HOST
  */
-bool bt_hid_host_descriptor_set(const uint8_t *descriptor,
-                                uint16_t       len);
+bool bt_hid_host_descriptor_set(uint8_t   bd_addr[6],
+                                uint8_t  *descriptor,
+                                uint16_t  len);
 
 /**
- * bt_hid_host.h
- *
  * \brief  Send HID connection request.
  *
  * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
@@ -121,8 +109,6 @@ bool bt_hid_host_connect_req(uint8_t bd_addr[6],
                              uint8_t proto_mode);
 
 /**
- * bt_hid_host.h
- *
  * \brief  Send HID connection confirmation.
  *
  * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
@@ -142,8 +128,6 @@ bool bt_hid_host_connect_cfm(uint8_t bd_addr[6],
                              bool    accept);
 
 /**
- * bt_hid_host.h
- *
  * \brief  Send HID disconnection request.
  *
  * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
@@ -159,16 +143,12 @@ bool bt_hid_host_connect_cfm(uint8_t bd_addr[6],
 bool bt_hid_host_disconnect_req(uint8_t bd_addr[6]);
 
 /**
- * bt_hid_host.h
- *
  * \brief  Send HID control message over control channel.
  *
  * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
  *
  * \param[in] bd_addr    Remote BT address.
  * \param[in] operation  Report Type \ref T_BT_HID_HOST_CONTROL_OPERATION.
- * \param[in] buf        Message buffer.
- * \param[in] len        Message length.
  *
  * \return          The status of sending HID control message over control channel.
  * \retval true     HID control message was sent successfully.
@@ -180,13 +160,9 @@ bool bt_hid_host_disconnect_req(uint8_t bd_addr[6]);
  * \ingroup BT_HID_HOST
  */
 bool bt_hid_host_control_req(uint8_t                          bd_addr[6],
-                             T_BT_HID_HOST_CONTROL_OPERATION  operation,
-                             uint8_t                         *buf,
-                             uint16_t                         len);
+                             T_BT_HID_HOST_CONTROL_OPERATION  operation);
 
 /**
- * bt_hid_host.h
- *
  * \brief  Send HID GET_REPORT message over control channel. This message is used by the Bluetooth
  *         HID Host to request the transfer of a HID report from the Bluetooth HID device.
  *
@@ -194,7 +170,7 @@ bool bt_hid_host_control_req(uint8_t                          bd_addr[6],
  *
  * \param[in] bd_addr            Remote BT address.
  * \param[in] report_type        Report Type \ref T_BT_HID_HOST_REPORT_TYPE.
- * \param[in] report_id          Report id.
+ * \param[in] report_id          Report ID.
  * \param[in] buffer_size        Buffer size.
  *
  * \return          The status of sending HID GET_REPORT message over control channel.
@@ -209,15 +185,13 @@ bool bt_hid_host_get_report_req(uint8_t                   bd_addr[6],
                                 uint16_t                  buffer_size);
 
 /**
- * bt_hid_host.h
- *
  * \brief  Send HID SET_REPORT message over control channel. This message is used by a Bluetooth
  *         HID Host to initiate the transfer of a report to a Bluetooth HID device.
  *
  * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
  *
  * \param[in] bd_addr            Remote BT address.
- * \param[in] report_type        Report Type \ref T_BT_HID_HOST_REPORT_TYPE.
+ * \param[in] report_type        Report type \ref T_BT_HID_HOST_REPORT_TYPE.
  * \param[in] buf                Message buffer.
  * \param[in] len                Message length.
  *
@@ -233,8 +207,6 @@ bool bt_hid_host_set_report_req(uint8_t                    bd_addr[6],
                                 uint16_t                   len);
 
 /**
- * bt_hid_host.h
- *
  * \brief  Send HID GET_PROTOCOL message over control channel. This message is used by a Bluetooth
  *         HID Host to retrieve the protocol mode of the Bluetooth HID device.
  *
@@ -252,8 +224,6 @@ bool bt_hid_host_get_protocol_req(uint8_t bd_addr[6]);
 
 
 /**
- * bt_hid_host.h
- *
  * \brief  Send HID SET_PROTOCOL message over control channel. This message is used by a Bluetooth
  *         HID Host to set protocol mode on the Bluetooth HID device.
  *
@@ -273,8 +243,6 @@ bool bt_hid_host_set_protocol_req(uint8_t                     bd_addr[6],
 
 
 /**
- * bt_hid_host.h
- *
  * \brief  Send HID DATA message over interrupt channel.
  *
  * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"

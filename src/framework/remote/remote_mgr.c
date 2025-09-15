@@ -11,9 +11,9 @@
 #include "trace.h"
 #include "sys_ipc.h"
 #include "sys_timer.h"
+#include "remote.h"
 #include "bt_rdtp.h"
 #include "bt_mgr.h"
-#include "bt_mgr_int.h"
 
 #define REMOTE_MSG_CREDITS              3
 #define REMOTE_MSG_QUEUE_NUM            32
@@ -635,14 +635,7 @@ static bool remote_msg_send(T_REMOTE_RELAY_MSG *msg_header,
         goto fail_enqueue_msg;
     }
 
-    if (senssion_mode == REMOTE_SESSION_MODE_ACTIVE)
-    {
-        remote_msg_dequeue();
-    }
-    else
-    {
-        remote_session_mode_set(REMOTE_SESSION_MODE_ACTIVE);
-    }
+    remote_msg_dequeue();
 
     return true;
 
@@ -1108,20 +1101,10 @@ void remote_retrans_timer_cback(T_SYS_TIMER_HANDLE handle)
 
 bool remote_session_mode_req(T_REMOTE_SESSION_MODE mode)
 {
-    T_BT_BR_LINK *p_link;
-    int32_t ret = 0;
-
     if (remote_db == NULL)
     {
-        ret = 1;
-        goto fail_invalid_db;
-    }
-
-    p_link = bt_find_br_link(remote_db->peer_addr);
-    if (p_link == NULL)
-    {
-        ret = 2;
-        goto fail_alloc_link;
+        REMOTE_PRINT_ERROR0("remote_session_mode_req: failed");
+        return false;
     }
 
     if (mode == REMOTE_SESSION_MODE_SLEEP)
@@ -1133,16 +1116,10 @@ bool remote_session_mode_req(T_REMOTE_SESSION_MODE mode)
     }
 
     return true;
-
-fail_alloc_link:
-fail_invalid_db:
-    REMOTE_PRINT_ERROR1("remote_session_mode_req: failed %d", -ret);
-    return false;
 }
 
 bool remote_session_mode_get(T_REMOTE_SESSION_MODE *mode)
 {
-    T_BT_BR_LINK       *p_link;
     T_BT_LINK_PM_STATE  pm_state;
     int32_t             ret = 0;
 
@@ -1152,14 +1129,11 @@ bool remote_session_mode_get(T_REMOTE_SESSION_MODE *mode)
         goto fail_db;
     }
 
-    p_link = bt_find_br_link(remote_db->peer_addr);
-    if (p_link == NULL)
+    if (bt_pm_state_get(remote_db->peer_addr, &pm_state) == false)
     {
         ret = 2;
-        goto fail_link;
+        goto fail_pm_state;
     }
-
-    pm_state = bt_pm_state_get(p_link);
 
     switch (pm_state)
     {
@@ -1182,7 +1156,7 @@ bool remote_session_mode_get(T_REMOTE_SESSION_MODE *mode)
 
     return true;
 
-fail_link:
+fail_pm_state:
 fail_db:
     REMOTE_PRINT_ERROR1("remote_session_mode_get: failed %d", -ret);
     return false;
@@ -1190,8 +1164,7 @@ fail_db:
 
 bool remote_session_mode_set(T_REMOTE_SESSION_MODE mode)
 {
-    T_BT_BR_LINK *p_link;
-    int32_t       ret = 0;
+    int32_t ret = 0;
 
     if (remote_db == NULL)
     {
@@ -1199,31 +1172,23 @@ bool remote_session_mode_set(T_REMOTE_SESSION_MODE mode)
         goto fail_db;
     }
 
-    p_link = bt_find_br_link(remote_db->peer_addr);
-    if (p_link == NULL)
-    {
-        ret = 2;
-        goto fail_link;
-    }
-
     if (mode == REMOTE_SESSION_MODE_SLEEP)
     {
-        bt_pm_sm(p_link, BT_PM_EVENT_SNIFF_ENTER_REQ);
+        bt_pm_sm(remote_db->peer_addr, BT_PM_EVENT_SNIFF_ENTER_REQ);
     }
     else if (mode == REMOTE_SESSION_MODE_ACTIVE)
     {
-        bt_pm_sm(p_link, BT_PM_EVENT_SNIFF_EXIT_REQ);
+        bt_pm_sm(remote_db->peer_addr, BT_PM_EVENT_SNIFF_EXIT_REQ);
     }
     else
     {
-        ret = 3;
+        ret = 2;
         goto fail_invalid_mode;
     }
 
     return true;
 
 fail_invalid_mode:
-fail_link:
 fail_db:
     REMOTE_PRINT_ERROR1("remote_session_mode_set: failed %d", -ret);
     return false;
@@ -1232,50 +1197,45 @@ fail_db:
 bool remote_bt_pm_cback(uint8_t       bd_addr[6],
                         T_BT_PM_EVENT event)
 {
-    T_BT_BR_LINK         *p_link;
-    bool                  ret = true;
+    bool ret = true;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link != NULL)
+    switch (event)
     {
-        switch (event)
+    case BT_PM_EVENT_LINK_CONNECTED:
+        break;
+
+    case BT_PM_EVENT_LINK_DISCONNECTED:
+        break;
+
+    case BT_PM_EVENT_SNIFF_ENTER_SUCCESS:
+        if (remote_db->relay_queue.count != 0)
         {
-        case BT_PM_EVENT_LINK_CONNECTED:
-            break;
-
-        case BT_PM_EVENT_LINK_DISCONNECTED:
-            break;
-
-        case BT_PM_EVENT_SNIFF_ENTER_SUCCESS:
-            if (remote_db->relay_queue.count != 0)
-            {
-                remote_session_mode_set(REMOTE_SESSION_MODE_ACTIVE);
-            }
-            break;
-
-        case BT_PM_EVENT_SNIFF_ENTER_FAIL:
-            remote_msg_dequeue();
-            break;
-
-        case BT_PM_EVENT_SNIFF_ENTER_REQ:
-            ret = remote_session_mode_req(REMOTE_SESSION_MODE_SLEEP);
-            break;
-
-        case BT_PM_EVENT_SNIFF_EXIT_SUCCESS:
-            remote_msg_dequeue();
-            break;
-
-        case BT_PM_EVENT_SNIFF_EXIT_FAIL:
-            if (remote_db->relay_queue.count != 0)
-            {
-                remote_session_mode_set(REMOTE_SESSION_MODE_ACTIVE);
-            }
-            break;
-
-        case BT_PM_EVENT_SNIFF_EXIT_REQ:
-            ret = remote_session_mode_req(REMOTE_SESSION_MODE_ACTIVE);
-            break;
+            remote_session_mode_set(REMOTE_SESSION_MODE_ACTIVE);
         }
+        break;
+
+    case BT_PM_EVENT_SNIFF_ENTER_FAIL:
+        remote_msg_dequeue();
+        break;
+
+    case BT_PM_EVENT_SNIFF_ENTER_REQ:
+        ret = remote_session_mode_req(REMOTE_SESSION_MODE_SLEEP);
+        break;
+
+    case BT_PM_EVENT_SNIFF_EXIT_SUCCESS:
+        remote_msg_dequeue();
+        break;
+
+    case BT_PM_EVENT_SNIFF_EXIT_FAIL:
+        if (remote_db->relay_queue.count != 0)
+        {
+            remote_session_mode_set(REMOTE_SESSION_MODE_ACTIVE);
+        }
+        break;
+
+    case BT_PM_EVENT_SNIFF_EXIT_REQ:
+        ret = remote_session_mode_req(REMOTE_SESSION_MODE_ACTIVE);
+        break;
     }
 
     return ret;

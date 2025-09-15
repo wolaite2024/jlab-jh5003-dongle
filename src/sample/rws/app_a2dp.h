@@ -29,6 +29,21 @@ extern "C" {
 bool app_a2dp_is_streaming(void);
 
 /**
+    * @brief  get a2dp streaming link num
+    * @param  void
+    * @return link num
+    */
+uint8_t app_a2dp_get_streaming_num(void);
+
+/**
+    * @brief  get a2dp streaming link idx
+    * @param  idx: link idx
+    * @return true if get success
+    */
+bool app_a2dp_get_streaming_idx(uint8_t *idx);
+
+
+/**
     * @brief  a2dp module init
     * @param  void
     * @return void

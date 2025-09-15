@@ -151,6 +151,7 @@ static void spi_tx_handler(void)
     {
         SPI_INTConfig(SPI_MASTER, SPI_INT_TXE, DISABLE);
         IO_PRINT_INFO0("spi_tx_handler: SPI TX FIFO Empty");
+        /* It is recommended to post the os msg to the task thread for data processing. */
     }
 }
 

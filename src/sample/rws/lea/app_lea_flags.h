@@ -8,11 +8,22 @@
 #define CONFIG_REALTEK_BT_GATT_CLIENT_SUPPORT   1
 
 #define F_APP_LE_AUDIO_CLI_TEST                 1
+#define F_APP_LE_AUDIO_RWS_EN_SC                1
 
 #define F_APP_VCS_SUPPORT                       1
+#if (TARGET_LE_AUDIO_GAMING == 1)
+#define F_APP_MICS_SUPPORT                      0
+#else
 #define F_APP_MICS_SUPPORT                      1
+#endif
+#define F_APP_AICS_SUPPORT                      1
 #define F_APP_CSIS_SUPPORT                      1
 #define F_APP_EATT_SUPPORT                      0
+#define F_APP_HAS_SUPPORT                       0
+#define F_APP_PBP_SUPPORT                       1
+
+#define F_APP_LC3_PLUS_SUPPORT                  0
+#define F_APP_FRAUNHOFER_SUPPORT                0
 
 // CT and UMR must support ASCS and PACS service
 #define F_APP_TMAP_CT_SUPPORT                   1
@@ -26,6 +37,9 @@
 #if RTL87x3EFL_PRODUCT_RWS
 #undef F_APP_TMAP_BMR_SUPPORT
 #define F_APP_TMAP_BMR_SUPPORT                  0
+#else
+#undef F_APP_LE_AUDIO_RWS_EN_SC
+#define F_APP_LE_AUDIO_RWS_EN_SC                0
 #endif
 
 #if F_APP_TMAP_CT_SUPPORT

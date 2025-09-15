@@ -2,7 +2,6 @@
  * Copyright (c) 2018, Realsil Semiconductor Corporation. All rights reserved.
  */
 #include <string.h>
-#include <stdlib.h>
 #include "stdlib_corecrt.h"
 #include "trace.h"
 #include "os_sched.h"
@@ -89,7 +88,6 @@
 #include "app_sniff_mode.h"
 #include "app_sdp.h"
 #include "app_hfp.h"
-#include "app_ota.h"
 #if CONFIG_REALTEK_APP_TEAMS_FEATURE_SUPPORT
 #include "app_asp_device.h"
 #include "app_teams_audio_policy.h"
@@ -155,6 +153,10 @@
 #endif
 
 #include "app_ipc.h"
+
+#include "app_ble_common_adv.h"
+
+#include "app_bt_point.h"
 
 #define ROLE_SWITCH_COUNT_MAX                 (5)
 #define ROLE_SWITCH_DELAY_MS                  (250)
@@ -246,6 +248,7 @@ typedef enum
     APP_TIMER_DEVICE_CONNECTED_RETRY_LINKBACK = 0x12,
     APP_TIMER_ROLESWAP                        = 0x13,
     APP_TIMER_SET_CPU_CLK                     = 0x14,
+    APP_TIMER_LINKBACK_LEA                    = 0x15,
 } T_APP_BT_POLICY_TIMER;
 
 typedef struct
@@ -288,6 +291,7 @@ static uint8_t timer_idx_discoverable = 0;
 static uint8_t timer_idx_bud_linklost = 0;
 static uint8_t timer_idx_linkback = 0;
 static uint8_t timer_idx_linkback_delay = 0;
+static uint8_t timer_idx_linkback_lea = 0;
 static uint8_t timer_idx_wait_coupling = 0;
 static uint8_t timer_idx_engage_action_adjust = 0;
 static uint8_t timer_idx_page_scan_param = 0;
@@ -316,7 +320,7 @@ static T_APP_DEVICE_TEMP_COD cod_temp[MULTILINK_SRC_CONNECTED] = {0};
 static void app_bt_policy_engage_sched(void);
 static void app_bt_policy_linkback_sched(void);
 static void app_bt_policy_stable_sched(T_STABLE_ENTER_MODE mode);
-static void app_bt_policy_linkback_run(void);
+static void app_bt_policy_linkback_run(T_EVENT event);
 static void app_bt_policy_engage_ind(T_ENGAGE_IND ind);
 static void app_bt_policy_disconnect_all_event_handle(void);
 static bool app_bt_policy_judge_dedicated_enter_pairing_mode(void);
@@ -363,24 +367,6 @@ T_B2B_TX_POWER b2b_tx_power = B2B_TX_POWER_SET_NONE;
 #if CONFIG_REALTEK_APP_TEAMS_FEATURE_SUPPORT
 uint8_t conn_to_new_device;
 #endif
-
-static void app_bt_policy_connected(void)
-{
-    uint32_t i;
-
-    ENGAGE_PRINT_INFO3("connected: bud_role %d, b2b %d, b2s %d",
-                       app_cfg_nv.bud_role, b2b_connected, app_db.b2s_connected_num);
-
-    for (i = 0; i < MAX_BR_LINK_NUM; i++)
-    {
-        if (app_link_check_b2s_link_by_id(i))
-        {
-            ENGAGE_PRINT_TRACE2("connected: b2s, bd_addr %s, profs 0x%08x",
-                                TRACE_BDADDR(app_db.br_link[i].bd_addr),
-                                app_db.br_link[i].connected_profile);
-        }
-    }
-}
 
 static void app_bt_policy_new_state(T_STATE state)
 {
@@ -447,6 +433,16 @@ uint32_t app_bt_policy_get_profs_by_bond_flag(uint32_t bond_flag)
             }
         }
 
+#if F_APP_GATT_OVER_BREDR_SUPPORT
+        if (bond_flag & (BOND_FLAG_GATT))
+        {
+            if (app_cfg_const.supported_profile_mask & GATT_PROFILE_MASK)
+            {
+                profs |= GATT_PROFILE_MASK;
+            }
+        }
+#endif
+
         if (bond_flag & BOND_FLAG_SPP)
         {
             if (app_cfg_const.supported_profile_mask & SPP_PROFILE_MASK)
@@ -461,6 +457,7 @@ uint32_t app_bt_policy_get_profs_by_bond_flag(uint32_t bond_flag)
                 profs |= IAP_PROFILE_MASK;
             }
         }
+
     }
     else if ((T_LINKBACK_SCENARIO)app_cfg_const.link_scenario == LINKBACK_SCENARIO_A2DP_BASE)
     {
@@ -469,6 +466,16 @@ uint32_t app_bt_policy_get_profs_by_bond_flag(uint32_t bond_flag)
             profs |= A2DP_PROFILE_MASK;
             profs |= AVRCP_PROFILE_MASK;
         }
+
+#if F_APP_GATT_OVER_BREDR_SUPPORT
+        if (bond_flag & (BOND_FLAG_GATT))
+        {
+            if (app_cfg_const.supported_profile_mask & GATT_PROFILE_MASK)
+            {
+                profs |= GATT_PROFILE_MASK;
+            }
+        }
+#endif
 
 #if F_APP_HID_SUPPORT
         if (bond_flag & (BOND_FLAG_HID))
@@ -507,12 +514,23 @@ uint32_t app_bt_policy_get_profs_by_bond_flag(uint32_t bond_flag)
             profs |= AVRCP_PROFILE_MASK;
         }
 
+
 #if F_APP_HID_SUPPORT
         if (bond_flag & (BOND_FLAG_HID))
         {
             if (app_cfg_const.supported_profile_mask & HID_PROFILE_MASK)
             {
                 profs |= HID_PROFILE_MASK;
+            }
+        }
+#endif
+
+#if F_APP_GATT_OVER_BREDR_SUPPORT
+        if (bond_flag & (BOND_FLAG_GATT))
+        {
+            if (app_cfg_const.supported_profile_mask & GATT_PROFILE_MASK)
+            {
+                profs |= GATT_PROFILE_MASK;
             }
         }
 #endif
@@ -548,6 +566,16 @@ uint32_t app_bt_policy_get_profs_by_bond_flag(uint32_t bond_flag)
                 profs |= IAP_PROFILE_MASK;
             }
         }
+
+#if F_APP_GATT_OVER_BREDR_SUPPORT
+        if (bond_flag & (BOND_FLAG_GATT))
+        {
+            if (app_cfg_const.supported_profile_mask & GATT_PROFILE_MASK)
+            {
+                profs |= GATT_PROFILE_MASK;
+            }
+        }
+#endif
     }
 #if F_APP_HID_SUPPORT
     else if ((T_LINKBACK_SCENARIO)app_cfg_const.link_scenario == LINKBACK_SCENARIO_HID_BASE)
@@ -577,6 +605,10 @@ static void app_bt_policy_set_bd_addr(void)
     remote_local_addr_set(app_cfg_nv.bud_local_addr);
     remote_peer_addr_set(app_cfg_nv.bud_peer_addr);
     remote_session_role_set((T_REMOTE_SESSION_ROLE)app_cfg_nv.bud_role);
+
+#if F_APP_LEA_SUPPORT
+    app_lea_uca_set_key_convert();
+#endif
 
 #if F_APP_ALLOW_LEGACY_GAMING_TX_3M
     gap_br_vendor_data_rate_set(0); //link for 2M/3M
@@ -707,14 +739,12 @@ static void app_bt_policy_b2b_connected_add_node(uint8_t *bd_addr)
         p_link = app_link_alloc_br_link(bd_addr);
     }
 
-    ENGAGE_PRINT_TRACE2("app_bt_policy_b2b_connected_add_node: bd_addr %s, p_link %p",
-                        TRACE_BDADDR(bd_addr), p_link);
-
     if (p_link != NULL)
     {
         engage_done = true;
         b2b_connected = true;
         rws_link_lost = false;
+        app_bt_point_link_num_changed(BP_LINK_TYPE_B2B_BR, BP_LINK_EVENT_CONNECT, bd_addr);
     }
 }
 
@@ -723,13 +753,12 @@ static void app_bt_policy_b2b_connected_del_node(uint8_t *bd_addr)
     T_APP_BR_LINK *p_link;
 
     p_link = app_link_find_br_link(bd_addr);
-    ENGAGE_PRINT_TRACE2("app_bt_policy_b2b_connected_del_node: bd_addr %s, p_link %p",
-                        TRACE_BDADDR(bd_addr), p_link);
     if (p_link != NULL)
     {
         app_link_free_br_link(p_link);
         engage_done = false;
         b2b_connected = false;
+        app_bt_point_link_num_changed(BP_LINK_TYPE_B2B_BR, BP_LINK_EVENT_DISCONNECT, bd_addr);
     }
 }
 
@@ -757,7 +786,6 @@ static void app_bt_policy_b2b_connected_del_prof(uint8_t *bd_addr, uint32_t prof
 
 static void app_bt_policy_b2s_connected_init(void)
 {
-    app_db.b2s_connected_num = 0;
     if (app_cfg_const.enable_multi_link)
     {
         app_db.b2s_connected_num_max = app_cfg_const.max_legacy_multilink_devices;
@@ -770,7 +798,7 @@ static void app_bt_policy_b2s_connected_init(void)
 
 static uint8_t app_bt_policy_b2s_connected_is_empty(void)
 {
-    if (app_db.b2s_connected_num == 0)
+    if (app_bt_point_br_link_num_get() == 0)
     {
         return true;
     }
@@ -782,7 +810,7 @@ static uint8_t app_bt_policy_b2s_connected_is_empty(void)
 
 static bool app_bt_policy_b2s_connected_is_over(void)
 {
-    if (app_db.b2s_connected_num > app_db.b2s_connected_num_max)
+    if (app_bt_point_br_link_num_get() > app_db.b2s_connected_num_max)
     {
         return true;
     }
@@ -804,8 +832,8 @@ static bool app_bt_policy_b2s_connected_add_node(uint8_t *bd_addr, uint8_t *id)
         {
             if (app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SECONDARY)
             {
-                app_db.b2s_connected_num++;
-                app_ipc_publish(APP_DEVICE_IPC_TOPIC, APP_DEVICE_IPC_EVT_B2S_LINK_NUM, NULL);
+                app_bt_point_link_num_changed(BP_LINK_TYPE_B2S_BR, BP_LINK_EVENT_CONNECT, bd_addr);
+
 #if F_APP_CHARGER_CASE_SUPPORT
                 uint8_t connect_status = true;
 
@@ -874,6 +902,12 @@ static void app_bt_policy_b2s_connected_add_prof(uint8_t *bd_addr, uint32_t prof
             bt_bond_flag_add(bd_addr, BOND_FLAG_IAP);
             break;
 
+#if F_APP_GATT_OVER_BREDR_SUPPORT
+        case GATT_PROFILE_MASK:
+            bt_bond_flag_add(bd_addr, BOND_FLAG_GATT);
+            break;
+#endif
+
         default:
             sync_flag = false;
             break;
@@ -889,8 +923,10 @@ static void app_bt_policy_b2s_connected_add_prof(uint8_t *bd_addr, uint32_t prof
                                                 (uint8_t *)&msg, sizeof(T_APP_REMOTE_MSG_PAYLOAD_PROFILE_CONNECTED));
 
         }
-    }
 
+        ENGAGE_PRINT_INFO2("connected: b2s, bd_addr %s, profs 0x%08x", TRACE_BDADDR(bd_addr),
+                           p_link->connected_profile);
+    }
 }
 
 static void app_bt_policy_b2s_connected_del_prof(uint8_t *bd_addr, uint32_t prof)
@@ -901,6 +937,9 @@ static void app_bt_policy_b2s_connected_del_prof(uint8_t *bd_addr, uint32_t prof
     if (p_link != NULL)
     {
         p_link->connected_profile &= ~prof;
+
+        ENGAGE_PRINT_INFO2("connected: b2s, bd_addr %s, profs 0x%08x", TRACE_BDADDR(bd_addr),
+                           p_link->connected_profile);
     }
 }
 
@@ -932,12 +971,11 @@ static bool app_bt_policy_b2s_connected_del_node(uint8_t *bd_addr)
 #endif
         if (app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SECONDARY)
         {
-            if (app_db.b2s_connected_num > 0)
+            if (app_bt_point_br_link_num_get() > 0)
             {
-                app_db.b2s_connected_num--;
-                app_ipc_publish(APP_DEVICE_IPC_TOPIC, APP_DEVICE_IPC_EVT_B2S_LINK_NUM, NULL);
+                app_bt_point_link_num_changed(BP_LINK_TYPE_B2S_BR, BP_LINK_EVENT_DISCONNECT, bd_addr);
 #if F_APP_CHARGER_CASE_SUPPORT
-                if (app_db.b2s_connected_num == 0)
+                if (app_link_get_b2s_link_num() == 0)
                 {
                     uint8_t connect_status = false;
 
@@ -1010,11 +1048,11 @@ static void app_bt_policy_b2s_connected_mark_index(uint8_t *bd_addr)
     {
         ++last_src_conn_idx;
 
-        if (app_db.b2s_connected_num > 1)
+        if (app_bt_point_br_link_num_get() > 1)
         {
             p_link->src_conn_idx = last_src_conn_idx;
         }
-        else if (app_db.b2s_connected_num == 1)
+        else if (app_bt_point_br_link_num_get() == 1)
         {
             p_link->src_conn_idx = last_src_conn_idx - 1;
         }
@@ -1090,9 +1128,9 @@ void app_bt_policy_update_cpu_freq(T_BP_CPU_FREQ_EVENT req_event)
     // increase cpu freq when:
     // 1. acl link connected (3s)
     // 2. (two sco link) || (sco + le link) || (sco + a2dp streaming)
-    // 3. bis random scan
+    // 3. lea bca state
     // 4. sco + a2dp streaming
-    // 5. LE audio streaming
+    // 5. lea streaming
     // 6. roleswap
     // 7. linkback
     //
@@ -1122,6 +1160,9 @@ void app_bt_policy_update_cpu_freq(T_BP_CPU_FREQ_EVENT req_event)
     else if (app_link_get_sco_conn_num() > 1 ||
              (app_link_get_sco_conn_num() > 0 && app_link_get_le_link_num() > 0) ||
              (app_link_get_sco_conn_num() > 0 && app_a2dp_is_streaming())
+#if F_APP_LEA_SUPPORT
+             || (app_link_get_sco_conn_num() > 0 && app_lea_adv_get_state() == BLE_EXT_ADV_MGR_ADV_ENABLED)
+#endif
             )
     {
         pm_cpu_freq_req(&app_bt_policy_freq_handle, cpu_freq_max, &actual_mhz);
@@ -1136,7 +1177,7 @@ void app_bt_policy_update_cpu_freq(T_BP_CPU_FREQ_EVENT req_event)
     }
 #endif
 #if TARGET_LE_AUDIO_GAMING
-    else if (app_lea_mgr_is_streaming())
+    else if (app_lea_mgr_is_downstreaming())
     {
         pm_cpu_freq_req(&app_bt_policy_freq_handle, cpu_freq_max, &actual_mhz);
         check_reason = 6;
@@ -1257,9 +1298,31 @@ static void app_bt_policy_recv_relay_pri_req(void *buf, uint16_t len)
 
         ENGAGE_PRINT_TRACE1("recv_relay_pri_req: 0x%x", req);
 
-        if (req & PRI_REQ_LET_SEC_TO_DISCONN)
+        if (req)
         {
-            gap_br_send_acl_disconn_req(app_cfg_nv.bud_peer_addr);
+            switch (req)
+            {
+            case PRI_REQ_LET_SEC_TO_DISCONN:
+                {
+                    gap_br_send_acl_disconn_req(app_cfg_nv.bud_peer_addr);
+                }
+                break;
+#if F_APP_LEA_SUPPORT
+            case PRI_REQ_LET_SEC_ENABLE_ADV:
+                {
+                    app_lea_adv_start();
+                }
+                break;
+
+            case PRI_REQ_LET_SEC_DISENABLE_ADV:
+                {
+                    app_lea_adv_stop();
+                }
+                break;
+#endif
+            default:
+                break;
+            }
         }
     }
 }
@@ -1339,9 +1402,7 @@ static void app_bt_policy_primary_adv(void)
     }
 
     ENGAGE_PRINT_TRACE1("app_bt_policy_primary_adv: adv_interval 0x%x", adv_interval);
-#if F_APP_LEA_SUPPORT
-    mtc_gap_set_pri(MTC_GAP_VENDOR_ADV);
-#endif
+
     engage_afe_primary_adv_start(adv_interval);
 }
 
@@ -1363,7 +1424,7 @@ void app_bt_policy_primary_engage_action_adjust(void)
         case STATE_AFE_PAIRING_MODE:
         case STATE_AFE_STANDBY:
             {
-                if (app_db.b2s_connected_num == 0 && rws_link_lost)
+                if (app_bt_point_br_link_num_get() == 0 && rws_link_lost)
                 {
                     engage_afe_forever_shaking_start();
                 }
@@ -1421,7 +1482,8 @@ static void app_bt_policy_enter_state(T_STATE state, T_BT_DEVICE_MODE mode)
         }
     }
 
-    if (app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SECONDARY && app_db.b2s_connected_num == 1)
+    if (app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SECONDARY &&
+        app_bt_point_br_link_num_get() == 1)
     {
         if (app_cfg_const.enable_multi_link && app_cfg_const.enable_always_discoverable)
         {
@@ -1477,7 +1539,7 @@ static void app_bt_policy_enter_state(T_STATE state, T_BT_DEVICE_MODE mode)
 #endif
 
         if ((app_hfp_get_call_status() != APP_CALL_IDLE) ||
-            app_link_is_b2s_link_num_full())
+            app_bt_point_br_link_is_full())
         {
             app_stop_timer(&timer_idx_discoverable);
         }
@@ -1513,7 +1575,7 @@ static void app_bt_policy_enter_state(T_STATE state, T_BT_DEVICE_MODE mode)
         }
         else if (app_cfg_const.enable_multi_link)
         {
-            if (app_cfg_nv.dongle_rf_mode == DONGLE_RF_MODE_24G && (app_db.b2s_connected_num >= 1))
+            if (app_cfg_nv.dongle_rf_mode == DONGLE_RF_MODE_24G && (app_link_get_b2s_link_num() >= 1))
             {
                 mode = BT_DEVICE_MODE_IDLE;
             }
@@ -1557,6 +1619,11 @@ static void app_bt_policy_enter_state(T_STATE state, T_BT_DEVICE_MODE mode)
     }
 #endif
 
+    if ((app_cfg_nv.is_dut_test_mode == 1) && (app_link_get_b2s_link_num() == 0))
+    {
+        mode = BT_DEVICE_MODE_DISCOVERABLE_CONNECTABLE;
+    }
+
     if (radio_mode != mode)
     {
         app_bt_policy_new_radio_mode(mode);
@@ -1589,6 +1656,17 @@ static void app_bt_policy_enter_state(T_STATE state, T_BT_DEVICE_MODE mode)
 
 #if F_APP_LEA_SUPPORT
         app_lea_mgr_dev_ctrl(LEA_DEV_CTRL_SET_RADIO, &mode);
+#if F_APP_ERWS_SUPPORT
+        if (mode == BT_DEVICE_MODE_CONNECTABLE ||
+            mode == BT_DEVICE_MODE_DISCOVERABLE_CONNECTABLE)
+        {
+            app_bt_policy_relay_pri_req(PRI_REQ_LET_SEC_ENABLE_ADV);
+        }
+        else if (mode == BT_DEVICE_MODE_IDLE)
+        {
+            app_bt_policy_relay_pri_req(PRI_REQ_LET_SEC_DISENABLE_ADV);
+        }
+#endif
 #elif F_APP_GAMING_DONGLE_SUPPORT
         bool ignore_radio_mode = (mode == BT_DEVICE_MODE_IDLE &&
                                   dongle_ctrl_data.ignore_radio_mode_idle_when_shutdown);
@@ -1747,6 +1825,10 @@ static void app_bt_policy_enter_state(T_STATE state, T_BT_DEVICE_MODE mode)
             break;
         }
 
+#if F_APP_LEA_SUPPORT
+        app_lea_adv_update();
+#endif
+
         if (app_cfg_const.timer_pairing_timeout != 0)
         {
             if (STATE_AFE_PAIRING_MODE == cur_state)
@@ -1783,7 +1865,7 @@ static void app_bt_policy_enter_state(T_STATE state, T_BT_DEVICE_MODE mode)
         {
             app_sniff_mode_b2s_disable_all(SNIFF_DISABLE_MASK_LINKBACK);
 
-            app_bt_policy_linkback_run();
+            app_bt_policy_linkback_run(EVENT_LINKBACK_START);
         }
         else
         {
@@ -1844,7 +1926,7 @@ static void app_bt_policy_linkback_sched(void)
     }
 }
 
-static void app_bt_policy_linkback_run(void)
+static void app_bt_policy_linkback_run(T_EVENT event)
 {
     T_LINKBACK_NODE node;
     uint32_t profs;
@@ -1872,7 +1954,7 @@ RETRY:
         }
     }
 
-    if (!linkback_active_node.is_valid)
+    if (!linkback_active_node.is_valid && linkback_todo_queue_node_num() == 0)
     {
         ENGAGE_PRINT_TRACE0("linkback_run: have no valid node, finish");
         app_bt_policy_b2s_tpoll_update(linkback_active_node.linkback_node.bd_addr,
@@ -1944,7 +2026,7 @@ RETRY:
         }
         else
         {
-            if (app_link_is_b2s_link_num_full())
+            if (app_bt_point_br_link_is_full())
             {
                 ENGAGE_PRINT_TRACE0("linkback_run: b2s is full, abort this node");
 
@@ -2040,7 +2122,7 @@ static void app_bt_policy_roleswap_delay_handle(void)
             bond_list_load_flag = true;
 
             if ((app_cfg_const.enter_pairing_while_only_one_device_connected) &&
-                (app_db.b2s_connected_num == 1))
+                (app_bt_point_br_link_num_get() == 1))
             {
                 discoverable_when_one_link = true;
             }
@@ -2109,11 +2191,9 @@ static void app_bt_policy_roleswap_event_handle(T_BT_PARAM *param)
 
         engage_done = true;
         b2b_connected = true;
-        app_db.b2s_connected_num = app_link_update_b2s_connected_num();
-
-        app_bt_policy_connected();
 
 #if F_APP_LEA_SUPPORT
+        app_lea_adv_update();
         app_lea_mgr_dev_ctrl(LEA_DEV_CTRL_SET_IDLE, NULL);
 
         if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_SECONDARY)
@@ -2123,6 +2203,8 @@ static void app_bt_policy_roleswap_event_handle(T_BT_PARAM *param)
         }
 
         mtc_check_reopen_mic();
+
+        app_lea_uca_set_key_convert();
 #endif
 
         dedicated_enter_pairing_mode_flag = false;
@@ -2140,6 +2222,7 @@ static void app_bt_policy_roleswap_event_handle(T_BT_PARAM *param)
         app_stop_timer(&timer_idx_discoverable);
         app_stop_timer(&timer_idx_linkback);
         app_stop_timer(&timer_idx_linkback_delay);
+        app_stop_timer(&timer_idx_linkback_lea);
         app_stop_timer(&timer_idx_wait_coupling);
         app_stop_timer(&timer_idx_engage_action_adjust);
         app_stop_timer(&timer_idx_page_scan_param);
@@ -2166,6 +2249,12 @@ static void app_bt_policy_roleswap_event_handle(T_BT_PARAM *param)
                     {
                         app_db.first_hf_index = app_idx;
                         p_link->app_hf_state = APP_HF_STATE_CONNECTED;
+                    }
+
+                    if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY)
+                    {
+                        app_bt_point_link_num_changed(BP_LINK_TYPE_B2S_BR, BP_LINK_EVENT_CONNECT, p_link->bd_addr);
+                        app_bt_policy_sync_b2s_connected();
                     }
 
                     ENGAGE_PRINT_TRACE2("roleswap_event_handle: b2s_tpoll_value %d, b2s_tpoll_ctx 0x%x",
@@ -2558,6 +2647,7 @@ static void app_bt_policy_role_slave_event_handle(T_BT_PARAM *param)
     }
 }
 
+#if F_APP_ROLESWITCH_WHEN_SCO_CHANGE
 void app_bt_policy_roleswitch_when_sco(uint8_t *bd_addr)
 {
     if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_SINGLE)
@@ -2565,6 +2655,7 @@ void app_bt_policy_roleswitch_when_sco(uint8_t *bd_addr)
         app_bt_policy_roleswitch_handle(bd_addr, ROLESWITCH_EVENT_SCO_CHANGED);
     }
 }
+#endif
 
 #if F_APP_ERWS_SUPPORT
 static void app_bt_policy_prepare_for_roleswap_event_handle(void)
@@ -2671,6 +2762,7 @@ static void app_bt_policy_startup_event_handle(T_BT_PARAM *bt_param)
     timer_idx_bud_linklost = 0;
     timer_idx_linkback = 0;
     timer_idx_linkback_delay = 0;
+    timer_idx_linkback_lea = 0;
     timer_idx_wait_coupling = 0;
     timer_idx_engage_action_adjust = 0;
     timer_idx_page_scan_param = 0;
@@ -2839,7 +2931,8 @@ static void app_bt_policy_shutdown_step_handle(void)
     case SHUTDOWN_STEP_WAIT_DISCONN_B2S_LINK:
         {
             ++shutdown_step_retry_cnt;
-            if ((0 == app_db.b2s_connected_num) || shutdown_step_retry_cnt >= DISCONN_B2S_LINK_WAIT_TIMES_MAX)
+            if ((0 == app_bt_point_br_link_num_get()) ||
+                shutdown_step_retry_cnt >= DISCONN_B2S_LINK_WAIT_TIMES_MAX)
             {
                 if (app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SINGLE)
                 {
@@ -2917,6 +3010,7 @@ static void app_bt_policy_stop_all_active_action(void)
     app_stop_timer(&timer_idx_bud_linklost);
     app_stop_timer(&timer_idx_linkback);
     app_stop_timer(&timer_idx_linkback_delay);
+    app_stop_timer(&timer_idx_linkback_lea);
     app_stop_timer(&timer_idx_wait_coupling);
     app_stop_timer(&timer_idx_engage_action_adjust);
     app_stop_timer(&timer_idx_page_scan_param);
@@ -2947,7 +3041,7 @@ static void app_bt_policy_stop_all_active_action(void)
 static void app_bt_policy_shutdown_event_handle(void)
 {
 #if F_APP_LEA_SUPPORT
-    mtc_if_fm_ap(AP_TO_MTC_SHUTDOWN, NULL, NULL);
+    mtc_if_fm_ap_handle(AP_TO_MTC_SHUTDOWN, NULL, NULL);
 #endif
     app_bt_policy_stop_all_active_action();
 
@@ -2971,7 +3065,7 @@ static void app_bt_policy_shutdown_event_handle(void)
 
     app_bt_policy_enter_state(STATE_SHUTDOWN_STEP, BT_DEVICE_MODE_IDLE);
 
-    if ((b2b_connected == false) && (app_db.b2s_connected_num == 0))
+    if ((b2b_connected == false) && (app_bt_point_br_link_num_get() == 0))
     {
         shutdown_step = SHUTDOWN_STEP_END;
     }
@@ -3201,6 +3295,7 @@ static void app_bt_policy_state_fe_coupling_event_handle(T_EVENT event)
 
             if (app_cfg_const.bud_role == REMOTE_SESSION_ROLE_SECONDARY)
             {
+                app_ble_common_adv_update_peer_addr();
                 app_bt_policy_legacy_set_page_scan_param(NORMAL_PAGESCAN_INTERVAL, NORMAL_PAGESCAN_WINDOW);
             }
 
@@ -3409,7 +3504,7 @@ static void app_bt_policy_state_afe_linkback_event_handle(T_EVENT event, T_BT_PA
                 }
                 else
                 {
-                    app_bt_policy_linkback_run();
+                    app_bt_policy_linkback_run(event);
                 }
             }
             else
@@ -3426,7 +3521,7 @@ static void app_bt_policy_state_afe_linkback_event_handle(T_EVENT event, T_BT_PA
 
                     linkback_active_node.is_valid = false;
 
-                    app_bt_policy_linkback_run();
+                    app_bt_policy_linkback_run(event);
                 }
             }
         }
@@ -3468,12 +3563,12 @@ static void app_bt_policy_state_afe_linkback_event_handle(T_EVENT event, T_BT_PA
                 }
                 else
                 {
-                    app_bt_policy_linkback_run();
+                    app_bt_policy_linkback_run(event);
                 }
             }
             else
             {
-                app_bt_policy_linkback_run();
+                app_bt_policy_linkback_run(event);
             }
         }
         break;
@@ -3482,7 +3577,7 @@ static void app_bt_policy_state_afe_linkback_event_handle(T_EVENT event, T_BT_PA
         {
             if (!linkback_active_node_judge_cur_conn_addr(param->bd_addr))
             {
-                if (app_link_is_b2s_link_num_full())
+                if (app_bt_point_br_link_is_full())
                 {
                     if (linkback_active_node.is_valid)
                     {
@@ -3513,7 +3608,7 @@ static void app_bt_policy_state_afe_linkback_event_handle(T_EVENT event, T_BT_PA
             linkback_active_node.is_exit = true;
             after_stop_sdp_todo_linkback_run_flag = false;
 
-            app_bt_policy_linkback_run();
+            app_bt_policy_linkback_run(event);
         }
         break;
 
@@ -3540,7 +3635,7 @@ static void app_bt_policy_state_afe_linkback_event_handle(T_EVENT event, T_BT_PA
                     //linkback delay meet linkback timeout,
                     //stop linkback delay timer and do linkback sched directly
                     app_stop_timer(&timer_idx_linkback_delay);
-                    app_bt_policy_linkback_run();
+                    app_bt_policy_linkback_run(event);
                 }
                 else
                 {
@@ -3564,7 +3659,7 @@ static void app_bt_policy_state_afe_linkback_event_handle(T_EVENT event, T_BT_PA
             {
                 //when linkback timeout, the linkback already finishd,
                 //do linkback sched directly
-                app_bt_policy_linkback_run();
+                app_bt_policy_linkback_run(event);
             }
         }
         break;
@@ -3582,38 +3677,20 @@ static void app_bt_policy_state_afe_linkback_event_handle(T_EVENT event, T_BT_PA
                                                  (T_BT_SPP_UUID_DATA *)(&param->sdp_info->srv_class_uuid_data), &local_server_chann))
                 {
                     bool is_sdp_ok = false;
-                    if (server_channel == RFC_SPP_CHANN_NUM)
+
+                    if (param->sdp_info->srv_class_uuid_data.uuid_16 == UUID_SERIAL_PORT)
                     {
-#if F_APP_GAMING_DONGLE_SUPPORT
-                        if (linkback_active_node.linkback_conn_param.server_channel != RFC_SPP_DONGLE_CHANN_NUM)
-#endif
+                        //standard spp
+                        if (!linkback_active_node.linkback_conn_param.spp_has_vendor)
                         {
-#if XM_XIAOAI_FEATURE_SUPPORT
-                            if (linkback_active_node.linkback_conn_param.server_channel != RFC_SPP_XIAOAI_CHANN_NUM)
-#endif
-                            {
-                                if (linkback_active_node.linkback_conn_param.server_channel != RFC_RTK_VENDOR_CHANN_NUM)
-                                {
-                                    is_sdp_ok = true;
-                                }
-                            }
+                            //when has no vendor spp attr, standard spp sdp suc
+                            is_sdp_ok = true;
                         }
                     }
-
-#if F_APP_GAMING_DONGLE_SUPPORT
-                    else if (server_channel == RFC_SPP_DONGLE_CHANN_NUM)
+                    else
                     {
-                        is_sdp_ok = true;
-                    }
-#endif
-#if XM_XIAOAI_FEATURE_SUPPORT
-                    else if (server_channel == RFC_SPP_XIAOAI_CHANN_NUM)
-                    {
-                        is_sdp_ok = true;
-                    }
-#endif
-                    else if (server_channel == RFC_RTK_VENDOR_CHANN_NUM)
-                    {
+                        //whether has standard spp attr or not, vendor spp sdp always suc
+                        linkback_active_node.linkback_conn_param.spp_has_vendor = true;
                         is_sdp_ok = true;
                     }
 
@@ -3665,7 +3742,7 @@ static void app_bt_policy_state_afe_linkback_event_handle(T_EVENT event, T_BT_PA
                          (profs & linkback_active_node.doing_prof)))
                     {
                         linkback_active_node_step_suc_adjust_remain_profs();
-                        app_bt_policy_linkback_run();
+                        app_bt_policy_linkback_run(event);
                     }
                     else
                     {
@@ -3675,20 +3752,20 @@ static void app_bt_policy_state_afe_linkback_event_handle(T_EVENT event, T_BT_PA
                             if (PBAP_PROFILE_MASK == linkback_active_node.doing_prof)
                             {
                                 linkback_active_node_step_suc_adjust_remain_profs();
-                                app_bt_policy_linkback_run();
+                                app_bt_policy_linkback_run(event);
                             }
                         }
                         else
                         {
                             linkback_active_node_step_fail_adjust_remain_profs();
-                            app_bt_policy_linkback_run();
+                            app_bt_policy_linkback_run(event);
                         }
                     }
                 }
                 else
                 {
                     linkback_active_node_step_fail_adjust_remain_profs();
-                    app_bt_policy_linkback_run();
+                    app_bt_policy_linkback_run(event);
                 }
             }
         }
@@ -3711,7 +3788,7 @@ static void app_bt_policy_state_afe_linkback_event_handle(T_EVENT event, T_BT_PA
                 }
 #endif
                 linkback_active_node_step_suc_adjust_remain_profs();
-                app_bt_policy_linkback_run();
+                app_bt_policy_linkback_run(event);
             }
         }
         break;
@@ -3751,7 +3828,7 @@ static void app_bt_policy_state_afe_linkback_event_handle(T_EVENT event, T_BT_PA
                 if (linkback_active_node_judge_cur_conn_prof(param->bd_addr, param->prof))
                 {
                     linkback_active_node_step_fail_adjust_remain_profs();
-                    app_bt_policy_linkback_run();
+                    app_bt_policy_linkback_run(event);
                 }
             }
         }
@@ -3762,7 +3839,7 @@ static void app_bt_policy_state_afe_linkback_event_handle(T_EVENT event, T_BT_PA
             if (linkback_active_node_judge_cur_conn_prof(param->bd_addr, param->prof))
             {
                 linkback_active_node_step_fail_adjust_remain_profs();
-                app_bt_policy_linkback_run();
+                app_bt_policy_linkback_run(event);
             }
         }
         break;
@@ -4002,7 +4079,7 @@ static bool app_bt_policy_judge_dedicated_enter_pairing_mode(void)
 
     if (!is_force_flag)
     {
-        if (app_link_is_b2s_link_num_full())
+        if (app_bt_point_is_full() && app_bt_point_br_link_is_full() && app_bt_point_lea_link_is_full())
         {
             ret = false;
         }
@@ -4138,7 +4215,7 @@ static void app_bt_policy_prepare_for_dedicated_enter_pairing_mode(void)
 
     disconnect_for_pairing_mode = false;
 
-    if (!app_link_is_b2s_link_num_full())
+    if (!(app_bt_point_is_full() && app_bt_point_br_link_is_full() && app_bt_point_lea_link_is_full()))
     {
 #if F_APP_DURIAN_SUPPORT
         if (!app_durian_cfg_multi_is_on())
@@ -4508,7 +4585,7 @@ static void app_bt_policy_engage_ind(T_ENGAGE_IND ind)
             app_bt_policy_state_machine(EVENT_FE_SHAKING_DONE, NULL);
 
 #if F_APP_LEA_SUPPORT
-            app_lea_adv_start();
+            app_lea_adv_update();
 #endif
         }
         break;
@@ -4519,7 +4596,7 @@ static void app_bt_policy_engage_ind(T_ENGAGE_IND ind)
             app_bt_policy_state_machine(EVENT_AFE_SHAKING_DONE, &bt_param);
 
 #if F_APP_LEA_SUPPORT
-            app_lea_adv_start();
+            app_lea_adv_update();
 #endif
         }
         break;
@@ -4530,7 +4607,7 @@ static void app_bt_policy_engage_ind(T_ENGAGE_IND ind)
             app_bt_policy_state_machine(EVENT_AFE_SHAKING_DONE, &bt_param);
 
 #if F_APP_LEA_SUPPORT
-            app_lea_adv_start();
+            app_lea_adv_update();
 #endif
         }
         break;
@@ -4771,7 +4848,8 @@ static void app_bt_policy_stable_sched(T_STABLE_ENTER_MODE mode)
                 }
                 else
                 {
-                    if (app_link_is_b2s_link_num_full() && engage_done)
+                    if ((app_bt_point_is_full() && app_bt_point_br_link_is_full() &&
+                         app_bt_point_lea_link_is_full()) && engage_done)
                     {
                         app_bt_policy_enter_state(STATE_AFE_CONNECTED, BT_DEVICE_MODE_IDLE);
                     }
@@ -4853,7 +4931,8 @@ static void app_bt_policy_stable_sched(T_STABLE_ENTER_MODE mode)
                     }
                     else
                     {
-                        if ((app_link_is_b2s_link_num_full() && engage_done)
+                        if (((app_bt_point_is_full() && app_bt_point_br_link_is_full() &&
+                              app_bt_point_lea_link_is_full()) && engage_done)
                             || (app_db.connected_num_before_roleswap > app_link_get_b2s_link_num()))
                         {
                             app_bt_policy_enter_state(STATE_AFE_CONNECTED, BT_DEVICE_MODE_IDLE);
@@ -4901,8 +4980,9 @@ static void app_bt_policy_stable_sched(T_STABLE_ENTER_MODE mode)
                     (feature_map.user_mode == ENABLE) && !app_anc_ramp_tool_is_busy() &&
 #endif
 #if F_APP_LEA_SUPPORT
-                    (mtc_device_poweroff_check(MTC_EVENT_LEGACY_PAIRING_TO)) &&
+                    (!app_lea_bca_state() && app_link_get_lea_link_num() == 0 && app_db.remote_lea_link_num == 0) &&
 #endif
+                    (app_link_get_le_link_num() == 0) &&
                     app_bt_policy_b2s_connected_is_empty() &&
                     (app_cfg_const.enable_auto_power_off_when_listening_mode_is_not_off
 #if F_APP_LISTENING_MODE_SUPPORT
@@ -4949,7 +5029,8 @@ static void app_bt_policy_stable_sched(T_STABLE_ENTER_MODE mode)
                     }
                     else
                     {
-                        if (app_link_is_b2s_link_num_full() && engage_done)
+                        if ((app_bt_point_is_full() && app_bt_point_br_link_is_full() && app_bt_point_lea_link_is_full()) &&
+                            engage_done)
                         {
                             app_bt_policy_enter_state(STATE_AFE_CONNECTED, BT_DEVICE_MODE_IDLE);
                         }
@@ -5019,11 +5100,8 @@ static bool app_bt_policy_bt_event_pre_handle(T_EVENT event, T_BT_PARAM *param)
     T_BP_EVENT_PARAM event_param;
     T_APP_BR_LINK *p_link;
 
-    if (param != NULL)
-    {
-        event_param.bd_addr = param->bd_addr;
-        event_param.cause = param->cause;
-    }
+    event_param.bd_addr = param->bd_addr;
+    event_param.cause = param->cause;
 
     switch (event)
     {
@@ -5086,7 +5164,7 @@ static bool app_bt_policy_bt_event_pre_handle(T_EVENT event, T_BT_PARAM *param)
                     }
                 }
 
-                app_db.b2s_connected_num = 0;
+                app_bt_point_br_link_num_set(0);
             }
             app_bt_policy_primary_engage_action_adjust();
 
@@ -5121,7 +5199,7 @@ static bool app_bt_policy_bt_event_pre_handle(T_EVENT event, T_BT_PARAM *param)
                     }
                 }
 
-                app_db.b2s_connected_num = 0;
+                app_bt_point_br_link_num_set(0);
             }
 
             app_bt_policy_primary_engage_action_adjust();
@@ -5325,7 +5403,7 @@ static bool app_bt_policy_bt_event_pre_handle(T_EVENT event, T_BT_PARAM *param)
     case EVENT_SRC_AUTH_SUC:
         {
             if ((app_cfg_const.enter_pairing_while_only_one_device_connected) &&
-                (app_db.b2s_connected_num == 1))
+                (app_bt_point_br_link_num_get() == 1))
             {
                 discoverable_when_one_link = true;
             }
@@ -5845,6 +5923,13 @@ static bool app_bt_policy_event_handle(T_EVENT event, T_BT_PARAM *param)
         }
         break;
 
+    case EVENT_LEA_CONN_TIMEOUT:
+        {
+            linkback_active_node.is_lea_adv_timeout = true;
+            app_bt_policy_linkback_run(event);
+        }
+        break;
+
     default:
         {
             ret = false;
@@ -5858,7 +5943,7 @@ static bool app_bt_policy_event_handle(T_EVENT event, T_BT_PARAM *param)
 #if F_APP_COMMON_DONGLE_SUPPORT
 static bool app_bt_policy_need_to_reject_acl(uint8_t *addr)
 {
-    uint32_t bond_flag;
+    uint32_t bond_flag = 0;
     uint8_t reject_reason = 0;
 #if F_APP_LEA_SUPPORT
     T_APP_LE_LINK *p_le_phone_link = app_dongle_get_le_audio_phone_link();
@@ -6093,20 +6178,14 @@ void app_bt_policy_state_machine(T_EVENT event, T_BT_PARAM *param)
     {
         if (EVENT_SRC_CONN_SUC <= event && event <= EVENT_PROFILE_DISCONN)
         {
-            if (app_bt_policy_sec_src_handle(event, param))
-            {
-                app_bt_policy_connected();
-            }
+            app_bt_policy_sec_src_handle(event, param);
             return;
         }
     }
 
     if (!app_bt_policy_event_handle(event, param))
     {
-        if (app_bt_policy_bt_event_pre_handle(event, param))
-        {
-            app_bt_policy_connected();
-        }
+        app_bt_policy_bt_event_pre_handle(event, param);
 
 #if F_APP_GAMING_DONGLE_SUPPORT
         if (event == EVENT_ENTER_GAMING_DONGLE_STREAMING)
@@ -6389,7 +6468,7 @@ static void app_bt_policy_timer_cback(uint8_t timer_evt, uint16_t param)
             {
                 if (app_db.remote_session_state == REMOTE_SESSION_STATE_CONNECTED)
                 {
-                    if (app_cfg_const.enable_low_bat_role_swap)
+                    if (app_cfg_const.disable_low_bat_role_swap == 0)
                     {
                         app_roleswap_req_battery_level();
                     }
@@ -6415,6 +6494,13 @@ static void app_bt_policy_timer_cback(uint8_t timer_evt, uint16_t param)
         {
             app_stop_timer(&timer_idx_increase_cpu_clk);
             app_bt_policy_update_cpu_freq(BP_CPU_FREQ_EVENT_SET_CPU_CLK_TIMEOUT);
+        }
+        break;
+
+    case APP_TIMER_LINKBACK_LEA:
+        {
+            app_stop_timer(&timer_idx_linkback_lea);
+            app_bt_policy_state_machine(EVENT_LEA_CONN_TIMEOUT, NULL);
         }
         break;
 
@@ -6561,8 +6647,6 @@ static void app_bt_policy_gaming_handle_did_info(T_APP_BR_LINK *p_link, T_BT_EVE
 {
     if (app_link_check_dongle_link(param->did_attr_info.bd_addr))
     {
-        app_dongle_record_init();
-
         app_bond_add_dongle_bond_info(param->did_attr_info.bd_addr);
 
 #if F_APP_MUTLILINK_SOURCE_PRIORITY_UI
@@ -6678,7 +6762,6 @@ static void app_bt_policy_cback(T_BT_EVENT event_type, void *event_buf, uint16_t
                     app_bt_policy_state_machine(EVENT_FE_TIMEOUT, NULL);
                 }
 #endif
-
                 app_bt_policy_state_machine(EVENT_SRC_CONN_SUC, &bt_param);
                 app_bt_sniffing_param_update(APP_BT_SNIFFING_EVENT_LEGACY_LINK_CHANGE);
                 bt_link_tpoll_range_set(param->acl_conn_success.bd_addr, 0, 0);
@@ -6687,6 +6770,13 @@ static void app_bt_policy_cback(T_BT_EVENT event_type, void *event_buf, uint16_t
                 bt_link_rssi_golden_range_set(param->acl_conn_success.bd_addr, GOLDEN_RANGE_B2S_MAX,
                                               GOLDEN_RANGE_B2S_MIN);
 #endif
+            }
+
+            T_APP_BR_LINK *p_link = app_link_find_br_link(param->acl_conn_success.bd_addr);
+
+            if (p_link != NULL)
+            {
+                p_link->acl_handle = param->acl_conn_success.handle;
             }
         }
         break;
@@ -6715,6 +6805,16 @@ static void app_bt_policy_cback(T_BT_EVENT event_type, void *event_buf, uint16_t
                 }
                 else
                 {
+#if F_APP_GAMING_DONGLE_SUPPORT
+                    if (!app_dongle_is_streaming())
+                    {
+                        if (STATE_AFE_LINKBACK == cur_state)
+                        {
+                            app_bt_policy_enter_state(STATE_AFE_LINKBACK, BT_DEVICE_MODE_CONNECTABLE);
+                        }
+                    }
+#endif
+
                     app_bt_policy_state_machine(EVENT_SRC_CONN_FAIL, &bt_param);
                 }
             }
@@ -7012,7 +7112,7 @@ static void app_bt_policy_cback(T_BT_EVENT event_type, void *event_buf, uint16_t
             {
                 bt_acl_conn_reject(param->acl_conn_ind.bd_addr, BT_ACL_REJECT_UNACCEPTABLE_ADDR);
             }
-            else if (app_link_check_b2s_link(param->acl_conn_ind.bd_addr) && app_link_is_b2s_link_num_full())
+            else if (app_link_check_b2s_link(param->acl_conn_ind.bd_addr) && app_bt_point_br_link_is_full())
             {
 #if CONFIG_REALTEK_GFPS_SASS_SUPPORT
                 if (extend_app_cfg_const.gfps_sass_support)
@@ -7195,6 +7295,7 @@ static void app_bt_policy_cback(T_BT_EVENT event_type, void *event_buf, uint16_t
             if (p_link != NULL && param->sco_conn_cmpl.cause == 0)
             {
                 p_link->sco_handle = param->sco_conn_cmpl.handle;
+                app_bt_point_link_num_changed(BP_LINK_TYPE_B2S_SCO, BP_LINK_EVENT_CONNECT, p_link->bd_addr);
 
                 if (app_bt_policy_get_radio_mode() == BT_DEVICE_MODE_DISCOVERABLE_CONNECTABLE)
                 {
@@ -7227,6 +7328,7 @@ static void app_bt_policy_cback(T_BT_EVENT event_type, void *event_buf, uint16_t
             if (p_link != NULL)
             {
                 p_link->sco_handle = 0;
+                app_bt_point_link_num_changed(BP_LINK_TYPE_B2S_SCO, BP_LINK_EVENT_DISCONNECT, p_link->bd_addr);
             }
 
             if (app_link_get_sco_conn_num() == 0)
@@ -7716,7 +7818,7 @@ static void app_bt_policy_cback(T_BT_EVENT event_type, void *event_buf, uint16_t
 
             gap_get_param(GAP_PARAM_BOND_AUTHEN_REQUIREMENTS_FLAGS, &auth_flags);
 
-            if (app_cfg_const.rws_remote_link_encryption_off && (auth_flags & GAP_AUTHEN_BIT_SC_BR_FLAG == 0))
+            if (app_cfg_const.rws_remote_link_encryption_off && ((auth_flags & GAP_AUTHEN_BIT_SC_BR_FLAG) == 0))
             {
                 if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY)
                 {
@@ -7843,11 +7945,13 @@ static void app_bt_policy_pri_collect_relay_info_for_roleswap(T_BP_ROLESWAP_INFO
                 bp_roleswap_info->link.remote_device_vendor_id = app_db.br_link[app_idx].remote_device_vendor_id;
                 bp_roleswap_info->link.abs_vol_state = app_db.br_link[app_idx].abs_vol_state;
                 bp_roleswap_info->link.rtk_vendor_spp_active = app_db.br_link[app_idx].rtk_vendor_spp_active;
-                bp_roleswap_info->link.tx_event_seqn = app_db.br_link[app_idx].tx_event_seqn;
+                bp_roleswap_info->link.tx_event_seqn = app_db.br_link[app_idx].cmd.tx_seqn;
                 bp_roleswap_info->link.b2s_connected_vp_is_played =
                     app_db.br_link[app_idx].b2s_connected_vp_is_played;
                 bp_roleswap_info->link.call_status = app_db.br_link[app_idx].call_status;
                 bp_roleswap_info->link.tpoll_value = app_db.br_link[app_idx].tpoll_value;
+                bp_roleswap_info->link.remote_hfp_brsf_capability =
+                    app_db.br_link[app_idx].remote_hfp_brsf_capability;
 
 #if F_APP_DURIAN_SUPPORT
                 bp_roleswap_info->link.audio_opus_status = app_db.br_link[app_idx].audio_opus_status;
@@ -7915,11 +8019,14 @@ static void app_bt_policy_new_pri_apply_relay_info_when_roleswap_suc(void)
                     bp_roleswap_info_temp.link.remote_device_vendor_id;
                 app_db.br_link[app_idx].abs_vol_state = bp_roleswap_info_temp.link.abs_vol_state;
                 app_db.br_link[app_idx].rtk_vendor_spp_active = bp_roleswap_info_temp.link.rtk_vendor_spp_active;
-                app_db.br_link[app_idx].tx_event_seqn = bp_roleswap_info_temp.link.tx_event_seqn;
+                app_db.br_link[app_idx].cmd.tx_seqn = bp_roleswap_info_temp.link.tx_event_seqn;
                 app_db.br_link[app_idx].b2s_connected_vp_is_played =
                     bp_roleswap_info_temp.link.b2s_connected_vp_is_played;
                 app_db.br_link[app_idx].call_status = bp_roleswap_info_temp.link.call_status;
                 app_db.br_link[app_idx].tpoll_value = bp_roleswap_info_temp.link.tpoll_value;
+                app_db.br_link[app_idx].remote_hfp_brsf_capability =
+                    bp_roleswap_info_temp.link.remote_hfp_brsf_capability;
+
 #if F_APP_DURIAN_SUPPORT
                 app_db.br_link[app_idx].audio_opus_status = bp_roleswap_info_temp.link.audio_opus_status;
 
@@ -8198,7 +8305,7 @@ void app_bt_policy_dynamic_adjust_b2b_tx_power(T_BP_SET_TX_POWER evt)
 
     T_B2B_TX_POWER tx_pwr_set = B2B_TX_POWER_SET_NONE;
 
-    if (app_db.b2s_connected_num != 0)
+    if (app_bt_point_br_link_num_get() != 0)
     {
         T_APP_BR_LINK *p_link = &(app_db.br_link[app_a2dp_get_active_idx()]);
 
@@ -8299,6 +8406,11 @@ T_APP_CALL_STATUS app_bt_policy_get_call_status(void)
     {
         return app_hfp_get_call_status();
     }
+}
+
+bool app_bt_policy_b2b_is_conn(void)
+{
+    return b2b_connected;
 }
 
 void app_bt_policy_update_bud_coupling_info(void)

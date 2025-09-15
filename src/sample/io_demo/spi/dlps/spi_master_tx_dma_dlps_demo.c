@@ -255,6 +255,7 @@ static void spi_master_tx_dma_handler(void)
 
     GDMA_INTConfig(SPI_MASTER_TX_DMA_CHANNEL_NUM, GDMA_INT_Transfer, DISABLE);
     GDMA_ClearINTPendingBit(SPI_MASTER_TX_DMA_CHANNEL_NUM, GDMA_INT_Transfer);
+    /* It is recommended to post the os msg to the task thread for data processing. */
 
     GDMA_INTConfig(SPI_MASTER_TX_DMA_CHANNEL_NUM, GDMA_INT_Transfer, ENABLE);
 }
@@ -265,6 +266,7 @@ static void spi_tx_handler(void)
     {
         SPI_INTConfig(SPI0, SPI_INT_TXE, DISABLE);
         IO_PRINT_INFO0("spi_tx_handler: SPI TX FIFO Empty");
+        /* It is recommended to post the os msg to the task thread for data processing. */
 
         allowedSystemEnterDlps = true;
     }

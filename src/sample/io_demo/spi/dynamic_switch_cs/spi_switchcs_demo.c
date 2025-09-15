@@ -17,7 +17,6 @@
  *============================================================================*/
 #include "rtl876x_rcc.h"
 #include "rtl876x_spi.h"
-#include "rtl876x_nvic.h"
 #include "rtl876x_pinmux.h"
 
 /** @defgroup  SPI_SWITCH_CS_DEMO  SPI DYNAMIC SWITCH CS DEMO

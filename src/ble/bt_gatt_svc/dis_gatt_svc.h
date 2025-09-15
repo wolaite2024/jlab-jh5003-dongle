@@ -52,7 +52,7 @@ extern "C" {
 /*============================================================================*
  *                         Macros
  *============================================================================*/
-/** @defgroup DIS_Exported_Macros DIS Exported Macros
+/** @defgroup DIS_GATT_Exported_Macros DIS GATT Exported Macros
   * @brief
   * @{
   */
@@ -150,14 +150,14 @@ extern "C" {
 #define DIS_PNP_ID_LENGTH                      7
 
 
-/** End of DIS_Exported_Macros
+/** End of DIS_GATT_Exported_Macros
 * @}
 */
 
 /*============================================================================*
  *                         Types
  *============================================================================*/
-/** @defgroup DIS_Exported_Types DIS Exported Types
+/** @defgroup DIS_GATT_Exported_Types DIS GATT Exported Types
   * @brief
   * @{
   */
@@ -179,14 +179,14 @@ typedef struct
     uint16_t    char_uuid;
     uint16_t    offset;
 } T_DIS_SERVER_READ_CHAR_IND;
-/** End of DIS_Exported_Types
+/** End of DIS_GATT_Exported_Types
 * @}
 */
 
 /*============================================================================*
  *                         Functions
  *============================================================================*/
-/** @defgroup DIS_Exported_Functions DIS Exported Functions
+/** @defgroup DIS_GATT_Exported_Functions DIS GATT Exported Functions
   * @brief
   * @{
   */
@@ -358,7 +358,7 @@ bool dis_char_read_confirm(uint16_t conn_handle, uint16_t cid, uint8_t service_i
                            uint16_t char_uuid, uint16_t offset,
                            uint16_t value_len, uint8_t *p_value);
 
-/** @} End of DIS_Exported_Functions */
+/** @} End of DIS_GATT_Exported_Functions */
 
 /** @} End of DIS_GATT_SVC */
 

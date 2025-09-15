@@ -19,8 +19,6 @@ extern "C" {
  */
 
 /**
- * remote.h
- *
  * \brief Remote control's session state.
  *
  * \ingroup REMOTE_CONTROL
@@ -32,8 +30,6 @@ typedef enum
 } T_REMOTE_SESSION_STATE;
 
 /**
- * remote.h
- *
  * \brief Define remote control session mode.
  *
  * \ingroup REMOTE_CONTROL
@@ -47,8 +43,6 @@ typedef enum
 } T_REMOTE_SESSION_MODE;
 
 /**
- * remote.h
- *
  * \brief Define remote control session role.
  *
  * \ingroup REMOTE_CONTROL
@@ -61,8 +55,6 @@ typedef enum
 } T_REMOTE_SESSION_ROLE;
 
 /**
- * remote.h
- *
  * \brief Define remote control timer type.
  *
  * \ingroup REMOTE_CONTROL
@@ -75,8 +67,6 @@ typedef enum
 } T_REMOTE_TIMER_TYPE;
 
 /**
- * remote.h
- *
  * \brief Define remote control relay status.
  *
  * \ingroup REMOTE_CONTROL
@@ -96,8 +86,6 @@ typedef enum
 } T_REMOTE_RELAY_STATUS;
 
 /**
- * remote.h
- *
  * \brief   Remote control relay handle.
  *
  * \ingroup REMOTE_CONTROL
@@ -105,14 +93,12 @@ typedef enum
 typedef void *T_REMOTE_RELAY_HANDLE;
 
 /**
- * remote.h
- *
  * \brief   Remote control relay callback prototype.
  *
- * \param[in] msg_id    The remote relay message id.
+ * \param[in] msg_id    The remote relay message ID.
  * \param[in] status    The relay status for the message \ref T_REMOTE_RELAY_STATUS.
  * \param[in] buf       The remote relay message payload buffer.
- * \param[in] len       The remote relay message playload length.
+ * \param[in] len       The remote relay message payload length.
  *
  * \ingroup REMOTE_CONTROL
  */
@@ -122,8 +108,6 @@ typedef void (*P_REMOTE_RELAY_CBACK)(uint16_t               msg_id,
                                      uint16_t               len);
 
 /**
- * remote.h
- *
  * \brief   Remote roleswap sync callback prototype.
  *
  * \ingroup REMOTE_CONTROL
@@ -131,23 +115,19 @@ typedef void (*P_REMOTE_RELAY_CBACK)(uint16_t               msg_id,
 typedef void (*P_REMOTE_ROLESWAP_SYNC_CBACK)(void);
 
 /**
- * remote.h
- *
  * \brief   Initialize remote control manager.
  *
  * \param[in] role  Remote control session role \ref T_REMOTE_SESSION_ROLE.
  *
- * \return          The status of initializing remote controll manager.
- * \retval true     Remote controll manager was initialized successfully.
- * \retval false    Remote controll manager was failed to initialize.
+ * \return          The status of initializing remote control manager.
+ * \retval true     Remote control manager was initialized successfully.
+ * \retval false    Remote control manager was failed to initialize.
  *
  * \ingroup REMOTE_CONTROL
  */
 bool remote_mgr_init(T_REMOTE_SESSION_ROLE role);
 
 /**
- * remote.h
- *
  * \brief   Set the remote control session role.
  *
  * \param[in] role  Remote control session role \ref T_REMOTE_SESSION_ROLE.
@@ -161,8 +141,6 @@ bool remote_mgr_init(T_REMOTE_SESSION_ROLE role);
 bool remote_session_role_set(T_REMOTE_SESSION_ROLE role);
 
 /**
- * remote.h
- *
  * \brief   Get the remote control session role.
  *
  * \return  The remote control session role \ref T_REMOTE_SESSION_ROLE.
@@ -172,11 +150,9 @@ bool remote_session_role_set(T_REMOTE_SESSION_ROLE role);
 T_REMOTE_SESSION_ROLE remote_session_role_get(void);
 
 /**
- * remote.h
- *
  * \brief   Set the remote control local address.
  *
- * \param[in] bd_addr   Remote control local bluetooth address.
+ * \param[in] bd_addr   Remote control local Bluetooth address.
  *
  * \return          The status of setting the remote control local address.
  * \retval true     Remote control local address was set successfully.
@@ -187,11 +163,9 @@ T_REMOTE_SESSION_ROLE remote_session_role_get(void);
 bool remote_local_addr_set(uint8_t bd_addr[6]);
 
 /**
- * remote.h
+ * \brief   Get the remote control local address.
  *
- * \brief   get the remote control local address.
- *
- * \param[in] bd_addr   Remote control local bluetooth address.
+ * \param[in] bd_addr   Remote control local Bluetooth address.
  *
  * \return          The status of getting the remote control local address.
  * \retval true     Remote control local address was get successfully.
@@ -202,11 +176,9 @@ bool remote_local_addr_set(uint8_t bd_addr[6]);
 bool remote_local_addr_get(uint8_t bd_addr[6]);
 
 /**
- * remote.h
- *
  * \brief   Set the remote control peer address.
  *
- * \param[in] bd_addr   Remote control peer bluetooth address.
+ * \param[in] bd_addr   Remote control peer Bluetooth address.
  *
  * \return          The status of setting the remote control peer address.
  * \retval true     Remote control peer address was set successfully.
@@ -217,11 +189,9 @@ bool remote_local_addr_get(uint8_t bd_addr[6]);
 bool remote_peer_addr_set(uint8_t bd_addr[6]);
 
 /**
- * remote.h
+ * \brief   Get the remote control peer address.
  *
- * \brief   get the remote control peer address.
- *
- * \param[in] bd_addr   Remote control peer bluetooth address.
+ * \param[in] bd_addr   Remote control peer Bluetooth address.
  *
  * \return          The status of getting the remote control peer address.
  * \retval true     Remote control peer address was get successfully.
@@ -232,11 +202,9 @@ bool remote_peer_addr_set(uint8_t bd_addr[6]);
 bool remote_peer_addr_get(uint8_t bd_addr[6]);
 
 /**
- * remote.h
- *
  * \brief   Create an remote control session.
  *
- * \param[in] bd_addr   Remote bluetooth device address.
+ * \param[in] bd_addr   Remote Bluetooth device address.
  *
  * \return          The status of creating the remote control session.
  * \retval true     Remote control session was created successfully.
@@ -247,11 +215,9 @@ bool remote_peer_addr_get(uint8_t bd_addr[6]);
 bool remote_session_open(uint8_t bd_addr[6]);
 
 /**
- * remote.h
- *
  * \brief   Release the remote control session.
  *
- * \param[in] bd_addr   Remote bluetooth device address.
+ * \param[in] bd_addr   Remote Bluetooth device address.
  *
  * \return          The status of releasing the remote control session.
  * \retval true     Remote control session was released successfully.
@@ -262,8 +228,6 @@ bool remote_session_open(uint8_t bd_addr[6]);
 bool remote_session_close(uint8_t bd_addr[6]);
 
 /**
- * remote.h
- *
  * \brief   Get the remote control session state.
  *
  * \return  The remote control session state \ref T_REMOTE_SESSION_STATE.
@@ -273,8 +237,6 @@ bool remote_session_close(uint8_t bd_addr[6]);
 T_REMOTE_SESSION_STATE remote_session_state_get(void);
 
 /**
- * remote.h
- *
  * \brief   Get the remote control session mode.
  *
  * \param[out] mode Pass back the remote control session mode \ref T_REMOTE_SESSION_MODE.
@@ -288,8 +250,6 @@ T_REMOTE_SESSION_STATE remote_session_state_get(void);
 bool remote_session_mode_get(T_REMOTE_SESSION_MODE *mode);
 
 /**
- * remote.h
- *
  * \brief   Set the remote control session mode.
  *
  * \param[in] mode  The remote control session mode \ref T_REMOTE_SESSION_MODE.
@@ -303,12 +263,10 @@ bool remote_session_mode_get(T_REMOTE_SESSION_MODE *mode);
 bool remote_session_mode_set(T_REMOTE_SESSION_MODE mode);
 
 /**
- * remote.h
- *
  * \brief   Start the remote roleswap procedure.
  *
- * \param[in] bd_addr             Remote shadowing bluetooth address.
- * \param[in] context             Uesr defined context for starting roleswap.
+ * \param[in] bd_addr             Remote shadowing Bluetooth address.
+ * \param[in] context             User defined context for starting roleswap.
  * \param[in] stop_after_shadow   Whether to stop after shadow is finished.
  * \param[in] cback               Callback function for application to sync data during roleswap.
  *
@@ -324,8 +282,6 @@ bool remote_roleswap_start(uint8_t                      bd_addr[6],
                            P_REMOTE_ROLESWAP_SYNC_CBACK cback);
 
 /**
- * remote.h
- *
  * \brief   Confirm the remote roleswap start procedure.
  *
  * \param[in] accept             Whether roleswap start request is accepted.
@@ -341,11 +297,9 @@ bool remote_roleswap_cfm(bool    accept,
                          uint8_t context);
 
 /**
- * remote.h
- *
  * \brief   Stop the remote roleswap procedure.
  *
- * \param[in] bd_addr             Remote shadowing bluetooth address.
+ * \param[in] bd_addr             Remote shadowing Bluetooth address.
  *
  * \return          The status of stopping remote roleswap procedure.
  * \retval true     Remote roleswap procedure was stopped successfully.
@@ -356,8 +310,6 @@ bool remote_roleswap_cfm(bool    accept,
 bool remote_roleswap_stop(uint8_t bd_addr[6]);
 
 /**
- * remote.h
- *
  * \brief   Register remote control relay callback.
  *
  * \param[in] cback Remote control relay callback \ref P_REMOTE_RELAY_CBACK.
@@ -370,8 +322,6 @@ bool remote_roleswap_stop(uint8_t bd_addr[6]);
 T_REMOTE_RELAY_HANDLE remote_relay_register(P_REMOTE_RELAY_CBACK cback);
 
 /**
- * remote.h
- *
  * \brief   Unregister remote control relay callback.
  *
  * \param[in] handle    The remote control relay handle \ref T_REMOTE_RELAY_HANDLE.
@@ -385,12 +335,10 @@ T_REMOTE_RELAY_HANDLE remote_relay_register(P_REMOTE_RELAY_CBACK cback);
 bool remote_relay_unregister(T_REMOTE_RELAY_HANDLE handle);
 
 /**
- * remote.h
- *
  * \brief   Relay an asynchronous message to the remote side.
  *
  * \param[in] handle        The remote control relay handle \ref T_REMOTE_RELAY_HANDLE.
- * \param[in] msg_id        The asynchronous message id.
+ * \param[in] msg_id        The asynchronous message ID.
  * \param[in] msg_buf       The asynchronous message payload buffer.
  * \param[in] msg_len       The asynchronous message payload length.
  * \param[in] loopback      Set the asynchronous message loopback or not.
@@ -410,12 +358,10 @@ bool remote_async_msg_relay(T_REMOTE_RELAY_HANDLE  handle,
                             bool                   loopback);
 
 /**
- * remote.h
- *
  * \brief   Relay a synchronous message to the remote side.
  *
  * \param[in] handle        The remote control relay handle \ref T_REMOTE_RELAY_HANDLE.
- * \param[in] msg_id        The synchronous message id.
+ * \param[in] msg_id        The synchronous message ID.
  * \param[in] msg_buf       The synchronous message payload buffer.
  * \param[in] msg_len       The synchronous message payload length.
  * \param[in] timer_type    The synchronous timer type \ref T_REMOTE_TIMER_TYPE.

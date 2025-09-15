@@ -13,7 +13,7 @@ extern "C" {
 #endif
 
 /**
- * \defgroup    OS_87x3e_Timer   Timer Management
+ * \addtogroup    OS_87x3e_Timer   Timer Management
  *
  * \brief   Create and control software timer and timer callback functions.
  * \details The Timer Management function group allows to create, delete, and control software
@@ -29,17 +29,25 @@ extern "C" {
  *
  * \image html OS-timer-state-transition.jpg "Software Timer State Transition" width=617px height=321px
  *
+ * @{
  */
 
+/*============================================================================*
+ *                         Functions
+ *============================================================================*/
+
+/** @defgroup OS_87x3e_Timer_Exported_functions Timer Management Exported Functions
+ * @{
+ */
 
 /**
  * os_timer.h
  *
  * \brief    Get the ID assigned to the timer when created.
  *
- * \param[in]   pp_handle   Pointer to the created timer handle.
+ * \param   pp_handle   Pointer to the created timer handle.
  *
- * \param[out]  p_timer_id  Used to pass back the ID assigned to the timer.
+ * \param  p_timer_id  Used to pass back the ID assigned to the timer.
  *
  * \return           The status of the timer id getting.
  * \retval true      Timer ID was got successfully.
@@ -85,7 +93,7 @@ extern "C" {
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Timer
+ *
  */
 extern bool (*os_timer_id_get)(void **pp_handle, uint32_t *p_timer_id);
 
@@ -96,23 +104,23 @@ extern bool (*os_timer_id_get)(void **pp_handle, uint32_t *p_timer_id);
  *          the new timer, initializes the new timers internal state, and returns a handle
  *          by which the new timer can be referenced.
  *
- * \param[out]  pp_handle        Used to pass back a handle by which the created timer
+ * \param  pp_handle        Used to pass back a handle by which the created timer
  *                               can be referenced.
  *
- * \param[in]   p_timer_name     A descriptive name for the timer.
+ * \param   p_timer_name     A descriptive name for the timer.
  *
- * \param[in]   timer_id         An identifier that is assigned to the timer being created.
+ * \param   timer_id         An identifier that is assigned to the timer being created.
  *                               Typically this would be used in the timer callback function to
  *                               identify which timer expired when the same callback function is
  *                               assigned to more than one timer.
  *
- * \param[in]   interval_ms      The timer period in milliseconds.
+ * \param   interval_ms      The timer period in milliseconds.
  *
- * \param[in]   reload           Used to set the timer as a periodic or one-shot timer.
+ * \param   reload           Used to set the timer as a periodic or one-shot timer.
  * \arg \c      true             Create a periodic timer.
  * \arg \c      false            Create a one-shot timer.
  *
- * \param[in]   p_timer_callback The function to call when the timer expires. Callback functions
+ * \param   p_timer_callback The function to call when the timer expires. Callback functions
  *                               must have the prototype defined as 'void callback(void *)'.
  *
  * \return           The status of the timer creation.
@@ -159,7 +167,7 @@ extern bool (*os_timer_id_get)(void **pp_handle, uint32_t *p_timer_id);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Timer
+ *
  */
 extern bool (*os_timer_create)(void **pp_handle, const char *p_timer_name, uint32_t timer_id,
                                uint32_t interval_ms, bool reload, void (*p_timer_callback)(void *));
@@ -172,7 +180,7 @@ extern bool (*os_timer_create)(void **pp_handle, const char *p_timer_name, uint3
  *           then os_timer_create() has equivalent functionality to the os_timer_create()
  *           API function.
  *
- * \param[in] pp_handle Pointer to the created timer handle.
+ * \param pp_handle Pointer to the created timer handle.
  *
  * \return           The status of the timer starting.
  * \retval true      Timer was started successfully.
@@ -218,7 +226,7 @@ extern bool (*os_timer_create)(void **pp_handle, const char *p_timer_name, uint3
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Timer
+ *
  */
 extern bool (*os_timer_start)(void **pp_handle);
 
@@ -232,9 +240,9 @@ extern bool (*os_timer_start)(void **pp_handle);
  *            was in the dormant state then os_timer_start() has equivalent functionality to
  *            the os_timer_start() API function.
  *
- * \param[in] pp_handle     Pointer to the created timer handle.
+ * \param pp_handle     Pointer to the created timer handle.
  *
- * \param[in] interval_ms   The timer period in milliseconds.
+ * \param interval_ms   The timer period in milliseconds.
  *
  * \return           The status of the timer restarting.
  * \retval true      Timer was restarted successfully.
@@ -280,7 +288,7 @@ extern bool (*os_timer_start)(void **pp_handle);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Timer
+ *
  */
 extern bool (*os_timer_restart)(void **pp_handle, uint32_t interval_ms);
 
@@ -291,7 +299,7 @@ extern bool (*os_timer_restart)(void **pp_handle, uint32_t interval_ms);
  *            os_timer_restart() API functions. Stopping a timer ensures the timer is not in
  *            the active state.
  *
- * \param[in] pp_handle Pointer to the handle of timer being stopped.
+ * \param pp_handle Pointer to the handle of timer being stopped.
  *
  * \return           The status of the timer stopping.
  * \retval true      Timer was stopped successfully.
@@ -340,7 +348,7 @@ extern bool (*os_timer_restart)(void **pp_handle, uint32_t interval_ms);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Timer
+ *
  */
 extern bool (*os_timer_stop)(void **pp_handle);
 
@@ -350,7 +358,7 @@ extern bool (*os_timer_stop)(void **pp_handle);
  * \brief      Delete a timer that was previously created using the os_timer_create()
  *             API function.
  *
- * \param[in] pp_handle Pointer to the handle of timer being deleted.
+ * \param pp_handle Pointer to the handle of timer being deleted.
  *
  * \return           The status of the timer deletion.
  * \retval true      Timer was deleted successfully.
@@ -396,7 +404,7 @@ extern bool (*os_timer_stop)(void **pp_handle);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Timer
+ *
  */
 extern bool (*os_timer_delete)(void **pp_handle);
 
@@ -405,7 +413,7 @@ extern bool (*os_timer_delete)(void **pp_handle);
  *
  * \brief      Dump all current used timers in system.
  *
- * \param None
+ * \param None.
  *
  * \return           The status of the timer dump.
  * \retval true      Timer was dumped successfully.
@@ -454,7 +462,7 @@ extern bool (*os_timer_delete)(void **pp_handle);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Timer
+ *
  */
 extern bool (*os_timer_pend_function_call)(void (*p_pend_function)(void *, uint32_t),
                                            void *pvParameter1, uint32_t ulParameter2);
@@ -482,6 +490,9 @@ bool os_timer_dump_rom(void);
 bool os_timer_get_auto_reload_rom(void **pp_handle, long *p_autoreload);
 bool os_timer_get_next_timeout_item_rom(void **pxListItem, unsigned long *puxListNum,
                                         uint8_t xListType);
+
+/** @} */ /* End of group OS_87x3e_Timer_Exported_Functions */
+/** @} */ /* End of group OS_87x3e_Timer */
 
 #ifdef __cplusplus
 }

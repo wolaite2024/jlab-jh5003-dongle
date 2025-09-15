@@ -3,7 +3,7 @@
 *               Copyright(c) 2021, Realtek Semiconductor Corporation. All rights reserved.
 *********************************************************************************************************
 * @file      gap_aox_connless_receiver.h
-* @brief     Head file for GAP AoA/AoD connectionless receiver
+* @brief     Header file for GAP AoA/AoD connectionless receiver
 * @details
 * @author
 * @date      2021-07-12
@@ -28,7 +28,7 @@ extern "C"
 #include "gap_le.h"
 #include "gap_le_types.h"
 
-/** @addtogroup GAP GAP Module
+/** @addtogroup BT_Host Bluetooth Host
   * @{
   */
 
@@ -37,6 +37,7 @@ extern "C"
   */
 
 /** @addtogroup GAP_LE_AOX_CONNLESS_RECEIVER GAP LE AoA/AoD Connectionless Receiver Module
+  * @brief GAP LE AoA/AoD Connectionless Receiver Module
   * @{
   */
 
@@ -46,7 +47,7 @@ extern "C"
 /** @defgroup GAP_LE_AOX_CONNLESS_RECEIVER_Exported_Macros GAP LE AoA/AoD Connectionless Receiver Exported Macros
   * @{
   */
-/** @defgroup AOX_CONNLESS_RECEIVER_SAMPLING_ENABLE AoA/AoD Connectionless Receiver Sampling Enable flag
+/** @defgroup AOX_CONNLESS_RECEIVER_SAMPLING_ENABLE AoA/AoD Connectionless Receiver Sampling Enable Flag
   * @brief Use the macro definitions to describe the sampling enable parameters.
   * @{
   */
@@ -56,18 +57,6 @@ extern "C"
   * @}
   */
 /** End of GAP_LE_AOX_CONNLESS_RECEIVER_Exported_Macros
-  * @}
-  */
-
-/*============================================================================*
- *                         Types
- *============================================================================*/
-/** @defgroup GAP_LE_AOX_CONNLESS_RECEIVER_Exported_Types GAP LE AoA/AoD Connectionless Receiver Exported Types
-  * @brief
-  * @{
-  */
-
-/** End of GAP_LE_AOX_CONNLESS_RECEIVER_Exported_Types
   * @}
   */
 
@@ -83,10 +72,10 @@ extern "C"
  * @brief       Request the Controller to enable or disable capturing IQ samples from the Constant Tone Extensions
  *              of periodic advertising packets in the periodic advertising train.
  *
- *              If sending request operation is success, the result of enabling or disabling will be returned by
+ * If sending request operation is successful, the result of enabling or disabling will be returned by
  *              @ref app_gap_aox_callback with cb_type @ref GAP_MSG_LE_AOX_CONNLESS_RECEIVER_SET_IQ_SAMPLING_ENABLE.
  *
- *              IQ information from the Constant Tone Extension of a received advertising packet forming part of
+ * IQ information from the Constant Tone Extension of a received advertising packet forming part of
  *              the periodic advertising train will be reported by @ref app_gap_aox_callback with cb_type
  *              @ref GAP_MSG_LE_AOX_CONNLESS_RECEIVER_CONNLESS_IQ_REPORT_INFO.
  *
@@ -95,10 +84,10 @@ extern "C"
  * @param[in]   slot_durations             @ref T_GAP_SLOT_DUATIONS_TYPE.
  * @param[in]   max_sampled_ctes           Specify the maximum number of Constant Tone Extensions in each periodic advertising
  *                                         event that the Controller should collect and report IQ samples from.
- *                                         0x00: Sample and report all available Constant Tone Extensions
- *                                         0xXX: The maximum number of Constant Tone Extensions to sample and
- *                                               report in each periodic advertising interval
- *                                               Range: 0x01 to 0x10
+ *                                         @arg 0x00: Sample and report all available Constant Tone Extensions.
+ *                                         @arg 0xXX: The maximum number of Constant Tone Extensions to sample and
+ *                                                    report in each periodic advertising interval.
+ *                                         @arg Range: 0x01 to 0x10.
  * @param[in]   switching_pattern_length   The number of Antenna IDs in the pattern.
  *                                         Range: 0x02 to max_switching_pattern_length supported by controller returned by
  *                                                @ref le_aox_read_antenna_information.
@@ -174,7 +163,7 @@ T_GAP_CAUSE le_aox_connless_receiver_set_iq_sampling_enable(uint8_t sync_id,
   * @}
   */
 
-/** End of GAP
+/** End of BT_Host
   * @}
   */
 

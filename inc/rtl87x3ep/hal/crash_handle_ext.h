@@ -17,7 +17,7 @@
     * @brief crash handle api
     * @{
     */
-/** @defgroup 87x3e_Crash_Handle_Exported_Functions Crash Hanlde Exported Functions
+/** @defgroup 87x3e_Crash_Handle_Exported_Functions Crash Handle Exported Functions
     * @brief
     * @{
     */

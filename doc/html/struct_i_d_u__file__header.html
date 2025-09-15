@@ -44,7 +44,7 @@ $(function() {
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">IDU_file_header Struct Reference<div class="ingroups"><a class="el" href="group___i_d_u.html">IDU</a> &raquo; <a class="el" href="group___i_d_u___exported___constants.html">IDU Exported Constants</a></div></div>  </div>
+<div class="title">IDU_file_header Struct Reference<div class="ingroups"><a class="el" href="group___i_d_u.html">IDU</a> &raquo; <a class="el" href="group___i_d_u___exported___types.html">IDU Exported Types</a> &raquo; <a class="el" href="group___i_d_u___f_i_l_e___h_e_a_d_e_r.html">IDU_File_Header</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -52,7 +52,7 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a82fef94e5c38ac54cab161e88f637866"><td class="memItemLeft" >struct {</td></tr>
+<tr class="memitem:ae9d65cd858addbc796351cb0c3b6b45a"><td class="memItemLeft" >struct {</td></tr>
 <tr class="memitem:a667f83dab4442a82405f7b56b8b9a64a"><td class="memItemLeft" >&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<a class="el" href="struct_i_d_u__file__header.html#a667f83dab4442a82405f7b56b8b9a64a">algorithm</a>: 2</td></tr>
 <tr class="separator:a667f83dab4442a82405f7b56b8b9a64a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a231f3a4890c8912e788d22d0b7f8efbf"><td class="memItemLeft" >&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<a class="el" href="struct_i_d_u__file__header.html#a231f3a4890c8912e788d22d0b7f8efbf">feature_1</a>: 2</td></tr>
@@ -61,8 +61,8 @@ Data Fields</h2></td></tr>
 <tr class="separator:a5255c55c9a3b1224343a637c929a6db7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee3ad3d4068924e972c7d79212e09ef9"><td class="memItemLeft" >&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<a class="el" href="struct_i_d_u__file__header.html#aee3ad3d4068924e972c7d79212e09ef9">pixel_bytes</a>: 2</td></tr>
 <tr class="separator:aee3ad3d4068924e972c7d79212e09ef9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82fef94e5c38ac54cab161e88f637866"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_i_d_u__file__header.html#a82fef94e5c38ac54cab161e88f637866">algorithm_type</a></td></tr>
-<tr class="separator:a82fef94e5c38ac54cab161e88f637866"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9d65cd858addbc796351cb0c3b6b45a"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_i_d_u__file__header.html#ae9d65cd858addbc796351cb0c3b6b45a">algorithm_type</a></td></tr>
+<tr class="separator:ae9d65cd858addbc796351cb0c3b6b45a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72aca6ea6d8153b28ea8f139b932ec3e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_i_d_u__file__header.html#a72aca6ea6d8153b28ea8f139b932ec3e">reserved</a> [3]</td></tr>
 <tr class="separator:a72aca6ea6d8153b28ea8f139b932ec3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac3e9f8515d2aa1e181db4a8f2c4d0ce7"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_i_d_u__file__header.html#ac3e9f8515d2aa1e181db4a8f2c4d0ce7">raw_pic_width</a></td></tr>
@@ -82,6 +82,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Compression algorithm of input file, This parameter can be a value of <a class="el" href="group___i_d_u___a_l_g_o_r_i_t_h_m.html">IDU Compress Algorithm</a>. </p>
 
 </div>
 </div>
@@ -96,6 +97,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>For RLE: Run length size, value of <a class="el" href="group___i_d_u___r_l_e___r_u_n_l_e_n_g_t_h___s_i_z_e.html">IDU RLE Run Length</a>. For YUV: Sample type, value of <a class="el" href="group___i_d_u___y_u_v___s_a_m_p_l_e___t_y_p_e.html">IDU YUV Sample Type</a>. </p>
 
 </div>
 </div>
@@ -110,6 +112,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>For RLE: Run length size, value of <a class="el" href="group___i_d_u___r_l_e___r_u_n_l_e_n_g_t_h___s_i_z_e.html">IDU RLE Run Length</a>. For YUV: Blur bit, value of <a class="el" href="group___i_d_u___y_u_v___b_l_u_r___b_i_t.html">IDU Blur Bit</a>. </p>
 
 </div>
 </div>
@@ -124,11 +127,12 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Size of pixel, can be 1-4 bytes. </p>
 
 </div>
 </div>
-<a id="a82fef94e5c38ac54cab161e88f637866"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a82fef94e5c38ac54cab161e88f637866">&#9670;&nbsp;</a></span>algorithm_type</h2>
+<a id="ae9d65cd858addbc796351cb0c3b6b45a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9d65cd858addbc796351cb0c3b6b45a">&#9670;&nbsp;</a></span>algorithm_type</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -138,6 +142,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Compressing information. </p>
 
 </div>
 </div>
@@ -152,6 +157,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Reserved for future use. </p>
 
 </div>
 </div>
@@ -166,6 +172,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Width of compressed picture in pixel. </p>
 
 </div>
 </div>
@@ -180,11 +187,12 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Height of compressed picture in pixel. </p>
 
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>sdk/src/mcu/display/driver/idu/inc/<a class="el" href="rtl__idu_8h_source.html">rtl_idu.h</a></li>
+<li>sdk/src/mcu/display/hardware/idu/inc/<a class="el" href="rtl__idu_8h_source.html">rtl_idu.h</a></li>
 </ul>
 </div><!-- contents -->
 

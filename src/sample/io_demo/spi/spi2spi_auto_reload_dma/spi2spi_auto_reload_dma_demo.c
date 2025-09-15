@@ -18,7 +18,6 @@
 #include "trace.h"
 #include "rtl876x_gdma.h"
 #include "rtl876x_gpio.h"
-#include "rtl876x_nvic.h"
 #include "rtl876x_pinmux.h"
 #include "rtl876x_rcc.h"
 #include "rtl876x_spi.h"
@@ -198,6 +197,7 @@ static void spi_auto_reload_dma_handler(void)
 {
     GDMA_ClearAllTypeINT(SPI_AUTO_RELOAD_DMA_CHANNEL_NUM);
     GDMA_channel_release(SPI_AUTO_RELOAD_DMA_CHANNEL_NUM);
+    /* It is recommended to post the os msg to the task thread for data processing. */
 }
 
 /** @} */ /* End of group SPI_DMA_DEMO */

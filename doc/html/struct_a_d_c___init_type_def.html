@@ -114,7 +114,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the ADC Sample clock . adc sample period = (n+1) cycles from 10MHz. This parameter only bit[13:0] vaild, means adcClock value rang from 0~0x2000(100ns) </p>
+<p>Specifies the ADC Sample clock. adc sample period = (n+1) cycles from 10MHz. This parameter only bit[13:0] vaild, means adc clock value rang from 0~0x2000(100ns). </p>
 
 </div>
 </div>
@@ -129,6 +129,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Specifies the ADC Sample convert time. This parameter can be a value of 0 to 3 which corresponding 0.5 0.7 0.9 1.1us.</p>
+<p>Specifies the ADC sample convert time. This parameter can be a value of <a class="el" href="group__x3e___a_d_c___c_o_n_v_e_r_t___t_i_m_e.html">ADC Convert Time</a>. </p>
 
 </div>
 </div>
@@ -143,7 +145,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the ADC Sample convert time. This parameter can be a value of 0 to 3 which corresponding 0.5 0.7 0.9 1.1us Specifies the ADC fifo threshold to trigger interrupt ADC_INT_FIFO_TH. This parameter can be a value of 0 to 31 </p>
+<p>Specifies the ADC fifo threshold to trigger interrupt ADC_INT_FIFO_TH. This parameter can be a value of 0 to 31.</p>
+<p>Specifies the ADC FIFO threshold to trigger interrupt <a class="el" href="group__x3e___a_d_c___interrupts___definition.html#gaeee1777cf2cde46d919ad242cfc6be2f">ADC_INT_FIFO_TH</a>. This parameter can be a value of 0 to 32. </p>
 
 </div>
 </div>
@@ -158,7 +161,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the ADC fifo Burst Size to trigger GDMA. This parameter can be a value of 0 to 31 </p>
+<p>Specifies the ADC fifo Burst Size to trigger GDMA. This parameter can be a value of 0 to 31.</p>
+<p>Specifies the ADC FIFO burst size to trigger GDMA. This parameter can be a value of 0 to 32. </p>
 
 </div>
 </div>
@@ -173,7 +177,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies if Over Write fifo when fifo overflow. This parameter can be a value of <a class="el" href="group___a_d_c__over__write__enable.html">ADC FIFO Over Write CR 0x04 bit 13</a> </p>
+<p>Specifies if Over Write fifo when fifo overflow. This parameter can be a value of <a class="el" href="group___a_d_c__over__write__enable.html">ADC FIFO Over Write</a>.</p>
+<p>Specifies if over write FIFO when FIFO overflow. This parameter can be a value of <a class="el" href="group__x3e___a_d_c__over__write__enable.html">ADC FIFO Over Write</a>. </p>
 
 </div>
 </div>
@@ -188,7 +193,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies ADC data latch mode. This parameter can be a value of <a class="el" href="group___a_d_c___latch___data___edge.html">ADC latch data edge</a> </p>
+<p>Specifies ADC data latch mode. This parameter can be a value of <a class="el" href="group___a_d_c___latch___data___edge.html">ADC Latch Data Edge</a>.</p>
+<p>Specifies ADC data latch mode. This parameter can be a value of <a class="el" href="group__x3e___a_d_c___latch___data___edge.html">ADC Latch Data Edge</a>. </p>
 
 </div>
 </div>
@@ -203,7 +209,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies fifo Overread. This parameter can be a value of ENABLE or DISABLE </p>
+<p>Specifies fifo Overread. This parameter can be a value of ENABLE or DISABLE.</p>
+<p>This is a deprecated parameter. </p>
 
 </div>
 </div>
@@ -218,7 +225,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies ADC mode and channel for schedule table. This parameter can be a value of <a class="el" href="group___a_d_c__schedule__table.html">ADC channel and mode</a> </p>
+<p>Specifies ADC mode and channel for schedule table. This parameter can be a value of <a class="el" href="group___a_d_c__schedule__table.html">ADC Channel and Mode</a>.</p>
+<p>Specifies ADC mode and channel for schedule table. This parameter can be a value of <a class="el" href="group__x3e___a_d_c__schedule__table.html">ADC Channel and Mode</a>. </p>
 
 </div>
 </div>
@@ -233,7 +241,12 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the schedule table channel map. This parameter can be a value of 16Bits map </p>
+<p>Specifies the schedule table channel map. This parameter can be a value of 16Bits map.</p>
+<p>Specify whether the schedule table is enabled. Each bit in the 16-bit bitmap corresponds to a schedule index from schIndex[0] to schIndex[15]. If a bit is set to 1, the corresponding schedule index is enabled; if it's 0, the schedule index is disabled. Given bitmap 0x0003, in binary it is 16'b0000000000000011. This means:</p><ul>
+<li>The schIndex[0] is enabled (bit 0 is 1).</li>
+<li>The schIndex[1] is enabled (bit 1 is 1).</li>
+<li>The schIndex[2] to schIndex[15] are disabled (bits 2 to 15 are 0). </li>
+</ul>
 
 </div>
 </div>
@@ -248,7 +261,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Enable ADC one-shot mode when tim7 toggles </p>
+<p>Enable ADC one-shot mode when tim7 toggles.</p>
+<p>To control whether the TIM7 peripheral triggers ADC one-shot mode sampling. This parameter can be a value of ENABLE or DISABLE. </p>
 
 </div>
 </div>
@@ -263,7 +277,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>ADC Data MSB or LSB aligned </p>
+<p>ADC Data MSB or LSB aligned.</p>
+<p>Specifies ADC data storage format. This parameter can be a value of <a class="el" href="group__x3e___a_d_c___data___align.html">ADC Data Align</a>. </p>
 
 </div>
 </div>
@@ -278,7 +293,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Write ADC one shot mode data into fifo </p>
+<p>Write ADC one shot mode data into fifo.</p>
+<p>Enable or disable the function that assign ADC output data write into FIFO in one shot mode. This parameter can be a value of ENABLE or DISABLE. </p>
 
 </div>
 </div>
@@ -293,7 +309,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Data minus the offset before writes to reg/fifo </p>
+<p>Data minus the offset before writes to reg/fifo.</p>
+<p>Enable or disable the function that data minuses the offset before writes to register/FIFO. This parameter can be a value of <a class="el" href="group__x3e___a_d_c___data___minus.html">ADC Data Minus</a>. </p>
 
 </div>
 </div>
@@ -308,7 +325,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>offset to be minused from </p>
+<p>Offset to be minused from adc raw data latched.</p>
+<p>Offset to be minused from ADC raw data latched. This parameter can be a value of 0 to 4095. </p>
 
 </div>
 </div>
@@ -323,7 +341,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies ADC Power mode. This parameter can be a value of <a class="el" href="group___a_d_c___power__mode.html">ADC Power Mode 0x50 bit 19 adc_manual_poweron</a> </p>
+<p>Specifies ADC Power mode. This parameter can be a value of <a class="el" href="group___a_d_c___power__mode.html">ADC Power Mode</a>.</p>
+<p>Specifies ADC power on mode. This parameter can be a value of <a class="el" href="group__x3e___a_d_c___power__mode.html">ADC Power Mode</a>. </p>
 
 </div>
 </div>
@@ -338,7 +357,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies delay of ck_ad to latch data. </p>
+<p>Specifies delay of ck_ad to latch data.</p>
+<p>Specifiy the delay time interval that postpone the ADC controller to latched the output code. The time unit is based on ADC controller system clock (40MHz). This parameter can be a value of 0x1 to 0x7. </p>
 
 </div>
 </div>
@@ -353,7 +373,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the power on delay time selection of RG2X_AUXADC[0]. This parameter can be a value of <a class="el" href="group___a_d_c___r_g2_x__0___delay___time.html">ADC RG2X 0 Delay Time</a> </p>
+<p>Specifies the power on delay time selection of RG2X_AUXADC[0]. This parameter can be a value of <a class="el" href="group___a_d_c___r_g2_x__0___delay___time.html">ADC RG2X 0 Delay Time</a>.</p>
+<p>Specifies the power on delay time selection of RG2X_AUXADC[0]. This parameter can be a value of <a class="el" href="group__x3e___a_d_c___r_g2_x__0___delay___time.html">ADC Power On Delay Time of RG2X_AUXADC[0]</a>. </p>
 
 </div>
 </div>
@@ -368,7 +389,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the power on delay time selection of RG0X_AUXADC[1]. This parameter can be a value of <a class="el" href="group___a_d_c___r_g0_x__1___delay___time.html">ADC RG0X 1 Delay Time</a> </p>
+<p>Specifies the power on delay time selection of RG0X_AUXADC[1]. This parameter can be a value of <a class="el" href="group___a_d_c___r_g0_x__1___delay___time.html">ADC RG0X 1 Delay Time</a>.</p>
+<p>Specifies the power on delay time selection of RG0X_AUXADC[1]. This parameter can be a value of <a class="el" href="group__x3e___a_d_c___r_g0_x__1___delay___time.html">ADC Power On Delay Time of RG0X_AUXADC[1]</a>. </p>
 
 </div>
 </div>
@@ -383,7 +405,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the power on delay time selection of RG0X_AUXADC[0]. This parameter can be a value of <a class="el" href="group___a_d_c___r_g0_x__0___delay___time.html">ADC RG0X 0 Delay Time</a> </p>
+<p>Specifies the power on delay time selection of RG0X_AUXADC[0]. This parameter can be a value of <a class="el" href="group___a_d_c___r_g0_x__0___delay___time.html">ADC RG0X 0 Delay Time</a>.</p>
+<p>Specifies the power on delay time selection of RG0X_AUXADC[0]. This parameter can be a value of <a class="el" href="group__x3e___a_d_c___r_g0_x__0___delay___time.html">ADC Power On Delay Time of RG0X_AUXADC[0]</a>. </p>
 
 </div>
 </div>
@@ -398,7 +421,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Stop fifo from writing data. This bit will be asserted automatically as fifo overflow, (not automatically when ADC_FIFO_OVER_WRITE_ENABLE), need to be cleared in order to write data again. This will not stop overwrite mode. </p>
+<p>Stop fifo from writing data. This bit will be asserted automatically as fifo overflow, (not automatically when ADC_FIFO_OVER_WRITE_ENABLE), need to be cleared in order to write data again. This will not stop overwrite mode.</p>
+<p>Stop FIFO from writing data. This bit will be asserted automatically as FIFO overflow, (not automatically when ADC_FIFO_OVER_WRITE_ENABLE), need to be cleared in order to write data again. This will not stop overwrite mode. This parameter can be a value of <a class="el" href="group__x3e___a_d_c___f_i_f_o___stop___write.html">ADC FIFO Stop Write</a> </p>
 
 </div>
 </div>
@@ -413,7 +437,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the power always on. This parameter can be a value of <a class="el" href="group___a_d_c__power__always__on__cmd.html">ADC power always on cmd 0x 50 bit15 adc_poweron_only_en</a> </p>
+<p>Specifies the power always on. This parameter can be a value of ADC_power_always_on_cmd.</p>
+<p>Enable or disable the power always on function. This parameter can be a value of <a class="el" href="group__x3e___a_d_c___power___always___on___cmd.html">ADC Power Always on CMD</a>. </p>
 
 </div>
 </div>
@@ -428,7 +453,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the ADC Sample clock . adc sample period = (n+1) cycles from 10MHz. This parameter only bit[7:0] vaild, means adcClock value rang from 5~255(100ns) except 32 and adcClock should greater than 4 </p>
+<p>Specifies the ADC sample clock. ADC sample period = (adcClock+1) cycles from 10MHz. This parameter can be a value of 0x1~0xff. </p>
 
 </div>
 </div>

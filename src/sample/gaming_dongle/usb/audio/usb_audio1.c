@@ -411,7 +411,7 @@ static T_UAC1_AC_HDR_DESC(0, UAC1_STREAM_INTF_NUM) ac_hdr_desc =
 #endif
 };
 
-static const void  *uac1_descs_ctrl[] =
+static void *const uac1_descs_ctrl[] =
 {
     (void *) &ac_interface_desc,
     (void *) &ac_hdr_desc,
@@ -429,7 +429,7 @@ static const void  *uac1_descs_ctrl[] =
 };
 
 #if UAC_SPK_SUPPORT
-static const void  *uac1_descs_spk_hs[] =
+static void *const uac1_descs_spk_hs[] =
 {
     (void *) &interface_alt0_desc1,
     (void *) &interface_alt1_desc1,
@@ -443,7 +443,7 @@ static const void  *uac1_descs_spk_hs[] =
     NULL
 };
 
-static const void  *uac1_descs_spk_fs[] =
+static void *const uac1_descs_spk_fs[] =
 {
     (void *) &interface_alt0_desc1,
     (void *) &interface_alt1_desc1,
@@ -459,7 +459,7 @@ static const void  *uac1_descs_spk_fs[] =
 #endif
 
 #if UAC_MIC_SUPPORT
-static const void  *uac1_descs_mic_hs[] =
+static void *const uac1_descs_mic_hs[] =
 {
     (void *) &interface_alt0_desc2,
     (void *) &interface_alt1_desc2,
@@ -470,7 +470,7 @@ static const void  *uac1_descs_mic_hs[] =
     NULL
 };
 
-static const void  *uac1_descs_mic_fs[] =
+static void *const uac1_descs_mic_fs[] =
 {
     (void *) &interface_alt0_desc2,
     (void *) &interface_alt1_desc2,

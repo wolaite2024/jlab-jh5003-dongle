@@ -8,9 +8,9 @@
 #include "bt_a2dp.h"
 #include "app_cfg.h"
 #include "app_main.h"
-#include "app_multilink.h"
 #include "app_link_util.h"
 #include "app_a2dp.h"
+#include "app_bt_policy_int.h"
 #include "app_bt_sniffing.h"
 #include "app_sniff_mode.h"
 #include "app_hfp.h"
@@ -21,8 +21,24 @@
 #include "app_dongle_source_ctrl.h"
 #endif
 
-#if F_APP_GAMING_DONGLE_SUPPORT
-#include "app_dongle_dual_mode.h"
+#if (F_APP_A2DP_CODEC_LHDC_SUPPORT == 1)
+#include "audio_probe.h"
+#include "system_status_api.h"
+#include "fmc_api.h"
+
+#define DEVICE_NAME_SIZE 40
+#define EUID_SIZE 14
+#define CHECK_BYTE_SIZE 2
+#define LHDC_EFFECT_KEY_UUID_MAGIC 0x5AA5
+#define LICENSE_KEY_SIZE 256
+#define LHDC_LICENSE_KEY_ADDR 0x02001000
+
+typedef struct
+{
+    uint8_t device_name[DEVICE_NAME_SIZE];
+    uint8_t uuid[EUID_SIZE + CHECK_BYTE_SIZE];
+    uint8_t key[LICENSE_KEY_SIZE];
+} T_LHDC_LICENSE_INFO;
 #endif
 
 #if (F_APP_A2DP_CODEC_LHDC_SUPPORT == 1)
@@ -80,17 +96,31 @@ static void app_a2dp_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t b
                     APP_PRINT_TRACE3("app_a2dp_bt_cback: reject a2dp connect, bd_addr %s, allowed_source %d, is_dongle_link %d",
                                      TRACE_BDADDR(param->a2dp_conn_ind.bd_addr), app_cfg_nv.allowed_source, is_dongle_link);
 
-                    accept_conn = false; // reject
+                    accept_conn = false;
+                    goto accept;
                 }
 #endif
 
-                bt_a2dp_connect_cfm(p_link->bd_addr, accept_conn);
+                accept_conn = (app_bt_policy_get_profs_by_bond_flag(ALL_PROFILE_MASK) & A2DP_PROFILE_MASK) ? true :
+                              false;
+accept:
+                bt_a2dp_connect_cfm(p_link->bd_addr, 0, accept_conn);
             }
         }
         break;
 
     case BT_EVENT_A2DP_CONFIG_CMPL:
         {
+            if (param->a2dp_config_cmpl.role == BT_A2DP_ROLE_SNK)
+            {
+                uint16_t latency_value;
+
+                app_audio_get_latency_value_by_level(AUDIO_STREAM_MODE_NORMAL,
+                                                     AUDIO_FORMAT_TYPE_AAC,
+                                                     0,
+                                                     &latency_value);
+                bt_a2dp_stream_delay_report_req(param->a2dp_config_cmpl.bd_addr, latency_value);
+            }
         }
         break;
 
@@ -212,19 +242,50 @@ bool app_a2dp_is_streaming(void)
     return false;
 }
 
+uint8_t app_a2dp_get_streaming_num(void)
+{
+    uint8_t num = 0;
+    T_APP_BR_LINK *p_link = NULL;
+
+    for (uint8_t i = 0; i < MAX_BR_LINK_NUM; i++)
+    {
+        p_link = &app_db.br_link[i];
+
+        if (p_link->streaming_fg == true)
+        {
+            num++;
+        }
+    }
+
+    return num;
+}
+
+bool app_a2dp_get_streaming_idx(uint8_t *idx)
+{
+    T_APP_BR_LINK *p_link = NULL;
+    bool ret = false;
+
+    for (uint8_t i = 0; i < MAX_BR_LINK_NUM; i++)
+    {
+        p_link = &app_db.br_link[i];
+
+        if (p_link->streaming_fg == true)
+        {
+            *idx = i;
+            ret = true;
+            break;
+        }
+    }
+
+    return ret;
+}
+
 void app_a2dp_set_active_idx(uint8_t idx)
 {
     bool idx_change = (active_a2dp_idx != idx);
 
     active_a2dp_idx = idx;
     APP_PRINT_TRACE1("app_a2dp_set_active_idx to %d", active_a2dp_idx);
-
-#if F_APP_GAMING_B2S_HTPOLL_SUPPORT
-    if (idx_change)
-    {
-        app_vendor_htpoll_control(B2S_HTPOLL_EVENT_ACTIVE_A2DP_IDX_CHANGED);
-    }
-#endif
 }
 
 uint8_t app_a2dp_get_active_idx(void)
@@ -290,12 +351,7 @@ void app_a2dp_init(void)
 {
     if (app_cfg_const.supported_profile_mask & A2DP_PROFILE_MASK)
     {
-        uint16_t latency_value;
-        app_audio_get_latency_value_by_level(AUDIO_STREAM_MODE_NORMAL, AUDIO_FORMAT_TYPE_AAC, 0,
-                                             &latency_value);
-        bt_a2dp_init(app_cfg_const.a2dp_link_number,
-                     latency_value,
-                     BT_A2DP_CAPABILITY_MEDIA_TRANSPORT |
+        bt_a2dp_init(BT_A2DP_CAPABILITY_MEDIA_TRANSPORT |
                      BT_A2DP_CAPABILITY_MEDIA_CODEC |
                      BT_A2DP_CAPABILITY_DELAY_REPORTING);
         if (app_cfg_const.a2dp_codec_type_sbc)

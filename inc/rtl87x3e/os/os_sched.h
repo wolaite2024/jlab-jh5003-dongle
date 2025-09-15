@@ -13,22 +13,29 @@ extern "C" {
 #endif
 
 /**
- * \defgroup    OS_87x3e_Schedule    Kernel Scheduler
+ * \addtogroup    OS_87x3e_Schedule    Kernel Scheduler
  *
  * \brief       Manage the kernel scheduler functions.
- *
+ * @{
  */
 
+/*============================================================================*
+ *                         Functions
+ *============================================================================*/
+
+/** @defgroup OS_87x3e_Schedule_Exported_functions Kernel Scheduler Exported Functions
+ * @{
+ */
 
 /**
  * os_sched.h
  *
  * \brief       Delay current task for a given period in milliseconds.
  *
- * \param[in]   ms  The amout of timer in milliseconds that the current task
+ * \param   ms  The amout of timer in milliseconds that the current task
  *                  should block.
  *
- * \return      None.
+ * \return      None..
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -45,7 +52,7 @@ extern "C" {
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Schedule
+ *
  */
 extern void (*os_delay)(uint32_t ms);
 
@@ -54,7 +61,7 @@ extern void (*os_delay)(uint32_t ms);
  *
  * \brief   Get the time in milliseconds since os_sched_start() API function was called.
  *
- * \param   None
+ * \param   None.
  *
  * \return  The time in milliseconds. Note the time represented by a 32-bit integer
  *          may be overflowed.
@@ -79,7 +86,7 @@ extern void (*os_delay)(uint32_t ms);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Schedule
+ *
  */
 extern uint32_t (*os_sys_time_get)(void);
 
@@ -90,7 +97,7 @@ extern uint32_t (*os_sys_time_get)(void);
  *
  * \xrefitem Added_API_2_13_0_0 "Added Since 2.13.0.0" "Added API"
  *
- * \param   None
+ * \param   None.
  *
  * \return  The time in microseconds. Note the time represented by a 32-bit integer
  *          may be overflowed.
@@ -115,7 +122,7 @@ extern uint32_t (*os_sys_time_get)(void);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Schedule
+ *
  */
 uint32_t os_hp_time_get(void);
 
@@ -124,7 +131,7 @@ uint32_t os_hp_time_get(void);
  *
  * \brief   Start the RTOS kernel scheduler.
  *
- * \param   None
+ * \param   None.
  *
  * \return  The status of starting kernel scheduler.
  * \retval  true      Scheduler was started successfully.
@@ -153,7 +160,7 @@ uint32_t os_hp_time_get(void);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Schedule
+ *
  */
 extern bool (*os_sched_start)(void);
 
@@ -163,7 +170,7 @@ extern bool (*os_sched_start)(void);
  * \brief   Stop the RTOS kernel scheduler. All created tasks will be automatically
  *          deleted and multitasking (either preemptive or cooperative) stops.
  *
- * \param   None
+ * \param   None.
  *
  * \return  The status of stopping kernel scheduler.
  * \retval  true      Scheduler was stopped successfully.
@@ -204,7 +211,7 @@ extern bool (*os_sched_start)(void);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Schedule
+ *
  */
 extern bool (*os_sched_stop)(void);
 
@@ -216,7 +223,7 @@ extern bool (*os_sched_stop)(void);
  *          os_sched_suspend(), the calling task will continue to execute without
  *          risk of being swapped out until a call to os_sched_resume() has been made.
  *
- * \param   None
+ * \param   None.
  *
  * \return  The status of suspending kernel scheduler.
  * \retval  true      Scheduler was suspended successfully.
@@ -243,7 +250,7 @@ extern bool (*os_sched_stop)(void);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Schedule
+ *
  */
 extern bool (*os_sched_suspend)(void);
 
@@ -253,7 +260,7 @@ extern bool (*os_sched_suspend)(void);
  * \brief   Resume the kernel scheduler after it was suspended by a call
  *          to os_sched_suspend().
  *
- * \param   None
+ * \param   None.
  *
  * \return  The status of resuming kernel scheduler.
  * \retval  true      Scheduler was resumed successfully.
@@ -280,7 +287,7 @@ extern bool (*os_sched_suspend)(void);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Schedule
+ *
  */
 extern bool (*os_sched_resume)(void);
 extern bool (*os_sched_state_get)(long *p_state);
@@ -294,6 +301,9 @@ bool os_sched_suspend_rom(void);
 bool os_sched_resume_rom(void);
 bool os_sched_state_get_rom(long *p_state);
 bool os_sched_in_restore_rom(void);
+
+/** @} */ /* End of group OS_87x3e_Schedule_Exported_Functions */
+/** @} */ /* End of group OS_87x3e_Schedule */
 
 #ifdef __cplusplus
 }

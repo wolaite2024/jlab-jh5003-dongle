@@ -3,8 +3,8 @@
 *               Copyright(c) 2021, Realtek Semiconductor Corporation. All rights reserved.
 *********************************************************************************************************
 * @file      bt_direct_msg.h
-* @brief     This file contains all the constants and functions prototypes for BT direct message.
-* @details   This file is used both bredr and le.
+* @brief     This file contains all the constants and function prototypes for Bluetooth direct message.
+* @details   This file is used for both BR/EDR and LE.
 * @author
 * @date      2021-07-12
 * @version   v0.8
@@ -28,25 +28,28 @@ extern "C"
 #include <stdint.h>
 #include <stdbool.h>
 
-/** @addtogroup GAP GAP Module
+/** @addtogroup BT_Host Bluetooth Host
   * @{
   */
 
-/** @addtogroup BT_DIRECT_MSG BT Direct Message Module
+/** @addtogroup BT_DIRECT_MSG Bluetooth Direct Message
+  * @brief All the constants and function prototypes for Bluetooth direct message
   * @{
   */
 
 /*============================================================================*
  *                         Macros
  *============================================================================*/
-/** @defgroup BT_DIRECT_MSG_Exported_Macros BT Direct Message Exported Macros
+/** @defgroup BT_DIRECT_MSG_Exported_Macros Bluetooth Direct Message Exported Macros
   * @{
   */
 
-/** @defgroup BT_DIRECT_MSG_CALLBACK_TYPE BT Direct Message Callback Type
+/** @defgroup BT_DIRECT_MSG_CALLBACK_TYPE Bluetooth Direct Message Callback Type
  * @{
  */
 #define BT_DIRECT_MSG_ISO_DATA_IND         0x01 //!<Notification msg type about ISO Data for @ref ISOCH_ROLE_INITIATOR, @ref ISOCH_ROLE_ACCEPTOR and @ref BIG_MGR_ROLE_SYNC_RECEIVER
+
+#define BT_DIRECT_MSG_GATT_SERVER_SERVICE_GET_ALLOW_INFO    0xD0
 /** End of BT_DIRECT_MSG_CALLBACK_TYPE
   * @}
   */
@@ -57,11 +60,11 @@ extern "C"
 /*============================================================================*
  *                         Types
  *============================================================================*/
-/** @defgroup BT_DIRECT_MSG_Exported_Types BT Direct Message Exported Types
+/** @defgroup BT_DIRECT_MSG_Exported_Types Bluetooth Direct Message Exported Types
   * @{
   */
 
-/** @brief Packet Status Flag in HCI ISO Datat packet sent by the Controller. */
+/** @brief Packet Status Flag in HCI ISO Data packet sent by the Controller. */
 typedef enum
 {
     ISOCH_DATA_PKT_STATUS_VALID_DATA = 0,             /**< Valid data. The complete SDU was received correctly. */
@@ -72,26 +75,51 @@ typedef enum
                                                            This is reported as "lost data". */
 } T_ISOCH_DATA_PKT_STATUS;
 
-/** @brief Indication of ISO Datat packet with cb_type @ref BT_DIRECT_MSG_ISO_DATA_IND. */
+/** @brief Indication of ISO Data packet with cb_type @ref BT_DIRECT_MSG_ISO_DATA_IND. */
 typedef struct
 {
     uint16_t conn_handle;                     /**< Connection handle of the CIS or BIS. */
     T_ISOCH_DATA_PKT_STATUS pkt_status_flag;  /**< @ref T_ISOCH_DATA_PKT_STATUS. */
-    uint8_t   *p_buf;                         /**< Point the buffer that needs to release. */
+    uint8_t   *p_buf;                         /**< Points to the buffer that needs to be released. */
     uint16_t  offset;                         /**< Offset from start of the SDU to @ref p_buf.
                                                    e.g. p_data->p_bt_direct_iso->p_buf + p_data->p_bt_direct_iso->offset indicates
                                                         the start of the SDU. */
     uint16_t  iso_sdu_len;                    /**< Length of the SDU. */
     uint16_t  pkt_seq_num;                    /**< The sequence number of the SDU. */
-    bool      ts_flag;                        /**< Indicates whether contains time_stamp.
-                                                   True: contain time_stamp.
-                                                   False: not contain time_stamp. */
+    bool      ts_flag;                        /**< Indicates whether it contains time_stamp.
+                                                   True: contains time_stamp.
+                                                   False: does not contain time_stamp. */
     uint32_t  time_stamp;                     /**< A time in microseconds. time_stamp is valid when @ref ts_flag is True. */
 } T_BT_DIRECT_ISO_DATA_IND;
+
+typedef struct
+{
+    uint16_t conn_handle;
+    uint8_t  remote_addr[6];
+    uint8_t  remote_addr_type;
+    uint8_t  local_addr[6];         /**< Valid if remote_addr_type is not @ref GAP_REMOTE_ADDR_CLASSIC. */
+    uint8_t  local_addr_type;       /**< Valid if remote_addr_type is not @ref GAP_REMOTE_ADDR_CLASSIC. */
+    uint8_t  role;                  /**< Valid if remote_addr_type is not @ref GAP_REMOTE_ADDR_CLASSIC.
+                                         - 0x00: Central.
+                                         - 0x01: Peripheral. */
+    uint8_t  service_id;
+    uint8_t  *p_use_flag;           /**< APP supply use flag to indicate whether *p_allow could be used.
+                                         - *p_use_flag = value.
+                                             - 0: Not use *p_allow.
+                                             - 1: Use *p_allow. */
+    uint16_t *p_allow;             /**< APP supply allowance of service.
+                                         - *p_allow = value.
+                                             - 0: Not allow.
+                                             - 1: Allow. */
+    uint16_t attribute_index;
+    uint16_t attribute_handle;
+} T_BT_DIRECT_GATT_SERVER_SERVICE_GET_ALLOW_INFO;
 
 typedef union
 {
     T_BT_DIRECT_ISO_DATA_IND        *p_bt_direct_iso;
+
+    T_BT_DIRECT_GATT_SERVER_SERVICE_GET_ALLOW_INFO *p_bt_direct_gatt_server_service_get_allow_info;
 } T_BT_DIRECT_CB_DATA;
 /** End of BT_DIRECT_MSG_Exported_Types
   * @}
@@ -101,31 +129,31 @@ typedef union
  *                         Functions
  *============================================================================*/
 /**
- * @defgroup BT_DIRECT_MSG_EXPORT_Functions BT Direct Message Exported Functions
+ * @defgroup BT_DIRECT_MSG_EXPORT_Functions Bluetooth Direct Message Exported Functions
  *
  * @{
  */
 
 /**
-  * @brief      Callback for BT Direct Message to notify app
+  * @brief      Callback for Bluetooth Direct Message to notify APP.
   *
-  * @param[in] cb_type    Callback msy type @ref BT_DIRECT_MSG_CALLBACK_TYPE.
-  * @param[in] p_cb_data  Point to callback data @ref T_BT_DIRECT_CB_DATA.
-  * @retval void
+  * @param[in] cb_type    Callback msg type @ref BT_DIRECT_MSG_CALLBACK_TYPE.
+  * @param[in] p_cb_data  Points to callback data @ref T_BT_DIRECT_CB_DATA.
+  * @return void.
   */
 typedef void(*P_FUN_BT_DIRECT_CB)(uint8_t cb_type, void *p_cb_data);
 
 /**
- * @brief         Register callback to gap, when messages in @ref BT_DIRECT_MSG_CALLBACK_TYPE happens, it will callback to app.
+ * @brief         Register callback to gap, when messages in @ref BT_DIRECT_MSG_CALLBACK_TYPE happens, it will callback to APP.
  *
- * @param[in]     app_callback    Callback function provided by the APP to handle BT direct messages.
- *                @arg NULL   -> Not send BT direct messages to APP.
- *                @arg Others -> Use application defined callback function.
- * @return void
+ * @param[in]     app_callback    Callback function provided by the APP to handle Bluetooth direct messages.
+ *                @arg NULL   -> Do not send Bluetooth direct messages to APP.
+ *                @arg Others -> Use application-defined callback function.
+ * @return void.
  *
  * <b>Example usage</b>
  * \code{.c}
-   void test()
+   void test(void)
    {
        ......
        gap_register_direct_cb(app_gap_direct_callback);
@@ -166,7 +194,7 @@ void gap_register_direct_cb(P_FUN_BT_DIRECT_CB app_callback);
   * @}
   */
 
-/** End of GAP
+/** End of BT_Host
   * @}
   */
 

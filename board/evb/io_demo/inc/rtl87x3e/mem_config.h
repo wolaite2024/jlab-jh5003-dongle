@@ -85,7 +85,7 @@ example:
 #endif
 /** @} */ /* End of group MEM_CONFIG_Exported_Constents */
 
-#define DSP_SHM_GLOBAL_ADDR    0x536000
+#define DSP_SHM_GLOBAL_ADDR    0x300000
 #define DSP_SHM_TOTAl_SIZE     80 * 1024
 #define DSP_SHM_GLOBAL_SIZE    10 * 1024
 #define DSP_SHM_HEAP_ADDR      DSP_SHM_GLOBAL_ADDR + DSP_SHM_GLOBAL_SIZE

@@ -3,9 +3,9 @@
 *               Copyright(c) 2016, Realtek Semiconductor Corporation. All rights reserved.
 *********************************************************************************************************
 * @file      bt_bond_le.h
-* @brief     key storage function.
+* @brief     Key storage function.
 * @details
-* @author    jane
+* @author    Jane
 * @date      2016-02-18
 * @version   v1.0
 * *********************************************************************************************************
@@ -22,8 +22,8 @@ extern "C"
 {
 #endif
 
-/** @defgroup BT_BOND_LE BT Bond LE
-  * @brief BT Bond LE Module
+/** @defgroup BT_BOND_LE Bluetooth Bond LE
+  * @brief Bluetooth Bond LE Module
   * @{
   */
 
@@ -37,7 +37,7 @@ extern "C"
 /*============================================================================*
  *                         Macros
  *============================================================================*/
-/** @defgroup BT_BOND_LE_Exported_Macros BT BOND Exported Macros
+/** @defgroup BT_BOND_LE_Exported_Macros Bluetooth Bond LE Exported Macros
   * @{
   */
 
@@ -77,7 +77,7 @@ extern "C"
 /*============================================================================*
  *                         Types
  *============================================================================*/
-/** @defgroup BT_BOND_LE_Exported_Types BT Bond Exported Types
+/** @defgroup BT_BOND_LE_Exported_Types Bluetooth Bond LE Exported Types
   * @{
   */
 
@@ -156,7 +156,7 @@ typedef struct
 {
     bool            new_bond;         /**<
                                          * \arg    true  : New pairing device which needs to save bond information.
-                                         * \arg    false : The number of bonds is full when sync bond information. */
+                                         * \arg    false : The number of bonds is full when syncing bond information. */
     uint8_t         bd_addr[6];       /**< Used when the parameter new_bond is true. */
     uint8_t         bd_type;          /**< Used when the parameter new_bond is true. */
     uint8_t         local_bd_addr[6]; /**< Used when the parameter new_bond is true. */
@@ -181,88 +181,82 @@ typedef union
  *                         Functions
  *============================================================================*/
 /**
- * @defgroup BT_BOND_LE_EXPORT_Functions BT Bond Exported Functions
+ * @defgroup BT_BOND_LE_Exported_Functions Bluetooth Bond LE Exported Functions
  *
  * @{
  */
 
 /**
- * @brief bt_le_find_key_entry
- * Find key entry by bluetooth device address and address type.
- * @param[in] bd_addr Remote bluetooth device address.
- * @param[in] bd_type Remote bluetooth device address type.
- * @param[in] local_bd_addr local bluetooth device address.
- * @param[in] local_bd_type local bluetooth device address type.
- * @return p_entry Pointer to the found key entry.
- * @retval null No entry found.
- * @retval others Pointer to the found key entry.
+ * @brief Find key entry by Bluetooth device address and address type.
+ * @param[in] bd_addr Remote Bluetooth device address.
+ * @param[in] bd_type Remote Bluetooth device address type.
+ * @param[in] local_bd_addr Local Bluetooth device address.
+ * @param[in] local_bd_type Local Bluetooth device address type.
+ * @return Pointer to the found key entry: @ref T_LE_BOND_ENTRY.
+ * @retval null    No entry found.
+ * @retval Others  Pointer to the found key entry.
  */
 T_LE_BOND_ENTRY *bt_le_find_key_entry(uint8_t *bd_addr, T_GAP_REMOTE_ADDR_TYPE bd_type,
                                       uint8_t *local_bd_addr, uint8_t local_bd_type);
 
 /**
- * @brief bt_le_find_key_entry_num
- * find key entry number by remote identity address and remote identity address type
- * @param identity_bd_addr remote identity address
- * @param identity_bd_type remote identity address type
- * @return uint8_t
+ * @brief Find key entry number by remote identity address and remote identity address type.
+ * @param identity_bd_addr Remote identity address.
+ * @param identity_bd_type Remote identity address type.
+ * @return Key entry number.
  */
 uint8_t bt_le_find_key_entry_num(uint8_t *identity_bd_addr, uint8_t identity_bd_type);
 
 /**
- * @brief bt_le_find_key_entry_by_idx
- * Find key entry by index.
+ * @brief Find key entry by index.
  * @param[in] idx Key entry index.
- * @return p_entry Pointer to the found key entry.
- * @retval null No entry found.
- * @retval Others Pointer to the found key entry.
+ * @return Pointer to the found key entry: @ref T_LE_BOND_ENTRY.
+ * @retval null     No entry found.
+ * @retval Others   Pointer to the found key entry.
  */
 T_LE_BOND_ENTRY *bt_le_find_key_entry_by_idx(uint8_t idx);
 
 /**
- * @brief bt_le_find_key_entry_by_priority
- * Find key entry by priority.
- * @param priority          indicate device priority. Range: [1, bt_le_get_bond_dev_num()]
- *                          priority=1 indicate the highest priority device.
- *                          priority=bt_le_get_bond_dev_num() indicate the lowest priority device.
- * @return T_LE_BOND_ENTRY*
- * @retval null No entry found.
+ * @brief Find key entry by priority.
+ * @param[in] priority          Indicate device priority. Range: [1, bt_le_get_bond_dev_num()]
+ *                          priority=1 indicates the highest priority device.
+ *                          priority=bt_le_get_bond_dev_num() indicates the lowest priority device.
+ * @return Pointer to the key entry: @ref T_LE_BOND_ENTRY.
+ * @retval null   No entry found.
  * @retval Others Pointer to the found key entry.
  */
 T_LE_BOND_ENTRY *bt_le_find_key_entry_by_priority(uint8_t priority);
 
 /**
- * @brief bt_le_get_bond_dev_num
- * get bonded device numbers
- * @return uint8_t
+ * @brief Get bonded device numbers
+ * @return Bonded device nuamber.
  */
 uint8_t bt_le_get_bond_dev_num(void);
 
 /**
- * @brief bt_le_get_low_priority_bond
- * Get the low priority bond device key entry.
- * @return T_LE_BOND_ENTRY*
+ * @brief Get the low priority bond device key entry.
+ * @return Pointer to the key entry: @ref T_LE_BOND_ENTRY.
  */
 T_LE_BOND_ENTRY *bt_le_get_low_priority_bond(void);
 
 /**
- * @brief bt_le_set_high_priority_bond
- * Set the high priority bond device key entry.
- * @param p_entry
- * @return true
- * @return false
+ * @brief Set the high priority bond device key entry.
+ * @param[in] p_entry Pointer to the key entry of the bonded device: @ref T_LE_BOND_ENTRY.
+ * @return   Operation result.
+ * @retval   true   Success.
+ * @retval   false  Failed.
  */
 bool bt_le_set_high_priority_bond(T_LE_BOND_ENTRY *p_entry);
 
 /**
- * @brief bt_le_resolve_random_address
- * Resolve random address of the specified bonded device.
- * @param[in]       unresolved_addr       Unresolved remote bluetooth device address.
- * @param[in,out]   resolved_addr         Resolved remote bluetooth device address.
- * @param[in,out]   resolved_addr_type    Resolved remote bluetooth device address type.
+ * @brief Resolve random address of the specified bonded device.
+ * @param[in]       unresolved_addr       Unresolved remote Bluetooth device address.
+ * @param[in,out]   resolved_addr         Resolved remote Bluetooth device address.
+ * @param[in,out]   resolved_addr_type    Resolved remote Bluetooth device address type.
  * @return Operation result.
  * @retval true     Operation success.
  * @retval false    Operation failure.
+ *
  * <b>Example usage</b>
  * \code{.c}
     void app_handle_authen_state_evt(uint8_t conn_id, uint8_t new_state, uint16_t status)
@@ -305,16 +299,16 @@ bool bt_le_resolve_random_address(uint8_t *unresolved_addr, uint8_t *resolved_ad
                                   T_GAP_IDENT_ADDR_TYPE *resolved_addr_type);
 
 /**
- * @brief bt_le_get_max_le_paired_device_num
- * Get maximum pairing information number that can be stored.
+ * @brief Get maximum pairing information number that can be stored.
+ *
  * This function can be called after @ref le_gap_init is invoked.
+ *
  * @return Maximum number of LE paired device information that can be stored.
  */
 uint8_t bt_le_get_max_le_paired_device_num(void);
 
 /**
- * @brief bt_le_get_dev_ltk
- * Get device LTK information.
+ * @brief Get device LTK information.
  * @param[in] p_entry        Pointer to the key entry of bonded device.
  * @param[in] remote         Read the remote LTK or the local LTK.
  * @param[out] p_key_len     Pointer to LTK key length to read.
@@ -326,8 +320,7 @@ uint8_t bt_le_get_max_le_paired_device_num(void);
 bool bt_le_get_dev_ltk(T_LE_BOND_ENTRY *p_entry, bool remote, uint8_t *p_key_len,
                        uint8_t *p_ltk);
 /**
- * @brief bt_le_set_dev_ltk
- * Update device LTK information.
+ * @brief Update device LTK information.
  * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
  * @param[in] p_entry        Pointer to the key entry of bonded device.
  * @param[in] remote         Set the remote LTK or the local LTK.
@@ -336,19 +329,19 @@ bool bt_le_get_dev_ltk(T_LE_BOND_ENTRY *p_entry, bool remote, uint8_t *p_key_len
  * @return Operation result.
  * @retval true     Operation success.
  * @retval false    Operation failure.
-  * <b>Example usage</b>
-   \code{.c}
+ *
+ * <b>Example usage</b>
+ * \code{.c}
    void test(uint8_t new_ltk[16])
    {
        bt_le_set_dev_ltk(p_entry, false, 16, new_ltk);
    }
-   \endcode
+ * \endcode
  */
 bool bt_le_set_dev_ltk(T_LE_BOND_ENTRY *p_entry, bool remote, uint8_t key_len,
                        uint8_t *p_ltk);
 /**
- * @brief bt_le_get_dev_irk
- * Get device IRK information.
+ * @brief Get device IRK information.
  * @param[in] p_entry        Pointer to the key entry of bonded device.
  * @param[in] remote         Read the remote IRK or the local IRK.
  * @param[out] p_irk         Pointer to IRK to read.
@@ -359,9 +352,9 @@ bool bt_le_set_dev_ltk(T_LE_BOND_ENTRY *p_entry, bool remote, uint8_t key_len,
 bool bt_le_get_dev_irk(T_LE_BOND_ENTRY *p_entry, bool remote, uint8_t *p_irk);
 
 /**
- * @brief   bt_le_clear_all_keys
- * Erase all keys of bonded devices.
- * @return  void
+ * @brief Erase all keys of bonded devices.
+ * @return  void.
+ *
  * <b>Example usage</b>
  * \code{.c}
     void app_ble_device_handle_factory_reset(void)
@@ -397,28 +390,28 @@ bool bt_le_get_dev_irk(T_LE_BOND_ENTRY *p_entry, bool remote, uint8_t *p_irk);
 void bt_le_clear_all_keys(void);
 
 /**
- * @brief bt_le_delete_bond
- * delete bond information by entry.
- * @param p_entry
+ * @brief Delete bond information by entry.
+ * @param[in] p_entry Pointer to the key entry of bonded device.
  */
 void bt_le_delete_bond(T_LE_BOND_ENTRY *p_entry);
 
 /**
- * \brief Set bond flag of a particular BLE bond.
+ * \brief Set bond flag of a particular LE bond.
  * \xrefitem Added_API_2_11_1_0 "Added Since 2.11.1.0" "Added API"
  * @param[in] p_entry Pointer to the key entry of bonded device.
  * \param[in] flag    Bond flag value to be set.
  * \return Result of setting bond flag.
  * \retval true  Set bond flag successfully.
  * \retval false Failed to set bond flag.
+ *
  * <b>Example usage</b>
-   \code{.c}
+ * \code{.c}
    int test(void)
    {
        uint8_t idx = 0;
        uint16_t bond_flag = 0x01;
        T_LE_BOND_ENTRY *p_entry = bt_le_find_key_entry_by_idx(idx);
-       if(p_entry)
+       if (p_entry)
        {
            bt_le_set_bond_flag(p_entry, bond_flag);
        }
@@ -428,21 +421,22 @@ void bt_le_delete_bond(T_LE_BOND_ENTRY *p_entry);
 bool bt_le_set_bond_flag(T_LE_BOND_ENTRY *p_entry, uint16_t flag);
 
 /**
- * \brief Get bond flag stored in FTL for a particular BLE bond.
+ * \brief Get bond flag stored in FTL for a particular LE bond.
  * \xrefitem Added_API_2_11_1_0 "Added Since 2.11.1.0" "Added API"
  * @param[in]  p_entry Pointer to the key entry of bonded device.
- * \param[out] p_flag  Bond flag of the BLE bond.
+ * \param[out] p_flag  Bond flag of the LE bond.
  * \return Result of getting bond flag.
  * \retval true  Get bond flag successfully.
  * \retval false Failed to get bond flag.
+ *
  * <b>Example usage</b>
-   \code{.c}
+ * \code{.c}
    int test(void)
    {
        uint8_t idx = 0;
        uint16_t bond_flag = 0;
        T_LE_BOND_ENTRY *p_entry = bt_le_find_key_entry_by_idx(idx);
-       if(p_entry)
+       if (p_entry)
        {
            bt_le_get_bond_flag(p_entry, &bond_flag);
        }
@@ -463,7 +457,7 @@ bool bt_le_get_bond_flag(T_LE_BOND_ENTRY *p_entry, uint16_t *p_flag);
   */
 bool bt_le_set_local_irk(uint8_t local_identity_address_type,
                          uint8_t *local_identity_address, uint8_t *local_irk);
-/** End of BT_BOND_LE_EXPORT_Functions
+/** End of BT_BOND_LE_Exported_Functions
   * @}
   */
 /** End of BT_BOND_LE

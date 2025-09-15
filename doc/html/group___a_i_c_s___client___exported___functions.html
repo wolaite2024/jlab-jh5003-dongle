@@ -54,7 +54,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga066a80dd563f99c984603157c9bca080"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get AICS service data.  <a href="#ga066a80dd563f99c984603157c9bca080">More...</a><br /></td></tr>
 <tr class="separator:ga066a80dd563f99c984603157c9bca080"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8a9838e8c742120d7cd547ad4bf93663"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_i_c_s___client___exported___functions.html#ga8a9838e8c742120d7cd547ad4bf93663">aics_cfg_cccd</a> (uint16_t conn_handle, uint8_t srv_instance_id, uint8_t cfg_flags, bool enable)</td></tr>
-<tr class="memdesc:ga8a9838e8c742120d7cd547ad4bf93663"><td class="mdescLeft">&#160;</td><td class="mdescRight">Config the AICS service CCCD data.  <a href="#ga8a9838e8c742120d7cd547ad4bf93663">More...</a><br /></td></tr>
+<tr class="memdesc:ga8a9838e8c742120d7cd547ad4bf93663"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the AICS service CCCD data.  <a href="#ga8a9838e8c742120d7cd547ad4bf93663">More...</a><br /></td></tr>
 <tr class="separator:ga8a9838e8c742120d7cd547ad4bf93663"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga41d8485a78c1cfb5e04896f0ce0d1a75"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_i_c_s___client___exported___functions.html#ga41d8485a78c1cfb5e04896f0ce0d1a75">aics_read_char_value</a> (uint16_t conn_handle, uint8_t srv_instance_id, <a class="el" href="group___a_i_c_s___client___exported___types.html#ga656c05ff39712f031b90c811b2d0ab94">T_AICS_CHAR_TYPE</a> type)</td></tr>
 <tr class="memdesc:ga41d8485a78c1cfb5e04896f0ce0d1a75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read AICS characteristic value.  <a href="#ga41d8485a78c1cfb5e04896f0ce0d1a75">More...</a><br /></td></tr>
@@ -63,10 +63,10 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga229b94bbd5c53522295d25bb8ce5de8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">AICS client write audio input control point.  <a href="#ga229b94bbd5c53522295d25bb8ce5de8d">More...</a><br /></td></tr>
 <tr class="separator:ga229b94bbd5c53522295d25bb8ce5de8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2c561c770144918e912e4c9b888c4a86"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___l_e_a___l_i_b___exported___types.html#ga33ecf84ad667c4432d2bd944274f2a83">T_LE_AUDIO_CAUSE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_i_c_s___client___exported___functions.html#ga2c561c770144918e912e4c9b888c4a86">aics_write_cp_by_group</a> (<a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a> group_handle, uint8_t srv_instance_id, <a class="el" href="group___a_i_c_s___def___exported___types.html#ga9d4a1d3db625b89702eef7ee67494a02">T_AICS_CP_OP</a> op, <a class="el" href="struct_t___a_i_c_s___c_p___p_a_r_a_m.html">T_AICS_CP_PARAM</a> *p_param)</td></tr>
-<tr class="memdesc:ga2c561c770144918e912e4c9b888c4a86"><td class="mdescLeft">&#160;</td><td class="mdescRight">AICS client write audio input control point by ble audio group.  <a href="#ga2c561c770144918e912e4c9b888c4a86">More...</a><br /></td></tr>
+<tr class="memdesc:ga2c561c770144918e912e4c9b888c4a86"><td class="mdescLeft">&#160;</td><td class="mdescRight">AICS client writes audio input control point by LE audio group.  <a href="#ga2c561c770144918e912e4c9b888c4a86">More...</a><br /></td></tr>
 <tr class="separator:ga2c561c770144918e912e4c9b888c4a86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac6f0f549bc1e6833ff688798428511c5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_i_c_s___client___exported___functions.html#gac6f0f549bc1e6833ff688798428511c5">aics_write_input_des</a> (uint16_t conn_handle, uint8_t srv_instance_id, uint8_t *p_input_des, uint16_t input_des_len)</td></tr>
-<tr class="memdesc:gac6f0f549bc1e6833ff688798428511c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the Audio Input Description characteristic. If the audio input description characteristic changes, the Application will receive LE_AUDIO_MSG_AICS_CLIENT_NOTIFY.  <a href="#gac6f0f549bc1e6833ff688798428511c5">More...</a><br /></td></tr>
+<tr class="memdesc:gac6f0f549bc1e6833ff688798428511c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the Audio Input Description characteristic.  <a href="#gac6f0f549bc1e6833ff688798428511c5">More...</a><br /></td></tr>
 <tr class="separator:gac6f0f549bc1e6833ff688798428511c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -113,11 +113,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of get AICS service data. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of getting AICS service data. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Get AICS service data success. </td></tr>
-    <tr><td class="paramname">false</td><td>Get AICS service data failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Getting AICS service data is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Getting AICS service data failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -162,13 +162,13 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Config the AICS service CCCD data. </p>
+<p>Configure the AICS service CCCD data. </p>
 <p><a class="el" href="aics__client_8h_source.html">aics_client.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">srv_instance_id</td><td>Service instance id. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">cfg_flags</td><td>AICS CCCD Flags: <a class="el" href="group___a_i_c_s___c_f_g___f_l_a_g_s.html">AICS Service Characteristic Flags.</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">srv_instance_id</td><td>Service instance ID. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cfg_flags</td><td>AICS CCCD Flags: <a class="el" href="group___a_i_c_s___c_f_g___f_l_a_g_s.html">AICS Service Characteristic Flags</a>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">enable</td><td>Whether to enable CCCD. <ul>
 <li>true Enable CCCD. </li>
 <li>false Disable CCCD. </li>
@@ -217,16 +217,16 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">srv_instance_id</td><td>Service instance id. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">srv_instance_id</td><td>Service instance ID. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>AICS characteristic type: <a class="el" href="group___a_i_c_s___client___exported___types.html#ga656c05ff39712f031b90c811b2d0ab94">T_AICS_CHAR_TYPE</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of read AICS characteristic value. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of reading AICS characteristic value. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Read AICS characteristic value success. </td></tr>
-    <tr><td class="paramname">false</td><td>Read AICS characteristic value failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Reading AICS characteristic value is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Reading AICS characteristic value failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -276,17 +276,17 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">srv_instance_id</td><td>Service instance id. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">srv_instance_id</td><td>Service instance ID. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">op</td><td>Audio input control point opcode: <a class="el" href="group___a_i_c_s___def___exported___types.html#ga9d4a1d3db625b89702eef7ee67494a02">T_AICS_CP_OP</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_param</td><td>Point to audio input control point parameter: <a class="el" href="struct_t___a_i_c_s___c_p___p_a_r_a_m.html">T_AICS_CP_PARAM</a>.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_param</td><td>Pointer to audio input control point parameter: <a class="el" href="struct_t___a_i_c_s___c_p___p_a_r_a_m.html">T_AICS_CP_PARAM</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of AICS client write audio input control point. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of AICS client writing audio input control point. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>AICS client write audio input control point success. </td></tr>
-    <tr><td class="paramname">false</td><td>AICS client write audio input control point failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Writing audio input control point is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Writing audio input control point failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -331,23 +331,23 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>AICS client write audio input control point by ble audio group. </p>
+<p>AICS client writes audio input control point by LE audio group. </p>
 <p><a class="el" href="aics__client_8h_source.html">aics_client.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000019">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000016">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">group_handle</td><td>BLE audio group handle: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">srv_instance_id</td><td>Service instance id. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">group_handle</td><td>LE audio group handle: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">srv_instance_id</td><td>Service instance ID. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">op</td><td>Audio input control point opcode: <a class="el" href="group___a_i_c_s___def___exported___types.html#ga9d4a1d3db625b89702eef7ee67494a02">T_AICS_CP_OP</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_param</td><td>Point to audio input control point parameter: <a class="el" href="struct_t___a_i_c_s___c_p___p_a_r_a_m.html">T_AICS_CP_PARAM</a>.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_param</td><td>Pointer to audio input control point parameter: <a class="el" href="struct_t___a_i_c_s___c_p___p_a_r_a_m.html">T_AICS_CP_PARAM</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Operation result The result of AICS client write audio input control point. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Operation result The result of AICS client writing audio input control point. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">LE_AUDIO_CAUSE_SUCCESS</td><td>AICS client write audio input control point success. </td></tr>
-    <tr><td class="paramname">Others</td><td>AICS client write audio input control point failed. </td></tr>
+    <tr><td class="paramname">LE_AUDIO_CAUSE_SUCCESS</td><td>Writing audio input control point is successful. </td></tr>
+    <tr><td class="paramname">Others</td><td>Writing audio input control point failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -392,23 +392,24 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Write the Audio Input Description characteristic. If the audio input description characteristic changes, the Application will receive LE_AUDIO_MSG_AICS_CLIENT_NOTIFY. </p>
+<p>Write the Audio Input Description characteristic. </p>
 <p><a class="el" href="aics__client_8h_source.html">aics_client.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000020">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<p>If the audio input description characteristic changes, the Application will receive <a class="el" href="group___l_e_a___l_i_b___exported___types.html#ggabe1a2e587cdc57dc5de8e141de5d1b0bab7e1ae35fa9127e067165485ad7e87a0">LE_AUDIO_MSG_AICS_CLIENT_NOTIFY</a>.</p>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000017">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">srv_instance_id</td><td>AICS service index. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_input_des</td><td>Point to the input descriptor value. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_input_des</td><td>Pointer to the input descriptor value. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">input_des_len</td><td>The length of the input descriptor value.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of AICS client send write without response packet. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of AICS client sending write without response packet. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>AICS client send write without response packet success. </td></tr>
-    <tr><td class="paramname">false</td><td>AICS client send write without response packet failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Sending write without response packet is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Sending write without response packet failed. </td></tr>
   </table>
   </dd>
 </dl>

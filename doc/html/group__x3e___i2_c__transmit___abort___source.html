@@ -51,40 +51,58 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:gab26b24f290f91f767945d44b6687976d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__transmit___abort___source.html#gab26b24f290f91f767945d44b6687976d">ABRT_SLVRD_INTX</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(15))</td></tr>
+<tr class="memdesc:gab26b24f290f91f767945d44b6687976d"><td class="mdescLeft">&#160;</td><td class="mdescRight">When the processor side responds to a slave mode request for data to be transmitted to a remote master and user send read command.  <a href="#gab26b24f290f91f767945d44b6687976d">More...</a><br /></td></tr>
 <tr class="separator:gab26b24f290f91f767945d44b6687976d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa272f24dab1294f8de08280387b2f3c7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__transmit___abort___source.html#gaa272f24dab1294f8de08280387b2f3c7">ABRT_SLV_ARBLOST</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(14))</td></tr>
+<tr class="memdesc:gaa272f24dab1294f8de08280387b2f3c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave lost the bus while transmitting data to a remote master.  <a href="#gaa272f24dab1294f8de08280387b2f3c7">More...</a><br /></td></tr>
 <tr class="separator:gaa272f24dab1294f8de08280387b2f3c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga09475c04716e7710f91e8133f051619d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__transmit___abort___source.html#ga09475c04716e7710f91e8133f051619d">ABRT_SLVFLUSH_TXFIFO</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(13))</td></tr>
+<tr class="memdesc:ga09475c04716e7710f91e8133f051619d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave has received a read command and some data exists in the TX FIFO so the slave issues TX abort interrupt to flush old data in TX FIFO.  <a href="#ga09475c04716e7710f91e8133f051619d">More...</a><br /></td></tr>
 <tr class="separator:ga09475c04716e7710f91e8133f051619d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga61365ed5ead818c56781155e7c050010"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__transmit___abort___source.html#ga61365ed5ead818c56781155e7c050010">ARB_LOST</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(12))</td></tr>
+<tr class="memdesc:ga61365ed5ead818c56781155e7c050010"><td class="mdescLeft">&#160;</td><td class="mdescRight">Master has lost arbitration or the slave transmitter has lost arbitration.  <a href="#ga61365ed5ead818c56781155e7c050010">More...</a><br /></td></tr>
 <tr class="separator:ga61365ed5ead818c56781155e7c050010"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9a4b45a773e7ffa809fd5d82058d3440"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__transmit___abort___source.html#ga9a4b45a773e7ffa809fd5d82058d3440">ABRT_MASTER_DIS</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(11))</td></tr>
+<tr class="memdesc:ga9a4b45a773e7ffa809fd5d82058d3440"><td class="mdescLeft">&#160;</td><td class="mdescRight">User tries to initiate a master operation with the master mode disabled.  <a href="#ga9a4b45a773e7ffa809fd5d82058d3440">More...</a><br /></td></tr>
 <tr class="separator:ga9a4b45a773e7ffa809fd5d82058d3440"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2bce4a02a3d90a5494fc1992ee89fa9d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__transmit___abort___source.html#ga2bce4a02a3d90a5494fc1992ee89fa9d">ABRT_10B_RD_NORSTRT</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(10))</td></tr>
+<tr class="memdesc:ga2bce4a02a3d90a5494fc1992ee89fa9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The restart is disabled and the master sends a read command in 10-bit addressing mode.  <a href="#ga2bce4a02a3d90a5494fc1992ee89fa9d">More...</a><br /></td></tr>
 <tr class="separator:ga2bce4a02a3d90a5494fc1992ee89fa9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab822cbe295b9050f9a0974b949abbfb3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__transmit___abort___source.html#gab822cbe295b9050f9a0974b949abbfb3">ABRT_SBYTE_NORSTRT</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(9))</td></tr>
+<tr class="memdesc:gab822cbe295b9050f9a0974b949abbfb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The restart is disabled and the user is trying to send a start byte.  <a href="#gab822cbe295b9050f9a0974b949abbfb3">More...</a><br /></td></tr>
 <tr class="separator:gab822cbe295b9050f9a0974b949abbfb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9fb8e34491ad2897fa36b12697ad8bfb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__transmit___abort___source.html#ga9fb8e34491ad2897fa36b12697ad8bfb">ABRT_HS_NORSTRT</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(8))</td></tr>
+<tr class="memdesc:ga9fb8e34491ad2897fa36b12697ad8bfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">The restart is disabled and the user is trying to use the master to transfer data in high speed mode.  <a href="#ga9fb8e34491ad2897fa36b12697ad8bfb">More...</a><br /></td></tr>
 <tr class="separator:ga9fb8e34491ad2897fa36b12697ad8bfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabc5fbb358d0e418ba010ac6b4e3d7122"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__transmit___abort___source.html#gabc5fbb358d0e418ba010ac6b4e3d7122">ABRT_SBYTE_ACKDET</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(7))</td></tr>
+<tr class="memdesc:gabc5fbb358d0e418ba010ac6b4e3d7122"><td class="mdescLeft">&#160;</td><td class="mdescRight">Master has sent a start byte and the start byte was acknowledged (wrong behavior).  <a href="#gabc5fbb358d0e418ba010ac6b4e3d7122">More...</a><br /></td></tr>
 <tr class="separator:gabc5fbb358d0e418ba010ac6b4e3d7122"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae249fe1e8dd2a29a0c93868d5d7d1e6e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__transmit___abort___source.html#gae249fe1e8dd2a29a0c93868d5d7d1e6e">ABRT_HS_ACKDET</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(6))</td></tr>
+<tr class="memdesc:gae249fe1e8dd2a29a0c93868d5d7d1e6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Master is in high speed mode and the high speed master code was acknowledged (wrong behavior).  <a href="#gae249fe1e8dd2a29a0c93868d5d7d1e6e">More...</a><br /></td></tr>
 <tr class="separator:gae249fe1e8dd2a29a0c93868d5d7d1e6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga24dfe3330cc13046518128cc083b8fc7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__transmit___abort___source.html#ga24dfe3330cc13046518128cc083b8fc7">ABRT_GCALL_READ</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(5))</td></tr>
+<tr class="memdesc:ga24dfe3330cc13046518128cc083b8fc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C in master mode sent a general call but the user programmed the byte following the general call to be a read from the bus.  <a href="#ga24dfe3330cc13046518128cc083b8fc7">More...</a><br /></td></tr>
 <tr class="separator:ga24dfe3330cc13046518128cc083b8fc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa3359550f878c3a06964291f9bb66ab0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__transmit___abort___source.html#gaa3359550f878c3a06964291f9bb66ab0">ABRT_GCALL_NOACK</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(4))</td></tr>
+<tr class="memdesc:gaa3359550f878c3a06964291f9bb66ab0"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C in master mode sent a general call and no slave on the bus acknowledged the general call.  <a href="#gaa3359550f878c3a06964291f9bb66ab0">More...</a><br /></td></tr>
 <tr class="separator:gaa3359550f878c3a06964291f9bb66ab0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga831222b7a9a2742068851f79255dbe35"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__transmit___abort___source.html#ga831222b7a9a2742068851f79255dbe35">ABRT_TXDATA_NOACK</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(3))</td></tr>
+<tr class="memdesc:ga831222b7a9a2742068851f79255dbe35"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is a master-mode only bit. master has received an acknowledgement for the address, but when it sent data byte(s) following the address, it did not receive an acknowledge from the remote slave(s).  <a href="#ga831222b7a9a2742068851f79255dbe35">More...</a><br /></td></tr>
 <tr class="separator:ga831222b7a9a2742068851f79255dbe35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8a146622092e2f665a0ce55199fa2bd0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__transmit___abort___source.html#ga8a146622092e2f665a0ce55199fa2bd0">ABRT_10ADDR2_NOACK</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(2))</td></tr>
+<tr class="memdesc:ga8a146622092e2f665a0ce55199fa2bd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Master is in 10-bit address mode and the second address byte of the 10-bit address was not acknowledged by any slave.  <a href="#ga8a146622092e2f665a0ce55199fa2bd0">More...</a><br /></td></tr>
 <tr class="separator:ga8a146622092e2f665a0ce55199fa2bd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa98d5ed9a819ebbb4b4135f48d38267a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__transmit___abort___source.html#gaa98d5ed9a819ebbb4b4135f48d38267a">ABRT_10ADDR1_NOACK</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(1))</td></tr>
+<tr class="memdesc:gaa98d5ed9a819ebbb4b4135f48d38267a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Master is in 10-bit address mode and the first 10-bit address byte was not acknowledged by any slave.  <a href="#gaa98d5ed9a819ebbb4b4135f48d38267a">More...</a><br /></td></tr>
 <tr class="separator:gaa98d5ed9a819ebbb4b4135f48d38267a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7f675554226f480ca3b13e1a314b655f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__transmit___abort___source.html#ga7f675554226f480ca3b13e1a314b655f">ABRT_7B_ADDR_NOACK</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(0))</td></tr>
+<tr class="memdesc:ga7f675554226f480ca3b13e1a314b655f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Master is in 7-bit address mode and the address sent was not acknowledged by any slave.  <a href="#ga7f675554226f480ca3b13e1a314b655f">More...</a><br /></td></tr>
 <tr class="separator:ga7f675554226f480ca3b13e1a314b655f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab3dcabcebdc75fd8f7e752fb38044c82"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__transmit___abort___source.html#gab3dcabcebdc75fd8f7e752fb38044c82">MS_ALL_ABORT</a></td></tr>
+<tr class="memdesc:gab3dcabcebdc75fd8f7e752fb38044c82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains all master abort sources.  <a href="#gab3dcabcebdc75fd8f7e752fb38044c82">More...</a><br /></td></tr>
 <tr class="separator:gab3dcabcebdc75fd8f7e752fb38044c82"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4b42e6936006195f89ff4f763d366970"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__transmit___abort___source.html#ga4b42e6936006195f89ff4f763d366970">IS_I2C_EVENT</a>(EVENT)</td></tr>
+<tr class="memdesc:ga4b42e6936006195f89ff4f763d366970"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the input parameter is valid.  <a href="#ga4b42e6936006195f89ff4f763d366970">More...</a><br /></td></tr>
 <tr class="separator:ga4b42e6936006195f89ff4f763d366970"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -101,6 +119,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>When the processor side responds to a slave mode request for data to be transmitted to a remote master and user send read command. </p>
+
 </div>
 </div>
 <a id="gaa272f24dab1294f8de08280387b2f3c7"></a>
@@ -114,6 +134,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Slave lost the bus while transmitting data to a remote master. </p>
 
 </div>
 </div>
@@ -129,6 +151,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Slave has received a read command and some data exists in the TX FIFO so the slave issues TX abort interrupt to flush old data in TX FIFO. </p>
+
 </div>
 </div>
 <a id="ga61365ed5ead818c56781155e7c050010"></a>
@@ -142,6 +166,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Master has lost arbitration or the slave transmitter has lost arbitration. </p>
 
 </div>
 </div>
@@ -157,6 +183,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>User tries to initiate a master operation with the master mode disabled. </p>
+
 </div>
 </div>
 <a id="ga2bce4a02a3d90a5494fc1992ee89fa9d"></a>
@@ -170,6 +198,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The restart is disabled and the master sends a read command in 10-bit addressing mode. </p>
 
 </div>
 </div>
@@ -185,6 +215,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>The restart is disabled and the user is trying to send a start byte. </p>
+
 </div>
 </div>
 <a id="ga9fb8e34491ad2897fa36b12697ad8bfb"></a>
@@ -198,6 +230,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The restart is disabled and the user is trying to use the master to transfer data in high speed mode. </p>
 
 </div>
 </div>
@@ -213,6 +247,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Master has sent a start byte and the start byte was acknowledged (wrong behavior). </p>
+
 </div>
 </div>
 <a id="gae249fe1e8dd2a29a0c93868d5d7d1e6e"></a>
@@ -226,6 +262,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Master is in high speed mode and the high speed master code was acknowledged (wrong behavior). </p>
 
 </div>
 </div>
@@ -241,6 +279,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>I2C in master mode sent a general call but the user programmed the byte following the general call to be a read from the bus. </p>
+
 </div>
 </div>
 <a id="gaa3359550f878c3a06964291f9bb66ab0"></a>
@@ -254,6 +294,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>I2C in master mode sent a general call and no slave on the bus acknowledged the general call. </p>
 
 </div>
 </div>
@@ -269,6 +311,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>This is a master-mode only bit. master has received an acknowledgement for the address, but when it sent data byte(s) following the address, it did not receive an acknowledge from the remote slave(s). </p>
+
 </div>
 </div>
 <a id="ga8a146622092e2f665a0ce55199fa2bd0"></a>
@@ -282,6 +326,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Master is in 10-bit address mode and the second address byte of the 10-bit address was not acknowledged by any slave. </p>
 
 </div>
 </div>
@@ -297,6 +343,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Master is in 10-bit address mode and the first 10-bit address byte was not acknowledged by any slave. </p>
+
 </div>
 </div>
 <a id="ga7f675554226f480ca3b13e1a314b655f"></a>
@@ -311,6 +359,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Master is in 7-bit address mode and the address sent was not acknowledged by any slave. </p>
+
 </div>
 </div>
 <a id="gab3dcabcebdc75fd8f7e752fb38044c82"></a>
@@ -324,12 +374,14 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">(<a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga61365ed5ead818c56781155e7c050010">ARB_LOST</a> | <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga9a4b45a773e7ffa809fd5d82058d3440">ABRT_MASTER_DIS</a> | <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga831222b7a9a2742068851f79255dbe35">ABRT_TXDATA_NOACK</a> |\</div><div class="line">                                                 ABRT_10ADDR2_NOACK | <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#gaa98d5ed9a819ebbb4b4135f48d38267a">ABRT_10ADDR1_NOACK</a> | <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga7f675554226f480ca3b13e1a314b655f">ABRT_7B_ADDR_NOACK</a>)</div><div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga7f675554226f480ca3b13e1a314b655f"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga7f675554226f480ca3b13e1a314b655f">ABRT_7B_ADDR_NOACK</a></div><div class="ttdeci">#define ABRT_7B_ADDR_NOACK</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:181</div></div>
-<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_gaa98d5ed9a819ebbb4b4135f48d38267a"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#gaa98d5ed9a819ebbb4b4135f48d38267a">ABRT_10ADDR1_NOACK</a></div><div class="ttdeci">#define ABRT_10ADDR1_NOACK</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:180</div></div>
-<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga9a4b45a773e7ffa809fd5d82058d3440"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga9a4b45a773e7ffa809fd5d82058d3440">ABRT_MASTER_DIS</a></div><div class="ttdeci">#define ABRT_MASTER_DIS</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:170</div></div>
-<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga831222b7a9a2742068851f79255dbe35"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga831222b7a9a2742068851f79255dbe35">ABRT_TXDATA_NOACK</a></div><div class="ttdeci">#define ABRT_TXDATA_NOACK</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:178</div></div>
-<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga61365ed5ead818c56781155e7c050010"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga61365ed5ead818c56781155e7c050010">ARB_LOST</a></div><div class="ttdeci">#define ARB_LOST</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:169</div></div>
+<b>Value:</b><div class="fragment"><div class="line">(<a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga61365ed5ead818c56781155e7c050010">ARB_LOST</a> | <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga9a4b45a773e7ffa809fd5d82058d3440">ABRT_MASTER_DIS</a> | <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga831222b7a9a2742068851f79255dbe35">ABRT_TXDATA_NOACK</a> |\</div><div class="line">                                                 ABRT_10ADDR2_NOACK | <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#gaa98d5ed9a819ebbb4b4135f48d38267a">ABRT_10ADDR1_NOACK</a> | <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga7f675554226f480ca3b13e1a314b655f">ABRT_7B_ADDR_NOACK</a>)</div><div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga7f675554226f480ca3b13e1a314b655f"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga7f675554226f480ca3b13e1a314b655f">ABRT_7B_ADDR_NOACK</a></div><div class="ttdeci">#define ABRT_7B_ADDR_NOACK</div><div class="ttdoc">Master is in 7-bit address mode and the address sent was not acknowledged by any slave. </div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:200</div></div>
+<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_gaa98d5ed9a819ebbb4b4135f48d38267a"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#gaa98d5ed9a819ebbb4b4135f48d38267a">ABRT_10ADDR1_NOACK</a></div><div class="ttdeci">#define ABRT_10ADDR1_NOACK</div><div class="ttdoc">Master is in 10-bit address mode and the first 10-bit address byte was not acknowledged by any slave...</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:199</div></div>
+<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga9a4b45a773e7ffa809fd5d82058d3440"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga9a4b45a773e7ffa809fd5d82058d3440">ABRT_MASTER_DIS</a></div><div class="ttdeci">#define ABRT_MASTER_DIS</div><div class="ttdoc">User tries to initiate a master operation with the master mode disabled. </div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:189</div></div>
+<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga831222b7a9a2742068851f79255dbe35"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga831222b7a9a2742068851f79255dbe35">ABRT_TXDATA_NOACK</a></div><div class="ttdeci">#define ABRT_TXDATA_NOACK</div><div class="ttdoc">This is a master-mode only bit. master has received an acknowledgement for the address, but when it sent data byte(s) following the address, it did not receive an acknowledge from the remote slave(s). </div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:197</div></div>
+<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga61365ed5ead818c56781155e7c050010"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga61365ed5ead818c56781155e7c050010">ARB_LOST</a></div><div class="ttdeci">#define ARB_LOST</div><div class="ttdoc">Master has lost arbitration or the slave transmitter has lost arbitration. </div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:188</div></div>
 </div><!-- fragment -->
+<p>Contains all master abort sources. </p>
+
 </div>
 </div>
 <a id="ga4b42e6936006195f89ff4f763d366970"></a>
@@ -347,23 +399,25 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">(((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#gab26b24f290f91f767945d44b6687976d">ABRT_SLVRD_INTX</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#gaa272f24dab1294f8de08280387b2f3c7">ABRT_SLV_ARBLOST</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga09475c04716e7710f91e8133f051619d">ABRT_SLVFLUSH_TXFIFO</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga61365ed5ead818c56781155e7c050010">ARB_LOST</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga9a4b45a773e7ffa809fd5d82058d3440">ABRT_MASTER_DIS</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga2bce4a02a3d90a5494fc1992ee89fa9d">ABRT_10B_RD_NORSTRT</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#gab822cbe295b9050f9a0974b949abbfb3">ABRT_SBYTE_NORSTRT</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga9fb8e34491ad2897fa36b12697ad8bfb">ABRT_HS_NORSTRT</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#gabc5fbb358d0e418ba010ac6b4e3d7122">ABRT_SBYTE_ACKDET</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#gae249fe1e8dd2a29a0c93868d5d7d1e6e">ABRT_HS_ACKDET</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga24dfe3330cc13046518128cc083b8fc7">ABRT_GCALL_READ</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#gaa3359550f878c3a06964291f9bb66ab0">ABRT_GCALL_NOACK</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga831222b7a9a2742068851f79255dbe35">ABRT_TXDATA_NOACK</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga8a146622092e2f665a0ce55199fa2bd0">ABRT_10ADDR2_NOACK</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#gaa98d5ed9a819ebbb4b4135f48d38267a">ABRT_10ADDR1_NOACK</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga7f675554226f480ca3b13e1a314b655f">ABRT_7B_ADDR_NOACK</a>))</div><div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga24dfe3330cc13046518128cc083b8fc7"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga24dfe3330cc13046518128cc083b8fc7">ABRT_GCALL_READ</a></div><div class="ttdeci">#define ABRT_GCALL_READ</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:176</div></div>
-<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_gae249fe1e8dd2a29a0c93868d5d7d1e6e"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#gae249fe1e8dd2a29a0c93868d5d7d1e6e">ABRT_HS_ACKDET</a></div><div class="ttdeci">#define ABRT_HS_ACKDET</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:175</div></div>
-<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga7f675554226f480ca3b13e1a314b655f"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga7f675554226f480ca3b13e1a314b655f">ABRT_7B_ADDR_NOACK</a></div><div class="ttdeci">#define ABRT_7B_ADDR_NOACK</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:181</div></div>
-<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga8a146622092e2f665a0ce55199fa2bd0"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga8a146622092e2f665a0ce55199fa2bd0">ABRT_10ADDR2_NOACK</a></div><div class="ttdeci">#define ABRT_10ADDR2_NOACK</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:179</div></div>
-<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga2bce4a02a3d90a5494fc1992ee89fa9d"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga2bce4a02a3d90a5494fc1992ee89fa9d">ABRT_10B_RD_NORSTRT</a></div><div class="ttdeci">#define ABRT_10B_RD_NORSTRT</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:171</div></div>
-<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga09475c04716e7710f91e8133f051619d"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga09475c04716e7710f91e8133f051619d">ABRT_SLVFLUSH_TXFIFO</a></div><div class="ttdeci">#define ABRT_SLVFLUSH_TXFIFO</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:168</div></div>
-<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_gab822cbe295b9050f9a0974b949abbfb3"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#gab822cbe295b9050f9a0974b949abbfb3">ABRT_SBYTE_NORSTRT</a></div><div class="ttdeci">#define ABRT_SBYTE_NORSTRT</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:172</div></div>
-<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_gab26b24f290f91f767945d44b6687976d"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#gab26b24f290f91f767945d44b6687976d">ABRT_SLVRD_INTX</a></div><div class="ttdeci">#define ABRT_SLVRD_INTX</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:166</div></div>
-<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_gaa98d5ed9a819ebbb4b4135f48d38267a"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#gaa98d5ed9a819ebbb4b4135f48d38267a">ABRT_10ADDR1_NOACK</a></div><div class="ttdeci">#define ABRT_10ADDR1_NOACK</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:180</div></div>
-<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga9fb8e34491ad2897fa36b12697ad8bfb"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga9fb8e34491ad2897fa36b12697ad8bfb">ABRT_HS_NORSTRT</a></div><div class="ttdeci">#define ABRT_HS_NORSTRT</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:173</div></div>
-<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_gabc5fbb358d0e418ba010ac6b4e3d7122"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#gabc5fbb358d0e418ba010ac6b4e3d7122">ABRT_SBYTE_ACKDET</a></div><div class="ttdeci">#define ABRT_SBYTE_ACKDET</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:174</div></div>
-<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga9a4b45a773e7ffa809fd5d82058d3440"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga9a4b45a773e7ffa809fd5d82058d3440">ABRT_MASTER_DIS</a></div><div class="ttdeci">#define ABRT_MASTER_DIS</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:170</div></div>
-<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga831222b7a9a2742068851f79255dbe35"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga831222b7a9a2742068851f79255dbe35">ABRT_TXDATA_NOACK</a></div><div class="ttdeci">#define ABRT_TXDATA_NOACK</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:178</div></div>
-<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_gaa272f24dab1294f8de08280387b2f3c7"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#gaa272f24dab1294f8de08280387b2f3c7">ABRT_SLV_ARBLOST</a></div><div class="ttdeci">#define ABRT_SLV_ARBLOST</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:167</div></div>
-<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga61365ed5ead818c56781155e7c050010"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga61365ed5ead818c56781155e7c050010">ARB_LOST</a></div><div class="ttdeci">#define ARB_LOST</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:169</div></div>
-<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_gaa3359550f878c3a06964291f9bb66ab0"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#gaa3359550f878c3a06964291f9bb66ab0">ABRT_GCALL_NOACK</a></div><div class="ttdeci">#define ABRT_GCALL_NOACK</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:177</div></div>
+<b>Value:</b><div class="fragment"><div class="line">(((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#gab26b24f290f91f767945d44b6687976d">ABRT_SLVRD_INTX</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#gaa272f24dab1294f8de08280387b2f3c7">ABRT_SLV_ARBLOST</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga09475c04716e7710f91e8133f051619d">ABRT_SLVFLUSH_TXFIFO</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga61365ed5ead818c56781155e7c050010">ARB_LOST</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga9a4b45a773e7ffa809fd5d82058d3440">ABRT_MASTER_DIS</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga2bce4a02a3d90a5494fc1992ee89fa9d">ABRT_10B_RD_NORSTRT</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#gab822cbe295b9050f9a0974b949abbfb3">ABRT_SBYTE_NORSTRT</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga9fb8e34491ad2897fa36b12697ad8bfb">ABRT_HS_NORSTRT</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#gabc5fbb358d0e418ba010ac6b4e3d7122">ABRT_SBYTE_ACKDET</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#gae249fe1e8dd2a29a0c93868d5d7d1e6e">ABRT_HS_ACKDET</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga24dfe3330cc13046518128cc083b8fc7">ABRT_GCALL_READ</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#gaa3359550f878c3a06964291f9bb66ab0">ABRT_GCALL_NOACK</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga831222b7a9a2742068851f79255dbe35">ABRT_TXDATA_NOACK</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga8a146622092e2f665a0ce55199fa2bd0">ABRT_10ADDR2_NOACK</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#gaa98d5ed9a819ebbb4b4135f48d38267a">ABRT_10ADDR1_NOACK</a>) || \</div><div class="line">                             ((EVENT) == <a class="code" href="group__x3e___i2_c__transmit___abort___source.html#ga7f675554226f480ca3b13e1a314b655f">ABRT_7B_ADDR_NOACK</a>))</div><div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga24dfe3330cc13046518128cc083b8fc7"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga24dfe3330cc13046518128cc083b8fc7">ABRT_GCALL_READ</a></div><div class="ttdeci">#define ABRT_GCALL_READ</div><div class="ttdoc">I2C in master mode sent a general call but the user programmed the byte following the general call to...</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:195</div></div>
+<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_gae249fe1e8dd2a29a0c93868d5d7d1e6e"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#gae249fe1e8dd2a29a0c93868d5d7d1e6e">ABRT_HS_ACKDET</a></div><div class="ttdeci">#define ABRT_HS_ACKDET</div><div class="ttdoc">Master is in high speed mode and the high speed master code was acknowledged (wrong behavior)...</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:194</div></div>
+<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga7f675554226f480ca3b13e1a314b655f"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga7f675554226f480ca3b13e1a314b655f">ABRT_7B_ADDR_NOACK</a></div><div class="ttdeci">#define ABRT_7B_ADDR_NOACK</div><div class="ttdoc">Master is in 7-bit address mode and the address sent was not acknowledged by any slave. </div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:200</div></div>
+<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga8a146622092e2f665a0ce55199fa2bd0"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga8a146622092e2f665a0ce55199fa2bd0">ABRT_10ADDR2_NOACK</a></div><div class="ttdeci">#define ABRT_10ADDR2_NOACK</div><div class="ttdoc">Master is in 10-bit address mode and the second address byte of the 10-bit address was not acknowledg...</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:198</div></div>
+<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga2bce4a02a3d90a5494fc1992ee89fa9d"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga2bce4a02a3d90a5494fc1992ee89fa9d">ABRT_10B_RD_NORSTRT</a></div><div class="ttdeci">#define ABRT_10B_RD_NORSTRT</div><div class="ttdoc">The restart is disabled and the master sends a read command in 10-bit addressing mode. </div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:190</div></div>
+<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga09475c04716e7710f91e8133f051619d"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga09475c04716e7710f91e8133f051619d">ABRT_SLVFLUSH_TXFIFO</a></div><div class="ttdeci">#define ABRT_SLVFLUSH_TXFIFO</div><div class="ttdoc">Slave has received a read command and some data exists in the TX FIFO so the slave issues TX abort in...</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:187</div></div>
+<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_gab822cbe295b9050f9a0974b949abbfb3"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#gab822cbe295b9050f9a0974b949abbfb3">ABRT_SBYTE_NORSTRT</a></div><div class="ttdeci">#define ABRT_SBYTE_NORSTRT</div><div class="ttdoc">The restart is disabled and the user is trying to send a start byte. </div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:191</div></div>
+<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_gab26b24f290f91f767945d44b6687976d"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#gab26b24f290f91f767945d44b6687976d">ABRT_SLVRD_INTX</a></div><div class="ttdeci">#define ABRT_SLVRD_INTX</div><div class="ttdoc">When the processor side responds to a slave mode request for data to be transmitted to a remote maste...</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:185</div></div>
+<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_gaa98d5ed9a819ebbb4b4135f48d38267a"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#gaa98d5ed9a819ebbb4b4135f48d38267a">ABRT_10ADDR1_NOACK</a></div><div class="ttdeci">#define ABRT_10ADDR1_NOACK</div><div class="ttdoc">Master is in 10-bit address mode and the first 10-bit address byte was not acknowledged by any slave...</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:199</div></div>
+<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga9fb8e34491ad2897fa36b12697ad8bfb"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga9fb8e34491ad2897fa36b12697ad8bfb">ABRT_HS_NORSTRT</a></div><div class="ttdeci">#define ABRT_HS_NORSTRT</div><div class="ttdoc">The restart is disabled and the user is trying to use the master to transfer data in high speed mode...</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:192</div></div>
+<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_gabc5fbb358d0e418ba010ac6b4e3d7122"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#gabc5fbb358d0e418ba010ac6b4e3d7122">ABRT_SBYTE_ACKDET</a></div><div class="ttdeci">#define ABRT_SBYTE_ACKDET</div><div class="ttdoc">Master has sent a start byte and the start byte was acknowledged (wrong behavior). </div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:193</div></div>
+<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga9a4b45a773e7ffa809fd5d82058d3440"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga9a4b45a773e7ffa809fd5d82058d3440">ABRT_MASTER_DIS</a></div><div class="ttdeci">#define ABRT_MASTER_DIS</div><div class="ttdoc">User tries to initiate a master operation with the master mode disabled. </div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:189</div></div>
+<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga831222b7a9a2742068851f79255dbe35"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga831222b7a9a2742068851f79255dbe35">ABRT_TXDATA_NOACK</a></div><div class="ttdeci">#define ABRT_TXDATA_NOACK</div><div class="ttdoc">This is a master-mode only bit. master has received an acknowledgement for the address, but when it sent data byte(s) following the address, it did not receive an acknowledge from the remote slave(s). </div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:197</div></div>
+<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_gaa272f24dab1294f8de08280387b2f3c7"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#gaa272f24dab1294f8de08280387b2f3c7">ABRT_SLV_ARBLOST</a></div><div class="ttdeci">#define ABRT_SLV_ARBLOST</div><div class="ttdoc">Slave lost the bus while transmitting data to a remote master. </div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:186</div></div>
+<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_ga61365ed5ead818c56781155e7c050010"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#ga61365ed5ead818c56781155e7c050010">ARB_LOST</a></div><div class="ttdeci">#define ARB_LOST</div><div class="ttdoc">Master has lost arbitration or the slave transmitter has lost arbitration. </div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:188</div></div>
+<div class="ttc" id="group__x3e___i2_c__transmit___abort___source_html_gaa3359550f878c3a06964291f9bb66ab0"><div class="ttname"><a href="group__x3e___i2_c__transmit___abort___source.html#gaa3359550f878c3a06964291f9bb66ab0">ABRT_GCALL_NOACK</a></div><div class="ttdeci">#define ABRT_GCALL_NOACK</div><div class="ttdoc">I2C in master mode sent a general call and no slave on the bus acknowledged the general call...</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:196</div></div>
 </div><!-- fragment -->
+<p>Check if the input parameter is valid. </p>
+
 </div>
 </div>
 </div><!-- contents -->

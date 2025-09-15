@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>BT AUDIO SDK: GAP Connection Exported Types</title>
+<title>BT AUDIO SDK: GAP LE Connection Exported Types</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,7 +45,7 @@ $(function() {
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">GAP Connection Exported Types<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___b_l_u_e_t_o_o_t_h.html">Bluetooth</a> &raquo; <a class="el" href="group___g_a_p.html">GAP</a> &raquo; <a class="el" href="group___g_a_p___l_e.html">GAP LE Module</a> &raquo; <a class="el" href="group___g_a_p___l_e___c_o_n_n_e_c_t_i_o_n___m_o_d_u_l_e.html">GAP LE Connection Module</a></div></div>  </div>
+<div class="title">GAP LE Connection Exported Types<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___b_l_u_e_t_o_o_t_h.html">Bluetooth</a> &raquo; <a class="el" href="group___g_a_p.html">GAP</a> &#124; <a class="el" href="group___b_t___host.html">Bluetooth Host</a> &raquo; <a class="el" href="group___g_a_p___l_e.html">GAP LE Module</a> &raquo; <a class="el" href="group___g_a_p___l_e___c_o_n_n_e_c_t_i_o_n___m_o_d_u_l_e.html">GAP LE Connection Module</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -125,9 +125,12 @@ Enumerations</h2></td></tr>
 
 <p>GAP connection phy types. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga1a4efcba9e05c1fc0fa65d437be21d6ea1ff775ec27b4d162464674a11809ce32"></a>GAP_CONN_PARAM_1M&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="gga1a4efcba9e05c1fc0fa65d437be21d6eac7bf0d49f40b1b805fec9794f601834d"></a>GAP_CONN_PARAM_2M&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="gga1a4efcba9e05c1fc0fa65d437be21d6ea313969a1e1da656bb111a585b586366e"></a>GAP_CONN_PARAM_CODED&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga1a4efcba9e05c1fc0fa65d437be21d6ea1ff775ec27b4d162464674a11809ce32"></a>GAP_CONN_PARAM_1M&#160;</td><td class="fielddoc"><p>LE 1M PHY. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1a4efcba9e05c1fc0fa65d437be21d6eac7bf0d49f40b1b805fec9794f601834d"></a>GAP_CONN_PARAM_2M&#160;</td><td class="fielddoc"><p>LE 2M PHY. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga1a4efcba9e05c1fc0fa65d437be21d6ea313969a1e1da656bb111a585b586366e"></a>GAP_CONN_PARAM_CODED&#160;</td><td class="fielddoc"><p>LE Coded PHY. </p>
+</td></tr>
 </table>
 
 </div>
@@ -170,23 +173,23 @@ Enumerations</h2></td></tr>
 
 <p>LE connection parameter types. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga6550240507031f4b2f0ec2df90f27558a39fdd487698a2f76ef5f821e50ebe012"></a>GAP_PARAM_CONN_BD_ADDR&#160;</td><td class="fielddoc"><p>Address of connected device. Read only. Size is uint8[B_MAX_ADV_LEN]. Set to all zeros when not connected. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga6550240507031f4b2f0ec2df90f27558a39fdd487698a2f76ef5f821e50ebe012"></a>GAP_PARAM_CONN_BD_ADDR&#160;</td><td class="fielddoc"><p>Address of connected device. Read only. Size is 6 bytes. Set to all zeros when not connected. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6550240507031f4b2f0ec2df90f27558aa7cf9ea09b804fab671b3a372e90dab5"></a>GAP_PARAM_CONN_BD_ADDR_TYPE&#160;</td><td class="fielddoc"><p>Address type of connected device. Read only. Size is uint8. Set to zero when not connected. </p>
+<tr><td class="fieldname"><a id="gga6550240507031f4b2f0ec2df90f27558aa7cf9ea09b804fab671b3a372e90dab5"></a>GAP_PARAM_CONN_BD_ADDR_TYPE&#160;</td><td class="fielddoc"><p>Address type of connected device. Read only. Size is 1 byte. Set to zero when not connected. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6550240507031f4b2f0ec2df90f27558a739e49c14dbfc00ad795334bc3f20eaf"></a>GAP_PARAM_CONN_INTERVAL&#160;</td><td class="fielddoc"><p>Current connection interval. Read only. Size is uint16. Range is 7.5ms to 4 seconds (0x0006 to 0x0C80). Default is 0 (no connection). </p>
+<tr><td class="fieldname"><a id="gga6550240507031f4b2f0ec2df90f27558a739e49c14dbfc00ad795334bc3f20eaf"></a>GAP_PARAM_CONN_INTERVAL&#160;</td><td class="fielddoc"><p>Current connection interval. Read only. Size is 2 bytes. Range is 7.5ms to 4 seconds (0x0006 to 0x0C80). Default is 0 (no connection). </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6550240507031f4b2f0ec2df90f27558a4dd84b91baf61991907358ba521cae9c"></a>GAP_PARAM_CONN_LATENCY&#160;</td><td class="fielddoc"><p>Current slave latency. Read only. Size is uint16. Range is 0 to 499. Default is 0 (no slave latency or no connection). </p>
+<tr><td class="fieldname"><a id="gga6550240507031f4b2f0ec2df90f27558a4dd84b91baf61991907358ba521cae9c"></a>GAP_PARAM_CONN_LATENCY&#160;</td><td class="fielddoc"><p>Current slave latency. Read only. Size is 2 bytes. Range is 0 to 499. Default is 0 (no slave latency or no connection). </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6550240507031f4b2f0ec2df90f27558a17dad61920a1192a73adf712823bb0e4"></a>GAP_PARAM_CONN_TIMEOUT&#160;</td><td class="fielddoc"><p>Current timeout value. Read only. size is uint16. Range is 100ms to 32 seconds. Default is 0 (no connection). </p>
+<tr><td class="fieldname"><a id="gga6550240507031f4b2f0ec2df90f27558a17dad61920a1192a73adf712823bb0e4"></a>GAP_PARAM_CONN_TIMEOUT&#160;</td><td class="fielddoc"><p>Current timeout value. Read only. Size is 2 bytes. Range is 100ms to 32 seconds. Default is 0 (no connection). </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6550240507031f4b2f0ec2df90f27558a06ff53b410bc821ebd4ff55b80d8aaff"></a>GAP_PARAM_CONN_MTU_SIZE&#160;</td><td class="fielddoc"><p>MTU size. Read only. size is uint16. </p>
+<tr><td class="fieldname"><a id="gga6550240507031f4b2f0ec2df90f27558a06ff53b410bc821ebd4ff55b80d8aaff"></a>GAP_PARAM_CONN_MTU_SIZE&#160;</td><td class="fielddoc"><p>MTU size. Read only. Size is 2 bytes. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6550240507031f4b2f0ec2df90f27558a20351cb5dac69001ab8b5fbd9dc45835"></a>GAP_PARAM_CONN_LOCAL_BD_TYPE&#160;</td><td class="fielddoc"><p>Local bluetooth address type. Read only. size is 1 byte. </p>
+<tr><td class="fieldname"><a id="gga6550240507031f4b2f0ec2df90f27558a20351cb5dac69001ab8b5fbd9dc45835"></a>GAP_PARAM_CONN_LOCAL_BD_TYPE&#160;</td><td class="fielddoc"><p>Local Bluetooth address type. Read only. Size is 1 byte. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6550240507031f4b2f0ec2df90f27558ae6d66a109761e0a62b061dc955ab2e38"></a>GAP_PARAM_CONN_RX_PHY_TYPE&#160;</td><td class="fielddoc"><p>Rx phy type. Read only. size is 1 byte. </p>
+<tr><td class="fieldname"><a id="gga6550240507031f4b2f0ec2df90f27558ae6d66a109761e0a62b061dc955ab2e38"></a>GAP_PARAM_CONN_RX_PHY_TYPE&#160;</td><td class="fielddoc"><p>Rx phy type. Read only. Size is 1 byte. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="gga6550240507031f4b2f0ec2df90f27558a3d74995cdc144af6e961c9298cfa1b6d"></a>GAP_PARAM_CONN_TX_PHY_TYPE&#160;</td><td class="fielddoc"><p>Tx phy type. Read only. size is 1 byte. </p>
+<tr><td class="fieldname"><a id="gga6550240507031f4b2f0ec2df90f27558a3d74995cdc144af6e961c9298cfa1b6d"></a>GAP_PARAM_CONN_TX_PHY_TYPE&#160;</td><td class="fielddoc"><p>Tx phy type. Read only. Size is 1 byte. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga6550240507031f4b2f0ec2df90f27558a4802711a02652353a073e1f038c48b26"></a>GAP_PARAM_CONN_REMOTE_FEATURES&#160;</td><td class="fielddoc"><p>Remote supported features. Read only. </p>
 </td></tr>

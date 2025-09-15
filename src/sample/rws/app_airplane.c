@@ -15,7 +15,6 @@
 #include "app_bt_policy_api.h"
 #include "app_relay.h"
 #include "app_mmi.h"
-#include "gap_br.h"
 #include "app_auto_power_off.h"
 #include "app_audio_policy.h"
 #if F_APP_LISTENING_MODE_SUPPORT

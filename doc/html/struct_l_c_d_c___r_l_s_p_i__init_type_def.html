@@ -44,7 +44,7 @@ $(function() {
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">LCDC_RLSPI_initTypeDef Struct Reference<div class="ingroups"><a class="el" href="group___l_c_d_c.html">LCDC</a> &raquo; <a class="el" href="group___x2_g___r_a_m_l_e_s_s___q_s_p_i.html">RAMLESS_QSPI</a> &raquo; <a class="el" href="group___r_a_m_l_e_s_s___q_s_p_i___exported___types.html">RAMLESS_QSPI Exported Types</a></div></div>  </div>
+<div class="title">LCDC_RLSPI_initTypeDef Struct Reference<div class="ingroups"><a class="el" href="group___l_c_d_c.html">LCDC</a> &raquo; <a class="el" href="group___l_c_d_c___r_a_m_l_e_s_s___q_s_p_i.html">LCDC Ramless QSPI</a> &raquo; <a class="el" href="group___r_a_m_l_e_s_s___q_s_p_i___exported___types.html">RAMLEQSPI Exported Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -58,8 +58,6 @@ Data Fields</h2></td></tr>
 <tr class="separator:ab14894bccf89e7d53230de5f1a2dba71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac612286134f2efd38fb21c97268aecd4"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_c_d_c___r_l_s_p_i__init_type_def.html#ac612286134f2efd38fb21c97268aecd4">VFP</a></td></tr>
 <tr class="separator:ac612286134f2efd38fb21c97268aecd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3135e45a9173425016364345ee607b36"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_c_d_c___r_l_s_p_i__init_type_def.html#a3135e45a9173425016364345ee607b36">tear_input_mux</a></td></tr>
-<tr class="separator:a3135e45a9173425016364345ee607b36"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a65aac53a3a3901df2d3378a3b5f321ed"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_c_d_c___r_l_s_p_i__init_type_def.html#a65aac53a3a3901df2d3378a3b5f321ed">VSYNC_CMD</a></td></tr>
 <tr class="separator:a65aac53a3a3901df2d3378a3b5f321ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6d341d9243bde29a26b1184104cc992a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_c_d_c___r_l_s_p_i__init_type_def.html#a6d341d9243bde29a26b1184104cc992a">VSYNC_CMD_ADDR</a></td></tr>
@@ -84,6 +82,10 @@ Data Fields</h2></td></tr>
 <tr class="separator:a6ad4f820ce4e75cda0686fcaad5168be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11f75f588df8924b94d9ae3b8b7a58b5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_c_d_c___r_l_s_p_i__init_type_def.html#a11f75f588df8924b94d9ae3b8b7a58b5">line_delay_in_vactive</a></td></tr>
 <tr class="separator:a11f75f588df8924b94d9ae3b8b7a58b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3e1128a1e76d81b047d012dd90a1e91"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_c_d_c___r_l_s_p_i__init_type_def.html#ab3e1128a1e76d81b047d012dd90a1e91">line_delay_out_vactive</a></td></tr>
+<tr class="separator:ab3e1128a1e76d81b047d012dd90a1e91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8111fd462cdbc58f2ec8b0e4719f8ed1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_l_c_d_c___r_l_s_p_i__init_type_def.html#a8111fd462cdbc58f2ec8b0e4719f8ed1">frame_delay</a></td></tr>
+<tr class="separator:a8111fd462cdbc58f2ec8b0e4719f8ed1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Field Documentation</h2>
 <a id="a3e414226cdb4e1c30e8e605087d23357"></a>
@@ -97,6 +99,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Vertical Synchronization Active height in units of horizontal scan lines. </p>
 
 </div>
 </div>
@@ -111,6 +114,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Vertical Back Porch in units of horizontal scan lines. </p>
 
 </div>
 </div>
@@ -125,20 +129,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a id="a3135e45a9173425016364345ee607b36"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3135e45a9173425016364345ee607b36">&#9670;&nbsp;</a></span>tear_input_mux</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t tear_input_mux</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>Vertical Front Porch in units of horizontal scan lines. </p>
 
 </div>
 </div>
@@ -153,6 +144,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>VSYNC command for ramless LCD host controller of SPI interface in vertical sync active period. </p>
 
 </div>
 </div>
@@ -167,6 +159,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Address for VSYNC command in vertical sync active period. </p>
 
 </div>
 </div>
@@ -181,6 +174,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>HSYNC command for ramless LCD host controller of SPI interface in vertical back porch period. </p>
 
 </div>
 </div>
@@ -195,6 +189,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Address for HSYNC command in vertical back porch period. </p>
 
 </div>
 </div>
@@ -209,6 +204,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>HSYNC command for ramless LCD host controller of SPI interface in vertical active period. </p>
 
 </div>
 </div>
@@ -223,6 +219,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Address for the HSYNC command in active period. </p>
 
 </div>
 </div>
@@ -237,6 +234,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>HSYNC command byte for ramless LCD host controller of SPI interface in vertical front porch period. </p>
 
 </div>
 </div>
@@ -251,6 +249,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Address for the HSYNC command in vertical front porch period. </p>
 
 </div>
 </div>
@@ -265,6 +264,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Dummy command for timing adjustment. </p>
 
 </div>
 </div>
@@ -279,6 +279,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Display width in pixels. </p>
 
 </div>
 </div>
@@ -293,6 +294,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Display height in pixels. </p>
 
 </div>
 </div>
@@ -307,11 +309,42 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Delay between each line during vertical active period measured in display clock. </p>
+
+</div>
+</div>
+<a id="ab3e1128a1e76d81b047d012dd90a1e91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3e1128a1e76d81b047d012dd90a1e91">&#9670;&nbsp;</a></span>line_delay_out_vactive</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t line_delay_out_vactive</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Delay between each line outside vertical active period measured in display clock. </p>
+
+</div>
+</div>
+<a id="a8111fd462cdbc58f2ec8b0e4719f8ed1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8111fd462cdbc58f2ec8b0e4719f8ed1">&#9670;&nbsp;</a></span>frame_delay</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t frame_delay</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Delay between frames in infinite mode measured in display clock. </p>
 
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>sdk/src/mcu/display/driver/lcdc/inc/<a class="el" href="rtl__ramless__qspi_8h_source.html">rtl_ramless_qspi.h</a></li>
+<li>sdk/src/mcu/display/hardware/lcdc/inc/<a class="el" href="rtl__ramless__qspi_8h_source.html">rtl_ramless_qspi.h</a></li>
 </ul>
 </div><!-- contents -->
 

@@ -23,6 +23,8 @@ typedef struct
     uint16_t    cause;
 } T_PA_SYNC_STATE_CHANGE_INFO;
 
+#define BLE_PA_SYNC_SKIP              0
+
 typedef void(*T_LE_PA_SYNC_CBACK)(uint8_t adv_bd_type, uint8_t *adv_addr,
                                   uint8_t adv_sid, uint8_t *broadcast_id, T_PA_SYNC_STATE_CHANGE_INFO *p_data);
 bool ble_register_pa_sync_callback(uint8_t app_id, T_LE_PA_SYNC_CBACK callback);

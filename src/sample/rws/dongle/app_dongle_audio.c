@@ -17,6 +17,10 @@
 #include "app_dongle_dual_mode.h"
 #include "app_dongle_common.h"
 #include "app_bt_policy_api.h"
+#include "app_device.h"
+#include "app_dongle_data_ctrl.h"
+#include "app_ipc.h"
+#include "app_main.h"
 
 typedef enum
 {
@@ -48,6 +52,7 @@ typedef struct
 /* increase a2dp interval if continuous plc happens exceeds this threshold */
 #define PLC_CHECK_THRESHOLD             3
 #define PLC_CHECK_INTERVAL              3000
+#define PLC_NOTIFY_THRESHOLD            1536
 
 static T_OS_QUEUE dongle_a2dp_list_queue;
 static T_dongle_a2dp_INFO dongle_a2dp_info;
@@ -77,7 +82,8 @@ static void app_audio_dongle_a2dp_prequeue_clear(void)
 }
 
 static void app_audio_dongle_a2dp_write(T_AUDIO_TRACK_HANDLE handle,
-                                        T_BT_EVENT_PARAM_A2DP_STREAM_DATA_IND *a2dp_data_ind)
+                                        T_BT_EVENT_PARAM_A2DP_STREAM_DATA_IND *a2dp_data_ind,
+                                        bool write_plc_enable)
 {
     uint16_t written_len = 0;
     uint16_t samples_per_frame = dongle_a2dp_info.samples_per_frame;
@@ -86,11 +92,18 @@ static void app_audio_dongle_a2dp_write(T_AUDIO_TRACK_HANDLE handle,
     {
         dongle_a2dp_info.last_a2dp_seq_updated = true;
     }
-    else
+    else /* for bb2 if use streampad plc cannot coexist with coder plc (write pkt loss) simultaneously */
     {
         uint8_t seq_diff = a2dp_data_ind->seq_num - dongle_a2dp_info.last_seq;
+        bool write_plc = false;
 
-        if (a2dp_data_ind->seq_num != (dongle_a2dp_info.last_seq + 1))
+        if (write_plc_enable &&
+            (a2dp_data_ind->seq_num != (dongle_a2dp_info.last_seq + 1)))
+        {
+            write_plc = true;
+        }
+
+        if (write_plc)
         {
             dongle_a2dp_info.pkt_loss_samples = a2dp_data_ind->timestamp - dongle_a2dp_info.last_timestamp -
                                                 (dongle_a2dp_info.last_rcv_frame_num * samples_per_frame);
@@ -111,9 +124,25 @@ static void app_audio_dongle_a2dp_write(T_AUDIO_TRACK_HANDLE handle,
                     write_frame_num = dongle_a2dp_info.pkt_loss_samples / samples_per_frame;
                 }
 
+                if (write_frame_num == 0)
+                {
+                    write_frame_num = 1;
+                }
+
                 write_seq = ++dongle_a2dp_info.last_seq;
                 dongle_a2dp_info.pkt_loss_cnt--;
-                dongle_a2dp_info.pkt_loss_samples -= (samples_per_frame * write_frame_num);
+
+                if (dongle_a2dp_info.pkt_loss_samples >= (samples_per_frame * write_frame_num))
+                {
+                    dongle_a2dp_info.pkt_loss_samples -= (samples_per_frame * write_frame_num);
+                }
+                else
+                {
+                    dongle_a2dp_info.pkt_loss_samples = 0;
+                }
+
+                APP_PRINT_TRACE2("app_audio_dongle_a2dp_write: pkt loss seq %d frame %d", write_seq,
+                                 write_frame_num);
 
                 audio_track_write(handle, a2dp_data_ind->bt_clock,
                                   write_seq,
@@ -221,9 +250,15 @@ static bool app_audio_dongle_a2dp_prequeue(T_APP_BR_LINK *p_link,
         {
             for (i = 0; i < dongle_a2dp_list_queue.count; i++)
             {
+                bool write_plc = true;
                 dongle_a2dp = os_queue_peek(&dongle_a2dp_list_queue, i);
 
-                app_audio_dongle_a2dp_write(p_link->a2dp_track_handle, &dongle_a2dp->data_ind);
+                if (i == 0)
+                {
+                    write_plc = false;
+                }
+
+                app_audio_dongle_a2dp_write(p_link->a2dp_track_handle, &dongle_a2dp->data_ind, write_plc);
             }
 
             app_audio_dongle_a2dp_prequeue_clear();
@@ -276,7 +311,7 @@ static void app_audio_dongle_a2dp_handle(T_APP_BR_LINK *p_link,
     }
     else
     {
-        app_audio_dongle_a2dp_write(p_link->a2dp_track_handle, a2dp_data_ind);
+        app_audio_dongle_a2dp_write(p_link->a2dp_track_handle, a2dp_data_ind, true);
     }
 
 }
@@ -296,6 +331,7 @@ static void app_dongle_audio_bt_cback(T_BT_EVENT event_type, void *event_buf, ui
 
                 headset_status.increase_a2dp_interval = false;
                 app_dongle_sync_headset_status();
+                app_dongle_adjust_gaming_latency();
 
                 plc_check_cnt = 0;
                 app_stop_timer(&timer_idx_increase_a2dp_interval);
@@ -334,7 +370,7 @@ static void app_dongle_audio_bt_cback(T_BT_EVENT event_type, void *event_buf, ui
                     uint8_t subbands = a2dp_config_cmpl->codec_info.sbc.subbands == BT_A2DP_SBC_SUBBANDS_8 ? 8 : 4;
                     uint8_t channels = (channel_mode == BT_A2DP_SBC_CHANNEL_MODE_MONO) ? 1 : 2;
                     uint8_t block_length = 0;
-                    uint8_t bitpool = 37;
+                    uint8_t bitpool = GAMING_SBC_BITPOOL;
                     uint8_t frame_len = 0;
 
                     if (a2dp_config_cmpl->codec_info.sbc.block_length == BT_A2DP_SBC_BLOCK_LENGTH_4)
@@ -461,7 +497,6 @@ static void app_dongle_audio_cback(T_AUDIO_EVENT event_type, void *event_buf, ui
                             /* increase a2dp send interval */
                             headset_status.increase_a2dp_interval = true;
                             app_dongle_sync_headset_status();
-
                             app_dongle_adjust_gaming_latency();
                         }
                     }
@@ -479,7 +514,7 @@ static void app_dongle_audio_cback(T_AUDIO_EVENT event_type, void *event_buf, ui
                 if (param->track_state_changed.state == AUDIO_TRACK_STATE_STARTED ||
                     param->track_state_changed.state == AUDIO_TRACK_STATE_RESTARTED)
                 {
-                    audio_track_plc_notify_set(p_dongle_link->a2dp_track_handle, 1000, 1536, true);
+                    audio_track_plc_notify_set(p_dongle_link->a2dp_track_handle, 1000, PLC_NOTIFY_THRESHOLD, true);
                     prequeue_dongle_a2dp = false;
                 }
             }
@@ -517,9 +552,38 @@ static void app_dongle_audio_timer_cback(uint8_t timer_evt, uint16_t param)
     }
 }
 
+static void app_dongle_audio_mic_mute_ctrl(uint8_t mic_mute)
+{
+#if TARGET_LEGACY_AUDIO_GAMING
+    if (app_db.dongle_is_enable_mic)
+#endif
+    {
+        app_dongle_send_cmd(DONGLE_CMD_MIC_MUTE_CTRL, &mic_mute, 1);
+    }
+}
+
+static void app_dongle_audio_device_event_cback(uint32_t event, void *msg)
+{
+    switch (event)
+    {
+    case APP_DEVICE_IPC_EVT_MIC_MUTE_STATUS:
+        {
+            uint8_t mic_mute = *(uint8_t *)msg;
+
+            app_dongle_audio_mic_mute_ctrl(mic_mute);
+        }
+        break;
+
+    default:
+        break;
+    }
+}
+
 void app_dongle_audio_init(void)
 {
     os_queue_init(&dongle_a2dp_list_queue);
+
+    app_ipc_subscribe(APP_DEVICE_IPC_TOPIC, app_dongle_audio_device_event_cback);
 
     bt_mgr_cback_register(app_dongle_audio_bt_cback);
 

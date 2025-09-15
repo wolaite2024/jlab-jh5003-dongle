@@ -15,6 +15,7 @@
 #include "app_main.h"
 #include "app_cmd.h"
 #include "app_sdp.h"
+#include "app_bt_policy_int.h"
 
 #if BISTO_FEATURE_SUPPORT
 #include "app_bisto_bt.h"
@@ -26,10 +27,6 @@
 
 #if AMA_FEATURE_SUPPORT
 #include "app_ama_transport.h"
-#endif
-
-#if F_APP_GAMING_DONGLE_SUPPORT
-#include "app_dongle_spp.h"
 #endif
 
 static const uint8_t spp_service_class_uuid128[16] =
@@ -140,7 +137,7 @@ static void app_spp_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t bu
 
             if (app_cfg_const.enable_rtk_vendor_cmd)
             {
-                if (app_db.br_link[app_idx].p_embedded_cmd == NULL)
+                if (app_db.br_link[app_idx].cmd.buf == NULL)
                 {
                     uint16_t cmd_len;
 
@@ -170,9 +167,9 @@ static void app_spp_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t bu
 
                     if (data_len)
                     {
-                        app_db.br_link[app_idx].p_embedded_cmd = malloc(data_len);
-                        memcpy(app_db.br_link[app_idx].p_embedded_cmd, p_data, data_len);
-                        app_db.br_link[app_idx].embedded_cmd_len = data_len;
+                        app_db.br_link[app_idx].cmd.buf = malloc(data_len);
+                        memcpy(app_db.br_link[app_idx].cmd.buf, p_data, data_len);
+                        app_db.br_link[app_idx].cmd.len = data_len;
                     }
                 }
                 else
@@ -180,21 +177,21 @@ static void app_spp_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t bu
                     uint8_t *p_temp;
                     uint16_t cmd_len;
 
-                    p_temp = app_db.br_link[app_idx].p_embedded_cmd;
-                    total_len = app_db.br_link[app_idx].embedded_cmd_len + data_len;
-                    app_db.br_link[app_idx].p_embedded_cmd = malloc(total_len);
-                    memcpy(app_db.br_link[app_idx].p_embedded_cmd, p_temp,
-                           app_db.br_link[app_idx].embedded_cmd_len);
+                    p_temp = app_db.br_link[app_idx].cmd.buf;
+                    total_len = app_db.br_link[app_idx].cmd.len + data_len;
+                    app_db.br_link[app_idx].cmd.buf = malloc(total_len);
+                    memcpy(app_db.br_link[app_idx].cmd.buf, p_temp,
+                           app_db.br_link[app_idx].cmd.len);
                     free(p_temp);
-                    memcpy(app_db.br_link[app_idx].p_embedded_cmd +
-                           app_db.br_link[app_idx].embedded_cmd_len,
+                    memcpy(app_db.br_link[app_idx].cmd.buf +
+                           app_db.br_link[app_idx].cmd.len,
                            p_data, data_len);
-                    app_db.br_link[app_idx].embedded_cmd_len = total_len;
+                    app_db.br_link[app_idx].cmd.len = total_len;
 
-                    p_data = app_db.br_link[app_idx].p_embedded_cmd;
+                    p_data = app_db.br_link[app_idx].cmd.buf;
                     data_len = total_len;
-                    p_temp = app_db.br_link[app_idx].p_embedded_cmd;
-                    app_db.br_link[app_idx].p_embedded_cmd = NULL;
+                    p_temp = app_db.br_link[app_idx].cmd.buf;
+                    app_db.br_link[app_idx].cmd.buf = NULL;
                     //ios will auto combine two cmd into one pkt
                     while (data_len)
                     {
@@ -221,10 +218,10 @@ static void app_spp_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t bu
 
                     if (data_len)
                     {
-                        app_db.br_link[app_idx].p_embedded_cmd = malloc(data_len);
-                        memcpy(app_db.br_link[app_idx].p_embedded_cmd, p_data, data_len);
+                        app_db.br_link[app_idx].cmd.buf = malloc(data_len);
+                        memcpy(app_db.br_link[app_idx].cmd.buf, p_data, data_len);
                     }
-                    app_db.br_link[app_idx].embedded_cmd_len = data_len;
+                    app_db.br_link[app_idx].cmd.len = data_len;
                     free(p_temp);
                 }
             }
@@ -295,9 +292,12 @@ static void app_spp_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t bu
                 APP_PRINT_ERROR0("app_spp_bt_cback: no acl link found");
                 return;
             }
+
             uint8_t local_server_chann = param->spp_conn_ind.local_server_chann;
             uint16_t frame_size = param->spp_conn_ind.frame_size;
-            bt_spp_connect_cfm(p_link->bd_addr, local_server_chann, true, frame_size, 7);
+            bool accept = (app_bt_policy_get_profs_by_bond_flag(ALL_PROFILE_MASK) & SPP_PROFILE_MASK) ? true :
+                          false;
+            bt_spp_connect_cfm(p_link->bd_addr, local_server_chann, accept, frame_size, 7);
         }
         break;
 
@@ -342,27 +342,7 @@ void app_spp_init(void)
         return;
     }
 
-    uint8_t service_num = 2;
-
-#if BISTO_FEATURE_SUPPORT
-    if (extend_app_cfg_const.bisto_support)
-    {
-        service_num += BISTO_SPP_CHANN_NUM;
-    }
-#endif
-
-#if F_APP_GAMING_DONGLE_SUPPORT
-    service_num++;
-#endif
-
-#if AMA_FEATURE_SUPPORT
-    if (extend_app_cfg_const.ama_support && app_ama_transport_supported(AMA_SPP_STREAM))
-    {
-        service_num += 2;
-    }
-#endif
-
-    bt_spp_init(app_cfg_const.spp_link_number, service_num);
+    bt_spp_init();
     bt_mgr_cback_register(app_spp_bt_cback);
 
 #if XM_XIAOAI_FEATURE_SUPPORT
@@ -378,17 +358,5 @@ void app_spp_init(void)
     bt_spp_service_register((uint8_t *)spp_service_class_uuid128, RFC_SPP_CHANN_NUM);
 #endif
 
-#if F_APP_SPECIFIC_UUID_SUPPORT
-    if (app_cfg_const.enable_specific_service_uuid)
-    {
-        bt_spp_service_register((uint8_t *)app_cfg_const.specific_service_uuid,
-                                RFC_RTK_VENDOR_CHANN_NUM);
-    }
-    else
-    {
-        bt_spp_service_register((uint8_t *)rtk_vendor_spp_service_class_uuid128, RFC_RTK_VENDOR_CHANN_NUM);
-    }
-#else
     bt_spp_service_register((uint8_t *)rtk_vendor_spp_service_class_uuid128, RFC_RTK_VENDOR_CHANN_NUM);
-#endif
 }

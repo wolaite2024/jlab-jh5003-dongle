@@ -55,6 +55,10 @@
 #include "app_link_util.h"
 #include "app_nrec.h"
 
+#if F_APP_POWER_TEST
+#include "power_debug.h"
+#endif
+
 #if F_APP_SIDETONE_SUPPORT
 #include "app_sidetone.h"
 #endif
@@ -70,7 +74,6 @@
 
 #if F_APP_LINEIN_SUPPORT
 #include "app_line_in.h"
-#include "line_in.h"
 #endif
 
 #if F_APP_ANC_SUPPORT
@@ -138,7 +141,6 @@
 
 #if F_APP_LEA_SUPPORT
 #include "multitopology_ctrl.h"
-#include "app_lea_adv.h"
 #endif
 
 #if F_APP_SLIDE_SWITCH_MIC_MUTE_TOGGLE
@@ -163,6 +165,7 @@ typedef enum
     APP_TIMER_NOTIFICATION_VOL_ADJ_WAIT_SEC_RSP = 0x01,
     APP_TIMER_NOTIFICATION_VOL_GET_WAIT_SEC_RSP = 0x02,
     APP_TIMER_IN_EAR_RESTORE_A2DP = 0x03,
+    APP_TIMER_GET_ELEMENT_ATTR = 0x04,
 } T_APP_AUDIO_POLICY_TIMER;
 
 typedef enum
@@ -217,13 +220,18 @@ static bool force_join = false;
 static T_APP_BUD_STREAM_STATE bud_stream_state = BUD_STREAM_STATE_IDLE;
 static T_SEG_SEND_DB seg_send_db;
 static bool enable_play_mic_unmute_tone = false;
-static bool enable_play_mic_mute_tone = true;
+static bool enable_play_mic_mute_tone = false;
 
 static uint8_t audio_policy_timer_id = 0;
 static uint8_t timer_idx_long_press_repeat = 0;
 static uint8_t timer_idx_in_ear_restore_a2dp = 0;
 static uint8_t timer_idx_waiting_paused_status = 0;
 static uint8_t timer_idx_waiting_play_status = 0;
+
+#if F_APP_CHARGER_CASE_SUPPORT
+static uint8_t attr_list[7] = {1, 2, 3, 4, 5, 6, 7};
+static uint8_t timer_idx_get_element_attr = 0;
+#endif
 
 static const uint8_t codec_low_latency_table[9][LOW_LATENCY_LEVEL_MAX] =
 {
@@ -530,6 +538,7 @@ static uint8_t app_audio_in_ear_action(bool from_remote, uint8_t cause_action)
 {
     uint8_t action = APP_AUDIO_RESULT_NOTHING;
     uint8_t active_a2dp_idx = app_a2dp_get_active_idx();
+    T_APP_BR_LINK *p_link = &app_db.br_link[active_a2dp_idx];
 
     if (app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SECONDARY)
     {
@@ -548,7 +557,7 @@ static uint8_t app_audio_in_ear_action(bool from_remote, uint8_t cause_action)
                 action = APP_AUDIO_RESULT_VOICE_TO_BUD;
             }
         }
-        else if (app_db.br_link[active_a2dp_idx].avrcp_ready_to_pause == false)
+        else if ((p_link->used != 0) && (app_db.br_link[active_a2dp_idx].avrcp_ready_to_pause == false))
         {
             if (app_db.detect_suspend_by_out_ear == true || app_cfg_const.in_ear_auto_playing == true)
             {
@@ -625,6 +634,7 @@ static uint8_t app_audio_in_case_action(void)
 void app_audio_action_when_bud_loc_changed(uint8_t action)
 {
     uint8_t active_a2dp_idx = app_a2dp_get_active_idx();
+    T_APP_BR_LINK *p_link = &app_db.br_link[active_a2dp_idx];
     uint8_t avrcp_is_to_pause = app_db.br_link[active_a2dp_idx].avrcp_ready_to_pause;
 
     APP_PRINT_TRACE6("app_audio_action_when_bud_loc_changed: action 0x%x, bud_role %d, play_status 0x%x, roleswap_status 0x%02x, detect_suspend %d, avrcp_ready_to_pause %d",
@@ -641,7 +651,7 @@ void app_audio_action_when_bud_loc_changed(uint8_t action)
     {
     case APP_AUDIO_RESULT_PAUSE:
         {
-            if (avrcp_is_to_pause == true)
+            if ((p_link->used != 0) && (avrcp_is_to_pause == true))
             {
                 app_db.br_link[active_a2dp_idx].avrcp_ready_to_pause = false;
                 bt_avrcp_pause(app_db.br_link[active_a2dp_idx].bd_addr);
@@ -653,7 +663,7 @@ void app_audio_action_when_bud_loc_changed(uint8_t action)
 
     case APP_AUDIO_RESULT_STOP:
         {
-            if (avrcp_is_to_pause == true)
+            if ((p_link->used != 0) && (avrcp_is_to_pause == true))
             {
                 app_db.br_link[active_a2dp_idx].avrcp_ready_to_pause = false;
                 bt_avrcp_pause(app_db.br_link[active_a2dp_idx].bd_addr);
@@ -664,7 +674,7 @@ void app_audio_action_when_bud_loc_changed(uint8_t action)
 
     case APP_AUDIO_RESULT_RESUME:
         {
-            if (avrcp_is_to_pause == false)
+            if ((p_link->used != 0) && (avrcp_is_to_pause == false))
             {
                 app_db.br_link[active_a2dp_idx].avrcp_ready_to_pause = true;
                 bt_avrcp_play(app_db.br_link[active_a2dp_idx].bd_addr);
@@ -707,6 +717,7 @@ void app_audio_action_when_bud_loc_changed(uint8_t action)
 void app_audio_update_detect_suspend_by_out_ear(bool flag)
 {
     app_db.detect_suspend_by_out_ear = flag;
+    APP_PRINT_INFO1("app_audio_update_detect_suspend_by_out_ear: flag %d", flag);
 
     if ((app_db.remote_session_state == REMOTE_SESSION_STATE_CONNECTED) &&
         (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY))
@@ -998,7 +1009,9 @@ static void app_audio_tts_report_handler(uint16_t event_type, T_AUDIO_EVENT_PARA
         return;
     }
 
-    if ((tts_path == CMD_PATH_SPP) || (tts_path == CMD_PATH_IAP))
+    if ((tts_path == CMD_PATH_SPP) ||
+        (tts_path == CMD_PATH_IAP) ||
+        (tts_path == CMD_PATH_GATT_OVER_BREDR))
     {
         T_APP_BR_LINK *p_link = app_link_find_br_link_by_tts_handle(tts_handle);
 
@@ -1242,12 +1255,10 @@ void app_audio_notification_vol_cmd_handle(uint16_t volume_cmd, uint8_t *param_p
                     break;
                 }
 
+                memset(send_msg, 0, sizeof(T_NOTIFICATION_VOL_RELAY_MSG));
                 send_msg->notification_vol_cur_level = app_cfg_nv.voice_prompt_volume_out_level;
                 send_msg->notification_vol_min_level = app_db.local_notification_vol_min_level;
                 send_msg->notification_vol_max_level = app_db.local_notification_vol_max_level;
-                send_msg->first_sync = false;
-                send_msg->need_to_report = false;
-                send_msg->need_to_sync = false;
 
                 if (app_cmd_relay_command_set(volume_cmd, (uint8_t *)send_msg, sizeof(T_NOTIFICATION_VOL_RELAY_MSG),
                                               APP_MODULE_TYPE_AUDIO_POLICY, APP_REMOTE_MSG_RELAY_NOTIFICATION_VOL_CMD, false))
@@ -1279,6 +1290,7 @@ void app_audio_notification_vol_cmd_handle(uint16_t volume_cmd, uint8_t *param_p
                     break;
                 }
 
+                memset(send_msg, 0, sizeof(T_NOTIFICATION_VOL_RELAY_MSG));
                 send_msg->notification_vol_cur_level = app_cfg_nv.voice_prompt_volume_out_level;
                 send_msg->notification_vol_min_level = app_db.local_notification_vol_min_level;
                 send_msg->notification_vol_max_level = app_db.local_notification_vol_max_level;
@@ -1382,6 +1394,11 @@ static void app_audio_policy_cback(T_AUDIO_EVENT event_type, void *event_buf, ui
             }
 #endif
 
+#if F_APP_POWER_TEST
+            TEST_PRINT_INFO2("app_audio_policy_cback: state %x  track handle %x",
+                             param->track_state_changed.state, param->track_state_changed.handle);
+#endif
+
             switch (param->track_state_changed.state)
             {
             case AUDIO_TRACK_STATE_RELEASED:
@@ -1414,6 +1431,9 @@ static void app_audio_policy_cback(T_AUDIO_EVENT event_type, void *event_buf, ui
                         if (param->track_state_changed.state == AUDIO_TRACK_STATE_STARTED)
                         {
                             p_link = &app_db.br_link[active_a2dp_idx];
+#if F_APP_POWER_TEST
+                            power_test_dump_register(POWER_DEBUG_STAGE_A2DP_START);
+#endif
 
 #if F_APP_SAIYAN_MODE
                             app_data_capture_send_gain();
@@ -1436,6 +1456,9 @@ static void app_audio_policy_cback(T_AUDIO_EVENT event_type, void *event_buf, ui
                         else if (param->track_state_changed.state == AUDIO_TRACK_STATE_RESTARTED)
                         {
                             int8_t rssi = 0;
+#if F_APP_POWER_TEST
+                            power_test_dump_register(POWER_DEBUG_STAGE_A2DP_START);
+#endif
 
                             app_qol_get_aggregate_rssi(false, &rssi);
 
@@ -1464,8 +1487,7 @@ static void app_audio_policy_cback(T_AUDIO_EVENT event_type, void *event_buf, ui
                         }
 #endif
                     }
-
-                    if (stream_type == AUDIO_STREAM_TYPE_VOICE)
+                    else if (stream_type == AUDIO_STREAM_TYPE_VOICE)
                     {
                         p_link = &app_db.br_link[active_hf_idx];
 
@@ -1473,6 +1495,9 @@ static void app_audio_policy_cback(T_AUDIO_EVENT event_type, void *event_buf, ui
                         {
                             if (param->track_state_changed.state == AUDIO_TRACK_STATE_STARTED)
                             {
+#if F_APP_POWER_TEST
+                                power_test_dump_register(POWER_DEBUG_STAGE_HFP_START);
+#endif
                                 if (app_dsp_cfg_sidetone.hw_enable)
                                 {
                                     audio_volume_in_unmute(stream_type);
@@ -1519,6 +1544,9 @@ static void app_audio_policy_cback(T_AUDIO_EVENT event_type, void *event_buf, ui
                     {
                         p_link = &app_db.br_link[active_hf_idx];
 
+#if F_APP_POWER_TEST
+                        power_test_dump_register(POWER_DEBUG_STAGE_HFP_STOP);
+#endif
                         if (p_link != NULL)
                         {
                             app_nrec_detach(p_link->sco_track_handle, p_link->nrec_instance);
@@ -1530,9 +1558,15 @@ static void app_audio_policy_cback(T_AUDIO_EVENT event_type, void *event_buf, ui
                         if (p_link->streaming_fg == true)
                         {
 #if F_APP_MUTLILINK_SOURCE_PRIORITY_UI
-                            uint8_t active_idx = app_multilink_customer_get_active_music_link_index();
-
-                            app_multilink_customer_music_event_handle(active_idx, JUDGE_EVENT_A2DP_START);
+                            if (app_multilink_customer_check_hfp_is_idle())
+                            {
+                                uint8_t active_idx = app_multilink_customer_get_active_music_link_index();
+                                app_multilink_customer_music_event_handle(active_idx, JUDGE_EVENT_A2DP_START);
+                            }
+                            else
+                            {
+                                app_db.resume_a2dp_track_later = true;
+                            }
 #else
 #if F_APP_LINEIN_SUPPORT
                             if (app_cfg_const.line_in_support)
@@ -1550,9 +1584,16 @@ static void app_audio_policy_cback(T_AUDIO_EVENT event_type, void *event_buf, ui
 #endif
                         }
                     }
+                    else if (stream_type == AUDIO_STREAM_TYPE_PLAYBACK)
+                    {
+#if F_APP_POWER_TEST
+                        power_test_dump_register(POWER_DEBUG_STAGE_A2DP_STOP);
+#endif
+                    }
                 }
                 break;
             }
+
         }
         break;
 
@@ -1656,18 +1697,11 @@ static void app_audio_policy_cback(T_AUDIO_EVENT event_type, void *event_buf, ui
             if ((app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY) ||
                 (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_SINGLE))
             {
-#if F_APP_LEA_SUPPORT
                 if (app_audio_is_enable_play_mic_mute_tone())
                 {
                     app_audio_tone_type_play(TONE_MIC_MUTE_ON, false, true);
                 }
-                else
-                {
-                    app_audio_enable_play_mic_mute_tone(true);
-                }
-#else
-                app_audio_tone_type_play(TONE_MIC_MUTE_ON, false, true);
-#endif
+                app_audio_enable_play_mic_mute_tone(false);
             }
 #endif
         }
@@ -1812,7 +1846,9 @@ static void app_audio_policy_cback(T_AUDIO_EVENT event_type, void *event_buf, ui
 
     case AUDIO_EVENT_TTS_STOPPED:
         {
-            if ((tts_path == CMD_PATH_SPP) || (tts_path == CMD_PATH_IAP))
+            if ((tts_path == CMD_PATH_SPP) ||
+                (tts_path == CMD_PATH_IAP) ||
+                (tts_path == CMD_PATH_GATT_OVER_BREDR))
             {
                 T_APP_BR_LINK *p_link = app_link_find_br_link_by_tts_handle(param->tts_stopped.handle);
 
@@ -1854,39 +1890,19 @@ static void app_audio_policy_cback(T_AUDIO_EVENT event_type, void *event_buf, ui
             {
                 sys_mgr_power_off();
             }
-
-            if (app_db.tone_vp_status.index == app_cfg_const.tone_cis_connected)
-            {
-                if (app_db.is_tone_cis_connected_played == 1)
-                {
-                    //Avoid play cis connected tone repeatedly
-                    app_audio_tone_type_cancel(TONE_CIS_CONNECTED, false);
-                }
-                else
-                {
-                    app_db.is_tone_cis_connected_played = 1;
-                }
-            }
         }
         break;
 
     case AUDIO_EVENT_VOICE_PROMPT_STOPPED:
         {
             app_db.tone_vp_status.state = APP_TONE_VP_STOP;
-            app_db.tone_vp_status.index = param->voice_prompt_stopped.index + VOICE_PROMPT_INDEX;
 
 #if F_APP_AIRPLANE_SUPPORT
-            if (app_db.tone_vp_status.index == app_cfg_const.tone_enter_airplane)
+            if ((param->voice_prompt_stopped.index + VOICE_PROMPT_INDEX) == app_cfg_const.tone_enter_airplane)
             {
                 app_airplane_enter_airplane_mode_handle();
             }
 #endif
-
-            if (app_db.tone_vp_status.index == app_cfg_const.tone_cis_connected)
-            {
-                //Clear pending cis connected tone
-                app_audio_tone_type_cancel(TONE_CIS_CONNECTED, false);
-            }
 
             app_db.tone_vp_status.index = TONE_INVALID_INDEX;
         }
@@ -1902,45 +1918,25 @@ static void app_audio_policy_cback(T_AUDIO_EVENT event_type, void *event_buf, ui
             {
                 sys_mgr_power_off();
             }
-
-            if (app_db.tone_vp_status.index == app_cfg_const.tone_cis_connected)
-            {
-                if (app_db.is_tone_cis_connected_played == 1)
-                {
-                    //Avoid play cis connected tone repeatedly
-                    app_audio_tone_type_cancel(TONE_CIS_CONNECTED, false);
-                }
-                else
-                {
-                    app_db.is_tone_cis_connected_played = 1;
-                }
-            }
         }
         break;
 
     case AUDIO_EVENT_RINGTONE_STOPPED:
         {
             app_db.tone_vp_status.state = APP_TONE_VP_STOP;
-            app_db.tone_vp_status.index = param->ringtone_stopped.index;
 
 #if F_APP_AIRPLANE_SUPPORT
-            if (app_db.tone_vp_status.index == app_cfg_const.tone_enter_airplane)
+            if (param->ringtone_stopped.index == app_cfg_const.tone_enter_airplane)
             {
                 app_airplane_enter_airplane_mode_handle();
             }
 #endif
 
-            if (app_db.tone_vp_status.index == app_cfg_const.tone_cis_connected)
-            {
-                //Clear pending cis connected tone
-                app_audio_tone_type_cancel(TONE_CIS_CONNECTED, false);
-            }
-
             app_db.tone_vp_status.index = TONE_INVALID_INDEX;
         }
         break;
 
-    case AUDIO_EVENT_BUFFER_STATE_PALYING:
+    case AUDIO_EVENT_BUFFER_STATE_PLAYING:
         {
 #if F_APP_QOL_MONITOR_SUPPORT
             T_APP_BR_LINK *p_link = NULL;
@@ -1976,7 +1972,8 @@ static void app_audio_policy_cback(T_AUDIO_EVENT event_type, void *event_buf, ui
 }
 
 static bool app_audio_set_voice_gain_when_sco_conn_cmpl(void *sco_track_handle,
-                                                        uint8_t voice_gain_level)
+                                                        uint8_t voice_gain_level,
+                                                        uint8_t voice_muted)
 {
     T_APP_CALL_STATUS call_status = app_hfp_get_call_status();
 
@@ -1991,10 +1988,17 @@ static bool app_audio_set_voice_gain_when_sco_conn_cmpl(void *sco_track_handle,
         voice_gain_level = app_cfg_const.inband_tone_gain_lv;
     }
 
-    APP_PRINT_TRACE3("app_audio_set_voice_gain_when_sco_conn_cmpl: call_status %d level %d(%d)",
-                     call_status, voice_gain_level, app_cfg_const.inband_tone_gain_lv);
+    APP_PRINT_TRACE4("app_audio_set_voice_gain_when_sco_conn_cmpl: call_status %d level %d(%d) voice_muted %d",
+                     call_status, voice_gain_level, app_cfg_const.inband_tone_gain_lv, voice_muted);
 
-    app_audio_vol_set(sco_track_handle, voice_gain_level);
+    if (voice_muted)
+    {
+        audio_track_volume_out_mute(sco_track_handle);
+    }
+    else
+    {
+        app_audio_vol_set(sco_track_handle, voice_gain_level);
+    }
 
     if (app_audio_is_mic_mute())
     {
@@ -2389,7 +2393,7 @@ static void app_audio_sco_conn_cmpl_handle(uint8_t *bd_addr, uint8_t air_mode, u
 
 #if F_APP_LEA_SUPPORT
     bool need_return = false;
-    if (mtc_if_fm_ap(AP_TO_MTC_SCO_CMPL, bd_addr, &need_return) == MTC_RESULT_SUCCESS)
+    if (mtc_if_fm_ap_handle(AP_TO_MTC_SCO_CMPL, bd_addr, &need_return) == MTC_RESULT_SUCCESS)
     {
         if (need_return)
         {
@@ -2462,8 +2466,8 @@ static void app_audio_sco_conn_cmpl_handle(uint8_t *bd_addr, uint8_t air_mode, u
 #endif
 
     app_audio_set_voice_gain_when_sco_conn_cmpl(p_link->sco_track_handle,
-                                                app_cfg_nv.voice_gain_level[pair_idx_mapping]);
-
+                                                app_cfg_nv.voice_gain_level[pair_idx_mapping],
+                                                p_link->voice_muted);
 #if F_APP_VOICE_SPK_EQ_SUPPORT
     app_eq_change_audio_eq_mode(true);
 
@@ -2493,7 +2497,7 @@ static void app_audio_sco_conn_cmpl_handle(uint8_t *bd_addr, uint8_t air_mode, u
 #if F_APP_MUTILINK_VA_PREEMPTIVE
         memcpy(app_db.active_hfp_addr, p_link->bd_addr, 6);
 #endif
-        p_link->streaming_fg = false;
+        app_link_update_a2dp_streaming(p_link, false);
         p_link->avrcp_ready_to_pause = false;
     }
     else
@@ -2677,17 +2681,24 @@ static void app_audio_a2dp_stream_start_handle(uint8_t *bd_addr, uint8_t *audio_
             latency_value = app_audio_set_latency(p_link->a2dp_track_handle,
                                                   app_cfg_nv.rws_low_latency_level_record,
                                                   GAMING_MODE_DYNAMIC_LATENCY_FIX);
-            bt_a2dp_stream_delay_report_request(p_link->bd_addr, latency_value);
+            bt_a2dp_stream_delay_report_req(p_link->bd_addr, latency_value);
             app_audio_update_latency_record(latency_value);
         }
         else
         {
             audio_track_latency_set(p_link->a2dp_track_handle, latency_value,
                                     NORMAL_MODE_DYNAMIC_LATENCY_FIX);
-            bt_a2dp_stream_delay_report_request(p_link->bd_addr, latency_value);
+            bt_a2dp_stream_delay_report_req(p_link->bd_addr, latency_value);
         }
 
-        app_audio_vol_set(p_link->a2dp_track_handle, app_cfg_nv.audio_gain_level[pair_idx_mapping]);
+        if (p_link->playback_muted)
+        {
+            audio_track_volume_out_mute(p_link->a2dp_track_handle);
+        }
+        else
+        {
+            app_audio_vol_set(p_link->a2dp_track_handle, app_cfg_nv.audio_gain_level[pair_idx_mapping]);
+        }
 
         app_eq_idx_check_accord_mode();
         p_link->eq_instance = app_eq_create(EQ_CONTENT_TYPE_AUDIO, EQ_STREAM_TYPE_AUDIO, SPK_SW_EQ,
@@ -3139,7 +3150,9 @@ static void app_audio_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
             if (param->hfp_call_status.curr_status == BT_HFP_CALL_ACTIVE ||
                 param->hfp_call_status.curr_status == BT_HFP_CALL_IDLE)
             {
-                if ((tts_path == CMD_PATH_SPP) || (tts_path == CMD_PATH_IAP))
+                if ((tts_path == CMD_PATH_SPP) ||
+                    (tts_path == CMD_PATH_IAP) ||
+                    (tts_path == CMD_PATH_GATT_OVER_BREDR))
                 {
                     T_APP_BR_LINK *p_link = app_link_find_br_link(param->hfp_call_status.bd_addr);
 
@@ -3165,7 +3178,43 @@ static void app_audio_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
         }
         break;
 
+    case BT_EVENT_AVRCP_ELEM_ATTR:
+        {
+#if F_APP_CHARGER_CASE_SUPPORT
+            if (param->avrcp_elem_attr.state == 0)
+            {
+                if (app_db.charger_case_connected &&
+                    app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SECONDARY)
+                {
+                    uint8_t num_of_attr = param->avrcp_elem_attr.num_of_attr;
+                    uint8_t i;
+
+                    for (i = 0; i < num_of_attr; i++)
+                    {
+                        uint8_t attr_len = param->avrcp_elem_attr.attr[i].length;
+                        uint8_t temp_buff[9 + attr_len] ;
+
+                        temp_buff[0] = 0x00; //Single packet
+                        memcpy(&temp_buff[1], &(param->avrcp_elem_attr.attr[i].attribute_id), 4);
+                        memcpy(&temp_buff[5], &(param->avrcp_elem_attr.attr[i].character_set_id), 2);
+                        memcpy(&temp_buff[7], &(param->avrcp_elem_attr.attr[i].length), 2);
+                        memcpy(&temp_buff[9], param->avrcp_elem_attr.attr[i].p_buf, attr_len);
+
+                        app_report_event(CMD_PATH_LE, EVENT_AVRCP_REPORT_ELEMENT_ATTR, app_db.charger_case_link_id,
+                                         temp_buff, sizeof(temp_buff));
+                    }
+                }
+            }
+#endif
+        }
+        break;
+
     case BT_EVENT_AVRCP_TRACK_CHANGED:
+        {
+
+        }
+        break;
+
     case BT_EVENT_AVRCP_ABSOLUTE_VOLUME_SET:
         {
 
@@ -3204,6 +3253,21 @@ static void app_audio_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
                 {
                     app_audio_set_avrcp_status(param->avrcp_play_status_changed.play_status);
                     app_avrcp_sync_status();
+
+#if F_APP_CHARGER_CASE_SUPPORT
+                    if (param->avrcp_play_status_changed.play_status == BT_AVRCP_PLAY_STATUS_PLAYING)
+                    {
+                        bt_avrcp_get_element_attr_req(param->avrcp_play_status_changed.bd_addr, sizeof(attr_list),
+                                                      attr_list);
+                        app_start_timer(&timer_idx_get_element_attr, "get_element_attr",
+                                        audio_policy_timer_id, APP_TIMER_GET_ELEMENT_ATTR, 0, true,
+                                        1000);
+                    }
+                    else
+                    {
+                        app_stop_timer(&timer_idx_get_element_attr);
+                    }
+#endif
                 }
 
                 if ((param->avrcp_play_status_changed.play_status != BT_AVRCP_PLAY_STATUS_STOPPED) &&
@@ -3417,6 +3481,9 @@ static void app_audio_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
                         app_audio_remote_join_set(false);
                     }
                 }
+
+                app_audio_mute_status_sync(param->acl_sniffing_conn_cmpl.bd_addr, AUDIO_STREAM_TYPE_PLAYBACK);
+                app_audio_mute_status_sync(param->acl_sniffing_conn_cmpl.bd_addr, AUDIO_STREAM_TYPE_VOICE);
             }
         }
         break;
@@ -3516,11 +3583,11 @@ static void app_audio_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
             {
                 if (app_cfg_const.bud_side == DEVICE_BUD_SIDE_LEFT)
                 {
-                    app_dual_audio_lr_info(MODE_INFO_L, true, app_cfg_const.couple_speaker_channel);
+                    app_dual_audio_lr_info(MODE_INFO_L, app_cfg_const.couple_speaker_channel);
                 }
                 else
                 {
-                    app_dual_audio_lr_info(MODE_INFO_R, true, app_cfg_const.couple_speaker_channel);
+                    app_dual_audio_lr_info(MODE_INFO_R, app_cfg_const.couple_speaker_channel);
                 }
             }
 #else
@@ -3626,7 +3693,7 @@ static void app_audio_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
                     {
                         if (app_link_get_b2s_link_num() > 0)
                         {
-                            if (app_cfg_const.enable_low_bat_role_swap)
+                            if (app_cfg_const.disable_low_bat_role_swap == 0)
                             {
                                 app_roleswap_req_battery_level();
                             }
@@ -3645,14 +3712,14 @@ static void app_audio_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
                     {
                         p_link = &app_db.br_link[i];
 
-                        if (app_db.br_link[i].connected_profile & (SPP_PROFILE_MASK | IAP_PROFILE_MASK))
+                        if (app_db.br_link[i].connected_profile & (SPP_PROFILE_MASK | IAP_PROFILE_MASK | GATT_PROFILE_MASK))
                         {
-                            app_db.br_link[i].cmd_set_enable = true;
+                            app_db.br_link[i].cmd.enable = true;
                         }
 
                         if ((i < MAX_BLE_LINK_NUM) && (app_db.le_link[i].state == LE_LINK_STATE_CONNECTED))
                         {
-                            app_db.le_link[i].cmd_set_enable = true;
+                            app_db.le_link[i].cmd.enable = true;
                         }
 
                         app_report_rws_bud_side();
@@ -3712,7 +3779,7 @@ static void app_audio_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
 
                     if (p_link != NULL)
                     {
-                        p_link->streaming_fg = true;
+                        app_link_update_a2dp_streaming(p_link, true);
                         p_link->avrcp_ready_to_pause = true;
                     }
                 }
@@ -3766,7 +3833,8 @@ static void app_audio_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
                             eq_release(p_link->eq_instance);
                             p_link->eq_instance = NULL;
                         }
-                        p_link->streaming_fg = false;
+
+                        app_link_update_a2dp_streaming(p_link, false);
                     }
 #if F_APP_DYNAMIC_ADJUST_B2B_TX_POWER
                     app_bt_policy_dynamic_adjust_b2b_tx_power(BP_TX_POWER_A2DP_STOP);
@@ -3816,19 +3884,6 @@ static void app_audio_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
     }
 }
 
-#if F_APP_LEA_SUPPORT
-static void app_audio_policy_media_eq_enable(T_APP_BR_LINK *p_link)
-{
-    if (mtc_get_btmode() == MULTI_PRO_BT_BREDR && p_link != NULL)
-    {
-        app_eq_audio_eq_enable(&p_link->eq_instance, &p_link->audio_eq_enabled);
-    }
-    else if (mtc_get_btmode() != MULTI_PRO_BT_BREDR && app_lea_uca_get_eq_instance() != NULL)
-    {
-        app_eq_audio_eq_enable(app_lea_uca_p_eq_instance(), app_lea_uca_get_eq_abled());
-    }
-}
-#endif
 static void app_audio_policy_timeout_cb(uint8_t timer_evt, uint16_t param)
 {
     APP_PRINT_TRACE2("app_audio_policy_timeout_cb: timer_evt %d, param %d", timer_evt, param);
@@ -3902,6 +3957,15 @@ static void app_audio_policy_timeout_cb(uint8_t timer_evt, uint16_t param)
             app_audio_update_detect_suspend_by_out_ear(false);
         }
         break;
+
+#if F_APP_CHARGER_CASE_SUPPORT
+    case APP_TIMER_GET_ELEMENT_ATTR:
+        {
+            bt_avrcp_get_element_attr_req(app_db.br_link[app_a2dp_get_active_idx()].bd_addr, sizeof(attr_list),
+                                          attr_list);
+        }
+        break;
+#endif
 
     default:
         break;
@@ -4459,19 +4523,14 @@ static void app_audio_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t len,
                 uint8_t *p_info = (uint8_t *)&buf[1];
                 uint16_t data_len = len - 1; // buf[0] is eq_mode
 
+                T_EQ_ENABLE_INFO enable_info;
+
+                app_eq_enable_info_get(eq_mode, &enable_info);
+
                 if (app_db.sw_eq_type == SPK_SW_EQ)
                 {
-                    T_APP_BR_LINK *p_link = &app_db.br_link[active_a2dp_idx];
-
-#if F_APP_VOICE_SPK_EQ_SUPPORT
-                    if (eq_mode == VOICE_SPK_MODE)
-                    {
-                        p_link = &app_db.br_link[app_hfp_get_active_idx()];
-                    }
-#endif
-
-                    app_eq_param_set(eq_mode, app_cfg_nv.eq_idx, &p_info[0], data_len);
-                    app_eq_audio_eq_enable(&p_link->eq_instance, &p_link->audio_eq_enabled);
+                    app_eq_param_set(eq_mode, enable_info.idx, &p_info[0], data_len);
+                    app_eq_audio_eq_enable(&enable_info.instance, &enable_info.is_enable);
                 }
                 else
                 {
@@ -4525,7 +4584,7 @@ static void app_audio_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t len,
                     }
                     break;
 
-#if (F_APP_SEPARATE_ADJUST_APT_EQ_SUPPORT == 1)
+#if (F_APP_SEPARATE_ADJUST_APT_EQ_SUPPORT == 1) || (F_APP_AUDIO_VOICE_SPK_EQ_INDEPENDENT_CFG == 1)
                 case EQ_SYNC_GET_SECONDARY_EQ_INFO:
                     {
                         uint8_t eq_mode = buf[3];
@@ -4706,50 +4765,60 @@ static void app_audio_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t len,
 
                 APP_PRINT_TRACE1("app_audio_parse_cback: Receive play sync status, para = %x", p_info[0]);
                 app_audio_set_avrcp_status(p_info[0]);
-#if F_APP_LISTENING_MODE_SUPPORT
-                app_listening_judge_a2dp_event(APPLY_LISTENING_MODE_AVRCP_PLAY_STATUS_CHANGE);
-#endif
             }
         }
         break;
 
     case APP_REMOTE_MSG_SYNC_ABS_VOL_STATE:
-        if (status == REMOTE_RELAY_STATUS_SYNC_TOUT ||
-            status == REMOTE_RELAY_STATUS_SYNC_EXPIRED ||
-            status == REMOTE_RELAY_STATUS_SYNC_REF_CHANGED ||
-            status == REMOTE_RELAY_STATUS_SEND_FAILED)
         {
-            uint8_t *p_info = (uint8_t *)buf;
-            uint8_t bd_addr[6];
-            uint8_t pair_idx_mapping;
-            T_APP_BR_LINK *p_link;
-            T_APP_ABS_VOL_STATE abs_vol_state = ABS_VOL_NOT_SUPPORTED;
-
-            memcpy(bd_addr, &p_info[0], 6);
-            abs_vol_state = (T_APP_ABS_VOL_STATE)p_info[6];
-
-            if (abs_vol_state == ABS_VOL_SUPPORTED)
+            if (status == REMOTE_RELAY_STATUS_SYNC_TOUT ||
+                status == REMOTE_RELAY_STATUS_SYNC_EXPIRED ||
+                status == REMOTE_RELAY_STATUS_SYNC_REF_CHANGED ||
+                status == REMOTE_RELAY_STATUS_SEND_FAILED)
             {
-                app_avrcp_stop_abs_vol_check_timer();
-            }
+                uint8_t *p_info = (uint8_t *)buf;
+                uint8_t bd_addr[6];
+                uint8_t pair_idx_mapping;
+                T_APP_BR_LINK *p_link;
+                T_APP_ABS_VOL_STATE abs_vol_state = ABS_VOL_NOT_SUPPORTED;
+                uint8_t playback_muted;
 
-            if (app_bond_get_pair_idx_mapping(bd_addr, &pair_idx_mapping) == false)
-            {
-                APP_PRINT_ERROR0("app_audio_parse_cback: abs vol state sync fail, cannot find pair index");
-                return;
-            }
+                memcpy(bd_addr, &p_info[0], 6);
+                abs_vol_state = (T_APP_ABS_VOL_STATE)p_info[6];
+                playback_muted = p_info[8];
 
-            if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_SECONDARY)
-            {
-                app_cfg_nv.audio_gain_level[pair_idx_mapping] = p_info[7];
-            }
+                if (abs_vol_state == ABS_VOL_SUPPORTED)
+                {
+                    app_avrcp_stop_abs_vol_check_timer();
+                }
 
-            p_link = app_link_find_br_link(bd_addr);
-            if (p_link != NULL)
-            {
-                p_link->abs_vol_state = abs_vol_state;
-                app_audio_vol_set(p_link->a2dp_track_handle, app_cfg_nv.audio_gain_level[pair_idx_mapping]);
-                app_audio_track_spk_unmute(AUDIO_STREAM_TYPE_PLAYBACK);
+                if (app_bond_get_pair_idx_mapping(bd_addr, &pair_idx_mapping) == false)
+                {
+                    APP_PRINT_ERROR0("app_audio_parse_cback: abs vol state sync fail, cannot find pair index");
+                    return;
+                }
+
+                if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_SECONDARY)
+                {
+                    app_cfg_nv.audio_gain_level[pair_idx_mapping] = p_info[7];
+                }
+
+                p_link = app_link_find_br_link(bd_addr);
+                if (p_link != NULL)
+                {
+                    p_link->abs_vol_state = abs_vol_state;
+                    p_link->playback_muted = playback_muted;
+
+                    if (p_link->playback_muted)
+                    {
+                        audio_track_volume_out_mute(p_link->a2dp_track_handle);
+                    }
+                    else
+                    {
+                        app_audio_vol_set(p_link->a2dp_track_handle, app_cfg_nv.audio_gain_level[pair_idx_mapping]);
+                        app_audio_track_spk_unmute(AUDIO_STREAM_TYPE_PLAYBACK);
+                    }
+                }
             }
         }
         break;
@@ -4825,7 +4894,10 @@ static void app_audio_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t len,
 
     case APP_REMOTE_MSG_SYNC_PLAYBACK_MUTE_STATUS:
         {
-            if (status == REMOTE_RELAY_STATUS_ASYNC_RCVD)
+            if (status == REMOTE_RELAY_STATUS_SYNC_TOUT ||
+                status == REMOTE_RELAY_STATUS_SYNC_EXPIRED ||
+                status == REMOTE_RELAY_STATUS_SYNC_REF_CHANGED ||
+                status == REMOTE_RELAY_STATUS_ASYNC_RCVD)
             {
                 if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_SECONDARY)
                 {
@@ -4843,7 +4915,6 @@ static void app_audio_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t len,
                     }
 
                     p_link = app_link_find_br_link(bd_addr);
-
                     if (p_link != NULL)
                     {
                         if (app_cfg_const.enable_rtk_charging_box)
@@ -4883,7 +4954,10 @@ static void app_audio_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t len,
 
     case APP_REMOTE_MSG_SYNC_VOICE_MUTE_STATUS:
         {
-            if (status == REMOTE_RELAY_STATUS_ASYNC_RCVD)
+            if (status == REMOTE_RELAY_STATUS_SYNC_TOUT ||
+                status == REMOTE_RELAY_STATUS_SYNC_EXPIRED ||
+                status == REMOTE_RELAY_STATUS_SYNC_REF_CHANGED ||
+                status == REMOTE_RELAY_STATUS_ASYNC_RCVD)
             {
                 if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_SECONDARY)
                 {
@@ -4901,7 +4975,6 @@ static void app_audio_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t len,
                     }
 
                     p_link = app_link_find_br_link(bd_addr);
-
                     if (p_link != NULL)
                     {
                         if (app_cfg_const.enable_rtk_charging_box)
@@ -5115,16 +5188,21 @@ static void app_audio_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t len,
                 || status == REMOTE_RELAY_STATUS_SYNC_REF_CHANGED)
             {
                 uint8_t *p_info = (uint8_t *)buf;
-                T_APP_BR_LINK *p_link = &app_db.br_link[active_a2dp_idx];
-                app_eq_index_set(SPK_SW_EQ, app_db.spk_eq_mode, p_info[0]);
-#if F_APP_LEA_SUPPORT
-                app_audio_policy_media_eq_enable(p_link);
-#else
-                if (p_link)
+
+                if (app_roleswap_ctrl_get_status() == APP_ROLESWAP_STATUS_IDLE)
                 {
-                    app_eq_audio_eq_enable(&p_link->eq_instance, &p_link->audio_eq_enabled);
-                }
+                    T_EQ_ENABLE_INFO enable_info;
+
+                    app_eq_enable_info_get(app_db.spk_eq_mode, &enable_info);
+
+                    app_eq_index_set(SPK_SW_EQ, app_db.spk_eq_mode, p_info[0]);
+
+#if F_APP_LEA_SUPPORT
+                    app_eq_media_eq_enable(&enable_info);
+#else
+                    app_eq_audio_eq_enable(&enable_info.instance, &enable_info.is_enable);
 #endif
+                }
             }
         }
         break;
@@ -5340,6 +5418,8 @@ static void app_audio_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t len,
             {
                 uint8_t *p_info = (uint8_t *)buf;
                 app_db.detect_suspend_by_out_ear = (bool)p_info[0];
+                APP_PRINT_INFO1("APP_REMOTE_MSG_SYNC_SUSPEND_A2DP_BY_OUT_EAR: flag %d",
+                                app_db.detect_suspend_by_out_ear);
             }
         }
         break;
@@ -5428,13 +5508,7 @@ static void app_audio_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t len,
         break;
     }
 #if F_APP_LEA_SUPPORT
-    T_RELAY_PARSE_PARA info;
-    info.msg_type = msg_type;
-    info.buf = buf;
-    info.len = len;
-    info.status = (T_MULTI_PRO_REMOTE_RELAY_STATUS)status;
-
-    mtc_pro_hook(0, &info);
+    mtc_audio_policy_cback(msg_type, buf, len, status);
 #endif
 }
 #endif
@@ -5712,7 +5786,7 @@ void app_audio_init(void)
 #endif
 
 #if F_APP_LEA_SUPPORT
-    mtc_if_ap_reg(app_audio_mtc_if_handle);
+    mtc_cback_register(app_audio_mtc_if_handle);
 #endif
 }
 
@@ -5725,7 +5799,7 @@ void app_audio_set_mic_mute_status(uint8_t status)
 {
     is_mic_mute = status;
 
-    app_ipc_publish(APP_DEVICE_IPC_TOPIC, APP_DEVICE_IPC_EVT_HFP_CALL_STATUS, NULL);
+    app_ipc_publish(APP_DEVICE_IPC_TOPIC, APP_DEVICE_IPC_EVT_MIC_MUTE_STATUS, &status);
 
 #if F_APP_CHARGER_CASE_SUPPORT
     app_report_status_to_charger_case(CHARGER_CASE_GET_MUTE_STATUS, &is_mic_mute);
@@ -5977,6 +6051,7 @@ bool app_audio_check_mic_mute_enable(void)
 
 void app_audio_enable_play_mic_unmute_tone(bool enable)
 {
+    APP_PRINT_INFO1("app_audio_enable_play_mic_unmute_tone %d", enable);
     enable_play_mic_unmute_tone = enable;
 }
 
@@ -5991,9 +6066,9 @@ void app_audio_tone_flush(bool relay)
     voice_prompt_flush(relay);
 }
 
-#if F_APP_LEA_SUPPORT
 void app_audio_enable_play_mic_mute_tone(bool enable)
 {
+    APP_PRINT_INFO1("app_audio_enable_play_mic_mute_tone %d", enable);
     enable_play_mic_mute_tone = enable;
 }
 
@@ -6001,7 +6076,6 @@ bool app_audio_is_enable_play_mic_mute_tone(void)
 {
     return enable_play_mic_mute_tone;
 }
-#endif
 
 bool app_audio_tone_type_cancel(T_APP_AUDIO_TONE_TYPE tone_type, bool relay)
 {
@@ -6553,7 +6627,7 @@ void app_audio_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, 
                                                  gain_level_data->gain);
                     app_cfg_nv.apt_volume_out_level = gain_level_data->level;
 #if F_APP_APT_SUPPORT
-                    audio_passthrough_volume_out_set(gain_level_data->level);
+                    app_apt_volume_out_set(gain_level_data->level);
 #endif
                 }
                 else
@@ -6655,7 +6729,7 @@ void app_audio_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, 
 #if APT_SUB_VOLUME_LEVEL_SUPPORT
                 app_apt_main_volume_set(event_data);
 #else
-                audio_passthrough_volume_out_set(event_data);
+                app_apt_volume_out_set(event_data);
 #endif
                 app_relay_async_single_with_raw_msg(APP_MODULE_TYPE_APT, APP_REMOTE_MSG_APT_VOLUME_OUT_LEVEL,
                                                     &event_data, sizeof(uint8_t));
@@ -6781,7 +6855,9 @@ void app_audio_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, 
 
             app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
 
-            if ((cmd_path == CMD_PATH_SPP) || (cmd_path == CMD_PATH_IAP))
+            if ((cmd_path == CMD_PATH_SPP) ||
+                (cmd_path == CMD_PATH_IAP) ||
+                (cmd_path == CMD_PATH_GATT_OVER_BREDR))
             {
                 app_report_event(cmd_path, EVENT_MIC_SWITCH, app_idx, &param, 1);
             }
@@ -6948,7 +7024,8 @@ void app_audio_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, 
 T_MTC_RESULT app_audio_mtc_if_handle(T_MTC_IF_MSG msg, void *inbuf, void *outbuf)
 {
     T_MTC_RESULT app_result = MTC_RESULT_SUCCESS;
-    //APP_PRINT_INFO2("app_audio_mtc_if_handle: msg %x, %d", msg, app_cfg_nv.bud_role);
+
+    APP_PRINT_INFO2("app_audio_mtc_if_handle: msg %x, %d", msg, app_cfg_nv.bud_role);
 
     switch (msg)
     {
@@ -7107,7 +7184,7 @@ void app_audio_restart_track(void)
             latency_value = app_audio_set_latency(p_link->a2dp_track_handle,
                                                   app_cfg_nv.rws_low_latency_level_record,
                                                   GAMING_MODE_DYNAMIC_LATENCY_FIX);
-            bt_a2dp_stream_delay_report_request(p_link->bd_addr, latency_value);
+            bt_a2dp_stream_delay_report_req(p_link->bd_addr, latency_value);
 
             app_audio_update_latency_record(latency_value);
         }
@@ -7116,7 +7193,7 @@ void app_audio_restart_track(void)
             app_audio_get_latency_value_by_level(AUDIO_STREAM_MODE_NORMAL, format.type, 0, &latency_value);
             audio_track_latency_set(p_link->a2dp_track_handle, latency_value,
                                     NORMAL_MODE_DYNAMIC_LATENCY_FIX);
-            bt_a2dp_stream_delay_report_request(p_link->bd_addr, app_cfg_nv.audio_latency);
+            bt_a2dp_stream_delay_report_req(p_link->bd_addr, app_cfg_nv.audio_latency);
         }
         audio_track_start(p_link->a2dp_track_handle);
 
@@ -7126,6 +7203,16 @@ void app_audio_restart_track(void)
 uint8_t app_audio_get_dongle_flag(void)
 {
     return app_db.remote_is_dongle;
+}
+
+bool app_audio_get_gaming_mode(void)
+{
+    return app_db.gaming_mode;
+}
+
+void app_audio_set_gaming_mode(bool gaming_mode)
+{
+    app_db.gaming_mode = gaming_mode;
 }
 #endif
 

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>BT AUDIO SDK: ADC FIFO Over Write  CR 0x04 bit 13</title>
+<title>BT AUDIO SDK: ADC FIFO Over Write</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -44,17 +44,20 @@ $(function() {
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">ADC FIFO Over Write CR 0x04 bit 13<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___a_d_c.html">ADC</a> &raquo; <a class="el" href="group__x3e___a_d_c___exported___constants.html">ADC Exported Constants</a></div></div>  </div>
+<div class="title">ADC FIFO Over Write<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___a_d_c.html">ADC</a> &raquo; <a class="el" href="group__x3e___a_d_c___exported___constants.html">ADC Exported Constants</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga2aaa0ed3e00d18a433c5853b154ad98e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___a_d_c__over__write__enable.html#ga2aaa0ed3e00d18a433c5853b154ad98e">ADC_FIFO_OVER_WRITE_ENABLE</a>&#160;&#160;&#160;((uint32_t)(1 &lt;&lt; 13))</td></tr>
+<tr class="memdesc:ga2aaa0ed3e00d18a433c5853b154ad98e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable ADC FIFO overwrite function.  <a href="#ga2aaa0ed3e00d18a433c5853b154ad98e">More...</a><br /></td></tr>
 <tr class="separator:ga2aaa0ed3e00d18a433c5853b154ad98e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafc7c8c7ecb4b7a783a8d415b163590a8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___a_d_c__over__write__enable.html#gafc7c8c7ecb4b7a783a8d415b163590a8">ADC_FIFO_OVER_WRITE_DISABLE</a>&#160;&#160;&#160;((uint32_t)(0 &lt;&lt; 13))</td></tr>
+<tr class="memdesc:gafc7c8c7ecb4b7a783a8d415b163590a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable ADC FIFO overwrite function.  <a href="#gafc7c8c7ecb4b7a783a8d415b163590a8">More...</a><br /></td></tr>
 <tr class="separator:gafc7c8c7ecb4b7a783a8d415b163590a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga196fa2cceb4ce095434758646b8c2011"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___a_d_c__over__write__enable.html#ga196fa2cceb4ce095434758646b8c2011">IS_ADC_OVERWRITE_MODE</a>(MODE)&#160;&#160;&#160;(((MODE) == <a class="el" href="group__x3e___a_d_c__over__write__enable.html#ga2aaa0ed3e00d18a433c5853b154ad98e">ADC_FIFO_OVER_WRITE_ENABLE</a>) || ((MODE) == <a class="el" href="group__x3e___a_d_c__over__write__enable.html#gafc7c8c7ecb4b7a783a8d415b163590a8">ADC_FIFO_OVER_WRITE_DISABLE</a>))</td></tr>
+<tr class="memdesc:ga196fa2cceb4ce095434758646b8c2011"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether is the status of ADC overwrite function.  <a href="#ga196fa2cceb4ce095434758646b8c2011">More...</a><br /></td></tr>
 <tr class="separator:ga196fa2cceb4ce095434758646b8c2011"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -71,6 +74,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Enable ADC FIFO overwrite function. </p>
+
 </div>
 </div>
 <a id="gafc7c8c7ecb4b7a783a8d415b163590a8"></a>
@@ -84,6 +89,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Disable ADC FIFO overwrite function. </p>
 
 </div>
 </div>
@@ -102,6 +109,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Check whether is the status of ADC overwrite function. </p>
 
 </div>
 </div>

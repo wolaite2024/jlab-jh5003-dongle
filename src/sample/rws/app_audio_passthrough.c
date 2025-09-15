@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <string.h>
 #include "stdlib_corecrt.h"
 #include "os_mem.h"
 #include "os_timer.h"
@@ -11,6 +10,7 @@
 #include "audio.h"
 #include "bt_hfp.h"
 #include "bt_bond.h"
+#include "bt_types.h"
 #include "eq_utils.h"
 #include "app_hfp.h"
 #include "app_cfg.h"
@@ -29,7 +29,6 @@
 #include "app_listening_mode.h"
 #endif
 #include "app_cmd.h"
-#include "app_multilink.h"
 #include "app_sniff_mode.h"
 #include "app_audio_policy.h"
 #include "app_bt_policy_api.h"
@@ -50,7 +49,6 @@
 #include "app_airplane.h"
 #endif
 #include "app_sensor.h"
-#include "app_a2dp.h"
 #include "app_dsp_cfg.h"
 #if F_APP_CLI_BINARY_MP_SUPPORT
 #include "mp_test_vendor.h"
@@ -66,6 +64,10 @@
 
 #if F_APP_EXT_MIC_SWITCH_SUPPORT && F_APP_EXT_MIC_SWITCH_PHYSICAL_MIC_SUPPORT && F_APP_APT_SUPPORT
 #include "app_dsp_cfg.h"
+#endif
+
+#if F_APP_LEA_SUPPORT
+#include "app_lea_unicast_audio.h"
 #endif
 
 #if F_APP_APT_SUPPORT
@@ -144,7 +146,7 @@ bool app_apt_set_first_llapt_scenario(T_ANC_APT_STATE *state)
 
 static void app_apt_llapt_activated_scenario_init(void)
 {
-    T_LLAPT_EXT_DATA llapt_ext_data;
+    T_LLAPT_EXT_DATA llapt_ext_data = {0};
 
     anc_tool_read_llapt_ext_data(&llapt_ext_data.d32);
 
@@ -275,6 +277,23 @@ void app_apt_volume_relay_report_handle(void)
     }
 }
 
+void app_apt_volume_out_set(uint8_t level)
+{
+    T_SNK_CAPABILITY snk_capability = app_cmd_get_system_capability();
+
+    if (app_apt_is_normal_apt_on_state(app_db.current_listening_state) ||
+        app_listening_is_anc_apt_on_state(app_db.current_listening_state))
+    {
+        if (snk_capability.snk_support_HA && snk_capability.snk_not_support_normal_apt_volume_adjust)
+        {
+            audio_passthrough_volume_out_set(app_dsp_cfg_vol.apt_volume_out_max);
+            return;
+        }
+    }
+
+    audio_passthrough_volume_out_set(level);
+}
+
 void app_apt_volume_sync_handle(T_APT_VOLUME_RELAY_MSG *rev_msg)
 {
     APP_PRINT_TRACE4("app_apt_volume_sync_handle first_sync = %x, remote_main = %x, remote_sub = %x, disallow_sync = %x",
@@ -303,7 +322,7 @@ void app_apt_volume_sync_handle(T_APT_VOLUME_RELAY_MSG *rev_msg)
             }
 #else
             app_cfg_nv.apt_volume_out_level = rev_msg->main_volume_level;
-            audio_passthrough_volume_out_set(app_cfg_nv.apt_volume_out_level);
+            app_apt_volume_out_set(app_cfg_nv.apt_volume_out_level);
 #endif
         }
     }
@@ -349,7 +368,7 @@ void app_apt_main_volume_set(uint8_t level)
 
     app_cfg_nv.apt_volume_out_level = level;
 
-    audio_passthrough_volume_out_set(level);
+    app_apt_volume_out_set(level);
 
     app_apt_volume_update_sub_level();
 
@@ -395,7 +414,7 @@ void app_apt_sub_volume_set(uint16_t level)
     app_audio_route_dac_gain_set(AUDIO_CATEGORY_APT, mapping_main_level,
                                  mapping_gain);  //step 1, update table
 
-    audio_passthrough_volume_out_set(mapping_main_level); //step 2, set level again
+    app_apt_volume_out_set(mapping_main_level); //step 2, set level again
 
     app_cfg_nv.apt_sub_volume_out_level = level;
 
@@ -412,7 +431,7 @@ void app_apt_volume_init(void)
 {
     audio_passthrough_volume_out_min_set(app_dsp_cfg_vol.apt_volume_out_min);
     audio_passthrough_volume_out_max_set(app_dsp_cfg_vol.apt_volume_out_max);
-    audio_passthrough_volume_out_set(app_cfg_nv.apt_volume_out_level);
+    app_apt_volume_out_set(app_cfg_nv.apt_volume_out_level);
     audio_passthrough_volume_in_min_set(app_dsp_cfg_vol.apt_volume_in_min);
     audio_passthrough_volume_in_max_set(app_dsp_cfg_vol.apt_volume_in_max);
     audio_passthrough_volume_in_set(app_dsp_cfg_vol.apt_volume_in_default);
@@ -574,10 +593,7 @@ void app_apt_report(uint16_t apt_report_event, uint8_t *event_data, uint16_t eve
 #endif
             app_report_event_broadcast(EVENT_LLAPT_QUERY, report_data, report_data[3] * 2 + 4);
 
-            if (report_data)
-            {
-                free(report_data);
-            }
+            free(report_data);
         }
         break;
 
@@ -688,9 +704,7 @@ void app_apt_report(uint16_t apt_report_event, uint8_t *event_data, uint16_t eve
 
     case EVENT_ASSIGN_APT_TYPE:
         {
-            uint8_t report_data = app_cfg_nv.apt_support_type;
-
-            app_report_event_broadcast(EVENT_ASSIGN_APT_TYPE, &report_data, sizeof(report_data));
+            app_report_event_broadcast(EVENT_ASSIGN_APT_TYPE, event_data, event_len);
         }
         break;
 
@@ -906,7 +920,7 @@ void app_apt_cmd_handle(uint16_t apt_cmd, uint8_t *param_ptr, uint16_t param_len
                     app_apt_main_volume_set(used_volume);
 #else
                     app_cfg_nv.apt_volume_out_level = used_volume;
-                    audio_passthrough_volume_out_set(app_cfg_nv.apt_volume_out_level);
+                    app_apt_volume_out_set(app_cfg_nv.apt_volume_out_level);
 #endif
 
                     app_apt_volume_relay(false, false);
@@ -1131,29 +1145,45 @@ void app_apt_cmd_handle(uint16_t apt_cmd, uint8_t *param_ptr, uint16_t param_len
     case CMD_ASSIGN_APT_TYPE:
         {
             uint8_t selected_apt_support_type = param_ptr[0];
+            uint8_t report_data = app_cfg_nv.apt_support_type;
 
             if (selected_apt_support_type != app_cfg_nv.apt_support_type)
             {
-                app_cfg_nv.apt_support_type = selected_apt_support_type;
-                app_cfg_store(&app_cfg_nv.offset_rws_sync_notification_vol, 1);
-
-                app_relay_async_single_with_raw_msg(APP_MODULE_TYPE_APT, APP_REMOTE_MSG_APT_SUPORT_TYPE,
-                                                    &selected_apt_support_type, sizeof(uint8_t));
-
-                if (LIGHT_SENSOR_ENABLED &&
-                    !app_cfg_const.listening_mode_does_not_depend_on_in_ear_status)
+                if (app_db.remote_session_state == REMOTE_SESSION_STATE_CONNECTED)
                 {
-                    app_apt_setting_state_update();
+                    if (app_apt_is_apt_on_state(app_db.current_listening_state) ||
+                        app_listening_is_anc_apt_on_state(app_db.current_listening_state) ||
+                        app_apt_is_apt_on_state(app_db.remote_current_listening_state) ||
+                        app_listening_is_anc_apt_on_state(app_db.remote_current_listening_state))
+                    {
+                        report_data = selected_apt_support_type;
+                        app_relay_sync_single_with_raw_msg(APP_MODULE_TYPE_APT, APP_REMOTE_MSG_APT_SUPORT_TYPE,
+                                                           &selected_apt_support_type, sizeof(uint8_t),
+                                                           REMOTE_TIMER_HIGH_PRECISION, 0, false);
+                    }
+
                 }
-
-                if (app_apt_is_apt_on_state(app_db.current_listening_state) ||
-                    app_listening_is_anc_apt_on_state(app_db.current_listening_state))
+                else
                 {
-                    app_apt_type_switch((T_APT_SUPPORT_TYPE)app_cfg_nv.apt_support_type);
+                    if (app_apt_is_apt_on_state(app_db.current_listening_state) ||
+                        app_listening_is_anc_apt_on_state(app_db.current_listening_state))
+                    {
+                        report_data = selected_apt_support_type;
+                        app_cfg_nv.apt_support_type = selected_apt_support_type;
+                        app_cfg_store(&app_cfg_nv.offset_rws_sync_notification_vol, 1);
+
+                        if (LIGHT_SENSOR_ENABLED &&
+                            !app_cfg_const.listening_mode_does_not_depend_on_in_ear_status)
+                        {
+                            app_apt_setting_state_update();
+                        }
+
+                        app_apt_type_switch((T_APT_SUPPORT_TYPE)app_cfg_nv.apt_support_type);
+                    }
                 }
             }
 
-            app_apt_report(EVENT_ASSIGN_APT_TYPE, NULL, 0);
+            app_apt_report(EVENT_ASSIGN_APT_TYPE, &report_data, 1);
         }
         break;
 
@@ -1230,10 +1260,18 @@ bool app_apt_open_condition_check(T_ANC_APT_STATE state)
     {
 #if F_APP_SINGLE_MUTLILINK_SCENERIO_1
         if (app_teams_multilink_get_voice_status() != APP_CALL_IDLE ||
-            app_hfp_sco_is_connected())
+            app_hfp_sco_is_connected()
+#if F_APP_LEA_SUPPORT
+            || app_lea_uca_is_upstreaming_enabled()
+#endif
+           )
 #else
         if (app_bt_policy_get_call_status() != APP_CALL_IDLE ||
-            app_hfp_sco_is_connected())
+            app_hfp_sco_is_connected()
+#if F_APP_LEA_SUPPORT
+            || app_lea_uca_is_upstreaming_enabled()
+#endif
+           )
 #endif
         {
             return false;
@@ -1275,10 +1313,18 @@ bool app_apt_open_condition_check(T_ANC_APT_STATE state)
              app_cfg_const.llapt_support)
     {
 #if F_APP_SINGLE_MUTLILINK_SCENERIO_1
-        if ((app_teams_multilink_get_voice_status() != APP_CALL_IDLE) &&
+        if ((app_teams_multilink_get_voice_status() != APP_CALL_IDLE
+#if F_APP_LEA_SUPPORT
+             || app_lea_uca_is_upstreaming_enabled()
+#endif
+            ) &&
             (!app_cfg_const.enable_llapt_when_sco))
 #else
-        if ((app_bt_policy_get_call_status() != APP_CALL_IDLE) &&
+        if ((app_bt_policy_get_call_status() != APP_CALL_IDLE
+#if F_APP_LEA_SUPPORT
+             || app_lea_uca_is_upstreaming_enabled()
+#endif
+            ) &&
             (!app_cfg_const.enable_llapt_when_sco))
 #endif
         {
@@ -1330,8 +1376,12 @@ bool app_apt_open_condition_check(T_ANC_APT_STATE state)
         }
     }
 
-    if ((app_cfg_const.apt_auto_on_off_while_music_playing)
-        && (app_db.avrcp_play_status == BT_AVRCP_PLAY_STATUS_PLAYING))
+    if ((app_cfg_const.apt_auto_on_off_while_music_playing) && app_db.a2dp_play_status)
+    {
+        return false;
+    }
+
+    if (app_db.power_on_delay_opening_apt)
     {
         return false;
     }
@@ -1421,8 +1471,6 @@ void app_apt_play_apt_volume_tone(void)
         }
     }
 }
-
-
 
 bool app_apt_is_apt_on_state(T_ANC_APT_STATE state)
 {
@@ -1949,7 +1997,7 @@ static void app_apt_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t len,
             if (status == REMOTE_RELAY_STATUS_ASYNC_RCVD)
             {
                 app_cfg_nv.apt_volume_out_level = *((uint8_t *)buf);
-                audio_passthrough_volume_out_set(app_cfg_nv.apt_volume_out_level);
+                app_apt_volume_out_set(app_cfg_nv.apt_volume_out_level);
             }
         }
         break;
@@ -2093,7 +2141,9 @@ static void app_apt_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t len,
 
     case APP_REMOTE_MSG_APT_SUPORT_TYPE:
         {
-            if (status == REMOTE_RELAY_STATUS_ASYNC_RCVD)
+            if (status == REMOTE_RELAY_STATUS_SYNC_TOUT ||
+                status == REMOTE_RELAY_STATUS_SYNC_EXPIRED ||
+                status == REMOTE_RELAY_STATUS_SYNC_REF_CHANGED)
             {
                 if (app_cfg_nv.apt_support_type != *((uint8_t *)buf))
                 {
@@ -2106,11 +2156,7 @@ static void app_apt_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t len,
                         app_apt_setting_state_update();
                     }
 
-                    if (app_apt_is_apt_on_state(app_db.current_listening_state) ||
-                        app_listening_is_anc_apt_on_state(app_db.current_listening_state))
-                    {
-                        app_apt_type_switch((T_APT_SUPPORT_TYPE)app_cfg_nv.apt_support_type);
-                    }
+                    app_apt_type_switch((T_APT_SUPPORT_TYPE)app_cfg_nv.apt_support_type);
                 }
             }
         }

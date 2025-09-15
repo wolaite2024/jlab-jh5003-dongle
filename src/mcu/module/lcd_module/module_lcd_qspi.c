@@ -29,6 +29,8 @@
 #include "lcd_sh8601z_454_qspi.h"
 #elif (TARGET_LCD_DEVICE == LCD_DEVICE_ST77916)
 #include "lcd_st77916_320_385_qspi.h"
+#elif (TARGET_LCD_DEVICE == LCD_DEVICE_ST7801)
+#include "lcd_st7801_368_448_qspi.h"
 #endif
 
 #define LCD_SPIC_CLK                     P9_4
@@ -38,7 +40,6 @@
 #define LCD_SPIC_SIO2                    P9_0
 #define LCD_SPIC_SIO3                    P9_5
 #define SPIC_ID                          FMC_SPIC_ID_2
-#define CLK_SPIC                         CLK_SPIC2
 #define SPIC_GDMA_TX_HANDSHAKE           GDMA_Handshake_SPIC2_TX
 #define SPIC_GDMA_DESTINATION_ADDR       ((uint32_t)(&(SPIC2->DR[0].WORD)))
 
@@ -48,7 +49,6 @@ static uint8_t lcd_qspi_dma_ch_num = 0xa5;
 #define LCD_DMA_CHANNEL_INDEX            DMA_CH_BASE(lcd_qspi_dma_ch_num)
 #define LCD_DMA_CHANNEL_IRQ              DMA_CH_IRQ(lcd_qspi_dma_ch_num)
 
-static GDMA_LLIDef GDMA_LLIStruct_LAST;
 static uint8_t lcd_rst_pin;
 
 void lcd_pin_config(uint8_t lcd_rst)
@@ -77,8 +77,13 @@ void rtk_lcd_hal_set_reset(bool reset)
 {
 #if (TARGET_LCD_DEVICE == LCD_DEVICE_ST77916)
     lcd_set_backlight(!reset);
+#elif (TARGET_LCD_DEVICE == LCD_DEVICE_ST7801)
+    lcd_set_vci_en(false);
 #endif
     lcd_set_reset(reset);
+#if (TARGET_LCD_DEVICE == LCD_DEVICE_SH8601Z)
+    lcd_set_avdd_en(false);
+#endif
 }
 
 /**
@@ -89,10 +94,16 @@ void rtk_lcd_hal_set_reset(bool reset)
 void lcd_driver_init(void)
 {
     lcd_device_init();
+#if (TARGET_LCD_DEVICE == LCD_DEVICE_SH8601Z)
+    lcd_set_avdd_en(true);
+#endif
     lcd_set_reset(true);
     platform_delay_ms(120);
     lcd_set_reset(false);
     platform_delay_ms(50);
+#if (TARGET_LCD_DEVICE == LCD_DEVICE_ST7801)
+    lcd_set_vci_en(true);
+#endif
 }
 
 void lcd_pad_init(void)
@@ -118,6 +129,10 @@ void lcd_pad_init(void)
                PAD_OUT_LOW);
 #if (TARGET_LCD_DEVICE == LCD_DEVICE_ST77916)
     lcd_backlight_init();
+#elif (TARGET_LCD_DEVICE == LCD_DEVICE_ST7801)
+    lcd_vci_en_init();
+#elif (TARGET_LCD_DEVICE == LCD_DEVICE_SH8601Z)
+    lcd_avdd_en_init();
 #endif
 #if (ENABLE_TE_FOR_LCD == 1)
     rtk_lcd_hal_set_TE_type(LCDC_TE_TYPE_SW_TE);
@@ -135,7 +150,7 @@ void lcd_device_init(void)
     lcd_pad_init();
     fmc_spic_init(SPIC_ID);
     uint32_t spic2_freq = 0;
-    fmc_spic_clock_switch(SPIC_ID, 80, &spic2_freq);
+    fmc_spic_clock_switch(SPIC_ID, 100, &spic2_freq);
     fmc_spic_set_baud(SPIC_ID, 1);
 }
 
@@ -147,6 +162,8 @@ void rtk_lcd_hal_init(void)
 #elif (TARGET_LCD_DEVICE == LCD_DEVICE_ST77916)
     st77916_init();
     lcd_set_backlight(true);
+#elif (TARGET_LCD_DEVICE == LCD_DEVICE_ST7801)
+    st7801_init();
 #endif
 }
 
@@ -157,6 +174,8 @@ void rtk_lcd_hal_set_window(uint16_t xStart, uint16_t yStart, uint16_t w, uint16
     lcd_SH8601A_qspi_454_set_window(xStart, yStart, xStart + w - 1, yStart + h - 1);
 #elif (TARGET_LCD_DEVICE == LCD_DEVICE_ST77916)
     lcd_ST77916_qspi_454_set_window(xStart, yStart, xStart + w - 1, yStart + h - 1);
+#elif (TARGET_LCD_DEVICE == LCD_DEVICE_ST7801)
+    lcd_ST7801_qspi_368_448_set_window(xStart, yStart, xStart + w - 1, yStart + h - 1);
 #endif
 }
 

@@ -265,7 +265,7 @@ typedef enum
 /*============================================================================*
  *                              RTL876X Pin Number
 *============================================================================*/
-/** @defgroup 87x3e_RTL876X_Pin_Number RTL876X Pin Number
+/** @defgroup 87x3e_Pin_Number Pin Number
   * @{
   */
 #define P0_0        0       /**< GPIO0   */
@@ -389,7 +389,7 @@ typedef enum
 #define ADC_2       P0_2    /**< GPIO2  */
 #define ADC_3       P0_3    /**< GPIO3  */
 
-/** @} */ /* End of group 87x3e_RTL876X_Pin_Number */
+/** @} */ /* End of group 87x3e_Pin_Number  */
 
 
 /* ================================================================================ */
@@ -3124,7 +3124,6 @@ typedef struct
 // for compatible with BBPRO
 #define LOG_UART_REG_BASE           0x40011000UL
 #define UART_REG_BASE               0x40012000UL
-#define LOG_UART1_REG_BASE          0x40024000UL
 
 #define HW_AES_REG_BASE             0x40014000UL
 #define IR_REG_BASE                 0x40016800UL
@@ -3219,44 +3218,12 @@ typedef struct
 #define PINMUX1                         ((PINMUX_TypeDef           *) PINMUX_REG1_BASE)
 #define DEBOUNCE_CLK_SET                ((DEBOUNCE_CLK_SET_TypeDef *) DEBOUNCE_CLK_SET_REG_BASE)
 #define KEYSCAN                         ((KEYSCAN_TypeDef          *) KEYSCAN_REG_BASE)
-#define GPIO                            ((GPIO_TypeDef             *) GPIO0_REG_BASE)
-#define GPIOA                           ((GPIO_TypeDef             *) GPIO0_REG_BASE)
-#define GPIOB                           ((GPIO_TypeDef             *) GPIO1_REG_BASE)
-#define QDEC                            ((QDEC_TypeDef             *) QDEC_REG_BASE)
-#define I2C0                            ((I2C_TypeDef              *) I2C0_REG_BASE)
-#define I2C1                            ((I2C_TypeDef              *) I2C1_REG_BASE)
-#define I2C2                            ((I2C_TypeDef              *) I2C2_REG_BASE)
-#define SPI0                            ((SPI_TypeDef              *) SPI0_REG_BASE)
-#define SPI1                            ((SPI_TypeDef              *) SPI1_REG_BASE)
-#define SPI2                            ((SPI_TypeDef              *) SPI2_REG_BASE)
-#define TIM0                            ((TIM_TypeDef              *) TIM0_REG_BASE)
-#define TIM1                            ((TIM_TypeDef              *) TIM1_REG_BASE)
-#define TIM2                            ((TIM_TypeDef              *) TIM2_REG_BASE)
-#define TIM3                            ((TIM_TypeDef              *) TIM3_REG_BASE)
-#define TIM4                            ((TIM_TypeDef              *) TIM4_REG_BASE)
-#define TIM5                            ((TIM_TypeDef              *) TIM5_REG_BASE)
-#define TIM6                            ((TIM_TypeDef              *) TIM6_REG_BASE)
-#define TIM7                            ((TIM_TypeDef              *) TIM7_REG_BASE)
-#define PWM0_PN                         ((PWM_TypeDef              *) PWM0_REG_BASE)
-#define PWM1_PN                         ((PWM_TypeDef              *) PWM1_REG_BASE)
 #define PWM2                            ((PWM_TypeDef              *) PWM2_REG_BASE)
 #define PWM3                            ((PWM_TypeDef              *) PWM3_REG_BASE)
 #define TIM_CHANNELS                    ((TIM_ChannelsTypeDef      *) TIM_CHANNELS_REG_BASE)
 #define GDMA_BASE                       ((GDMA_TypeDef             *) GDMA_REG_BASE)
-#define GDMA_Channel0                   ((GDMA_ChannelTypeDef      *) GDMA_Channel0_BASE)
-#define GDMA_Channel1                   ((GDMA_ChannelTypeDef      *) GDMA_Channel1_BASE)
-#define GDMA_Channel2                   ((GDMA_ChannelTypeDef      *) GDMA_Channel2_BASE)
-#define GDMA_Channel3                   ((GDMA_ChannelTypeDef      *) GDMA_Channel3_BASE)
-#define GDMA_Channel4                   ((GDMA_ChannelTypeDef      *) GDMA_Channel4_BASE)
-#define GDMA_Channel5                   ((GDMA_ChannelTypeDef      *) GDMA_Channel5_BASE)
-#define GDMA_Channel6                   ((GDMA_ChannelTypeDef      *) GDMA_Channel6_BASE)
-#define GDMA_Channel7                   ((GDMA_ChannelTypeDef      *) GDMA_Channel7_BASE)
-#define GDMA_Channel8                   ((GDMA_ChannelTypeDef      *) GDMA_Channel8_BASE)
-#define ADC                             ((ADC_TypeDef              *) ADC_REG_BASE)
-#define UART0                           ((UART_TypeDef             *) UART0_REG_BASE)
-#define UART1                           ((UART_TypeDef             *) UART1_REG_BASE)
-#define UART2                           ((UART_TypeDef             *) UART2_REG_BASE)
 
+#define ADC                             ((ADC_TypeDef              *) ADC_REG_BASE)
 #define SPI3WIRE                        ((SPI3WIRE_TypeDef         *) SPI2WIRE_REG_BASE)
 #define IR                              ((IR_TypeDef               *) IR_REG_BASE)
 #define RTC                             ((RTC_TypeDef              *) RTC_REG_BASE)

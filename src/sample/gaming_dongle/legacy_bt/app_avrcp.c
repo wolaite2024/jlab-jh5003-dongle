@@ -22,12 +22,6 @@ static void app_avrcp_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
     T_APP_BR_LINK *p_link;
     bool handle = true;
 
-    if (event_type != BT_EVENT_SDP_ATTR_INFO)
-    {
-        APP_PRINT_INFO2("app_avrcp_bt_cback: event %x bd_addr %b", event_type,
-                        TRACE_BDADDR(param->avrcp_conn_ind.bd_addr));
-    }
-
     switch (event_type)
     {
     case BT_EVENT_AVRCP_CONN_IND:
@@ -36,6 +30,26 @@ static void app_avrcp_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
             if (p_link != NULL)
             {
                 bt_avrcp_connect_cfm(p_link->bd_addr, true);
+            }
+        }
+        break;
+
+    case BT_EVENT_AVRCP_GET_CAPABILITIES_RSP:
+        {
+            p_link = app_find_br_link(param->avrcp_browsing_conn_ind.bd_addr);
+            if (p_link != NULL)
+            {
+                uint8_t  capability_count;
+                uint8_t *capabilities;
+
+                capability_count = param->avrcp_get_capabilities_rsp.capability_count;
+                capabilities = param->avrcp_get_capabilities_rsp.capabilities;
+                while (capability_count != 0)
+                {
+                    bt_avrcp_register_notification_req(p_link->bd_addr, *capabilities);
+                    capability_count -= 1;
+                    capabilities += 1;
+                }
             }
         }
         break;
@@ -294,9 +308,8 @@ void app_avrcp_init(void)
 {
     if (app_cfg_const.supported_profile_mask & AVRCP_PROFILE_MASK)
     {
-        bt_avrcp_init(app_cfg_const.avrcp_link_number);
-        bt_avrcp_supported_features_set(BT_AVRCP_FEATURE_CATEGORY_1 | BT_AVRCP_FEATURE_CATEGORY_2,
-                                        BT_AVRCP_FEATURE_CATEGORY_1);
+        bt_avrcp_init(BT_AVRCP_FEATURE_CATEGORY_1 | BT_AVRCP_FEATURE_CATEGORY_2,
+                      BT_AVRCP_FEATURE_CATEGORY_1);
         bt_mgr_cback_register(app_avrcp_bt_cback);
     }
 }

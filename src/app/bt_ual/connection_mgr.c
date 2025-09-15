@@ -20,7 +20,6 @@
 #include "ual_api_types.h"
 #include "gap_le.h"
 #include "connection_mgr.h"
-#include "app_timer.h"
 #include "gap_privacy.h"
 #include "ual_bluetooth.h"
 #include "gatt.h"
@@ -133,7 +132,7 @@ bool ble_is_gaming_mode(void)
     return conn_mgr.gaming ? true : false;
 }
 
-
+extern void gatt_client_handle_mtu_info(uint8_t conn_id, uint16_t mtu_size);
 void ble_conn_handle_conn_mtu_info_evt(uint8_t conn_id, uint16_t mtu_size)
 {
     APP_PRINT_INFO2("conn_handle_conn_mtu_info_evt: conn_id %d, mtu_size %d", conn_id, mtu_size);
@@ -153,9 +152,12 @@ void ble_conn_handle_conn_mtu_info_evt(uint8_t conn_id, uint16_t mtu_size)
         p_dev->mtu_received = true;
         if (p_dev->auth_cmpl)
         {
+            bt_dev_handle_conn_update_event(p_dev->bd_addr, CI_EVENT_GATT_DISCOVERY);
+            bt_dev_disable_conn_update(p_dev->bd_addr);
             gatt_client_start_discovery_all(le_get_conn_handle(conn_id), ble_gatt_client_discover_cb);
         }
     }
+    gatt_client_handle_mtu_info(conn_id, mtu_size);
 }
 
 void ble_conn_mgr_handle_le_conn_state(uint8_t conn_id, T_GAP_CONN_STATE new_state,
@@ -562,7 +564,6 @@ static void ble_start_conn_update(T_BT_DEVICE *p_dev)
 
 
     if ((p_conn->conn_mask & BLE_UPDATE_WAIT_RSP) ||
-        (p_conn->conn_mask & BLE_UPDATE_DISABLE)  ||
         (p_conn->conn_mask & BLE_UPDATE_PEND))
     {
         return;
@@ -576,6 +577,11 @@ static void ble_start_conn_update(T_BT_DEVICE *p_dev)
     }
 
     p_conn->param_update_pend = false;
+
+    APP_PRINT_INFO7("ble_start_conn_update id %d, ci_min 0x%d ci_max %d, latency %x, timeout %d, ce_min %x ce_max %x",
+                    p_dev->le_conn_id, p_conn->ci_min_pend, p_conn->ci_max_pend,
+                    p_conn->latency_pend, p_conn->timeout_pend,
+                    p_conn->ce_min_pend, p_conn->ce_max_pend);
 
     cause = le_update_conn_param(p_dev->le_conn_id,
                                  p_conn->ci_min_pend, p_conn->ci_max_pend,
@@ -790,6 +796,12 @@ bool bt_dev_update_conn_params(uint8_t *bd_addr, uint16_t ci_min, uint16_t ci_ma
         return false;
     }
 
+    if (p_conn->conn_mask & BLE_UPDATE_DISABLE)
+    {
+        APP_PRINT_ERROR1("bt_dev_update_conn_params: disable update mask 0x%x", p_conn->conn_mask);
+        return false;
+    }
+
     p_conn->ci_min_pend = ci_min;
     p_conn->ci_max_pend = ci_max;
     p_conn->latency_pend = latency;
@@ -806,6 +818,10 @@ bool bt_dev_update_conn_params(uint8_t *bd_addr, uint16_t ci_min, uint16_t ci_ma
 
 T_APP_RESULT ble_handle_conn_update_ind(T_LE_CONN_UPDATE_IND *p_conn_ind)
 {
+#if 1
+    /* reject snk update indication */
+    return APP_RESULT_REJECT;
+#else
     uint16_t ci_min, ci_max, latency, timeout, ce_min, ce_max;
     T_BT_DEVICE *p_dev = ual_find_device_by_conn_id(p_conn_ind->conn_id);
     if (p_dev == NULL)
@@ -832,14 +848,19 @@ T_APP_RESULT ble_handle_conn_update_ind(T_LE_CONN_UPDATE_IND *p_conn_ind)
     ce_min = p_conn->ce_min;
     ce_max = p_conn->ce_max;
 
-    APP_PRINT_TRACE2("ble_handle_conn_update_ind, mask %x role %x",
+    APP_PRINT_TRACE3("ble_handle_conn_update_ind, mask %x role %x ci_min %x",
                      p_dev->ble_conn_param.conn_mask,
-                     p_dev->role);
+                     p_dev->role, ci_min);
     if (p_dev->role != GAP_LINK_ROLE_MASTER)
     {
         return APP_RESULT_REJECT;
     }
     if (!bt_dev_check_conn_params(ci_min, ci_max, latency, timeout, ce_min, ce_max))
+    {
+        return APP_RESULT_REJECT;
+    }
+
+    if (ci_min < BLE_CONN_IND_MIN_CI_DEF)
     {
         return APP_RESULT_REJECT;
     }
@@ -865,6 +886,7 @@ T_APP_RESULT ble_handle_conn_update_ind(T_LE_CONN_UPDATE_IND *p_conn_ind)
         ble_start_conn_update(p_dev);
         return APP_RESULT_SUCCESS;
     }
+#endif
 }
 
 
@@ -951,28 +973,13 @@ T_APP_RESULT ble_gatt_client_discover_cb(uint16_t conn_handle, T_GATT_CLIENT_EVE
         APP_PRINT_ERROR1("gatt_client_discover_cb: conn_handle 0x%x not find device", conn_handle);
         return APP_RESULT_APP_ERR;
     }
+    APP_PRINT_INFO1("gatt_client_discover_cb:state %x", type);
 
     if (type == GATT_CLIENT_EVENT_DIS_ALL_STATE)
     {
         T_GATT_CLIENT_DIS_ALL_DONE *p_disc = (T_GATT_CLIENT_DIS_ALL_DONE *)p_data;
         APP_PRINT_INFO2("gatt_client_discover_cb:state 0x%x, load_from_ftl %d",
                         p_disc->state, p_disc->load_from_ftl);
-
-        if (p_disc->state == GATT_CLIENT_STATE_DISCOVERY)
-        {
-#if (LE_AUDIO_CONNECT_FASTER == 0)
-            bt_dev_handle_conn_update_event(p_sec_dev->bd_addr, CI_EVENT_GATT_DISCOVERY);
-            bt_dev_disable_conn_update(p_sec_dev->bd_addr);
-#endif
-        }
-        else if (p_disc->state == GATT_CLIENT_STATE_DONE &&
-                 !p_disc->load_from_ftl)
-        {
-#if (LE_AUDIO_CONNECT_FASTER == 0)
-            bt_dev_handle_conn_update_event(p_sec_dev->bd_addr, CI_EVENT_GATT_DONE);
-            bt_dev_enable_conn_update(p_sec_dev->bd_addr);
-#endif
-        }
     }
     return APP_RESULT_SUCCESS;
 }
@@ -984,6 +991,7 @@ static T_APP_RESULT gap_client_cb(uint16_t conn_handle, T_GATT_CLIENT_EVENT type
     uint8_t conn_id;
     T_GATT_CLIENT_DATA *p_client_cb_data = (T_GATT_CLIENT_DATA *)p_data;
     T_BT_DEVICE *p_sec_dev;
+    T_GAP_CAUSE cause;
     le_get_conn_id_by_handle(conn_handle, &conn_id);
     p_sec_dev = ual_find_device_by_conn_id(conn_id);
 
@@ -1014,7 +1022,11 @@ static T_APP_RESULT gap_client_cb(uint16_t conn_handle, T_GATT_CLIENT_EVENT type
                     char_uuid.p.uuid16 = GATT_UUID_CHAR_PER_PREF_CONN_PARAM;
                     if (gatt_client_find_char_handle(conn_handle, &srv_uuid, &char_uuid, &handle))
                     {
-                        gatt_client_read(conn_handle, handle, NULL);
+                        cause = gatt_client_read(conn_handle, handle, NULL);
+                        if (cause != GAP_CAUSE_SUCCESS)
+                        {
+                            APP_PRINT_ERROR1("gap_client_cb: read fail %d", cause);
+                        }
                     }
                 }
             }
@@ -1103,9 +1115,14 @@ void ble_conn_update_by_app(bool enable)
     conn_update_by_app = enable;
 }
 
+void ble_set_default_conn_interval(uint16_t interval)
+{
+    ble_direct_set_conn_interval(interval);
+}
+
 void ble_conn_mgr_init()
 {
-    T_ATTR_UUID srv_uuid;
+    T_ATTR_UUID srv_uuid = {0x0};
 
     memset(&conn_mgr, 0, sizeof(conn_mgr));
     init_ualist_head(&conn_mgr.conn_devs_set);

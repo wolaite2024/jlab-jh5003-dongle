@@ -41,7 +41,11 @@ static const T_ATTRIB_APPL TRANSMIT_SRV_TABLE[] =
     /*----------------- Transmit Service -------------------*/
     /* <<Primary Service>>, .. */
     {
+#if F_APP_GATT_OVER_BREDR_SUPPORT
+        (ATTRIB_FLAG_VOID | ATTRIB_FLAG_LE | ATTRIB_FLAG_BREDR),   /* flags     */
+#else
         (ATTRIB_FLAG_VOID | ATTRIB_FLAG_LE),   /* flags     */
+#endif
         {                                           /* type_value */
             LO_WORD(GATT_UUID_PRIMARY_SERVICE),
             HI_WORD(GATT_UUID_PRIMARY_SERVICE),

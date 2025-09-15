@@ -54,7 +54,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:gae8ccc52f4990de786b2daceaac0ebda6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the IR peripheral registers to their default values.  <a href="#gae8ccc52f4990de786b2daceaac0ebda6">More...</a><br /></td></tr>
 <tr class="separator:gae8ccc52f4990de786b2daceaac0ebda6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf6abc176153d12a5d09f89896492f230"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_r___exported___functions.html#gaf6abc176153d12a5d09f89896492f230">IR_Init</a> (<a class="el" href="struct_i_r___init_type_def.html">IR_InitTypeDef</a> *IR_InitStruct)</td></tr>
-<tr class="memdesc:gaf6abc176153d12a5d09f89896492f230"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the IR peripheral according to the specified parameters in the IR_InitStruct.  <a href="#gaf6abc176153d12a5d09f89896492f230">More...</a><br /></td></tr>
+<tr class="memdesc:gaf6abc176153d12a5d09f89896492f230"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the IR peripheral according to the specified parameters in IR_InitStruct.  <a href="#gaf6abc176153d12a5d09f89896492f230">More...</a><br /></td></tr>
 <tr class="separator:gaf6abc176153d12a5d09f89896492f230"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaeb4d63c4b589f27b0d4078d709d5a720"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_r___exported___functions.html#gaeb4d63c4b589f27b0d4078d709d5a720">IR_StructInit</a> (<a class="el" href="struct_i_r___init_type_def.html">IR_InitTypeDef</a> *IR_InitStruct)</td></tr>
 <tr class="memdesc:gaeb4d63c4b589f27b0d4078d709d5a720"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills each IR_InitStruct member with its default value.  <a href="#gaeb4d63c4b589f27b0d4078d709d5a720">More...</a><br /></td></tr>
@@ -63,34 +63,34 @@ Functions</h2></td></tr>
 <tr class="memdesc:gaa35fd88ec9b71d495943f18684e282ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable the selected IR mode.  <a href="#gaa35fd88ec9b71d495943f18684e282ea">More...</a><br /></td></tr>
 <tr class="separator:gaa35fd88ec9b71d495943f18684e282ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac85f2ea12288362118b78040ecb5ffd8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_r___exported___functions.html#gac85f2ea12288362118b78040ecb5ffd8">IR_StartManualRxTrigger</a> (void)</td></tr>
-<tr class="memdesc:gac85f2ea12288362118b78040ecb5ffd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start trigger only in manual receive mode.  <a href="#gac85f2ea12288362118b78040ecb5ffd8">More...</a><br /></td></tr>
+<tr class="memdesc:gac85f2ea12288362118b78040ecb5ffd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start trigger receive, only in manual receive mode.  <a href="#gac85f2ea12288362118b78040ecb5ffd8">More...</a><br /></td></tr>
 <tr class="separator:gac85f2ea12288362118b78040ecb5ffd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9892c772986fe5ef05bbde68f81f9769"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_r___exported___functions.html#ga9892c772986fe5ef05bbde68f81f9769">IR_SetRxCounterThreshold</a> (uint32_t IR_RxCntThrType, uint32_t IR_RxCntThr)</td></tr>
-<tr class="memdesc:ga9892c772986fe5ef05bbde68f81f9769"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure counter threshold value in receiving mode.You can use it to stop receiving IR data.  <a href="#ga9892c772986fe5ef05bbde68f81f9769">More...</a><br /></td></tr>
+<tr class="memdesc:ga9892c772986fe5ef05bbde68f81f9769"><td class="mdescLeft">&#160;</td><td class="mdescRight">Config counter threshold value in receiving mode. You can use it to stop receiving IR data.  <a href="#ga9892c772986fe5ef05bbde68f81f9769">More...</a><br /></td></tr>
 <tr class="separator:ga9892c772986fe5ef05bbde68f81f9769"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab24d44506e374ce140c23092c1f6cbff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_r___exported___functions.html#gab24d44506e374ce140c23092c1f6cbff">IR_SendBuf</a> (uint32_t *pBuf, uint32_t len, <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gac9a7e9a35d2513ec15c3b537aaa4fba1">FunctionalState</a> IsLastPacket)</td></tr>
-<tr class="memdesc:gab24d44506e374ce140c23092c1f6cbff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send data.  <a href="#gab24d44506e374ce140c23092c1f6cbff">More...</a><br /></td></tr>
+<tr class="memdesc:gab24d44506e374ce140c23092c1f6cbff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send data through IR.  <a href="#gab24d44506e374ce140c23092c1f6cbff">More...</a><br /></td></tr>
 <tr class="separator:gab24d44506e374ce140c23092c1f6cbff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga18a1562cf09679892a79acbbdadc2c61"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_r___exported___functions.html#ga18a1562cf09679892a79acbbdadc2c61">IR_SendCompenBuf</a> (<a class="el" href="group___i_r___compensation___flag.html#ga93f6e6ad7df533ccbadf230d61f74fc0">IR_TX_COMPEN_TYPE</a> comp_type, uint32_t *pBuf, uint32_t len, <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gac9a7e9a35d2513ec15c3b537aaa4fba1">FunctionalState</a> IsLastPacket)</td></tr>
 <tr class="memdesc:ga18a1562cf09679892a79acbbdadc2c61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send compensation data.  <a href="#ga18a1562cf09679892a79acbbdadc2c61">More...</a><br /></td></tr>
 <tr class="separator:ga18a1562cf09679892a79acbbdadc2c61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga57e8062508f0d96187fd0f404f94fcb7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_r___exported___functions.html#ga57e8062508f0d96187fd0f404f94fcb7">IR_ReceiveBuf</a> (uint32_t *pBuf, uint32_t length)</td></tr>
-<tr class="memdesc:ga57e8062508f0d96187fd0f404f94fcb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data From RX FIO.  <a href="#ga57e8062508f0d96187fd0f404f94fcb7">More...</a><br /></td></tr>
+<tr class="memdesc:ga57e8062508f0d96187fd0f404f94fcb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data From RX FIFO.  <a href="#ga57e8062508f0d96187fd0f404f94fcb7">More...</a><br /></td></tr>
 <tr class="separator:ga57e8062508f0d96187fd0f404f94fcb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3ca7c9e503d98d65e01cf27428bda385"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_r___exported___functions.html#ga3ca7c9e503d98d65e01cf27428bda385">IR_INTConfig</a> (uint32_t IR_INT, <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gac9a7e9a35d2513ec15c3b537aaa4fba1">FunctionalState</a> newState)</td></tr>
-<tr class="memdesc:ga3ca7c9e503d98d65e01cf27428bda385"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables the specified IR interrupts.  <a href="#ga3ca7c9e503d98d65e01cf27428bda385">More...</a><br /></td></tr>
+<tr class="memdesc:ga3ca7c9e503d98d65e01cf27428bda385"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable the specified IR interrupt source.  <a href="#ga3ca7c9e503d98d65e01cf27428bda385">More...</a><br /></td></tr>
 <tr class="separator:ga3ca7c9e503d98d65e01cf27428bda385"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga742c175219d9579d4df6f7a1fc269676"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_r___exported___functions.html#ga742c175219d9579d4df6f7a1fc269676">IR_MaskINTConfig</a> (uint32_t IR_INT, <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gac9a7e9a35d2513ec15c3b537aaa4fba1">FunctionalState</a> newState)</td></tr>
-<tr class="memdesc:ga742c175219d9579d4df6f7a1fc269676"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mask or unmask the specified IR interrupts.  <a href="#ga742c175219d9579d4df6f7a1fc269676">More...</a><br /></td></tr>
+<tr class="memdesc:ga742c175219d9579d4df6f7a1fc269676"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mask or unmask the specified IR interrupt source.  <a href="#ga742c175219d9579d4df6f7a1fc269676">More...</a><br /></td></tr>
 <tr class="separator:ga742c175219d9579d4df6f7a1fc269676"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga48cc1b5be366b891292535718d9d5073"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__x3d___r_t_l876x___exported__types.html#gaacbd7ed539db0aacd973a0f6eca34074">ITStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_r___exported___functions.html#ga48cc1b5be366b891292535718d9d5073">IR_GetINTStatus</a> (uint32_t IR_INT)</td></tr>
 <tr class="memdesc:ga48cc1b5be366b891292535718d9d5073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the specified IR interrupt status.  <a href="#ga48cc1b5be366b891292535718d9d5073">More...</a><br /></td></tr>
 <tr class="separator:ga48cc1b5be366b891292535718d9d5073"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga589dc6b6d731bd90a5dea2b3fd0f5462"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_r___exported___functions.html#ga589dc6b6d731bd90a5dea2b3fd0f5462">IR_ClearINTPendingBit</a> (uint32_t IR_CLEAR_INT)</td></tr>
-<tr class="memdesc:ga589dc6b6d731bd90a5dea2b3fd0f5462"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the IR interrupt pending bits.  <a href="#ga589dc6b6d731bd90a5dea2b3fd0f5462">More...</a><br /></td></tr>
+<tr class="memdesc:ga589dc6b6d731bd90a5dea2b3fd0f5462"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the IR interrupt pending bit.  <a href="#ga589dc6b6d731bd90a5dea2b3fd0f5462">More...</a><br /></td></tr>
 <tr class="separator:ga589dc6b6d731bd90a5dea2b3fd0f5462"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae3238305e415891302fbbe6f8ddaa7dd"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_r___exported___functions.html#gae3238305e415891302fbbe6f8ddaa7dd">IR_GetTxFIFOFreeLen</a> (void)</td></tr>
-<tr class="memdesc:gae3238305e415891302fbbe6f8ddaa7dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get free size of TX FIFO .  <a href="#gae3238305e415891302fbbe6f8ddaa7dd">More...</a><br /></td></tr>
+<tr class="memdesc:gae3238305e415891302fbbe6f8ddaa7dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get free size of TX FIFO.  <a href="#gae3238305e415891302fbbe6f8ddaa7dd">More...</a><br /></td></tr>
 <tr class="separator:gae3238305e415891302fbbe6f8ddaa7dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0632c0b6b1937f01016c876327a9eed6"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_r___exported___functions.html#ga0632c0b6b1937f01016c876327a9eed6">IR_GetRxDataLen</a> (void)</td></tr>
 <tr class="memdesc:ga0632c0b6b1937f01016c876327a9eed6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get data size in RX FIFO.  <a href="#ga0632c0b6b1937f01016c876327a9eed6">More...</a><br /></td></tr>
@@ -102,10 +102,10 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga581feeab272b9d287e8a75c5417fce6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read one data.  <a href="#ga581feeab272b9d287e8a75c5417fce6d">More...</a><br /></td></tr>
 <tr class="separator:ga581feeab272b9d287e8a75c5417fce6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1a73def354b85412d7986856a4443ab4"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_r___exported___functions.html#ga1a73def354b85412d7986856a4443ab4">IR_SetTxThreshold</a> (uint8_t thd)</td></tr>
-<tr class="memdesc:ga1a73def354b85412d7986856a4443ab4"><td class="mdescLeft">&#160;</td><td class="mdescRight">set tx threshold.when TX FIFO depth &lt;= threshold value, trigger interrupt  <a href="#ga1a73def354b85412d7986856a4443ab4">More...</a><br /></td></tr>
+<tr class="memdesc:ga1a73def354b85412d7986856a4443ab4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set tx threshold, when TX FIFO depth &lt;= threshold value will trigger interrupt.  <a href="#ga1a73def354b85412d7986856a4443ab4">More...</a><br /></td></tr>
 <tr class="separator:ga1a73def354b85412d7986856a4443ab4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac77acecf29a6d2338a899c6042d3c5a9"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_r___exported___functions.html#gac77acecf29a6d2338a899c6042d3c5a9">IR_SetRxThreshold</a> (uint8_t thd)</td></tr>
-<tr class="memdesc:gac77acecf29a6d2338a899c6042d3c5a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">set tx threshold.when RX FIFO depth &gt;= threshold value, trigger interrupt  <a href="#gac77acecf29a6d2338a899c6042d3c5a9">More...</a><br /></td></tr>
+<tr class="memdesc:gac77acecf29a6d2338a899c6042d3c5a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set rx threshold, when RX FIFO depth &gt;= threshold value will trigger interrupt.  <a href="#gac77acecf29a6d2338a899c6042d3c5a9">More...</a><br /></td></tr>
 <tr class="separator:gac77acecf29a6d2338a899c6042d3c5a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafa6c03a3fb16b51509a0c11aac52bbdc"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_r___exported___functions.html#gafa6c03a3fb16b51509a0c11aac52bbdc">IR_ClearTxFIFO</a> (void)</td></tr>
 <tr class="memdesc:gafa6c03a3fb16b51509a0c11aac52bbdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear IR TX FIFO.  <a href="#gafa6c03a3fb16b51509a0c11aac52bbdc">More...</a><br /></td></tr>
@@ -114,16 +114,16 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga3ed11706a9eda2ff8550f51fb62670b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear IR RX FIFO.  <a href="#ga3ed11706a9eda2ff8550f51fb62670b0">More...</a><br /></td></tr>
 <tr class="separator:ga3ed11706a9eda2ff8550f51fb62670b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2ab8fa7f61c25911b813e36bde15468f"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE <a class="el" href="group__x3d___r_t_l876x___exported__types.html#ga89136caac2e14c55151f527ac02daaff">FlagStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_r___exported___functions.html#ga2ab8fa7f61c25911b813e36bde15468f">IR_GetFlagStatus</a> (uint32_t IR_FLAG)</td></tr>
-<tr class="memdesc:ga2ab8fa7f61c25911b813e36bde15468f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether the specified IR flag is set or not.  <a href="#ga2ab8fa7f61c25911b813e36bde15468f">More...</a><br /></td></tr>
+<tr class="memdesc:ga2ab8fa7f61c25911b813e36bde15468f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether the specified IR flag is set.  <a href="#ga2ab8fa7f61c25911b813e36bde15468f">More...</a><br /></td></tr>
 <tr class="separator:ga2ab8fa7f61c25911b813e36bde15468f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac69ee63c8e47a29ad46c141e6d0d3187"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_r___exported___functions.html#gac69ee63c8e47a29ad46c141e6d0d3187">IR_SetTxInverse</a> (<a class="el" href="group__x3d___r_t_l876x___exported__types.html#gac9a7e9a35d2513ec15c3b537aaa4fba1">FunctionalState</a> NewState)</td></tr>
-<tr class="memdesc:gac69ee63c8e47a29ad46c141e6d0d3187"><td class="mdescLeft">&#160;</td><td class="mdescRight">set or reset tx data inverse. This parameter can be: ENABLE or DISABLE.  <a href="#gac69ee63c8e47a29ad46c141e6d0d3187">More...</a><br /></td></tr>
+<tr class="memdesc:gac69ee63c8e47a29ad46c141e6d0d3187"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set or reset tx data inverse.  <a href="#gac69ee63c8e47a29ad46c141e6d0d3187">More...</a><br /></td></tr>
 <tr class="separator:gac69ee63c8e47a29ad46c141e6d0d3187"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3ff4c75214c464f95b0af20052a89fe0"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_r___exported___functions.html#ga3ff4c75214c464f95b0af20052a89fe0">IR_TxOutputInverse</a> (<a class="el" href="group__x3d___r_t_l876x___exported__types.html#gac9a7e9a35d2513ec15c3b537aaa4fba1">FunctionalState</a> NewState)</td></tr>
-<tr class="memdesc:ga3ff4c75214c464f95b0af20052a89fe0"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX output inverse or not. This parameter can be: ENABLE or DISABLE.  <a href="#ga3ff4c75214c464f95b0af20052a89fe0">More...</a><br /></td></tr>
+<tr class="memdesc:ga3ff4c75214c464f95b0af20052a89fe0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enbale or disdble TX output inverse.  <a href="#ga3ff4c75214c464f95b0af20052a89fe0">More...</a><br /></td></tr>
 <tr class="separator:ga3ff4c75214c464f95b0af20052a89fe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga64c6931fa8b081e4f7948b4e74083a9a"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___i_r___exported___functions.html#ga64c6931fa8b081e4f7948b4e74083a9a">IR_ConfigCompenParam</a> (uint32_t data)</td></tr>
-<tr class="memdesc:ga64c6931fa8b081e4f7948b4e74083a9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get free size of TX FIFO .  <a href="#ga64c6931fa8b081e4f7948b4e74083a9a">More...</a><br /></td></tr>
+<tr class="memdesc:ga64c6931fa8b081e4f7948b4e74083a9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Config the compensation parameter.  <a href="#ga64c6931fa8b081e4f7948b4e74083a9a">More...</a><br /></td></tr>
 <tr class="separator:ga64c6931fa8b081e4f7948b4e74083a9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -145,19 +145,15 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Deinitializes the IR peripheral registers to their default values. </p>
+<p>rtl876x_ir.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">None</td><td></td></tr>
+    <tr><td class="paramname">None.</td><td></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_ir_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___i_r___exported___functions.html#gae8ccc52f4990de786b2daceaac0ebda6">IR_DeInit</a>();</div><div class="line">}</div></div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">None.</td><td></td></tr>
   </table>
@@ -188,19 +184,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initializes the IR peripheral according to the specified parameters in the IR_InitStruct. </p>
+<p>Initializes the IR peripheral according to the specified parameters in IR_InitStruct. </p>
+<p>rtl876x_ir.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">IR_InitStruct</td><td>pointer to a <a class="el" href="struct_i_r___init_type_def.html" title="IR initialize parameters. ">IR_InitTypeDef</a> structure that contains the configuration information for the specified IR peripheral </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">IR_InitStruct</td><td>Pointer to a <a class="el" href="struct_i_r___init_type_def.html" title="IR initialize parameters. ">IR_InitTypeDef</a> structure that contains the configuration information for the specified IR peripheral.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_ir_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_c_c___exported___functions.html#ga883379580c235037d0c1ed70340fb680">RCC_PeriphClockCmd</a>(<a class="code" href="group___a_p_b___peripheral___define.html#ga3f923565574d0287bc5ecb7205c54202">APBPeriph_IR</a>, <a class="code" href="group___r_c_c___peripheral___clock.html#ga091ed613a522f265331710a8a132e7d0">APBPeriph_IR_CLOCK</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line"></div><div class="line">    <a class="code" href="struct_i_r___init_type_def.html">IR_InitTypeDef</a> IR_InitStruct;</div><div class="line">    <a class="code" href="group___i_r___exported___functions.html#gaeb4d63c4b589f27b0d4078d709d5a720">IR_StructInit</a>(&amp;IR_InitStruct);</div><div class="line"></div><div class="line">    IR_InitStruct.<a class="code" href="struct_i_r___init_type_def.html#a8968c93e28cbccf581075933327180cc">IR_Freq</a>               = 38;<span class="comment">// IR carrier freqency is 38KHz</span></div><div class="line">    IR_InitStruct.<a class="code" href="struct_i_r___init_type_def.html#a502f637a541e47e550a7c3a45054646b">IR_DutyCycle</a>          = 2; <span class="comment">//Duty ratio = 1/IR_DutyCycle</span></div><div class="line">    IR_InitStruct.<a class="code" href="struct_i_r___init_type_def.html#a01fe3780fbd7c70b50b6fe508317a63a">IR_Mode</a>               = <a class="code" href="group___i_r___mode.html#gad89153d65178210e6a2c81c85eb6759f">IR_MODE_RX</a>;<span class="comment">// IR receiveing mode</span></div><div class="line">    IR_InitStruct.<a class="code" href="struct_i_r___init_type_def.html#acf9abb125c368d4f13e352ee1239dd5e">IR_RxStartMode</a>        = <a class="code" href="group___i_r___rx___start___mode.html#ga69aceeb62d279fa0fa88f95818c58700">IR_RX_AUTO_MODE</a>;</div><div class="line">    IR_InitStruct.<a class="code" href="struct_i_r___init_type_def.html#a85744548dc0d702b43593783e1e5cf88">IR_RxFIFOThrLevel</a>     =</div><div class="line">        IR_RX_FIFO_THR_LEVEL; <span class="comment">// Configure RX FIFO threshold level to trigger IR_INT_RF_LEVEL interrupt</span></div><div class="line">    IR_InitStruct.<a class="code" href="struct_i_r___init_type_def.html#a93e43986d305553ae61a4f4fcd33d147">IR_RxFIFOFullCtrl</a>     =</div><div class="line">        <a class="code" href="group___i_r___r_x___f_i_f_o___d_i_s_c_a_r_d___s_e_t_t_i_n_g.html#gab7ba23ee15c6e10ff40a0eec63ec7129">IR_RX_FIFO_FULL_DISCARD_NEWEST</a>;<span class="comment">// Discard the lastest received dta if RX FIFO is full</span></div><div class="line">    IR_InitStruct.<a class="code" href="struct_i_r___init_type_def.html#a13cc0d3374b4ff6e359665fed0f15747">IR_RxFilterTime</a>       =</div><div class="line">        <a class="code" href="group___i_r___r_x___filter___time.html#ga9df98a0d996f3c9e85cfba3b66795326">IR_RX_FILTER_TIME_50ns</a>;<span class="comment">// If high to low or low to high transition time &lt;= 50ns,Filter out it.</span></div><div class="line">    IR_InitStruct.<a class="code" href="struct_i_r___init_type_def.html#a264a2869fa42d5a851b1cebc5ddf1608">IR_RxTriggerMode</a>      = <a class="code" href="group___i_r___r_x___trigger___mode.html#ga01b74c9bf80e3a8f629d91c6e653d693">IR_RX_RISING_EDGE</a>;<span class="comment">// Configure trigger type</span></div><div class="line">    IR_InitStruct.<a class="code" href="struct_i_r___init_type_def.html#a80ca54dd5bbeb693e12a4e70d7ff2ef1">IR_RxCntThrType</a>       =</div><div class="line">        <a class="code" href="group___i_r___r_x___c_o_u_n_t_e_r___t_h_r_e_s_h_o_l_d___t_y_p_e.html#ga3db4c6a315a4f417a95592a956df8383">IR_RX_Count_Low_Level</a>;<span class="comment">// IR_RX_Count_Low_Level is counting low level</span></div><div class="line">    IR_InitStruct.<a class="code" href="struct_i_r___init_type_def.html#a989ff2d6754765d5d647a0d10176e198">IR_RxCntThr</a>           =</div><div class="line">        0x23a;<span class="comment">// Configure RX counter threshold.You can use it to decide to stop receiving IR data</span></div><div class="line">    <a class="code" href="group___i_r___exported___functions.html#gaf6abc176153d12a5d09f89896492f230">IR_Init</a>(&amp;IR_InitStruct);</div><div class="line">}</div></div><!-- fragment --><p>Initializes the IR peripheral according to the specified parameters in IR_InitStruct.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">IRx</td><td>selected IR peripheral. </td></tr>
@@ -234,7 +227,15 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Fills each IR_InitStruct member with its default value. </p>
+<p>rtl876x_ir.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">IR_InitStruct</td><td>Pointer to an <a class="el" href="struct_i_r___init_type_def.html" title="IR initialize parameters. ">IR_InitTypeDef</a> structure which will be initialized.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_ir_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_c_c___exported___functions.html#ga883379580c235037d0c1ed70340fb680">RCC_PeriphClockCmd</a>(<a class="code" href="group___a_p_b___peripheral___define.html#ga3f923565574d0287bc5ecb7205c54202">APBPeriph_IR</a>, <a class="code" href="group___r_c_c___peripheral___clock.html#ga091ed613a522f265331710a8a132e7d0">APBPeriph_IR_CLOCK</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line"></div><div class="line">    <a class="code" href="struct_i_r___init_type_def.html">IR_InitTypeDef</a> IR_InitStruct;</div><div class="line">    <a class="code" href="group___i_r___exported___functions.html#gaeb4d63c4b589f27b0d4078d709d5a720">IR_StructInit</a>(&amp;IR_InitStruct);</div><div class="line"></div><div class="line">    IR_InitStruct.<a class="code" href="struct_i_r___init_type_def.html#a8968c93e28cbccf581075933327180cc">IR_Freq</a>               = 38;<span class="comment">// IR carrier freqency is 38KHz</span></div><div class="line">    IR_InitStruct.<a class="code" href="struct_i_r___init_type_def.html#a502f637a541e47e550a7c3a45054646b">IR_DutyCycle</a>          = 2; <span class="comment">// !&lt; 1/2 duty cycle</span></div><div class="line">    IR_InitStruct.<a class="code" href="struct_i_r___init_type_def.html#a01fe3780fbd7c70b50b6fe508317a63a">IR_Mode</a>               = <a class="code" href="group___i_r___mode.html#ga5acc9c2dbf5114f93857996feaeba701">IR_MODE_TX</a>;</div><div class="line">    IR_InitStruct.<a class="code" href="struct_i_r___init_type_def.html#af71977d89e04a5815d1b50f54ff4645e">IR_TxInverse</a>          = <a class="code" href="group___i_r___t_x___data___type.html#ga934063bdc25f0cdb6873be9c650ed070">IR_TX_DATA_NORMAL</a>;</div><div class="line">    IR_InitStruct.<a class="code" href="struct_i_r___init_type_def.html#a5be73bb821a3a77ad77781261627f70b">IR_TxFIFOThrLevel</a>     = IR_TX_FIFO_THR_LEVEL;</div><div class="line">    <a class="code" href="group___i_r___exported___functions.html#gaf6abc176153d12a5d09f89896492f230">IR_Init</a>(&amp;IR_InitStruct);</div><div class="line">}</div></div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">IR_InitStruct</td><td>pointer to an <a class="el" href="struct_i_r___init_type_def.html" title="IR initialize parameters. ">IR_InitTypeDef</a> structure which will be initialized. </td></tr>
   </table>
@@ -276,7 +277,24 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Enable or disable the selected IR mode. </p>
+<p>rtl876x_ir.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">mode</td><td>Selected IR operation mode. This parameter can be one of the following values: <ul>
+<li>IR_MODE_TX: Transmission mode. </li>
+<li>IR_MODE_RX: Receiving mode. </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">NewState</td><td>New state of the operation mode. This parameter can be one of the following values: <ul>
+<li>ENABLE: Enable the selected IR mode. </li>
+<li>DISABLE: Disable the selected IR mode.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> ir_send_demo_code(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___i_r___exported___functions.html#gaa35fd88ec9b71d495943f18684e282ea">IR_Cmd</a>(<a class="code" href="group___i_r___mode.html#ga5acc9c2dbf5114f93857996feaeba701">IR_MODE_TX</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line">}</div></div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">mode</td><td>selected IR operation mode. This parameter can be the following values: <ul>
 <li>IR_MODE_TX: Transmission mode. </li>
@@ -312,19 +330,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Start trigger only in manual receive mode. </p>
+<p>Start trigger receive, only in manual receive mode. </p>
+<p>rtl876x_ir.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">None</td><td></td></tr>
+    <tr><td class="paramname">None.</td><td></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> ir_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___i_r___exported___functions.html#gac85f2ea12288362118b78040ecb5ffd8">IR_StartManualRxTrigger</a>();</div><div class="line">}</div></div><!-- fragment --><p>Start trigger receive, only in manual receive mode.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">None.</td><td></td></tr>
@@ -366,7 +381,21 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Configure counter threshold value in receiving mode.You can use it to stop receiving IR data. </p>
+<p>Config counter threshold value in receiving mode. You can use it to stop receiving IR data. </p>
+<p>rtl876x_ir.h</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">IR_RxCntThrType</td><td>IR RX Count threshold type. This parameter can be the following values: <ul>
+<li>IR_RX_Count_Low_Level: Low level counter value &gt;= IR_RxCntThr, trigger IR_INT_RX_CNT_THR interrupt. </li>
+<li>IR_RX_Count_High_Level: High level counter value &gt;= IR_RxCntThr, trigger IR_INT_RX_CNT_THR interrupt. </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">IR_RxCntThr</td><td>Configure IR Rx counter threshold value which can be 0 to 0x7fffffffUL.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> ir_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___i_r___exported___functions.html#ga9892c772986fe5ef05bbde68f81f9769">IR_SetRxCounterThreshold</a>(<a class="code" href="group___i_r___r_x___c_o_u_n_t_e_r___t_h_r_e_s_h_o_l_d___t_y_p_e.html#ga3db4c6a315a4f417a95592a956df8383">IR_RX_Count_Low_Level</a>, 0x100);</div><div class="line">}</div></div><!-- fragment --><p>Config counter threshold value in receiving mode. You can use it to stop receiving IR data.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">IR_RxCntThrType</td><td>This parameter can be the following values: <ul>
@@ -419,25 +448,22 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Send data. </p>
+<p>Send data through IR. </p>
+<p>rtl876x_ir.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pBuf</td><td>data buffer to send. </td></tr>
-    <tr><td class="paramname">len</td><td>buffer length. </td></tr>
-    <tr><td class="paramname">IsLastPacket</td><td>This parameter can be the following values: <ul>
-<li>ENABLE: The last data in IR packet and there is no continous data.In other words, An infrared data transmission is completed. </li>
-<li>DISABLE: There is data to be transmitted continuously. </li>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pBuf</td><td>Data buffer to send. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>The length of data to send. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">IsLastPacket</td><td>Is it the last package of data. This parameter can be one of the following values: <ul>
+<li>ENABLE: The last data in IR packet and there is no continous data. In other words, an infrared data transmission is completed. </li>
+<li>DISABLE: There is data to be transmitted continuously.</li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> ir_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint32_t data_buf[80] = {0};</div><div class="line">    <a class="code" href="group___i_r___exported___functions.html#gab24d44506e374ce140c23092c1f6cbff">IR_SendBuf</a>(data_buf, 68, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1ad3a9df141be0ccf10389b640f492b26d">DISABLE</a>);</div><div class="line">}</div></div><!-- fragment --><p>Send data through IR.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">buf</td><td>data buffer to send. </td></tr>
@@ -498,30 +524,34 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send compensation data. </p>
+<p>rtl876x_ir.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">comp_type</td><td><ul>
-<li>IR_COMPEN_FLAG_1_2_CARRIER: 1/2 carrier freqency. </li>
-<li>IR_COMPEN_FLAG_1_4_CARRIER: 1/4 carrier freqency. </li>
-<li>IR_COMPEN_FLAG_1_N_SYSTEM_CLK: MOD((0x48[27:16]+0x00[11:0]), 4095)/40MHz. User can call function of IR_ConfigCompParam to configure 0x48[27:16]. </li>
+    <tr><td class="paramdir">[in]</td><td class="paramname">comp_type</td><td>Compensation data type. This parameter can be one of the following values: <ul>
+<li>IR_COMPEN_FLAG_0_8_CARRIER: no compensation. </li>
+<li>IR_COMPEN_FLAG_1_8_CARRIER: 1/8 carrier cycle. </li>
+<li>IR_COMPEN_FLAG_1_4_CARRIER: 1/4 carrier cycle. </li>
+<li>IR_COMPEN_FLAG_1_2_CARRIER: 1/2 carrier cycle. </li>
+<li>IR_COMPEN_FLAG_2_8_CARRIER: 2/8 carrier cycle. </li>
+<li>IR_COMPEN_FLAG_3_8_CARRIER: 3/8 carrier cycle. </li>
+<li>IR_COMPEN_FLAG_4_8_CARRIER: 4/8 carrier cycle. </li>
+<li>IR_COMPEN_FLAG_5_8_CARRIER: 5/8 carrier cycle. </li>
+<li>IR_COMPEN_FLAG_6_8_CARRIER: 6/8 carrier cycle. </li>
+<li>IR_COMPEN_FLAG_7_8_CARRIER: 7/8 carrier cycle. </li>
 </ul>
 </td></tr>
-    <tr><td class="paramname">buf</td><td>data buffer to send. </td></tr>
-    <tr><td class="paramname">length</td><td>buffer length. </td></tr>
-    <tr><td class="paramname">IsLastPacket</td><td>This parameter can be the following values: <ul>
-<li>ENABLE: The last data in IR packet and there is no continous data.In other words, An infrared data transmission is completed. </li>
-<li>DISABLE: There is data to be transmitted continuously. </li>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pBuf</td><td>Data buffer to send. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>The length of data to send. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">IsLastPacket</td><td>Is it the last package of data. This parameter can be one of the following values: <ul>
+<li>ENABLE: The last data in IR packet and there is no continous data. In other words, an infrared data transmission is completed. </li>
+<li>DISABLE: There is data to be transmitted continuously.</li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td>Send compensation data.</td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> ir_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint32_t data_buf[80] = {0};</div><div class="line">    <a class="code" href="group___i_r___exported___functions.html#ga18a1562cf09679892a79acbbdadc2c61">IR_SendCompenBuf</a>(<a class="code" href="group__x3e___i_r___compensation___flag.html#gga93f6e6ad7df533ccbadf230d61f74fc0ae8f502033901472cb4dae411fe101413">IR_COMPEN_FLAG_1_2_CARRIER</a>, data_buf, 68, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1ad3a9df141be0ccf10389b640f492b26d">DISABLE</a>);</div><div class="line">}</div></div><!-- fragment --><p>Send compensation data.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">comp_type</td><td><ul>
@@ -580,20 +610,17 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Read data From RX FIO. </p>
+<p>Read data From RX FIFO. </p>
+<p>rtl876x_ir.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pBuf</td><td>buffer address to receive data. </td></tr>
-    <tr><td class="paramname">length</td><td>read data length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pBuf</td><td>Buffer address to receive data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>The length of data to read.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> ir_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint32_t data_buf[80] = {0};</div><div class="line">    <a class="code" href="group___i_r___exported___functions.html#ga57e8062508f0d96187fd0f404f94fcb7">IR_ReceiveBuf</a>(data_buf, 68);</div><div class="line">}</div></div><!-- fragment --><p>Read data From RX FIFO.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">buf</td><td>buffer address to receive data. </td></tr>
@@ -636,31 +663,32 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Enables or disables the specified IR interrupts. </p>
+<p>Enable or disable the specified IR interrupt source. </p>
+<p>rtl876x_ir.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">IR_INT</td><td>specifies the IR interrupts sources to be enabled or disabled. This parameter can be the following values: <ul>
-<li>IR_INT_TF_EMPTY: TX FIFO empty interrupt. </li>
-<li>IR_INT_TF_LEVEL: TX FIFO threshold interrupt. </li>
-<li>IR_INT_TF_OF: TX FIFO overflow interrupt. </li>
-<li>IR_INT_RF_FULL: RX FIFO full interrupt. </li>
-<li>IR_INT_RF_LEVEL: RX FIFO threshold interrupt. </li>
-<li>IR_INT_RX_CNT_OF: RX counter overflow interrupt. </li>
-<li>IR_INT_RF_OF: RX FIFO overflow interrupt. </li>
-<li>IR_INT_RX_CNT_THR: RX counter threshold interrupt. </li>
-<li>IR_INT_RF_ERROR: RX FIFO error read interrupt. Trigger when RX FIFO empty and read RX FIFO. </li>
+    <tr><td class="paramdir">[in]</td><td class="paramname">IR_INT</td><td>Specifies the IR interrupt source to be enabled or disabled. This parameter can be one of the following values: <ul>
+<li>IR_INT_TF_EMPTY: TX FIFO empty interrupt source. </li>
+<li>IR_INT_TF_LEVEL: TX FIFO threshold interrupt source. </li>
+<li>IR_INT_TF_OF: TX FIFO overflow interrupt source. </li>
+<li>IR_INT_RF_FULL: RX FIFO full interrupt source. </li>
+<li>IR_INT_RF_LEVEL: RX FIFO threshold interrupt source. </li>
+<li>IR_INT_RX_CNT_OF: RX counter overflow interrupt source. </li>
+<li>IR_INT_RF_OF: RX FIFO overflow interrupt source. </li>
+<li>IR_INT_RX_CNT_THR: RX counter threshold interrupt source. </li>
+<li>IR_INT_RF_ERROR: RX FIFO error read interrupt source. Trigger when RX FIFO empty and read RX FIFO. </li>
 </ul>
 </td></tr>
-    <tr><td class="paramname">newState</td><td>new state of the specified IR interrupts. This parameter can be: ENABLE or DISABLE. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">newState</td><td>New state of the specified IR interrupt. This parameter can be one of the following values: <ul>
+<li>ENABLE: Enable the specified IR interrupt source. </li>
+<li>DISABLE: Disable the specified IR interrupt source.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> ir_send_demo_code(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">//Enable IR threshold interrupt. when TX FIFO offset &lt;= threshold value, trigger interrupt.</span></div><div class="line">    <a class="code" href="group___i_r___exported___functions.html#ga3ca7c9e503d98d65e01cf27428bda385">IR_INTConfig</a>(<a class="code" href="group___i_r___interrupts___definition.html#ga8b4c235c4e2de1ec5b1628a3b55ae7d4">IR_INT_TF_LEVEL</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line">}</div></div><!-- fragment --><p>Enable or disable the specified IR interrupt source.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">IR_INT</td><td>specifies the IR interrupts sources to be enabled or disabled. This parameter can be the following values: <ul>
@@ -714,31 +742,32 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Mask or unmask the specified IR interrupts. </p>
+<p>Mask or unmask the specified IR interrupt source. </p>
+<p>rtl876x_ir.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">IR_INT</td><td>specifies the IR interrupts sources to be mask or unmask. This parameter can be the following values: <ul>
-<li>IR_INT_TF_EMPTY: TX FIFO empty interrupt. </li>
-<li>IR_INT_TF_LEVEL: TX FIFO threshold interrupt. </li>
-<li>IR_INT_TF_OF: TX FIFO overflow interrupt. </li>
-<li>IR_INT_RF_FULL: RX FIFO full interrupt. </li>
-<li>IR_INT_RF_LEVEL: RX FIFO threshold interrupt. </li>
-<li>IR_INT_RX_CNT_OF: RX counter overflow interrupt. </li>
-<li>IR_INT_RF_OF: RX FIFO overflow interrupt. </li>
-<li>IR_INT_RX_CNT_THR: RX counter threshold interrupt. </li>
-<li>IR_INT_RF_ERROR: RX FIFO error read interrupt. Trigger when RX FIFO empty and read RX FIFO. </li>
+    <tr><td class="paramdir">[in]</td><td class="paramname">IR_INT</td><td>Specifies the IR interrupts sources to be mask or unmask. This parameter can be one of the following values: <ul>
+<li>IR_INT_TF_EMPTY: TX FIFO empty interrupt source. </li>
+<li>IR_INT_TF_LEVEL: TX FIFO threshold interrupt source. </li>
+<li>IR_INT_TF_OF: TX FIFO overflow interrupt source. </li>
+<li>IR_INT_RF_FULL: RX FIFO full interrupt source. </li>
+<li>IR_INT_RF_LEVEL: RX FIFO threshold interrupt source. </li>
+<li>IR_INT_RX_CNT_OF: RX counter overflow interrupt source. </li>
+<li>IR_INT_RF_OF: RX FIFO overflow interrupt source. </li>
+<li>IR_INT_RX_CNT_THR: RX counter threshold interrupt source. </li>
+<li>IR_INT_RF_ERROR: RX FIFO error read interrupt source. Trigger when RX FIFO empty and read RX FIFO. </li>
 </ul>
 </td></tr>
-    <tr><td class="paramname">newState</td><td>new state of the specified IR interrupts. This parameter can be: ENABLE or DISABLE. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">newState</td><td>New state of the specified IR interrupts. This parameter can be one of the following values: <ul>
+<li>ENABLE: Mask the specified IR interrupt source. </li>
+<li>DISABLE: Unmask the specified IR interrupt source.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> IR_Handler(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___i_r___exported___functions.html#ga48cc1b5be366b891292535718d9d5073">IR_GetINTStatus</a>(<a class="code" href="group___i_r___interrupts___definition.html#ga8b4c235c4e2de1ec5b1628a3b55ae7d4">IR_INT_TF_LEVEL</a>) == <a class="code" href="group__x3e___r_t_l876x___exported__types.html#gga89136caac2e14c55151f527ac02daaffab44c8101cc294c074709ec1b14211792">SET</a>)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___i_r___exported___functions.html#ga742c175219d9579d4df6f7a1fc269676">IR_MaskINTConfig</a>(<a class="code" href="group___i_r___interrupts___definition.html#ga8b4c235c4e2de1ec5b1628a3b55ae7d4">IR_INT_TF_LEVEL</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line"></div><div class="line">        <span class="comment">//add user code here.</span></div><div class="line"></div><div class="line">        <a class="code" href="group___i_r___exported___functions.html#ga589dc6b6d731bd90a5dea2b3fd0f5462">IR_ClearINTPendingBit</a>(<a class="code" href="group___i_r___interrupts___clear___flag.html#gaabf63847425c7507bc24b123251751de">IR_INT_TF_LEVEL_CLR</a>);</div><div class="line">        <a class="code" href="group___i_r___exported___functions.html#ga742c175219d9579d4df6f7a1fc269676">IR_MaskINTConfig</a>(<a class="code" href="group___i_r___interrupts___definition.html#ga8b4c235c4e2de1ec5b1628a3b55ae7d4">IR_INT_TF_LEVEL</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1ad3a9df141be0ccf10389b640f492b26d">DISABLE</a>);</div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --><p>Mask or unmask the specified IR interrupt source.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">IR_INT</td><td>specifies the IR interrupts sources to be mask or unmask. This parameter can be the following values: <ul>
@@ -783,7 +812,33 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the specified IR interrupt status. </p>
+<p>rtl876x_ir.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">IR_INT</td><td>the specified IR interrupts. This parameter can be one of the following values: <ul>
+<li>IR_INT_TF_EMPTY: TX FIFO empty interrupt source. </li>
+<li>IR_INT_TF_LEVEL: TX FIFO threshold interrupt source. </li>
+<li>IR_INT_TF_OF: TX FIFO overflow interrupt source. </li>
+<li>IR_INT_RF_FULL: RX FIFO full interrupt source. </li>
+<li>IR_INT_RF_LEVEL: RX FIFO threshold interrupt source. </li>
+<li>IR_INT_RX_CNT_OF: RX counter overflow interrupt source. </li>
+<li>IR_INT_RF_OF: RX FIFO overflow interrupt source. </li>
+<li>IR_INT_RX_CNT_THR: RX counter threshold interrupt source. </li>
+<li>IR_INT_RF_ERROR: RX FIFO error read interrupt source. Trigger when RX FIFO empty and read RX FIFO.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The new state of IR_INT. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">SET</td><td>The specified IR interrupt flag is set. </td></tr>
+    <tr><td class="paramname">RESET</td><td>The specified IR interrupt flag is unset.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> IR_Handler(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___i_r___exported___functions.html#ga48cc1b5be366b891292535718d9d5073">IR_GetINTStatus</a>(<a class="code" href="group___i_r___interrupts___definition.html#gad5bdf868b14f494160c5bbb3ed59ba90">IR_INT_RF_LEVEL</a>) == <a class="code" href="group__x3e___r_t_l876x___exported__types.html#gga89136caac2e14c55151f527ac02daaffab44c8101cc294c074709ec1b14211792">SET</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">//add user code here.</span></div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">IR_INT</td><td>the specified IR interrupts. This parameter can be one of the following values: <ul>
 <li>IR_INT_TF_EMPTY: TX FIFO empty interrupt. </li>
@@ -825,10 +880,11 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Clears the IR interrupt pending bits. </p>
+<p>Clear the IR interrupt pending bit. </p>
+<p>rtl876x_ir.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">IR_CLEAR_INT</td><td>specifies the interrupt pending bit to clear. This parameter can be any combination of the following values: <ul>
+    <tr><td class="paramdir">[in]</td><td class="paramname">IR_CLEAR_INT</td><td>specifies the interrupt pending bit to clear. This parameter can be one or any combination of the following values: <ul>
 <li>IR_INT_TF_EMPTY_CLR: Clear TX FIFO empty interrupt. </li>
 <li>IR_INT_TF_LEVEL_CLR: Clear TX FIFO threshold interrupt. </li>
 <li>IR_INT_TF_OF_CLR: Clear TX FIFO overflow interrupt. </li>
@@ -837,18 +893,14 @@ Functions</h2></td></tr>
 <li>IR_INT_RX_CNT_OF_CLR: Clear RX counter overflow interrupt. </li>
 <li>IR_INT_RF_OF_CLR: Clear RX FIFO overflow interrupt. </li>
 <li>IR_INT_RX_CNT_THR_CLR: Clear RX counter threshold interrupt. </li>
-<li>IR_INT_RF_ERROR_CLR: Clear RX FIFO error read interrupt. Trigger when RX FIFO empty and read RX FIFO. </li>
+<li>IR_INT_RF_ERROR_CLR: Clear RX FIFO error read interrupt. Trigger when RX FIFO empty and read RX FIFO.</li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> IR_Handler(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___i_r___exported___functions.html#ga48cc1b5be366b891292535718d9d5073">IR_GetINTStatus</a>(<a class="code" href="group___i_r___interrupts___definition.html#gad5bdf868b14f494160c5bbb3ed59ba90">IR_INT_RF_LEVEL</a>) == <a class="code" href="group__x3e___r_t_l876x___exported__types.html#gga89136caac2e14c55151f527ac02daaffab44c8101cc294c074709ec1b14211792">SET</a>)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___i_r___exported___functions.html#ga742c175219d9579d4df6f7a1fc269676">IR_MaskINTConfig</a>(<a class="code" href="group___i_r___interrupts___definition.html#gad5bdf868b14f494160c5bbb3ed59ba90">IR_INT_RF_LEVEL</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line"></div><div class="line">        <span class="comment">//add user code here.</span></div><div class="line">        <a class="code" href="group___i_r___exported___functions.html#ga589dc6b6d731bd90a5dea2b3fd0f5462">IR_ClearINTPendingBit</a>(<a class="code" href="group___i_r___interrupts___clear___flag.html#ga4c33e926c4f0a286649932c550fd136b">IR_INT_RF_LEVEL_CLR</a>);</div><div class="line">        <a class="code" href="group___i_r___exported___functions.html#ga742c175219d9579d4df6f7a1fc269676">IR_MaskINTConfig</a>(<a class="code" href="group___i_r___interrupts___definition.html#gad5bdf868b14f494160c5bbb3ed59ba90">IR_INT_RF_LEVEL</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1ad3a9df141be0ccf10389b640f492b26d">DISABLE</a>);</div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --><p>Clear the IR interrupt pending bit.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">IR_IT</td><td>specifies the interrupt pending bit to clear. This parameter can be any combination of the following values: <ul>
@@ -891,20 +943,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get free size of TX FIFO . </p>
+<p>Get free size of TX FIFO. </p>
+<p>rtl876x_ir.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">None</td><td></td></tr>
+    <tr><td class="paramname">None.</td><td></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">the</td><td>free size of TX FIFO </td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>The free size of TX FIFO.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> ir_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint16_t data_len = <a class="code" href="group___i_r___exported___functions.html#gae3238305e415891302fbbe6f8ddaa7dd">IR_GetTxFIFOFreeLen</a>();</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga0632c0b6b1937f01016c876327a9eed6"></a>
@@ -924,19 +972,15 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get data size in RX FIFO. </p>
+<p>rtl876x_ir.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">None</td><td></td></tr>
+    <tr><td class="paramname">None.</td><td></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">current</td><td>data size in RX FIFO. </td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>Current data size in RX FIFO.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> IR_Handler(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">//Receive by interrupt.</span></div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___i_r___exported___functions.html#ga48cc1b5be366b891292535718d9d5073">IR_GetINTStatus</a>(<a class="code" href="group___i_r___interrupts___definition.html#gad5bdf868b14f494160c5bbb3ed59ba90">IR_INT_RF_LEVEL</a>) == <a class="code" href="group__x3e___r_t_l876x___exported__types.html#gga89136caac2e14c55151f527ac02daaffab44c8101cc294c074709ec1b14211792">SET</a>)</div><div class="line">    {</div><div class="line">        len = <a class="code" href="group___i_r___exported___functions.html#ga0632c0b6b1937f01016c876327a9eed6">IR_GetRxDataLen</a>();</div><div class="line">        <a class="code" href="group___i_r___exported___functions.html#ga57e8062508f0d96187fd0f404f94fcb7">IR_ReceiveBuf</a>(IR_DataStruct.irBuf + rx_count, len);</div><div class="line">        IR_DataStruct.bufLen += len;</div><div class="line">        rx_count += len;</div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="gadffdcad0328569a6eb7890de2810ec08"></a>
@@ -956,19 +1000,15 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send one data. </p>
+<p>rtl876x_ir.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">data</td><td>send data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>The data to send.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> ir_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___i_r___exported___functions.html#gadffdcad0328569a6eb7890de2810ec08">IR_SendData</a>(0x80000100);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga581feeab272b9d287e8a75c5417fce6d"></a>
@@ -988,19 +1028,15 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Read one data. </p>
+<p>rtl876x_ir.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">none</td><td></td></tr>
+    <tr><td class="paramname">None.</td><td></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">data</td><td>which read from RX FIFO. </td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>Data which read from RX FIFO.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> ir_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint32_t data = <a class="code" href="group___i_r___exported___functions.html#ga581feeab272b9d287e8a75c5417fce6d">IR_ReceiveData</a>(30);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga1a73def354b85412d7986856a4443ab4"></a>
@@ -1019,20 +1055,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>set tx threshold.when TX FIFO depth &lt;= threshold value, trigger interrupt </p>
+<p>Set tx threshold, when TX FIFO depth &lt;= threshold value will trigger interrupt. </p>
+<p>rtl876x_ir.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">thd</td><td>tx threshold. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">thd</td><td>Tx threshold.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> IR_Handler(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">//Configure TX threshold level to zero and trigger interrupt when TX FIFO is empty.</span></div><div class="line">    <a class="code" href="group___i_r___exported___functions.html#ga1a73def354b85412d7986856a4443ab4">IR_SetTxThreshold</a>(0);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="gac77acecf29a6d2338a899c6042d3c5a9"></a>
@@ -1051,20 +1083,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>set tx threshold.when RX FIFO depth &gt;= threshold value, trigger interrupt </p>
+<p>Set rx threshold, when RX FIFO depth &gt;= threshold value will trigger interrupt. </p>
+<p>rtl876x_ir.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">thd</td><td>rx threshold. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">thd</td><td>Rx threshold.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> ir_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___i_r___exported___functions.html#gac77acecf29a6d2338a899c6042d3c5a9">IR_SetRxThreshold</a>(2);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="gafa6c03a3fb16b51509a0c11aac52bbdc"></a>
@@ -1084,19 +1112,15 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Clear IR TX FIFO. </p>
+<p>rtl876x_ir.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">none</td><td></td></tr>
+    <tr><td class="paramname">None.</td><td></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> ir_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___i_r___exported___functions.html#gafa6c03a3fb16b51509a0c11aac52bbdc">IR_ClearTxFIFO</a>();</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga3ed11706a9eda2ff8550f51fb62670b0"></a>
@@ -1116,19 +1140,15 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Clear IR RX FIFO. </p>
+<p>rtl876x_ir.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">none</td><td></td></tr>
+    <tr><td class="paramname">None.</td><td></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> ir_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___i_r___exported___functions.html#ga3ed11706a9eda2ff8550f51fb62670b0">IR_ClearRxFIFO</a>();</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga2ab8fa7f61c25911b813e36bde15468f"></a>
@@ -1147,27 +1167,30 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Checks whether the specified IR flag is set or not. </p>
+<p>Check whether the specified IR flag is set. </p>
+<p>rtl876x_ir.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">IR_FLAG</td><td>specifies the flag to check. This parameter can be one of the following values: <ul>
+    <tr><td class="paramdir">[in]</td><td class="paramname">IR_FLAG</td><td>Specifies the IR flag to check. This parameter can be one of the following values: <ul>
 <li>IR_FLAG_TF_EMPTY: TX FIFO empty or not. If SET, TX FIFO is empty. </li>
 <li>IR_FLAG_TF_FULL: TX FIFO full or not. If SET, TX FIFO is full. </li>
 <li>IR_FLAG_TX_RUN: TX run or not. If SET, TX is running. </li>
 <li>IR_FLAG_RF_EMPTY: RX FIFO empty or not. If SET, RX FIFO is empty. </li>
-<li>IR_FLAG_RX_RUN: RX run or not. If SET, RX is running. </li>
+<li>IR_FLAG_RX_RUN: RX run or not. If SET, RX is running.</li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The new state of IR_FLAG. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">The</td><td>new state of IR_FLAG (SET or RESET). </td></tr>
+    <tr><td class="paramname">SET</td><td>The specified IR flag is set. </td></tr>
+    <tr><td class="paramname">RESET</td><td>The specified IR flag is unset.</td></tr>
   </table>
   </dd>
 </dl>
-
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> ir_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">//add user code here.</span></div><div class="line">    <span class="keywordflow">while</span> (<a class="code" href="group___i_r___exported___functions.html#ga2ab8fa7f61c25911b813e36bde15468f">IR_GetFlagStatus</a>(<a class="code" href="group___i_r___flag.html#ga84f483662120855c85dc12720495ad8e">IR_FLAG_TF_EMPTY</a>) == <a class="code" href="group__x3e___r_t_l876x___exported__types.html#gga89136caac2e14c55151f527ac02daaffa589b7d94a3d91d145720e2fed0eb3a05">RESET</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="gac69ee63c8e47a29ad46c141e6d0d3187"></a>
@@ -1186,14 +1209,20 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>set or reset tx data inverse. This parameter can be: ENABLE or DISABLE. </p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
+<p>Set or reset tx data inverse. </p>
+<p>rtl876x_ir.h</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">NewState</td><td>This parameter can be: ENABLE or DISABLE. This parameter can be one of the following values: <ul>
+<li>ENABLE: Set tx data inverse. </li>
+<li>DISABLE: Reset tx data inverse.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> ir_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___i_r___exported___functions.html#gac69ee63c8e47a29ad46c141e6d0d3187">IR_SetTxInverse</a>(<a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga3ff4c75214c464f95b0af20052a89fe0"></a>
@@ -1212,14 +1241,20 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>TX output inverse or not. This parameter can be: ENABLE or DISABLE. </p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
+<p>Enbale or disdble TX output inverse. </p>
+<p>rtl876x_ir.h</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">NewState</td><td>This parameter can be: ENABLE or DISABLE. This parameter can be one of the following values: <ul>
+<li>ENABLE: Enable TX output inverse. </li>
+<li>DISABLE: Disable TX output inverse.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> ir_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___i_r___exported___functions.html#ga3ff4c75214c464f95b0af20052a89fe0">IR_TxOutputInverse</a>(<a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga64c6931fa8b081e4f7948b4e74083a9a"></a>
@@ -1238,20 +1273,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get free size of TX FIFO . </p>
+<p>Config the compensation parameter. </p>
+<p>rtl876x_ir.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">data</td><td>compensation parameter, time = MOD((data+0x00[11:0]),4095)/40MHz </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>compensation parameter, time = MOD((data+0x00[11:0]),4095)/40MHz.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">the</td><td>free size of TX FIFO </td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> ir_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint32_t data = 0x1;</div><div class="line">    <a class="code" href="group___i_r___exported___functions.html#ga64c6931fa8b081e4f7948b4e74083a9a">IR_ConfigCompenParam</a>(data);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

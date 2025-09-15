@@ -62,11 +62,14 @@ Macros</h2></td></tr>
 <tr class="separator:ga0a2a68b92de4277fc9764e25a3f39e15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7516756ad51021d820c556110dc124e9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___s_p_i__interrupts__definition.html#ga7516756ad51021d820c556110dc124e9">SPI_INT_MST</a>&#160;&#160;&#160;((uint8_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(5))</td></tr>
 <tr class="separator:ga7516756ad51021d820c556110dc124e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadfb7e5dfc2e048156361edb46446f8e1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___s_p_i__interrupts__definition.html#gadfb7e5dfc2e048156361edb46446f8e1">SPI_INT_FAE</a>&#160;&#160;&#160;((uint8_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(5))</td></tr>
+<tr class="separator:gadfb7e5dfc2e048156361edb46446f8e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf33af58050b5acc2455cbb5d604e9976"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___s_p_i__interrupts__definition.html#gaf33af58050b5acc2455cbb5d604e9976">SPI_INT_TUF</a>&#160;&#160;&#160;((uint8_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(6))</td></tr>
 <tr class="separator:gaf33af58050b5acc2455cbb5d604e9976"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1014bb71b24feb7789f2adbc278b8a63"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___s_p_i__interrupts__definition.html#ga1014bb71b24feb7789f2adbc278b8a63">SPI_INT_RIG</a>&#160;&#160;&#160;((uint8_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(7))</td></tr>
 <tr class="separator:ga1014bb71b24feb7789f2adbc278b8a63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad8a780106f883dc600d0f3da96f304dc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___s_p_i__interrupts__definition.html#gad8a780106f883dc600d0f3da96f304dc">IS_SPI_CONFIG_IT</a>(IT)</td></tr>
+<tr class="memdesc:gad8a780106f883dc600d0f3da96f304dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the input parameter is valid.  <a href="#gad8a780106f883dc600d0f3da96f304dc">More...</a><br /></td></tr>
 <tr class="separator:gad8a780106f883dc600d0f3da96f304dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -82,6 +85,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Transmit FIFO empty interrupt. The TX FIFO is equal to or below its threshold value and requires service to prevent an under-run. </p>
 
 </div>
 </div>
@@ -96,6 +100,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Transmit FIFO overflow interrupt. An APB access attempts to write into the TX FIFO after it has been completely filled. When set, data written from the APB is discarded. </p>
 
 </div>
 </div>
@@ -110,6 +115,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Receive FIFO underflow interrupt. An APB access attempts to read from the RX FIFO when it is empty. When set, zeros are read back from the RX FIFO. </p>
 
 </div>
 </div>
@@ -124,6 +130,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Receive FIFO overflow interrupt. The receive logic attempts to place data into the RX FIFO after it has been completely filled. When set, newly received data are discarded. </p>
 
 </div>
 </div>
@@ -138,6 +145,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Receive FIFO full interrupt. RX FIFO is equal to or above its threshold value plus 1 and requires service to prevent an overflow. </p>
 
 </div>
 </div>
@@ -152,6 +160,22 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Multi-Master contention interrupt, only for master. The interrupt is set when another serial master on the serial bus selects the SPI master as a serial-slave device and is actively transferring data. </p>
+
+</div>
+</div>
+<a id="gadfb7e5dfc2e048156361edb46446f8e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadfb7e5dfc2e048156361edb46446f8e1">&#9670;&nbsp;</a></span>SPI_INT_FAE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SPI_INT_FAE&#160;&#160;&#160;((uint8_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(5))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TX frame alignment interrupt, only for slave. The data received by the slave does not match data frame size. </p>
 
 </div>
 </div>
@@ -166,6 +190,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Transmit FIFO underflow interrupt, only for slave. Clocks sent by the master when the slave is at the empty FIFO level. </p>
 
 </div>
 </div>
@@ -180,6 +205,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>CS rising edge detect interrupt, only for slave. CS line has a rising edge. </p>
 
 </div>
 </div>
@@ -198,15 +224,17 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">(((IT) == <a class="code" href="group__x3e___s_p_i__interrupts__definition.html#gaa1d565246767e5ef256f094ba4b5f814">SPI_INT_TXE</a>) || \</div><div class="line">                              ((IT) == <a class="code" href="group__x3e___s_p_i__interrupts__definition.html#ga811afa0382ddb2aea4b8291629c1929b">SPI_INT_TXO</a>) || \</div><div class="line">                              ((IT) == <a class="code" href="group__x3e___s_p_i__interrupts__definition.html#gadb5c402104dd9d5b3064949700a43922">SPI_INT_RXU</a>) || \</div><div class="line">                              ((IT) == <a class="code" href="group__x3e___s_p_i__interrupts__definition.html#ga1c902798beb2da42795a05c3e50d39c9">SPI_INT_RXO</a>) || \</div><div class="line">                              ((IT) == <a class="code" href="group__x3e___s_p_i__interrupts__definition.html#ga0a2a68b92de4277fc9764e25a3f39e15">SPI_INT_RXF</a>) || \</div><div class="line">                              ((IT) == <a class="code" href="group__x3e___s_p_i__interrupts__definition.html#ga7516756ad51021d820c556110dc124e9">SPI_INT_MST</a>) || \</div><div class="line">                              ((IT) == <a class="code" href="group__x3e___s_p_i__interrupts__definition.html#gaf33af58050b5acc2455cbb5d604e9976">SPI_INT_TUF</a>) || \</div><div class="line">                              ((IT) == <a class="code" href="group__x3e___s_p_i__interrupts__definition.html#ga1014bb71b24feb7789f2adbc278b8a63">SPI_INT_RIG</a>) )</div><div class="ttc" id="group__x3e___s_p_i__interrupts__definition_html_gaf33af58050b5acc2455cbb5d604e9976"><div class="ttname"><a href="group__x3e___s_p_i__interrupts__definition.html#gaf33af58050b5acc2455cbb5d604e9976">SPI_INT_TUF</a></div><div class="ttdeci">#define SPI_INT_TUF</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:300</div></div>
-<div class="ttc" id="group__x3e___s_p_i__interrupts__definition_html_ga0a2a68b92de4277fc9764e25a3f39e15"><div class="ttname"><a href="group__x3e___s_p_i__interrupts__definition.html#ga0a2a68b92de4277fc9764e25a3f39e15">SPI_INT_RXF</a></div><div class="ttdeci">#define SPI_INT_RXF</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:298</div></div>
-<div class="ttc" id="group__x3e___s_p_i__interrupts__definition_html_gaa1d565246767e5ef256f094ba4b5f814"><div class="ttname"><a href="group__x3e___s_p_i__interrupts__definition.html#gaa1d565246767e5ef256f094ba4b5f814">SPI_INT_TXE</a></div><div class="ttdeci">#define SPI_INT_TXE</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:294</div></div>
-<div class="ttc" id="group__x3e___s_p_i__interrupts__definition_html_ga1014bb71b24feb7789f2adbc278b8a63"><div class="ttname"><a href="group__x3e___s_p_i__interrupts__definition.html#ga1014bb71b24feb7789f2adbc278b8a63">SPI_INT_RIG</a></div><div class="ttdeci">#define SPI_INT_RIG</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:301</div></div>
-<div class="ttc" id="group__x3e___s_p_i__interrupts__definition_html_ga811afa0382ddb2aea4b8291629c1929b"><div class="ttname"><a href="group__x3e___s_p_i__interrupts__definition.html#ga811afa0382ddb2aea4b8291629c1929b">SPI_INT_TXO</a></div><div class="ttdeci">#define SPI_INT_TXO</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:295</div></div>
-<div class="ttc" id="group__x3e___s_p_i__interrupts__definition_html_ga7516756ad51021d820c556110dc124e9"><div class="ttname"><a href="group__x3e___s_p_i__interrupts__definition.html#ga7516756ad51021d820c556110dc124e9">SPI_INT_MST</a></div><div class="ttdeci">#define SPI_INT_MST</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:299</div></div>
-<div class="ttc" id="group__x3e___s_p_i__interrupts__definition_html_gadb5c402104dd9d5b3064949700a43922"><div class="ttname"><a href="group__x3e___s_p_i__interrupts__definition.html#gadb5c402104dd9d5b3064949700a43922">SPI_INT_RXU</a></div><div class="ttdeci">#define SPI_INT_RXU</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:296</div></div>
-<div class="ttc" id="group__x3e___s_p_i__interrupts__definition_html_ga1c902798beb2da42795a05c3e50d39c9"><div class="ttname"><a href="group__x3e___s_p_i__interrupts__definition.html#ga1c902798beb2da42795a05c3e50d39c9">SPI_INT_RXO</a></div><div class="ttdeci">#define SPI_INT_RXO</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:297</div></div>
+<b>Value:</b><div class="fragment"><div class="line">(((IT) == <a class="code" href="group__x3e___s_p_i__interrupts__definition.html#gaa1d565246767e5ef256f094ba4b5f814">SPI_INT_TXE</a>) || \</div><div class="line">                              ((IT) == <a class="code" href="group__x3e___s_p_i__interrupts__definition.html#ga811afa0382ddb2aea4b8291629c1929b">SPI_INT_TXO</a>) || \</div><div class="line">                              ((IT) == <a class="code" href="group__x3e___s_p_i__interrupts__definition.html#gadb5c402104dd9d5b3064949700a43922">SPI_INT_RXU</a>) || \</div><div class="line">                              ((IT) == <a class="code" href="group__x3e___s_p_i__interrupts__definition.html#ga1c902798beb2da42795a05c3e50d39c9">SPI_INT_RXO</a>) || \</div><div class="line">                              ((IT) == <a class="code" href="group__x3e___s_p_i__interrupts__definition.html#ga0a2a68b92de4277fc9764e25a3f39e15">SPI_INT_RXF</a>) || \</div><div class="line">                              ((IT) == <a class="code" href="group__x3e___s_p_i__interrupts__definition.html#ga7516756ad51021d820c556110dc124e9">SPI_INT_MST</a>) || \</div><div class="line">                              ((IT) == <a class="code" href="group__x3e___s_p_i__interrupts__definition.html#gaf33af58050b5acc2455cbb5d604e9976">SPI_INT_TUF</a>) || \</div><div class="line">                              ((IT) == <a class="code" href="group__x3e___s_p_i__interrupts__definition.html#ga1014bb71b24feb7789f2adbc278b8a63">SPI_INT_RIG</a>) )</div><div class="ttc" id="group__x3e___s_p_i__interrupts__definition_html_gaf33af58050b5acc2455cbb5d604e9976"><div class="ttname"><a href="group__x3e___s_p_i__interrupts__definition.html#gaf33af58050b5acc2455cbb5d604e9976">SPI_INT_TUF</a></div><div class="ttdeci">#define SPI_INT_TUF</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:352</div></div>
+<div class="ttc" id="group__x3e___s_p_i__interrupts__definition_html_ga0a2a68b92de4277fc9764e25a3f39e15"><div class="ttname"><a href="group__x3e___s_p_i__interrupts__definition.html#ga0a2a68b92de4277fc9764e25a3f39e15">SPI_INT_RXF</a></div><div class="ttdeci">#define SPI_INT_RXF</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:349</div></div>
+<div class="ttc" id="group__x3e___s_p_i__interrupts__definition_html_gaa1d565246767e5ef256f094ba4b5f814"><div class="ttname"><a href="group__x3e___s_p_i__interrupts__definition.html#gaa1d565246767e5ef256f094ba4b5f814">SPI_INT_TXE</a></div><div class="ttdeci">#define SPI_INT_TXE</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:345</div></div>
+<div class="ttc" id="group__x3e___s_p_i__interrupts__definition_html_ga1014bb71b24feb7789f2adbc278b8a63"><div class="ttname"><a href="group__x3e___s_p_i__interrupts__definition.html#ga1014bb71b24feb7789f2adbc278b8a63">SPI_INT_RIG</a></div><div class="ttdeci">#define SPI_INT_RIG</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:353</div></div>
+<div class="ttc" id="group__x3e___s_p_i__interrupts__definition_html_ga811afa0382ddb2aea4b8291629c1929b"><div class="ttname"><a href="group__x3e___s_p_i__interrupts__definition.html#ga811afa0382ddb2aea4b8291629c1929b">SPI_INT_TXO</a></div><div class="ttdeci">#define SPI_INT_TXO</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:346</div></div>
+<div class="ttc" id="group__x3e___s_p_i__interrupts__definition_html_ga7516756ad51021d820c556110dc124e9"><div class="ttname"><a href="group__x3e___s_p_i__interrupts__definition.html#ga7516756ad51021d820c556110dc124e9">SPI_INT_MST</a></div><div class="ttdeci">#define SPI_INT_MST</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:350</div></div>
+<div class="ttc" id="group__x3e___s_p_i__interrupts__definition_html_gadb5c402104dd9d5b3064949700a43922"><div class="ttname"><a href="group__x3e___s_p_i__interrupts__definition.html#gadb5c402104dd9d5b3064949700a43922">SPI_INT_RXU</a></div><div class="ttdeci">#define SPI_INT_RXU</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:347</div></div>
+<div class="ttc" id="group__x3e___s_p_i__interrupts__definition_html_ga1c902798beb2da42795a05c3e50d39c9"><div class="ttname"><a href="group__x3e___s_p_i__interrupts__definition.html#ga1c902798beb2da42795a05c3e50d39c9">SPI_INT_RXO</a></div><div class="ttdeci">#define SPI_INT_RXO</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:348</div></div>
 </div><!-- fragment -->
+<p>Check if the input parameter is valid. </p>
+
 </div>
 </div>
 </div><!-- contents -->

@@ -51,14 +51,19 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:gaa52039a1a5915c451290d7c6a7eb69a1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___s_p_i__frame__format.html#gaa52039a1a5915c451290d7c6a7eb69a1">SPI_Frame_Motorola</a>&#160;&#160;&#160;((uint16_t)0x0000)</td></tr>
+<tr class="memdesc:gaa52039a1a5915c451290d7c6a7eb69a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard SPI frame format.  <a href="#gaa52039a1a5915c451290d7c6a7eb69a1">More...</a><br /></td></tr>
 <tr class="separator:gaa52039a1a5915c451290d7c6a7eb69a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae88a72890d25a0dcc03f0f30f752a041"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___s_p_i__frame__format.html#gae88a72890d25a0dcc03f0f30f752a041">SPI_Frame_TI_SSP</a>&#160;&#160;&#160;((uint16_t)0x0001)</td></tr>
+<tr class="memdesc:gae88a72890d25a0dcc03f0f30f752a041"><td class="mdescLeft">&#160;</td><td class="mdescRight">Texas instruments SSP frame format.  <a href="#gae88a72890d25a0dcc03f0f30f752a041">More...</a><br /></td></tr>
 <tr class="separator:gae88a72890d25a0dcc03f0f30f752a041"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac0c6797a25698034a3d5e715e5bd5544"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___s_p_i__frame__format.html#gac0c6797a25698034a3d5e715e5bd5544">SPI_Frame_NS_MICROWIRE</a>&#160;&#160;&#160;((uint16_t)0x0002)</td></tr>
+<tr class="memdesc:gac0c6797a25698034a3d5e715e5bd5544"><td class="mdescLeft">&#160;</td><td class="mdescRight">National microwire frame format.  <a href="#gac0c6797a25698034a3d5e715e5bd5544">More...</a><br /></td></tr>
 <tr class="separator:gac0c6797a25698034a3d5e715e5bd5544"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1608da8539a37fbd44593dd9fb4768f2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___s_p_i__frame__format.html#ga1608da8539a37fbd44593dd9fb4768f2">SPI_Frame_Reserve</a>&#160;&#160;&#160;((uint16_t)0x0003)</td></tr>
+<tr class="memdesc:ga1608da8539a37fbd44593dd9fb4768f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reserved value.  <a href="#ga1608da8539a37fbd44593dd9fb4768f2">More...</a><br /></td></tr>
 <tr class="separator:ga1608da8539a37fbd44593dd9fb4768f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7f67f96f69aca0ff139f37c5b8af4bd7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___s_p_i__frame__format.html#ga7f67f96f69aca0ff139f37c5b8af4bd7">IS_SPI_FRAME_FORMAT</a>(FRAME)</td></tr>
+<tr class="memdesc:ga7f67f96f69aca0ff139f37c5b8af4bd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the input parameter is valid.  <a href="#ga7f67f96f69aca0ff139f37c5b8af4bd7">More...</a><br /></td></tr>
 <tr class="separator:ga7f67f96f69aca0ff139f37c5b8af4bd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -75,6 +80,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Standard SPI frame format. </p>
+
 </div>
 </div>
 <a id="gae88a72890d25a0dcc03f0f30f752a041"></a>
@@ -88,6 +95,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Texas instruments SSP frame format. </p>
 
 </div>
 </div>
@@ -103,6 +112,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>National microwire frame format. </p>
+
 </div>
 </div>
 <a id="ga1608da8539a37fbd44593dd9fb4768f2"></a>
@@ -116,6 +127,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Reserved value. </p>
 
 </div>
 </div>
@@ -134,11 +147,13 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">(((FRAME) == <a class="code" href="group__x3e___s_p_i__frame__format.html#gaa52039a1a5915c451290d7c6a7eb69a1">SPI_Frame_Motorola</a>) || \</div><div class="line">                                    ((FRAME) == <a class="code" href="group__x3e___s_p_i__frame__format.html#gae88a72890d25a0dcc03f0f30f752a041">SPI_Frame_TI_SSP</a>) || \</div><div class="line">                                    ((FRAME) == <a class="code" href="group__x3e___s_p_i__frame__format.html#gac0c6797a25698034a3d5e715e5bd5544">SPI_Frame_NS_MICROWIRE</a>) || \</div><div class="line">                                    ((FRAME) == <a class="code" href="group__x3e___s_p_i__frame__format.html#ga1608da8539a37fbd44593dd9fb4768f2">SPI_Frame_Reserve</a>))</div><div class="ttc" id="group__x3e___s_p_i__frame__format_html_ga1608da8539a37fbd44593dd9fb4768f2"><div class="ttname"><a href="group__x3e___s_p_i__frame__format.html#ga1608da8539a37fbd44593dd9fb4768f2">SPI_Frame_Reserve</a></div><div class="ttdeci">#define SPI_Frame_Reserve</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:260</div></div>
-<div class="ttc" id="group__x3e___s_p_i__frame__format_html_gae88a72890d25a0dcc03f0f30f752a041"><div class="ttname"><a href="group__x3e___s_p_i__frame__format.html#gae88a72890d25a0dcc03f0f30f752a041">SPI_Frame_TI_SSP</a></div><div class="ttdeci">#define SPI_Frame_TI_SSP</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:258</div></div>
-<div class="ttc" id="group__x3e___s_p_i__frame__format_html_gaa52039a1a5915c451290d7c6a7eb69a1"><div class="ttname"><a href="group__x3e___s_p_i__frame__format.html#gaa52039a1a5915c451290d7c6a7eb69a1">SPI_Frame_Motorola</a></div><div class="ttdeci">#define SPI_Frame_Motorola</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:257</div></div>
-<div class="ttc" id="group__x3e___s_p_i__frame__format_html_gac0c6797a25698034a3d5e715e5bd5544"><div class="ttname"><a href="group__x3e___s_p_i__frame__format.html#gac0c6797a25698034a3d5e715e5bd5544">SPI_Frame_NS_MICROWIRE</a></div><div class="ttdeci">#define SPI_Frame_NS_MICROWIRE</div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:259</div></div>
+<b>Value:</b><div class="fragment"><div class="line">(((FRAME) == <a class="code" href="group__x3e___s_p_i__frame__format.html#gaa52039a1a5915c451290d7c6a7eb69a1">SPI_Frame_Motorola</a>) || \</div><div class="line">                                    ((FRAME) == <a class="code" href="group__x3e___s_p_i__frame__format.html#gae88a72890d25a0dcc03f0f30f752a041">SPI_Frame_TI_SSP</a>) || \</div><div class="line">                                    ((FRAME) == <a class="code" href="group__x3e___s_p_i__frame__format.html#gac0c6797a25698034a3d5e715e5bd5544">SPI_Frame_NS_MICROWIRE</a>) || \</div><div class="line">                                    ((FRAME) == <a class="code" href="group__x3e___s_p_i__frame__format.html#ga1608da8539a37fbd44593dd9fb4768f2">SPI_Frame_Reserve</a>))</div><div class="ttc" id="group__x3e___s_p_i__frame__format_html_ga1608da8539a37fbd44593dd9fb4768f2"><div class="ttname"><a href="group__x3e___s_p_i__frame__format.html#ga1608da8539a37fbd44593dd9fb4768f2">SPI_Frame_Reserve</a></div><div class="ttdeci">#define SPI_Frame_Reserve</div><div class="ttdoc">Reserved value. </div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:304</div></div>
+<div class="ttc" id="group__x3e___s_p_i__frame__format_html_gae88a72890d25a0dcc03f0f30f752a041"><div class="ttname"><a href="group__x3e___s_p_i__frame__format.html#gae88a72890d25a0dcc03f0f30f752a041">SPI_Frame_TI_SSP</a></div><div class="ttdeci">#define SPI_Frame_TI_SSP</div><div class="ttdoc">Texas instruments SSP frame format. </div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:302</div></div>
+<div class="ttc" id="group__x3e___s_p_i__frame__format_html_gaa52039a1a5915c451290d7c6a7eb69a1"><div class="ttname"><a href="group__x3e___s_p_i__frame__format.html#gaa52039a1a5915c451290d7c6a7eb69a1">SPI_Frame_Motorola</a></div><div class="ttdeci">#define SPI_Frame_Motorola</div><div class="ttdoc">Standard SPI frame format. </div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:301</div></div>
+<div class="ttc" id="group__x3e___s_p_i__frame__format_html_gac0c6797a25698034a3d5e715e5bd5544"><div class="ttname"><a href="group__x3e___s_p_i__frame__format.html#gac0c6797a25698034a3d5e715e5bd5544">SPI_Frame_NS_MICROWIRE</a></div><div class="ttdeci">#define SPI_Frame_NS_MICROWIRE</div><div class="ttdoc">National microwire frame format. </div><div class="ttdef"><b>Definition:</b> rtl876x_spi.h:303</div></div>
 </div><!-- fragment -->
+<p>Check if the input parameter is valid. </p>
+
 </div>
 </div>
 </div><!-- contents -->

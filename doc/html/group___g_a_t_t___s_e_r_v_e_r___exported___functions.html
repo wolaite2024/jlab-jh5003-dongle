@@ -44,7 +44,7 @@ $(function() {
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">GATT Server Exported Functions<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___b_l_u_e_t_o_o_t_h.html">Bluetooth</a> &raquo; <a class="el" href="group___p_r_o_f_i_l_e___a_p_i.html">Profile</a> &raquo; <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___a_p_i.html">GATT Server API</a> &raquo; <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___l_e_g_a_c_y___a_p_i.html">GATT Server API</a></div></div>  </div>
+<div class="title">GATT Server Exported Functions<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___b_l_u_e_t_o_o_t_h.html">Bluetooth</a> &raquo; <a class="el" href="group___p_r_o_f_i_l_e___a_p_i.html">Profile</a> &raquo; <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___a_p_i.html">GATT Server API</a> &raquo; <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___l_e_g_a_c_y___a_p_i.html">GATT Server Legacy API</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -60,13 +60,13 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga2fcbc3f5f19d9fdfb3e48923145e98f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register callback function to send events to application.  <a href="#ga2fcbc3f5f19d9fdfb3e48923145e98f4">More...</a><br /></td></tr>
 <tr class="separator:ga2fcbc3f5f19d9fdfb3e48923145e98f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga86bef558ac767887aa490e560dac639d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r___exported___functions.html#ga86bef558ac767887aa490e560dac639d">server_attr_read_confirm</a> (uint8_t conn_id, <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a> service_id, uint16_t attrib_index, uint8_t *p_data, uint16_t data_len, <a class="el" href="group___g_a_p___common___exported___types.html#ga90b0c39404615bbdf0fc222483ed3fb9">T_APP_RESULT</a> cause)</td></tr>
-<tr class="memdesc:ga86bef558ac767887aa490e560dac639d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Confirm from application when receive read Request from client.  <a href="#ga86bef558ac767887aa490e560dac639d">More...</a><br /></td></tr>
+<tr class="memdesc:ga86bef558ac767887aa490e560dac639d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Confirm from application when receiving a read request from client.  <a href="#ga86bef558ac767887aa490e560dac639d">More...</a><br /></td></tr>
 <tr class="separator:ga86bef558ac767887aa490e560dac639d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa5bea3d4101d8cac8ee469eb336004c0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r___exported___functions.html#gaa5bea3d4101d8cac8ee469eb336004c0">server_exec_write_confirm</a> (uint8_t conn_id, uint16_t cause, uint16_t handle)</td></tr>
-<tr class="memdesc:gaa5bea3d4101d8cac8ee469eb336004c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Confirm from application when receive Execute Write Request from client.  <a href="#gaa5bea3d4101d8cac8ee469eb336004c0">More...</a><br /></td></tr>
+<tr class="memdesc:gaa5bea3d4101d8cac8ee469eb336004c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Confirm from application when receiving an Execute Write Request from the client.  <a href="#gaa5bea3d4101d8cac8ee469eb336004c0">More...</a><br /></td></tr>
 <tr class="separator:gaa5bea3d4101d8cac8ee469eb336004c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9898ababb9fd56ed9edbbb6a019f4eed"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r___exported___functions.html#ga9898ababb9fd56ed9edbbb6a019f4eed">server_attr_write_confirm</a> (uint8_t conn_id, <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a> service_id, uint16_t attrib_index, <a class="el" href="group___g_a_p___common___exported___types.html#ga90b0c39404615bbdf0fc222483ed3fb9">T_APP_RESULT</a> cause)</td></tr>
-<tr class="memdesc:ga9898ababb9fd56ed9edbbb6a019f4eed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Confirm from application when receive Write Request from client.  <a href="#ga9898ababb9fd56ed9edbbb6a019f4eed">More...</a><br /></td></tr>
+<tr class="memdesc:ga9898ababb9fd56ed9edbbb6a019f4eed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Confirm from application when receiving a Write Request from the client.  <a href="#ga9898ababb9fd56ed9edbbb6a019f4eed">More...</a><br /></td></tr>
 <tr class="separator:ga9898ababb9fd56ed9edbbb6a019f4eed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga60d379433a73a0e377e4ad3dda22ac1c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r___exported___functions.html#ga60d379433a73a0e377e4ad3dda22ac1c">server_send_data</a> (uint8_t conn_id, <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a> service_id, uint16_t attrib_index, uint8_t *p_data, uint16_t data_len, <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gadc8629288ad4dc04523014696c756e04">T_GATT_PDU_TYPE</a> type)</td></tr>
 <tr class="memdesc:ga60d379433a73a0e377e4ad3dda22ac1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send characteristic value to peer device.  <a href="#ga60d379433a73a0e377e4ad3dda22ac1c">More...</a><br /></td></tr>
@@ -122,7 +122,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Register specific service without start handle. </p>
-<p>Add specific service infomation to gatt_svc_table struct, will be registered to GATT later.</p>
+<p>Add specific service information to gatt_svc_table struct, will be registered to GATT later.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_out_service_id</td><td>Service ID of specific service. </td></tr>
@@ -134,12 +134,12 @@ Functions</h2></td></tr>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Add service success </td></tr>
-    <tr><td class="paramname">false</td><td>Add service failed</td></tr>
+    <tr><td class="paramname">true</td><td>Add service success. </td></tr>
+    <tr><td class="paramname">false</td><td>Add service failed.</td></tr>
   </table>
   </dd>
 </dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a> <a class="code" href="group___b_a_s___exported___functions.html#ga718af7cba22ef1b332212967d11b0504">bas_add_service</a>(<span class="keywordtype">void</span> *p_func)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a> service_id;</div><div class="line">    <span class="keywordflow">if</span> (<span class="keyword">false</span> == <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___exported___functions.html#ga0a1a154168440ec5d4621accfc44a5a0">server_add_service</a>(&amp;service_id,</div><div class="line">                                   (uint8_t *)bas_attr_tbl,</div><div class="line">                                   bas_attr_tbl_size,</div><div class="line">                                   bas_cbs))</div><div class="line">    {</div><div class="line">        <a class="code" href="group___t_r_a_c_e.html#ga57c6954e0ebb68c0ca06a0052659be48">APP_PRINT_ERROR1</a>(<span class="stringliteral">&quot;bas_add_service: service_id %d&quot;</span>, service_id);</div><div class="line">        service_id = 0xff;</div><div class="line">    }</div><div class="line">    pfn_bas_cb = (<a class="code" href="group___p___f_u_n___s_e_r_v_e_r___g_e_n_e_r_a_l___c_b.html#ga58463a252b3e4f0362285a5e7e8cf2dd">P_FUN_SERVER_GENERAL_CB</a>)p_func;</div><div class="line">    <span class="keywordflow">return</span> service_id;</div><div class="line">}</div></div><!-- fragment --> 
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a> <a class="code" href="group___b_a_s___exported___functions.html#ga718af7cba22ef1b332212967d11b0504">bas_add_service</a>(<span class="keywordtype">void</span> *p_func)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a> service_id;</div><div class="line">    <span class="keywordflow">if</span> (<span class="keyword">false</span> == <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___exported___functions.html#ga0a1a154168440ec5d4621accfc44a5a0">server_add_service</a>(&amp;service_id,</div><div class="line">                                   (uint8_t *)bas_attr_tbl,</div><div class="line">                                   bas_attr_tbl_size,</div><div class="line">                                   bas_cbs))</div><div class="line">    {</div><div class="line">        <a class="code" href="group__x3d___t_r_a_c_e.html#ga57c6954e0ebb68c0ca06a0052659be48">APP_PRINT_ERROR1</a>(<span class="stringliteral">&quot;bas_add_service: service_id %d&quot;</span>, service_id);</div><div class="line">        service_id = 0xff;</div><div class="line">    }</div><div class="line">    pfn_bas_cb = (<a class="code" href="group___p___f_u_n___s_e_r_v_e_r___g_e_n_e_r_a_l___c_b.html#ga58463a252b3e4f0362285a5e7e8cf2dd">P_FUN_SERVER_GENERAL_CB</a>)p_func;</div><div class="line">    <span class="keywordflow">return</span> service_id;</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga814694da2d926f0ae73fd3a14f0a50c7"></a>
@@ -187,7 +187,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Register specific service with start handle. </p>
-<p>Add specific service infomation to gatt_svc_table struct, will be registered to GATT later.</p>
+<p>Add specific service information to gatt_svc_table struct, will be registered to GATT later.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_out_service_id</td><td>Service ID of specific service. </td></tr>
@@ -200,12 +200,12 @@ Functions</h2></td></tr>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Add service success </td></tr>
-    <tr><td class="paramname">false</td><td>Add service failed</td></tr>
+    <tr><td class="paramname">true</td><td>Add service success. </td></tr>
+    <tr><td class="paramname">false</td><td>Add service failed.</td></tr>
   </table>
   </dd>
 </dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a> <a class="code" href="group___b_a_s___exported___functions.html#ga718af7cba22ef1b332212967d11b0504">bas_add_service</a>(<span class="keywordtype">void</span> *p_func)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a> service_id;</div><div class="line">    <span class="keywordflow">if</span> (<span class="keyword">false</span> == <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___exported___functions.html#ga814694da2d926f0ae73fd3a14f0a50c7">server_add_service_by_start_handle</a>(&amp;service_id,</div><div class="line">                                   (uint8_t *)bas_attr_tbl,</div><div class="line">                                   bas_attr_tbl_size,</div><div class="line">                                   bas_cbs, 0x00f0))</div><div class="line">    {</div><div class="line">        <a class="code" href="group___t_r_a_c_e.html#ga57c6954e0ebb68c0ca06a0052659be48">APP_PRINT_ERROR1</a>(<span class="stringliteral">&quot;bas_add_service: service_id %d&quot;</span>, service_id);</div><div class="line">        service_id = 0xff;</div><div class="line">    }</div><div class="line">    pfn_bas_cb = (<a class="code" href="group___p___f_u_n___s_e_r_v_e_r___g_e_n_e_r_a_l___c_b.html#ga58463a252b3e4f0362285a5e7e8cf2dd">P_FUN_SERVER_GENERAL_CB</a>)p_func;</div><div class="line">    <span class="keywordflow">return</span> service_id;</div><div class="line">}</div></div><!-- fragment --> 
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a> <a class="code" href="group___b_a_s___exported___functions.html#ga718af7cba22ef1b332212967d11b0504">bas_add_service</a>(<span class="keywordtype">void</span> *p_func)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a> service_id;</div><div class="line">    <span class="keywordflow">if</span> (<span class="keyword">false</span> == <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___exported___functions.html#ga814694da2d926f0ae73fd3a14f0a50c7">server_add_service_by_start_handle</a>(&amp;service_id,</div><div class="line">                                   (uint8_t *)bas_attr_tbl,</div><div class="line">                                   bas_attr_tbl_size,</div><div class="line">                                   bas_cbs, 0x00f0))</div><div class="line">    {</div><div class="line">        <a class="code" href="group__x3d___t_r_a_c_e.html#ga57c6954e0ebb68c0ca06a0052659be48">APP_PRINT_ERROR1</a>(<span class="stringliteral">&quot;bas_add_service: service_id %d&quot;</span>, service_id);</div><div class="line">        service_id = 0xff;</div><div class="line">    }</div><div class="line">    pfn_bas_cb = (<a class="code" href="group___p___f_u_n___s_e_r_v_e_r___g_e_n_e_r_a_l___c_b.html#ga58463a252b3e4f0362285a5e7e8cf2dd">P_FUN_SERVER_GENERAL_CB</a>)p_func;</div><div class="line">    <span class="keywordflow">return</span> service_id;</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga2fcbc3f5f19d9fdfb3e48923145e98f4"></a>
@@ -231,13 +231,8 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td><b>Example usage</b> <div class="fragment"><div class="line"><span class="keywordtype">void</span> app_le_profile_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga69f3a8c88a1c2d5255f87e69e135311b">server_init</a>(1);</div><div class="line">    simp_srv_id = <a class="code" href="group___s_i_m_p___service___exported___functions.html#ga67af3dc85c06595757de67de3e9918c6">simp_ble_service_add_service</a>(app_profile_callback);</div><div class="line">    <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___exported___functions.html#ga2fcbc3f5f19d9fdfb3e48923145e98f4">server_register_app_cb</a>(app_profile_callback);</div><div class="line">}</div></div><!-- fragment --> </td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>void.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> app_le_profile_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga69f3a8c88a1c2d5255f87e69e135311b">server_init</a>(service_num);</div><div class="line">    simp_srv_id = <a class="code" href="group___s_i_m_p___service___exported___functions.html#ga67af3dc85c06595757de67de3e9918c6">simp_ble_service_add_service</a>(app_profile_callback);</div><div class="line">    <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___exported___functions.html#ga2fcbc3f5f19d9fdfb3e48923145e98f4">server_register_app_cb</a>(app_profile_callback);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga86bef558ac767887aa490e560dac639d"></a>
@@ -290,22 +285,22 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Confirm from application when receive read Request from client. </p>
+<p>Confirm from application when receiving a read request from client. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection id indicate which link is. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection ID indicates which link it is. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service ID. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">attrib_index</td><td>Attribute index of attribute to read confirm from application. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>Point to the readed value. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>Point to the read value. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">data_len</td><td>The length of the data. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">cause</td><td>Cause for read confirm. <a class="el" href="group___g_a_p___common___exported___types.html#ga90b0c39404615bbdf0fc222483ed3fb9">T_APP_RESULT</a> </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cause</td><td>Cause for read confirm. <a class="el" href="group___g_a_p___common___exported___types.html#ga90b0c39404615bbdf0fc222483ed3fb9">T_APP_RESULT</a>. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>confirm from app OK. </td></tr>
-    <tr><td class="paramname">false</td><td>confirm from app failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Confirm from APP success. </td></tr>
+    <tr><td class="paramname">false</td><td>Confirm from APP failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -344,19 +339,19 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Confirm from application when receive Execute Write Request from client. </p>
+<p>Confirm from application when receiving an Execute Write Request from the client. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection id indicate which link is. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">cause</td><td>Cause for execute write confirm. <a class="el" href="group___g_a_p___common___exported___types.html#ga90b0c39404615bbdf0fc222483ed3fb9">T_APP_RESULT</a> </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Gatt attribute handle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection ID indicates which link it is. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cause</td><td>Cause for execute write confirm. <a class="el" href="group___g_a_p___common___exported___types.html#ga90b0c39404615bbdf0fc222483ed3fb9">T_APP_RESULT</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>GATT attribute handle. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>confirm from app OK. </td></tr>
-    <tr><td class="paramname">false</td><td>confirm from app failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Confirm from APP success. </td></tr>
+    <tr><td class="paramname">false</td><td>Confirm from APP failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -401,20 +396,20 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Confirm from application when receive Write Request from client. </p>
+<p>Confirm from application when receiving a Write Request from the client. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection id indicate which link is. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection ID indicates which link it is. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service ID. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">attrib_index</td><td>Attribute index of attribute to write confirm from application. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">cause</td><td>Write request app handle result, APP_RESULT_SUCCESS or other. <a class="el" href="group___g_a_p___common___exported___types.html#ga90b0c39404615bbdf0fc222483ed3fb9">T_APP_RESULT</a> </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cause</td><td>Write request APP handle result, APP_RESULT_SUCCESS or other. <a class="el" href="group___g_a_p___common___exported___types.html#ga90b0c39404615bbdf0fc222483ed3fb9">T_APP_RESULT</a>. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>confirm from app OK. </td></tr>
-    <tr><td class="paramname">false</td><td>confirm from app failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Confirm from APP success. </td></tr>
+    <tr><td class="paramname">false</td><td>Confirm from APP failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -474,7 +469,7 @@ Functions</h2></td></tr>
 <p>Send characteristic value to peer device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection id indicate which link is. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection ID indicates which link it is. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service ID. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">attrib_index</td><td>Attribute index of characteristic. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>Point to data to be sent. </td></tr>
@@ -483,7 +478,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Data sent result </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Data sent result. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">true</td><td>Success. </td></tr>
@@ -529,13 +524,13 @@ Functions</h2></td></tr>
 <p>Get the header point of the write command data buffer. This function is used to get the buffer point of the write command data. This function only can be called in write_attr_cb. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection id indicate which link is. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection ID indicates which link it is. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">pp_buffer</td><td>Pointer to the address of the buffer. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_offset</td><td>Pointer to the offset of the data. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Buffer get result </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Buffer get result. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">true</td><td>Success. </td></tr>
@@ -581,13 +576,13 @@ Functions</h2></td></tr>
 <p>Send the multiple variable notification. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection id indicate which link is. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection ID indicates which link it is. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>Point to data to be sent. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">data_len</td><td>Length of value to be sent, range: 0~(mtu_size - 1). uint16_t mtu_size is acquired by le_get_conn_param(GAP_PARAM_CONN_MTU_SIZE, &amp;mtu_size, conn_id). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Data sent result </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Data sent result. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">true</td><td>Success. </td></tr>
@@ -595,7 +590,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">bool</span> simp_ble_service_send_v3_v8_notify(uint8_t conn_id, <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a> service_id, <span class="keywordtype">void</span> *p_v3_value,</div><div class="line">                                        uint16_t v3_length, <span class="keywordtype">void</span> *p_v8_value, uint16_t v8_length)</div><div class="line">{</div><div class="line">    <span class="keywordtype">bool</span> ret;</div><div class="line">    uint8_t *p_value;</div><div class="line">    uint8_t *p_data;</div><div class="line">    uint16_t length = v3_length + v8_length + 2 * 4;</div><div class="line">    uint16_t handle;</div><div class="line"></div><div class="line">    p_value = <a class="code" href="group___o_s__87x3d___memory.html#gaa1a340c697ba158359b84f652091b934">os_mem_zalloc</a>(<a class="code" href="group__x3e___m_e_m___c_o_n_f_i_g___exported___types.html#gga20f6fc28665b1bdf8326a4826ba69b77a53394a9ecf33e56adc53407220bae73d">RAM_TYPE_DATA_ON</a>, length);</div><div class="line">    <span class="keywordflow">if</span> (p_value == <a class="code" href="group___platform___types___exported___macros.html#ga070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div><div class="line">    }</div><div class="line">    p_data = p_value;</div><div class="line">    handle = <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga5fd0c8616de60433af1c09853edb20b7">server_get_start_handle</a>(service_id) + SIMPLE_BLE_SERVICE_CHAR_V3_NOTIFY_INDEX;</div><div class="line">    <a class="code" href="group___b_t___t_y_p_e_s.html#gaa74124cb3708d9bac3ecc45849460342">LE_UINT16_TO_STREAM</a>(p_data, handle);</div><div class="line">    <a class="code" href="group___b_t___t_y_p_e_s.html#gaa74124cb3708d9bac3ecc45849460342">LE_UINT16_TO_STREAM</a>(p_data, v3_length);</div><div class="line">    memcpy(p_data, p_v3_value, v3_length);</div><div class="line">    p_data += v3_length;</div><div class="line"></div><div class="line">    handle = <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga5fd0c8616de60433af1c09853edb20b7">server_get_start_handle</a>(service_id) + SIMPLE_BLE_SERVICE_CHAR_V8_NOTIFY_INDICATE_INDEX;</div><div class="line">    <a class="code" href="group___b_t___t_y_p_e_s.html#gaa74124cb3708d9bac3ecc45849460342">LE_UINT16_TO_STREAM</a>(p_data, handle);</div><div class="line">    <a class="code" href="group___b_t___t_y_p_e_s.html#gaa74124cb3708d9bac3ecc45849460342">LE_UINT16_TO_STREAM</a>(p_data, v8_length);</div><div class="line">    memcpy(p_data, p_v8_value, v8_length);</div><div class="line">    p_data += v8_length;</div><div class="line"></div><div class="line">    ret = <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___exported___functions.html#ga08aec168923b98ec31cb0edbb83591df">server_send_multi_notify</a>(conn_id, p_value, length);</div><div class="line">    <span class="keywordflow">if</span> (p_value)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___o_s__87x3d___memory.html#ga9f49944885e39c41ea8232fba92cc5f3">os_mem_free</a>(p_value);</div><div class="line">    }</div><div class="line">    <span class="keywordflow">return</span> ret;</div><div class="line">}</div></div><!-- fragment --> 
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">bool</span> simp_ble_service_send_v3_v8_notify(uint8_t conn_id, <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a> service_id, <span class="keywordtype">void</span> *p_v3_value,</div><div class="line">                                        uint16_t v3_length, <span class="keywordtype">void</span> *p_v8_value, uint16_t v8_length)</div><div class="line">{</div><div class="line">    <span class="keywordtype">bool</span> ret;</div><div class="line">    uint8_t *p_value;</div><div class="line">    uint8_t *p_data;</div><div class="line">    uint16_t length = v3_length + v8_length + 2 * 4;</div><div class="line">    uint16_t handle;</div><div class="line"></div><div class="line">    p_value = <a class="code" href="group___o_s__87x3d___memory.html#gaa1a340c697ba158359b84f652091b934">os_mem_zalloc</a>(<a class="code" href="group__x3e___m_e_m___c_o_n_f_i_g___exported___types.html#gga20f6fc28665b1bdf8326a4826ba69b77a53394a9ecf33e56adc53407220bae73d">RAM_TYPE_DATA_ON</a>, length);</div><div class="line">    <span class="keywordflow">if</span> (p_value == <a class="code" href="group___platform___types___exported___macros.html#ga070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a>)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div><div class="line">    }</div><div class="line">    p_data = p_value;</div><div class="line">    handle = <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga5fd0c8616de60433af1c09853edb20b7">server_get_start_handle</a>(service_id) + SIMPLE_BLE_SERVICE_CHAR_V3_NOTIFY_INDEX;</div><div class="line">    <a class="code" href="group___b_t___b_y_t_e___o_r_d_e_r.html#gaa74124cb3708d9bac3ecc45849460342">LE_UINT16_TO_STREAM</a>(p_data, handle);</div><div class="line">    <a class="code" href="group___b_t___b_y_t_e___o_r_d_e_r.html#gaa74124cb3708d9bac3ecc45849460342">LE_UINT16_TO_STREAM</a>(p_data, v3_length);</div><div class="line">    memcpy(p_data, p_v3_value, v3_length);</div><div class="line">    p_data += v3_length;</div><div class="line"></div><div class="line">    handle = <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga5fd0c8616de60433af1c09853edb20b7">server_get_start_handle</a>(service_id) + SIMPLE_BLE_SERVICE_CHAR_V8_NOTIFY_INDICATE_INDEX;</div><div class="line">    <a class="code" href="group___b_t___b_y_t_e___o_r_d_e_r.html#gaa74124cb3708d9bac3ecc45849460342">LE_UINT16_TO_STREAM</a>(p_data, handle);</div><div class="line">    <a class="code" href="group___b_t___b_y_t_e___o_r_d_e_r.html#gaa74124cb3708d9bac3ecc45849460342">LE_UINT16_TO_STREAM</a>(p_data, v8_length);</div><div class="line">    memcpy(p_data, p_v8_value, v8_length);</div><div class="line">    p_data += v8_length;</div><div class="line"></div><div class="line">    ret = <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___exported___functions.html#ga08aec168923b98ec31cb0edbb83591df">server_send_multi_notify</a>(conn_id, p_value, length);</div><div class="line">    <span class="keywordflow">if</span> (p_value)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___o_s__87x3e___memory___exported__functions.html#gaa24b3140450c6eda57a1365a6c3d9d26">os_mem_free</a>(p_value);</div><div class="line">    }</div><div class="line">    <span class="keywordflow">return</span> ret;</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga457e9c205e883ef62bdd25a55efd8058"></a>
@@ -639,9 +634,9 @@ Functions</h2></td></tr>
 <p>Get the CCCD information. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection id indicate which link is. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection ID to indicate which link it is. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service ID. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">attrib_index</td><td>Attribute index of attribute to get CCCD. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">attrib_index</td><td>Attribute index of the attribute to get CCCD. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_cccd</td><td>The CCCD information. </td></tr>
   </table>
   </dd>
@@ -653,7 +648,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">bool</span> <a class="code" href="group___s_i_m_p___service___exported___functions.html#ga8d644966c8211083be66835b367d2f4c">simp_ble_service_send_v3_notify</a>(uint8_t conn_id, <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a> service_id, <span class="keywordtype">void</span> *p_value,</div><div class="line">                                    uint16_t length)</div><div class="line">{</div><div class="line">    uint16_t cccd_bits;</div><div class="line">    <a class="code" href="group___t_r_a_c_e.html#ga5d77ab23ef056676a6860b9959404140">APP_PRINT_INFO0</a>(<span class="stringliteral">&quot;simp_ble_service_send_v3_notify&quot;</span>);</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___g_a_t_t___s_e_r_v_e_r___exported___functions.html#ga457e9c205e883ef62bdd25a55efd8058">server_get_cccd_info</a>(conn_id, service_id, SIMPLE_BLE_SERVICE_CHAR_NOTIFY_CCCD_INDEX,</div><div class="line">                            &amp;cccd_bits))</div><div class="line">    {</div><div class="line">        <a class="code" href="group___t_r_a_c_e.html#ga81687b044a4d8600c4be891734f4839a">APP_PRINT_INFO1</a>(<span class="stringliteral">&quot;simp_ble_service_send_v3_notify: cccd_bits 0x%x&quot;</span>, cccd_bits);</div><div class="line">    }</div><div class="line">    <span class="keywordflow">return</span> <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___exported___functions.html#ga60d379433a73a0e377e4ad3dda22ac1c">server_send_data</a>(conn_id, service_id, SIMPLE_BLE_SERVICE_CHAR_V3_NOTIFY_INDEX, p_value,</div><div class="line">                            length,</div><div class="line">                            <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#ggadc8629288ad4dc04523014696c756e04a0822a5e97023e0da17c29e7485c36e52">GATT_PDU_TYPE_ANY</a>);</div><div class="line">}</div></div><!-- fragment --> 
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">bool</span> <a class="code" href="group___s_i_m_p___service___exported___functions.html#ga8d644966c8211083be66835b367d2f4c">simp_ble_service_send_v3_notify</a>(uint8_t conn_id, <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a> service_id, <span class="keywordtype">void</span> *p_value,</div><div class="line">                                    uint16_t length)</div><div class="line">{</div><div class="line">    uint16_t cccd_bits;</div><div class="line">    <a class="code" href="group__x3d___t_r_a_c_e.html#ga5d77ab23ef056676a6860b9959404140">APP_PRINT_INFO0</a>(<span class="stringliteral">&quot;simp_ble_service_send_v3_notify&quot;</span>);</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___g_a_t_t___s_e_r_v_e_r___exported___functions.html#ga457e9c205e883ef62bdd25a55efd8058">server_get_cccd_info</a>(conn_id, service_id, SIMPLE_BLE_SERVICE_CHAR_NOTIFY_CCCD_INDEX,</div><div class="line">                            &amp;cccd_bits))</div><div class="line">    {</div><div class="line">        <a class="code" href="group__x3d___t_r_a_c_e.html#ga81687b044a4d8600c4be891734f4839a">APP_PRINT_INFO1</a>(<span class="stringliteral">&quot;simp_ble_service_send_v3_notify: cccd_bits 0x%x&quot;</span>, cccd_bits);</div><div class="line">    }</div><div class="line">    <span class="keywordflow">return</span> <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___exported___functions.html#ga60d379433a73a0e377e4ad3dda22ac1c">server_send_data</a>(conn_id, service_id, SIMPLE_BLE_SERVICE_CHAR_V3_NOTIFY_INDEX, p_value,</div><div class="line">                            length,</div><div class="line">                            <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#ggadc8629288ad4dc04523014696c756e04a0822a5e97023e0da17c29e7485c36e52">GATT_PDU_TYPE_ANY</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

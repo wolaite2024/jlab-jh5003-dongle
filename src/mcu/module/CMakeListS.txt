@@ -1,9 +1,9 @@
 #HEADER_DIRECTORIES(bt_audio_trx_module_src_dir .)
-if(NOT compile_lib_only)	
-target_include_directories(btAudioTrx PRIVATE ./led)
-target_include_directories(btAudioTrx PRIVATE ./console)
-target_include_directories(btAudioTrx PRIVATE ./stream)
-target_include_directories(btAudioTrx PRIVATE ./vector)
+if(NOT compile_lib_only AND CONFIG_REALTEK_APP_BT_AUDIO_TRX)	
+target_include_directories(btAudioTrx PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/led)
+target_include_directories(btAudioTrx PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/console)
+target_include_directories(btAudioTrx PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/stream)
+target_include_directories(btAudioTrx PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/vector)
 
 if(CONFIG_REALTEK_FLASH_MAP_16M)
 target_include_directories(btAudioTrx PRIVATE ./lcd_module)
@@ -13,6 +13,7 @@ set(app_module_lcd_module_src "${CMAKE_CURRENT_SOURCE_DIR}/lcd_module/module_lcd
                         "${CMAKE_CURRENT_SOURCE_DIR}/lcd_module/module_psram.c"
                         "${CMAKE_CURRENT_SOURCE_DIR}/lcd_module/module_touch_cst816t.c"
                         "${CMAKE_CURRENT_SOURCE_DIR}/lcd_module/module_touch_cst816d.c"
+                        "${CMAKE_CURRENT_SOURCE_DIR}/lcd_module/module_touch_chsc5816.c"
                         "${CMAKE_CURRENT_SOURCE_DIR}/lcd_module/module_lcd_te.c")
 set(app_module_lcd_driver_src "${CMAKE_CURRENT_SOURCE_DIR}/lcdc_driver/lcd_sh8601z_454_qspi.c"
                         "${CMAKE_CURRENT_SOURCE_DIR}/lcdc_driver/lcd_st77916_320_385_qspi.c")

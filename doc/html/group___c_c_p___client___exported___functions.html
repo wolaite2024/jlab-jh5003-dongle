@@ -107,20 +107,20 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Configure CCCD. </p>
-<p><a class="el" href="ccp__client_8h_source.html" title="Head file for Call Control Client. ">ccp_client.h</a></p>
+<p><a class="el" href="ccp__client_8h_source.html" title="Header file for Call Control Client. ">ccp_client.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">srv_instance_id</td><td>Service instance id </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">cfg_flags</td><td><a class="el" href="group___c_c_p___c_l_i_e_n_t___c_f_g___c_c_c_d___f_l_a_g.html">CCP Client Configure CCCD Flag</a> </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">srv_instance_id</td><td>Service instance ID. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cfg_flags</td><td><a class="el" href="group___c_c_p___c_l_i_e_n_t___c_f_g___c_c_c_d___f_l_a_g.html">CCP Client Configure CCCD Flag</a>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">enable</td><td><ul>
-<li>true : Enable CCCD </li>
-<li>false : Disable CCCD </li>
+<li>true : Enable CCCD. </li>
+<li>false : Disable CCCD. </li>
 </ul>
 </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">gtbs</td><td><ul>
-<li>true : Generic Telephone Bearer Service (GTBS) </li>
-<li>false : Telephone Bearer Service (TBS)</li>
+<li>true : Generic Telephone Bearer Service (GTBS). </li>
+<li>false : Telephone Bearer Service (TBS).</li>
 </ul>
 </td></tr>
   </table>
@@ -170,11 +170,11 @@ Functions</h2></td></tr>
 
 <p>Read characteristic value. </p>
 <p>If sending operation is successful, the result of read characteristic value will be returned by callback registered by <a class="el" href="group___l_e_a___l_i_b___exported___functions.html#gae459ea2b839f0a662f20d69aaac0013f">ble_audio_cback_register</a> with msg <a class="el" href="group___l_e_a___l_i_b___exported___types.html#ggabe1a2e587cdc57dc5de8e141de5d1b0baf66b3160dae5ae12e2b4fbbfd6d5ea45">LE_AUDIO_MSG_CCP_CLIENT_READ_RESULT</a> and buf <a class="el" href="struct_t___c_c_p___c_l_i_e_n_t___r_e_a_d___r_e_s_u_l_t.html">T_CCP_CLIENT_READ_RESULT</a>.</p>
-<p><a class="el" href="ccp__client_8h_source.html" title="Head file for Call Control Client. ">ccp_client.h</a></p>
+<p><a class="el" href="ccp__client_8h_source.html" title="Header file for Call Control Client. ">ccp_client.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">srv_instance_id</td><td>Service instance id </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">srv_instance_id</td><td>Service instance ID. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">char_uuid</td><td><ul>
 <li><a class="el" href="group___t_b_s___u_u_i_d___c_h_a_r.html#ga6531d49cd020d89862298c58dab1b5f1">TBS_UUID_CHAR_BEARER_PROVIDER_NAME</a> </li>
 <li><a class="el" href="group___t_b_s___u_u_i_d___c_h_a_r.html#gacee3a074fb4eedfa5d7aa8ee72cd4b15">TBS_UUID_CHAR_BEARER_UCI</a> </li>
@@ -193,18 +193,18 @@ Functions</h2></td></tr>
 </ul>
 </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">gtbs</td><td><ul>
-<li>true : Generic Telephone Bearer Service (GTBS) </li>
-<li>false : Telephone Bearer Service (TBS)</li>
+<li>true : Generic Telephone Bearer Service (GTBS). </li>
+<li>false : Telephone Bearer Service (TBS).</li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of sending operation </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of the sending operation. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Sending operation is successful </td></tr>
-    <tr><td class="paramname">false</td><td>Sending operation is failed</td></tr>
+    <tr><td class="paramname">true</td><td>Sending operation is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Sending operation is failed.</td></tr>
   </table>
   </dd>
 </dl>
@@ -257,34 +257,34 @@ Functions</h2></td></tr>
 
 <p>Write Call Control Point characteristic. </p>
 <p>If sending operation is successful and Call Control Server sends Call Control Point Notification, Call Control Point Notification will be returned by callback registered by <a class="el" href="group___l_e_a___l_i_b___exported___functions.html#gae459ea2b839f0a662f20d69aaac0013f">ble_audio_cback_register</a> with msg <a class="el" href="group___l_e_a___l_i_b___exported___types.html#ggabe1a2e587cdc57dc5de8e141de5d1b0baf186c088e2a7e122020efcb2a4f07170">LE_AUDIO_MSG_CCP_CLIENT_CALL_CP_NOTIFY</a> and buf <a class="el" href="struct_t___c_c_p___c_l_i_e_n_t___c_a_l_l___c_p___n_o_t_i_f_y.html">T_CCP_CLIENT_CALL_CP_NOTIFY</a>.</p>
-<p><a class="el" href="ccp__client_8h_source.html" title="Head file for Call Control Client. ">ccp_client.h</a></p>
+<p><a class="el" href="ccp__client_8h_source.html" title="Header file for Call Control Client. ">ccp_client.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">srv_instance_id</td><td>Service instance id </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">srv_instance_id</td><td>Service instance ID. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">gtbs</td><td><ul>
-<li>true : Generic Telephone Bearer Service (GTBS) </li>
-<li>false : Telephone Bearer Service (TBS) </li>
+<li>true : Generic Telephone Bearer Service (GTBS). </li>
+<li>false : Telephone Bearer Service (TBS). </li>
 </ul>
 </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">is_req</td><td><ul>
-<li>true : Write request </li>
-<li>false : Write command </li>
+<li>true : Write request. </li>
+<li>false : Write command. </li>
 </ul>
 </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_param</td><td>Point to call control point parameter: <a class="el" href="struct_t___c_c_p___c_l_i_e_n_t___w_r_i_t_e___c_a_l_l___c_p___p_a_r_a_m.html">T_CCP_CLIENT_WRITE_CALL_CP_PARAM</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_param</td><td>Pointer to call control point parameter: <a class="el" href="struct_t___c_c_p___c_l_i_e_n_t___w_r_i_t_e___c_a_l_l___c_p___p_a_r_a_m.html">T_CCP_CLIENT_WRITE_CALL_CP_PARAM</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of sending operation </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of the sending operation. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Sending operation is successful </td></tr>
-    <tr><td class="paramname">false</td><td>Sending operation is failed</td></tr>
+    <tr><td class="paramname">true</td><td>Sending operation is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Sending operation is failed.</td></tr>
   </table>
   </dd>
 </dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keywordtype">bool</span> retval = <a class="code" href="group___c_c_p___client___exported___functions.html#ga9eb05fda4d3b03467f7e482bb3fc5083">ccp_client_write_call_cp</a>(conn_handle, srv_instance_id, gtbs, is_req, p_param);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">// If sending operation is successful and Call Control Server sends Call Control Point Notification</span></div><div class="line"><span class="comment">// Callback registered by @ref ble_audio_cback_register</span></div><div class="line">{</div><div class="line">    <span class="keywordflow">switch</span> (msg)</div><div class="line">    {</div><div class="line">    <span class="keywordflow">case</span> <a class="code" href="group___l_e_a___l_i_b___exported___types.html#ggabe1a2e587cdc57dc5de8e141de5d1b0baf186c088e2a7e122020efcb2a4f07170">LE_AUDIO_MSG_CCP_CLIENT_CALL_CP_NOTIFY</a>:</div><div class="line">        {</div><div class="line">            ......</div><div class="line">        }</div><div class="line">        <span class="keywordflow">break</span>;</div><div class="line">    ......</div><div class="line">}</div></div><!-- fragment --> 
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keywordtype">bool</span> retval = <a class="code" href="group___c_c_p___client___exported___functions.html#ga9eb05fda4d3b03467f7e482bb3fc5083">ccp_client_write_call_cp</a>(conn_handle, srv_instance_id, gtbs, is_req, p_param);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">// If the sending operation is successful and the Call Control Server sends Call Control Point Notification</span></div><div class="line"><span class="comment">// Callback registered by @ref ble_audio_cback_register</span></div><div class="line">{</div><div class="line">    <span class="keywordflow">switch</span> (msg)</div><div class="line">    {</div><div class="line">    <span class="keywordflow">case</span> <a class="code" href="group___l_e_a___l_i_b___exported___types.html#ggabe1a2e587cdc57dc5de8e141de5d1b0baf186c088e2a7e122020efcb2a4f07170">LE_AUDIO_MSG_CCP_CLIENT_CALL_CP_NOTIFY</a>:</div><div class="line">        {</div><div class="line">            ......</div><div class="line">        }</div><div class="line">        <span class="keywordflow">break</span>;</div><div class="line">    ......</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

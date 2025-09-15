@@ -17,6 +17,7 @@
 #include "app_audio_policy.h"
 #include "audio_track.h"
 #include "app_bt_policy_api.h"
+#include "app_bt_policy_int.h"
 #include "app_report.h"
 #include "app_cmd.h"
 #include "app_multilink.h"
@@ -102,9 +103,6 @@ void app_avrcp_sync_status(void)
     if ((app_db.remote_session_state == REMOTE_SESSION_STATE_CONNECTED) &&
         (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY))
     {
-#if F_APP_LISTENING_MODE_SUPPORT
-        app_listening_judge_a2dp_event(APPLY_LISTENING_MODE_AVRCP_PLAY_STATUS_CHANGE);
-#endif
         app_relay_async_single(APP_MODULE_TYPE_AUDIO_POLICY, APP_REMOTE_MSG_SYNC_PLAY_STATUS);
     }
 }
@@ -124,7 +122,11 @@ static void app_avrcp_abs_vol_set(uint8_t *bd_addr, uint8_t volume)
 
     if (p_link != NULL)
     {
-        app_avrcp_vol_change_ongoing = true;
+        if (p_link->streaming_fg == true)
+        {
+            app_avrcp_vol_change_ongoing = true;
+        }
+
         app_bond_get_pair_idx_mapping(p_link->bd_addr, &pair_idx_mapping);
 
         // if enable_align_default_volume_after_factory_reset, and a support abs vol phone first connect, sync default vol to src
@@ -227,11 +229,11 @@ static void app_avrcp_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
     {
     case BT_EVENT_AVRCP_CONN_IND:
         {
+            bool accept_conn = true;
+
             p_link = app_link_find_br_link(param->avrcp_conn_ind.bd_addr);
             if (p_link != NULL)
             {
-                bool accept_conn = true;
-
 #if F_APP_24G_BT_AUDIO_SOURCE_CTRL_SUPPORT
                 bool is_dongle_link = false;
 
@@ -248,9 +250,13 @@ static void app_avrcp_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
                                      TRACE_BDADDR(param->avrcp_conn_ind.bd_addr), app_cfg_nv.allowed_source, is_dongle_link);
 
                     accept_conn = false; // reject
+                    goto accept;
                 }
 #endif
 
+                accept_conn = (app_bt_policy_get_profs_by_bond_flag(ALL_PROFILE_MASK) & AVRCP_PROFILE_MASK) ? true :
+                              false;
+accept:
                 bt_avrcp_connect_cfm(p_link->bd_addr, accept_conn);
             }
         }
@@ -266,19 +272,33 @@ static void app_avrcp_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
         }
         break;
 
+    case BT_EVENT_AVRCP_GET_CAPABILITIES_RSP:
+        {
+            p_link = app_link_find_br_link(param->avrcp_browsing_conn_ind.bd_addr);
+            if (p_link != NULL)
+            {
+                uint8_t  capability_count;
+                uint8_t *capabilities;
+
+                capability_count = param->avrcp_get_capabilities_rsp.capability_count;
+                capabilities = param->avrcp_get_capabilities_rsp.capabilities;
+                while (capability_count != 0)
+                {
+                    bt_avrcp_register_notification_req(p_link->bd_addr, *capabilities);
+                    capability_count -= 1;
+                    capabilities += 1;
+                }
+            }
+        }
+        break;
+
     case BT_EVENT_AVRCP_ABSOLUTE_VOLUME_SET:
         {
 #if F_APP_CHARGER_CASE_SUPPORT
-            app_cmd_charger_case_record_volume(param->avrcp_absolute_volume_set.volume,
-                                               param->avrcp_absolute_volume_set.bd_addr);
-            if (app_db.charger_case_connected &&
-                app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SECONDARY)
-            {
-                app_report_event(CMD_PATH_LE, EVENT_VOLUME_SYNC, app_db.charger_case_link_id,
-                                 (uint8_t *)&param->avrcp_absolute_volume_set,
-                                 sizeof(param->avrcp_absolute_volume_set));
-            }
+            app_report_level_to_charger_case(param->avrcp_absolute_volume_set.volume,
+                                             param->avrcp_absolute_volume_set.bd_addr);
 #endif
+
             if (!app_avrcp_vol_change_ongoing ||
                 (memcmp(avrcp_abs_vol_set_cur.bd_addr, param->avrcp_absolute_volume_set.bd_addr, 6) != 0))
 
@@ -397,17 +417,7 @@ static void app_avrcp_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
                       app_dsp_cfg_vol.playback_volume_max;
 
 #if F_APP_CHARGER_CASE_SUPPORT
-                app_cmd_charger_case_record_volume(vol, param->avrcp_reg_volume_changed.bd_addr);
-                if (app_db.charger_case_connected &&
-                    app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SECONDARY)
-                {
-                    uint8_t evt_buf[7];
-
-                    memcpy(&evt_buf[0], param->avrcp_reg_volume_changed.bd_addr, 6);
-                    evt_buf[6] = vol;
-                    app_report_event(CMD_PATH_LE, EVENT_VOLUME_SYNC, app_db.charger_case_link_id, evt_buf,
-                                     sizeof(evt_buf));
-                }
+                app_report_level_to_charger_case(vol, param->avrcp_reg_volume_changed.bd_addr);
 #endif
 
                 if (bt_avrcp_volume_change_register_rsp(p_link->bd_addr, vol))
@@ -535,7 +545,8 @@ void app_avrcp_stop_abs_vol_check_timer(void)
 
 bool app_avrcp_sync_abs_vol_state(uint8_t *bd_addr, T_APP_ABS_VOL_STATE abs_vol_state)
 {
-    uint8_t cmd_ptr[8] = {0};
+    T_APP_BR_LINK *p_link = NULL;
+    uint8_t cmd_ptr[9] = {0};
     uint8_t pair_idx_mapping;
     bool ret = false;
 
@@ -554,9 +565,16 @@ bool app_avrcp_sync_abs_vol_state(uint8_t *bd_addr, T_APP_ABS_VOL_STATE abs_vol_
         memcpy(&cmd_ptr[0], bd_addr, 6);
         cmd_ptr[6] = abs_vol_state;
         cmd_ptr[7] = app_cfg_nv.audio_gain_level[pair_idx_mapping];
+
+        p_link = app_link_find_br_link(bd_addr);
+        if (p_link != NULL)
+        {
+            cmd_ptr[8] = p_link->playback_muted;
+        }
+
         ret = app_relay_sync_single_with_raw_msg(APP_MODULE_TYPE_AUDIO_POLICY,
                                                  APP_REMOTE_MSG_SYNC_ABS_VOL_STATE,
-                                                 cmd_ptr, 8, REMOTE_TIMER_HIGH_PRECISION, 0, false);
+                                                 cmd_ptr, 9, REMOTE_TIMER_HIGH_PRECISION, 0, false);
     }
 
     return ret;
@@ -616,7 +634,8 @@ void app_avrcp_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, 
             uint8_t attr_list[attr_num * 2];
 
             memcpy(attr_list, &cmd_ptr[4], attr_num * 2);
-            if (bt_avrcp_app_setting_value_set(app_db.br_link[app_index].bd_addr, attr_num, attr_list) == false)
+            if (bt_avrcp_app_setting_value_set(app_db.br_link[app_index].bd_addr, attr_num,
+                                               (T_BT_AVRCP_APP_SETTING *)attr_list) == false)
             {
                 ack_pkt[2] = CMD_SET_STATUS_PROCESS_FAIL;
             }
@@ -727,10 +746,8 @@ void app_avrcp_init(void)
         uint8_t ct_features;
         uint8_t tg_features;
 
-        bt_avrcp_init(app_cfg_const.avrcp_link_number);
-
         app_avrcp_get_supported_features(&ct_features, &tg_features);
-        bt_avrcp_supported_features_set(ct_features, tg_features);
+        bt_avrcp_init(ct_features, tg_features);
 
         bt_mgr_cback_register(app_avrcp_bt_cback);
 

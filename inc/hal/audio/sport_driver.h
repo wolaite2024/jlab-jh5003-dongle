@@ -278,6 +278,7 @@ void sport_drv_dsp_ctrl_mode(T_SPORT_ID id, bool is_enable);
 
 /* trx start & stop control */
 void sport_drv_trx_start_ctrl(T_SPORT_ID id, uint8_t dir, bool is_enable);
+void sport_drv_trx_lrck_ctrl(T_SPORT_ID id, uint8_t dir, bool is_enable);
 void sport_drv_mcu_rx_int_ctrl(T_SPORT_ID id, uint8_t dir, bool is_enable);
 
 uint32_t sport_drv_get_fifo_data(T_SPORT_ID id);

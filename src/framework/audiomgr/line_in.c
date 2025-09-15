@@ -64,6 +64,7 @@ typedef struct t_line_in_db
     bool                effect_apply;
     T_OS_QUEUE          effects;
     uint32_t            sample_rate;
+    uint32_t            device;
 } T_LINE_IN_DB;
 
 #if (CONFIG_REALTEK_AM_LINE_IN_SUPPORT == 1)
@@ -98,7 +99,7 @@ static bool line_in_state_set(T_LINE_IN_STATE state)
 
             line_in_db->state  = state;
             line_in_db->handle = audio_path_create(AUDIO_CATEGORY_ANALOG,
-                                                   AUDIO_DEVICE_IN_AUX | AUDIO_DEVICE_OUT_SPK,
+                                                   line_in_db->device,
                                                    &info,
                                                    AUDIO_STREAM_MODE_NORMAL,
                                                    line_in_db->volume_out,
@@ -1562,7 +1563,8 @@ void line_in_deinit(void)
     }
 }
 
-bool line_in_create(uint32_t sample_rate)
+bool line_in_create(uint32_t device,
+                    uint32_t sample_rate)
 {
     int32_t ret = 0;
 
@@ -1579,6 +1581,7 @@ bool line_in_create(uint32_t sample_rate)
     }
 
     line_in_db->sample_rate = sample_rate;
+    line_in_db->device      = device;
 
     if (line_in_state_set(LINE_IN_STATE_CREATING) == false)
     {
@@ -2230,7 +2233,8 @@ void line_in_deinit(void)
 
 }
 
-bool line_in_create(uint32_t sample_rate)
+bool line_in_create(uint32_t device,
+                    uint32_t sample_rate)
 {
     return false;
 }

@@ -23,7 +23,6 @@
 #include "vad.h"
 #endif
 #include "remote.h"
-#include "platform_utils.h"
 #include "eq_utils.h"
 #include "app_mmi.h"
 #include "app_main.h"
@@ -94,12 +93,11 @@
 #include "app_roleswap.h"
 #include "app_roleswap_control.h"
 #if F_APP_LINEIN_SUPPORT
-#include "line_in.h"
+#include "app_line_in.h"
 #endif
 #if F_APP_IO_OUTPUT_SUPPORT
 #include "app_io_output.h"
 #endif
-#include "app_line_in.h"
 
 #include "app_device.h"
 #include "app_sniff_mode.h"
@@ -158,6 +156,10 @@
 #include "app_lea_mgr.h"
 #endif
 
+#if F_APP_HAS_SUPPORT
+#include "has_mgr.h"
+#endif
+
 #if F_APP_USB_HID_SUPPORT
 #include "app_usb_mmi.h"
 #endif
@@ -207,6 +209,8 @@
 #include "app_gfps_finder.h"
 #include "app_gfps_msg.h"
 #include "bt_gfps.h"
+#include "app_dult_device.h"
+#include "app_gfps_finder_adv.h"
 #endif
 
 #if F_APP_DISCHARGER_NTC_DETECT_PROTECT
@@ -535,6 +539,26 @@ void app_mmi_init(void)
 #endif
 }
 
+static void app_mmi_connect_highest_prio_link_hfp_or_hsp(void)
+{
+    uint8_t bd_addr[6];
+    uint32_t bond_flag;
+
+    if (app_bond_b2s_addr_get(1, bd_addr))
+    {
+        bt_bond_flag_get(bd_addr, &bond_flag);
+
+        if (bond_flag & BOND_FLAG_HFP)
+        {
+            app_bt_policy_default_connect(bd_addr, HFP_PROFILE_MASK, false);
+        }
+        else if (bond_flag & BOND_FLAG_HSP)
+        {
+            app_bt_policy_default_connect(bd_addr, HSP_PROFILE_MASK, false);
+        }
+    }
+}
+
 static void app_mmi_voice_recognition(uint8_t app_idx)
 {
 #if F_APP_DURIAN_SUPPORT
@@ -548,13 +572,7 @@ static void app_mmi_voice_recognition(uint8_t app_idx)
     }
     else
     {
-        uint8_t bd_addr[6];
-
-        if (app_bond_b2s_addr_get(1, bd_addr) == true)
-        {
-            app_bt_policy_default_connect(bd_addr,
-                                          HSP_PROFILE_MASK | HFP_PROFILE_MASK, true);
-        }
+        app_mmi_connect_highest_prio_link_hfp_or_hsp();
     }
 #endif
 }
@@ -723,6 +741,13 @@ static void app_mmi_volume_up()
             app_relay_sync_single_with_raw_msg(APP_MODULE_TYPE_AUDIO_POLICY, APP_REMOTE_MSG_A2DP_VOLUME_SYNC,
                                                cmd_ptr, 9, REMOTE_TIMER_HIGH_PRECISION, 0, false);
             bt_avrcp_volume_change_req(app_db.br_link[active_idx].bd_addr, level);
+
+#if F_APP_CHARGER_CASE_SUPPORT
+            if (app_db.br_link[active_idx].abs_vol_state == ABS_VOL_NOT_SUPPORTED)
+            {
+                app_report_level_to_charger_case(level, app_db.br_link[active_idx].bd_addr);
+            }
+#endif
         }
 
         else if (volume_type == AUDIO_STREAM_TYPE_VOICE)
@@ -933,6 +958,13 @@ static void app_mmi_volume_down()
                                                cmd_ptr, 9, REMOTE_TIMER_HIGH_PRECISION, 0, false);
 
             bt_avrcp_volume_change_req(app_db.br_link[active_idx].bd_addr, level);
+
+#if F_APP_CHARGER_CASE_SUPPORT
+            if (app_db.br_link[active_idx].abs_vol_state == ABS_VOL_NOT_SUPPORTED)
+            {
+                app_report_level_to_charger_case(level, app_db.br_link[active_idx].bd_addr);
+            }
+#endif
         }
         else if (volume_type == AUDIO_STREAM_TYPE_VOICE)
         {
@@ -1108,11 +1140,7 @@ void app_mmi_switch_gaming_mode()
 #endif
 
     app_led_change_mode(LED_MODE_GAMING_MODE, true, false);
-
-    if (app_bt_sniffing_set_low_latency() == false)
-    {
-        return;
-    }
+    (void) app_bt_sniffing_set_low_latency();
 
     if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_SECONDARY)
     {
@@ -1205,7 +1233,7 @@ void app_mmi_switch_gaming_mode()
                 latency_value = app_audio_set_latency(p_link->a2dp_track_handle,
                                                       app_cfg_nv.rws_low_latency_level_record,
                                                       GAMING_MODE_DYNAMIC_LATENCY_FIX);
-                bt_a2dp_stream_delay_report_request(p_link->bd_addr, latency_value);
+                bt_a2dp_stream_delay_report_req(p_link->bd_addr, latency_value);
 
                 app_db.last_gaming_mode_audio_track_latency = latency_value;
             }
@@ -1214,7 +1242,7 @@ void app_mmi_switch_gaming_mode()
                 app_audio_get_latency_value_by_level(AUDIO_STREAM_MODE_NORMAL, format.type, 0, &latency_value);
                 audio_track_latency_set(p_link->a2dp_track_handle, latency_value,
                                         NORMAL_MODE_DYNAMIC_LATENCY_FIX);
-                bt_a2dp_stream_delay_report_request(p_link->bd_addr, latency_value);
+                bt_a2dp_stream_delay_report_req(p_link->bd_addr, latency_value);
             }
 
             if (p_link->eq_instance != NULL)
@@ -1315,7 +1343,7 @@ void app_mmi_switch_gaming_mode()
                     latency_value = app_audio_set_latency(p_link->a2dp_track_handle,
                                                           app_cfg_nv.rws_low_latency_level_record,
                                                           GAMING_MODE_DYNAMIC_LATENCY_FIX);
-                    bt_a2dp_stream_delay_report_request(p_link->bd_addr, latency_value);
+                    bt_a2dp_stream_delay_report_req(p_link->bd_addr, latency_value);
 
                     app_db.last_gaming_mode_audio_track_latency = latency_value;
                 }
@@ -1324,7 +1352,7 @@ void app_mmi_switch_gaming_mode()
                     app_audio_get_latency_value_by_level(AUDIO_STREAM_MODE_NORMAL, format.type, 0, &latency_value);
                     audio_track_latency_set(p_link->a2dp_track_handle, latency_value,
                                             NORMAL_MODE_DYNAMIC_LATENCY_FIX);
-                    bt_a2dp_stream_delay_report_request(p_link->bd_addr, latency_value);
+                    bt_a2dp_stream_delay_report_req(p_link->bd_addr, latency_value);
                 }
 
                 if (p_link->eq_instance != NULL)
@@ -1486,29 +1514,48 @@ bool app_mmi_is_allow_factory_reset(void)
 static bool app_mmi_check_lea_action(uint8_t action)
 {
     bool lea_only_mmi = true;
+    mtc_topology_dm(MTC_TOPO_EVENT_MMI);
 
     switch (action)
     {
     case MMI_BIG_START:
     case MMI_BIG_STOP:
         {
-            app_lea_mgr_mmi_handle(action);
+            if (app_cfg_const.bis_mode == LEA_BROADCAST_SINK)
+            {
+                app_lea_mgr_mmi_handle(action);
+            }
         }
         break;
 
 #if F_APP_CCP_SUPPORT
+    case MMI_HF_LAST_NUMBER_REDIAL:
+        {
+            if (app_lea_mgr_find_call_device_by_priority())
+            {
+                app_lea_mgr_mmi_handle(action);
+            }
+            else
+            {
+                lea_only_mmi = false;
+            }
+        }
+        break;
+
     case MMI_HF_END_OUTGOING_CALL:
     case MMI_HF_ANSWER_CALL:
     case MMI_HF_END_ACTIVE_CALL:
+    case MMI_HF_INITIATE_VOICE_DIAL:
+    case MMI_HF_CANCEL_VOICE_DIAL:
     case MMI_HF_TRANSFER_CALL:
     case MMI_HF_REJECT_CALL:
     case MMI_HF_JOIN_TWO_CALLS:
     case MMI_HF_SWITCH_TO_SECOND_CALL:
-    case MMI_HF_LAST_NUMBER_REDIAL:
     case MMI_HF_RELEASE_HELD_OR_WAITING_CALL:
     case MMI_HF_RELEASE_ACTIVE_CALL_ACCEPT_HELD_OR_WAITING_CALL:
 #endif
 #if F_APP_MCP_SUPPORT
+    case MMI_AV_PLAY_PAUSE:
     case MMI_AV_STOP:
     case MMI_AV_FWD:
     case MMI_AV_BWD:
@@ -1540,21 +1587,6 @@ static bool app_mmi_check_lea_action(uint8_t action)
             }
         }
         break;
-
-#if F_APP_MCP_SUPPORT
-    case MMI_AV_PLAY_PAUSE:
-        {
-            app_lea_mgr_mmi_handle(action);
-
-            if (mtc_get_btmode())
-            {
-                break;
-            }
-
-            lea_only_mmi = false;
-        }
-        break;
-#endif
 
     default:
         {
@@ -1689,6 +1721,45 @@ void app_mmi_handle_action(uint8_t action)
 {
     APP_PRINT_INFO1("app_mmi_handle_action: action 0x%02x", action);
 
+#if 0
+#if CONFIG_REALTEK_GFPS_FINDER_SUPPORT
+    if (extend_app_cfg_const.gfps_finder_support)
+    {
+        //finder stop ring
+        T_GFPS_MSG_RING_STATE ring_type = app_gfps_msg_get_ring_state();
+        //dult stop ring
+        T_DULT_RING_STATE dult_ring_state = app_dult_device_get_ring_state();
+
+        if ((ring_type != GFPS_MSG_RING_STOP) || (dult_ring_state != DULT_RING_STATE_STOPPED))
+        {
+            APP_PRINT_INFO0("app_mmi_handle_action: keypress to stop gfps finder or dult ringtone");
+
+            if (app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SECONDARY)
+            {
+                if (ring_type != GFPS_MSG_RING_STOP)
+                {
+                    app_gfps_msg_handle_ring_event(GFPS_ALL_STOP);
+
+                    uint8_t ring_state = GFPS_FINDER_RING_BUTTON_STOP;
+                    app_gfps_finder_send_ring_rsp(ring_state);
+                }
+
+                if (dult_ring_state != DULT_RING_STATE_STOPPED)
+                {
+                    app_dult_device_sound_stop(0xFF, NULL);
+                }
+            }
+            else
+            {
+                //maybe relay to primary bud and stop ring
+            }
+
+            return;
+        }
+    }
+#endif
+#endif
+
 #if F_APP_AUTO_POWER_TEST_LOG
     TEST_PRINT_INFO1("app_mmi_handle_action: action 0x%02x", action);
 #endif
@@ -1714,7 +1785,11 @@ void app_mmi_handle_action(uint8_t action)
 #if F_APP_LEA_SUPPORT
             app_lea_mgr_mmi_handle(MMI_DEV_GAMING_MODE_SWITCH);
 #endif
-            if (app_link_get_b2s_link_num() == 0)
+            if (app_link_get_b2s_link_num() == 0
+#if F_APP_LEA_SUPPORT
+                && app_link_get_lea_link_num() == 0
+#endif
+               )
             {
                 APP_PRINT_TRACE0("app_mmi_handle_action b2s = 0 return ");
                 return;
@@ -1771,7 +1846,7 @@ void app_mmi_handle_action(uint8_t action)
 
 #if F_APP_GAMING_DONGLE_SUPPORT
 #if (F_APP_24G_BT_AUDIO_SOURCE_CTRL_SUPPORT == 0) && F_APP_MUTLILINK_SOURCE_PRIORITY_UI
-            if (app_multilink_customer_is_dongle_priority_higher() && app_db.b2s_connected_num > 1)
+            if (app_multilink_customer_is_dongle_priority_higher() && app_link_get_b2s_link_num() > 1)
             {
                 T_APP_BR_LINK *p_dongle_link = app_dongle_get_connected_dongle_link();
 
@@ -2071,13 +2146,7 @@ void app_mmi_handle_action(uint8_t action)
             }
             else
             {
-                uint8_t bd_addr[6];
-
-                if (app_bond_b2s_addr_get(1, bd_addr) == true)
-                {
-                    app_bt_policy_default_connect(bd_addr,
-                                                  HSP_PROFILE_MASK | HFP_PROFILE_MASK, true);
-                }
+                app_mmi_connect_highest_prio_link_hfp_or_hsp();
             }
         }
         break;
@@ -2484,10 +2553,10 @@ void app_mmi_handle_action(uint8_t action)
                 }
             }
 
-#if CONFIG_REALTEK_GFPS_LE_DEVICE_SUPPORT
-            if (extend_app_cfg_const.gfps_le_device_support)
+#if CONFIG_REALTEK_GFPS_FEATURE_SUPPORT
+            if (extend_app_cfg_const.gfps_support)
             {
-                app_gfps_le_force_enter_pairing_mode(GFPS_KEY_FORCE_ENTER_PAIR_MODE);
+                app_gfps_force_enter_pairing_mode(GFPS_KEY_FORCE_ENTER_PAIR_MODE);
             }
 #endif
         }
@@ -2500,10 +2569,10 @@ void app_mmi_handle_action(uint8_t action)
             app_lea_adv_stop();
 #endif
 
-#if CONFIG_REALTEK_GFPS_LE_DEVICE_SUPPORT
-            if (extend_app_cfg_const.gfps_le_device_support)
+#if CONFIG_REALTEK_GFPS_FEATURE_SUPPORT
+            if (extend_app_cfg_const.gfps_support)
             {
-                app_gfps_le_force_enter_pairing_mode(GFPS_EXIT_PAIR_MODE);
+                app_gfps_force_enter_pairing_mode(GFPS_EXIT_PAIR_MODE);
             }
 #endif
         }
@@ -2515,7 +2584,7 @@ void app_mmi_handle_action(uint8_t action)
             {
                 app_multi_switch_by_mmi(true);
                 app_audio_tone_type_play(TONE_DEV_MULTILINK_ON, false, false);
-#if F_APP_ADP_CMD_SUPPORT
+#if F_APP_ADP_5V_CMD_SUPPORT || F_APP_ONE_WIRE_UART_SUPPORT
                 app_adp_cmd_factory_reset_link_dis(1000);
 #endif
             }
@@ -2655,8 +2724,7 @@ void app_mmi_handle_action(uint8_t action)
             {
                 if (app_audio_is_mic_mute())
                 {
-                    if ((app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY) ||
-                        (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_SINGLE))
+                    if (app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SECONDARY)
                     {
                         if (audio_volume_in_is_muted(AUDIO_STREAM_TYPE_VOICE))
                         {
@@ -2670,6 +2738,13 @@ void app_mmi_handle_action(uint8_t action)
                 }
                 else
                 {
+                    if (app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SECONDARY)
+                    {
+                        if (!audio_volume_in_is_muted(AUDIO_STREAM_TYPE_VOICE))
+                        {
+                            app_audio_enable_play_mic_mute_tone(true);
+                        }
+                    }
                     app_audio_set_mic_mute_status(1);
 #if F_APP_TEAMS_GLOBAL_MUTE_SUPPORT
                     app_teams_audio_set_bt_mute_status(teams_active_device_idx, true);
@@ -2733,6 +2808,13 @@ void app_mmi_handle_action(uint8_t action)
 #endif
             if (app_audio_check_mic_mute_enable() == true)
             {
+                if (app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SECONDARY)
+                {
+                    if (!audio_volume_in_is_muted(AUDIO_STREAM_TYPE_VOICE))
+                    {
+                        app_audio_enable_play_mic_mute_tone(true);
+                    }
+                }
                 app_audio_set_mic_mute_status(1);
 #if F_APP_TEAMS_GLOBAL_MUTE_SUPPORT
                 app_teams_audio_set_bt_mute_status(teams_active_device_idx, true);
@@ -2991,7 +3073,7 @@ void app_mmi_handle_action(uint8_t action)
 #if APT_SUB_VOLUME_LEVEL_SUPPORT
                 app_apt_main_volume_set(app_cfg_nv.apt_volume_out_level);
 #else
-                audio_passthrough_volume_out_set(app_cfg_nv.apt_volume_out_level);
+                app_apt_volume_out_set(app_cfg_nv.apt_volume_out_level);
 #endif
                 app_apt_volume_relay_report_handle();
 
@@ -3065,7 +3147,7 @@ void app_mmi_handle_action(uint8_t action)
 #if APT_SUB_VOLUME_LEVEL_SUPPORT
                 app_apt_main_volume_set(app_cfg_nv.apt_volume_out_level);
 #else
-                audio_passthrough_volume_out_set(app_cfg_nv.apt_volume_out_level);
+                app_apt_volume_out_set(app_cfg_nv.apt_volume_out_level);
 #endif
                 app_apt_volume_relay_report_handle();
 
@@ -3094,7 +3176,7 @@ void app_mmi_handle_action(uint8_t action)
                 app_apt_sub_volume_set(APT_SUB_VOLUME_LEVEL_MAX / 2);
 #else
                 app_cfg_nv.apt_volume_out_level = APT_MAIN_VOLUME_LEVEL_MAX / 2;
-                audio_passthrough_volume_out_set(app_cfg_nv.apt_volume_out_level);
+                app_apt_volume_out_set(app_cfg_nv.apt_volume_out_level);
 #endif
 
                 if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_SECONDARY)
@@ -3236,6 +3318,9 @@ void app_mmi_handle_action(uint8_t action)
                 if (app_apt_is_normal_apt_started())
                 {
                     app_ha_switch_hearable_prog();
+#if F_APP_HAS_SUPPORT
+                    has_update_active_preset_idx(app_ha_hearing_get_active_prog_id() + 1);
+#endif
                 }
             }
         }
@@ -3385,7 +3470,8 @@ void app_mmi_handle_action(uint8_t action)
 
                     if (app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SECONDARY)
                     {
-                        app_apt_report(EVENT_ASSIGN_APT_TYPE, NULL, 0);
+                        uint8_t report_data = app_cfg_nv.apt_support_type;
+                        app_apt_report(EVENT_ASSIGN_APT_TYPE, &report_data, 1);
                     }
                 }
             }
@@ -3424,6 +3510,7 @@ void app_mmi_handle_action(uint8_t action)
 
     case MMI_START_ROLESWAP:
         {
+            //triggerred by ota roleswap
             if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY)
             {
                 app_roleswap_ctrl_check(APP_ROLESWAP_CTRL_EVENT_MMI_TRIGGER_ROLESWAP);
@@ -3620,8 +3707,8 @@ void app_mmi_handle_action(uint8_t action)
 
     case MMI_TAKE_PICTURE:
         {
-            uint8_t keyboard_vol_up[5] = {0x02, 0, 0, 0x80, 0};
-            uint8_t keyboard_release[5] = {0x02, 0, 0, 0, 0};
+            uint8_t keyboard_vol_up[4] = {0x02, 0, 0, 0x80};
+            uint8_t keyboard_release[4] = {0x02, 0, 0, 0};
 
             bt_hid_device_interrupt_data_send(app_db.br_link[active_a2dp_idx].bd_addr,
                                               BT_HID_DEVICE_REPORT_TYPE_INPUT,
@@ -3968,6 +4055,21 @@ void app_mmi_handle_action(uint8_t action)
             }
         }
         break;
+
+    case MMI_GFPS_FINDER_STOP_ADV:
+        {
+            app_gfps_finder_adv_handle_mmi_action();
+        }
+        break;
+
+    case MMI_DULT_ENTER_ID_READ_STATE:
+        {
+            if (extend_app_cfg_const.gfps_finder_support)
+            {
+                app_dult_id_read_state_enable();
+            }
+        }
+        break;
 #endif
 
 #if CONFIG_REALTEK_GFPS_LE_DEVICE_SUPPORT
@@ -3975,7 +4077,7 @@ void app_mmi_handle_action(uint8_t action)
         {
             if (extend_app_cfg_const.gfps_le_device_support)
             {
-                app_gfps_le_force_enter_pairing_mode(GFPS_KEY_FORCE_ENTER_PAIR_MODE);
+                app_gfps_force_enter_pairing_mode(GFPS_KEY_FORCE_ENTER_PAIR_MODE);
                 app_gfps_le_device_adv_start((T_REMOTE_SESSION_ROLE)app_cfg_nv.bud_role);
                 app_audio_tone_type_play(TONE_GFPS_PAIRING, false, false);
             }
@@ -3986,7 +4088,7 @@ void app_mmi_handle_action(uint8_t action)
         {
             if (extend_app_cfg_const.gfps_le_device_support)
             {
-                app_gfps_le_force_enter_pairing_mode(GFPS_EXIT_PAIR_MODE);
+                app_gfps_force_enter_pairing_mode(GFPS_EXIT_PAIR_MODE);
                 app_gfps_le_device_adv_start((T_REMOTE_SESSION_ROLE)app_cfg_nv.bud_role);
             }
         }

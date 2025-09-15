@@ -29,24 +29,39 @@
 #endif
 #include "app_usb_vol_control.h"
 
+#if F_APP_GAMING_LE_FIX_CHANNEL_SUPPORT
+#include "gap_fix_chann_conn.h"
+
 bool app_cmd_send_by_le(uint8_t cmd, uint8_t *data, uint16_t len, T_EARBUD_SIDE side)
 {
-    if ((!data) || (!len))
+    T_APP_LE_LINK *p_left_link = NULL;
+    T_APP_LE_LINK *p_right_link = NULL;
+    uint8_t cause = 0;
+    bool left_ret = true;
+    bool right_ret = true;
+    bool ret = true;
+    uint16_t pack_len = 0;
+    uint8_t *p_pack = NULL;
+    T_GAMING_SYNC_HDR *p_hdr = NULL;
+
+    if (data == NULL || len == 0)
     {
-        APP_PRINT_ERROR0("app_cmd_send_by_le(): invaild inputs");
-        return false;
+        cause = 1;
+        ret = false;
+        goto failed;
     }
 
-    uint16_t pack_len = len + sizeof(T_GAMING_SYNC_HDR) + 1;
-    uint8_t *p_pack = calloc(1, pack_len);
+    pack_len = len + sizeof(T_GAMING_SYNC_HDR) + 1;
+    p_pack = calloc(1, pack_len);
 
-    if (!p_pack)
+    if (p_pack == NULL)
     {
-        APP_PRINT_ERROR0("app_cmd_send_by_le(): zalloc fail");
-        return false;
+        cause = 2;
+        ret = false;
+        goto failed;
     }
 
-    T_GAMING_SYNC_HDR *p_hdr = (T_GAMING_SYNC_HDR *)p_pack;
+    p_hdr = (T_GAMING_SYNC_HDR *)p_pack;
 
     p_hdr->sync = DONGLE_FORMAT_START_BIT;
     p_hdr->type = DONGLE_TYPE_CMD;
@@ -55,18 +70,51 @@ bool app_cmd_send_by_le(uint8_t cmd, uint8_t *data, uint16_t len, T_EARBUD_SIDE 
     memcpy(p_pack + sizeof(T_GAMING_SYNC_HDR), data, len);
     p_pack[pack_len - 1] = DONGLE_FORMAT_STOP_BIT;
 
-    if (app_dongle_transmit_client_start(side, pack_len, p_pack) == false)
+    if (side == EARBUD_SIDE_LEFT)
     {
-        APP_PRINT_INFO2("app_cmd_send_by_le: failed to send %u, %b", pack_len, TRACE_BINARY(pack_len,
-                        p_pack));
-
-        os_mem_free(p_pack);
-        return false;
+        p_left_link = app_link_find_le_link_by_bud_side(DEVICE_BUD_SIDE_LEFT);
+    }
+    else if (side == EARBUD_SIDE_RIGHT)
+    {
+        p_right_link = app_link_find_le_link_by_bud_side(DEVICE_BUD_SIDE_RIGHT);
+    }
+    else
+    {
+        p_left_link  = app_link_find_le_link_by_bud_side(DEVICE_BUD_SIDE_LEFT);
+        p_right_link = app_link_find_le_link_by_bud_side(DEVICE_BUD_SIDE_RIGHT);
     }
 
-    os_mem_free(p_pack);
-    return true;
+    if (p_left_link != NULL)
+    {
+        left_ret = le_fixed_chann_data_send(p_left_link->conn_id, LE_FIX_CHANNEL_ID, p_pack, pack_len);
+    }
+
+    if (p_right_link != NULL)
+    {
+        right_ret = le_fixed_chann_data_send(p_right_link->conn_id, LE_FIX_CHANNEL_ID, p_pack,
+                                             pack_len);
+    }
+
+    if (left_ret == false || right_ret == false)
+    {
+        ret = false;
+    }
+
+    free(p_pack);
+failed:
+    if (ret == false)
+    {
+        APP_PRINT_ERROR2("app_cmd_send_by_le failed: cmd %d cause -%d", cmd, cause);
+    }
+
+    return ret;
 }
+#else
+bool app_cmd_send_by_le(uint8_t cmd, uint8_t *data, uint16_t len, T_EARBUD_SIDE side)
+{
+    return false;
+}
+#endif
 
 #if TARGET_LE_AUDIO_GAMING_DONGLE
 static void le_data_handler(uint8_t *buf, uint16_t len)
@@ -113,6 +161,47 @@ static void le_data_handler(uint8_t *buf, uint16_t len)
                 app_usb_audio_volume_hid_ctrl((T_APP_VOL_CTRL)hdr->payload[0]);
             }
 #endif
+            else if (cmd == DONGLE_CMD_B2B_RELAY_DATA || cmd == DONGLE_CMD_B2B_RELAY_ENGAGE_ADV)
+            {
+                T_DONGLE_RELAY_B2B_DATA *b2b_relay_data = NULL;
+                T_DONGLE_RELAY_B2B_ADV  *b2b_relay_adv  = NULL;
+                T_APP_LE_LINK *p_link;
+                T_EARBUD_SIDE peer_bud_side;
+                T_DEVICE_BUD_SIDE bud_side;
+                uint8_t *send_data = NULL;
+                uint16_t send_len = 0;
+
+                if (cmd == DONGLE_CMD_B2B_RELAY_DATA)
+                {
+                    b2b_relay_data = (T_DONGLE_RELAY_B2B_DATA *)(buf + offsetof(T_GAMING_SYNC_HDR, payload));
+                    bud_side = b2b_relay_data->bud_side;
+                    send_data = (uint8_t *)b2b_relay_data;
+                    send_len = sizeof(T_DONGLE_RELAY_B2B_DATA) + b2b_relay_data->len;
+                }
+                else
+                {
+                    b2b_relay_adv = (T_DONGLE_RELAY_B2B_ADV *)(buf + offsetof(T_GAMING_SYNC_HDR, payload));
+                    bud_side = b2b_relay_adv->bud_side;
+                    send_data = (uint8_t *)b2b_relay_adv;
+                    send_len = sizeof(T_DONGLE_RELAY_B2B_ADV) + b2b_relay_adv->adv_len;
+                }
+
+                if (bud_side == DEVICE_BUD_SIDE_LEFT)
+                {
+                    p_link = app_link_find_le_link_by_bud_side(DEVICE_BUD_SIDE_RIGHT);
+                    peer_bud_side = EARBUD_SIDE_RIGHT;
+                }
+                else
+                {
+                    p_link = app_link_find_le_link_by_bud_side(DEVICE_BUD_SIDE_LEFT);
+                    peer_bud_side = EARBUD_SIDE_LEFT;
+                }
+
+                if (p_link != NULL)
+                {
+                    app_cmd_send_by_le(cmd, send_data, send_len, peer_bud_side);
+                }
+            }
         }
         break;
 

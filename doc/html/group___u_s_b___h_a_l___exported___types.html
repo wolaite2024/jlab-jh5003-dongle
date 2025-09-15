@@ -752,7 +752,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000239">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000258">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -808,7 +808,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000240">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000259">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -837,7 +837,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h"</dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000241">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000260">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="preprocessor">#include &quot;usb_spec20.h&quot;</span></div><div class="line"><span class="keywordtype">int</span> setup_cb(uint8_t *data)</div><div class="line">{</div><div class="line">    <a class="code" href="struct__usb__device__request.html">T_USB_DEVICE_REQUEST</a> *ctrl_request = (<a class="code" href="struct__usb__device__request.html">T_USB_DEVICE_REQUEST</a> *)data;</div><div class="line">    ret = 0;</div><div class="line">    <span class="keywordflow">if</span>(ctrl_request-&gt;<a class="code" href="struct__usb__device__request.html#abea120ea756eb0abdb8aafb8713f61f4">bmRequestType</a> &amp; USB_TYPE_MASK == USB_TYPE_STANDARD)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">if</span>(ctrl_request-&gt;<a class="code" href="struct__usb__device__request.html#a1e7be110861bd4ff75c86d5214f31543">bRequest</a> == USB_REQ_CODE_SET_ADDRESS)</div><div class="line">        {</div><div class="line">            ret = <a class="code" href="group___u_s_b___h_a_l___exported___types.html#ga565a9e5c8578b317de6b966cf522ae62">hal_usb_set_address</a>(UGETW(ctrl_request-&gt;<a class="code" href="struct__usb__device__request.html#a7383d0165ad8eab48aa239c005199121">wValue</a>));</div><div class="line">        }</div><div class="line">    }</div><div class="line">    <span class="keywordflow">return</span> ret;</div><div class="line">}</div></div><!-- fragment --> </dd></dl>
 
 </div>
@@ -867,7 +867,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>T_HAL_USB_REQUEST_BLOCK* NULL: fail, other: success </dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000242">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000261">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="section user"><dt>Example</dt><dd>Please refer to "Data transfer" in <a class="el" href="group___u_s_b___h_a_l.html#HAL_Usage_Chapter">How to use USB HAL</a> </dd></dl>
 
 </div>
@@ -897,7 +897,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000243">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000262">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -927,7 +927,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>T_HAL_USB_ISO_REQUEST_BLOCK* NULL: fail, other: success </dd></dl>
 <dl class="section user"><dt>Example</dt><dd>Please refer to "Data transfer" in <a class="el" href="group___u_s_b___h_a_l.html#HAL_Usage_Chapter">How to use USB HAL</a></dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000244">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000263">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -956,7 +956,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h"</dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000245">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000264">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -987,7 +987,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>void* endpoint handle NULL: invalid other: valid </dd></dl>
 <dl class="section user"><dt>Example</dt><dd>Please refer to "Endpoint setup" in <a class="el" href="group___u_s_b___h_a_l.html#HAL_Usage_Chapter">How to use USB HAL</a></dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000246">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000265">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1028,7 +1028,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section user"><dt>Example</dt><dd>Please refer to "Endpoint setup" in <a class="el" href="group___u_s_b___h_a_l.html#HAL_Usage_Chapter">How to use USB HAL</a></dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000247">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000266">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1058,7 +1058,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section user"><dt>Example</dt><dd>Please refer to "Data transfer" in <a class="el" href="group___u_s_b___h_a_l.html#HAL_Usage_Chapter">How to use USB HAL</a></dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000248">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000267">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1099,7 +1099,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section user"><dt>Example</dt><dd>Please refer to "Data transfer" in <a class="el" href="group___u_s_b___h_a_l.html#HAL_Usage_Chapter">How to use USB HAL</a></dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000249">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000268">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1140,7 +1140,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section user"><dt>Example</dt><dd>Please refer to "Data transfer" in <a class="el" href="group___u_s_b___h_a_l.html#HAL_Usage_Chapter">How to use USB HAL</a></dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000250">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000269">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1181,7 +1181,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section user"><dt>Example</dt><dd>Please refer to "Data transfer" in <a class="el" href="group___u_s_b___h_a_l.html#HAL_Usage_Chapter">How to use USB HAL</a></dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000251">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000270">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1225,7 +1225,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">    <span class="comment">//endpoint0</span></div><div class="line">     <span class="keywordtype">int</span> setup_cb(uint8_t *data)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">if</span> request is not supported</div><div class="line">        {</div><div class="line">            <a class="code" href="group___u_s_b___h_a_l___exported___types.html#ga013bddd9ff84b1e1b5bc658ffdf9d8be">hal_usb_ep_stall_set</a>(ep0_handle, -ENOTSUPP);</div><div class="line">        }</div><div class="line">        <span class="keywordflow">return</span> -ENOTSUPP;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">//interrupt/bulk endpoints</span></div><div class="line">*   <span class="keywordtype">int</span> setup_cb(uint8_t *data)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">if</span> request is SetFeature(ENDPOINT_HALT)</div><div class="line">        {</div><div class="line">            uint8_t addr = UGETW(wIndex);</div><div class="line">            <span class="keywordtype">void</span> *ep_handle = <a class="code" href="group___u_s_b___h_a_l___exported___types.html#ga256e70428e1ec93bf2033785282ad2be">hal_usb_ep_handle_get</a>(addr);</div><div class="line">            <a class="code" href="group___u_s_b___h_a_l___exported___types.html#ga013bddd9ff84b1e1b5bc658ffdf9d8be">hal_usb_ep_stall_set</a>(ep_handle, 0);</div><div class="line">        }</div><div class="line">        <span class="keywordflow">return</span> 0;</div><div class="line">    }</div></div><!-- fragment --></dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000252">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000271">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1255,7 +1255,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">    <span class="comment">//interrupt/bulk endpoints</span></div><div class="line">*   <span class="keywordtype">int</span> setup_cb(uint8_t *data)</div><div class="line">    {</div><div class="line">        <span class="keywordflow">if</span> request is ClearFeature(ENDPOINT_HALT)</div><div class="line">        {</div><div class="line">            uint8_t addr = UGETW(wIndex);</div><div class="line">            <span class="keywordtype">void</span> *ep_handle = <a class="code" href="group___u_s_b___h_a_l___exported___types.html#ga256e70428e1ec93bf2033785282ad2be">hal_usb_ep_handle_get</a>(addr);</div><div class="line">            <a class="code" href="group___u_s_b___h_a_l___exported___types.html#gafc68bad5aab05a7fdbce4c06914c6852">hal_usb_ep_stall_clear</a>(ep_handle);</div><div class="line">        }</div><div class="line">        <span class="keywordflow">return</span> 0;</div><div class="line">    }</div></div><!-- fragment --></dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000253">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000272">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1285,7 +1285,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>uint16_t status </dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">int</span> setup_cb(uint8_t *data)</div><div class="line">{</div><div class="line">    ...</div><div class="line">    <span class="keywordflow">if</span> request is  GetStatus(ENDPOINT)</div><div class="line">    {</div><div class="line">        uint8_t addr = UGETW(wIndex);</div><div class="line">        <span class="keywordtype">void</span> *ep_handle = <a class="code" href="group___u_s_b___h_a_l___exported___types.html#ga256e70428e1ec93bf2033785282ad2be">hal_usb_ep_handle_get</a>(addr);</div><div class="line">        uint16_t status = <a class="code" href="group___u_s_b___h_a_l___exported___types.html#ga1b93f816bbac4e4dcb144cfc5ba7341f">hal_usb_ep_stall_status_get</a>(ep_handle);</div><div class="line">        memcpy(ctrl_urb-&gt;buf, &amp;status, 2);</div><div class="line">        ....</div><div class="line">    }</div><div class="line">    <span class="keywordflow">return</span> 0;</div><div class="line">}</div></div><!-- fragment --></dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000254">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000273">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1326,7 +1326,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section user"><dt>Example</dt><dd>Please refer to "Data transfer" in <a class="el" href="group___u_s_b___h_a_l.html#HAL_Usage_Chapter">How to use USB HAL</a></dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000255">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000274">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1367,7 +1367,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section user"><dt>Example</dt><dd>Please refer to "Data transfer" in <a class="el" href="group___u_s_b___h_a_l.html#HAL_Usage_Chapter">How to use USB HAL</a></dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000256">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000275">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1418,7 +1418,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h"</dd></dl>
 <dl class="section user"><dt>Example</dt><dd>Please refer to "Hardware setup" in <a class="el" href="group___u_s_b___h_a_l.html#HAL_Usage_Chapter">How to use USB HAL</a></dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000257">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000276">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1441,7 +1441,7 @@ Functions</h2></td></tr>
 <p>deinit HAL software resource </p>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h"</dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000258">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000277">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1471,7 +1471,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h"</dd></dl>
 <dl class="section user"><dt>Example</dt><dd>Please refer to "Hardware setup" in <a class="el" href="group___u_s_b___h_a_l.html#HAL_Usage_Chapter">How to use USB HAL</a></dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000259">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000278">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1494,7 +1494,7 @@ Functions</h2></td></tr>
 <p>remote wakeup host, if the bmAttributes support remote wakeup in configure descriptor </p>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h"</dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000260">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000279">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1518,7 +1518,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section user"><dt>Example</dt><dd>Please refer to "Hardware setup" in <a class="el" href="group___u_s_b___h_a_l.html#HAL_Usage_Chapter">How to use USB HAL</a></dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000261">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000280">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1541,7 +1541,7 @@ Functions</h2></td></tr>
 <p>deinit USB mac </p>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h"</dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000262">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000281">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1565,7 +1565,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section user"><dt>Example</dt><dd>Please refer to "Hardware setup" in <a class="el" href="group___u_s_b___h_a_l.html#HAL_Usage_Chapter">How to use USB HAL</a></dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000263">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000282">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1588,7 +1588,7 @@ Functions</h2></td></tr>
 <p>power down USB phy </p>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h"</dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000264">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000283">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1612,7 +1612,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section user"><dt>Example</dt><dd>Please refer to "Hardware setup" in <a class="el" href="group___u_s_b___h_a_l.html#HAL_Usage_Chapter">How to use USB HAL</a></dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000265">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000284">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1635,7 +1635,7 @@ Functions</h2></td></tr>
 <p>generate disconnect signal to host </p>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h"</dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000266">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000285">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1657,7 +1657,7 @@ Functions</h2></td></tr>
 
 <p>enable dedicated isochronous interrupt, refer to T_USB_ISR_TYPE </p>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000267">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000286">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1679,7 +1679,7 @@ Functions</h2></td></tr>
 
 <p>disable dedicated isochronous interrupt, refer to T_USB_ISR_TYPE </p>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000268">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000287">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1701,7 +1701,7 @@ Functions</h2></td></tr>
 
 <p>disable global interrupt to the application </p>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000269">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000288">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1723,7 +1723,7 @@ Functions</h2></td></tr>
 
 <p>enable global interrupt to the application </p>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000270">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000289">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1746,7 +1746,7 @@ Functions</h2></td></tr>
 <p>USB phy enter suspend. </p>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000271">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000290">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1769,7 +1769,7 @@ Functions</h2></td></tr>
 <p>USB phy exit suspend. </p>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000272">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000291">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1792,7 +1792,7 @@ Functions</h2></td></tr>
 <p>USB phy set sts. </p>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000273">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000292">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1815,7 +1815,7 @@ Functions</h2></td></tr>
 <p>USB phy get sts. </p>
 <dl class="section return"><dt>Returns</dt><dd>int result, if sts is set to 1, USB wake up. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000274">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000293">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -1844,7 +1844,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000275">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000294">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>

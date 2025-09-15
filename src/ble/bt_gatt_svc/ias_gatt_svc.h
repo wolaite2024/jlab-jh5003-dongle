@@ -41,7 +41,7 @@ extern "C" {
 /*============================================================================*
  *                         Macros
  *============================================================================*/
-/** @defgroup IAS_Exported_Macros IAS Exported Macros
+/** @defgroup IAS_GATT_Exported_Macros IAS GATT Exported Macros
   * @brief
   * @{
   */
@@ -52,7 +52,7 @@ extern "C" {
   */
 #define GATT_MSG_IAS_SERVER_WRITE_ALERT_LEVEL    0x00
 /** @} End of IAS_SVC_CB_MSG */
-/** End of IAS_Exported_Macros
+/** End of IAS_GATT_Exported_Macros
 * @}
 */
 
@@ -60,7 +60,7 @@ extern "C" {
  *                              Types
  *============================================================================*/
 
-/** @defgroup IAS_Exported_Types IAS Exported Types
+/** @defgroup IAS_GATT_Exported_Types IAS GATT Exported Types
   * @brief
   * @{
   */
@@ -81,13 +81,13 @@ typedef struct
     uint8_t alert_level;
 } T_IAS_SERVER_WRITE_ALERT_LEVEL;
 
-/** @} End of IAS_Exported_Types */
+/** @} End of IAS_GATT_Exported_Types */
 
 /*============================================================================*
  *                              Functions
  *============================================================================*/
 
-/** @defgroup IAS_Exported_Functions IAS Exported Functions
+/** @defgroup IAS_GATT_Exported_Functions IAS GATT Exported Functions
   * @brief
   * @{
   */
@@ -111,7 +111,7 @@ typedef struct
  */
 T_SERVER_ID ias_reg_srv(P_FUN_IAS_SERVER_APP_CB app_cb);
 
-/** @} End of IAS_Exported_Functions */
+/** @} End of IAS_GATT_Exported_Functions */
 
 /** @} End of IAS_GATT_SVC */
 

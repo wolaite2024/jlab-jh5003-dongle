@@ -83,7 +83,8 @@ void test_app_hfp_ag_handle_sdp_discovery_info(uint8_t *bd_addr, T_BT_SDP_ATTR_I
     p_link = app_find_br_link(bd_addr);
     if (p_link != NULL)
     {
-        if (p_link->sdp_active_inquire_profile == HFP_PROFILE_MASK)
+        if (p_link->sdp_active_inquire_profile == HFP_PROFILE_MASK &&
+            p_info->srv_class_uuid_data.uuid_16 == UUID_HANDSFREE)
         {
             if ((p_link->connected_profile & HFP_PROFILE_MASK) == 0)
             {
@@ -94,7 +95,8 @@ void test_app_hfp_ag_handle_sdp_discovery_info(uint8_t *bd_addr, T_BT_SDP_ATTR_I
                 }
             }
         }
-        else if (p_link->sdp_active_inquire_profile == HSP_PROFILE_MASK)
+        else if (p_link->sdp_active_inquire_profile == HSP_PROFILE_MASK &&
+                 p_info->srv_class_uuid_data.uuid_16 == UUID_HEADSET)
         {
             if ((p_link->connected_profile & HSP_PROFILE_MASK) == 0)
             {

@@ -92,11 +92,13 @@ typedef struct t_audio_track
     T_MEDIA_BUFFER_PROXY    buffer_proxy;
     T_OS_QUEUE              effects;
     bool                    effect_apply;
+    uint8_t                 effect_bypass;
     uint16_t                seq_in_num;
     bool                    signal_in;
     bool                    signal_out;
     uint16_t                signal_in_interval;
     uint16_t                signal_out_interval;
+    uint16_t                us_packet_length;
 } T_AUDIO_TRACK;
 
 typedef struct t_audio_track_db
@@ -414,6 +416,34 @@ static bool audio_track_effect_run(T_AUDIO_TRACK *track)
     }
 
     return true;
+}
+
+static void audio_track_effect_control_apply(T_AUDIO_TRACK *track, uint8_t action)
+{
+    switch (track->stream_type)
+    {
+    case AUDIO_STREAM_TYPE_PLAYBACK:
+        {
+            audio_path_decoder_effect_control(track->path_handle, action);
+        }
+        break;
+
+    case AUDIO_STREAM_TYPE_RECORD:
+        {
+            audio_path_encoder_effect_control(track->path_handle, action);
+        }
+        break;
+
+    case AUDIO_STREAM_TYPE_VOICE:
+        {
+            audio_path_decoder_effect_control(track->path_handle, action);
+            audio_path_encoder_effect_control(track->path_handle, action);
+        }
+        break;
+
+    default:
+        break;
+    }
 }
 
 static bool audio_track_effect_stop(T_AUDIO_TRACK *track)
@@ -976,6 +1006,8 @@ static bool audio_track_path_cback(T_AUDIO_PATH_HANDLE handle,
         case AUDIO_PATH_EVT_EFFECT_REQ:
             {
                 track->effect_apply = true;
+
+                audio_track_effect_control_apply(track, track->effect_bypass);
                 audio_track_effect_run(track);
             }
             break;
@@ -1010,6 +1042,13 @@ static bool audio_track_path_cback(T_AUDIO_PATH_HANDLE handle,
                 T_H2D_STREAM_HEADER2 *d2h_hdr;
 
                 peek_len = audio_path_data_peek(track->path_handle);
+                if (peek_len > track->us_packet_length)
+                {
+                    AUDIO_PRINT_ERROR2("AUDIO_PATH_EVT_DATA_IND: peek_len %u us_packet_length %u", peek_len,
+                                       track->us_packet_length);
+                    break;
+                }
+
                 peek_buf = os_mem_alloc2(peek_len);
                 if (peek_buf == NULL)
                 {
@@ -1037,8 +1076,8 @@ static bool audio_track_path_cback(T_AUDIO_PATH_HANDLE handle,
                 payload = d2h_hdr->payload;
                 payload_len = d2h_hdr->payload_length;
 
-                AUDIO_PRINT_TRACE4("AUDIO_PATH_EVT_DATA_IND: payload_len %u timestamp 0x%x seq %u frame_num %u",
-                                   payload_len, timestamp, track->seq_in_num, frame_num);
+                AUDIO_PRINT_INFO4("AUDIO_PATH_EVT_DATA_IND: payload_len %u timestamp 0x%x seq %u frame_num %u",
+                                  payload_len, timestamp, track->seq_in_num, frame_num);
 
                 if (track->async_read != NULL)
                 {
@@ -3752,9 +3791,9 @@ T_AUDIO_TRACK_HANDLE audio_track_create(T_AUDIO_STREAM_TYPE    stream_type,
         goto fail_alloc_track;
     }
 
-    AUDIO_PRINT_TRACE8("audio_track_create: handle %p, stream_type %u, mode %u, usage %u, "
-                       "volume_out %u, volume_in %u, async_write %p, async_read %p",
-                       track, stream_type, mode, usage, volume_out, volume_in, async_write, async_read);
+    AUDIO_PRINT_INFO8("audio_track_create: handle %p, stream_type %u, mode %u, usage %u, "
+                      "volume_out %u, volume_in %u, async_write %p, async_read %p",
+                      track, stream_type, mode, usage, volume_out, volume_in, async_write, async_read);
 
     track->container        = NULL;
     track->state            = AUDIO_SESSION_STATE_RELEASED;
@@ -3800,6 +3839,8 @@ T_AUDIO_TRACK_HANDLE audio_track_create(T_AUDIO_STREAM_TYPE    stream_type,
         track->volume_in_max    = audio_track_db.voice_volume_in_max;
         track->volume_in_min    = audio_track_db.voice_volume_in_min;
         track->volume_in        = audio_track_db.voice_volume_in_default;
+        track->us_packet_length = media_buffer_cacu_frames_length(&format_info) +
+                                  sizeof(T_H2D_STREAM_HEADER2);
 
         if (track->volume_out >= track->volume_out_min &&
             track->volume_out <= track->volume_out_max)
@@ -3818,6 +3859,8 @@ T_AUDIO_TRACK_HANDLE audio_track_create(T_AUDIO_STREAM_TYPE    stream_type,
         track->volume_in_max    = audio_track_db.record_volume_max;
         track->volume_in_min    = audio_track_db.record_volume_min;
         track->volume_in        = audio_track_db.record_volume_default;
+        track->us_packet_length = media_buffer_cacu_frames_length(&format_info) +
+                                  sizeof(T_H2D_STREAM_HEADER2);
 
         if (track->volume_in >= track->volume_in_min &&
             track->volume_in <= track->volume_in_max)
@@ -3826,7 +3869,8 @@ T_AUDIO_TRACK_HANDLE audio_track_create(T_AUDIO_STREAM_TYPE    stream_type,
         }
     }
 
-    track->effect_apply = false;
+    track->effect_apply  = false;
+    track->effect_bypass = 0;
     os_queue_init(&track->effects);
 
     if (audio_session_state_set(track, AUDIO_SESSION_STATE_CREATING) == false)
@@ -3856,8 +3900,8 @@ bool audio_track_start(T_AUDIO_TRACK_HANDLE handle)
         goto fail_check_handle;
     }
 
-    AUDIO_PRINT_TRACE3("audio_track_start: handle %p, state %u, action %u",
-                       handle, track->state, track->action);
+    AUDIO_PRINT_INFO3("audio_track_start: handle %p, state %u, action %u",
+                      handle, track->state, track->action);
 
     if (audio_session_state_set(track, AUDIO_SESSION_STATE_STARTING) == false)
     {
@@ -3885,8 +3929,8 @@ bool audio_track_restart(T_AUDIO_TRACK_HANDLE handle)
         goto fail_check_handle;
     }
 
-    AUDIO_PRINT_TRACE3("audio_track_restart: handle %p, state %u, action %u",
-                       handle, track->state, track->action);
+    AUDIO_PRINT_INFO3("audio_track_restart: handle %p, state %u, action %u",
+                      handle, track->state, track->action);
 
     if (audio_session_state_set(track, AUDIO_SESSION_STATE_RESTARTING) == false)
     {
@@ -3914,8 +3958,8 @@ bool audio_track_pause(T_AUDIO_TRACK_HANDLE handle)
         goto fail_check_handle;
     }
 
-    AUDIO_PRINT_TRACE3("audio_track_pause: handle %p, state %u, action %u",
-                       handle, track->state, track->action);
+    AUDIO_PRINT_INFO3("audio_track_pause: handle %p, state %u, action %u",
+                      handle, track->state, track->action);
 
     if (audio_session_state_set(track, AUDIO_SESSION_STATE_PAUSING) == false)
     {
@@ -3943,8 +3987,8 @@ bool audio_track_stop(T_AUDIO_TRACK_HANDLE handle)
         goto fail_check_handle;
     }
 
-    AUDIO_PRINT_TRACE3("audio_track_stop: handle %p, state %u, action %u",
-                       handle, track->state, track->action);
+    AUDIO_PRINT_INFO3("audio_track_stop: handle %p, state %u, action %u",
+                      handle, track->state, track->action);
 
     if (audio_session_state_set(track, AUDIO_SESSION_STATE_STOPPING) == false)
     {
@@ -3978,8 +4022,8 @@ bool audio_track_release(T_AUDIO_TRACK_HANDLE handle)
         goto fail_invalid_handle;
     }
 
-    AUDIO_PRINT_TRACE3("audio_track_release: handle %p, state %u, action %u",
-                       handle, track->state, track->action);
+    AUDIO_PRINT_INFO3("audio_track_release: handle %p, state %u, action %u",
+                      handle, track->state, track->action);
 
     if (audio_session_state_set(track, AUDIO_SESSION_STATE_RELEASING) == false)
     {
@@ -4133,8 +4177,8 @@ bool audio_track_threshold_set(T_AUDIO_TRACK_HANDLE handle,
         goto fail_invalid_type;
     }
 
-    AUDIO_PRINT_TRACE3("audio_track_threshold_set: handle %p, upper_threshold %u, lower_threshold %u",
-                       handle, upper_threshold, lower_threshold);
+    AUDIO_PRINT_INFO3("audio_track_threshold_set: handle %p, upper_threshold %u, lower_threshold %u",
+                      handle, upper_threshold, lower_threshold);
 
     media_buffer_threshold_set(track->buffer_proxy, upper_threshold, lower_threshold);
     return true;
@@ -4313,8 +4357,8 @@ bool audio_track_latency_set(T_AUDIO_TRACK_HANDLE handle,
         goto fail_invalid_handle;
     }
 
-    AUDIO_PRINT_TRACE3("audio_track_latency_set: handle %p, latency %u fixed %u",
-                       handle, latency, fixed);
+    AUDIO_PRINT_INFO3("audio_track_latency_set: handle %p, latency %u fixed %u",
+                      handle, latency, fixed);
 
     track->latency_fixed = fixed;
     track->latency = latency;
@@ -5181,8 +5225,8 @@ bool audio_track_volume_in_set(T_AUDIO_TRACK_HANDLE handle,
 
     track = (T_AUDIO_TRACK *)handle;
 
-    AUDIO_PRINT_TRACE2("audio_track_volume_in_set: volume %u, volume_in_muted %u",
-                       volume, track->volume_in_muted);
+    AUDIO_PRINT_INFO2("audio_track_volume_in_set: volume %u, volume_in_muted %u",
+                      volume, track->volume_in_muted);
 
     if (audio_track_handle_check(handle) == false)
     {
@@ -5387,8 +5431,8 @@ static void audio_track_effect_cback(T_AUDIO_EFFECT_INSTANCE instance,
 
     track = audio_effect_owner_get(instance);
 
-    AUDIO_PRINT_TRACE3("audio_track_effect_cback: instance %p, track %p, event 0x%02x",
-                       instance, track, event);
+    AUDIO_PRINT_INFO3("audio_track_effect_cback: instance %p, track %p, event 0x%02x",
+                      instance, track, event);
 
     if (audio_track_handle_check(track) == true)
     {
@@ -5465,6 +5509,35 @@ static void audio_track_effect_cback(T_AUDIO_EFFECT_INSTANCE instance,
             break;
         }
     }
+}
+
+bool audio_track_effect_control(T_AUDIO_TRACK_HANDLE handle,
+                                uint8_t              action)
+{
+    T_AUDIO_TRACK *track;
+    int32_t        ret = 0;
+
+    track = (T_AUDIO_TRACK *)handle;
+
+    if (audio_track_handle_check(handle) == false)
+    {
+        ret = 1;
+        goto fail_check_handle;
+    }
+
+    track->effect_bypass = action;
+
+    if (track->state == AUDIO_SESSION_STATE_STARTED)
+    {
+        audio_track_effect_control_apply(track, action);
+    }
+
+    return true;
+
+fail_check_handle:
+    AUDIO_PRINT_ERROR3("audio_track_effect_control: handle %p, action %d, failed %d",
+                       handle, action, -ret);
+    return false;
 }
 
 bool audio_track_effect_attach(T_AUDIO_TRACK_HANDLE    handle,
@@ -5649,6 +5722,12 @@ bool audio_track_out_db_set(T_AUDIO_TRACK_HANDLE handle,
         goto fail_invalid_handle;
     }
 
+    if (track->volume_out_muted == true)
+    {
+        ret = 5;
+        goto fail_volume_out_muted;
+    }
+
     if (left_db < -128 || left_db > 0 ||
         right_db < -128 || right_db > 0)
     {
@@ -5674,6 +5753,7 @@ bool audio_track_out_db_set(T_AUDIO_TRACK_HANDLE handle,
     return true;
 
 fail_invalid_state:
+fail_volume_out_muted:
 fail_invalid_stream_type:
 fail_invalid_db_value:
 fail_invalid_handle:

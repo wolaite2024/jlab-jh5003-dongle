@@ -337,9 +337,9 @@ static void app_hfp_ag_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t
             }
         }
         break;
-    case BT_EVENT_HFP_AG_UNKNOWN_CMD:
+    case BT_EVENT_HFP_AG_VENDOR_CMD:
         {
-            bt_hfp_ag_error_send(param->hfp_ag_unknown_cmd.bd_addr, BT_HFP_AG_ERR_INVALID_CHAR_IN_TSTR);
+            bt_hfp_ag_error_send(param->hfp_ag_vendor_cmd.bd_addr, BT_HFP_AG_ERR_INVALID_CHAR_IN_TSTR);
         }
         break;
 
@@ -402,7 +402,7 @@ void app_hfp_ag_init(void)
 {
     if (app_cfg_const.supported_profile_mask & HFP_PROFILE_MASK)
     {
-        bt_hfp_ag_init(1, RFC_HFP_AG_CHANN_NUM, RFC_HSP_AG_CHANN_NUM, 0xf69,
+        bt_hfp_ag_init(RFC_HFP_AG_CHANN_NUM, RFC_HSP_AG_CHANN_NUM, 0xf69,
                        BT_HFP_AG_CODEC_TYPE_CVSD | BT_HFP_AG_CODEC_TYPE_MSBC);
         bt_mgr_cback_register(app_hfp_ag_bt_cback);
     }

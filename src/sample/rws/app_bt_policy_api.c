@@ -65,6 +65,10 @@ extern T_LINKBACK_ACTIVE_NODE linkback_active_node;
 extern T_BP_STATE bp_state;
 extern T_EVENT cur_event;
 
+#if F_APP_GAMING_WIRED_MODE_HANDLE
+extern T_STATE cur_state;
+#endif
+
 extern T_BT_DEVICE_MODE radio_mode;
 
 extern bool first_connect_sync_default_volume_to_src;
@@ -274,6 +278,13 @@ T_BP_STATE app_bt_policy_get_state(void)
     return bp_state;
 }
 
+#if F_APP_GAMING_WIRED_MODE_HANDLE
+bool app_bt_policy_is_shutdown_step_state(void)
+{
+    return (STATE_SHUTDOWN_STEP == cur_state);
+}
+#endif
+
 T_BT_DEVICE_MODE app_bt_policy_get_radio_mode(void)
 {
     return radio_mode;
@@ -383,10 +394,7 @@ static bool app_bt_policy_b2s_tpoll_check_state(uint8_t *bd_addr, T_BP_TPOLL_EVE
     {
     case BP_TPOLL_EVENT_ACL_CONN:
         {
-            if (linkback_active_node_judge_cur_conn_addr(bd_addr))
-            {
-                changed = true;
-            }
+            changed = true;
         }
         break;
 

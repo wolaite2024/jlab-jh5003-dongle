@@ -51,10 +51,10 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga8d89145dc60bd6f0d1d81e3e6abb92fc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_o_c_s___server___exported___functions.html#ga8d89145dc60bd6f0d1d81e3e6abb92fc">vocs_set_param</a> (uint8_t srv_instance_id, <a class="el" href="struct_t___v_o_c_s___p_a_r_a_m___s_e_t.html">T_VOCS_PARAM_SET</a> *p_param)</td></tr>
-<tr class="memdesc:ga8d89145dc60bd6f0d1d81e3e6abb92fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set volume offset control service parameters.  <a href="#ga8d89145dc60bd6f0d1d81e3e6abb92fc">More...</a><br /></td></tr>
+<tr class="memdesc:ga8d89145dc60bd6f0d1d81e3e6abb92fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set VOCS service parameters.  <a href="#ga8d89145dc60bd6f0d1d81e3e6abb92fc">More...</a><br /></td></tr>
 <tr class="separator:ga8d89145dc60bd6f0d1d81e3e6abb92fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga288e2e65fa37cacf23251f985468104c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___v_o_c_s___server___exported___functions.html#ga288e2e65fa37cacf23251f985468104c">vocs_get_param</a> (uint8_t srv_instance_id, <a class="el" href="struct_t___v_o_c_s___p_a_r_a_m___g_e_t.html">T_VOCS_PARAM_GET</a> *p_param)</td></tr>
-<tr class="memdesc:ga288e2e65fa37cacf23251f985468104c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get volume offset control service parameters.  <a href="#ga288e2e65fa37cacf23251f985468104c">More...</a><br /></td></tr>
+<tr class="memdesc:ga288e2e65fa37cacf23251f985468104c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get VOCS service parameters.  <a href="#ga288e2e65fa37cacf23251f985468104c">More...</a><br /></td></tr>
 <tr class="separator:ga288e2e65fa37cacf23251f985468104c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -85,20 +85,20 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set volume offset control service parameters. </p>
+<p>Set VOCS service parameters. </p>
 <p><a class="el" href="vocs__mgr_8h_source.html">vocs_mgr.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">srv_instance_id</td><td>Service index. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_param</td><td>Pointer to the location of volume offset control service parameter: <a class="el" href="struct_t___v_o_c_s___p_a_r_a_m___s_e_t.html">T_VOCS_PARAM_SET</a>.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_param</td><td>Pointer to the location of VOCS service parameter: <a class="el" href="struct_t___v_o_c_s___p_a_r_a_m___s_e_t.html">T_VOCS_PARAM_SET</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of set volume offset control service parameter. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of VOCS service parameter. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Set volume offset control service parameter success. </td></tr>
-    <tr><td class="paramname">false</td><td>Set volume offset control service parameter failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Set VOCS service parameter is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Set VOCS service parameter failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -131,20 +131,20 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get volume offset control service parameters. </p>
+<p>Get VOCS service parameters. </p>
 <p><a class="el" href="vocs__mgr_8h_source.html">vocs_mgr.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">srv_instance_id</td><td>Service index. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_param</td><td>Pointer to the location of volume offset control service parameter: <a class="el" href="struct_t___v_o_c_s___p_a_r_a_m___g_e_t.html">T_VOCS_PARAM_GET</a>.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_param</td><td>Pointer to the location of VOCS service parameter: <a class="el" href="struct_t___v_o_c_s___p_a_r_a_m___g_e_t.html">T_VOCS_PARAM_GET</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of get volume offset control service parameter. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of get VOCS service parameter. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Get volume offset control service parameter success. </td></tr>
-    <tr><td class="paramname">false</td><td>Get volume offset control service parameter failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Get VOCS service parameter is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Get VOCS service parameter failed. </td></tr>
   </table>
   </dd>
 </dl>

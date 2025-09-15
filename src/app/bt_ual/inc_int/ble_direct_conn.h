@@ -13,6 +13,8 @@
 extern "C" {
 #endif /* __cplusplus */
 
+void ble_direct_set_conn_interval(uint16_t interval);
+
 bool ble_direct_connect(uint8_t *bd_addr, uint8_t bd_type);
 
 bool ble_direct_disconnect(uint8_t *bd_addr, uint8_t bd_type);

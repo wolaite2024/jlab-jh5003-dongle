@@ -10,7 +10,7 @@
 #include "app_link_util.h"
 #include "app_device.h"
 #include "voice_prompt.h"
-#include "engage.h"
+//#include "engage.h"
 #include "remote.h"
 #include "charger_api.h"
 
@@ -59,6 +59,7 @@ typedef enum
 typedef struct
 {
     T_APP_BR_LINK               *br_link;
+    T_APP_LE_LINK               le_link[MAX_BLE_LINK_NUM];
     uint16_t                    external_mcu_mtu;
     uint8_t                     local_loc;                 /**< local bud location */
     uint8_t                     local_batt_level;          /**< local battery level */

@@ -45,13 +45,13 @@ $(function() {
 <a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">LCDC Tear Input Mux<div class="ingroups"><a class="el" href="group___l_c_d_c.html">LCDC</a> &raquo; <a class="el" href="group___l_c_d_c___exported___constants.html">LCDC Exported Constants</a></div></div>  </div>
+<div class="title">LCDC Tear Input Mux<div class="ingroups"><a class="el" href="group___l_c_d_c.html">LCDC</a> &raquo; <a class="el" href="group___l_c_d_c___b_a_s_e.html">LCDC Base</a> &raquo; <a class="el" href="group___l_c_d_c___exported___constants.html">LCDC Exported Constants</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga3ff5c1e02f2c196369a331a3c5da02e2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d_c___tear___input___mux.html#ga3ff5c1e02f2c196369a331a3c5da02e2">IS_LCDC_TE_INPUTMUX</a>(INPUT)&#160;&#160;&#160;((INPUT) == <a class="el" href="group___l_c_d_c___tear___input___mux.html#ggacc9daa738536407e37aff5907ad554d2af4e467b0700ae39d84b55e661cb39845">LCDC_TE_LCD_INPUT</a>) || ((INPUT) == <a class="el" href="group___l_c_d_c___tear___input___mux.html#ggacc9daa738536407e37aff5907ad554d2a880ff18b01383e3ac677f619ab7ff33f">LCDC_TE_DSIHOST_INPUT</a>)</td></tr>
+<tr class="memitem:ga3ff5c1e02f2c196369a331a3c5da02e2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d_c___tear___input___mux.html#ga3ff5c1e02f2c196369a331a3c5da02e2">IS_LCDC_TE_INPUTMUX</a>(INPUT)&#160;&#160;&#160;(((INPUT) == <a class="el" href="group___l_c_d_c___tear___input___mux.html#ggacc9daa738536407e37aff5907ad554d2af4e467b0700ae39d84b55e661cb39845">LCDC_TE_LCD_INPUT</a>) || ((INPUT) == <a class="el" href="group___l_c_d_c___tear___input___mux.html#ggacc9daa738536407e37aff5907ad554d2a880ff18b01383e3ac677f619ab7ff33f">LCDC_TE_DSIHOST_INPUT</a>))</td></tr>
 <tr class="separator:ga3ff5c1e02f2c196369a331a3c5da02e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
@@ -77,7 +77,7 @@ Enumerations</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">INPUT</td><td>)</td>
-          <td>&#160;&#160;&#160;((INPUT) == <a class="el" href="group___l_c_d_c___tear___input___mux.html#ggacc9daa738536407e37aff5907ad554d2af4e467b0700ae39d84b55e661cb39845">LCDC_TE_LCD_INPUT</a>) || ((INPUT) == <a class="el" href="group___l_c_d_c___tear___input___mux.html#ggacc9daa738536407e37aff5907ad554d2a880ff18b01383e3ac677f619ab7ff33f">LCDC_TE_DSIHOST_INPUT</a>)</td>
+          <td>&#160;&#160;&#160;(((INPUT) == <a class="el" href="group___l_c_d_c___tear___input___mux.html#ggacc9daa738536407e37aff5907ad554d2af4e467b0700ae39d84b55e661cb39845">LCDC_TE_LCD_INPUT</a>) || ((INPUT) == <a class="el" href="group___l_c_d_c___tear___input___mux.html#ggacc9daa738536407e37aff5907ad554d2a880ff18b01383e3ac677f619ab7ff33f">LCDC_TE_DSIHOST_INPUT</a>))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -97,8 +97,10 @@ Enumerations</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggacc9daa738536407e37aff5907ad554d2af4e467b0700ae39d84b55e661cb39845"></a>LCDC_TE_LCD_INPUT&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ggacc9daa738536407e37aff5907ad554d2a880ff18b01383e3ac677f619ab7ff33f"></a>LCDC_TE_DSIHOST_INPUT&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggacc9daa738536407e37aff5907ad554d2af4e467b0700ae39d84b55e661cb39845"></a>LCDC_TE_LCD_INPUT&#160;</td><td class="fielddoc"><p>Tear input signal is from LCD Panel Output. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacc9daa738536407e37aff5907ad554d2a880ff18b01383e3ac677f619ab7ff33f"></a>LCDC_TE_DSIHOST_INPUT&#160;</td><td class="fielddoc"><p>Tear input signal is from DW DSI Host Controller(Only used in eDPI interface). </p>
+</td></tr>
 </table>
 
 </div>

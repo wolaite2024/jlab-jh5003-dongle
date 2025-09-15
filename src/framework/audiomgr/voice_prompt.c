@@ -135,7 +135,6 @@ bool voice_prompt_play(uint8_t index, T_VOICE_PROMPT_LANGUAGE_ID language, bool 
                        uint32_t addr, uint32_t len)
 {
     T_VOICE_PROMPT_MODE mode;
-    uint8_t             language_id;
 
     mode = (T_VOICE_PROMPT_MODE)notification_mode_get(NOTIFICATION_TYPE_VP);
 
@@ -152,17 +151,12 @@ bool voice_prompt_play(uint8_t index, T_VOICE_PROMPT_LANGUAGE_ID language, bool 
         return false;
     }
 
-    if (language < VOICE_PROMPT_LANGUAGE_INVALID)
+    if (language >= VOICE_PROMPT_LANGUAGE_INVALID)
     {
-        language_id = language;
-    }
-    else
-    {
-        /* Use current language id if invalid language required. */
-        language_id = vp_language;
+        return false;
     }
 
-    return notification_push(NOTIFICATION_TYPE_VP, index, language_id, NULL, relay, addr, len);
+    return notification_push(NOTIFICATION_TYPE_VP, index, language, NULL, relay, addr, len);
 }
 
 float voice_prompt_volume_balance_get(void)

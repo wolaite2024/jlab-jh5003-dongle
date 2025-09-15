@@ -56,6 +56,14 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:ga410708f63255f49a9449976f19ece52f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ga410708f63255f49a9449976f19ece52f">LE_DEFAULT_MIN_CONN_INTERVAL</a>&#160;&#160;&#160;(12)</td></tr>
+<tr class="separator:ga410708f63255f49a9449976f19ece52f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3a21d80a097ea360c32707d680bee06b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ga3a21d80a097ea360c32707d680bee06b">LE_DEFAULT_MAX_CONN_INTERVAL</a>&#160;&#160;&#160;(24)</td></tr>
+<tr class="separator:ga3a21d80a097ea360c32707d680bee06b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf247dcd297d24cc220d9cb64693509db"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gaf247dcd297d24cc220d9cb64693509db">LE_DEFAULT_SLAVE_LATENCY</a>&#160;&#160;&#160;(0)</td></tr>
+<tr class="separator:gaf247dcd297d24cc220d9cb64693509db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7f12fc24b1cf1dccf3b28e15638a2241"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ga7f12fc24b1cf1dccf3b28e15638a2241">LE_DEFAULT_SUPERVISION_TIMEOUT</a>&#160;&#160;&#160;(500)</td></tr>
+<tr class="separator:ga7f12fc24b1cf1dccf3b28e15638a2241"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga68805d936c2066de60d8ab34feee0683"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ga68805d936c2066de60d8ab34feee0683">RWS_LE_DEFAULT_MIN_CONN_INTERVAL</a>&#160;&#160;&#160;(12)</td></tr>
 <tr class="separator:ga68805d936c2066de60d8ab34feee0683"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6fa2239ef0b3c8e411ae1d42a1329791"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ga6fa2239ef0b3c8e411ae1d42a1329791">RWS_LE_DEFAULT_MAX_CONN_INTERVAL</a>&#160;&#160;&#160;(32)</td></tr>
@@ -76,6 +84,14 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga8e32165862758d82cb9c6dfc689b4e58a231bf631b34c319de30b424ea3807885">LE_LINK_STATE_CONNECTED</a>, 
 <br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga8e32165862758d82cb9c6dfc689b4e58a53e7793e2daa8648b5c4dbdee692cb2f">LE_LINK_STATE_DISCONNECTING</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga8e32165862758d82cb9c6dfc689b4e58a4d3c1ca2c3c9d73a123859f2ef690847">LE_LINK_STATE_DISCONNECTED</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga8e32165862758d82cb9c6dfc689b4e58ad2eb98c9017dc39c886842b32ec80360">LE_LINK_STATE_CONNECTING</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga8e32165862758d82cb9c6dfc689b4e58a231bf631b34c319de30b424ea3807885">LE_LINK_STATE_CONNECTED</a>, 
+<br />
 &#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga8e32165862758d82cb9c6dfc689b4e58a53e7793e2daa8648b5c4dbdee692cb2f">LE_LINK_STATE_DISCONNECTING</a>
 <br />
  }</td></tr>
@@ -86,12 +102,137 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ggab24f7577f4ee435ff6cc34dd775e3d75a3416a4e98469461d9a35c8453a78c602">LE_LINK_ENCRYPTIONED</a> = 1, 
 <br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ggab24f7577f4ee435ff6cc34dd775e3d75a11bdd11a1e7b71072f6368b4ea86078f">LE_LINK_ERROR</a> = 2, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ggab24f7577f4ee435ff6cc34dd775e3d75a5f21019a1191b1a51da55ff6e95ea0cb">LE_LINK_UNENCRYPTIONED</a> = 0, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ggab24f7577f4ee435ff6cc34dd775e3d75a3416a4e98469461d9a35c8453a78c602">LE_LINK_ENCRYPTIONED</a> = 1, 
+<br />
 &#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ggab24f7577f4ee435ff6cc34dd775e3d75a11bdd11a1e7b71072f6368b4ea86078f">LE_LINK_ERROR</a> = 2
 <br />
  }</td></tr>
 <tr class="memdesc:gab24f7577f4ee435ff6cc34dd775e3d75"><td class="mdescLeft">&#160;</td><td class="mdescRight">App define le link encryption state.  <a href="group___a_p_p___b_l_e___g_a_p.html#gab24f7577f4ee435ff6cc34dd775e3d75">More...</a><br /></td></tr>
 <tr class="separator:gab24f7577f4ee435ff6cc34dd775e3d75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga873771f2bddb81d5b70a0e402f570cb4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ga873771f2bddb81d5b70a0e402f570cb4">T_LE_LOCAL_DISC_CAUSE</a> { <br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a856189b0b834f1f5b3b31dfdbc1165a4">LE_LOCAL_DISC_CAUSE_UNKNOWN</a> = 0x00, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a0fec2dbe67718429c57691008a538f9e">LE_LOCAL_DISC_CAUSE_POWER_OFF</a> = 0x01, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a59e77f7d0c82f764707f36086f88f210">LE_LOCAL_DISC_CAUSE_SWITCH_TO_OTA</a> = 0x02, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a5409372a79a8ec978729e17da0c125b7">LE_LOCAL_DISC_CAUSE_AUTHEN_FAILED</a> = 0x03, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4acf6a5f67a19b9e267601ed1394d203be">LE_LOCAL_DISC_CAUSE_TTS_DISC</a> = 0x04, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4affa7dbb7837da1214a7496894624d694">LE_LOCAL_DISC_CAUSE_OTA_RESET</a> = 0x05, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a3a9e8aa8d209b03af1d697e46fb8a2c6">LE_LOCAL_DISC_CAUSE_GFPS_STOP</a> = 0x06, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a39c631214bb82ae5ecd48adb44741ffb">LE_LOCAL_DISC_CAUSE_GFPS_FAILED</a> = 0x07, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a6e5c39c6774a59f94635e79362e197d4">LE_LOCAL_DISC_CAUSE_ROLESWAP</a> = 0x08, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a447f1c323598526070c28294558220b5">LE_LOCAL_DISC_CAUSE_SECONDARY</a> = 0x09, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4acb8f00b8440093fd52ebe56890d91ef8">LE_LOCAL_DISC_CAUSE_TUYA</a> = 0x0A, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a3917393bc3741a34d493b22a100a8973">LE_LOCAL_DISC_CAUSE_ENGAGE_STREAM_PRIOIRTY</a> = 0x0B, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a856189b0b834f1f5b3b31dfdbc1165a4">LE_LOCAL_DISC_CAUSE_UNKNOWN</a> = 0x00, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a0fec2dbe67718429c57691008a538f9e">LE_LOCAL_DISC_CAUSE_POWER_OFF</a> = 0x01, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a59e77f7d0c82f764707f36086f88f210">LE_LOCAL_DISC_CAUSE_SWITCH_TO_OTA</a> = 0x02, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a5409372a79a8ec978729e17da0c125b7">LE_LOCAL_DISC_CAUSE_AUTHEN_FAILED</a> = 0x03, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4acf6a5f67a19b9e267601ed1394d203be">LE_LOCAL_DISC_CAUSE_TTS_DISC</a> = 0x04, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4affa7dbb7837da1214a7496894624d694">LE_LOCAL_DISC_CAUSE_OTA_RESET</a> = 0x05, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a3a9e8aa8d209b03af1d697e46fb8a2c6">LE_LOCAL_DISC_CAUSE_GFPS_STOP</a> = 0x06, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a39c631214bb82ae5ecd48adb44741ffb">LE_LOCAL_DISC_CAUSE_GFPS_FAILED</a> = 0x07, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a6e5c39c6774a59f94635e79362e197d4">LE_LOCAL_DISC_CAUSE_ROLESWAP</a> = 0x08, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a447f1c323598526070c28294558220b5">LE_LOCAL_DISC_CAUSE_SECONDARY</a> = 0x09, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4acb8f00b8440093fd52ebe56890d91ef8">LE_LOCAL_DISC_CAUSE_TUYA</a> = 0x0A, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a3917393bc3741a34d493b22a100a8973">LE_LOCAL_DISC_CAUSE_ENGAGE_STREAM_PRIOIRTY</a> = 0x0B, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a4884a98640d558a1d468322290b3d630">LE_LOCAL_DISC_CAUSE_GFPS_LINK_FULL</a> = 0x0C, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a7bc28b8951ad9d8a9731fd327322bfd0">LE_LOCAL_DISC_CAUSE_GFPS_FINDER</a> = 0x0D, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4afc5ac02c86c471eac85fa0d3bfecc8d8">LE_LOCAL_DISC_CAUSE_RWS_OTA_SUCCESS</a> = 0x0E, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a9b0d06de4368f31710d34f9cdc545188">LE_LOCAL_DISC_CAUSE_DONGLE_MODE_SWITCH</a> = 0x0F
+<br />
+ }</td></tr>
+<tr class="separator:ga873771f2bddb81d5b70a0e402f570cb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8e32165862758d82cb9c6dfc689b4e58"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ga8e32165862758d82cb9c6dfc689b4e58">T_LE_LINK_STATE</a> { <br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga8e32165862758d82cb9c6dfc689b4e58a4d3c1ca2c3c9d73a123859f2ef690847">LE_LINK_STATE_DISCONNECTED</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga8e32165862758d82cb9c6dfc689b4e58ad2eb98c9017dc39c886842b32ec80360">LE_LINK_STATE_CONNECTING</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga8e32165862758d82cb9c6dfc689b4e58a231bf631b34c319de30b424ea3807885">LE_LINK_STATE_CONNECTED</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga8e32165862758d82cb9c6dfc689b4e58a53e7793e2daa8648b5c4dbdee692cb2f">LE_LINK_STATE_DISCONNECTING</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga8e32165862758d82cb9c6dfc689b4e58a4d3c1ca2c3c9d73a123859f2ef690847">LE_LINK_STATE_DISCONNECTED</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga8e32165862758d82cb9c6dfc689b4e58ad2eb98c9017dc39c886842b32ec80360">LE_LINK_STATE_CONNECTING</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga8e32165862758d82cb9c6dfc689b4e58a231bf631b34c319de30b424ea3807885">LE_LINK_STATE_CONNECTED</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga8e32165862758d82cb9c6dfc689b4e58a53e7793e2daa8648b5c4dbdee692cb2f">LE_LINK_STATE_DISCONNECTING</a>
+<br />
+ }</td></tr>
+<tr class="memdesc:ga8e32165862758d82cb9c6dfc689b4e58"><td class="mdescLeft">&#160;</td><td class="mdescRight">App define le link connection state status.  <a href="group___a_p_p___b_l_e___g_a_p.html#ga8e32165862758d82cb9c6dfc689b4e58">More...</a><br /></td></tr>
+<tr class="separator:ga8e32165862758d82cb9c6dfc689b4e58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab24f7577f4ee435ff6cc34dd775e3d75"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gab24f7577f4ee435ff6cc34dd775e3d75">T_LE_LINK_ENCRYPTION_STATE</a> { <br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ggab24f7577f4ee435ff6cc34dd775e3d75a5f21019a1191b1a51da55ff6e95ea0cb">LE_LINK_UNENCRYPTIONED</a> = 0, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ggab24f7577f4ee435ff6cc34dd775e3d75a3416a4e98469461d9a35c8453a78c602">LE_LINK_ENCRYPTIONED</a> = 1, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ggab24f7577f4ee435ff6cc34dd775e3d75a11bdd11a1e7b71072f6368b4ea86078f">LE_LINK_ERROR</a> = 2, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ggab24f7577f4ee435ff6cc34dd775e3d75a5f21019a1191b1a51da55ff6e95ea0cb">LE_LINK_UNENCRYPTIONED</a> = 0, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ggab24f7577f4ee435ff6cc34dd775e3d75a3416a4e98469461d9a35c8453a78c602">LE_LINK_ENCRYPTIONED</a> = 1, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ggab24f7577f4ee435ff6cc34dd775e3d75a11bdd11a1e7b71072f6368b4ea86078f">LE_LINK_ERROR</a> = 2
+<br />
+ }</td></tr>
+<tr class="memdesc:gab24f7577f4ee435ff6cc34dd775e3d75"><td class="mdescLeft">&#160;</td><td class="mdescRight">App define le link encryption state.  <a href="group___a_p_p___b_l_e___g_a_p.html#gab24f7577f4ee435ff6cc34dd775e3d75">More...</a><br /></td></tr>
+<tr class="separator:gab24f7577f4ee435ff6cc34dd775e3d75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga873771f2bddb81d5b70a0e402f570cb4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ga873771f2bddb81d5b70a0e402f570cb4">T_LE_LOCAL_DISC_CAUSE</a> { <br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a856189b0b834f1f5b3b31dfdbc1165a4">LE_LOCAL_DISC_CAUSE_UNKNOWN</a> = 0x00, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a0fec2dbe67718429c57691008a538f9e">LE_LOCAL_DISC_CAUSE_POWER_OFF</a> = 0x01, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a59e77f7d0c82f764707f36086f88f210">LE_LOCAL_DISC_CAUSE_SWITCH_TO_OTA</a> = 0x02, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a5409372a79a8ec978729e17da0c125b7">LE_LOCAL_DISC_CAUSE_AUTHEN_FAILED</a> = 0x03, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4acf6a5f67a19b9e267601ed1394d203be">LE_LOCAL_DISC_CAUSE_TTS_DISC</a> = 0x04, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4affa7dbb7837da1214a7496894624d694">LE_LOCAL_DISC_CAUSE_OTA_RESET</a> = 0x05, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a3a9e8aa8d209b03af1d697e46fb8a2c6">LE_LOCAL_DISC_CAUSE_GFPS_STOP</a> = 0x06, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a39c631214bb82ae5ecd48adb44741ffb">LE_LOCAL_DISC_CAUSE_GFPS_FAILED</a> = 0x07, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a6e5c39c6774a59f94635e79362e197d4">LE_LOCAL_DISC_CAUSE_ROLESWAP</a> = 0x08, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a447f1c323598526070c28294558220b5">LE_LOCAL_DISC_CAUSE_SECONDARY</a> = 0x09, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4acb8f00b8440093fd52ebe56890d91ef8">LE_LOCAL_DISC_CAUSE_TUYA</a> = 0x0A, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a3917393bc3741a34d493b22a100a8973">LE_LOCAL_DISC_CAUSE_ENGAGE_STREAM_PRIOIRTY</a> = 0x0B, 
+<br />
 &#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a856189b0b834f1f5b3b31dfdbc1165a4">LE_LOCAL_DISC_CAUSE_UNKNOWN</a> = 0x00, 
 <br />
 &#160;&#160;<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gga873771f2bddb81d5b70a0e402f570cb4a0fec2dbe67718429c57691008a538f9e">LE_LOCAL_DISC_CAUSE_POWER_OFF</a> = 0x01, 
@@ -141,12 +282,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga99e7c4070bb364ab4015c974edb579d3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ga99e7c4070bb364ab4015c974edb579d3">app_ble_gap_disconnect</a> (<a class="el" href="struct_t___a_p_p___l_e___l_i_n_k.html">T_APP_LE_LINK</a> *p_link, <a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ga873771f2bddb81d5b70a0e402f570cb4">T_LE_LOCAL_DISC_CAUSE</a> disc_cause)</td></tr>
 <tr class="memdesc:ga99e7c4070bb364ab4015c974edb579d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnect BLE link.  <a href="#ga99e7c4070bb364ab4015c974edb579d3">More...</a><br /></td></tr>
 <tr class="separator:ga99e7c4070bb364ab4015c974edb579d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga52f2d89c50d2ffbde5c1aa19fa281407"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ga52f2d89c50d2ffbde5c1aa19fa281407">app_ble_gap_handle_gap_msg</a> (<a class="el" href="struct_t___i_o___m_s_g.html">T_IO_MSG</a> *p_io_msg)</td></tr>
+<tr class="memdesc:ga52f2d89c50d2ffbde5c1aa19fa281407"><td class="mdescLeft">&#160;</td><td class="mdescRight">All the bt gap msg events are pre-handled in this function. Then the event handling function shall be called according to the subType of BEE_IO_MSG.  <a href="#ga52f2d89c50d2ffbde5c1aa19fa281407">More...</a><br /></td></tr>
+<tr class="separator:ga52f2d89c50d2ffbde5c1aa19fa281407"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacfd0f488cd4528e9a21275e1a4846cf5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gacfd0f488cd4528e9a21275e1a4846cf5">app_ble_gap_disconnect_all</a> (<a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ga873771f2bddb81d5b70a0e402f570cb4">T_LE_LOCAL_DISC_CAUSE</a> disc_cause)</td></tr>
 <tr class="memdesc:gacfd0f488cd4528e9a21275e1a4846cf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnect all BLE links.  <a href="#gacfd0f488cd4528e9a21275e1a4846cf5">More...</a><br /></td></tr>
 <tr class="separator:gacfd0f488cd4528e9a21275e1a4846cf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga74db254007c7fbbe873ed69ab0fdd61b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ga74db254007c7fbbe873ed69ab0fdd61b">app_ble_gap_handle_gap_msg</a> (<a class="el" href="struct_t___i_o___m_s_g.html">T_IO_MSG</a> *p_bee_io_msg)</td></tr>
-<tr class="memdesc:ga74db254007c7fbbe873ed69ab0fdd61b"><td class="mdescLeft">&#160;</td><td class="mdescRight">All the bt gap msg events are pre-handled in this function. Then the event handling function shall be called according to the subType of BEE_IO_MSG.  <a href="#ga74db254007c7fbbe873ed69ab0fdd61b">More...</a><br /></td></tr>
-<tr class="separator:ga74db254007c7fbbe873ed69ab0fdd61b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafdde3cb52c61eeb5b76510f7d30ab1fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gab24f7577f4ee435ff6cc34dd775e3d75">T_LE_LINK_ENCRYPTION_STATE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gafdde3cb52c61eeb5b76510f7d30ab1fa">app_ble_gap_get_link_encryption_status</a> (<a class="el" href="struct_t___a_p_p___l_e___l_i_n_k.html">T_APP_LE_LINK</a> *p_link)</td></tr>
 <tr class="memdesc:gafdde3cb52c61eeb5b76510f7d30ab1fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">app ble get link encryption status  <a href="#gafdde3cb52c61eeb5b76510f7d30ab1fa">More...</a><br /></td></tr>
 <tr class="separator:gafdde3cb52c61eeb5b76510f7d30ab1fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -160,10 +301,70 @@ Variables</h2></td></tr>
 <tr class="separator:gaf79d883b90bf38f70f8787d9bd2b34b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga70462e89d6a5310e9ac4a03e25b7b5e3"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ga70462e89d6a5310e9ac4a03e25b7b5e3">scan_rsp_data</a> [<a class="el" href="group___g_a_p___l_e___e_x_t_e_n_d_e_d___a_d_v___exported___macros.html#ga37b63a93bfde5eeca258a5fce04dc5f6">GAP_MAX_LEGACY_ADV_LEN</a>]</td></tr>
 <tr class="separator:ga70462e89d6a5310e9ac4a03e25b7b5e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf79d883b90bf38f70f8787d9bd2b34b1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gaf79d883b90bf38f70f8787d9bd2b34b1">scan_rsp_data_len</a></td></tr>
+<tr class="separator:gaf79d883b90bf38f70f8787d9bd2b34b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga70462e89d6a5310e9ac4a03e25b7b5e3"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ga70462e89d6a5310e9ac4a03e25b7b5e3">scan_rsp_data</a> [<a class="el" href="group___g_a_p___l_e___e_x_t_e_n_d_e_d___a_d_v___exported___macros.html#ga37b63a93bfde5eeca258a5fce04dc5f6">GAP_MAX_LEGACY_ADV_LEN</a>]</td></tr>
+<tr class="separator:ga70462e89d6a5310e9ac4a03e25b7b5e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>App Ble Gap. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ga410708f63255f49a9449976f19ece52f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga410708f63255f49a9449976f19ece52f">&#9670;&nbsp;</a></span>LE_DEFAULT_MIN_CONN_INTERVAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LE_DEFAULT_MIN_CONN_INTERVAL&#160;&#160;&#160;(12)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ga3a21d80a097ea360c32707d680bee06b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3a21d80a097ea360c32707d680bee06b">&#9670;&nbsp;</a></span>LE_DEFAULT_MAX_CONN_INTERVAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LE_DEFAULT_MAX_CONN_INTERVAL&#160;&#160;&#160;(24)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="gaf247dcd297d24cc220d9cb64693509db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf247dcd297d24cc220d9cb64693509db">&#9670;&nbsp;</a></span>LE_DEFAULT_SLAVE_LATENCY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LE_DEFAULT_SLAVE_LATENCY&#160;&#160;&#160;(0)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ga7f12fc24b1cf1dccf3b28e15638a2241"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7f12fc24b1cf1dccf3b28e15638a2241">&#9670;&nbsp;</a></span>LE_DEFAULT_SUPERVISION_TIMEOUT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LE_DEFAULT_SUPERVISION_TIMEOUT&#160;&#160;&#160;(500)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ga68805d936c2066de60d8ab34feee0683"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga68805d936c2066de60d8ab34feee0683">&#9670;&nbsp;</a></span>RWS_LE_DEFAULT_MIN_CONN_INTERVAL</h2>
 
@@ -236,7 +437,7 @@ Variables</h2></td></tr>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="ga8e32165862758d82cb9c6dfc689b4e58"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga8e32165862758d82cb9c6dfc689b4e58">&#9670;&nbsp;</a></span>T_LE_LINK_STATE</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8e32165862758d82cb9c6dfc689b4e58">&#9670;&nbsp;</a></span>T_LE_LINK_STATE <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -253,12 +454,16 @@ Variables</h2></td></tr>
 <tr><td class="fieldname"><a id="gga8e32165862758d82cb9c6dfc689b4e58ad2eb98c9017dc39c886842b32ec80360"></a>LE_LINK_STATE_CONNECTING&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga8e32165862758d82cb9c6dfc689b4e58a231bf631b34c319de30b424ea3807885"></a>LE_LINK_STATE_CONNECTED&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga8e32165862758d82cb9c6dfc689b4e58a53e7793e2daa8648b5c4dbdee692cb2f"></a>LE_LINK_STATE_DISCONNECTING&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga8e32165862758d82cb9c6dfc689b4e58a4d3c1ca2c3c9d73a123859f2ef690847"></a>LE_LINK_STATE_DISCONNECTED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga8e32165862758d82cb9c6dfc689b4e58ad2eb98c9017dc39c886842b32ec80360"></a>LE_LINK_STATE_CONNECTING&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga8e32165862758d82cb9c6dfc689b4e58a231bf631b34c319de30b424ea3807885"></a>LE_LINK_STATE_CONNECTED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga8e32165862758d82cb9c6dfc689b4e58a53e7793e2daa8648b5c4dbdee692cb2f"></a>LE_LINK_STATE_DISCONNECTING&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>
 </div>
 <a id="gab24f7577f4ee435ff6cc34dd775e3d75"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab24f7577f4ee435ff6cc34dd775e3d75">&#9670;&nbsp;</a></span>T_LE_LINK_ENCRYPTION_STATE</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#gab24f7577f4ee435ff6cc34dd775e3d75">&#9670;&nbsp;</a></span>T_LE_LINK_ENCRYPTION_STATE <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -274,12 +479,15 @@ Variables</h2></td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggab24f7577f4ee435ff6cc34dd775e3d75a5f21019a1191b1a51da55ff6e95ea0cb"></a>LE_LINK_UNENCRYPTIONED&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ggab24f7577f4ee435ff6cc34dd775e3d75a3416a4e98469461d9a35c8453a78c602"></a>LE_LINK_ENCRYPTIONED&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ggab24f7577f4ee435ff6cc34dd775e3d75a11bdd11a1e7b71072f6368b4ea86078f"></a>LE_LINK_ERROR&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ggab24f7577f4ee435ff6cc34dd775e3d75a5f21019a1191b1a51da55ff6e95ea0cb"></a>LE_LINK_UNENCRYPTIONED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ggab24f7577f4ee435ff6cc34dd775e3d75a3416a4e98469461d9a35c8453a78c602"></a>LE_LINK_ENCRYPTIONED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ggab24f7577f4ee435ff6cc34dd775e3d75a11bdd11a1e7b71072f6368b4ea86078f"></a>LE_LINK_ERROR&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>
 </div>
 <a id="ga873771f2bddb81d5b70a0e402f570cb4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga873771f2bddb81d5b70a0e402f570cb4">&#9670;&nbsp;</a></span>T_LE_LOCAL_DISC_CAUSE</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ga873771f2bddb81d5b70a0e402f570cb4">&#9670;&nbsp;</a></span>T_LE_LOCAL_DISC_CAUSE <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -291,6 +499,112 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a856189b0b834f1f5b3b31dfdbc1165a4"></a>LE_LOCAL_DISC_CAUSE_UNKNOWN&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a0fec2dbe67718429c57691008a538f9e"></a>LE_LOCAL_DISC_CAUSE_POWER_OFF&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a59e77f7d0c82f764707f36086f88f210"></a>LE_LOCAL_DISC_CAUSE_SWITCH_TO_OTA&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a5409372a79a8ec978729e17da0c125b7"></a>LE_LOCAL_DISC_CAUSE_AUTHEN_FAILED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4acf6a5f67a19b9e267601ed1394d203be"></a>LE_LOCAL_DISC_CAUSE_TTS_DISC&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4affa7dbb7837da1214a7496894624d694"></a>LE_LOCAL_DISC_CAUSE_OTA_RESET&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a3a9e8aa8d209b03af1d697e46fb8a2c6"></a>LE_LOCAL_DISC_CAUSE_GFPS_STOP&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a39c631214bb82ae5ecd48adb44741ffb"></a>LE_LOCAL_DISC_CAUSE_GFPS_FAILED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a6e5c39c6774a59f94635e79362e197d4"></a>LE_LOCAL_DISC_CAUSE_ROLESWAP&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a447f1c323598526070c28294558220b5"></a>LE_LOCAL_DISC_CAUSE_SECONDARY&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4acb8f00b8440093fd52ebe56890d91ef8"></a>LE_LOCAL_DISC_CAUSE_TUYA&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a3917393bc3741a34d493b22a100a8973"></a>LE_LOCAL_DISC_CAUSE_ENGAGE_STREAM_PRIOIRTY&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a856189b0b834f1f5b3b31dfdbc1165a4"></a>LE_LOCAL_DISC_CAUSE_UNKNOWN&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a0fec2dbe67718429c57691008a538f9e"></a>LE_LOCAL_DISC_CAUSE_POWER_OFF&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a59e77f7d0c82f764707f36086f88f210"></a>LE_LOCAL_DISC_CAUSE_SWITCH_TO_OTA&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a5409372a79a8ec978729e17da0c125b7"></a>LE_LOCAL_DISC_CAUSE_AUTHEN_FAILED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4acf6a5f67a19b9e267601ed1394d203be"></a>LE_LOCAL_DISC_CAUSE_TTS_DISC&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4affa7dbb7837da1214a7496894624d694"></a>LE_LOCAL_DISC_CAUSE_OTA_RESET&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a3a9e8aa8d209b03af1d697e46fb8a2c6"></a>LE_LOCAL_DISC_CAUSE_GFPS_STOP&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a39c631214bb82ae5ecd48adb44741ffb"></a>LE_LOCAL_DISC_CAUSE_GFPS_FAILED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a6e5c39c6774a59f94635e79362e197d4"></a>LE_LOCAL_DISC_CAUSE_ROLESWAP&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a447f1c323598526070c28294558220b5"></a>LE_LOCAL_DISC_CAUSE_SECONDARY&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4acb8f00b8440093fd52ebe56890d91ef8"></a>LE_LOCAL_DISC_CAUSE_TUYA&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a3917393bc3741a34d493b22a100a8973"></a>LE_LOCAL_DISC_CAUSE_ENGAGE_STREAM_PRIOIRTY&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a4884a98640d558a1d468322290b3d630"></a>LE_LOCAL_DISC_CAUSE_GFPS_LINK_FULL&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a7bc28b8951ad9d8a9731fd327322bfd0"></a>LE_LOCAL_DISC_CAUSE_GFPS_FINDER&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4afc5ac02c86c471eac85fa0d3bfecc8d8"></a>LE_LOCAL_DISC_CAUSE_RWS_OTA_SUCCESS&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a9b0d06de4368f31710d34f9cdc545188"></a>LE_LOCAL_DISC_CAUSE_DONGLE_MODE_SWITCH&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga8e32165862758d82cb9c6dfc689b4e58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8e32165862758d82cb9c6dfc689b4e58">&#9670;&nbsp;</a></span>T_LE_LINK_STATE <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ga8e32165862758d82cb9c6dfc689b4e58">T_LE_LINK_STATE</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>App define le link connection state status. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga8e32165862758d82cb9c6dfc689b4e58a4d3c1ca2c3c9d73a123859f2ef690847"></a>LE_LINK_STATE_DISCONNECTED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga8e32165862758d82cb9c6dfc689b4e58ad2eb98c9017dc39c886842b32ec80360"></a>LE_LINK_STATE_CONNECTING&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga8e32165862758d82cb9c6dfc689b4e58a231bf631b34c319de30b424ea3807885"></a>LE_LINK_STATE_CONNECTED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga8e32165862758d82cb9c6dfc689b4e58a53e7793e2daa8648b5c4dbdee692cb2f"></a>LE_LINK_STATE_DISCONNECTING&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga8e32165862758d82cb9c6dfc689b4e58a4d3c1ca2c3c9d73a123859f2ef690847"></a>LE_LINK_STATE_DISCONNECTED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga8e32165862758d82cb9c6dfc689b4e58ad2eb98c9017dc39c886842b32ec80360"></a>LE_LINK_STATE_CONNECTING&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga8e32165862758d82cb9c6dfc689b4e58a231bf631b34c319de30b424ea3807885"></a>LE_LINK_STATE_CONNECTED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga8e32165862758d82cb9c6dfc689b4e58a53e7793e2daa8648b5c4dbdee692cb2f"></a>LE_LINK_STATE_DISCONNECTING&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="gab24f7577f4ee435ff6cc34dd775e3d75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab24f7577f4ee435ff6cc34dd775e3d75">&#9670;&nbsp;</a></span>T_LE_LINK_ENCRYPTION_STATE <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___a_p_p___b_l_e___g_a_p.html#gab24f7577f4ee435ff6cc34dd775e3d75">T_LE_LINK_ENCRYPTION_STATE</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>App define le link encryption state. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggab24f7577f4ee435ff6cc34dd775e3d75a5f21019a1191b1a51da55ff6e95ea0cb"></a>LE_LINK_UNENCRYPTIONED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ggab24f7577f4ee435ff6cc34dd775e3d75a3416a4e98469461d9a35c8453a78c602"></a>LE_LINK_ENCRYPTIONED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ggab24f7577f4ee435ff6cc34dd775e3d75a11bdd11a1e7b71072f6368b4ea86078f"></a>LE_LINK_ERROR&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ggab24f7577f4ee435ff6cc34dd775e3d75a5f21019a1191b1a51da55ff6e95ea0cb"></a>LE_LINK_UNENCRYPTIONED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ggab24f7577f4ee435ff6cc34dd775e3d75a3416a4e98469461d9a35c8453a78c602"></a>LE_LINK_ENCRYPTIONED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ggab24f7577f4ee435ff6cc34dd775e3d75a11bdd11a1e7b71072f6368b4ea86078f"></a>LE_LINK_ERROR&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga873771f2bddb81d5b70a0e402f570cb4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga873771f2bddb81d5b70a0e402f570cb4">&#9670;&nbsp;</a></span>T_LE_LOCAL_DISC_CAUSE <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___a_p_p___b_l_e___g_a_p.html#ga873771f2bddb81d5b70a0e402f570cb4">T_LE_LOCAL_DISC_CAUSE</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a856189b0b834f1f5b3b31dfdbc1165a4"></a>LE_LOCAL_DISC_CAUSE_UNKNOWN&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a0fec2dbe67718429c57691008a538f9e"></a>LE_LOCAL_DISC_CAUSE_POWER_OFF&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a59e77f7d0c82f764707f36086f88f210"></a>LE_LOCAL_DISC_CAUSE_SWITCH_TO_OTA&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a5409372a79a8ec978729e17da0c125b7"></a>LE_LOCAL_DISC_CAUSE_AUTHEN_FAILED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4acf6a5f67a19b9e267601ed1394d203be"></a>LE_LOCAL_DISC_CAUSE_TTS_DISC&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4affa7dbb7837da1214a7496894624d694"></a>LE_LOCAL_DISC_CAUSE_OTA_RESET&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a3a9e8aa8d209b03af1d697e46fb8a2c6"></a>LE_LOCAL_DISC_CAUSE_GFPS_STOP&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a39c631214bb82ae5ecd48adb44741ffb"></a>LE_LOCAL_DISC_CAUSE_GFPS_FAILED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a6e5c39c6774a59f94635e79362e197d4"></a>LE_LOCAL_DISC_CAUSE_ROLESWAP&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a447f1c323598526070c28294558220b5"></a>LE_LOCAL_DISC_CAUSE_SECONDARY&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4acb8f00b8440093fd52ebe56890d91ef8"></a>LE_LOCAL_DISC_CAUSE_TUYA&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a3917393bc3741a34d493b22a100a8973"></a>LE_LOCAL_DISC_CAUSE_ENGAGE_STREAM_PRIOIRTY&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a856189b0b834f1f5b3b31dfdbc1165a4"></a>LE_LOCAL_DISC_CAUSE_UNKNOWN&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a0fec2dbe67718429c57691008a538f9e"></a>LE_LOCAL_DISC_CAUSE_POWER_OFF&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a59e77f7d0c82f764707f36086f88f210"></a>LE_LOCAL_DISC_CAUSE_SWITCH_TO_OTA&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga873771f2bddb81d5b70a0e402f570cb4a5409372a79a8ec978729e17da0c125b7"></a>LE_LOCAL_DISC_CAUSE_AUTHEN_FAILED&#160;</td><td class="fielddoc"></td></tr>
@@ -431,6 +745,40 @@ false fail </dd></dl>
 
 </div>
 </div>
+<a id="ga52f2d89c50d2ffbde5c1aa19fa281407"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga52f2d89c50d2ffbde5c1aa19fa281407">&#9670;&nbsp;</a></span>app_ble_gap_handle_gap_msg()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void app_ble_gap_handle_gap_msg </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_t___i_o___m_s_g.html">T_IO_MSG</a> *&#160;</td>
+          <td class="paramname"><em>p_io_msg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>All the bt gap msg events are pre-handled in this function. Then the event handling function shall be called according to the subType of BEE_IO_MSG. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p_io_msg</td><td>pointer to io msg </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p_bee_io_msg</td><td>pointer to bee io msg </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
+
+</div>
+</div>
 <a id="gacfd0f488cd4528e9a21275e1a4846cf5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gacfd0f488cd4528e9a21275e1a4846cf5">&#9670;&nbsp;</a></span>app_ble_gap_disconnect_all()</h2>
 
@@ -454,33 +802,6 @@ false fail </dd></dl>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="ga74db254007c7fbbe873ed69ab0fdd61b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga74db254007c7fbbe873ed69ab0fdd61b">&#9670;&nbsp;</a></span>app_ble_gap_handle_gap_msg()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void app_ble_gap_handle_gap_msg </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_t___i_o___m_s_g.html">T_IO_MSG</a> *&#160;</td>
-          <td class="paramname"><em>p_bee_io_msg</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>All the bt gap msg events are pre-handled in this function. Then the event handling function shall be called according to the subType of BEE_IO_MSG. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">p_bee_io_msg</td><td>pointer to bee io msg </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
 </div>
 </div>
@@ -544,7 +865,7 @@ false fail </dd></dl>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
 <a id="gaf79d883b90bf38f70f8787d9bd2b34b1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf79d883b90bf38f70f8787d9bd2b34b1">&#9670;&nbsp;</a></span>scan_rsp_data_len</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf79d883b90bf38f70f8787d9bd2b34b1">&#9670;&nbsp;</a></span>scan_rsp_data_len <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -558,7 +879,35 @@ false fail </dd></dl>
 </div>
 </div>
 <a id="ga70462e89d6a5310e9ac4a03e25b7b5e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga70462e89d6a5310e9ac4a03e25b7b5e3">&#9670;&nbsp;</a></span>scan_rsp_data</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ga70462e89d6a5310e9ac4a03e25b7b5e3">&#9670;&nbsp;</a></span>scan_rsp_data <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t scan_rsp_data[<a class="el" href="group___g_a_p___l_e___e_x_t_e_n_d_e_d___a_d_v___exported___macros.html#ga37b63a93bfde5eeca258a5fce04dc5f6">GAP_MAX_LEGACY_ADV_LEN</a>]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="gaf79d883b90bf38f70f8787d9bd2b34b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf79d883b90bf38f70f8787d9bd2b34b1">&#9670;&nbsp;</a></span>scan_rsp_data_len <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t scan_rsp_data_len</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ga70462e89d6a5310e9ac4a03e25b7b5e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga70462e89d6a5310e9ac4a03e25b7b5e3">&#9670;&nbsp;</a></span>scan_rsp_data <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

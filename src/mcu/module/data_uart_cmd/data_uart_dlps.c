@@ -3,7 +3,7 @@
 #include <rtl876x_pinmux.h>
 #include "io_dlps.h"
 #include "pm.h"
-#if F_BT_DLPS_EN
+#if F_DLPS_EN
 bool can_enter_dlps = true;
 
 void data_uart_dlps_exit_cb(void)

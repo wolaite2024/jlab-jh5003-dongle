@@ -22,6 +22,7 @@
 #include "section.h"
 #include "trace.h"
 #include "wdg.h"
+#include "rtl876x.h"
 
 /** @defgroup  IO_DEMO_MAIN  IO DEMO MAIN
     * @brief

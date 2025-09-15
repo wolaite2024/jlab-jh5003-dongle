@@ -18,6 +18,7 @@
 #include "rtl876x_gdma.h"
 #include "rtl876x_rcc.h"
 #include "rtl876x_nvic.h"
+#include "trace.h"
 
 /** @defgroup  GDMA_MULTIBLOCK_DEMO  GDMA multi-block Demo
     * @brief  Gdma multiblock implementation demo code
@@ -32,11 +33,15 @@
   * @{
   */
 
-static uint8_t GDMA_SendBuffer[12][100];
-static uint8_t GDMA_RecvBuffer[12][100];
+#define GDMA_TRANSFER_SIZE              100                 /*< Set this macro to modify the transfer size. */
+#define GDMA_MULTIBLOCK_SIZE            12                  /*< Set this macro to modify the block size. */
 
-static GDMA_LLIDef GDMA_LLIStruct[12];
+static uint8_t GDMA_SendBuffer[GDMA_MULTIBLOCK_SIZE][GDMA_TRANSFER_SIZE];
+static uint8_t GDMA_RecvBuffer[GDMA_MULTIBLOCK_SIZE][GDMA_TRANSFER_SIZE];
+
+static GDMA_LLIDef GDMA_LLIStruct[GDMA_MULTIBLOCK_SIZE];
 static uint8_t multi_block_dma_ch_num = 0xa5;
+static uint8_t block_cnt = 0;
 
 #define MULTI_BLOCK_DMA_CHANNEL_NUM     multi_block_dma_ch_num
 #define MULTI_BLOCK_DMA_CHANNEL         DMA_CH_BASE(multi_block_dma_ch_num)
@@ -69,7 +74,7 @@ void dma_multiblock_demo(void)
     }
 
     /*--------------initialize test buffer---------------------*/
-    for (i = 0; i < 100; i++)
+    for (i = 0; i < GDMA_TRANSFER_SIZE; i++)
     {
         GDMA_SendBuffer[0][i] = (i & 0xff);
         GDMA_SendBuffer[1][i] = (i + 1) & 0xff;
@@ -84,9 +89,9 @@ void dma_multiblock_demo(void)
         GDMA_SendBuffer[10][i] = (i + 10) & 0xff;
         GDMA_SendBuffer[11][i] = (i + 11) & 0xff;
     }
-    for (i = 0; i < 100; i++)
+    for (i = 0; i < GDMA_TRANSFER_SIZE; i++)
     {
-        for (j = 0; j < 12; j++)
+        for (j = 0; j < GDMA_MULTIBLOCK_SIZE; j++)
         {
             GDMA_RecvBuffer[j][i] = 0;
         }
@@ -95,7 +100,7 @@ void dma_multiblock_demo(void)
     GDMA_StructInit(&GDMA_InitStruct);
     GDMA_InitStruct.GDMA_ChannelNum      = MULTI_BLOCK_DMA_CHANNEL_NUM;
     GDMA_InitStruct.GDMA_DIR             = GDMA_DIR_MemoryToMemory;
-    GDMA_InitStruct.GDMA_BufferSize      = 100;//determine total transfer size
+    GDMA_InitStruct.GDMA_BufferSize      = GDMA_TRANSFER_SIZE;//determine total transfer size
     GDMA_InitStruct.GDMA_SourceInc       = DMA_SourceInc_Inc;
     GDMA_InitStruct.GDMA_DestinationInc  = DMA_DestinationInc_Inc;
     GDMA_InitStruct.GDMA_SourceDataSize  = GDMA_DataSize_Byte;
@@ -108,9 +113,9 @@ void dma_multiblock_demo(void)
     GDMA_InitStruct.GDMA_Multi_Block_En = 1;
     GDMA_InitStruct.GDMA_Multi_Block_Struct = (uint32_t)GDMA_LLIStruct;
 
-    for (int i = 0; i < 12; i++)
+    for (int i = 0; i < GDMA_MULTIBLOCK_SIZE; i++)
     {
-        if (i == 11)
+        if (i == (GDMA_MULTIBLOCK_SIZE - 1))
         {
             //GDMA_LLIStruct[i].LLP=0;
             GDMA_LLIStruct[i].SAR = (uint32_t)GDMA_SendBuffer[i];
@@ -168,7 +173,25 @@ void dma_multiblock_demo(void)
 static void multi_block_dma_handler(void)
 {
     GDMA_ClearAllTypeINT(MULTI_BLOCK_DMA_CHANNEL_NUM);
-    GDMA_Cmd(MULTI_BLOCK_DMA_CHANNEL_NUM, ENABLE);
+    block_cnt++;
+
+    if (block_cnt == GDMA_MULTIBLOCK_SIZE)
+    {
+        /* Compare whether the destination data which transported by GDMA is equal to the source data*/
+        for (uint32_t i = 0; i < GDMA_MULTIBLOCK_SIZE; i++)
+        {
+            for (uint32_t j = 0; j < GDMA_TRANSFER_SIZE; j++)
+            {
+                if (GDMA_SendBuffer[i][j] != GDMA_RecvBuffer[i][j])
+                {
+                    IO_PRINT_ERROR4("multi_block_dma_handler: Data transmission error! index %d %d GDMA_SendBuffer = %d, GDMA_RecvBuffer = %d",
+                                    i, j, GDMA_SendBuffer[i][j], GDMA_RecvBuffer[i][j]);
+                }
+            }
+        }
+
+        IO_PRINT_INFO0("multi_block_dma_handler: Data transmission completion!");
+    }
 }
 
 /** @} */ /* End of group GDMA_MULTIBLOCK_Exported_Functions */

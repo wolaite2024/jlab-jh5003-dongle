@@ -35,14 +35,15 @@ extern "C" {
 
 typedef enum
 {
-    CMD_PATH_NONE = 0x00,
-    CMD_PATH_UART = 0x01,
-    CMD_PATH_LE   = 0x02,
-    CMD_PATH_SPP  = 0x03,
-    CMD_PATH_IAP  = 0x04,
+    CMD_PATH_NONE                           = 0x00,
+    CMD_PATH_UART                           = 0x01,
+    CMD_PATH_LE                             = 0x02,
+    CMD_PATH_SPP                            = 0x03,
+    CMD_PATH_IAP                            = 0x04,
+    CMD_PATH_GATT_OVER_BREDR                = 0x05,
 
-    CMD_PATH_RWS_ASYNC = 0x10,
-    CMD_PATH_RWS_SYNC  = 0x11,
+    CMD_PATH_RWS_ASYNC                      = 0x10,
+    CMD_PATH_RWS_SYNC                       = 0x11,
 } T_CMD_PATH;
 
 typedef enum
@@ -155,32 +156,31 @@ typedef enum
     EVENT_RF_XTAL_K                         = 0x032A,
     EVENT_RF_XTAL_K_GET_RESULT              = 0x032B,
 
-    EVENT_HFP_AG_CONN_IND                           = 0x0380,
-    EVENT_HFP_AG_CONN_CMPL                          = 0x0381,
-    EVENT_HFP_AG_DISCONN_CMPL                       = 0x0382,
-    EVENT_HFP_AG_MIC_VOL_CHANGED                    = 0x0383,
-    EVENT_HFP_AG_SPK_VOL_CHANGED                    = 0x0384,
-    EVENT_HFP_AG_CALL_STATUS_CHANGED                = 0x0385,
-    EVENT_HFP_AG_INDI_STATUS_REQ                    = 0x0386,
-    EVENT_HFP_AG_BATT_LEVEL                         = 0x0387,
-    EVENT_HFP_AG_HF_CODEC_TYPE_SELECTED             = 0x0388,
-    EVENT_HFP_AG_SUPPORTED_FEATURES                 = 0x0389,
-    EVENT_HFP_AG_INBAND_RINGING_REQ                 = 0x038A,
-    EVENT_HFP_AG_CALL_ANSWER_REQ                    = 0x038B,
-    EVENT_HFP_AG_CALL_TERM_REQ                      = 0x038C,
-    EVENT_HFP_AG_CURR_CALLS_LIST_QUERY              = 0x038D,
-    EVENT_HFP_AG_DTMF_CODE                          = 0x038E,
-    EVENT_HFP_AG_DIAL_WITH_NUMBER                   = 0x038F,
-    EVENT_HFP_AG_DIAL_LAST_NUMBER                   = 0x0390,
-    EVENT_HFP_AG_3WAY_HELD_CALL_RELEASED            = 0x0391,
-    EVENT_HFP_AG_3WAY_ACTIVE_CALL_RELEASED          = 0x0392,
-    EVENT_HFP_AG_3WAY_SWITCHED                      = 0x0393,
-    EVENT_HFP_AG_3WAY_MERGED                        = 0x0394,
-    EVENT_HFP_AG_SUBSCRIBER_NUMBER_QUERY            = 0x0395,
-    EVENT_HFP_AG_NETWORK_NAME_FORMAT_SET            = 0x0396,
-    EVENT_HFP_AG_CURR_OPERATOR_QUERY                = 0x0397,
-    EVENT_HFP_AG_ENHANCED_SAFETY_STATUS             = 0x0398,
-
+    EVENT_HFP_AG_CONN_IND                   = 0x0380,
+    EVENT_HFP_AG_CONN_CMPL                  = 0x0381,
+    EVENT_HFP_AG_DISCONN_CMPL               = 0x0382,
+    EVENT_HFP_AG_MIC_VOL_CHANGED            = 0x0383,
+    EVENT_HFP_AG_SPK_VOL_CHANGED            = 0x0384,
+    EVENT_HFP_AG_CALL_STATUS_CHANGED        = 0x0385,
+    EVENT_HFP_AG_INDI_STATUS_REQ            = 0x0386,
+    EVENT_HFP_AG_BATT_LEVEL                 = 0x0387,
+    EVENT_HFP_AG_HF_CODEC_TYPE_SELECTED     = 0x0388,
+    EVENT_HFP_AG_SUPPORTED_FEATURES         = 0x0389,
+    EVENT_HFP_AG_INBAND_RINGING_REQ         = 0x038A,
+    EVENT_HFP_AG_CALL_ANSWER_REQ            = 0x038B,
+    EVENT_HFP_AG_CALL_TERM_REQ              = 0x038C,
+    EVENT_HFP_AG_CURR_CALLS_LIST_QUERY      = 0x038D,
+    EVENT_HFP_AG_DTMF_CODE                  = 0x038E,
+    EVENT_HFP_AG_DIAL_WITH_NUMBER           = 0x038F,
+    EVENT_HFP_AG_DIAL_LAST_NUMBER           = 0x0390,
+    EVENT_HFP_AG_3WAY_HELD_CALL_RELEASED    = 0x0391,
+    EVENT_HFP_AG_3WAY_ACTIVE_CALL_RELEASED  = 0x0392,
+    EVENT_HFP_AG_3WAY_SWITCHED              = 0x0393,
+    EVENT_HFP_AG_3WAY_MERGED                = 0x0394,
+    EVENT_HFP_AG_SUBSCRIBER_NUMBER_QUERY    = 0x0395,
+    EVENT_HFP_AG_NETWORK_NAME_FORMAT_SET    = 0x0396,
+    EVENT_HFP_AG_CURR_OPERATOR_QUERY        = 0x0397,
+    EVENT_HFP_AG_ENHANCED_SAFETY_STATUS     = 0x0398,
 
     //0x0400 ~ 0x04FF reserved for profile
 #if F_APP_HFP_CMD_SUPPORT
@@ -205,7 +205,9 @@ typedef enum
     EVENT_AVRCP_REPORT_LIST_SETTING_VALUE   = 0x0411,
     EVENT_AVRCP_REPORT_CURRENT_VALUE        = 0x0412,
     EVENT_AVRCP_REPORT_SETTING_CHANGED      = 0x0413,
+#endif
     EVENT_AVRCP_REPORT_ELEMENT_ATTR         = 0x0414,
+#if F_APP_AVRCP_CMD_SUPPORT
     EVENT_AVRCP_REPORT_PLAYER_STATUS        = 0x0415,
 #endif
 
@@ -432,22 +434,22 @@ typedef enum
     EVENT_LEA_DEVICE_STATE_NOTIFY           = 0x3006,
 #endif
 
-    EVENT_GCSS_REG                  = 0x3100,
-    EVENT_GCSS_DATA_TRANSFER        = 0x3101,
-    EVENT_GCSS_CON_NOTIFY           = 0x3102,
-    EVENT_GCSS_INFO                 = 0x3103,
-    EVENT_GCSS_READ_REQ             = 0x3104,
-    EVENT_GCSS_IND_ACK              = 0x3105,
-    EVENT_GCSS_SERV_CHG             = 0x3106,
-    EVENT_GCSS_NOTI_CREDIT_UPD      = 0x3107,
+    EVENT_GCSS_REG                          = 0x3100,
+    EVENT_GCSS_DATA_TRANSFER                = 0x3101,
+    EVENT_GCSS_CON_NOTIFY                   = 0x3102,
+    EVENT_GCSS_INFO                         = 0x3103,
+    EVENT_GCSS_READ_REQ                     = 0x3104,
+    EVENT_GCSS_IND_ACK                      = 0x3105,
+    EVENT_GCSS_SERV_CHG                     = 0x3106,
+    EVENT_GCSS_NOTI_CREDIT_UPD              = 0x3107,
 
-    EVENT_GCSC_DISCOVER_STATE                = 0x3140,
-    EVENT_GCSC_DISCOVER_RES                  = 0x3141,
-    EVENT_GCSC_READ_RES                      = 0x3142,
-    EVENT_GCSC_WRITE_RES                     = 0x3143,
-    EVENT_GCSC_NOTI_IND                      = 0x3144,
-    EVENT_GCSC_DISC                          = 0x3145,
-    EVENT_GCSC_DISCOVER_ALL_END              = 0x3146,
+    EVENT_GCSC_DISCOVER_STATE               = 0x3140,
+    EVENT_GCSC_DISCOVER_RES                 = 0x3141,
+    EVENT_GCSC_READ_RES                     = 0x3142,
+    EVENT_GCSC_WRITE_RES                    = 0x3143,
+    EVENT_GCSC_NOTI_IND                     = 0x3144,
+    EVENT_GCSC_DISC                         = 0x3145,
+    EVENT_GCSC_DISCOVER_ALL_END             = 0x3146,
 
     //for MAP test
     EVENT_MAP_SDP_REQUEST                   = 0x3800,
@@ -508,8 +510,10 @@ typedef enum
 #if F_APP_CHARGER_CASE_SUPPORT
     EVENT_CHARGER_CASE_REPORT_STATUS        = 0x8101,
     EVENT_CHARGER_CASE_OTA_MODE             = 0x8102,
-    EVENT_CHAGRER_CASE_REPORT_BT_ADDR       = 0x8103,
+    EVENT_CHAGRER_CASE_RSV                  = 0x8103,
     EVENT_CHARGER_CASE_FIND_CHARGER_CASE    = 0x8104,
+    EVENT_CHARGER_CASE_BUD_AUTO_PAIR_SUC    = 0x8105,
+    EVENT_CHAGRER_CASE_REPORT_BT_ADDR       = 0x8106,
 #endif
 
     EVENT_TOTAL
@@ -597,12 +601,14 @@ void app_report_get_bud_info(uint8_t *data);
 
 /**
     * @brief  report gaming mode info
-    * @param  none
+    * @param  bool true is gaming mode and false is not gaming mode
     * @return void
     */
-void app_report_gaming_mode_info(void);
+void app_report_gaming_mode_info(bool gaming_mode);
 
 #if F_APP_CHARGER_CASE_SUPPORT
+void app_report_level_to_charger_case(uint8_t level, uint8_t *bd_addr);
+
 void app_report_bud_loc_to_charger_case(void);
 
 void app_report_status_to_charger_case(uint8_t type, uint8_t *param);

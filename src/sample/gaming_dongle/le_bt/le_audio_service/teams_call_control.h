@@ -9,6 +9,28 @@ extern "C" {
 #include "ccp_mgr.h"
 #include "ble_audio.h"
 
+/* FIXME: HID report map not support HOLD YET */
+#define USB_HID_HOLD_SUPPORT        1
+
+typedef struct
+{
+    uint16_t hook_switch    : 1;    /* 0:terminate 1:accept */
+    uint16_t line_busy      : 1;
+    uint16_t line           : 1;
+    uint16_t mute           : 1;    /* 0:un-mute 1:mute */
+    uint16_t flash          : 1;
+#if (USB_HID_HOLD_SUPPORT == 1)
+    uint16_t hold           : 1;
+    uint16_t redial         : 1;
+#else
+    uint16_t redial         : 1;
+    uint16_t speed_dial     : 1;
+#endif
+    uint16_t key_pad        : 4;
+    uint16_t button         : 1;    /* 1:reject */
+    uint16_t rsv            : 4;
+} T_TELEPHONY_HID_INPUT;
+
 #if LE_AUDIO_CCP_SERVER_SUPPORT
 
 void teams_call_control_init(T_SERVER_ID ccp_id);

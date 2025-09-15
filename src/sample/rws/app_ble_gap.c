@@ -2,7 +2,6 @@
  * Copyright (c) 2018, Realsil Semiconductor Corporation. All rights reserved.
  */
 #include <string.h>
-#include "stdlib.h"
 #include "trace.h"
 #include "sysm.h"
 #include "gap.h"
@@ -19,7 +18,6 @@
 #include "app_report.h"
 #include "app_cfg.h"
 #include "remote.h"
-#include "engage.h"
 #include "app_ble_common_adv.h"
 #include "ble_conn.h"
 #include "app_ble_device.h"
@@ -36,7 +34,6 @@
 #include "app_ble_whitelist.h"
 #include "app_ota.h"
 #include "ble_mgr.h"
-#include "ble_scan.h"
 #include "app_timer.h"
 #include "gap_vendor.h"
 #include "app_ble_rand_addr_mgr.h"
@@ -72,12 +69,10 @@
 #include "bisto_api.h"
 #include "app_bisto_ble.h"
 #endif
-#if F_APP_BLE_SWIFT_PAIR_SUPPORT
-#include "app_ble_swift_pair.h"
-#endif
 #if F_APP_LEA_SUPPORT
 #include "app_lea_adv.h"
 #include "app_lea_pacs.h"
+#include "app_lea_unicast_audio.h"
 #endif
 #if GATTC_TBL_STORAGE_SUPPORT
 #include "gattc_tbl_storage.h"
@@ -104,14 +99,15 @@
 #if F_APP_SC_KEY_DERIVE_SUPPORT
 #include "app_ble_sc_key_derive.h"
 #endif
-#if F_APP_EATT_SUPPORT
-#include "gap_ecfc.h"
-#endif
+
 #if F_APP_GAMING_DONGLE_SUPPORT || F_APP_LEA_DONGLE_BINDING
 #include "app_dongle_common.h"
 #endif
 #if F_APP_GAMING_DONGLE_SUPPORT
 #include "app_dongle_dual_mode.h"
+#if F_APP_B2B_ENGAGE_REDUCE_NSE
+#include "app_vendor.h"
+#endif
 #endif
 #if F_APP_GATT_CACHING_SUPPORT
 #include "app_ble_gatt_caching.h"
@@ -120,15 +116,23 @@
 #include "ble_bond_sync.h"
 #endif
 
+#if F_APP_EATT_SUPPORT
+#include "app_ble_eatt.h"
+#endif
+
+#include "app_bt_point.h"
+
+#if F_APP_HAS_SUPPORT
+#include "app_lea_has.h"
+#endif
+
+#if F_APP_GAMING_LE_FIX_CHANNEL_SUPPORT
+#include "gap_callback_le.h"
+#include "transmit_svc_dongle.h"
+#endif
+
 #define LE_DATA_LEN_TX_OCTETS      251     //Maximum allowable setting value
 #define LE_DATA_LEN_TX_TIME        0x0848  //ms, refers to the setting value of upperstack
-
-#if F_APP_EATT_SUPPORT
-#define MAX_REMOTE_MTU 512
-#define ECFC_LOCAL_MTU 247
-#define ECFC_CREDITS   10
-#define EATT_DEBUG_LOG 1
-#endif
 
 typedef enum
 {
@@ -152,10 +156,6 @@ static uint8_t wait_for_authen_conn_id = 0xFF;
 
 uint8_t scan_rsp_data_len;
 uint8_t scan_rsp_data[GAP_MAX_LEGACY_ADV_LEN];
-
-#if F_APP_EATT_SUPPORT
-static uint8_t app_ecfc_le_proto_id = 0xFF;
-#endif
 
 #if F_APP_ALLOW_ONE_DONGLE_AND_ONE_PHONE_ONLY
 uint8_t le_public_bd_addr[6] = {0};
@@ -235,11 +235,6 @@ static void app_ble_gap_handle_dev_state_change_evt(T_GAP_DEV_STATE new_state, u
     }
 
     le_state = new_state;
-#if F_APP_LEA_SUPPORT
-    uint8_t state;
-    memcpy(&state, &new_state, sizeof(new_state));
-    mtc_gap_handle_state_evt_callback(state, cause);
-#endif
 }
 
 static void app_ble_gap_handle_disconnecting_evt(T_APP_LE_LINK *p_link)
@@ -256,7 +251,7 @@ static bool app_ble_gap_check_resume_common_adv(T_APP_LE_LINK *p_link)
     bool ret = false;
 
     if (memcmp(p_link->bd_addr, app_cfg_nv.dongle_addr, 6) &&
-        app_link_le_check_rtk_link_exist() == false)
+        app_link_le_check_common_link_exist() == false)
     {
         ret = true;
     }
@@ -268,6 +263,8 @@ static bool app_ble_gap_check_resume_common_adv(T_APP_LE_LINK *p_link)
 static void app_ble_gap_handle_disconnected_evt(uint8_t conn_id, T_APP_LE_LINK *p_link,
                                                 uint16_t disc_cause)
 {
+    uint8_t bd_addr[6];
+
     if (p_link != NULL)
     {
 #if F_APP_CHARGER_CASE_SUPPORT
@@ -275,7 +272,7 @@ static void app_ble_gap_handle_disconnected_evt(uint8_t conn_id, T_APP_LE_LINK *
 #endif
 
         uint8_t local_disc_cause = p_link->local_disc_cause;
-        bool handle_disconnect_when_rtk_link_free = false;
+        bool handle_disconnect_when_common_link_free = false;
 
         for (uint8_t i = 0; i < p_link->disc_cb_list.count; i++)
         {
@@ -284,8 +281,8 @@ static void app_ble_gap_handle_disconnected_evt(uint8_t conn_id, T_APP_LE_LINK *
 
             if (p_entry != NULL && p_entry->disc_callback != NULL)
             {
-                APP_PRINT_INFO1("app_ble_gap_handle_disconnected_evt: p_entry->disc_callback 0x%x ",
-                                p_entry->disc_callback);
+                APP_PRINT_INFO4("app_ble_gap_handle_disconnected_evt: conn_id %d, disc_callback 0x%x, i %d, total_count %d ",
+                                conn_id, p_entry->disc_callback, i, p_link->disc_cb_list.count);
                 p_entry->disc_callback(conn_id, p_link->local_disc_cause, disc_cause);
             }
         }
@@ -351,31 +348,35 @@ static void app_ble_gap_handle_disconnected_evt(uint8_t conn_id, T_APP_LE_LINK *
             wait_for_authen_conn_id = 0xFF;
         }
 
-        if (p_link->is_rtk_link
+        if (p_link->is_common_link
 #if TARGET_LE_AUDIO_GAMING
             || app_ble_gap_check_resume_common_adv(p_link)
 #endif
            )
         {
-#if F_APP_SLAVE_LATENCY_UPDATE_SUPPORT
-            app_cmd_set_apk_init_state(false);
-#endif
-            handle_disconnect_when_rtk_link_free = true;
+            handle_disconnect_when_common_link_free = true;
         }
         else
         {
-            APP_PRINT_ERROR0("app_ble_gap_handle_disconnected_evt: rtk link not exist");
+            APP_PRINT_ERROR0("app_ble_gap_handle_disconnected_evt: common link not exist");
         }
+
+        memcpy(bd_addr, p_link->bd_addr, 6);
 
         app_link_free_le_link(p_link);
 
-        if (handle_disconnect_when_rtk_link_free)
+        app_bt_point_link_num_changed(BP_LINK_TYPE_B2S_LE, BP_LINK_EVENT_DISCONNECT, bd_addr);
+
+        if (handle_disconnect_when_common_link_free)
         {
             app_ble_common_adv_handle_ble_disconnected(conn_id, local_disc_cause, disc_cause);
         }
 
 #if F_APP_LEA_SUPPORT
-        app_lea_adv_check_restart_adv();
+        if (local_disc_cause != LE_LOCAL_DISC_CAUSE_ROLESWAP)
+        {
+            app_lea_adv_check_restart_adv();
+        }
 #endif
 
 #if F_APP_LEA_DONGLE_BINDING
@@ -526,7 +527,7 @@ static void app_ble_gap_adjust_link_priority_for_a_while(uint8_t conn_id)
                     2000);
 }
 
-static void app_ble_gap_handle_rtk_link_priority(T_GAP_CONN_STATE new_state, uint8_t conn_id)
+static void app_ble_gap_handle_common_link_priority(T_GAP_CONN_STATE new_state, uint8_t conn_id)
 {
     T_GAP_CONN_INFO conn_info;
 
@@ -563,7 +564,7 @@ static void app_ble_gap_handle_new_conn_state_evt(uint8_t conn_id, T_GAP_CONN_ST
     p_link = app_link_find_le_link_by_conn_id(conn_id);
 
 #if F_APP_INCREASE_RTK_APP_LINK_PRIORITY_TEMPORARILY
-    app_ble_gap_handle_rtk_link_priority(new_state, conn_id);
+    app_ble_gap_handle_common_link_priority(new_state, conn_id);
 #endif
 
     switch (new_state)
@@ -602,7 +603,6 @@ static void app_ble_gap_handle_new_conn_state_evt(uint8_t conn_id, T_GAP_CONN_ST
             if (p_link != NULL)
             {
                 app_ble_gap_get_remote_bd_addr_and_type(p_link);
-
                 p_link->conn_handle = le_get_conn_handle(conn_id);
                 app_bt_sniffing_param_update(APP_BT_SNIFFING_EVENT_BLE_CONN_STATE_CHANGE);
 
@@ -640,16 +640,16 @@ static void app_ble_gap_handle_new_conn_state_evt(uint8_t conn_id, T_GAP_CONN_ST
                     app_ble_common_adv_set_random(rand_addr);
                 }
 #if F_APP_LEA_SUPPORT
+                if (p_link->lea_link_state == LEA_LINK_IDLE && p_link->lea_device)
+                {
+                    app_lea_uca_link_sm(p_link->conn_handle, LEA_CONNECT, NULL);
+                }
                 app_lea_pacs_init_available_context(p_link->conn_handle);
 #endif
 
                 uint16_t conn_interval_min = RWS_LE_DEFAULT_MIN_CONN_INTERVAL;
                 uint16_t conn_interval_max = RWS_LE_DEFAULT_MAX_CONN_INTERVAL;
-#if F_APP_SLAVE_LATENCY_UPDATE_SUPPORT
-                uint16_t conn_latency = RWS_LE_MAX_SLAVE_LATENCY;
-#else
                 uint16_t conn_latency = RWS_LE_DEFAULT_SLAVE_LATENCY;
-#endif
                 uint16_t conn_supervision_timeout = RWS_LE_DEFAULT_SUPERVISION_TIMEOUT;
 
                 ble_set_prefer_conn_param(conn_id, conn_interval_min, conn_interval_max, conn_latency,
@@ -689,81 +689,8 @@ T_APP_RESULT app_ble_gap_client_discov_cb(uint16_t conn_handle, T_GATT_CLIENT_EV
         APP_PRINT_INFO2("app_ble_gap_client_discov_cb:is_success %d, load_from_ftl %d",
                         p_disc->state, p_disc->load_from_ftl);
     }
-#if F_APP_EATT_SUPPORT
-    else if (type == GATT_CLIENT_EVENT_GATT_SERVICE_INFO)
-    {
-#if EATT_DEBUG_LOG
-        T_GATT_CLIENT_GATT_SERVICE_INFO *p_gatt_svc = (T_GATT_CLIENT_GATT_SERVICE_INFO *)p_data;
-        APP_PRINT_INFO2("app_ble_gap_client_discov_cb: GATT_CLIENT_EVENT_GATT_SERVICE_INFO, is_found %d, load_from_ftl %d",
-                        p_gatt_svc->is_found, p_gatt_svc->load_from_ftl);
-        if (p_gatt_svc->p_gatt_data)
-        {
-            APP_PRINT_INFO7("app_ble_gap_client_discov_cb: char_exist 0x%x, data_exist 0x%x, database_hash %b, feature[%d] 0x%x,  server feature[%d] 0x%x",
-                            p_gatt_svc->p_gatt_data->char_exist,
-                            p_gatt_svc->p_gatt_data->data_exist,
-                            TRACE_BINARY(GATT_SVC_DATABASE_HASH_LEN, p_gatt_svc->p_gatt_data->database_hash),
-                            p_gatt_svc->p_gatt_data->client_supported_features_len,
-                            p_gatt_svc->p_gatt_data->client_supported_features[0],
-                            p_gatt_svc->p_gatt_data->server_supported_features_len,
-                            p_gatt_svc->p_gatt_data->server_supported_features[0]);
-        }
-#endif
-    }
-#endif
+
     return APP_RESULT_SUCCESS;
-}
-#endif
-
-#if F_APP_ALLOW_ONE_DONGLE_AND_ONE_PHONE_ONLY
-static bool app_ble_gap_conn_ind_get_bd_addr(uint8_t *bd_addr, uint8_t *remote_bd_addr,
-                                             T_GAP_REMOTE_ADDR_TYPE remote_bd_type)
-{
-    bool ret = true;
-    uint8_t resolved_addr[6] = {0};
-    T_GAP_IDENT_ADDR_TYPE resolved_bd_type = (T_GAP_IDENT_ADDR_TYPE)0xFF;
-
-    if (remote_bd_type == GAP_REMOTE_ADDR_LE_RANDOM)
-    {
-        if (app_ble_is_rpa_addr(remote_bd_addr))
-        {
-#if CONFIG_REALTEK_APP_BOND_MGR_SUPPORT
-            if (bt_le_resolve_random_address(remote_bd_addr, resolved_addr, &resolved_bd_type))
-#else
-            if (le_resolve_random_address(remote_bd_addr, resolved_addr, &resolved_bd_type))
-#endif
-            {
-                if (resolved_bd_type == GAP_IDENT_ADDR_PUBLIC)
-                {
-                    memcpy(bd_addr, resolved_addr, 6);
-                }
-                else if (resolved_bd_type == GAP_IDENT_ADDR_RAND)
-                {
-                    memcpy(bd_addr, resolved_addr, 6);
-                }
-            }
-            else
-            {
-                ret = false;
-            }
-        }
-        else if (app_ble_is_static_rand_addr(remote_bd_addr))
-        {
-            memcpy(bd_addr, remote_bd_addr, 6);
-        }
-        else
-        {
-            ret = false;
-        }
-    }
-    else if (remote_bd_type == GAP_REMOTE_ADDR_LE_PUBLIC)
-    {
-        memcpy(bd_addr, remote_bd_addr, 6);
-    }
-
-    APP_PRINT_TRACE4("app_ble_gap_conn_ind_get_bd_addr ret %d, type: 0x%02X, input_addr %s, output_addr %s",
-                     ret, remote_bd_type, TRACE_BDADDR(remote_bd_addr), TRACE_BDADDR(bd_addr));
-
-    return ret;
 }
 #endif
 
@@ -797,13 +724,15 @@ void app_ble_gap_handle_authen_state_evt(uint8_t conn_id, uint8_t new_state, uin
 
             if (cause == GAP_SUCCESS)
             {
-                p_link->transmit_srv_tx_enable_fg |= TX_ENABLE_AUTHEN_BIT;
-                p_link->transmit_srv_dongle_tx_enable_fg |= TX_ENABLE_AUTHEN_BIT;
+                p_link->cmd.tx_mask |= TX_ENABLE_AUTHEN_BIT;
+                p_link->cmd.dongle_tx_mask |= TX_ENABLE_AUTHEN_BIT;
                 p_link->encryption_status = LE_LINK_ENCRYPTIONED;
                 app_audio_tone_type_play(TONE_LE_PAIR_COMPLETE, false, false);
                 app_bt_sniffing_param_update(APP_BT_SNIFFING_EVENT_BLE_ENCRYPT_STATE_CHANGE);
 
                 app_ble_gap_get_remote_bd_addr_and_type(p_link);
+
+                app_bt_point_link_num_changed(BP_LINK_TYPE_B2S_LE, BP_LINK_EVENT_CONNECT, p_link->bd_addr);
 
 #if F_APP_BLE_BOND_SYNC_SUPPORT
                 app_ble_bond_add_send_to_sec(p_link->bd_addr);
@@ -865,13 +794,8 @@ void app_ble_gap_handle_authen_state_evt(uint8_t conn_id, uint8_t new_state, uin
                 // set default ble connection parameters, LE supervision timeout 5sec
                 uint16_t conn_interval_min = RWS_LE_DEFAULT_MIN_CONN_INTERVAL;
                 uint16_t conn_interval_max = RWS_LE_DEFAULT_MAX_CONN_INTERVAL;
-#if F_APP_SLAVE_LATENCY_UPDATE_SUPPORT
-                uint16_t conn_latency = RWS_LE_MAX_SLAVE_LATENCY;
-#else
                 uint16_t conn_latency = RWS_LE_DEFAULT_SLAVE_LATENCY;
-#endif
                 uint16_t conn_supervision_timeout = RWS_LE_DEFAULT_SUPERVISION_TIMEOUT;
-
                 ble_set_prefer_conn_param(conn_id, conn_interval_min, conn_interval_max, conn_latency,
                                           conn_supervision_timeout);
 
@@ -882,6 +806,10 @@ void app_ble_gap_handle_authen_state_evt(uint8_t conn_id, uint8_t new_state, uin
                 {
                     p_link->start_discover = true;
                 }
+#endif
+
+#if F_APP_HAS_SUPPORT
+                app_lea_has_handle_authen_evt();
 #endif
             }
             else
@@ -1071,7 +999,7 @@ void app_ble_gap_handle_gap_msg(T_IO_MSG *p_io_msg)
         {
             if (stack_msg.msg_data.gap_conn_param_update.status == GAP_CONN_PARAM_UPDATE_STATUS_SUCCESS)
             {
-                app_cmd_check_slave_latency_update(stack_msg.msg_data.gap_conn_param_update.conn_id);
+                app_cmd_check_slave_latency_update(stack_msg.msg_data.gap_conn_param_update.conn_id, false);
             }
         }
         break;
@@ -1079,6 +1007,57 @@ void app_ble_gap_handle_gap_msg(T_IO_MSG *p_io_msg)
     default:
         break;
     }
+}
+
+static bool app_ble_gap_conn_ind_get_bd_addr(uint8_t *bd_addr, uint8_t *remote_bd_addr,
+                                             T_GAP_REMOTE_ADDR_TYPE remote_bd_type)
+{
+    bool ret = true;
+    uint8_t resolved_addr[6] = {0};
+    T_GAP_IDENT_ADDR_TYPE resolved_bd_type = (T_GAP_IDENT_ADDR_TYPE)0xFF;
+
+    if (remote_bd_type == GAP_REMOTE_ADDR_LE_RANDOM)
+    {
+        if (app_ble_is_rpa_addr(remote_bd_addr))
+        {
+#if CONFIG_REALTEK_APP_BOND_MGR_SUPPORT
+            if (bt_le_resolve_random_address(remote_bd_addr, resolved_addr, &resolved_bd_type))
+#else
+            if (le_resolve_random_address(remote_bd_addr, resolved_addr, &resolved_bd_type))
+#endif
+            {
+                if (resolved_bd_type == GAP_IDENT_ADDR_PUBLIC)
+                {
+                    memcpy(bd_addr, resolved_addr, 6);
+                }
+                else if (resolved_bd_type == GAP_IDENT_ADDR_RAND)
+                {
+                    memcpy(bd_addr, resolved_addr, 6);
+                }
+            }
+            else
+            {
+                ret = false;
+            }
+        }
+        else if (app_ble_is_static_rand_addr(remote_bd_addr))
+        {
+            memcpy(bd_addr, remote_bd_addr, 6);
+        }
+        else
+        {
+            ret = false;
+        }
+    }
+    else if (remote_bd_type == GAP_REMOTE_ADDR_LE_PUBLIC)
+    {
+        memcpy(bd_addr, remote_bd_addr, 6);
+    }
+
+    APP_PRINT_TRACE4("app_ble_gap_conn_ind_get_bd_addr ret %d, type: 0x%02X, input_addr %s, output_addr %s",
+                     ret, remote_bd_type, TRACE_BDADDR(remote_bd_addr), TRACE_BDADDR(bd_addr));
+
+    return ret;
 }
 
 static T_APP_RESULT app_ble_gap_cb(uint8_t cb_type, void *p_cb_data)
@@ -1212,6 +1191,30 @@ static T_APP_RESULT app_ble_gap_cb(uint8_t cb_type, void *p_cb_data)
         {
             result = APP_RESULT_ACCEPT;
 
+#if F_APP_LEA_SUPPORT
+            uint8_t remote_bd_addr[6] = {0};
+            uint8_t resolved_addr[6] = {0};
+            uint8_t resolved_bd_type = 0xFF;
+
+            memcpy(remote_bd_addr, cb_data.p_le_create_conn_ind->bd_addr, 6);
+
+#if CONFIG_REALTEK_APP_BOND_MGR_SUPPORT
+            if (bt_le_resolve_random_address(remote_bd_addr, resolved_addr, &resolved_bd_type) == true)
+#else
+            if (le_resolve_random_address(remote_bd_addr, resolved_addr, &resolved_bd_type) == true)
+#endif
+            {
+                for (uint8_t i = 0; i < MAX_BLE_LINK_NUM; i++)
+                {
+                    if (app_db.le_link[i].used == true &&
+                        !memcmp(app_db.le_link[i].bd_addr, resolved_addr, 6))
+                    {
+                        return APP_RESULT_REJECT;
+                    }
+                }
+            }
+#endif
+
 #if F_APP_ALLOW_ONE_DONGLE_AND_ONE_PHONE_ONLY && TARGET_LEGACY_AUDIO_GAMING
 #if F_APP_LEA_SUPPORT
             T_APP_LE_LINK *p_le_phone_link = app_dongle_get_le_audio_phone_link();
@@ -1223,6 +1226,7 @@ static T_APP_RESULT app_ble_gap_cb(uint8_t cb_type, void *p_cb_data)
                                                  cb_data.p_le_create_conn_ind->remote_addr_type) == false)
             {
                 APP_PRINT_ERROR0("GAP_MSG_LE_CREATE_CONN_IND: Fail to reslove le public address");
+                break;
             }
 
             if ((p_le_phone_link != NULL) && (memcmp(le_public_bd_addr, p_le_phone_link->le_pulbic_bd_addr, 6)))
@@ -1262,12 +1266,26 @@ static T_APP_RESULT app_ble_gap_cb(uint8_t cb_type, void *p_cb_data)
         }
         break;
 
+#if F_APP_GAMING_LE_FIX_CHANNEL_SUPPORT
+    case GAP_MSG_LE_FIXED_CHANN_DATA_IND:
+        {
+            T_LE_FIXED_CHANN_DATA_IND *data_ind = cb_data.p_le_fixed_chann_data_ind;
+            T_APP_LE_LINK *p_dongle_link = app_link_find_le_link_by_conn_id(data_ind->conn_id);
+
+            if (p_dongle_link != NULL)
+            {
+                p_dongle_link->remote_device_type = DEVICE_TYPE_DONGLE;
+            }
+
+            app_gaming_sync_disassemble_data(NULL, data_ind->p_data, data_ind->value_len);
+        }
+        break;
+
+#endif
+
     default:
         break;
     }
-#if F_APP_LEA_SUPPORT
-    mtc_gap_callback(cb_type, p_cb_data);
-#endif
 
     return result;
 }
@@ -1325,23 +1343,6 @@ static void app_ble_gap_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_
                 /* init here to avoid app_cfg_nv.bud_local_addr no mac info (due to factory reset) */
                 app_ble_common_adv_init();
             }
-#if CONFIG_REALTEK_GFPS_FEATURE_SUPPORT
-            /*Resolvable private address can only be successfully generate after BLE stack ready,
-            app_gfps_adv_init() and app_gfps_finder_init() need to generate RPA, so we call them here*/
-            if (extend_app_cfg_const.gfps_support)
-            {
-                app_gfps_adv_init();
-#if CONFIG_REALTEK_GFPS_FINDER_SUPPORT
-                if (extend_app_cfg_const.gfps_finder_support)
-                {
-                    app_gfps_finder_init();
-                    APP_PRINT_INFO0("app_ble_gap_bt_cback: gfps finder power off start finder adv");
-                    T_GFPS_FINDER_BEACON_STATE beacon_state = GFPS_FINDER_BEACON_STATE_ON;
-                    app_gfps_finder_enter_beacon_state(beacon_state);
-                }
-#endif
-            }
-#endif
         }
         break;
 
@@ -1509,8 +1510,8 @@ static void app_ble_gap_timeout_cb(uint8_t timer_evt, uint16_t param)
             if (p_link != NULL)
             {
                 authen_fail_conn_id = 0xFF;
-                p_link->transmit_srv_tx_enable_fg &= ~TX_ENABLE_AUTHEN_BIT;
-                p_link->transmit_srv_dongle_tx_enable_fg &= ~TX_ENABLE_AUTHEN_BIT;
+                p_link->cmd.tx_mask &= ~TX_ENABLE_AUTHEN_BIT;
+                p_link->cmd.dongle_tx_mask &= ~TX_ENABLE_AUTHEN_BIT;
                 p_link->encryption_status = LE_LINK_UNENCRYPTIONED;
                 app_ble_gap_disconnect(p_link, LE_LOCAL_DISC_CAUSE_AUTHEN_FAILED);
             }
@@ -1525,8 +1526,8 @@ static void app_ble_gap_timeout_cb(uint8_t timer_evt, uint16_t param)
             if (p_link != NULL)
             {
                 wait_for_authen_conn_id = 0xFF;
-                p_link->transmit_srv_tx_enable_fg &= ~TX_ENABLE_AUTHEN_BIT;
-                p_link->transmit_srv_dongle_tx_enable_fg &= ~TX_ENABLE_AUTHEN_BIT;
+                p_link->cmd.tx_mask &= ~TX_ENABLE_AUTHEN_BIT;
+                p_link->cmd.dongle_tx_mask &= ~TX_ENABLE_AUTHEN_BIT;
                 p_link->encryption_status = LE_LINK_UNENCRYPTIONED;
                 app_ble_gap_disconnect(p_link, LE_LOCAL_DISC_CAUSE_AUTHEN_FAILED);
             }
@@ -1550,195 +1551,20 @@ static void app_ble_gap_timeout_cb(uint8_t timer_evt, uint16_t param)
     }
 }
 
-#if F_APP_EATT_SUPPORT
-static uint16_t app_ble_gap_ecfc_cb(void *p_buf, T_GAP_ECFC_MSG msg)
-{
-    uint16_t result = 0;
-
-    APP_PRINT_TRACE1("app_ble_gap_ecfc_cb: msg %d", msg);
-    switch (msg)
-    {
-    case GAP_ECFC_PROTO_REG_RSP:
-        {
-#if EATT_DEBUG_LOG
-            T_GAP_ECFC_PROTO_REG_RSP *p_rsp = (T_GAP_ECFC_PROTO_REG_RSP *)p_buf;
-            APP_PRINT_INFO3("GAP_ECFC_PROTO_REG_RSP: proto_id %d, psm 0x%x, cause 0x%x",
-                            p_rsp->proto_id,
-                            p_rsp->psm,
-                            p_rsp->cause);
-#endif
-        }
-        break;
-
-    case GAP_ECFC_CONN_IND:
-        {
-            T_GAP_ECFC_CONN_IND *p_ind = (T_GAP_ECFC_CONN_IND *)p_buf;
-            T_GAP_ECFC_CONN_CFM_CAUSE cause = GAP_ECFC_CONN_ACCEPT;
-
-            APP_PRINT_INFO8("GAP_ECFC_CONN_IND: proto_id %d, conn_handle 0x%x, remote_mtu %d, cid_num %d, cis %b, bd_addr %s, bd_type 0x%x, identity_id 0x%x",
-                            p_ind->proto_id,
-                            p_ind->conn_handle,
-                            p_ind->remote_mtu,
-                            p_ind->cid_num,
-                            TRACE_BINARY(GAP_ECFC_CREATE_CHANN_MAX_NUM * 2, p_ind->cid),
-                            TRACE_BDADDR(p_ind->bd_addr),
-                            p_ind->bd_type,
-                            p_ind->identity_id);
-            if (p_ind->remote_mtu > MAX_REMOTE_MTU)
-            {
-                cause = GAP_ECFC_CONN_UNACCEPTABLE_PARAMS;
-            }
-
-            gap_ecfc_send_conn_cfm(p_ind->conn_handle, p_ind->identity_id,
-                                   cause, p_ind->cid, p_ind->cid_num, ECFC_LOCAL_MTU);
-        }
-        break;
-
-    case GAP_ECFC_CONN_RSP:
-        {
-#if EATT_DEBUG_LOG
-            T_GAP_ECFC_CONN_RSP *p_rsp = (T_GAP_ECFC_CONN_RSP *)p_buf;
-            APP_PRINT_INFO5("GAP_ECFC_CONN_RSP: proto_id %d, cid_num %d, cause 0x%x, bd_addr %s, bd_type 0x%x",
-                            p_rsp->proto_id,
-                            p_rsp->cid_num,
-                            p_rsp->cause,
-                            TRACE_BDADDR(p_rsp->bd_addr),
-                            p_rsp->bd_type);
-#endif
-        }
-        break;
-
-    case GAP_ECFC_CONN_CMPL:
-        {
-            T_GAP_ECFC_CONN_CMPL_INFO *p_info = (T_GAP_ECFC_CONN_CMPL_INFO *)p_buf;
-            T_APP_LE_LINK *p_link = app_link_find_le_link_by_addr(p_info->bd_addr);
-
-            if (p_link)
-            {
-                if (p_link->start_discover == false)
-                {
-                    if (gatt_client_start_discovery_all(p_info->conn_handle,
-                                                        app_ble_gap_client_discov_cb) == GAP_CAUSE_SUCCESS)
-                    {
-                        p_link->start_discover = true;
-                    }
-                }
-            }
-            APP_PRINT_INFO8("GAP_ECFC_CONN_CMPL: proto_id %d, cause 0x%x, conn_handle 0x%x, ds_data_offset %d, bd_addr %s, remote_mtu %d, local_mtu %d, local_mps %d",
-                            p_info->proto_id,
-                            p_info->cause,
-                            p_info->conn_handle,
-                            p_info->ds_data_offset,
-                            TRACE_BDADDR(p_info->bd_addr),
-                            p_info->remote_mtu,
-                            p_info->local_mtu,
-                            p_info->local_mps);
-            for (uint8_t i = 0; i < p_info->cid_num; i++)
-            {
-                APP_PRINT_INFO2("GAP_ECFC_CONN_CMPL: cis[%d] 0x%x", i, p_info->cid[i]);
-            }
-        }
-        break;
-
-    case GAP_ECFC_DISCONN_IND:
-        {
-#if EATT_DEBUG_LOG
-            T_GAP_ECFC_DISCONN_IND *p_ind = (T_GAP_ECFC_DISCONN_IND *)p_buf;
-            APP_PRINT_INFO4("GAP_ECFC_DISCONN_IND: proto_id %d, conn_handle 0x%x, cid 0x%x, cause 0x%x",
-                            p_ind->proto_id,
-                            p_ind->conn_handle,
-                            p_ind->cid,
-                            p_ind->cause);
-#endif
-        }
-        break;
-
-    case GAP_ECFC_DISCONN_RSP:
-        {
-#if EATT_DEBUG_LOG
-            T_GAP_ECFC_DISCONN_RSP *p_rsp = (T_GAP_ECFC_DISCONN_RSP *)p_buf;
-            APP_PRINT_INFO4("GAP_ECFC_DISCONN_RSP: proto_id %d, conn_handle 0x%x, cid 0x%x, cause 0x%x",
-                            p_rsp->proto_id,
-                            p_rsp->conn_handle,
-                            p_rsp->cid,
-                            p_rsp->cause);
-#endif
-        }
-        break;
-
-    case GAP_ECFC_SEC_REG_RSP:
-        {
-#if EATT_DEBUG_LOG
-            T_GAP_ECFC_SEC_REG_RSP *p_rsp = (T_GAP_ECFC_SEC_REG_RSP *)p_buf;
-            APP_PRINT_INFO5("GAP_ECFC_SEC_REG_RSP: is_le %d, psm 0x%x, active %d, uuid 0x%x, cause 0x%x",
-                            p_rsp->is_le,
-                            p_rsp->psm,
-                            p_rsp->active,
-                            p_rsp->uuid,
-                            p_rsp->cause);
-#endif
-        }
-        break;
-
-    case GAP_ECFC_RECONFIGURE_IND:
-        {
-#if EATT_DEBUG_LOG
-            T_GAP_ECFC_RECONFIGURE_IND *p_ind = (T_GAP_ECFC_RECONFIGURE_IND *)p_buf;
-            APP_PRINT_INFO6("GAP_ECFC_RECONFIGURE_IND: proto_id %d, conn_handle 0x%x, remote_mtu %d, remote_mps %d,cid_num %d, cis %b",
-                            p_ind->proto_id,
-                            p_ind->conn_handle,
-                            p_ind->remote_mtu,
-                            p_ind->remote_mps,
-                            p_ind->cid_num,
-                            TRACE_BINARY(GAP_ECFC_CREATE_CHANN_MAX_NUM * 2, p_ind->cid));
-#endif
-            result = GAP_ECFC_RCFG_ACCEPT;
-        }
-        break;
-
-    case GAP_ECFC_RECONFIGURE_RSP:
-        {
-#if EATT_DEBUG_LOG
-            T_GAP_ECFC_RECONFIGURE_RSP *p_rsp = (T_GAP_ECFC_RECONFIGURE_RSP *)p_buf;
-            APP_PRINT_INFO7("GAP_ECFC_RECONFIGURE_RSP: proto_id %d, cause 0x%x, conn_handle 0x%x, local_mtu %d, local_mps %d,cid_num %d, cis %b",
-                            p_rsp->proto_id,
-                            p_rsp->cause,
-                            p_rsp->conn_handle,
-                            p_rsp->local_mtu,
-                            p_rsp->local_mps,
-                            p_rsp->cid_num,
-                            TRACE_BINARY(GAP_ECFC_CREATE_CHANN_MAX_NUM * 2, p_rsp->cid));
-#endif
-        }
-        break;
-
-    default:
-        break;
-    }
-
-    return result;
-}
-
-static void app_ble_gap_ecfc_init(void)
-{
-    uint16_t initial_credits = ECFC_CREDITS;
-
-    gap_ecfc_set_param(GAP_ECFC_PARAM_INIT_CREDITS, 2, &initial_credits);
-
-    gap_ecfc_init(1);
-    gap_ecfc_reg_proto(PSM_EATT, app_ble_gap_ecfc_cb, true, &app_ecfc_le_proto_id,
-                       GAP_ECFC_DATA_PATH_GATT);
-}
-#endif
-
 static void app_ble_gap_common_callback(uint8_t cb_type, void *p_cb_data)
 {
     T_GAP_CB_DATA cb_data;
     memcpy(&cb_data, p_cb_data, sizeof(T_GAP_CB_DATA));
     APP_PRINT_INFO1("app_ble_gap_common_callback: cb_type = 0x%x", cb_type);
 
+    ble_mgr_handle_gap_common_cb(cb_type, p_cb_data);
+
 #if F_APP_GATT_CACHING_SUPPORT
     app_ble_gatt_caching_common_callback(cb_type, p_cb_data);
+#endif
+
+#if F_APP_B2B_ENGAGE_REDUCE_NSE
+    app_vendor_ble_gap_handle(cb_type, p_cb_data);
 #endif
 
     switch (cb_type)
@@ -1796,7 +1622,7 @@ void app_ble_gap_init(void)
 #endif
 
 #if F_APP_EATT_SUPPORT
-    app_ble_gap_ecfc_init();
+    app_ble_eatt_ecfc_init();
 #endif
 
 #if F_APP_RWS_BLE_USE_RPA_SUPPORT
@@ -1838,6 +1664,10 @@ void app_ble_gap_param_init(void)
     {
         handle_conn_ind = true;
     }
+#endif
+
+#if F_APP_LEA_SUPPORT
+    handle_conn_ind = true;
 #endif
 
 #if F_APP_ALLOW_ONE_DONGLE_AND_ONE_PHONE_ONLY
@@ -1907,17 +1737,3 @@ void app_ble_gap_param_init(void)
                           &scan_filter_duplicate);
     le_ext_scan_set_phy_param(LE_SCAN_PHY_LE_1M, &extended_scan_param[0]);
 }
-
-#if F_APP_LEA_SUPPORT
-bool app_ble_gap_stack_info(void)
-{
-    if (le_state.gap_init_state == GAP_INIT_STATE_STACK_READY)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-#endif

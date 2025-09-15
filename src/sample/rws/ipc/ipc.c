@@ -15,7 +15,11 @@
 
 #define IPC_QUEUE_LEN        0x20
 
-#define DSP_LOG_UART        ((UART_TypeDef *) LOG_UART1_REG_BASE)
+#define DSP2_LOG_UART                   UART3
+#define DSP2_LOG_UART_APBPeriph         APBPeriph_UART3
+#define DSP2_LOG_UART_APBPeriph_CLOCK   APBPeriph_UART3_CLOCK
+#define DSP2_LOG_UART_TX                UART3_TX
+#define DSP2_LOG_UART_RX                UART3_RX
 
 static void *ipc_queue_handle = NULL;
 
@@ -180,7 +184,7 @@ static void enable_uart3_fucntion(uint8_t enable)
 
 static void log_uart_driver_init(void)
 {
-    RCC_PeriphClockCmd(APBPeriph_UART3, APBPeriph_UART3_CLOCK, ENABLE);
+    RCC_PeriphClockCmd(DSP2_LOG_UART_APBPeriph, DSP2_LOG_UART_APBPeriph_CLOCK, ENABLE);
     RCC_PeriphClockCmd(APBPeriph_GDMA, APBPeriph_GDMA_CLOCK, ENABLE);
 
     UART_InitTypeDef uart_init_struct;
@@ -193,20 +197,19 @@ static void log_uart_driver_init(void)
     uart_init_struct.ovsr = 5;
     uart_init_struct.ovsr_adj = 0;
 
-    UART_Init(DSP_LOG_UART, &uart_init_struct);
+    UART_Init(DSP2_LOG_UART, &uart_init_struct);
     enable_uart3_fucntion(1);
-    DSP_LOG_UART->MISCR |= ((16 - 8) << 3) | (1U << 1);
+    DSP2_LOG_UART->MISCR |= ((16 - 8) << 3) | (1U << 1);
 }
 
 static void log_uart_init(void)
 {
     if (app_cfg2_const.dsp2_log_output_select == DSP_OUTPUT_LOG_BY_UART)
     {
-
         Pinmux_Deinit(app_cfg_const.dsp_log_pin);//TX
         Pad_Config(app_cfg_const.dsp_log_pin, PAD_PINMUX_MODE, PAD_IS_PWRON, PAD_PULL_NONE,
                    PAD_OUT_ENABLE, PAD_OUT_HIGH);
-        Pinmux_Config(app_cfg_const.dsp_log_pin, UART3_TX);
+        Pinmux_Config(app_cfg_const.dsp_log_pin, DSP2_LOG_UART_TX);
     }
     log_uart_driver_init();
 }

@@ -38,11 +38,6 @@ static uint16_t app_lea_mcp_ble_audio_cback(T_LE_AUDIO_MSG msg, void *buf)
                     mcp_client_read_char_value(p_dis_done->conn_handle, 0, MCS_UUID_CHAR_MEDIA_STATE, true);
                     mcp_client_read_char_value(p_dis_done->conn_handle, 0, MCS_UUID_CHAR_MEDIA_PLAYER_NAME, true);
                     p_link->gmcs = p_dis_done->gmcs;
-
-                    if (app_link_get_lea_link_num() <= 1)
-                    {
-                        app_lea_mcp_set_active_conn_handle(p_link->conn_handle);
-                    }
                 }
             }
         }

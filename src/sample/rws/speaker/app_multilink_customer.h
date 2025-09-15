@@ -86,6 +86,7 @@ void app_multilink_customer_line_in_start(void);
 void app_multilink_customer_line_in_stop(void);
 void app_multilink_customer_line_in_plug(void);
 void app_multilink_customer_line_in_unplug(void);
+bool app_multilink_customer_check_hfp_is_idle(void);
 
 #if F_APP_GAMING_DONGLE_SUPPORT
 bool app_multilink_customer_is_dongle_priority_higher(void);

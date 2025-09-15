@@ -19,8 +19,6 @@ extern "C" {
  */
 
 /**
- * bt_att.h
- *
  * \brief  BT ATT message type.
  *
  * \ingroup BT_ATT
@@ -34,8 +32,29 @@ typedef enum t_bt_att_msg_type
 } T_BT_ATT_MSG_TYPE;
 
 /**
- * bt_att.h
+ * \brief  BT ATT connection completed.
  *
+ * \ingroup BT_ATT
+ */
+typedef struct t_bt_att_conn_cmpl
+{
+    uint16_t conn_handle;
+    uint16_t cid;
+    uint16_t mtu_size;
+} T_BT_ATT_CONN_CMPL;
+
+/**
+ * \brief  BT ATT data indication.
+ *
+ * \ingroup BT_ATT
+ */
+typedef struct t_bt_att_data_ind
+{
+    uint8_t  *buf;
+    uint16_t  len;
+} T_BT_ATT_DATA_IND;
+
+/**
  * \brief  ATT message callback definition.
  *
  * \xrefitem Added_API_2_11_1_0 "Added Since 2.11.1.0" "Added API"
@@ -46,13 +65,11 @@ typedef enum t_bt_att_msg_type
  *
  * \ingroup BT_ATT
  */
-typedef void (* P_BT_ATT_CBACK)(uint8_t            bd_addr[6],
-                                T_BT_ATT_MSG_TYPE  msg_type,
-                                void              *p_msg);
+typedef void (*P_BT_ATT_CBACK)(uint8_t             bd_addr[6],
+                               T_BT_ATT_MSG_TYPE  msg_type,
+                               void              *msg);
 
 /**
- * bt_att.h
- *
  * \brief  Initialize ATT profile.
  *
  * \xrefitem Added_API_2_11_1_0 "Added Since 2.11.1.0" "Added API"
@@ -68,9 +85,7 @@ typedef void (* P_BT_ATT_CBACK)(uint8_t            bd_addr[6],
 bool bt_att_init(P_BT_ATT_CBACK cback);
 
 /**
- * bt_att.h
- *
- * \brief   Send a ATT connection request.
+ * \brief   Send an ATT connection request.
  *
  * \xrefitem Added_API_2_11_1_0 "Added Since 2.11.1.0" "Added API"
  *
@@ -85,9 +100,7 @@ bool bt_att_init(P_BT_ATT_CBACK cback);
 bool bt_att_connect_req(uint8_t bd_addr[6]);
 
 /**
- * bt_att.h
- *
- * \brief  Send a ATT disconnection request.
+ * \brief  Send an ATT disconnection request.
  *
  * \xrefitem Added_API_2_11_1_0 "Added Since 2.11.1.0" "Added API"
  *

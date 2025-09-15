@@ -164,6 +164,169 @@ typedef union t_cfu_flag
     };
 } T_CFU_FLAG;
 
+typedef enum t_component_firmware_update
+{
+    COMPONENT_FIRMWARE_UPDATE_FLAG_DEFAULT = 0x00,
+    COMPONENT_FIRMWARE_UPDATE_FLAG_FIRST_BLOCK = 0x80,        // Denotes the first block of a firmware payload.
+    COMPONENT_FIRMWARE_UPDATE_FLAG_LAST_BLOCK = 0x40,         // Denotes the last block of a firmware payload.
+    COMPONENT_FIRMWARE_UPDATE_FLAG_VERIFY = 0x08,             // If set, the firmware verifies the byte array in the upper block at the specified address.
+} T_COMPONENT_FIRMWARE_UPDATE;
+
+typedef enum t_fw_offer_status
+{
+    // The offer needs to be skipped at this time indicating to
+    // the host to please offer again during next applicable period.
+    FIRMWARE_UPDATE_OFFER_SKIP = 0x00,
+
+    // Once FIRMWARE_UPDATE_FLAG_LAST_BLOCK has been issued,
+    // the accessory can then determine if the offer contents
+    // apply to it.
+    FIRMWARE_UPDATE_OFFER_ACCEPT = 0x01,
+
+    // Once FIRMWARE_UPDATE_FLAG_LAST_BLOCK has been issued,
+    // the accessory can then determine if the offer block contents apply to it.
+    FIRMWARE_UPDATE_OFFER_REJECT = 0x02,
+
+    // The offer needs to be delayed at this time.  The device has
+    // nowhere to put the incoming blob.
+    FIRMWARE_UPDATE_OFFER_BUSY = 0x03,
+
+    // Used with the Offer Other response for the OFFER_NOTIFY_ON_READY
+    // request, when the Accessory is ready to accept additional Offers.
+    FIRMWARE_UPDATE_OFFER_COMMAND_READY = 0x04,
+
+    // Response applicable to when the Offer request is not recognized.
+    FIRMWARE_UPDATE_CMD_NOT_SUPPORTED = 0xFF
+} T_FW_OFFER_STATUS;
+
+typedef enum t_fw_update_offer_reject_reason
+{
+    // The offer was rejected by the product due to the offer
+    // version being older than the currently downloaded / existing firmware.
+    FIRMWARE_OFFER_REJECT_OLD_FW = 0x00, //The offer was rejected by the product due to the offer version being older than the currently downloaded / existing firmware.
+
+    // The offer was rejected due to it not being applicable to
+    // the product?s primary MCU(Component ID).
+    FIRMWARE_OFFER_REJECT_INV_COMPONENT = 0x01,
+
+    // MCU Firmware has been updated and a swap is currently pending.
+    // No further Firmware Update processing can occur until the
+    // target has been reset.
+    FIRMWARE_UPDATE_OFFER_SWAP_PENDING = 0x02,
+
+    // The offer was rejected due to a Version mismatch(Debug / Release for example)
+    FIRMWARE_OFFER_REJECT_MISMATCH = 0x03,
+
+    // The bank being offered for the component is currently in use.
+    FIRMWARE_OFFER_REJECT_BANK = 0x04,
+
+    // The offer's Platform ID does not correlate to the receiving
+    // hardware product.
+    FIRMWARE_OFFER_REJECT_PLATFORM = 0x05,
+
+    // The offer's Milestone does not correlate to the receiving
+    // hardware's Build ID.
+    FIRMWARE_OFFER_REJECT_MILESTONE = 0x06,
+
+    // The offer indicates an interface Protocol Revision that
+    // the receiving product does not support.
+    FIRMWARE_OFFER_REJECT_INV_PCOL_REV = 0x07,
+
+    // The combination of Milestone & Compatibility Variants Mask did
+    // not match the HW.
+    FIRMWARE_OFFER_REJECT_VARIANT = 0x08
+} T_FW_UPDATE_OFFER_REJECT_REASON;
+
+typedef enum t_component_firmware_update_payload_response
+{
+    COMPONENT_FIRMWARE_UPDATE_SUCCESS = 0x00,                             // No Error, the requested function(s) succeeded.
+    COMPONENT_FIRMWARE_UPDATE_ERROR_PREPARE = 0x01,                       // Could not either: 1) Erase the upper block; 2) Initialize the swap command scratch block; 3) Copy the configuration data to the upper block.
+    COMPONENT_FIRMWARE_UPDATE_ERROR_WRITE = 0x02,                         // Could not write the bytes.
+    COMPONENT_FIRMWARE_UPDATE_ERROR_COMPLETE = 0x03,                      // Could not set up the swap, in response to COMPONENT_FIRMWARE_UPDATE_FLAG_LAST_BLOCK.
+    COMPONENT_FIRMWARE_UPDATE_ERROR_VERIFY = 0x04,                        // Verification of the DWord failed, in response to COMPONENT_FIRMWARE_UPDATE_FLAG_VERIFY.
+    COMPONENT_FIRMWARE_UPDATE_ERROR_CRC = 0x05,                           // CRC of the image failed, in response to COMPONENT_FIRMWARE_UPDATE_FLAG_LAST_BLOCK.
+    COMPONENT_FIRMWARE_UPDATE_ERROR_SIGNATURE = 0x06,                     // Firmware signature verification failed, in response to COMPONENT_FIRMWARE_UPDATE_FLAG_LAST_BLOCK.
+    COMPONENT_FIRMWARE_UPDATE_ERROR_VERSION = 0x07,                       // Firmware version verification failed, in response to COMPONENT_FIRMWARE_UPDATE_FLAG_LAST_BLOCK.
+    COMPONENT_FIRMWARE_UPDATE_ERROR_SWAP_PENDING = 0x08,                  // Firmware has already been updated and a swap is pending.  No further Firmware Update commands can be accepted until the device has been reset.
+    COMPONENT_FIRMWARE_UPDATE_ERROR_INVALID_ADDR = 0x09,                  // Firmware has detected an invalid destination address within the message data content.
+    COMPONENT_FIRMWARE_UPDATE_ERROR_NO_OFFER = 0x0A,                      // The Firmware Update Content Command was received without first receiving a valid & accepted FW Update Offer.
+    COMPONENT_FIRMWARE_UPDATE_ERROR_INVALID = 0x0B                        // General error for the Firmware Update Content command, such as an invalid applicable Data Length.
+} T_COMPONENT_FIRMWARE_UPDATE_PAYLOAD_RESPONSE;
+
+typedef enum t_content_status
+{
+    CFU_CONTENT_IDLE,
+    CFU_CONTENT_RECEIVE_CFU_HEADER,
+    CFU_CONTENT_RECEIVE_IMG_HEADER,
+    CFU_CONTENT_RECEIVE_IMG_BLOCKS,
+} T_CONTENT_STATUS;
+
+typedef enum t_cfu_remote_msg
+{
+    APP_REMOTE_MSG_CFU_ACK                    = 0x00,
+    APP_REMOTE_MSG_CFU_P2S_OFFER              = 0x01,
+    APP_REMOTE_MSG_CFU_P2S_CONTENT            = 0x02,
+    APP_REMOTE_MSG_CFU_S2P_OFFER_RSP          = 0x03,
+    APP_REMOTE_MSG_CFU_S2P_CONTENT_RSP        = 0x04,
+
+    APP_REMOTE_MSG_CFU_TOTAL                  = 0x05,
+} T_CFU_REMOTE_MSG;
+
+typedef union t_cfu_offer_version
+{
+    uint8_t value[4];
+    struct
+    {
+        uint8_t signer: 2;
+        uint8_t build_type: 2;
+        uint8_t rsvd0: 3;
+        uint8_t official: 1;
+        uint8_t minor_ver[2];
+        uint8_t major_ver;
+    } ver;
+} T_CFU_OFFER_VERSION;
+
+typedef struct t_fw_update_standard_offer
+{
+    uint8_t rsvd0;
+    uint8_t rsvd1: 6;
+    uint8_t force_reset: 1;
+    uint8_t force_ignore: 1;
+    uint8_t component_id;
+    uint8_t token;
+    T_CFU_OFFER_VERSION version;
+    uint16_t last_image_id;
+    uint8_t bud_role: 2;
+    uint8_t force_ignore_platform_id: 1;
+    uint8_t rsvd2: 5;
+    uint8_t rsvd3;
+    uint8_t cfu_ver: 4;
+    uint8_t bank: 2;
+    uint8_t rsvd4: 2;
+    uint8_t milestone: 4;
+    uint8_t sfua_ver: 4;
+    uint16_t platform_id;
+} T_FW_UPDATE_STANDARD_OFFER;
+
+typedef struct t_fw_update_special_offer
+{
+    uint8_t cmdCode;
+    uint8_t rsvd0;
+    uint8_t component_id;
+    uint8_t token;
+    uint8_t rsvd1[12];
+} T_FW_UPDATE_SPECIAL_OFFER;
+
+
+typedef struct t_fw_update_content_command
+{
+    uint8_t flags;
+    uint8_t length;
+    uint16_t seq_num;
+    uint8_t offset[4];
+    uint8_t data[52];
+} T_FW_UPDATE_CONTENT_COMMAND;
+
 typedef struct t_cfu_struct
 {
     uint32_t cur_img_offset;

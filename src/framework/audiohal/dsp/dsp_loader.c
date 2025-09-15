@@ -46,7 +46,7 @@ bool fix_scenario = false;
 
 typedef struct
 {
-    T_BIN_LOADER_SESSION_HANDLE *dsp_load_session;
+    T_BIN_LOADER_SESSION_HANDLE dsp_load_session;
     T_SHM_SCENARIO loader_scenario;
     T_DSP_LOAD_STATE state;
     uint8_t reload_count;

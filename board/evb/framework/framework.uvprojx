@@ -339,9 +339,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>--gnu --bss_threshold=0  --no_branch_tables</MiscControls>
-              <Define>F_BT_LE_5_0_AE_ADV_SUPPORT=1 CONFIG_SOC_SERIES_RTL8763E CONFIG_REALTEK_BTM_HID_DEVICE_SUPPORT=1 CONFIG_REALTEK_BTM_HID_HOST_SUPPORT=0  CONFIG_REALTEK_BTM_IAP_SUPPORT=1 CONFIG_REALTEK_BTM_MAP_SUPPORT=1 CONFIG_REALTEK_BTM_ROLESWAP_SUPPORT=1 CONFIG_REALTEK_BTM_PBAP_SUPPORT=1 CONFIG_REALTEK_BTM_ATT_SUPPORT=1 CONFIG_REALTEK_BTM_A2DP_SUPPORT=1 CONFIG_REALTEK_BTM_AVRCP_SUPPORT=1 CONFIG_REALTEK_BTM_AVRCP_BROWSING_SUPPORT=1 CONFIG_REALTEK_BTM_AVRCP_COVER_ART_SUPPORT=1 CONFIG_REALTEK_BTM_HFP_AG_SUPPORT=1 CONFIG_REALTEK_BTM_HFP_SUPPORT=1 CONFIG_REALTEK_AM_LINE_IN_SUPPORT=1 CONFIG_REALTEK_AM_AUDIO_PIPE_SUPPORT=1 CONFIG_REALTEK_LISTEN_WHILE_SAVE_SUPPORT=1 CONFIG_REALTEK_AM_ANC_SUPPORT=1 CONFIG_REALTEK_AM_AUDIO_PLUGIN_SUPPORT=1 CONFIG_REALTEK_REMOTE_CONTROL_SUPPORT=1 F_APP_EXT_MIC_SWITCH_SUPPORT=1</Define>
+              <Define>F_BT_LE_5_0_AE_ADV_SUPPORT=1 CONFIG_SOC_SERIES_RTL8763E CONFIG_REALTEK_BTM_HID_DEVICE_SUPPORT=1 CONFIG_REALTEK_BTM_HID_HOST_SUPPORT=1  CONFIG_REALTEK_BTM_AVP_SUPPORT=1 CONFIG_REALTEK_BTM_IAP_SUPPORT=1 CONFIG_REALTEK_BTM_MAP_SUPPORT=1 CONFIG_REALTEK_BTM_ROLESWAP_SUPPORT=1 CONFIG_REALTEK_BTM_PBAP_SUPPORT=1 CONFIG_REALTEK_BTM_ATT_SUPPORT=1 CONFIG_REALTEK_BTM_A2DP_SUPPORT=1 CONFIG_REALTEK_BTM_AVRCP_SUPPORT=1 CONFIG_REALTEK_BTM_AVRCP_BROWSING_SUPPORT=1 CONFIG_REALTEK_BTM_AVRCP_COVER_ART_SUPPORT=1 CONFIG_REALTEK_BTM_HFP_AG_SUPPORT=1 CONFIG_REALTEK_BTM_HFP_SUPPORT=1 CONFIG_REALTEK_BTM_PAN_SUPPORT=1 CONFIG_REALTEK_AM_LINE_IN_SUPPORT=1 CONFIG_REALTEK_AM_AUDIO_PIPE_SUPPORT=1 CONFIG_REALTEK_LISTEN_WHILE_SAVE_SUPPORT=1 CONFIG_REALTEK_AM_ANC_SUPPORT=1 CONFIG_REALTEK_AM_AUDIO_PLUGIN_SUPPORT=1 CONFIG_REALTEK_REMOTE_CONTROL_SUPPORT=1 F_APP_EXT_MIC_SWITCH_SUPPORT=1</Define>
               <Undefine/>
-              <IncludePath>..\..\..\inc\app;..\..\..\inc\bluetooth\gap;..\..\..\inc\bluetooth\gap\gap_lib;..\..\..\inc\framework\sys;..\..\..\inc\framework\audio;..\..\..\inc\framework\bt;..\..\..\inc\framework\remote;..\..\..\src\framework\sys;..\..\..\src\framework\btm\gatt;..\..\..\src\framework\btm;..\..\..\src\framework\audiomgr;..\..\..\src\framework\audiohal;..\..\..\src\framework\audiohal\dsp;..\..\..\src\framework\audiohal\codec;..\..\..\src\framework\audiohal\sport;..\..\..\src\framework\audiohal\anc;..\..\..\inc\rtl87x3e\io;..\..\..\inc\rtl87x3e\os;..\..\..\inc\rtl87x3e\platform;..\..\..\inc\platform;..\..\..\inc\rtl87x3e\platform\cmsis;..\..\..\src\mcu\rtl876x;..\..\..\inc\rtl87x3e\hal;..\..\..\inc\rtl87x3e\hal\audio;..\..\..\inc\rtl87x3e\hal\stack;..\..\..\inc\rtl87x3e\bluetooth\gap;..\..\..\inc\rtl87x3e\hal\io;..\..\..\inc\hal\io;..\..\..\inc\hal\audio;..\..\..\inc\bluetooth\profile;..\..\..\inc\hal\platform</IncludePath>
+              <IncludePath>..\..\..\inc\app;..\..\..\inc\bluetooth\gap;..\..\..\inc\bluetooth\gap\gap_lib;..\..\..\inc\framework\sys;..\..\..\inc\framework\audio;..\..\..\inc\framework\bt;..\..\..\inc\framework\remote;..\..\..\src\framework\sys;..\..\..\src\framework\btm\gatt;..\..\..\src\framework\btm;..\..\..\src\framework\audiomgr;..\..\..\src\framework\audiohal;..\..\..\src\framework\audiohal\dsp;..\..\..\src\framework\audiohal\codec;..\..\..\src\framework\audiohal\sport;..\..\..\src\framework\audiohal\anc;..\..\..\inc\rtl87x3e\io;..\..\..\inc\rtl87x3e\os;..\..\..\inc\rtl87x3e\platform;..\..\..\inc\platform;..\..\..\inc\rtl87x3e\platform\cmsis;..\..\..\src\mcu\rtl876x;..\..\..\inc\rtl87x3e\hal;..\..\..\inc\rtl87x3e\hal\audio;..\..\..\inc\rtl87x3e\hal\stack;..\..\..\inc\rtl87x3e\bluetooth\gap;..\..\..\inc\rtl87x3e\hal\io;..\..\..\inc\hal\io;..\..\..\inc\hal\audio;..\..\..\inc\bluetooth\profile;..\..\..\inc\hal\platform;..\..\..\src\framework\audiohal\bin_load</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -386,11 +386,6 @@
           <GroupName>profile</GroupName>
           <Files>
             <File>
-              <FileName>a2dp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\a2dp.c</FilePath>
-            </File>
-            <File>
               <FileName>avctp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\src\framework\btm\avctp.c</FilePath>
@@ -401,29 +396,9 @@
               <FilePath>..\..\..\src\framework\btm\avdtp.c</FilePath>
             </File>
             <File>
-              <FileName>avrcp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\avrcp.c</FilePath>
-            </File>
-            <File>
-              <FileName>hfp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\hfp.c</FilePath>
-            </File>
-            <File>
               <FileName>obex.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\src\framework\btm\obex.c</FilePath>
-            </File>
-            <File>
-              <FileName>pbap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\pbap.c</FilePath>
-            </File>
-            <File>
-              <FileName>spp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\spp.c</FilePath>
             </File>
             <File>
               <FileName>rfc.c</FileName>
@@ -431,64 +406,14 @@
               <FilePath>..\..\..\src\framework\btm\rfc.c</FilePath>
             </File>
             <File>
-              <FileName>iap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\iap.c</FilePath>
-            </File>
-            <File>
-              <FileName>rdtp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\rdtp.c</FilePath>
-            </File>
-            <File>
-              <FileName>avp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\avp.c</FilePath>
-            </File>
-            <File>
-              <FileName>avp_att.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\avp_att.c</FilePath>
-            </File>
-            <File>
-              <FileName>hfp_ag.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\hfp_ag.c</FilePath>
-            </File>
-            <File>
-              <FileName>hid_device.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\hid_device.c</FilePath>
-            </File>
-            <File>
-              <FileName>hid_host.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\hid_host.c</FilePath>
-            </File>
-            <File>
-              <FileName>hid_parser.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\hid_parser.c</FilePath>
-            </File>
-            <File>
-              <FileName>map.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\map.c</FilePath>
-            </File>
-            <File>
               <FileName>iap_cp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\src\framework\btm\iap_cp.c</FilePath>
             </File>
             <File>
-              <FileName>att_br.c</FileName>
+              <FileName>bnep.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\att_br.c</FilePath>
-            </File>
-            <File>
-              <FileName>opp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\opp.c</FilePath>
+              <FilePath>..\..\..\src\framework\btm\bnep.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -586,6 +511,11 @@
               <FilePath>..\..\..\src\framework\btm\bt_hid_host.c</FilePath>
             </File>
             <File>
+              <FileName>bt_hid_parser.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\src\framework\btm\bt_hid_parser.c</FilePath>
+            </File>
+            <File>
               <FileName>bt_map.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\src\framework\btm\bt_map.c</FilePath>
@@ -599,6 +529,11 @@
               <FileName>bt_opp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\src\framework\btm\bt_opp.c</FilePath>
+            </File>
+            <File>
+              <FileName>bt_pan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\src\framework\btm\bt_pan.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1208,9 +1143,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>--gnu --bss_threshold=0</MiscControls>
-              <Define>F_BT_LE_5_0_AE_ADV_SUPPORT=1 CONFIG_SOC_SERIES_RTL8763E CONFIG_REALTEK_BTM_HID_DEVICE_SUPPORT=1 CONFIG_REALTEK_BTM_HID_HOST_SUPPORT=0  CONFIG_REALTEK_BTM_AVP_SUPPORT=0 CONFIG_REALTEK_BTM_IAP_SUPPORT=1 CONFIG_REALTEK_BTM_MAP_SUPPORT=0 CONFIG_REALTEK_BTM_ROLESWAP_SUPPORT=0 CONFIG_REALTEK_BTM_PBAP_SUPPORT=1 CONFIG_REALTEK_BTM_A2DP_SUPPORT=1 CONFIG_REALTEK_BTM_AVRCP_SUPPORT=1 CONFIG_REALTEK_BTM_HFP_SUPPORT=1 CONFIG_REALTEK_AM_LINE_IN_SUPPORT=1 CONFIG_REALTEK_AM_AUDIO_PIPE_SUPPORT=1 CONFIG_REALTEK_LISTEN_WHILE_SAVE_SUPPORT=0 CONFIG_REALTEK_AM_ANC_SUPPORT=1 CONFIG_REALTEK_AM_AUDIO_PLUGIN_SUPPORT=1 CONFIG_REALTEK_AM_AUDIO_STEREO_SUPPORT = 1 CONFIG_REALTEK_REMOTE_CONTROL_SUPPORT=1 F_APP_EXT_MIC_SWITCH_SUPPORT=1</Define>
+              <Define>F_BT_LE_5_0_AE_ADV_SUPPORT=1 CONFIG_SOC_SERIES_RTL8763E CONFIG_REALTEK_BTM_HID_DEVICE_SUPPORT=1 CONFIG_REALTEK_BTM_HID_HOST_SUPPORT=0  CONFIG_REALTEK_BTM_AVP_SUPPORT=0 CONFIG_REALTEK_BTM_IAP_SUPPORT=1 CONFIG_REALTEK_BTM_MAP_SUPPORT=0 CONFIG_REALTEK_BTM_ROLESWAP_SUPPORT=0 CONFIG_REALTEK_BTM_PBAP_SUPPORT=1 CONFIG_REALTEK_BTM_A2DP_SUPPORT=1 CONFIG_REALTEK_BTM_AVRCP_SUPPORT=1 CONFIG_REALTEK_BTM_HFP_SUPPORT=1 CONFIG_REALTEK_BTM_PAN_SUPPORT=0 CONFIG_REALTEK_AM_LINE_IN_SUPPORT=1 CONFIG_REALTEK_AM_AUDIO_PIPE_SUPPORT=1 CONFIG_REALTEK_LISTEN_WHILE_SAVE_SUPPORT=0 CONFIG_REALTEK_AM_ANC_SUPPORT=1 CONFIG_REALTEK_AM_AUDIO_PLUGIN_SUPPORT=1 CONFIG_REALTEK_AM_AUDIO_STEREO_SUPPORT = 1 CONFIG_REALTEK_REMOTE_CONTROL_SUPPORT=1 F_APP_EXT_MIC_SWITCH_SUPPORT=1</Define>
               <Undefine/>
-              <IncludePath>..\..\..\inc\app;..\..\..\inc\bluetooth\gap;..\..\..\inc\bluetooth\gap\gap_lib;..\..\..\inc\framework\sys;..\..\..\inc\framework\audio;..\..\..\inc\framework\bt;..\..\..\inc\framework\remote;..\..\..\src\framework\sys;..\..\..\src\framework\btm\gatt;..\..\..\src\framework\btm;..\..\..\src\framework\audiomgr;..\..\..\src\framework\audiohal;..\..\..\src\framework\audiohal\dsp;..\..\..\src\framework\audiohal\codec;..\..\..\src\framework\audiohal\sport;..\..\..\src\framework\audiohal\anc;..\..\..\inc\rtl87x3e\io;..\..\..\inc\rtl87x3e\os;..\..\..\inc\rtl87x3e\platform;..\..\..\inc\platform;..\..\..\inc\rtl87x3e\platform\cmsis;..\..\..\src\mcu\rtl876x;..\..\..\inc\rtl87x3e\hal;..\..\..\inc\rtl87x3e\hal\audio;..\..\..\inc\rtl87x3e\hal\stack;..\..\..\inc\rtl87x3e\bluetooth\gap;..\..\..\inc\rtl87x3e\hal\io;..\..\..\inc\hal\io;..\..\..\inc\hal\audio;..\..\..\inc\bluetooth\profile;..\..\..\inc\hal\platform</IncludePath>
+              <IncludePath>..\..\..\inc\app;..\..\..\inc\bluetooth\gap;..\..\..\inc\bluetooth\gap\gap_lib;..\..\..\inc\framework\sys;..\..\..\inc\framework\audio;..\..\..\inc\framework\bt;..\..\..\inc\framework\remote;..\..\..\src\framework\sys;..\..\..\src\framework\btm\gatt;..\..\..\src\framework\btm;..\..\..\src\framework\audiomgr;..\..\..\src\framework\audiohal;..\..\..\src\framework\audiohal\dsp;..\..\..\src\framework\audiohal\codec;..\..\..\src\framework\audiohal\sport;..\..\..\src\framework\audiohal\anc;..\..\..\inc\rtl87x3e\io;..\..\..\inc\rtl87x3e\os;..\..\..\inc\rtl87x3e\platform;..\..\..\inc\platform;..\..\..\inc\rtl87x3e\platform\cmsis;..\..\..\src\mcu\rtl876x;..\..\..\inc\rtl87x3e\hal;..\..\..\inc\rtl87x3e\hal\audio;..\..\..\inc\rtl87x3e\hal\stack;..\..\..\inc\rtl87x3e\bluetooth\gap;..\..\..\inc\rtl87x3e\hal\io;..\..\..\inc\hal\io;..\..\..\inc\hal\audio;..\..\..\inc\bluetooth\profile;..\..\..\inc\hal\platform;..\..\..\src\framework\audiohal\bin_load</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1255,11 +1190,6 @@
           <GroupName>profile</GroupName>
           <Files>
             <File>
-              <FileName>a2dp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\a2dp.c</FilePath>
-            </File>
-            <File>
               <FileName>avctp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\src\framework\btm\avctp.c</FilePath>
@@ -1270,29 +1200,9 @@
               <FilePath>..\..\..\src\framework\btm\avdtp.c</FilePath>
             </File>
             <File>
-              <FileName>avrcp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\avrcp.c</FilePath>
-            </File>
-            <File>
-              <FileName>hfp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\hfp.c</FilePath>
-            </File>
-            <File>
               <FileName>obex.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\src\framework\btm\obex.c</FilePath>
-            </File>
-            <File>
-              <FileName>pbap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\pbap.c</FilePath>
-            </File>
-            <File>
-              <FileName>spp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\spp.c</FilePath>
             </File>
             <File>
               <FileName>rfc.c</FileName>
@@ -1300,64 +1210,14 @@
               <FilePath>..\..\..\src\framework\btm\rfc.c</FilePath>
             </File>
             <File>
-              <FileName>iap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\iap.c</FilePath>
-            </File>
-            <File>
-              <FileName>rdtp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\rdtp.c</FilePath>
-            </File>
-            <File>
-              <FileName>avp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\avp.c</FilePath>
-            </File>
-            <File>
-              <FileName>avp_att.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\avp_att.c</FilePath>
-            </File>
-            <File>
-              <FileName>hfp_ag.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\hfp_ag.c</FilePath>
-            </File>
-            <File>
-              <FileName>hid_device.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\hid_device.c</FilePath>
-            </File>
-            <File>
-              <FileName>hid_host.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\hid_host.c</FilePath>
-            </File>
-            <File>
-              <FileName>hid_parser.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\hid_parser.c</FilePath>
-            </File>
-            <File>
-              <FileName>map.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\map.c</FilePath>
-            </File>
-            <File>
               <FileName>iap_cp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\src\framework\btm\iap_cp.c</FilePath>
             </File>
             <File>
-              <FileName>att_br.c</FileName>
+              <FileName>bnep.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\att_br.c</FilePath>
-            </File>
-            <File>
-              <FileName>opp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\src\framework\btm\opp.c</FilePath>
+              <FilePath>..\..\..\src\framework\btm\bnep.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1455,6 +1315,11 @@
               <FilePath>..\..\..\src\framework\btm\bt_hid_host.c</FilePath>
             </File>
             <File>
+              <FileName>bt_hid_parser.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\src\framework\btm\bt_hid_parser.c</FilePath>
+            </File>
+            <File>
               <FileName>bt_map.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\src\framework\btm\bt_map.c</FilePath>
@@ -1468,6 +1333,11 @@
               <FileName>bt_opp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\src\framework\btm\bt_opp.c</FilePath>
+            </File>
+            <File>
+              <FileName>bt_pan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\src\framework\btm\bt_pan.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1906,14 +1776,5 @@
     <components/>
     <files/>
   </RTE>
-
-  <LayerInfo>
-    <Layers>
-      <Layer>
-        <LayName>framework</LayName>
-        <LayPrjMark>1</LayPrjMark>
-      </Layer>
-    </Layers>
-  </LayerInfo>
 
 </Project>

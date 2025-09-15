@@ -482,7 +482,7 @@ static void ble_appearance_to_cod(uint16_t appearance, uint8_t *dev_class)
 
 static void ble_update_scan_result(T_DISC_RESULT *p_result, uint8_t *p_data, uint16_t data_len)
 {
-    uint8_t pos = 0;
+    uint16_t pos = 0;
     uint8_t *pp;
     uint16_t length;
     uint8_t type;
@@ -530,7 +530,7 @@ static void ble_update_scan_result(T_DISC_RESULT *p_result, uint8_t *p_data, uin
                 {
                     break;
                 }
-                for (uint8_t i = 0; i + 2 <= (length - 1); i = i + 2)
+                for (uint16_t i = 0; i + 2 <= (length - 1); i = i + 2)
                 {
                     if ((pp[i] | (pp[i + 1] << 8)) == UUID_SERVCLASS_LE_HID)
                     {
@@ -542,7 +542,6 @@ static void ble_update_scan_result(T_DISC_RESULT *p_result, uint8_t *p_data, uin
             break;
         }
         pos += length;
-
     }
 }
 
@@ -617,8 +616,6 @@ static bool ual_join_rsp_adv_report(T_DISC_RESULT *p_cur, T_LE_EXT_ADV_REPORT_IN
 
 static bool ual_join_legacy_adv_report(T_DISC_RESULT *p_cur, T_LE_EXT_ADV_REPORT_INFO *p_report)
 {
-  static bool printf_flag = false;  
-	
     if ((!p_cur) || (!p_report))
     {
         return false;
@@ -656,13 +653,10 @@ static bool ual_join_legacy_adv_report(T_DISC_RESULT *p_cur, T_LE_EXT_ADV_REPORT
         p_cur->data_len = p_report->data_len;
     }
 
-    if (p_report->event_type & GAP_EXT_ADV_REPORT_BIT_SCANNABLE_ADV)
+    if (p_report->event_type & GAP_EXT_ADV_REPORT_BIT_SCANNABLE_ADV &&
+        bt_adap_get_scan_mode() != GAP_SCAN_MODE_PASSIVE)
     {
-      if(!printf_flag)
-       {
-         printf_flag = true;
-         APP_PRINT_INFO1("ual_join_legacy_adv_report: %s wait rsp ", TRACE_BDADDR(p_report->bd_addr));
-       }
+        APP_PRINT_INFO1("ual_join_legacy_adv_report: %s wait rsp ", TRACE_BDADDR(p_report->bd_addr));
         return false;
     }
 
@@ -734,11 +728,14 @@ static bool ual_join_ext_adv_report(T_DISC_RESULT *p_cur, T_LE_EXT_ADV_REPORT_IN
             p_cur->data_len += p_report->data_len;
         }
         p_cur->adv_cmplt = true;
-        if (p_report->event_type & GAP_EXT_ADV_REPORT_BIT_SCANNABLE_ADV)
+
+        if (p_report->event_type & GAP_EXT_ADV_REPORT_BIT_SCANNABLE_ADV &&
+            bt_adap_get_scan_mode() != GAP_SCAN_MODE_PASSIVE)
         {
             APP_PRINT_INFO1("ual_join_ext_adv_report: %s wait rsp ", TRACE_BDADDR(p_report->bd_addr));
             return false;
         }
+
         return true;
     }
     else if (p_report->data_status == GAP_EXT_ADV_EVT_DATA_STATUS_MORE)

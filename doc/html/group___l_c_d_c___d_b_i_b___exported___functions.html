@@ -47,6 +47,9 @@ $(function() {
 <div class="title">LCDC DBIB Exported Functions<div class="ingroups"><a class="el" href="group___l_c_d_c.html">LCDC</a> &raquo; <a class="el" href="group___l_c_d_c___d_b_i_b.html">LCDC DBIB</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Functions provided by the DBIB driver module.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -86,8 +89,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga72a0917f3f83dd47877c55f4a8561533"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__x3d___r_t_l876x___exported__types.html#ga89136caac2e14c55151f527ac02daaff">FlagStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d_c___d_b_i_b___exported___functions.html#ga72a0917f3f83dd47877c55f4a8561533">LCDC_DBIB_SetCmdSequence</a> (uint8_t *pCmdBuf, uint8_t len)</td></tr>
 <tr class="memdesc:ga72a0917f3f83dd47877c55f4a8561533"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure command sequences in auto mode.  <a href="#ga72a0917f3f83dd47877c55f4a8561533">More...</a><br /></td></tr>
 <tr class="separator:ga72a0917f3f83dd47877c55f4a8561533"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacafeb9d21393020c84f37aef55e14eb7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_c_d_c___d_b_i_b___exported___functions.html#gacafeb9d21393020c84f37aef55e14eb7">DBIB_StructInit</a> (<a class="el" href="struct_l_c_d_c___d_b_i_b_cfg_type_def.html">LCDC_DBIBCfgTypeDef</a> *DBIBCfg)</td></tr>
+<tr class="memdesc:gacafeb9d21393020c84f37aef55e14eb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the <a class="el" href="struct_l_c_d_c___d_b_i_b_cfg_type_def.html" title="LCDC DBIB init structure definition. ">LCDC_DBIBCfgTypeDef</a> structure with default values.  <a href="#gacafeb9d21393020c84f37aef55e14eb7">More...</a><br /></td></tr>
+<tr class="separator:gacafeb9d21393020c84f37aef55e14eb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Functions provided by the DBIB driver module. </p>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ga34ef1df31ac1247541ba62ab945c30e0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga34ef1df31ac1247541ba62ab945c30e0">&#9670;&nbsp;</a></span>DBIB_BypassCmdByteCmd()</h2>
@@ -106,18 +113,16 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Enable or disable command byte bypass in auto mode. </p>
-<p><a class="el" href="rtl__lcdc__dbib_8h_source.html" title="The header file of the peripheral DBIB driver. ">rtl_lcdc_dbib.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">NewState</td><td>New state of command byte bypass. This parameter can be one of the following values: <ul>
-<li>ENABLE: Enable command byte bypass. </li>
+    <tr><td class="paramdir">[in]</td><td class="paramname">NewState</td><td>New state of command byte bypass. This parameter can be one of the following values:<ul>
+<li>ENABLE: Enable command byte bypass.</li>
 <li>DISABLE: Disable command byte bypass.</li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
 <p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_lcdc_dbib_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_b___exported___functions.html#ga34ef1df31ac1247541ba62ab945c30e0">DBIB_BypassCmdByteCmd</a>(<a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
@@ -138,14 +143,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Pull down CS to active state. </p>
-<p><a class="el" href="rtl__lcdc__dbib_8h_source.html" title="The header file of the peripheral DBIB driver. ">rtl_lcdc_dbib.h</a></p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
 <p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_lcdc_dbib_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_b___exported___functions.html#ga67b8ff75e8b72b49ff97a7985224a076">DBIB_ResetCS</a>();</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
@@ -166,14 +163,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Pull up CS to idle state. </p>
-<p><a class="el" href="rtl__lcdc__dbib_8h_source.html" title="The header file of the peripheral DBIB driver. ">rtl_lcdc_dbib.h</a></p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
 <p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_lcdc_dbib_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_b___exported___functions.html#ga8bae6965beb0a835f8971416cf8bcedd">DBIB_SetCS</a>();</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
@@ -194,14 +183,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Put DBIB in command mode. </p>
-<p><a class="el" href="rtl__lcdc__dbib_8h_source.html" title="The header file of the peripheral DBIB driver. ">rtl_lcdc_dbib.h</a></p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
 <p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_lcdc_dbib_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_b___exported___functions.html#gac4f7e78c07343365d75abd8b9204cd65">DBIB_ResetDC</a>();</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
@@ -222,14 +203,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Put DBIB in data mode. </p>
-<p><a class="el" href="rtl__lcdc__dbib_8h_source.html" title="The header file of the peripheral DBIB driver. ">rtl_lcdc_dbib.h</a></p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
 <p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_lcdc_dbib_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_b___exported___functions.html#gaba4d7b4d3d47ce998e0cf5a4253768ce">DBIB_SetDC</a>();</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
@@ -250,15 +223,13 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Initializes DBIB interface according to the specified parameters in the DBIBCfg. </p>
-<p><a class="el" href="rtl__lcdc__dbib_8h_source.html" title="The header file of the peripheral DBIB driver. ">rtl_lcdc_dbib.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">DBIBCfg</td><td>Pointer to a <a class="el" href="struct_l_c_d_c___d_b_i_b_cfg_type_def.html" title="LCDC DBIB init structure definition. ">LCDC_DBIBCfgTypeDef</a> structure that contains the configuration information for DBIB interface.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_lcdc_dbib_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="struct_l_c_d_c___d_b_i_b_cfg_type_def.html">LCDC_DBIBCfgTypeDef</a> dbib_init = {0};</div><div class="line">    dbib_init.<a class="code" href="struct_l_c_d_c___d_b_i_b_cfg_type_def.html#a3059d893fe06203acc7258e21e718fb3">DBIB_SPEED_SEL</a>         = <a class="code" href="group___l_c_d_c___d_b_i_b___clock___divider.html#gaf7f86b595aa356c24701a87c6a4b8341">DBIB_CLOCK_DIV_2</a>;</div><div class="line">    dbib_init.<a class="code" href="struct_l_c_d_c___d_b_i_b_cfg_type_def.html#a021e8ae43a81523fb8c3472a04edb1f5">DBIB_InitGuardTimeCmd</a>  = <a class="code" href="group___l_c_d_c___d_b_i_b___init_guard_time___cmd.html#gaadbcae1e07d566799a6e5aa6a65a3ef5">DBIB_INIT_GUARD_TIME_DISABLE</a>;</div><div class="line">    dbib_init.<a class="code" href="struct_l_c_d_c___d_b_i_b_cfg_type_def.html#a340d5732b2b7e5b02d77aaf25da104e8">DBIB_InitGuardTime</a>     = <a class="code" href="group___l_c_d_c___d_b_i_b___init_guard_time.html#gaa3d5f7d0f4233ef7b6f52197adc511d5">DBIB_INIT_GUARD_TIME_1T</a>;</div><div class="line">    dbib_init.<a class="code" href="struct_l_c_d_c___d_b_i_b_cfg_type_def.html#a201e02ba499eb44c798ccb5e43c1cfc4">DBIB_CmdGuardTimeCmd</a>   = <a class="code" href="group___l_c_d_c___d_b_i_b___cmd_guard_time___cmd.html#gae463a234a30e389f8974fad7a56053c0">DBIB_CMD_GUARD_TIME_DISABLE</a>;</div><div class="line">    dbib_init.<a class="code" href="struct_l_c_d_c___d_b_i_b_cfg_type_def.html#a25949992c909bb3da3fa12edb6d83de3">DBIB_CmdGuardTime</a>      = <a class="code" href="group___l_c_d_c___d_b_i_b___cmd_guard_time.html#ga3e366c0c2d058be21a7038a8ad554e3b">DBIB_CMD_GUARD_TIME_1T</a>;</div><div class="line">    dbib_init.<a class="code" href="struct_l_c_d_c___d_b_i_b_cfg_type_def.html#ac219b8952bac4bb54925ab73a880e307">DBIB_GuardTimeCmd</a>      = <a class="code" href="group___l_c_d_c___d_b_i_b___guard_time___cmd.html#gaef9018b7e2fa1fb60863916a48ad848a">DBIB_GUARD_TIME_DISABLE</a>;</div><div class="line">    dbib_init.<a class="code" href="struct_l_c_d_c___d_b_i_b_cfg_type_def.html#a4c3ef0c23fa5fe6990513a3953fb5d9a">DBIB_GuardTime</a>         = <a class="code" href="group___l_c_d_c___d_b_i_b___guard_time.html#ga1ce0544787c2ade451ec95bf8a09b4c0">DBIB_GUARD_TIME_1T</a>;</div><div class="line">    dbib_init.<a class="code" href="struct_l_c_d_c___d_b_i_b_cfg_type_def.html#aa01a02ba5f19ec7f888ce75a15f32545">DBIB_WRDelay</a>           = <a class="code" href="group___l_c_d_c___d_b_i_b___w_r_delay.html#ga492312361ca76938c72b567031c10134">DBIB_WR_HALF_DELAY</a>;</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_b___exported___functions.html#gaf7ef2cd637928409cf10c952590b8bb8">DBIB_Init</a>(&amp;dbib_init);</div><div class="line">}</div></div><!-- fragment --> 
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_lcdc_dbib_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="struct_l_c_d_c___d_b_i_b_cfg_type_def.html">LCDC_DBIBCfgTypeDef</a> dbib_init = {0};</div><div class="line">    dbib_init.DBIB_SPEED_SEL         = DBIB_CLOCK_DIV_2;</div><div class="line">    dbib_init.<a class="code" href="struct_l_c_d_c___d_b_i_b_cfg_type_def.html#a021e8ae43a81523fb8c3472a04edb1f5">DBIB_InitGuardTimeCmd</a>  = <a class="code" href="group___l_c_d_c___d_b_i_b___init_guard_time___cmd.html#gaadbcae1e07d566799a6e5aa6a65a3ef5">DBIB_INIT_GUARD_TIME_DISABLE</a>;</div><div class="line">    dbib_init.<a class="code" href="struct_l_c_d_c___d_b_i_b_cfg_type_def.html#a340d5732b2b7e5b02d77aaf25da104e8">DBIB_InitGuardTime</a>     = DBIB_INIT_GUARD_TIME_1T;</div><div class="line">    dbib_init.<a class="code" href="struct_l_c_d_c___d_b_i_b_cfg_type_def.html#a201e02ba499eb44c798ccb5e43c1cfc4">DBIB_CmdGuardTimeCmd</a>   = <a class="code" href="group___l_c_d_c___d_b_i_b___cmd_guard_time___cmd.html#gae463a234a30e389f8974fad7a56053c0">DBIB_CMD_GUARD_TIME_DISABLE</a>;</div><div class="line">    dbib_init.<a class="code" href="struct_l_c_d_c___d_b_i_b_cfg_type_def.html#a25949992c909bb3da3fa12edb6d83de3">DBIB_CmdGuardTime</a>      = DBIB_CMD_GUARD_TIME_1T;</div><div class="line">    dbib_init.<a class="code" href="struct_l_c_d_c___d_b_i_b_cfg_type_def.html#ac219b8952bac4bb54925ab73a880e307">DBIB_GuardTimeCmd</a>      = <a class="code" href="group___l_c_d_c___d_b_i_b___guard_time___cmd.html#gaef9018b7e2fa1fb60863916a48ad848a">DBIB_GUARD_TIME_DISABLE</a>;</div><div class="line">    dbib_init.<a class="code" href="struct_l_c_d_c___d_b_i_b_cfg_type_def.html#a4c3ef0c23fa5fe6990513a3953fb5d9a">DBIB_GuardTime</a>         = <a class="code" href="group___l_c_d_c___d_b_i_b___guard_time.html#ga1ce0544787c2ade451ec95bf8a09b4c0">DBIB_GUARD_TIME_1T</a>;</div><div class="line">    dbib_init.<a class="code" href="struct_l_c_d_c___d_b_i_b_cfg_type_def.html#aa01a02ba5f19ec7f888ce75a15f32545">DBIB_WRDelay</a>           = <a class="code" href="group___l_c_d_c___d_b_i_b___w_r_delay.html#ga492312361ca76938c72b567031c10134">DBIB_WR_HALF_DELAY</a>;</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_b___exported___functions.html#gaf7ef2cd637928409cf10c952590b8bb8">DBIB_Init</a>(&amp;dbib_init);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga889235cf49c0c5d3518cdb3f73dfc7e8"></a>
@@ -278,14 +249,12 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send command in manual mode. </p>
-<p><a class="el" href="rtl__lcdc__dbib_8h_source.html" title="The header file of the peripheral DBIB driver. ">rtl_lcdc_dbib.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">cmd</td><td>Command which to be sent.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
 <p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_lcdc_dbib_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_b___exported___functions.html#ga889235cf49c0c5d3518cdb3f73dfc7e8">DBIB_SendCmd</a>(0x09);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
@@ -316,7 +285,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send data in manual mode. </p>
-<p><a class="el" href="rtl__lcdc__dbib_8h_source.html" title="The header file of the peripheral DBIB driver. ">rtl_lcdc_dbib.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">pBuf</td><td>Data buffer for sending. </td></tr>
@@ -324,7 +292,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
 <p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_lcdc_dbib_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t buf[3] = {0x05, 0x08, 0x10};</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_b___exported___functions.html#ga9a49d960270b133a172bb9005c782240">DBIB_SendData</a>(buf, 3);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
@@ -355,7 +322,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Receive data in manual mode. </p>
-<p><a class="el" href="rtl__lcdc__dbib_8h_source.html" title="The header file of the peripheral DBIB driver. ">rtl_lcdc_dbib.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">pBuf</td><td>Data buffer for receiving. </td></tr>
@@ -363,7 +329,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
 <p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_lcdc_dbib_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t buf[3] = {0, 0, 0};</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_b___exported___functions.html#ga0de889406c01c1f6b60e1cc3fc513f75">DBIB_ReceiveData</a>(buf, 3);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
@@ -400,7 +365,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send command and data in manual mode. </p>
-<p><a class="el" href="rtl__lcdc__dbib_8h_source.html" title="The header file of the peripheral DBIB driver. ">rtl_lcdc_dbib.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">cmd</td><td>Command which to be sent. </td></tr>
@@ -409,7 +373,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
 <p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_lcdc_dbib_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t buf[3] = {0x05, 0x08, 0x10};</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_b___exported___functions.html#ga0678758ba962a209c4ddd5f483aefa6e">DBIB_Write</a>(0x09, buf, 3);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
@@ -446,16 +409,14 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send command and read data in manual mode. </p>
-<p><a class="el" href="rtl__lcdc__dbib_8h_source.html" title="The header file of the peripheral DBIB driver. ">rtl_lcdc_dbib.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">cmd</td><td>Command which to be sent. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cmd</td><td>Command to be sent. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">pBuf</td><td>Data buffer for receiving. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>The length of the data to be received.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
 <p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_lcdc_dbib_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t buf[3] = {0, 0, 0};</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_b___exported___functions.html#ga41ae7ddab49e75f9f38b2a3eb2e3c1d0">DBIB_Read</a>(0x10, buf, 3);</div><div class="line">}</div></div><!-- fragment --><p>Send command and read data in manual mode.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -496,7 +457,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Configure command sequences in auto mode. </p>
-<p><a class="el" href="rtl__lcdc__dbib_8h_source.html" title="The header file of the peripheral DBIB driver. ">rtl_lcdc_dbib.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">pCmdBuf</td><td>Buffer address which store command sequence. </td></tr>
@@ -521,6 +481,53 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
+</div>
+</div>
+<a id="gacafeb9d21393020c84f37aef55e14eb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacafeb9d21393020c84f37aef55e14eb7">&#9670;&nbsp;</a></span>DBIB_StructInit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DBIB_StructInit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_l_c_d_c___d_b_i_b_cfg_type_def.html">LCDC_DBIBCfgTypeDef</a> *&#160;</td>
+          <td class="paramname"><em>DBIBCfg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize the <a class="el" href="struct_l_c_d_c___d_b_i_b_cfg_type_def.html" title="LCDC DBIB init structure definition. ">LCDC_DBIBCfgTypeDef</a> structure with default values. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">DBIBCfg</td><td>Pointer to a <a class="el" href="struct_l_c_d_c___d_b_i_b_cfg_type_def.html" title="LCDC DBIB init structure definition. ">LCDC_DBIBCfgTypeDef</a> structure that will be initialized.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Default values for each member: <table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Member  </th><th class="markdownTableHeadNone">Default Value   </th></tr>
+<tr class="markdownTableBody" class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">DBIB_Clock_Divider  </td><td class="markdownTableBodyNone">2   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowEven">
+<td class="markdownTableBodyNone">DBIB_InitGuardTimeCmd  </td><td class="markdownTableBodyNone"><a class="el" href="group___l_c_d_c___d_b_i_b___init_guard_time___cmd.html#gaadbcae1e07d566799a6e5aa6a65a3ef5">DBIB_INIT_GUARD_TIME_DISABLE</a>   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">DBIB_InitGuardTime  </td><td class="markdownTableBodyNone"><a class="el" href="group___l_c_d_c___d_b_i_b___guard_time.html#ga1ce0544787c2ade451ec95bf8a09b4c0">DBIB_GUARD_TIME_1T</a>   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowEven">
+<td class="markdownTableBodyNone">DBIB_CmdGuardTimeCmd  </td><td class="markdownTableBodyNone"><a class="el" href="group___l_c_d_c___d_b_i_b___cmd_guard_time___cmd.html#gae463a234a30e389f8974fad7a56053c0">DBIB_CMD_GUARD_TIME_DISABLE</a>   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">DBIB_CmdGuardTime  </td><td class="markdownTableBodyNone"><a class="el" href="group___l_c_d_c___d_b_i_b___guard_time.html#ga1ce0544787c2ade451ec95bf8a09b4c0">DBIB_GUARD_TIME_1T</a>   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowEven">
+<td class="markdownTableBodyNone">DBIB_GuardTimeCmd  </td><td class="markdownTableBodyNone"><a class="el" href="group___l_c_d_c___d_b_i_b___guard_time___cmd.html#gaef9018b7e2fa1fb60863916a48ad848a">DBIB_GUARD_TIME_DISABLE</a>   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">DBIB_GuardTime  </td><td class="markdownTableBodyNone"><a class="el" href="group___l_c_d_c___d_b_i_b___guard_time.html#ga1ce0544787c2ade451ec95bf8a09b4c0">DBIB_GUARD_TIME_1T</a>   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowEven">
+<td class="markdownTableBodyNone">DBIB_WRDelay  </td><td class="markdownTableBodyNone"><a class="el" href="group___l_c_d_c___d_b_i_b___w_r_delay.html#ga492312361ca76938c72b567031c10134">DBIB_WR_HALF_DELAY</a>   </td></tr>
+</table>
+</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_lcdc_dbib_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="struct_l_c_d_c___d_b_i_b_cfg_type_def.html">LCDC_DBIBCfgTypeDef</a> dbib_init;</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_b___exported___functions.html#gacafeb9d21393020c84f37aef55e14eb7">DBIB_StructInit</a>(&amp;dbib_init);</div><div class="line">    <a class="code" href="group___l_c_d_c___d_b_i_b___exported___functions.html#gaf7ef2cd637928409cf10c952590b8bb8">DBIB_Init</a>(&amp;dbib_init);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

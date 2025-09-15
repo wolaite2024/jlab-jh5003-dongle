@@ -9,7 +9,7 @@
       <TargetName>rtl87x3e</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
+      <pCCUsed>5060750::V5.06 update 6 (build 750)::.\ARMCC_506build750</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -338,7 +338,7 @@
               <MiscControls>--gnu --bss_threshold=0</MiscControls>
               <Define/>
               <Undefine/>
-              <IncludePath>..\..\..\..\inc\rtl87x3e\platform;..\..\..\..\inc\platform;..\..\..\..\inc\rtl87x3e\os;..\..\..\..\inc\rtl87x3e\hal;..\..\..\..\inc\rtl87x3e\hal\io;..\..\..\..\inc\hal\io;..\..\..\..\inc\app;..\..\..\..\inc\framework\sys</IncludePath>
+              <IncludePath>..\..\..\..\inc\rtl87x3e\platform;..\..\..\..\inc\platform;..\..\..\..\inc\rtl87x3e\os;..\..\..\..\inc\rtl87x3e\hal;..\..\..\..\inc\rtl87x3e\hal\io;..\..\..\..\inc\hal\io;..\..\..\..\inc\app;..\..\..\..\inc\framework\sys;..\..\..\..\inc\hal\platform</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

@@ -14,7 +14,7 @@ extern "C" {
 #endif
 
 /**
- * \defgroup    OS_87x3e_Pool    Pool Management
+ * \addtogroup    OS_87x3e_Pool    Pool Management
  *
  * \brief   Manage task-safe and fixed-size blocks of dynamic memory.
  * \details Memory pools are fixed-size blocks of memory that are task-safe. They operate much
@@ -27,17 +27,30 @@ extern "C" {
  *
  * \image html OS-pool-overview.jpg "Memory Pool Overview" width=601px height=481px
  *
+ * @{
  */
 
+/*============================================================================*
+ *                         Types
+ *============================================================================*/
+
+
+/** @defgroup OS_87x3e_Pool_Exported_Types Pool Management Exported Types
+ * @{
+ */
 
 /**
  * os_pool.h
  *
  * \brief The invalid pool handle. Valid pool handles should be less than OS_POOL_INVALID_HANDLE.
  *
- * \ingroup OS_87x3e_Pool
+ *
  */
 #define OS_POOL_INVALID_HANDLE  0xFF
+
+/** End of group OS_87x3e_Pool_Exported_Types
+  * @}
+  */
 
 extern bool (*os_pool_create_intern)(uint8_t *p_handle, RAM_TYPE ram_type, uint16_t buf_size,
                                      uint16_t buf_count, const char *p_func, uint32_t file_line);
@@ -51,6 +64,14 @@ extern void *(*os_buffer_get_intern)(uint8_t handle, uint16_t buf_size,
                                      const char *p_func, uint32_t file_line);
 
 extern bool (*os_buffer_put_intern)(void *p_buf, const char *p_func, uint32_t file_line);
+
+/*============================================================================*
+ *                         Functions
+ *============================================================================*/
+
+/** @defgroup OS_87x3e_Pool_Exported_functions Pool Management Exported Functions
+ * @{
+ */
 
 /**
  * os_pool.h
@@ -98,7 +119,7 @@ extern bool (*os_buffer_put_intern)(void *p_buf, const char *p_func, uint32_t fi
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Pool
+ *
  */
 #define os_pool_create(p_handle, ram_type, buf_size, buf_count) \
     os_pool_create_intern(p_handle, ram_type, buf_size, buf_count, __func__, __LINE__)
@@ -148,7 +169,7 @@ extern bool (*os_buffer_put_intern)(void *p_buf, const char *p_func, uint32_t fi
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Pool
+ *
  */
 #define os_pool_extend(handle, buf_size, buf_count) \
     os_pool_extend_intern(handle, buf_size, buf_count, __func__, __LINE__)
@@ -191,7 +212,7 @@ extern bool (*os_buffer_put_intern)(void *p_buf, const char *p_func, uint32_t fi
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Pool
+ *
  */
 #define os_pool_delete(handle)  os_pool_delete_intern(handle, __func__, __LINE__)
 
@@ -242,7 +263,7 @@ extern bool (*os_buffer_put_intern)(void *p_buf, const char *p_func, uint32_t fi
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Pool
+ *
  */
 #define os_buffer_get(handle, buf_size) \
     os_buffer_get_intern(handle, buf_size, __func__, __LINE__)
@@ -296,7 +317,7 @@ extern bool (*os_buffer_put_intern)(void *p_buf, const char *p_func, uint32_t fi
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Pool
+ *
  */
 #define os_buffer_put(p_buf)    \
     os_buffer_put_intern(p_buf, __func__, __LINE__)
@@ -349,7 +370,7 @@ extern bool (*os_buffer_put_intern)(void *p_buf, const char *p_func, uint32_t fi
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Pool
+ *
  */
 void os_pool_dump(uint8_t handle);
 
@@ -362,7 +383,8 @@ void *os_buffer_get_intern_rom(uint8_t handle, uint16_t buf_size,
                                const char *p_func, uint32_t file_line);
 bool os_buffer_put_intern_rom(void *p_buf, const char *p_func, uint32_t file_line);
 
-
+/** @} */ /* End of group OS_87x3e_Pool_Exported_Functions */
+/** @} */ /* End of group OS_87x3e_Pool */
 
 #ifdef __cplusplus
 }

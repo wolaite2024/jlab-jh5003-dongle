@@ -14,3 +14,8 @@ target_link_libraries(remoteLib
 						
 target_precompile_headers(remoteLib PUBLIC  ${kconfig_header_dir_path}/config.h)
 target_include_directories(remoteLib PUBLIC ${kconfig_header_dir_path})
+
+add_custom_command(TARGET remoteLib POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:remoteLib>  ${lib_output_path_temp_dirt}
+    COMMENT "Copying remoteLib to  ${lib_output_path}/../temp"
+)

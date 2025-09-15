@@ -78,17 +78,12 @@ Functions</h2></td></tr>
 <p>Initialize parameters of GATT client. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">client_num</td><td>Set the number of clients that needs to register. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">client_num</td><td>Set the number of clients that need to register. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td><b>Example usage</b> <div class="fragment"><div class="line"><span class="keywordtype">void</span> app_le_profile_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_a_t_t___client___common___exported___functions.html#ga8154deffc5d5e230be3159ebd77b8ac9">client_init</a>(1);</div><div class="line">}</div></div><!-- fragment --> </td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>void.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> app_le_profile_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_a_t_t___client___common___exported___functions.html#ga8154deffc5d5e230be3159ebd77b8ac9">client_init</a>(client_num);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga382324980fef2d5840227861351f70e9"></a>
@@ -110,15 +105,15 @@ Functions</h2></td></tr>
 <p>Configure the client interface. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">use_ext</td><td>Wether use the extension API. Default value is false. <ul>
-<li>true Use the API in <a class="el" href="profile__client__ext_8h_source.html" title="Head file for profile client structure. ">profile_client_ext.h</a>. </li>
-<li>false Use the API in <a class="el" href="profile__client_8h_source.html" title="Head file for profile client structure. ">profile_client.h</a>. </li>
+    <tr><td class="paramdir">[in]</td><td class="paramname">use_ext</td><td>Whether to use the extension API. Default value is false. <ul>
+<li>true Use the API in <a class="el" href="profile__client__ext_8h_source.html" title="Header file for profile client structure. ">profile_client_ext.h</a>. </li>
+<li>false Use the API in <a class="el" href="profile__client_8h_source.html" title="Header file for profile client structure. ">profile_client.h</a>. </li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Configure result </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Configure result. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">true</td><td>Success. </td></tr>
@@ -126,7 +121,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_a_t_t___client___common___exported___functions.html#ga382324980fef2d5840227861351f70e9">client_cfg_use_ext_api</a>(<span class="keyword">true</span>);</div><div class="line">}</div></div><!-- fragment --> 
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keywordtype">bool</span> ret = <a class="code" href="group___g_a_t_t___client___common___exported___functions.html#ga382324980fef2d5840227861351f70e9">client_cfg_use_ext_api</a>(<span class="keyword">true</span>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

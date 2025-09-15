@@ -44,7 +44,7 @@ $(function() {
   <div class="summary">
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">GAP Broadcaster Exported Types<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___b_l_u_e_t_o_o_t_h.html">Bluetooth</a> &raquo; <a class="el" href="group___g_a_p.html">GAP</a> &raquo; <a class="el" href="group___g_a_p___l_e.html">GAP LE Module</a> &raquo; <a class="el" href="group___g_a_p___b_r_o_a_d_c_a_s_t_e_r___role.html">GAP Broadcaster Role</a></div></div>  </div>
+<div class="title">GAP Broadcaster Exported Types<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___b_l_u_e_t_o_o_t_h.html">Bluetooth</a> &raquo; <a class="el" href="group___g_a_p.html">GAP</a> &#124; <a class="el" href="group___b_t___host.html">Bluetooth Host</a> &raquo; <a class="el" href="group___g_a_p___l_e.html">GAP LE Module</a> &raquo; <a class="el" href="group___g_a_p___b_r_o_a_d_c_a_s_t_e_r___role.html">GAP Broadcaster Role</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -91,7 +91,7 @@ Enumerations</h2></td></tr>
 
 <p>LE advertising parameter types. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaf151893614db4dc36de4ad9a83b7b3a6a4cb51d7749e45e3eabf14b59c42a47c6"></a>GAP_PARAM_ADV_LOCAL_ADDR_TYPE&#160;</td><td class="fielddoc"><p>Advertisement used local bluetooth device address type. Read/Write Size is uint8. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaf151893614db4dc36de4ad9a83b7b3a6a4cb51d7749e45e3eabf14b59c42a47c6"></a>GAP_PARAM_ADV_LOCAL_ADDR_TYPE&#160;</td><td class="fielddoc"><p>Advertisement used local Bluetooth device address type. Read/Write. Size is uint8. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaf151893614db4dc36de4ad9a83b7b3a6a5f260805cfa689d16568f9b885d637a4"></a>GAP_PARAM_ADV_DATA&#160;</td><td class="fielddoc"><p>Advertisement Data. Read/Write. Max size is uint8[GAP_MAX_ADV_LEN]. Default is "02:01:05", which means that it is a Limited Discoverable Advertisement. </p>
 </td></tr>
@@ -103,13 +103,13 @@ Enumerations</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaf151893614db4dc36de4ad9a83b7b3a6a6781a98bc80bb4264509e1c50aff782e"></a>GAP_PARAM_ADV_DIRECT_ADDR&#160;</td><td class="fielddoc"><p>Direct Advertisement Address. Read/Write. Size is uint8[GAP_BD_ADDR_LEN]. Default is NULL. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaf151893614db4dc36de4ad9a83b7b3a6ad7a2dddb99531474df843faf7512658f"></a>GAP_PARAM_ADV_CHANNEL_MAP&#160;</td><td class="fielddoc"><p>Which channels to advertise on. Read/Write Size is uint8. Default is GAP_ADVCHAN_ALL (<a class="el" href="group___a_d_v___c_h_a_n_n_e_l___m_a_p.html">Advertising Channel Map</a>) </p>
+<tr><td class="fieldname"><a id="ggaf151893614db4dc36de4ad9a83b7b3a6ad7a2dddb99531474df843faf7512658f"></a>GAP_PARAM_ADV_CHANNEL_MAP&#160;</td><td class="fielddoc"><p>Which channels to advertise on. Read/Write. Size is uint8. Default is GAP_ADVCHAN_ALL (<a class="el" href="group___a_d_v___c_h_a_n_n_e_l___m_a_p.html">Advertising Channel Map</a>). </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggaf151893614db4dc36de4ad9a83b7b3a6a150f9aa741e715cc577687823b9d8ca6"></a>GAP_PARAM_ADV_FILTER_POLICY&#160;</td><td class="fielddoc"><p>Filter Policy. Ignored when directed advertising is used. Read/Write. Size is uint8. Default is GAP_ADV_FILTER_ANY (<a class="el" href="group___g_a_p___l_e___t_y_p_e_s___exported___types.html#gac0433c68ddb7484621ec659b7f8edd76">T_GAP_ADV_FILTER_POLICY</a>). </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaf151893614db4dc36de4ad9a83b7b3a6a21a3e030bafd97cc8f1b5a41880ff4eb"></a>GAP_PARAM_ADV_INTERVAL_MIN&#160;</td><td class="fielddoc"><p>Minimum advertising interval for undirected and low duty cycle directed advertising. Value range: 0x0020 - 0x4000 (20ms - 10240ms 0.625ms/step),Read/Write Size is uint16_t. </p>
+<tr><td class="fieldname"><a id="ggaf151893614db4dc36de4ad9a83b7b3a6a21a3e030bafd97cc8f1b5a41880ff4eb"></a>GAP_PARAM_ADV_INTERVAL_MIN&#160;</td><td class="fielddoc"><p>Minimum advertising interval for undirected and low duty cycle directed advertising. Value range: 0x0020 - 0x4000 (20ms - 10240ms 0.625ms/step), Read/Write. Size is uint16_t. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ggaf151893614db4dc36de4ad9a83b7b3a6a58b2bbbce6c71886d7688c00e7281845"></a>GAP_PARAM_ADV_INTERVAL_MAX&#160;</td><td class="fielddoc"><p>Maximum advertising interval for undirected and low duty cycle directed advertising. Value range: 0x0020 - 0x4000 (20ms - 10240ms 0.625ms/step)),Read/Write Size is uint16_t. </p>
+<tr><td class="fieldname"><a id="ggaf151893614db4dc36de4ad9a83b7b3a6a58b2bbbce6c71886d7688c00e7281845"></a>GAP_PARAM_ADV_INTERVAL_MAX&#160;</td><td class="fielddoc"><p>Maximum advertising interval for undirected and low duty cycle directed advertising. Value range: 0x0020 - 0x4000 (20ms - 10240ms 0.625ms/step), Read/Write. Size is uint16_t. </p>
 </td></tr>
 </table>
 

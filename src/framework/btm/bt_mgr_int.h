@@ -7,6 +7,9 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "remote.h"
+#include "bt_mgr.h"
+#include "btm.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -105,50 +108,58 @@ typedef enum t_bt_msg
     BT_MSG_A2DP_CONN_FAIL            = BT_MSG_GROUP_A2DP | 0x02,
     BT_MSG_A2DP_DISCONN_CMPL         = BT_MSG_GROUP_A2DP | 0x03,
     BT_MSG_A2DP_CONFIG_CMPL          = BT_MSG_GROUP_A2DP | 0x04,
-    BT_MSG_A2DP_STREAM_START_IND     = BT_MSG_GROUP_A2DP | 0x05,
-    BT_MSG_A2DP_STREAM_START_RSP     = BT_MSG_GROUP_A2DP | 0x06,
-    BT_MSG_A2DP_STREAM_OPEN          = BT_MSG_GROUP_A2DP | 0x07,
-    BT_MSG_A2DP_STREAM_OPEN_FAIL     = BT_MSG_GROUP_A2DP | 0x08,
-    BT_MSG_A2DP_STREAM_STOP          = BT_MSG_GROUP_A2DP | 0x09,
-    BT_MSG_A2DP_STREAM_CLOSE         = BT_MSG_GROUP_A2DP | 0x0a,
-    BT_MSG_A2DP_STREAM_DATA_IND      = BT_MSG_GROUP_A2DP | 0x0b,
-    BT_MSG_A2DP_STREAM_DATA_RSP      = BT_MSG_GROUP_A2DP | 0x0c,
+    BT_MSG_A2DP_DELAY_REPORT         = BT_MSG_GROUP_A2DP | 0x05,
+    BT_MSG_A2DP_STREAM_START_IND     = BT_MSG_GROUP_A2DP | 0x06,
+    BT_MSG_A2DP_STREAM_START_RSP     = BT_MSG_GROUP_A2DP | 0x07,
+    BT_MSG_A2DP_STREAM_OPEN          = BT_MSG_GROUP_A2DP | 0x08,
+    BT_MSG_A2DP_STREAM_OPEN_FAIL     = BT_MSG_GROUP_A2DP | 0x09,
+    BT_MSG_A2DP_STREAM_STOP          = BT_MSG_GROUP_A2DP | 0x0a,
+    BT_MSG_A2DP_STREAM_CLOSE         = BT_MSG_GROUP_A2DP | 0x0b,
+    BT_MSG_A2DP_STREAM_DATA_IND      = BT_MSG_GROUP_A2DP | 0x0c,
+    BT_MSG_A2DP_STREAM_DATA_RSP      = BT_MSG_GROUP_A2DP | 0x0d,
+
 
     BT_MSG_AVRCP_CONN_IND                        = BT_MSG_GROUP_AVRCP | 0x00,
     BT_MSG_AVRCP_CONN_CMPL                       = BT_MSG_GROUP_AVRCP | 0x01,
     BT_MSG_AVRCP_CONN_FAIL                       = BT_MSG_GROUP_AVRCP | 0x02,
     BT_MSG_AVRCP_DISCONN_CMPL                    = BT_MSG_GROUP_AVRCP | 0x03,
-    BT_MSG_AVRCP_ABSOLUTE_VOLUME_SET             = BT_MSG_GROUP_AVRCP | 0x04,
-    BT_MSG_AVRCP_KEY_VOLUME_UP                   = BT_MSG_GROUP_AVRCP | 0x05,
-    BT_MSG_AVRCP_KEY_VOLUME_DOWN                 = BT_MSG_GROUP_AVRCP | 0x06,
-    BT_MSG_AVRCP_REG_VOL_CHANGE                  = BT_MSG_GROUP_AVRCP | 0x07,
-    BT_MSG_AVRCP_PLAY_STATUS_CHANGED             = BT_MSG_GROUP_AVRCP | 0x08,
-    BT_MSG_AVRCP_PLAY_STATUS_RSP                 = BT_MSG_GROUP_AVRCP | 0x09,
-    BT_MSG_AVRCP_TRACK_CHANGED                   = BT_MSG_GROUP_AVRCP | 0x0a,
-    BT_MSG_AVRCP_GET_PLAY_STATUS_RSP             = BT_MSG_GROUP_AVRCP | 0x0b,
-    BT_MSG_AVRCP_GET_ELEM_ATTR_RSP               = BT_MSG_GROUP_AVRCP | 0x0c,
-    BT_MSG_AVRCP_APP_SETTING_CHANGED             = BT_MSG_GROUP_AVRCP | 0x0d,
-    BT_MSG_AVRCP_PLAYING_CONTENT_CHANGED         = BT_MSG_GROUP_AVRCP | 0x0e,
-    BT_MSG_AVRCP_AVAILABLE_PLAYER_CHANGED        = BT_MSG_GROUP_AVRCP | 0x0f,
-    BT_MSG_AVRCP_ADDRESSED_PLAYER_CHANGED        = BT_MSG_GROUP_AVRCP | 0x10,
-    BT_MSG_AVRCP_UIDS_CHANGED                    = BT_MSG_GROUP_AVRCP | 0x11,
-    BT_MSG_AVRCP_APP_SETTING_ATTRS               = BT_MSG_GROUP_AVRCP | 0x12,
-    BT_MSG_AVRCP_APP_SETTING_VALUES              = BT_MSG_GROUP_AVRCP | 0x13,
-    BT_MSG_AVRCP_CUR_APP_SETTING_VALUE           = BT_MSG_GROUP_AVRCP | 0x14,
-    BT_MSG_AVRCP_SET_ADDRESSED_PLAYER_RSP        = BT_MSG_GROUP_AVRCP | 0x15,
-    BT_MSG_AVRCP_PLAY_ITEM                       = BT_MSG_GROUP_AVRCP | 0x16,
-    BT_MSG_AVRCP_FOLDER_ITEMS                    = BT_MSG_GROUP_AVRCP | 0x17,
-    BT_MSG_AVRCP_ITEM_ATTR                       = BT_MSG_GROUP_AVRCP | 0x18,
-    BT_MSG_AVRCP_SEARCH                          = BT_MSG_GROUP_AVRCP | 0x19,
-    BT_MSG_AVRCP_SET_BROWSED_PLAYER              = BT_MSG_GROUP_AVRCP | 0x1a,
-    BT_MSG_AVRCP_CHANGE_PATH                     = BT_MSG_GROUP_AVRCP | 0x1b,
-    BT_MSG_AVRCP_SET_ABSOLUTE_VOLUME_RSP         = BT_MSG_GROUP_AVRCP | 0x1c,
-    BT_MSG_AVRCP_BROWSING_CONN_IND               = BT_MSG_GROUP_AVRCP | 0x1d,
-    BT_MSG_AVRCP_BROWSING_CONN_CMPL              = BT_MSG_GROUP_AVRCP | 0x1e,
-    BT_MSG_AVRCP_BROWSING_DISCONN_CMPL           = BT_MSG_GROUP_AVRCP | 0x1f,
-    BT_MSG_AVRCP_COVER_ART_CONN_CMPL             = BT_MSG_GROUP_AVRCP | 0x20,
-    BT_MSG_AVRCP_COVER_ART_DISCONN_CMPL          = BT_MSG_GROUP_AVRCP | 0x21,
-    BT_MSG_AVRCP_COVER_ART_DATA_IND              = BT_MSG_GROUP_AVRCP | 0x22,
+    BT_MSG_AVRCP_GET_CAPABILITIES_RSP            = BT_MSG_GROUP_AVRCP | 0x04,
+    BT_MSG_AVRCP_ABSOLUTE_VOLUME_SET             = BT_MSG_GROUP_AVRCP | 0x05,
+    BT_MSG_AVRCP_KEY_VOLUME_UP                   = BT_MSG_GROUP_AVRCP | 0x06,
+    BT_MSG_AVRCP_KEY_VOLUME_DOWN                 = BT_MSG_GROUP_AVRCP | 0x07,
+    BT_MSG_AVRCP_REG_VOL_CHANGE                  = BT_MSG_GROUP_AVRCP | 0x08,
+    BT_MSG_AVRCP_PLAY_STATUS_CHANGED             = BT_MSG_GROUP_AVRCP | 0x09,
+    BT_MSG_AVRCP_PLAY_STATUS_RSP                 = BT_MSG_GROUP_AVRCP | 0x0a,
+    BT_MSG_AVRCP_TRACK_CHANGED                   = BT_MSG_GROUP_AVRCP | 0x0b,
+    BT_MSG_AVRCP_TRACK_REACHED_END               = BT_MSG_GROUP_AVRCP | 0x0c,
+    BT_MSG_AVRCP_TRACK_REACHED_START             = BT_MSG_GROUP_AVRCP | 0x0d,
+    BT_MSG_AVRCP_PLAYBACK_POS_CHANGED            = BT_MSG_GROUP_AVRCP | 0x0e,
+    BT_MSG_AVRCP_BATT_STATUS_CHANGED             = BT_MSG_GROUP_AVRCP | 0x0f,
+    BT_MSG_AVRCP_SYSTEM_STATUS_CHANGED           = BT_MSG_GROUP_AVRCP | 0x10,
+    BT_MSG_AVRCP_APP_SETTING_CHANGED             = BT_MSG_GROUP_AVRCP | 0x11,
+    BT_MSG_AVRCP_PLAYING_CONTENT_CHANGED         = BT_MSG_GROUP_AVRCP | 0x12,
+    BT_MSG_AVRCP_AVAILABLE_PLAYER_CHANGED        = BT_MSG_GROUP_AVRCP | 0x13,
+    BT_MSG_AVRCP_ADDRESSED_PLAYER_CHANGED        = BT_MSG_GROUP_AVRCP | 0x14,
+    BT_MSG_AVRCP_UIDS_CHANGED                    = BT_MSG_GROUP_AVRCP | 0x15,
+    BT_MSG_AVRCP_GET_PLAY_STATUS_RSP             = BT_MSG_GROUP_AVRCP | 0x16,
+    BT_MSG_AVRCP_GET_ELEM_ATTR_RSP               = BT_MSG_GROUP_AVRCP | 0x17,
+    BT_MSG_AVRCP_APP_SETTING_ATTRS               = BT_MSG_GROUP_AVRCP | 0x18,
+    BT_MSG_AVRCP_APP_SETTING_VALUES              = BT_MSG_GROUP_AVRCP | 0x19,
+    BT_MSG_AVRCP_CUR_APP_SETTING_VALUE           = BT_MSG_GROUP_AVRCP | 0x1a,
+    BT_MSG_AVRCP_SET_ADDRESSED_PLAYER_RSP        = BT_MSG_GROUP_AVRCP | 0x1b,
+    BT_MSG_AVRCP_PLAY_ITEM                       = BT_MSG_GROUP_AVRCP | 0x1c,
+    BT_MSG_AVRCP_FOLDER_ITEMS                    = BT_MSG_GROUP_AVRCP | 0x1d,
+    BT_MSG_AVRCP_ITEM_ATTR                       = BT_MSG_GROUP_AVRCP | 0x1e,
+    BT_MSG_AVRCP_SEARCH                          = BT_MSG_GROUP_AVRCP | 0x1f,
+    BT_MSG_AVRCP_SET_BROWSED_PLAYER              = BT_MSG_GROUP_AVRCP | 0x20,
+    BT_MSG_AVRCP_CHANGE_PATH                     = BT_MSG_GROUP_AVRCP | 0x21,
+    BT_MSG_AVRCP_SET_ABSOLUTE_VOLUME_RSP         = BT_MSG_GROUP_AVRCP | 0x22,
+    BT_MSG_AVRCP_BROWSING_CONN_IND               = BT_MSG_GROUP_AVRCP | 0x23,
+    BT_MSG_AVRCP_BROWSING_CONN_CMPL              = BT_MSG_GROUP_AVRCP | 0x24,
+    BT_MSG_AVRCP_BROWSING_DISCONN_CMPL           = BT_MSG_GROUP_AVRCP | 0x25,
+    BT_MSG_AVRCP_COVER_ART_CONN_CMPL             = BT_MSG_GROUP_AVRCP | 0x26,
+    BT_MSG_AVRCP_COVER_ART_DISCONN_CMPL          = BT_MSG_GROUP_AVRCP | 0x27,
+    BT_MSG_AVRCP_COVER_ART_DATA_IND              = BT_MSG_GROUP_AVRCP | 0x28,
     BT_MSG_AVRCP_VENDOR_CMD_IND                  = BT_MSG_GROUP_AVRCP | 0x30,
     BT_MSG_AVRCP_VENDOR_RSP                      = BT_MSG_GROUP_AVRCP | 0x31,
     BT_MSG_AVRCP_VOLUME_CHANGED                  = BT_MSG_GROUP_AVRCP | 0x80,
@@ -191,10 +202,11 @@ typedef enum t_bt_msg
     BT_MSG_HFP_ROAM_IND                          = BT_MSG_GROUP_HFP | 0x10,
     BT_MSG_HFP_BATTERY_IND                       = BT_MSG_GROUP_HFP | 0x11,
     BT_MSG_HFP_SUPPORTED_FEATURES_IND            = BT_MSG_GROUP_HFP | 0x12,
-    BT_MSG_HFP_UNKNOWN_CMD                       = BT_MSG_GROUP_HFP | 0x13,
+    BT_MSG_HFP_VENDOR_CMD                        = BT_MSG_GROUP_HFP | 0x13,
     BT_MSG_HFP_VOICE_RECOGNITION_ACTIVATION      = BT_MSG_GROUP_HFP | 0x14,
     BT_MSG_HFP_VOICE_RECOGNITION_DEACTIVATION    = BT_MSG_GROUP_HFP | 0x15,
     BT_MSG_HFP_DIAL_WITH_NUMBER_RESULT           = BT_MSG_GROUP_HFP | 0x16,
+    BT_MSG_HFP_CODEC_TYPE_SELECTED               = BT_MSG_GROUP_HFP | 0x17,
     BT_MSG_HFP_AG_CONN_IND                       = BT_MSG_GROUP_HFP | 0x80,
     BT_MSG_HFP_AG_CONN_CMPL                      = BT_MSG_GROUP_HFP | 0x81,
     BT_MSG_HFP_AG_DISCONN_CMPL                   = BT_MSG_GROUP_HFP | 0x82,
@@ -223,7 +235,8 @@ typedef enum t_bt_msg
     BT_MSG_HFP_AG_NREC_STATUS                    = BT_MSG_GROUP_HFP | 0x99,
     BT_MSG_HFP_AG_VOICE_RECOGNITION_ACTIVATION   = BT_MSG_GROUP_HFP | 0x9a,
     BT_MSG_HFP_AG_VOICE_RECOGNITION_DEACTIVATION = BT_MSG_GROUP_HFP | 0x9b,
-    BT_MSG_HFP_AG_UNKNOWN_CMD                    = BT_MSG_GROUP_HFP | 0x9c,
+    BT_MSG_HFP_AG_VENDOR_CMD                     = BT_MSG_GROUP_HFP | 0x9c,
+    BT_MSG_HFP_AG_CODEC_TYPE_SELECTED            = BT_MSG_GROUP_HFP | 0x9d,
 
     BT_MSG_HSP_CONN_CMPL                    = BT_MSG_GROUP_HSP | 0x00,
     BT_MSG_HSP_CONN_FAIL                    = BT_MSG_GROUP_HSP | 0x01,
@@ -231,8 +244,7 @@ typedef enum t_bt_msg
     BT_MSG_HSP_AG_CONN_CMPL                 = BT_MSG_GROUP_HSP | 0x03,
     BT_MSG_HSP_AG_DISCONN_CMPL              = BT_MSG_GROUP_HSP | 0x04,
     BT_MSG_HSP_AG_INBAND_RINGING_REQ        = BT_MSG_GROUP_HSP | 0x05,
-    BT_MSG_HSP_AG_CALL_ANSWER_REQ           = BT_MSG_GROUP_HSP | 0x06,
-    BT_MSG_HSP_AG_CALL_TERMINATE_REQ        = BT_MSG_GROUP_HSP | 0x07,
+    BT_MSG_HSP_AG_BUTTON_PRESS              = BT_MSG_GROUP_HSP | 0x06,
 
     BT_MSG_SPP_CONN_IND                     = BT_MSG_GROUP_SPP | 0x00,
     BT_MSG_SPP_CONN_CMPL                    = BT_MSG_GROUP_SPP | 0x01,
@@ -264,6 +276,7 @@ typedef enum t_bt_msg
     BT_MSG_PBAP_GET_PHONE_BOOK_CMPL         = BT_MSG_GROUP_PBAP | 0x04,
     BT_MSG_PBAP_GET_PHONE_BOOK_SIZE_CMPL    = BT_MSG_GROUP_PBAP | 0x05,
     BT_MSG_PBAP_CALLER_ID_NAME              = BT_MSG_GROUP_PBAP | 0x06,
+    BT_MSG_PBAP_GET_VCARD_ENTRY_CMPL        = BT_MSG_GROUP_PBAP | 0x07,
 
     BT_MSG_HID_DEVICE_CONN_IND              = BT_MSG_GROUP_HID | 0x00,
     BT_MSG_HID_DEVICE_CONN_CMPL             = BT_MSG_GROUP_HID | 0x01,
@@ -361,7 +374,33 @@ typedef enum t_bt_msg
     BT_MSG_VND_SET_RSSI_GOLDEN_RANGE_RSP  = BT_MSG_GROUP_VND | 0x03,
     BT_MSG_VND_SET_IDLE_ZONE_RSP          = BT_MSG_GROUP_VND | 0x04,
     BT_MSG_VND_TRAFFIC_QOS_RSP            = BT_MSG_GROUP_VND | 0x05,
+    BT_MSG_VND_TRAFFIC_QOS_CMPL           = BT_MSG_GROUP_VND | 0x06,
 } T_BT_MSG;
+
+typedef enum t_bt_role_switch_status
+{
+    BT_ROLE_SWITCH_IDLE             = 0x00, /* role switch not in progress */
+    BT_ROLE_SWITCH_MASTER_RUNNING   = 0x01, /* role switch to master in progress */
+    BT_ROLE_SWITCH_MASTER_PENDING   = 0x02, /* role switch to master waiting */
+    BT_ROLE_SWITCH_SLAVE_RUNNING    = 0x03, /* role switch to slave in progress */
+    BT_ROLE_SWITCH_SLAVE_PENDING    = 0x04, /* role switch to slave waiting */
+} T_BT_ROLE_SWITCH_STATUS;
+
+typedef enum t_bt_link_state
+{
+    BT_LINK_STATE_DISCONNECTED  = 0x00,
+    BT_LINK_STATE_CONNECTING    = 0x01,
+    BT_LINK_STATE_CONNECTED     = 0x02,
+    BT_LINK_STATE_DISCONNECTING = 0x03,
+} T_BT_LINK_STATE;
+
+typedef enum t_bt_link_sco_state
+{
+    BT_LINK_SCO_STATE_DISCONNECTED  = 0x00,
+    BT_LINK_SCO_STATE_CONNECTING    = 0x01,
+    BT_LINK_SCO_STATE_CONNECTED     = 0x02,
+    BT_LINK_SCO_STATE_DISCONNECTING = 0x03,
+} T_BT_LINK_SCO_STATE;
 
 typedef struct t_bt_rdtp_data_ind
 {
@@ -491,40 +530,77 @@ typedef struct t_bt_remote_payload_hid_disconnected
     uint8_t bd_addr[6];
 } T_BT_REMOTE_PAYLOAD_HID_DISCONNECTED;
 
-typedef enum t_bt_pm_event
+typedef struct t_bt_link
 {
-    BT_PM_EVENT_LINK_CONNECTED      = 0x00,
-    BT_PM_EVENT_LINK_DISCONNECTED   = 0x01,
-    BT_PM_EVENT_SNIFF_ENTER_SUCCESS = 0x02,
-    BT_PM_EVENT_SNIFF_ENTER_FAIL    = 0x03,
-    BT_PM_EVENT_SNIFF_ENTER_REQ     = 0x04,
-    BT_PM_EVENT_SNIFF_EXIT_SUCCESS  = 0x05,
-    BT_PM_EVENT_SNIFF_EXIT_FAIL     = 0x06,
-    BT_PM_EVENT_SNIFF_EXIT_REQ      = 0x07,
-} T_BT_PM_EVENT;
+    struct t_bt_link       *next;
+    uint8_t                 bd_addr[6];
+    uint16_t                acl_handle;
+    uint8_t                 index;
 
-typedef bool (*P_BT_PM_CBACK)(uint8_t       bd_addr[6],
-                              T_BT_PM_EVENT event);
+    T_BT_LINK_STATE         acl_link_state;
+    bool                    acl_link_authenticated;
+    bool                    acl_link_encrypted;
+    bool                    acl_link_sc_ongoing;
+    bool                    acl_link_role_master;
+    uint16_t                acl_link_policy;
+    T_BT_ROLE_SWITCH_STATUS role_switch_status;
+    bool                    pm_enable;
+    T_BT_LINK_PM_STATE      pm_state;
+    T_BT_LINK_PM_ACTION     pm_action;
+    uint32_t                pm_timeout;
+    uint16_t                min_interval;
+    uint16_t                max_interval;
+    uint16_t                sniff_attempt;
+    uint16_t                sniff_timeout;
+    T_SYS_TIMER_HANDLE      timer_sniff;
+    T_OS_QUEUE              pm_cback_list;
+    T_BT_LINK_SCO_STATE     sco_state;
+    uint16_t                sco_handle;
+    uint8_t                 is_esco;
+    uint8_t                 sco_air_mode;
+    uint8_t                 sco_packet_length;
+    uint8_t                 curr_sco_len;
+    uint8_t                *sco_buf;
+} T_BT_LINK;
 
-typedef struct t_bt_pm_cback_item
+typedef struct t_roleswap_info
 {
-    struct t_bt_pm_cback_item *p_next;
-    P_BT_PM_CBACK              cback;
-} T_BT_PM_CBACK_ITEM;
+    struct t_roleswap_info *next;
+    uint8_t                 bd_addr[6];
+    T_OS_QUEUE              info_list;
+} T_ROLESWAP_INFO;
+
+typedef struct t_btm_db
+{
+    T_OS_QUEUE               link_list;
+    T_OS_QUEUE               roleswap_info_list;
+    T_REMOTE_RELAY_HANDLE    relay_handle;
+    T_OS_QUEUE               cback_list;
+    bool                     stack_ready;
+    T_BT_DEVICE_MODE         curr_dev_mode;
+    T_BT_DEVICE_MODE_ACTION  pending_dev_mode_action;
+    T_BT_DEVICE_MODE_ACTION  next_dev_mode_action;
+    uint8_t                  active_a2dp_addr[6];
+} T_BTM_DB;
+
+extern T_BTM_DB btm_db;
+
+T_BT_LINK *bt_link_alloc(uint8_t bd_addr[6]);
+
+void bt_link_free(T_BT_LINK *link);
+
+T_BT_LINK *bt_link_find(uint8_t bd_addr[6]);
+
+T_BT_LINK *bt_link_find_by_handle(uint16_t handle);
+
+bool bt_link_policy_set(uint8_t  bd_addr[6],
+                        uint16_t link_policy);
+
+bool bt_link_policy_get(uint8_t   bd_addr[6],
+                        uint16_t *link_policy);
 
 bool bt_mgr_dispatch(T_BT_MSG  msg,
                      void     *buf);
-
-bool bt_pm_cback_register(uint8_t       bd_addr[6],
-                          P_BT_PM_CBACK cback);
-
-bool bt_pm_cback_unregister(uint8_t       bd_addr[6],
-                            P_BT_PM_CBACK cback);
-
-void bt_pm_sm(T_BT_BR_LINK  *p_link,
-              T_BT_PM_EVENT  event);
-
-T_BT_LINK_PM_STATE bt_pm_state_get(T_BT_BR_LINK *p_link);
 
 bool bt_sniff_mode_config(uint8_t  bd_addr[6],
                           uint16_t sniff_interval,
@@ -532,14 +608,11 @@ bool bt_sniff_mode_config(uint8_t  bd_addr[6],
                           uint16_t sniff_timeout,
                           uint32_t pm_timeout);
 
-bool bt_sniff_mode_enter(T_BT_BR_LINK *p_link,
+bool bt_sniff_mode_enter(uint8_t  bd_addr[6],
                          uint16_t min_interval,
                          uint16_t max_interval,
                          uint16_t sniff_attempt,
                          uint16_t sniff_timeout);
-
-bool bt_sniff_mode_exit(T_BT_BR_LINK *p_link,
-                        bool          refresh);
 
 bool bt_sdp_init(void);
 

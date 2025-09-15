@@ -27,7 +27,7 @@ extern "C" {
 /*============================================================================*
  *                         Macros
  *============================================================================*/
-/** @addtogroup DIS_CLIENT_Exported_Macros DIS Client Exported Macros
+/** @addtogroup DIS_GATT_CLIENT_Exported_Macros DIS GATT Client Exported Macros
   * @brief
   * @{
   */
@@ -53,14 +53,14 @@ extern "C" {
 #define GATT_MSG_DIS_CLIENT_READ_RESULT        0x01
 
 /** @} End of DIS_CLT_CB_MSG */
-/** End of DIS_CLIENT_Exported_Macros
+/** End of DIS_GATT_CLIENT_Exported_Macros
 * @}
 */
 
 /*============================================================================*
  *                         Types
  *============================================================================*/
-/** @defgroup DIS_CLIENT_Exported_Types DIS Client Exported Types
+/** @defgroup DIS_GATT_CLIENT_Exported_Types DIS GATT Client Exported Types
   * @brief
   * @{
   */
@@ -119,14 +119,14 @@ typedef struct
         uint8_t                   *udi_for_medical_dev;    /**< UDI for Medical Devices */
     } data;
 } T_DIS_CLIENT_READ_RESULT;
-/** End of DIS_CLIENT_Exported_Types
+/** End of DIS_GATT_CLIENT_Exported_Types
 * @}
 */
 
 /*============================================================================*
  *                         Functions
  *============================================================================*/
-/** @defgroup DIS_CLIENT_Exported_Functions DIS Client Exported Functions
+/** @defgroup DIS_GATT_CLIENT_Exported_Functions DIS GATT Client Exported Functions
   * @brief
   * @{
   */

@@ -19,40 +19,31 @@ extern "C" {
  */
 
 /**
- * bt_spp.h
- *
- * \brief    BT SPP UUID TYPE.
+ * \brief    BT SPP UUID type.
  *
  * \ingroup  BT_SPP
  */
 typedef enum t_bt_spp_uuid_type
 {
-    BT_SPP_UUID16,    /**< UUID type 16 bits */
-    BT_SPP_UUID32,    /**< UUID type 32 bits */
-    BT_SPP_UUID128    /**< UUID type 128 bits */
+    BT_SPP_UUID16,    /**< UUID type 16 bits. */
+    BT_SPP_UUID32,    /**< UUID type 32 bits. */
+    BT_SPP_UUID128    /**< UUID type 128 bits. */
 } T_BT_SPP_UUID_TYPE;
 
 /**
- * bt_spp.h
- *
- * \brief    BT SPP UUID DATA.
+ * \brief    BT SPP UUID data.
  *
  * \ingroup  BT_SPP
  */
 typedef union t_bt_spp_uuid_data
 {
-    uint16_t    uuid_16;        /**< UUID data in 16 bits */
-    uint32_t    uuid_32;        /**< UUID data in 32 bits */
-    uint8_t     uuid_128[16];   /**< UUID data in 128 bits */
+    uint16_t    uuid_16;        /**< UUID data in 16 bits. */
+    uint32_t    uuid_32;        /**< UUID data in 32 bits. */
+    uint8_t     uuid_128[16];   /**< UUID data in 128 bits. */
 } T_BT_SPP_UUID_DATA;
 
 /**
- * bt_spp.h
- *
  * \brief  Initialize SPP profile.
- *
- * \param[in]    link_num       Spp maximum connected link number
- * \param[in]    service_num    Supported service number.
  *
  * \return          The status of initializing SPP profile.
  * \retval true     SPP profile was initialized successfully.
@@ -60,17 +51,14 @@ typedef union t_bt_spp_uuid_data
  *
  * \ingroup BT_SPP
  */
-bool bt_spp_init(uint8_t link_num,
-                 uint8_t service_num);
+bool bt_spp_init(void);
 
 /**
- * bt_spp.h
- *
  * \brief  Register SPP service.
  *
  * \note   This function shall be used after \ref bt_spp_int() called.
  *
- * \param[in]   service_uuid        SPP service uuid.
+ * \param[in]   service_uuid        SPP service UUID.
  * \param[in]   server_chann        Local server channel.
  *
  * \return         The status of registering SPP service.
@@ -79,21 +67,19 @@ bool bt_spp_init(uint8_t link_num,
  *
  * \ingroup BT_SPP
  */
-bool bt_spp_service_register(uint8_t *service_uuid,
-                             uint8_t  server_chann);
+bool bt_spp_service_register(uint8_t service_uuid[16],
+                             uint8_t server_chann);
 
 /**
- * bt_spp.h
- *
- * \brief  Check the uuid is registered and bond local server channel with the checked uuid.
+ * \brief  Check the UUID is registered and bond local server channel with the checked UUID.
  *
  * \param[in]  type                    UUID type \ref T_GAP_UUID_TYPE.
  * \param[in]  data                    UUID data \ref T_GAP_UUID_DATA.
  * \param[in]  local_server_chann      Local server channel.
  *
- * \return         The status of checking uuid.
- * \retval true    The uuid was registered and the local server channel was bonded.
- * \retval false   The uuid was not registered and the local server channel was not bonded.
+ * \return         The status of checking UUID.
+ * \retval true    The UUID was registered and the local server channel was bonded.
+ * \retval false   The UUID was not registered and the local server channel was not bonded.
  *
  * \ingroup BT_SPP
  */
@@ -102,8 +88,6 @@ bool bt_spp_registered_uuid_check(T_BT_SPP_UUID_TYPE  type,
                                   uint8_t            *local_server_chann);
 
 /**
- * bt_spp.h
- *
  * \brief  Set SPP ERTM mode.
  *
  * \param[in]  enable    Enable or disable ERTM mode.
@@ -119,16 +103,14 @@ bool bt_spp_registered_uuid_check(T_BT_SPP_UUID_TYPE  type,
 bool bt_spp_ertm_mode_set(bool enable);
 
 /**
- * bt_spp.h
- *
  * \brief  Send an SPP connection request.
  *
  * \param[in]  bd_addr             Remote BT address.
- * \param[in]  rmt_server_chann    Remote server channel.
- * \param[in]  frame_size          The max frame_size supported by local device.
- * \param[in]  credits             The number of packet that remote can be send. This para is used for flow control.A sending
- *                                 entity may send as many frames on a spp connection as it has credits;if the credit count
- *                                 reaches zero,the sender will stop and wait for further credits from peer.
+ * \param[in]  remote_server_chann Remote server channel.
+ * \param[in]  frame_size          The maximum frame_size supported by local device.
+ * \param[in]  credits             The number of packet that remote can be send. This parameter is used for flow control. A sending
+ *                                 entity may send as many frames on a SPP connection as it has credits; if the credit count
+ *                                 reaches zero, the sender will stop and wait for further credits from peer.
  * \param[in]  local_server_chann  Local server channel.
  *
  * \return         The status of sending the SPP connection request.
@@ -138,25 +120,23 @@ bool bt_spp_ertm_mode_set(bool enable);
  * \ingroup BT_SPP
  */
 bool bt_spp_connect_req(uint8_t  bd_addr[6],
-                        uint8_t  rmt_server_chann,
+                        uint8_t  remote_server_chann,
                         uint16_t frame_size,
                         uint8_t  credits,
                         uint8_t  local_server_chann);
 
 /**
- * bt_spp.h
- *
  * \brief  Send an SPP connection confirmation.
  *
  * \param[in]  bd_addr             Remote BT address.
  * \param[in]  local_server_chann  Local server channel.
  * \param[in]  accept              Confirmation message.
- * \arg    true    Accept the received spp connection request.
- * \arg    false   Reject the received spp connection request.
- * \param[in]  frame_size         The max frame_size supported by local device.
- * \param[in]  credits            The number of packet that remote can be send. This para is used for flow control.A sending
- *                                entity may send as many frames on a spp connection as it has credits;if the credit count
- *                                reaches zero,the sender will stop and wait for further credits from peer.
+ * \arg    true    Accept the received SPP connection request.
+ * \arg    false   Reject the received SPP connection request.
+ * \param[in]  frame_size         The maximum frame_size supported by local device.
+ * \param[in]  credits            The number of packet that remote can be send. This parameter is used for flow control. A sending
+ *                                entity may send as many frames on a SPP connection as it has credits; if the credit count
+ *                                reaches zero, the sender will stop and wait for further credits from peer.
  *
  * \return         The status of sending the SPP connection confirmation.
  * \retval true    SPP connection confirmation was sent successfully.
@@ -171,8 +151,6 @@ bool bt_spp_connect_cfm(uint8_t  bd_addr[6],
                         uint8_t  credits);
 
 /**
- * bt_spp.h
- *
  * \brief  Send an SPP disconnection request.
  *
  * \param[in]  bd_addr                Remote BT address.
@@ -188,8 +166,6 @@ bool bt_spp_disconnect_req(uint8_t bd_addr[6],
                            uint8_t local_server_chann);
 
 /**
- * bt_spp.h
- *
  * \brief  Send a request to disconnect all SPP connection.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -203,8 +179,6 @@ bool bt_spp_disconnect_req(uint8_t bd_addr[6],
 bool bt_spp_disconnect_all_req(uint8_t bd_addr[6]);
 
 /**
- * bt_spp.h
- *
  * \brief  Send SPP data to remote device.
  *
  * \param[in]  bd_addr                Remote BT address.
@@ -228,8 +202,6 @@ bool bt_spp_data_send(uint8_t   bd_addr[6],
                       bool      ack);
 
 /**
- * bt_spp.h
- *
  * \brief  Give SPP credits to remote device.
  *
  * \param[in]  bd_addr                Remote BT address.

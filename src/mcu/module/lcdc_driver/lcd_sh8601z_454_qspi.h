@@ -20,5 +20,8 @@ void SH8601A_qspi_power_off(void);
 void SH8601A_qspi_power_on(void);
 void lcd_SH8601A_qspi_454_set_window(uint16_t xStart, uint16_t yStart,
                                      uint16_t xEnd, uint16_t yEnd);
+void lcd_avdd_en_pin_config(uint8_t lcd_avdd_en);
+void lcd_avdd_en_init(void);
+void lcd_set_avdd_en(bool set);
 
 #endif // LCD_SH8601Z_454_QSPI_H

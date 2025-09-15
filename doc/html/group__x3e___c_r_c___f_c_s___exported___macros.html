@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>BT AUDIO SDK: CRC Implementation Exported Macros</title>
+<title>BT AUDIO SDK: CRC Implementation Exported Constants</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -42,10 +42,9 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">CRC Implementation Exported Macros<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___p_l_a_t_f_o_r_m.html">Platform</a> &raquo; <a class="el" href="group___p_l_a_t_f_o_r_m__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___c_r_c___f_c_s.html">CRC Implementation</a></div></div>  </div>
+<div class="title">CRC Implementation Exported Constants<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___p_l_a_t_f_o_r_m.html">Platform</a> &raquo; <a class="el" href="group___p_l_a_t_f_o_r_m__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___c_r_c___f_c_s.html">CRC Implementation</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -57,18 +56,6 @@ Macros</h2></td></tr>
 <tr class="memitem:gad9c163a69cea24d3494df4630988ffac"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___c_r_c___f_c_s___exported___macros.html#gad9c163a69cea24d3494df4630988ffac">BTXFCS_GOOD</a>&#160;&#160;&#160;0x0000</td></tr>
 <tr class="memdesc:gad9c163a69cea24d3494df4630988ffac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Good final FCS value.  <a href="#gad9c163a69cea24d3494df4630988ffac">More...</a><br /></td></tr>
 <tr class="separator:gad9c163a69cea24d3494df4630988ffac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gadf8953bea9b0ad187023ad8adee17b8a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___c_r_c___f_c_s___exported___macros.html#gadf8953bea9b0ad187023ad8adee17b8a">btxfcs</a> (uint16_t fcs, uint8_t *cp, uint16_t len)</td></tr>
-<tr class="memdesc:gadf8953bea9b0ad187023ad8adee17b8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate a new fcs given the current fcs and the new data. Polynomial: X**0 + X**2 + X**15 + X16.  <a href="#gadf8953bea9b0ad187023ad8adee17b8a">More...</a><br /></td></tr>
-<tr class="separator:gadf8953bea9b0ad187023ad8adee17b8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga81685b0b3b62fd4db895923559cabfc5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___c_r_c___f_c_s___exported___macros.html#ga81685b0b3b62fd4db895923559cabfc5">crc16_ibm</a> (uint8_t *buf, uint32_t size, uint16_t compared_crc16)</td></tr>
-<tr class="memdesc:ga81685b0b3b62fd4db895923559cabfc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate.  <a href="#ga81685b0b3b62fd4db895923559cabfc5">More...</a><br /></td></tr>
-<tr class="separator:ga81685b0b3b62fd4db895923559cabfc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0c8d65b4cc4cfa2395761ad2778ba83f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___c_r_c___f_c_s___exported___macros.html#ga0c8d65b4cc4cfa2395761ad2778ba83f">btx_vendor_get_response</a> (uint8_t *data, uint8_t len)</td></tr>
-<tr class="memdesc:ga0c8d65b4cc4cfa2395761ad2778ba83f"><td class="mdescLeft">&#160;</td><td class="mdescRight">proprietary inteface for Realtek internal handshake API .  <a href="#ga0c8d65b4cc4cfa2395761ad2778ba83f">More...</a><br /></td></tr>
-<tr class="separator:ga0c8d65b4cc4cfa2395761ad2778ba83f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Macro Definition Documentation</h2>
@@ -101,135 +88,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Good final FCS value. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="gadf8953bea9b0ad187023ad8adee17b8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gadf8953bea9b0ad187023ad8adee17b8a">&#9670;&nbsp;</a></span>btxfcs()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t btxfcs </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>fcs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>cp</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Calculate a new fcs given the current fcs and the new data. Polynomial: X**0 + X**2 + X**15 + X16. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">fcs</td><td>init or good final </td></tr>
-    <tr><td class="paramname">cp</td><td>data point </td></tr>
-    <tr><td class="paramname">len</td><td>length</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
-</div>
-</div>
-<a id="ga81685b0b3b62fd4db895923559cabfc5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga81685b0b3b62fd4db895923559cabfc5">&#9670;&nbsp;</a></span>crc16_ibm()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool crc16_ibm </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>compared_crc16</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Calculate. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">buf</td><td>data point </td></tr>
-    <tr><td class="paramname">size</td><td>data size </td></tr>
-    <tr><td class="paramname">compared_crc16</td><td>expected crc16 result </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true: the same as compared_crc16, false: has differnet value </dd></dl>
-
-</div>
-</div>
-<a id="ga0c8d65b4cc4cfa2395761ad2778ba83f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga0c8d65b4cc4cfa2395761ad2778ba83f">&#9670;&nbsp;</a></span>btx_vendor_get_response()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool btx_vendor_get_response </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>proprietary inteface for Realtek internal handshake API . </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">data</td><td>input data buffer </td></tr>
-    <tr><td class="paramname">len</td><td>input data buffer length </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if handshare pass, fals othewise </dd></dl>
 
 </div>
 </div>

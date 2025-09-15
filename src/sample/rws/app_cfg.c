@@ -43,6 +43,7 @@
 
 #if F_APP_DUAL_AUDIO_EFFECT
 #include "app_dual_audio_effect.h"
+#include "app_audio_policy.h"
 #endif
 
 #if F_APP_SLIDE_SWITCH_SUPPORT
@@ -50,7 +51,7 @@
 #endif
 
 #if F_APP_OTA_TOOLING_SUPPORT
-#include "app_adp_cmd.h"
+#include "app_adp_cmd_parse.h"
 #endif
 
 #if F_APP_ANC_SUPPORT
@@ -107,6 +108,11 @@ static const T_APP_CFG_NV app_cfg_rw_default =
     .ps_vol_gain = VOL_GAIN_RESET,
     .android_vol_gain = VOL_GAIN_RESET,
     .switch_vol_gain = VOL_GAIN_RESET,
+#if F_APP_AICS_SUPPORT
+    .lea_mic_gain_mode = 2,
+    .lea_mic_gain_vol = 0,
+    .lea_mic_change_cnt = 0,
+#endif
 };
 
 T_APP_CFG_CONST app_cfg_const;
@@ -277,6 +283,10 @@ uint32_t app_cfg_reset(void)
     app_cfg_nv.rws_disallow_sync_apt_volume = app_cfg_const.rws_disallow_sync_apt_volume;
 #endif
 
+#if F_APP_POWER_ON_DELAY_APPLY_ANC_SUPPORT
+    app_cfg_nv.time_delay_to_open_anc_when_power_on =
+        app_cfg_const.time_delay_to_open_anc_when_power_on;
+#endif
 #if F_APP_POWER_ON_DELAY_APPLY_APT_SUPPORT
     app_cfg_nv.time_delay_to_open_apt_when_power_on =
         app_cfg_const.time_delay_to_open_apt_when_power_on;
@@ -439,6 +449,11 @@ static void app_cfg_load(void)
 
     app_dsp_cfg_init(app_cfg_const.normal_apt_support);
 
+    if (sizeof(T_APP_CFG_NV) > APP_RW_DATA_SIZE)
+    {
+        APP_PRINT_ERROR0("app_cfg_load: nv size out of range");
+        chip_reset(RESET_ALL);
+    }
     //read-write data
     ftl_load_from_storage(&app_cfg_nv.hdr, APP_RW_DATA_ADDR, sizeof(app_cfg_nv.hdr));
 
@@ -537,13 +552,15 @@ static void app_cfg_load(void)
         app_cfg_const.normal_apt_support = 0;
     }
 
+#if F_APP_ADP_5V_CMD_SUPPORT
     if (app_cfg_const.enable_rtk_charging_box == 0)
     {
         // Since support rtk charging box is disabled
         // We should set those value.
         app_cfg_const.smart_charger_box_cmd_set = CHARGER_BOX_CMD_SET_15BITS;
-        app_cfg_const.smart_charger_box_bit_length = 1; // 1: 20ms, 0 40ms
+        app_cfg_const.smart_charger_box_bit_length = CHARGER_BOX_BIT_LENGTH_20MS; // 1: 20ms, 0 40ms
     }
+#endif
 #endif
 
 #if F_APP_MULTI_LINK_ENABLE
@@ -564,10 +581,9 @@ static void app_cfg_load(void)
 #endif
 
 #if F_APP_QOL_MONITOR_SUPPORT
-    app_cfg_const.enable_link_monitor_roleswap = 1;
+    app_cfg_const.disable_link_monitor_roleswap = 0;
     app_cfg_const.roleswap_rssi_threshold = 8;
     app_cfg_const.rssi_roleswap_judge_timeout = 1;
-    app_cfg_const.enable_low_bat_role_swap = 0;
     app_cfg_const.enable_high_batt_primary = 0;
 #endif
 
@@ -589,12 +605,12 @@ static void app_cfg_load(void)
         app_cfg_const.listening_mode_power_on_status = POWER_ON_LISTENING_MODE_ALL_OFF;
         app_cfg_const.enable_pairing_timeout_to_power_off = 0;
         app_cfg_const.timer_pairing_timeout = 600;
-
-        if (meas_mode == ANC_RESP_MEAS_MODE_ENTER)
-        {
-            app_cfg_const.supported_profile_mask = SPP_PROFILE_MASK;
-        }
     }
+#endif
+
+#if F_APP_GATT_OVER_BREDR_SUPPORT
+    app_cfg_const.rtk_app_adv_support = 0;
+    app_cfg_const.supported_profile_mask |= GATT_PROFILE_MASK;
 #endif
 
 #if F_APP_GAMING_DONGLE_SUPPORT && F_APP_LEA_SUPPORT
@@ -611,6 +627,10 @@ static void app_cfg_load(void)
 #if F_APP_GAMING_CONTROLLER_SUPPORT
     /* only support 16k */
     app_cfg_const.spp_voice_smaple_rate = RECORD_SAMPLE_RATE_16K;
+#endif
+
+#if F_APP_CHARGER_CASE_SUPPORT
+    app_cfg_const.enable_inbox_power_off = 0;
 #endif
 }
 
@@ -746,6 +766,7 @@ void app_cfg_init(void)
 #if TARGET_LEGACY_AUDIO_GAMING
     app_cfg_const.enable_enter_gaming_mode_after_power_on = 0;
 #endif
+
 }
 
 #if TARGET_HOIST_V2 && (TARGET_VIZIER == 0)

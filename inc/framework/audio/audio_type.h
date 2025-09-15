@@ -15,30 +15,25 @@ extern "C" {
 /**
  * \defgroup    AUDIO_TYPE Audio Type
  *
- * \brief   Define basic and common types for Audio subsystem.
+ * \brief   Define basic and common types for Audio Subsystem.
  */
 
-
 /**
- * audio_type.h
- *
- * \brief Define Audio supported stream types.
+ * \brief Define the supported Audio Stream types.
  *
  * \ingroup AUDIO_TYPE
  */
 typedef enum t_audio_stream_type
 {
-    AUDIO_STREAM_TYPE_PLAYBACK  = 0x00, /**< Audio stream for audio playback */
-    AUDIO_STREAM_TYPE_VOICE     = 0x01, /**< Audio stream for voice communication */
-    AUDIO_STREAM_TYPE_RECORD    = 0x02, /**< Audio stream for recognition or capture */
+    AUDIO_STREAM_TYPE_PLAYBACK  = 0x00, /**< Audio Stream for audio playback */
+    AUDIO_STREAM_TYPE_VOICE     = 0x01, /**< Audio Stream for voice communication */
+    AUDIO_STREAM_TYPE_RECORD    = 0x02, /**< Audio Stream for recognition or capture */
 } T_AUDIO_STREAM_TYPE;
 
 /**
- * audio_type.h
+ * \brief Define Audio Stream modes.
  *
- * \brief Define Audio stream modes.
- *
- * \details Each Audio stream type can set its stream performance mode.
+ * \details Each Audio Stream type can set its stream performance mode.
  *          \ref AUDIO_STREAM_MODE_NORMAL is the default mode that balances its latency with
  *          its stability.
  *          \ref AUDIO_STREAM_MODE_LOW_LATENCY is the mode that focuses on the latency performance,
@@ -56,45 +51,39 @@ typedef enum t_audio_stream_type
  */
 typedef enum t_audio_stream_mode
 {
-    AUDIO_STREAM_MODE_NORMAL            = 0x00, /**< Audio stream normal mode */
-    AUDIO_STREAM_MODE_LOW_LATENCY       = 0x01, /**< Audio stream low-latency mode */
-    AUDIO_STREAM_MODE_HIGH_STABILITY    = 0x02, /**< Audio stream high-stability mode */
-    AUDIO_STREAM_MODE_DIRECT            = 0x03, /**< Audio stream direct mode */
-    AUDIO_STREAM_MODE_ULTRA_LOW_LATENCY = 0x04, /**< Audio stream ultra low-latency mode */
+    AUDIO_STREAM_MODE_NORMAL            = 0x00, /**< Audio Stream normal mode */
+    AUDIO_STREAM_MODE_LOW_LATENCY       = 0x01, /**< Audio Stream low-latency mode */
+    AUDIO_STREAM_MODE_HIGH_STABILITY    = 0x02, /**< Audio Stream high-stability mode */
+    AUDIO_STREAM_MODE_DIRECT            = 0x03, /**< Audio Stream direct mode */
+    AUDIO_STREAM_MODE_ULTRA_LOW_LATENCY = 0x04, /**< Audio Stream ultra low-latency mode */
 } T_AUDIO_STREAM_MODE;
 
 /**
- * audio_type.h
- *
- * \brief Define Audio stream usages.
+ * \brief Define Audio Stream usages.
  *
  * \ingroup AUDIO_TYPE
  */
 typedef enum t_audio_stream_usage
 {
-    AUDIO_STREAM_USAGE_LOCAL    = 0x00, /**< Audio stream local usage */
-    AUDIO_STREAM_USAGE_RELAY    = 0x01, /**< Audio stream remote relay usage */
-    AUDIO_STREAM_USAGE_SNOOP    = 0x02, /**< Audio stream remote snoop usage */
+    AUDIO_STREAM_USAGE_LOCAL    = 0x00, /**< Audio Stream local usage */
+    AUDIO_STREAM_USAGE_RELAY    = 0x01, /**< Audio Stream remote relay usage */
+    AUDIO_STREAM_USAGE_SNOOP    = 0x02, /**< Audio Stream remote snoop usage */
 } T_AUDIO_STREAM_USAGE;
 
 /**
- * audio_type.h
- *
- * \brief Define Audio stream status.
+ * \brief Define Audio Stream status.
  *
  * \ingroup AUDIO_TYPE
  */
 typedef enum t_audio_stream_status
 {
-    AUDIO_STREAM_STATUS_CORRECT = 0x00, /**< The whole payload data are marked as "good data". */
-    AUDIO_STREAM_STATUS_ERROR   = 0x01, /**< The whole or partial payload data are marked as "wrong data". */
-    AUDIO_STREAM_STATUS_LOST    = 0x02, /**< The payload data are marked as "empty data" in zero length. */
-    AUDIO_STREAM_STATUS_DUMMY   = 0x03, /**< The payload data are marked as "default data". */
+    AUDIO_STREAM_STATUS_CORRECT = 0x00, /**< The whole payload data are marked as 'good data'. */
+    AUDIO_STREAM_STATUS_ERROR   = 0x01, /**< The whole or partial payload data are marked as 'wrong data'. */
+    AUDIO_STREAM_STATUS_LOST    = 0x02, /**< The payload data are marked as 'empty data' in zero length. */
+    AUDIO_STREAM_STATUS_DUMMY   = 0x03, /**< The payload data are marked as 'default data'. */
 } T_AUDIO_STREAM_STATUS;
 
 /**
- * audio_type.h
- *
  * \brief Define Audio category.
  *
  * \ingroup AUDIO_TYPE
@@ -116,15 +105,13 @@ typedef enum t_audio_category
 } T_AUDIO_CATEGORY;
 
 /**
- * audio_type.h
- *
  * \defgroup AUDIO_DEVICE_BITMASK Audio Device Bitmask
  *
- * \brief Define the bitmask of Audio out/sink and in/source devices.
+ * \brief Define the bitmask of Audio Stream out/sink and in/source devices.
  *
  * \details The low 16 bits represent audio out devices, and high 16 bits represent audio in devices.
  *
- * \note If the audio stream chooses \ref AUDIO_DEVICE_OUT_DEFAULT or \ref AUDIO_DEVICE_IN_DEFAULT,
+ * \note If the Audio Stream chooses \ref AUDIO_DEVICE_OUT_DEFAULT or \ref AUDIO_DEVICE_IN_DEFAULT,
  *       it will be dynamically routed to the most relevant hardware device in different audio scenarios.
  *
  * \ingroup AUDIO_TYPE
@@ -143,16 +130,14 @@ typedef enum t_audio_category
  */
 
 /**
- * audio_type.h
- *
  * \defgroup AUDIO_CHANNEL_LOCATION Audio Channel Location Bitmap
  *
- * \brief Define the 4-octet bitmap of Audio channel location.
+ * \brief Define the 4-octet bitmap of audio channel location.
  *
- * \details A media packet shall contain encoded codec frames for the Audio Channels, ordered from the
- *          lowest to highest Audio Location bit indices present in the bitmap value.
+ * \details A media packet shall contain encoded codec frames for the audio channels, ordered from the
+ *          lowest to highest audio location bit indices present in the bitmap value.
  *
- * \note    An Audio Channel Location bitmap value of all zeros that refers to Mono audio, or a single
+ * \note    An audio channel location bitmap value of all zeros that refers to Mono audio, or a single
  *          channel of no specified location.
  *
  * \ingroup AUDIO_TYPE
@@ -196,9 +181,7 @@ typedef enum t_audio_category
  */
 
 /**
- * audio_type.h
- *
- * \brief Define Audio supported encoding/decoding format types.
+ * \brief Define the supported audio encoding/decoding format types.
  *
  * \ingroup AUDIO_TYPE
  */
@@ -218,8 +201,6 @@ typedef enum t_audio_format_type
 } T_AUDIO_FORMAT_TYPE;
 
 /**
- * audio_type.h
- *
  * \brief Define Audio PCM format attributes for \ref AUDIO_FORMAT_TYPE_PCM.
  *
  * \ingroup AUDIO_TYPE
@@ -251,8 +232,6 @@ typedef struct t_audio_pcm_attr
 } T_AUDIO_PCM_ATTR;
 
 /**
- * audio_type.h
- *
  * \brief Define Audio CVSD frame duration for \ref T_AUDIO_CVSD_ATTR.
  *
  * \ingroup AUDIO_TYPE
@@ -264,8 +243,6 @@ typedef enum
 } T_AUDIO_CVSD_FRAME_DURATION;
 
 /**
- * audio_type.h
- *
  * \brief Define Audio CVSD format attributes for \ref AUDIO_FORMAT_TYPE_CVSD.
  *
  * \ingroup AUDIO_TYPE
@@ -292,8 +269,6 @@ typedef struct t_audio_cvsd_attr
 } T_AUDIO_CVSD_ATTR;
 
 /**
- * audio_type.h
- *
  * \brief Define Audio SBC channel modes.
  *
  * \ingroup AUDIO_TYPE
@@ -307,8 +282,6 @@ typedef enum t_audio_sbc_channel_mode
 } T_AUDIO_SBC_CHANNEL_MODE;
 
 /**
- * audio_type.h
- *
  * \brief Define Audio SBC format attributes for \ref AUDIO_FORMAT_TYPE_SBC.
  *
  * \ingroup AUDIO_TYPE
@@ -353,13 +326,11 @@ typedef struct t_audio_sbc_attr
 } T_AUDIO_SBC_ATTR;
 
 /**
- * audio_type.h
- *
  * \brief Define Audio mSBC format attributes for \ref AUDIO_FORMAT_TYPE_MSBC.
  *
  * \details mSBC is a modified version of the SBC codec that is used for voice communication,
- * for example, Bluetooth HFP SCO; therefore all format attribute parameters of mSBC are fixed
- * and not negotiable.
+ *          for example, Bluetooth HFP SCO; therefore all format attribute parameters of mSBC are
+ *          fixed and not negotiable.
  *
  * \ingroup AUDIO_TYPE
  */
@@ -404,8 +375,6 @@ typedef struct t_audio_msbc_attr
 } T_AUDIO_MSBC_ATTR;
 
 /**
- * audio_type.h
- *
  * \brief Define Audio MPEG-4 AAC transport formats.
  *
  * \details There is no standard transport mechanism of the MPEG-4 elementary streams over a channel.
@@ -453,8 +422,6 @@ typedef enum t_audio_aac_transport_format
 } T_AUDIO_AAC_TRANSPORT_FORMAT;
 
 /**
- * audio_type.h
- *
  * \brief Define Audio MPEG-4 AAC object types.
  *
  * \ingroup AUDIO_TYPE
@@ -517,8 +484,6 @@ typedef enum t_audio_aac_object_type
 } T_AUDIO_AAC_OBJECT_TYPE;
 
 /**
- * audio_type.h
- *
  * \brief Define Audio AAC format attributes for \ref AUDIO_FORMAT_TYPE_AAC.
  *
  * \ingroup AUDIO_TYPE
@@ -565,8 +530,6 @@ typedef struct t_audio_aac_attr
 } T_AUDIO_AAC_ATTR;
 
 /**
- * audio_type.h
- *
  * \brief Define Audio OPUS application for \ref T_AUDIO_OPUS_ATTR.
  *
  * \ingroup AUDIO_TYPE
@@ -579,8 +542,6 @@ typedef enum t_audio_opus_application
 } T_AUDIO_OPUS_APPLICATION;
 
 /**
- * audio_type.h
- *
  * \brief Define Audio OPUS frame duration for \ref T_AUDIO_OPUS_ATTR.
  *
  * \ingroup AUDIO_TYPE
@@ -599,8 +560,6 @@ typedef enum t_audio_opus_frame_duration
 } T_AUDIO_OPUS_FRAME_DURATION;
 
 /**
- * audio_type.h
- *
  * \brief Define Audio OPUS format attributes for \ref AUDIO_FORMAT_TYPE_OPUS.
  *
  * \ingroup AUDIO_TYPE
@@ -660,8 +619,6 @@ typedef struct t_audio_opus_attr
 } T_AUDIO_OPUS_ATTR;
 
 /**
- * audio_type.h
- *
  * \brief Define Audio FLAC format attributes for \ref AUDIO_FORMAT_TYPE_FLAC.
  *
  * \ingroup AUDIO_TYPE
@@ -673,8 +630,6 @@ typedef struct t_audio_flac_attr
 } T_AUDIO_FLAC_ATTR;
 
 /**
- * audio_type.h
- *
  * \brief Define Audio MP3 channel modes.
  *
  * \ingroup AUDIO_TYPE
@@ -688,8 +643,6 @@ typedef enum t_audio_mp3_channel_mode
 } T_AUDIO_MP3_CHANNEL_MODE;
 
 /**
- * audio_type.h
- *
  * \brief Define Audio MP3 format attributes for \ref AUDIO_FORMAT_TYPE_MP3.
  *
  * \ingroup AUDIO_TYPE
@@ -731,8 +684,6 @@ typedef struct t_audio_mp3_attr
 } T_AUDIO_MP3_ATTR;
 
 /**
- * audio_type.h
- *
  * \brief Define Audio LC3 frame duration for \ref T_AUDIO_LC3_ATTR.
  *
  * \ingroup AUDIO_TYPE
@@ -744,8 +695,6 @@ typedef enum t_audio_lc3_frame_duration
 } T_AUDIO_LC3_FRAME_DURATION;
 
 /**
- * audio_type.h
- *
  * \brief Define Audio LC3 format attributes for \ref AUDIO_FORMAT_TYPE_LC3.
  *
  * \ingroup AUDIO_TYPE
@@ -784,8 +733,6 @@ typedef struct t_audio_lc3_attr
 } T_AUDIO_LC3_ATTR;
 
 /**
- * audio_type.h
- *
  * \brief Define Audio LDAC channel modes.
  *
  * \ingroup AUDIO_TYPE
@@ -798,8 +745,6 @@ typedef enum t_audio_ldac_channel_mode
 } T_AUDIO_LDAC_CHANNEL_MODE;
 
 /**
- * audio_type.h
- *
  * \brief Define Audio LDAC format attributes for \ref AUDIO_FORMAT_TYPE_LDAC.
  *
  * \ingroup AUDIO_TYPE
@@ -820,8 +765,6 @@ typedef struct t_audio_ldac_attr
 } T_AUDIO_LDAC_ATTR;
 
 /**
- * audio_type.h
- *
  * \brief Define Audio LHDC frame duration for \ref T_AUDIO_LHDC_ATTR.
  *
  * \ingroup AUDIO_TYPE
@@ -832,8 +775,6 @@ typedef enum t_audio_lhdc_frame_duration
 } T_AUDIO_LHDC_FRAME_DURATION;
 
 /**
- * audio_type.h
- *
  * \brief Define Audio LHDC format attributes for \ref AUDIO_FORMAT_TYPE_LHDC.
  *
  * \ingroup AUDIO_TYPE
@@ -866,8 +807,6 @@ typedef struct t_audio_lhdc_attr
 } T_AUDIO_LHDC_ATTR;
 
 /**
- * audio_type.h
- *
  * \brief Define Audio format informations.
  *
  * \ingroup AUDIO_TYPE
@@ -893,8 +832,6 @@ typedef struct t_audio_format_info
 } T_AUDIO_FORMAT_INFO;
 
 /**
- * audio_type.h
- *
  * \brief Define Audio Effect instance.
  *
  * \ingroup AUDIO_TYPE

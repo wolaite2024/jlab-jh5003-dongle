@@ -1,13 +1,13 @@
 /**
 *********************************************************************************************************
-*               Copyright(c) 2021, Realtek Semiconductor Corporation. All rights reserved.
+*               Copyright(c) 2024, Realtek Semiconductor Corporation. All rights reserved.
 *********************************************************************************************************
 * @file      power_debug.h
 * @brief
 * @details
 * @author
-* @date      2022-7-29
-* @version   v1.0
+* @date      2024-10-11
+* @version   v1.1
 * *********************************************************************************************************
 */
 
@@ -19,6 +19,15 @@
 extern "C" {
 #endif
 
+/** @addtogroup POWER_DEBUG Power Debug
+  * @brief Power debug function module.
+  * @{
+  */
+
+/** @defgroup POWER_DEBUG_Exported_Types Power Debug Exported Types
+  * @{
+  */
+
 typedef enum
 {
     POWER_DEBUG_STAGE_BOOT,
@@ -28,13 +37,28 @@ typedef enum
     POWER_DEBUG_STAGE_HFP_STOP,
 } T_POWER_DEBUG_STAGE;
 
+/** End of Group POWER_DEBUG_Exported_Types
+  * @}
+  */
+
+/*============================================================================*
+ *                         Functions
+ *============================================================================*/
+
+/** @defgroup POWER_DEBUG_Exported_Functions Power Debug Exported Functions
+  * @{
+  */
+
 /**
  * @brief  Dump register for power test.
  * \xrefitem Added_API_2_12_0_0 "Added Since 2.12.0.0" "Added API"
- * @param  none
- * @retval none
+ * @param[in]  stage: The stage (boot/a2dp start/a2dp stop/HFP start/HFP stop) that requires dump power related registers.
+ * @return None.
 */
 void power_test_dump_register(T_POWER_DEBUG_STAGE stage);
+
+/** @} */ /* End of group POWER_DEBUG_Exported_Functions */
+/** @} */ /* End of group POWER_DEBUG */
 
 #ifdef __cplusplus
 }
@@ -42,8 +66,5 @@ void power_test_dump_register(T_POWER_DEBUG_STAGE stage);
 
 #endif /* _POWER_DEBUG_ */
 
-/** @} */ /* End of group POWER_DEBUG */
-
-
-/******************* (C) COPYRIGHT 2021 Realtek Semiconductor *****END OF FILE****/
+/******************* (C) COPYRIGHT 2024 Realtek Semiconductor *****END OF FILE****/
 

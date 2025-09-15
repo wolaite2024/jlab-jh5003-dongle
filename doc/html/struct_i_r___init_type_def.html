@@ -86,7 +86,6 @@ Data Fields</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>IR initialize parameters. </p>
-<p>IR initialize parameters </p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a id="a9ef9dd130ddb50516352d71d11da3fa3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9ef9dd130ddb50516352d71d11da3fa3">&#9670;&nbsp;</a></span>IR_Clock</h2>
@@ -99,6 +98,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Specifies the IR clock source, default 40000000. </p>
 
 </div>
 </div>
@@ -113,7 +113,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the clock frequency. This parameter is IR carrier freqency whose unit is Hz. This parameter can be a value of <a class="el" href="group___i_r___frequency.html">IR Frequency</a> </p>
+<p>Specifies the clock frequency. This parameter is IR carrier freqency whose unit is Hz. This parameter can be a value of <a class="el" href="group___i_r___frequency.html">IR Frequency</a>.</p>
+<p>Specifies the IR clock frequency. This parameter is the IR TX carrier frequency or RX sample clock, unit KHz. This parameter can be a value of <a class="el" href="group__x3e___i_r___frequency.html">IR Frequency</a>. IR_CLK_DIV = (IR_Clock / IR_Freq * 1000) - 1 . </p>
 
 </div>
 </div>
@@ -128,7 +129,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the IR duty cycle. </p>
+<p>Specifies the IR duty cycle.</p>
+<p>Specifies the IR duty cycle. This parameter must range from 0x1 to 0x3FFF. IR_TX_DUTY_NUM = (IR_CLK_DIV + 1)/IR_DutyCycle - 1 . </p>
 
 </div>
 </div>
@@ -143,7 +145,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the IR mode. This parameter can be a value of <a class="el" href="group___i_r___mode.html">IR Mode</a> </p>
+<p>Specifies the IR mode. This parameter can be a value of <a class="el" href="group___i_r___mode.html">IR Mode</a>.</p>
+<p>Specifies the IR mode. This parameter can be a value of <a class="el" href="group__x3e___i_r___mode.html">IR Mode</a>. </p>
 
 </div>
 </div>
@@ -158,7 +161,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the IR output level in Tx mode This parameter can be a value of <a class="el" href="group___i_r___idle___status.html">IR Idle Status</a> </p>
+<p>Specifies the IR output level in Tx mode. This parameter can be a value of <a class="el" href="group___i_r___idle___status.html">IR Idle Status</a>.</p>
+<p>Specifies the IR TX output level in idle. This parameter can be a value of <a class="el" href="group__x3e___i_r___idle___status.html">IR Idle Status</a>. </p>
 
 </div>
 </div>
@@ -173,7 +177,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies inverse FIFO data or not in TX mode This parameter can be a value of <a class="el" href="group___i_r___t_x___data___type.html">IR TX Data Type</a> </p>
+<p>Specifies inverse FIFO data or not in TX mode. This parameter can be a value of <a class="el" href="group___i_r___t_x___data___type.html">IR TX Data Type</a>.</p>
+<p>Specifies inverse FIFO data or not in TX mode. This parameter can be a value of <a class="el" href="group__x3e___i_r___t_x___data___type.html">IR TX Data Type</a>. </p>
 
 </div>
 </div>
@@ -188,7 +193,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies TX FIFO interrupt threshold in TX mode. When TX FIFO depth &lt;= threshold value, trigger interrupt. This parameter can be a value of <a class="el" href="group___i_r___tx___threshold.html">IR TX Threshold</a> </p>
+<p>Specifies TX FIFO interrupt threshold in TX mode. When TX FIFO depth &lt;= threshold value, trigger interrupt. This parameter can be a value of <a class="el" href="group___i_r___tx___threshold.html">IR TX Threshold</a>.</p>
+<p>Specifies TX FIFO threshold value in TX mode. When TX FIFO offset &lt;= IR_TxFIFOThrLevel, trigger interrupt <a class="el" href="group__x3e___i_r___interrupts___definition.html#ga8b4c235c4e2de1ec5b1628a3b55ae7d4">IR_INT_TF_LEVEL</a>. This parameter can be a value of <a class="el" href="group__x3e___i_r___tx___threshold.html">IR TX Threshold</a>. This parameter must range from 0 to 32. </p>
 
 </div>
 </div>
@@ -203,7 +209,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies Start mode in RX mode This parameter can be a value of <a class="el" href="group___i_r___rx___start___mode.html">RX Start Mode</a> </p>
+<p>Specifies Start mode in RX mode. This parameter can be a value of <a class="el" href="group___i_r___rx___start___mode.html">IR RX Start Mode</a>.</p>
+<p>Specifies the IR RX start mode. This parameter can be a value of <a class="el" href="group__x3e___i_r___rx___start___mode.html">IR RX Start Mode</a>. </p>
 
 </div>
 </div>
@@ -218,7 +225,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies RX FIFO interrupt threshold in RX mode. when RX FIFO depth &gt; threshold value, trigger interrupt. This parameter can be a value of <a class="el" href="group___i_r___rx___threshold.html">IR RX Threshold</a> </p>
+<p>Specifies RX FIFO interrupt threshold in RX mode. when RX FIFO depth &gt; threshold value, trigger interrupt. This parameter can be a value of <a class="el" href="group___i_r___rx___threshold.html">IR RX Threshold</a>.</p>
+<p>Specifies RX FIFO threshold value in RX mode. When RX FIFO offset &gt;= IR_RxFIFOThrLevel, trigger interrupt <a class="el" href="group__x3e___i_r___interrupts___definition.html#gad5bdf868b14f494160c5bbb3ed59ba90">IR_INT_RF_LEVEL</a>. This parameter can be a value of <a class="el" href="group__x3e___i_r___rx___threshold.html">IR RX Threshold</a>. This parameter must range from 0 to 32. </p>
 
 </div>
 </div>
@@ -233,7 +241,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies data discard mode in RX mode when RX FIFO is full and receiving new data This parameter can be a value of <a class="el" href="group___i_r___r_x___f_i_f_o___d_i_s_c_a_r_d___s_e_t_t_i_n_g.html">IR RX FIFO Discard Setting</a> </p>
+<p>Specifies data discard mode in RX mode when RX FIFO is full and receiving new data. This parameter can be a value of <a class="el" href="group___i_r___r_x___f_i_f_o___d_i_s_c_a_r_d___s_e_t_t_i_n_g.html">IR RX FIFO Discard Setting</a>.</p>
+<p>Specifies data discard mode in RX mode when RX FIFO is full and receiving new data. This parameter can be a value of <a class="el" href="group__x3e___i_r___r_x___f_i_f_o___d_i_s_c_a_r_d___s_e_t_t_i_n_g.html">IR RX FIFO Discard Setting</a>. </p>
 
 </div>
 </div>
@@ -248,7 +257,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies trigger in RX mode This parameter can be a value of <a class="el" href="group___i_r___r_x___trigger___mode.html">RX Trigger Mode</a> </p>
+<p>Specifies trigger in RX mode. This parameter can be a value of <a class="el" href="group___i_r___r_x___trigger___mode.html">IR RX Trigger Mode</a>.</p>
+<p>Specifies IR RX trigger mode. This parameter can be a value of <a class="el" href="group__x3e___i_r___r_x___trigger___mode.html">IR RX Trigger Mode</a>. </p>
 
 </div>
 </div>
@@ -263,7 +273,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies filter time in RX mode This parameter can be a value of <a class="el" href="group___i_r___r_x___filter___time.html">RX Filter Time</a> </p>
+<p>Specifies filter time in RX mode. This parameter can be a value of <a class="el" href="group___i_r___r_x___filter___time.html">IR RX Filter Time</a>.</p>
+<p>Specifies IR RX filter time. This parameter can be a value of <a class="el" href="group__x3e___i_r___r_x___filter___time.html">IR RX Filter Time</a>. </p>
 
 </div>
 </div>
@@ -278,7 +289,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies counter level type when trigger IR_INT_RX_CNT_THR interrupt in RX mode This parameter can be a value of <a class="el" href="group___i_r___r_x___c_o_u_n_t_e_r___t_h_r_e_s_h_o_l_d___t_y_p_e.html">IR RX Counter threshold type</a> </p>
+<p>Specifies counter level type when trigger IR_INT_RX_CNT_THR interrupt in RX mode. This parameter can be a value of <a class="el" href="group___i_r___r_x___c_o_u_n_t_e_r___t_h_r_e_s_h_o_l_d___t_y_p_e.html">IR RX Counter Threshold Type</a>.</p>
+<p>Specifies counter level type when trigger <a class="el" href="group__x3e___i_r___interrupts___definition.html#ga9107e9107205ee7714c76320f631a2b3">IR_INT_RX_CNT_THR</a> interrupt in RX mode. This parameter can be a value of <a class="el" href="group__x3e___i_r___r_x___c_o_u_n_t_e_r___t_h_r_e_s_h_o_l_d___t_y_p_e.html">IR RX Counter Threshold Type</a>. </p>
 
 </div>
 </div>
@@ -293,7 +305,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies counter threshold value when trigger IR_INT_RX_CNT_THR interrupt in RX mode </p>
+<p>Specifies counter threshold value when trigger IR_INT_RX_CNT_THR interrupt in RX mode.</p>
+<p>Specifies counter threshold value when trigger <a class="el" href="group__x3e___i_r___interrupts___definition.html#ga9107e9107205ee7714c76320f631a2b3">IR_INT_RX_CNT_THR</a> interrupt in RX mode. This parameter must range from 0x0 to 0x7FFFFFFF. This parameter can be a value of <a class="el" href="group__x3e___i_r___rx___counter___threshold.html">IR RX Counter Threshold</a>. </p>
 
 </div>
 </div>

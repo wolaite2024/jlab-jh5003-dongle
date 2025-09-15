@@ -1,6 +1,7 @@
 #ifndef _APP_ADAPTER_SERVICE_H_
 #define _APP_ADAPTER_SERVICE_H_
 
+#include "app_cfg.h"
 #include "ual_types.h"
 #include "ual_dev_mgr.h"
 #if F_APP_GAMING_LEA_A2DP_SWITCH_SUPPORT
@@ -49,6 +50,8 @@ void adapter_stop_le_scan(void);
 void adapter_set_scan_by_mmi(bool flag);
 bool adapter_get_scan_by_mmi(void);
 #endif
+
+bool adapter_get_bud_side_by_addr(uint8_t *addr, T_DEVICE_BUD_SIDE *bud_side);
 
 #ifdef  __cplusplus
 }

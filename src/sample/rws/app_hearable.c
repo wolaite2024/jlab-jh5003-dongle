@@ -21,7 +21,12 @@
 #include "app_audio_passthrough.h"
 #include "app_audio_policy.h"
 #include "app_audio_hearing.h"
+#include "app_dsp_cfg.h"
 #include "pm.h"
+
+#if F_APP_HAS_SUPPORT
+#include "app_lea_has_preset_record.h"
+#endif
 
 #define HA_BLOCK                            256
 #define HA_PROG_OPTION                      4
@@ -122,7 +127,14 @@ typedef enum
     APP_HA_DATA_MSG_SET_PARAMS          = 0x01,
     APP_HA_HEARING_TEST_MSG_SET         = 0x02,
     APP_HA_GLOBAL_OBJ_MSG_SET           = 0X03,
-
+    APP_HA_BANDWIDTH_EQ_PARAMS_GET      = 0x04,
+    APP_HA_CUSTOMER_EQ_PARAMS_GET       = 0x05,
+    APP_HA_RNS_COMPENSATION_PARAMS_GET  = 0x06,
+    APP_HA_TOOL_DATA_PARAMS_GET         = 0x07,
+    APP_HA_MIC0_DBFS_DBSPL_PARAMS_GET   = 0x08,
+    APP_HA_CMD_MSG_SET_ALL_PARAMS       = 0x09,
+    APP_HA_DATA_MSG_SET_ALL_PARAMS      = 0x0A,
+    APP_HA_SET_PROG_ALL_OBJS            = 0x0B,
     APP_HA_CMD_MSG_TOTAL,
 } T_APP_HA_CMD_MSG;
 
@@ -364,8 +376,6 @@ static uint32_t org_actual_mhz = 40;
 static T_AUDIO_TRACK_HANDLE last_playback_handle = NULL;
 
 static uint8_t prev_selectable_prog_idx = 0;
-
-static bool check_switch_listening_mode = false;
 
 static uint16_t ha_params_size_table[HA_PARAMS_TOTAL] =
 {
@@ -633,6 +643,30 @@ static bool app_ha_tone_flush_and_play(T_APP_AUDIO_TONE_TYPE tone_type, bool rel
     ret = app_audio_tone_type_play(tone_type, false, relay);
 
     return ret;
+}
+
+static uint16_t app_ha_get_effect_ui_from_tool_data(uint8_t effect)
+{
+    uint16_t len = HA_PROG_OBJ_TOOL_DATA_SIZE;
+    uint16_t offset = HA_PROG_OBJ_TOOL_DATA_SIZE;
+
+    switch (effect)
+    {
+    case HA_EFFECT_OUTPUT_DRC:
+        {
+            offset = len - 52;
+        }
+        break;
+
+    default:
+        {
+
+        }
+        break;
+
+    }
+
+    return offset;
 }
 
 static void app_ha_prog_set_selectable_idx(uint8_t prog_id)
@@ -1472,12 +1506,6 @@ void app_ha_prog_load(uint8_t prog_id)
         return;
     }
 
-    if (check_switch_listening_mode)
-    {
-        app_ha_check_switch_listening_mode(prog_id);
-        check_switch_listening_mode = false;
-    }
-
     cur_effect_addr = 0;
 
     while (cur_effect_addr < ha_prog_db->prog_size_arr[prog_id])
@@ -1619,7 +1647,7 @@ void app_ha_prog_load(uint8_t prog_id)
         case HA_PARAMS_MIC_COMPENSATION:
         case HA_PARAMS_MIC_SETTING:
             {
-                if (p_item->len)
+                if (p_item->len && app_apt_is_normal_apt_started())
                 {
                     audio_probe_dsp_send(p_item->buf, p_item->len);
                 }
@@ -1763,9 +1791,10 @@ static bool app_ha_prog_reset(uint8_t prog_id)
 
     app_ha_global_obj_set(HA_GLOBAL_OBJ_VOLUME_SYNC_STATUS, buf);
 
-    check_switch_listening_mode = true;
-
-    app_ha_prog_load(prog_id);
+    if (app_ha_check_switch_listening_mode(prog_id) == false)
+    {
+        app_ha_prog_load(prog_id);
+    }
 
     return true;
 }
@@ -1894,9 +1923,10 @@ static bool app_ha_prog_db_load()
             prog_start_offset += prog_size;
         }
 
-        check_switch_listening_mode = true;
-
-        app_ha_prog_load(ha_prog_db->selectable_prog_idx);
+        if (app_ha_check_switch_listening_mode(ha_prog_db->selectable_prog_idx) == false)
+        {
+            app_ha_prog_load(ha_prog_db->selectable_prog_idx);
+        }
 
         return true;
     }
@@ -2264,6 +2294,13 @@ void app_ha_get_all_direction_obj(uint8_t prog_id, uint8_t type)
     event_data[3] = obj_size;
     event_data[4] = obj_size >> 8;
 
+    if (type == HA_PROG_OBJ_VOLUME_LEVEL) //set default volume value to 0xFF
+    {
+        uint8_t default_volume_buf[HA_PROG_OBJ_VOLUME_LEVEL_SIZE] = {0xFF, 0xFF, 0x00, 0x00};
+        memcpy(event_data + offset, default_volume_buf, HA_PROG_OBJ_VOLUME_LEVEL_SIZE);
+        memcpy(event_data + offset + obj_size, default_volume_buf, HA_PROG_OBJ_VOLUME_LEVEL_SIZE);
+    }
+
     if (app_cfg_const.bud_side == DEVICE_BUD_SIDE_RIGHT)
     {
         offset += obj_size;
@@ -2273,7 +2310,10 @@ void app_ha_get_all_direction_obj(uint8_t prog_id, uint8_t type)
          (app_db.remote_session_state == REMOTE_SESSION_STATE_CONNECTED)) ||
         (app_db.remote_session_state == REMOTE_SESSION_STATE_DISCONNECTED))
     {
-        app_ha_prog_get_object(prog_id, type, event_data + offset, &obj_size);
+        if (offset < event_len)
+        {
+            app_ha_prog_get_object(prog_id, type, event_data + offset, &obj_size);
+        }
     }
 
     if ((app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SINGLE) &&
@@ -2300,20 +2340,15 @@ void app_ha_get_all_direction_obj_status(uint8_t prog_id, uint8_t type)
             uint16_t event_len = 5; //prog_id, buds' status, L level, R level, balance
             uint16_t offset = 2;
             uint8_t *event_data = calloc(event_len, sizeof(uint8_t));
-            uint16_t tool_data_size = app_ha_prog_get_object_size(HA_PROG_OBJ_TOOL_DATA);
-            uint8_t *tool_data = calloc(tool_data_size, 1);
-
-            app_ha_prog_get_object(prog_id, HA_PROG_OBJ_TOOL_DATA, tool_data, &tool_data_size);
+            uint8_t data[4] = {0};
+            uint16_t size = 0;
 
             event_data[0] = prog_id;
 
-            memcpy(event_data + offset, tool_data + 2, 2); //set curr bud's volume
+            app_ha_prog_get_object(prog_id, HA_PROG_OBJ_VOLUME_LEVEL, data, &size);
 
-            offset = 4 + tool_data[1] * 2;
-            memcpy(event_data + 4, tool_data + offset, 1); //set balance
-
-            free(tool_data);
-            tool_data = NULL;
+            event_data[offset + app_cfg_const.bud_side] = data[0]; //set curr bud's volume
+            event_data[offset + 2] = data[1]; //set curr bud's balance
 
             if ((app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY) &&
                 (app_db.remote_session_state == REMOTE_SESSION_STATE_CONNECTED))
@@ -2553,8 +2588,6 @@ static void app_ha_audio_cback(T_AUDIO_EVENT event_type, void *event_buf, uint16
 
 static void app_ha_effect_apply_cback(void)
 {
-    check_switch_listening_mode = false;
-
     app_ha_prog_load(ha_prog_db->selectable_prog_idx);
 }
 
@@ -2567,13 +2600,98 @@ void app_ha_listening_delay_start()
 }
 #endif
 
+T_HA_HAP_INFO app_ha_hearing_get_prog_info(uint8_t id)
+{
+    T_HA_HAP_INFO info = {0};
+    uint8_t name[HA_PROG_OBJ_NAME_SIZE] = {0};
+    uint16_t len;
+    uint16_t len_real;
+
+    info.index = id;
+
+    if (id < ha_prog_db->prog_num)
+    {
+        app_ha_prog_get_object(id, HA_PROG_OBJ_NAME, name, &len);
+
+        //name struct: len_L - len_H - name string
+        len_real = (uint16_t)name[0] + ((uint16_t)name[1] << 8);
+
+        if (len_real <= HA_PROG_NAME_SIZE)
+        {
+            info.name_len = len_real;
+            memcpy(info.p_name, name + 2, info.name_len);
+        }
+    }
+
+    //APP_PRINT_INFO3("app_ha_hearing_get_prog_info: id %d, name len %d, name %s", info.index,
+    //                info.name_len, TRACE_STRING(info.p_name));
+
+    return info;
+}
+
+bool app_ha_hearing_set_prog_id(uint8_t id)
+{
+    uint8_t prog_id = id;
+
+    if (prog_id < ha_prog_db->prog_num)
+    {
+        if (prog_id != ha_prog_db->selectable_prog_idx)
+        {
+            if (app_db.remote_session_state == REMOTE_SESSION_STATE_DISCONNECTED)
+            {
+                uint8_t event_data[2];
+
+                app_ha_prog_set_selectable_idx(prog_id);
+
+                if (app_ha_check_switch_listening_mode(prog_id) == false)
+                {
+                    app_ha_prog_load(prog_id);
+                }
+
+                event_data[0] = HA_PROG_OPCODE_SET_ID;
+                event_data[1] = prog_id;
+                app_report_event_broadcast(EVENT_HA_PROGRAM_INFO, event_data, 2);
+            }
+            else if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY)
+            {
+                app_relay_sync_single_with_raw_msg(APP_MODULE_TYPE_HA, APP_REMOTE_MSG_HA_PROGRAM_SET_ID,
+                                                   &prog_id, 1,
+                                                   REMOTE_TIMER_HIGH_PRECISION, 0,
+                                                   true);
+            }
+        }
+        else
+        {
+            uint8_t event_data[2];
+
+            event_data[0] = HA_PROG_OPCODE_SET_ID;
+            event_data[1] = prog_id;
+            app_report_event_broadcast(EVENT_HA_PROGRAM_INFO, event_data, 2);
+        }
+        return true;
+    }
+
+    return false;
+}
+
+uint8_t app_ha_hearing_get_prog_num(void)
+{
+    return ha_prog_db->prog_num;
+}
+
+uint8_t app_ha_hearing_get_active_prog_id(void)
+{
+    return ha_prog_db->selectable_prog_idx;
+}
+
 void app_ha_switch_hearable_prog()
 {
     app_ha_prog_set_selectable_idx((ha_prog_db->selectable_prog_idx + 1) % HA_PROG_NUM);
 
-    check_switch_listening_mode = true;
-
-    app_ha_prog_load(ha_prog_db->selectable_prog_idx);
+    if (app_ha_check_switch_listening_mode(ha_prog_db->selectable_prog_idx) == false)
+    {
+        app_ha_prog_load(ha_prog_db->selectable_prog_idx);
+    }
 
     if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY ||
         app_db.remote_session_state == REMOTE_SESSION_STATE_DISCONNECTED)
@@ -2685,11 +2803,17 @@ static void app_ha_hearing_test_tone_spefify_window_sample_generator(uint32_t te
         }
         else
         {
-            cou = ha_hearing_test_db.offset_list[generator_idx + 1] - tp_seq;
+            if (generator_idx + 1 < 1 + HA_HEARING_TEST_TONE_PHASE)
+            {
+                cou = ha_hearing_test_db.offset_list[generator_idx + 1] - tp_seq;
+            }
         }
 
-        ha_hearing_test_db.test_tone_func[generator_idx](tp_seq -
-                                                         ha_hearing_test_db.offset_list[generator_idx], cou, buf_idx);
+        if (generator_idx < HA_HEARING_TEST_TONE_PHASE)
+        {
+            ha_hearing_test_db.test_tone_func[generator_idx](tp_seq -
+                                                             ha_hearing_test_db.offset_list[generator_idx], cou, buf_idx);
+        }
 
         tp_seq += cou;
         tp_num -= cou;
@@ -2929,7 +3053,7 @@ static void app_ha_timeout_cb(uint8_t timer_evt, uint16_t param)
             {
                 current_apt_vol_level_cnt = 0;
 
-                if (low_to_high_gain_level[current_apt_vol_level_cnt] <= app_cfg_nv.apt_volume_out_level)
+                if (low_to_high_gain_level[current_apt_vol_level_cnt] <= app_dsp_cfg_vol.apt_volume_out_max)
                 {
                     audio_passthrough_volume_out_set(low_to_high_gain_level[current_apt_vol_level_cnt]);
                     app_start_timer(&timer_idx_ha_apt_vol_level, "ha_apt_vol_level",
@@ -2938,7 +3062,7 @@ static void app_ha_timeout_cb(uint8_t timer_evt, uint16_t param)
                 }
                 else
                 {
-                    audio_passthrough_volume_out_set(app_cfg_nv.apt_volume_out_level);
+                    app_apt_volume_out_set(app_cfg_nv.apt_volume_out_level);
                 }
             }
 #endif
@@ -2950,7 +3074,7 @@ static void app_ha_timeout_cb(uint8_t timer_evt, uint16_t param)
         {
             current_apt_vol_level_cnt++;
 
-            if (low_to_high_gain_level[current_apt_vol_level_cnt] <= app_cfg_nv.apt_volume_out_level)
+            if (low_to_high_gain_level[current_apt_vol_level_cnt] <= app_dsp_cfg_vol.apt_volume_out_max)
             {
                 audio_passthrough_volume_out_set(low_to_high_gain_level[current_apt_vol_level_cnt]);
 
@@ -2997,11 +3121,15 @@ static void app_ha_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t len,
                 status == REMOTE_RELAY_STATUS_SYNC_REF_CHANGED ||
                 status == REMOTE_RELAY_STATUS_ASYNC_RCVD)
             {
-                app_ha_prog_set_selectable_idx(*(uint8_t *)buf);
+                if (buf[0] != ha_prog_db->selectable_prog_idx)
+                {
+                    app_ha_prog_set_selectable_idx(*(uint8_t *)buf);
 
-                check_switch_listening_mode = true;
-
-                app_ha_prog_load(ha_prog_db->selectable_prog_idx);
+                    if (app_ha_check_switch_listening_mode(ha_prog_db->selectable_prog_idx) == false)
+                    {
+                        app_ha_prog_load(ha_prog_db->selectable_prog_idx);
+                    }
+                }
 
                 if (app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SECONDARY)
                 {
@@ -3265,9 +3393,15 @@ static void app_ha_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t len,
                 status == REMOTE_RELAY_STATUS_SYNC_REF_CHANGED ||
                 status == REMOTE_RELAY_STATUS_ASYNC_RCVD)
             {
-                app_ha_prog_set_object_with_tool_data(ha_prog_db->selectable_prog_idx, HA_PROG_OBJ_NR, buf);
+                uint8_t is_burn = buf[0];
+                uint8_t *cmd_buf = buf + 1;
 
-                audio_probe_dsp_send(buf, 12);
+                if (is_burn)
+                {
+                    app_ha_prog_set_object_with_tool_data(ha_prog_db->selectable_prog_idx, HA_PROG_OBJ_NR, cmd_buf);
+                }
+
+                audio_probe_dsp_send(cmd_buf, 12);
             }
         }
         break;
@@ -3279,8 +3413,15 @@ static void app_ha_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t len,
                 status == REMOTE_RELAY_STATUS_SYNC_REF_CHANGED ||
                 status == REMOTE_RELAY_STATUS_ASYNC_RCVD)
             {
-                app_ha_prog_set_object_with_tool_data(ha_prog_db->selectable_prog_idx, HA_PROG_OBJ_OVP, buf);
-                audio_probe_dsp_send(buf, 12);
+                uint8_t is_burn = buf[0];
+                uint8_t *cmd_buf = buf + 1;
+
+                if (is_burn)
+                {
+                    app_ha_prog_set_object_with_tool_data(ha_prog_db->selectable_prog_idx, HA_PROG_OBJ_OVP, cmd_buf);
+                }
+
+                audio_probe_dsp_send(cmd_buf, 12);
             }
         }
         break;
@@ -3292,8 +3433,15 @@ static void app_ha_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t len,
                 status == REMOTE_RELAY_STATUS_SYNC_REF_CHANGED ||
                 status == REMOTE_RELAY_STATUS_ASYNC_RCVD)
             {
-                app_ha_prog_set_object_with_tool_data(ha_prog_db->selectable_prog_idx, HA_PROG_OBJ_BF, buf);
-                audio_probe_dsp_send(buf, 12);
+                uint8_t is_burn = buf[0];
+                uint8_t *cmd_buf = buf + 1;
+
+                if (is_burn)
+                {
+                    app_ha_prog_set_object_with_tool_data(ha_prog_db->selectable_prog_idx, HA_PROG_OBJ_BF, cmd_buf);
+                }
+
+                audio_probe_dsp_send(cmd_buf, 12);
             }
         }
         break;
@@ -3305,22 +3453,14 @@ static void app_ha_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t len,
                 if ((app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_SECONDARY) &&
                     (app_db.remote_session_state == REMOTE_SESSION_STATE_CONNECTED))
                 {
+                    //buf: prog_id, buds' status, L level, R level, balance
                     uint8_t prog_id = buf[0];
-                    uint16_t tool_data_size = app_ha_prog_get_object_size(HA_PROG_OBJ_TOOL_DATA);
                     uint16_t offset = 2;
-                    uint8_t *tool_data = calloc(tool_data_size, 1);
+                    uint8_t data[4] = {0};
+                    uint16_t size = 0;
 
-                    app_ha_prog_get_object(prog_id, HA_PROG_OBJ_TOOL_DATA, tool_data, &tool_data_size);
-
-                    if (app_cfg_const.bud_side == DEVICE_BUD_SIDE_RIGHT)
-                    {
-                        offset += 1;
-                    }
-
-                    memcpy(buf + offset, tool_data + 2 + app_cfg_const.bud_side, 1); //set curr bud's volume
-
-                    free(tool_data);
-                    tool_data = NULL;
+                    app_ha_prog_get_object(prog_id, HA_PROG_OBJ_VOLUME_LEVEL, data, &size);
+                    buf[offset + app_cfg_const.bud_side] = data[0]; //set curr bud's volume
 
                     app_relay_async_single_with_raw_msg(APP_MODULE_TYPE_HA, APP_REMOTE_MSG_HA_PROGRAM_GET_HA_VOL, buf,
                                                         len);
@@ -3340,28 +3480,39 @@ static void app_ha_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t len,
                 status == REMOTE_RELAY_STATUS_SYNC_REF_CHANGED ||
                 status == REMOTE_RELAY_STATUS_ASYNC_RCVD)
             {
-                uint8_t volume_level = buf[app_cfg_const.bud_side];
-                uint8_t balance_level = buf[2];
+                uint8_t is_burn = buf[0];
+                uint8_t volume_level = buf[1 + app_cfg_const.bud_side];
+                uint8_t balance_level = buf[3];
                 uint8_t cmd_buf[12] = {0};
-                uint16_t tool_data_size = app_ha_prog_get_object_size(HA_PROG_OBJ_TOOL_DATA);
-                uint16_t offset = 2;
-                uint8_t *tool_data = calloc(tool_data_size, 1);
+                uint8_t volume_level_data[4] = {0};
 
                 app_ha_generate_gain_db(volume_level, balance_level, cmd_buf);
-                app_ha_prog_set_object(ha_prog_db->selectable_prog_idx, HA_PROG_OBJ_VOLUME_LEVEL, cmd_buf);
 
-                app_ha_prog_get_object(ha_prog_db->selectable_prog_idx, HA_PROG_OBJ_TOOL_DATA, tool_data,
-                                       &tool_data_size);
-                tool_data[offset] = buf[0]; //L_level
-                tool_data[offset + 1] = buf[1]; //R_level
+                if (is_burn)
+                {
+                    uint16_t tool_data_size = app_ha_prog_get_object_size(HA_PROG_OBJ_TOOL_DATA);
+                    uint8_t *tool_data = calloc(tool_data_size, 1);
+                    uint16_t offset = 2;
 
-                offset = 4 + tool_data[1] * 2;
-                tool_data[offset] = balance_level;
+                    volume_level_data[0] = volume_level;
+                    volume_level_data[1] = balance_level;
 
-                app_ha_prog_set_object(ha_prog_db->selectable_prog_idx, HA_PROG_OBJ_TOOL_DATA, tool_data);
+                    app_ha_prog_set_object(ha_prog_db->selectable_prog_idx, HA_PROG_OBJ_VOLUME_LEVEL,
+                                           volume_level_data);
+                    app_ha_prog_get_object(ha_prog_db->selectable_prog_idx, HA_PROG_OBJ_TOOL_DATA, tool_data,
+                                           &tool_data_size);
 
-                free(tool_data);
-                tool_data = NULL;
+                    tool_data[offset] = buf[1]; //L_level
+                    tool_data[offset + 1] = buf[2]; //R_level
+
+                    offset = 4 + tool_data[1] * 2;
+                    tool_data[offset] = balance_level;
+
+                    app_ha_prog_set_object(ha_prog_db->selectable_prog_idx, HA_PROG_OBJ_TOOL_DATA, tool_data);
+
+                    free(tool_data);
+                    tool_data = NULL;
+                }
 
                 audio_probe_dsp_send(cmd_buf, 12);
             }
@@ -3504,42 +3655,12 @@ void app_ha_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, uin
 
             case HA_PROG_OPCODE_SET_ID:
                 {
-                    if (cmd_ptr[3] < ha_prog_db->prog_num)
+                    if (app_ha_hearing_set_prog_id(cmd_ptr[3]))
                     {
-                        if (cmd_ptr[3] != ha_prog_db->selectable_prog_idx)
-                        {
-                            if (app_db.remote_session_state == REMOTE_SESSION_STATE_DISCONNECTED)
-                            {
-                                uint8_t event_data[2];
-
-                                app_ha_prog_set_selectable_idx(cmd_ptr[3]);
-
-                                check_switch_listening_mode = true;
-
-                                app_ha_prog_load(ha_prog_db->selectable_prog_idx);
-
-                                event_data[0] = cmd_ptr[2];
-                                event_data[1] = ha_prog_db->selectable_prog_idx;
-                                app_report_event_broadcast(EVENT_HA_PROGRAM_INFO, event_data, 2);
-                            }
-                            else
-                            {
-                                app_relay_sync_single_with_raw_msg(APP_MODULE_TYPE_HA, APP_REMOTE_MSG_HA_PROGRAM_SET_ID,
-                                                                   cmd_ptr + 3, 1,
-                                                                   REMOTE_TIMER_HIGH_PRECISION, 0,
-                                                                   true);
-                            }
-                        }
-                        else
-                        {
-                            uint8_t event_data[2];
-
-                            event_data[0] = cmd_ptr[2];
-                            event_data[1] = ha_prog_db->selectable_prog_idx;
-                            app_report_event_broadcast(EVENT_HA_PROGRAM_INFO, event_data, 2);
-                        }
-
                         app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
+#if F_APP_HAS_SUPPORT
+                        app_lea_has_update_preset_idx_by_audio_conn(cmd_ptr[3]);
+#endif
                     }
                     else
                     {
@@ -3626,7 +3747,10 @@ void app_ha_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, uin
 
                     for (i = 0; i < HA_PROG_NUM; i++)
                     {
-                        app_ha_prog_get_object(i, type, event_data + 3 + (type_len * i), &size);
+                        if (3 + (type_len * i) < event_len)
+                        {
+                            app_ha_prog_get_object(i, type, event_data + 3 + (type_len * i), &size);
+                        }
                     }
 
                     app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
@@ -3891,19 +4015,22 @@ void app_ha_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, uin
 
     case CMD_HA_PROGRAM_NR_SET:
         {
-            if (cmd_len < 4)
+            if (cmd_len < 5)
             {
                 ack_pkt[2] = CMD_SET_STATUS_DISALLOW;
                 app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
             }
             else
             {
-                uint8_t is_enabled = cmd_ptr[2];
-                uint8_t level = cmd_ptr[3];
-                uint8_t cmd_buf[12] = {0};
+                uint8_t is_burn = cmd_ptr[2];
+                uint8_t is_enabled = cmd_ptr[3];
+                uint8_t level = cmd_ptr[4];
+                uint8_t data_buf[13] = {0};
+                uint8_t *cmd_buf = data_buf + 1;
 
                 app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
 
+                data_buf[0] = is_burn;
                 app_ha_generate_nr_cmd(is_enabled, level, cmd_buf);
 
                 if ((app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SINGLE) &&
@@ -3911,13 +4038,17 @@ void app_ha_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, uin
                 {
                     app_relay_sync_single_with_raw_msg(APP_MODULE_TYPE_HA,
                                                        APP_REMOTE_MSG_HA_PROGRAM_SET_HA_NR,
-                                                       cmd_buf, 12,
+                                                       data_buf, 13,
                                                        REMOTE_TIMER_HIGH_PRECISION, 0,
                                                        true);
                 }
                 else
                 {
-                    app_ha_prog_set_object_with_tool_data(ha_prog_db->selectable_prog_idx, HA_PROG_OBJ_NR, cmd_buf);
+                    if (is_burn)
+                    {
+                        app_ha_prog_set_object_with_tool_data(ha_prog_db->selectable_prog_idx, HA_PROG_OBJ_NR, cmd_buf);
+                    }
+
                     audio_probe_dsp_send(cmd_buf, 12);
                 }
             }
@@ -3948,19 +4079,22 @@ void app_ha_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, uin
 
     case CMD_HA_PROGRAM_OVP_SET:
         {
-            if (cmd_len < 4)
+            if (cmd_len < 5)
             {
                 ack_pkt[2] = CMD_SET_STATUS_DISALLOW;
                 app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
             }
             else
             {
-                uint8_t is_enabled = cmd_ptr[2];
-                uint8_t level = cmd_ptr[3];
-                uint8_t cmd_buf[12] = {0};
+                uint8_t is_burn = cmd_ptr[2];
+                uint8_t is_enabled = cmd_ptr[3];
+                uint8_t level = cmd_ptr[4];
+                uint8_t data_buf[13] = {0};
+                uint8_t *cmd_buf = data_buf + 1;
 
                 app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
 
+                data_buf[0] = is_burn;
                 app_ha_generate_ovp_cmd(is_enabled, level, cmd_buf);
 
                 if ((app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SINGLE) &&
@@ -3968,13 +4102,17 @@ void app_ha_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, uin
                 {
                     app_relay_sync_single_with_raw_msg(APP_MODULE_TYPE_HA,
                                                        APP_REMOTE_MSG_HA_PROGRAM_SET_HA_OVP,
-                                                       cmd_buf, 12,
+                                                       data_buf, 13,
                                                        REMOTE_TIMER_HIGH_PRECISION, 0,
                                                        true);
                 }
                 else
                 {
-                    app_ha_prog_set_object_with_tool_data(ha_prog_db->selectable_prog_idx, HA_PROG_OBJ_OVP, cmd_buf);
+                    if (is_burn)
+                    {
+                        app_ha_prog_set_object_with_tool_data(ha_prog_db->selectable_prog_idx, HA_PROG_OBJ_OVP, cmd_buf);
+                    }
+
                     audio_probe_dsp_send(cmd_buf, 12);
                 }
             }
@@ -4005,18 +4143,21 @@ void app_ha_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, uin
 
     case CMD_HA_PROGRAM_BF_SET:
         {
-            if (cmd_len < 3)
+            if (cmd_len < 4)
             {
                 ack_pkt[2] = CMD_SET_STATUS_DISALLOW;
                 app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
             }
             else
             {
-                uint8_t is_enabled = cmd_ptr[2];
-                uint8_t cmd_buf[12] = {0};
+                uint8_t is_burn = cmd_ptr[2];
+                uint8_t is_enabled = cmd_ptr[3];
+                uint8_t data_buf[13] = {0};
+                uint8_t *cmd_buf = data_buf + 1;
 
                 app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
 
+                data_buf[0] = is_burn;
                 app_ha_generate_bf_cmd(is_enabled, cmd_buf);
 
                 if ((app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SINGLE) &&
@@ -4024,13 +4165,17 @@ void app_ha_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, uin
                 {
                     app_relay_sync_single_with_raw_msg(APP_MODULE_TYPE_HA,
                                                        APP_REMOTE_MSG_HA_PROGRAM_SET_HA_BF,
-                                                       cmd_buf, 12,
+                                                       data_buf, 13,
                                                        REMOTE_TIMER_HIGH_PRECISION, 0,
                                                        true);
                 }
                 else
                 {
-                    app_ha_prog_set_object_with_tool_data(ha_prog_db->selectable_prog_idx, HA_PROG_OBJ_BF, cmd_buf);
+                    if (is_burn)
+                    {
+                        app_ha_prog_set_object_with_tool_data(ha_prog_db->selectable_prog_idx, HA_PROG_OBJ_BF, cmd_buf);
+                    }
+
                     audio_probe_dsp_send(cmd_buf, 12);
                 }
             }
@@ -4057,7 +4202,7 @@ void app_ha_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, uin
 
     case CMD_HA_PROGRAM_VOL_SET:
         {
-            if (cmd_len < 5)
+            if (cmd_len < 6)
             {
                 ack_pkt[2] = CMD_SET_STATUS_DISALLOW;
                 app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
@@ -4071,34 +4216,45 @@ void app_ha_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, uin
                 {
                     app_relay_sync_single_with_raw_msg(APP_MODULE_TYPE_HA,
                                                        APP_REMOTE_MSG_HA_PROGRAM_SET_HA_VOL,
-                                                       cmd_ptr + 2, 3,
+                                                       cmd_ptr + 2, 4,
                                                        REMOTE_TIMER_HIGH_PRECISION, 0,
                                                        true);
                 }
                 else
                 {
-                    uint8_t volume_level = cmd_ptr[2 + app_cfg_const.bud_side];
-                    uint8_t balance_level = cmd_ptr[4];
+                    uint8_t is_burn = cmd_ptr[2];
+                    uint8_t volume_level = cmd_ptr[3 + app_cfg_const.bud_side];
+                    uint8_t balance_level = cmd_ptr[5];
                     uint8_t cmd_buf[12] = {0};
-                    uint16_t tool_data_size = app_ha_prog_get_object_size(HA_PROG_OBJ_TOOL_DATA);
-                    uint16_t offset = 2;
-                    uint8_t *tool_data = calloc(tool_data_size, 1);
+                    uint8_t volume_level_data[4] = {0};
 
                     app_ha_generate_gain_db(volume_level, balance_level, cmd_buf);
-                    app_ha_prog_set_object(ha_prog_db->selectable_prog_idx, HA_PROG_OBJ_VOLUME_LEVEL, cmd_buf);
 
-                    app_ha_prog_get_object(ha_prog_db->selectable_prog_idx, HA_PROG_OBJ_TOOL_DATA, tool_data,
-                                           &tool_data_size);
-                    tool_data[offset] = cmd_ptr[2]; //L_level
-                    tool_data[offset + 1] = cmd_ptr[3]; //R_level
+                    if (is_burn)
+                    {
+                        uint16_t tool_data_size = app_ha_prog_get_object_size(HA_PROG_OBJ_TOOL_DATA);
+                        uint8_t *tool_data = calloc(tool_data_size, 1);
+                        uint16_t offset = 2;
 
-                    offset = 4 + tool_data[1] * 2;
-                    tool_data[offset] = balance_level;
+                        volume_level_data[0] = volume_level;
+                        volume_level_data[1] = balance_level;
 
-                    app_ha_prog_set_object(ha_prog_db->selectable_prog_idx, HA_PROG_OBJ_TOOL_DATA, tool_data);
+                        app_ha_prog_set_object(ha_prog_db->selectable_prog_idx, HA_PROG_OBJ_VOLUME_LEVEL,
+                                               volume_level_data);
+                        app_ha_prog_get_object(ha_prog_db->selectable_prog_idx, HA_PROG_OBJ_TOOL_DATA, tool_data,
+                                               &tool_data_size);
 
-                    free(tool_data);
-                    tool_data = NULL;
+                        tool_data[offset] = cmd_ptr[3]; //L_level
+                        tool_data[offset + 1] = cmd_ptr[4]; //R_level
+
+                        offset = 4 + tool_data[1] * 2;
+                        tool_data[offset] = balance_level;
+
+                        app_ha_prog_set_object(ha_prog_db->selectable_prog_idx, HA_PROG_OBJ_TOOL_DATA, tool_data);
+
+                        free(tool_data);
+                        tool_data = NULL;
+                    }
 
                     audio_probe_dsp_send(cmd_buf, 12);
                 }
@@ -4305,12 +4461,77 @@ static void app_ha_handle_effect_payload(uint8_t *buf)
                                                HA_EFFECT_TO_PROG_OBJ(effect_type),
                                                buf + effect_offset);
 
-                        if (!app_ha_check_switch_listening_mode(ha_prog_db->selectable_prog_idx))
+                        if (app_ha_check_switch_listening_mode(ha_prog_db->selectable_prog_idx) == false)
                         {
                             app_ha_effect_apply((T_APP_HA_EFFECT)effect_type);
                         }
                     }
                     break;
+                }
+            }
+        }
+        break;
+
+    default:
+        break;
+    }
+}
+
+static void app_ha_handle_all_effect_payload(uint8_t *buf)
+{
+    uint8_t effect_type = buf[0];
+    uint16_t tool_data_len = buf[1] + (buf[2] << 8);
+    uint16_t effect_l_len = buf[3] + (buf[4] << 8);
+    uint16_t effect_r_len = buf[5] + (buf[6] << 8);
+    uint16_t effect_offset = 0;
+    uint16_t effect_len = 0;
+    uint16_t offset = 0;
+    uint8_t tool_data[HA_PROG_OBJ_TOOL_DATA_SIZE] = {0};
+    uint16_t size = 0;
+    uint8_t i = 0;
+
+    switch (effect_type)
+    {
+    case HA_EFFECT_OUTPUT_DRC:
+        {
+            //effect tool_data set
+            offset = app_ha_get_effect_ui_from_tool_data(HA_EFFECT_OUTPUT_DRC);
+
+            if (offset < HA_PROG_OBJ_TOOL_DATA_SIZE)
+            {
+                for (i = 0; i < HA_PROG_NUM; i++)
+                {
+                    app_ha_prog_get_object(i, HA_PROG_OBJ_TOOL_DATA, tool_data, &size);
+                    memcpy(tool_data + offset, buf + 7 + offset, 16);
+                    app_ha_prog_set_object(i, HA_PROG_OBJ_TOOL_DATA, tool_data);
+                }
+            }
+
+            if (effect_l_len > 0 && (app_cfg_const.bud_side == DEVICE_BUD_SIDE_LEFT))
+            {
+                effect_offset = 7 + tool_data_len;
+                effect_len = effect_l_len;
+            }
+            else if (effect_r_len > 0 && (app_cfg_const.bud_side == DEVICE_BUD_SIDE_RIGHT))
+            {
+                effect_offset = 7 + tool_data_len + effect_l_len;
+                effect_len = effect_r_len;
+            }
+
+            if (effect_len > 0)
+            {
+                app_ha_effect_set((T_APP_HA_EFFECT)effect_type, buf + effect_offset, effect_len);
+                app_ha_effect_apply((T_APP_HA_EFFECT)effect_type);
+
+                for (i = 0; i < HA_PROG_NUM; i++)
+                {
+                    app_ha_prog_set_object(i, HA_EFFECT_TO_PROG_OBJ(effect_type), buf + effect_offset);
+                }
+
+                if (effect_type == HA_EFFECT_NR)
+                {
+                    app_ha_effect_apply(HA_EFFECT_WDRC);
+                    app_ha_effect_apply(HA_EFFECT_GRAPHIC_EQ);
                 }
             }
         }
@@ -4559,6 +4780,12 @@ void app_ha_cmd_cback(uint8_t msg_type, uint8_t *buf, uint16_t len)
         }
         break;
 
+    case APP_HA_CMD_MSG_SET_ALL_PARAMS:
+        {
+            app_ha_handle_all_effect_payload(buf);
+        }
+        break;
+
     default:
         break;
     }
@@ -4600,7 +4827,16 @@ static void app_ha_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t buf
 
     case BT_EVENT_REMOTE_CONN_CMPL:
         {
-            T_APP_BR_LINK *p_link;
+            T_APP_BR_LINK *p_link = NULL;
+
+            //sync secondary earbud's program id by primary earbud's program id
+            if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY)
+            {
+                app_relay_async_single_with_raw_msg(APP_MODULE_TYPE_HA,
+                                                    APP_REMOTE_MSG_HA_PROGRAM_SET_ID,
+                                                    (uint8_t *) & (ha_prog_db->selectable_prog_idx),
+                                                    sizeof(uint8_t));
+            }
 
             p_link = app_link_find_br_link(param->remote_conn_cmpl.bd_addr);
 

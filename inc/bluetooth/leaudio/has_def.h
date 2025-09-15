@@ -3,8 +3,8 @@
 *     Copyright(c) 2022, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * @file     has_def.h
-  * @brief    Head file for Hearing Aid Profile.
-  * @details  This file defines Hearing Aid Profile related definition.
+  * @brief    Header file for Hearing Aid Profile.
+  * @details  This file defines Hearing Aid Profile related definitions.
   * @author
   * @date
   * @version
@@ -23,14 +23,14 @@ extern "C" {
 /**
  * \defgroup    LEA_USE_CASE_HAP_Def Hearing Aid Profile Definition
  *
- * \brief   Hearing Aid Profile related definition.
+ * \brief   Hearing Aid Profile related definitions.
  */
 
 /**
  * \defgroup HAP_Def_Exported_Macros Hearing Aid Profile Definition Exported Macros
  *
  * \ingroup LEA_USE_CASE_HAP_Def
- * \{
+ * @{
  */
 
 /**
@@ -41,7 +41,7 @@ extern "C" {
  * \brief  Define Hearing Aid Service UUID.
  *
  * \ingroup HAP_Def_Exported_Macros
- * \{
+ * @{
  */
 #define GATT_UUID_HAS                              0x1854    /**< Hearing Aid Service. */
 
@@ -50,7 +50,7 @@ extern "C" {
 #define HAS_UUID_CHAR_ACTIVE_PRESET_IDX            0x2BDC    /**< Active Preset Index. */
 /**
  * End of HAS_UUID
- * \}
+ * @}
  */
 
 /**
@@ -58,19 +58,19 @@ extern "C" {
  *
  * \defgroup  HAS_ERR_CODE HAS Error Code
  *
- * \brief  Define Hearing Aid Service related error code.
+ * \brief  Define Hearing Aid Service related error codes.
  *
  * \ingroup HAP_Def_Exported_Macros
- * \{
+ * @{
  */
 #define ATT_ERR_HAS_OP_INVALID_OPCODE                   (ATT_ERR | 0x80)  /**< Invalid Opcode. */
 #define ATT_ERR_HAS_OP_WRITE_NAME_NOT_ALLOWED           (ATT_ERR | 0x81)  /**< Write Name Not Allowed. */
 #define ATT_ERR_HAS_OP_PRESET_SYNC_NOT_SUPPORT          (ATT_ERR | 0x82)  /**< Preset Synchronization Not Supported. */
 #define ATT_ERR_HAS_OP_PRESET_OPERATION_NOT_POSSIBLE    (ATT_ERR | 0x83)  /**< Preset Operation Not Possible. */
-#define ATT_ERR_HAS_OP_PRESET_NAME_TOO_LONG             (ATT_ERR | 0x84)  /**< Invalid Parameters Length. */
+#define ATT_ERR_HAS_OP_PRESET_NAME_TOO_LONG             (ATT_ERR | 0x84)  /**< Invalid Parameter Length. */
 /**
  * End of HAS_ERR_CODE
- * \}
+ * @}
  */
 
 /**
@@ -81,7 +81,7 @@ extern "C" {
  * \brief  Define Hearing Aid Types bit mask.
  *
  * \ingroup HAP_Def_Exported_Macros
- * \{
+ * @{
  */
 #define HA_FEATURES_BINAURAL_HA_MASK                    0x00
 #define HA_FEATURES_MONAURAL_HA_MASK                    0x01
@@ -89,7 +89,7 @@ extern "C" {
 #define HA_FEATURES_HA_TYPE_RFU_MASK                    0x03
 /**
  * End of HA_TYPE
- * \}
+ * @}
  */
 
 /**
@@ -100,13 +100,13 @@ extern "C" {
  * \brief  Define preset record properties bit mask.
  *
  * \ingroup HAP_Def_Exported_Macros
- * \{
+ * @{
  */
 #define HAS_PRESET_PROPERTIES_WRITABLE                  ((uint8_t)0x01)
 #define HAS_PRESET_PROPERTIES_AVAILABLE                 ((uint8_t)0x02)
 /**
  * End of PRESET_RECORD_PROP
- * \}
+ * @}
  */
 
 /**
@@ -117,13 +117,13 @@ extern "C" {
  * \brief  Define preset record name length range.
  *
  * \ingroup HAP_Def_Exported_Macros
- * \{
+ * @{
  */
 #define HAS_MIN_PRESET_NAME_LENGTH          1
 #define HAS_MAX_PRESET_NAME_LENGTH          40
 /**
  * End of PRESET_NAME_LEN
- * \}
+ * @}
  */
 
 /**
@@ -136,20 +136,20 @@ extern "C" {
 #define HAS_MAX_PRESET_IDX                  0xFF
 /**
  * End of HAP_Def_Exported_Macros
- * \}
+ * @}
  */
 
 /**
  * \defgroup HAP_Def_Exported_Types Hearing Aid Profile Definition Exported Types
  *
  * \ingroup LEA_USE_CASE_HAP_Def
- * \{
+ * @{
  */
 
 /**
  * has_def.h
  *
- * \brief  HAS Control Point Opcode.
+ * \brief  HAS Control Point opcodes.
  *
  * \ingroup HAP_Def_Exported_Types
  */
@@ -171,7 +171,7 @@ typedef enum
 /**
  * has_def.h
  *
- * \brief  Format of Preset Record.
+ * \brief  Format of preset record.
  *
  * \ingroup HAP_Def_Exported_Types
  */
@@ -185,7 +185,7 @@ typedef struct
 /**
  * has_def.h
  *
- * \brief  Preset Record Change ID.
+ * \brief  Preset record Change ID types.
  *
  * \ingroup HAP_Def_Exported_Types
  */
@@ -200,7 +200,7 @@ typedef enum
 /**
  * has_def.h
  *
- * \brief  Hearing Aid Features.
+ * \brief  Hearing Aid Features parameters.
  *
  * \ingroup HAP_Def_Exported_Types
  */
@@ -215,7 +215,7 @@ typedef struct
 } T_HAS_HA_FEATURES;
 /**
  * End of HAP_Def_Exported_Types
- * \}
+ * @}
  */
 
 #ifdef  __cplusplus

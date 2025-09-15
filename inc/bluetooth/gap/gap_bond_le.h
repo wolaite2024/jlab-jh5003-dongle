@@ -3,7 +3,7 @@
 *     Copyright(c) 2016, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * @file    gap_bond_le.h
-  * @brief   This file contains all the functions prototypes for the GAP bond and pairing
+  * @brief   This file contains all the function prototypes for the GAP bond and pairing
   *          related functions.
   * @details
   * @author  ranhui
@@ -44,19 +44,19 @@ extern "C"
 typedef enum
 {
     GAP_PARAM_BOND_OOB_DATA             = 0x210,//!< OOB Data. Read/Write. size uint8_t[16]. Default is all 0's.
-    GAP_PARAM_BOND_FIXED_PASSKEY        = 0x211,//!< The fix passcode for MITM protection. Read/Write. size is uint32_t. Range is 0 - 999,999. Default is 0.
-    GAP_PARAM_BOND_FIXED_PASSKEY_ENABLE = 0x212,//!< The fix passcode available for pairing. Read/Write. size is uint8_t. Default is 0(disabled).
-    GAP_PARAM_BOND_SEC_REQ_ENABLE       = 0x213,//!< Send smp security request when connected. Read/Write. size is uint8_t. Default is 0(disabled).
-    GAP_PARAM_BOND_SEC_REQ_REQUIREMENT  = 0x214,//!< Security request requirements. Read/Write. size is uint8_t. Default is GAP_AUTHEN_BIT_BONDING_FLAG (@ref BOND_MITM_DEFINES)
-    GAP_PARAM_BOND_MIN_KEY_SIZE         = 0x215,//!< Minium LTK size required. Read/Write. size is uint8_t.
-    GAP_PARAM_BOND_GEN_LOCAL_IRK_AUTO   = 0x216,//!< Auto generate local IRK. Write only. size is uint8_t. Default is 0(disabled).
-    GAP_PARAM_BOND_SET_LOCAL_IRK        = 0x217,//!< Set local IRK. Write only. size is uint8_t. Default is all zero.
-    GAP_PARAM_BOND_KEY_MANAGER          = 0x218,//!< Key manager. Write only. size is uint8_t. Default is 0(disabled).
-    GAP_PARAM_BOND_SIGN_KEY_FLAG        = 0x219,//!< Sign key flag configure. Write only. size is uint8_t. Default is 0(disabled).
-    GAP_PARAM_BOND_CCCD_STORAGE         = 0x21A,//!< Whether to store cccd information. Write only. size is uint8_t. Default is true.
+    GAP_PARAM_BOND_FIXED_PASSKEY        = 0x211,//!< The fixed passcode for MITM protection. Read/Write. Size is uint32_t. Range is 0 - 999,999. Default is 0.
+    GAP_PARAM_BOND_FIXED_PASSKEY_ENABLE = 0x212,//!< The fixed passcode available for pairing. Read/Write. Size is uint8_t. Default is 0 (disabled).
+    GAP_PARAM_BOND_SEC_REQ_ENABLE       = 0x213,//!< Send SMP security request when connected. Read/Write. Size is uint8_t. Default is 0 (disabled).
+    GAP_PARAM_BOND_SEC_REQ_REQUIREMENT  = 0x214,//!< Security request requirements. Read/Write. Size is uint8_t. Default is GAP_AUTHEN_BIT_BONDING_FLAG (@ref BOND_MITM_DEFINES).
+    GAP_PARAM_BOND_MIN_KEY_SIZE         = 0x215,//!< Minimum LTK size required. Read/Write. Size is uint8_t.
+    GAP_PARAM_BOND_GEN_LOCAL_IRK_AUTO   = 0x216,//!< Auto generate local IRK. Write only. Size is uint8_t. Default is 0 (disabled).
+    GAP_PARAM_BOND_SET_LOCAL_IRK        = 0x217,//!< Set local IRK. Write only. Size is uint8_t. Default is all zero.
+    GAP_PARAM_BOND_KEY_MANAGER          = 0x218,//!< Key manager. Write only. Size is uint8_t. Default is 0 (disabled).
+    GAP_PARAM_BOND_SIGN_KEY_FLAG        = 0x219,//!< Sign key flag configuration. Write only. Size is uint8_t. Default is 0 (disabled).
+    GAP_PARAM_BOND_CCCD_STORAGE         = 0x21A,//!< Whether to store CCCD information. Write only. Size is uint8_t. Default is true.
 } T_LE_BOND_PARAM_TYPE;
 
-/** @brief LE local out of bond data */
+/** @brief LE local Out of Band data */
 typedef struct
 {
     uint8_t     present;
@@ -67,7 +67,7 @@ typedef struct
     uint8_t     local_pk[64];
 } T_GAP_LE_LOCAL_OOB_DATA;
 
-/** @brief LE peer out of bond data */
+/** @brief LE peer Out of Band data */
 typedef struct
 {
     uint8_t     present;
@@ -92,19 +92,19 @@ typedef struct
 /**
  * @brief   Set a GAP Bond Manager Parameter.
  *
- *          NOTE: You can call this function with a bond parameter type and it will set the
+ * This function can be called with a bond parameter type and it will set the
  *          bond parameter. Bond parameters are defined in @ref T_LE_BOND_PARAM_TYPE.
- *          if the "len" field sets to the size of a "uint16_t" ,the
+ *          If the "len" field sets to the size of a "uint16_t", the
  *          "p_value" field must point to a data with type of "uint16_t".
  *
- * @param[in]   param   Bond parameter type: @ref T_LE_BOND_PARAM_TYPE
- * @param[in]   len     Length of data to write
+ * @param[in]   param   Bond parameter type: @ref T_LE_BOND_PARAM_TYPE.
+ * @param[in]   len     Length of data to write.
  * @param[in]   p_value Pointer to data to write.  This is dependent on
  *                      the parameter type and will be cast to the appropriate
  *                      data type (For example: if data type param is uint16, p_value will be cast to
  *                      pointer of uint16_t).
  *
- * @return Set result
+ * @return Set result.
  * @retval GAP_CAUSE_SUCCESS  Operation success.
  * @retval Others  Operation failure. No connection.
  *
@@ -133,17 +133,17 @@ T_GAP_CAUSE le_bond_set_param(T_LE_BOND_PARAM_TYPE param, uint8_t len, void *p_v
 /**
  * @brief   Get a GAP Bond Manager Parameter.
  *
- *          NOTE: You can call this function with a bond parameter type and it will get a
+ * This function can be called with a bond parameter type and it will get a
  *          bond parameter. Bond parameters are defined in @ref T_LE_BOND_PARAM_TYPE. Also, the
  *          "p_value" field must point to a "uint16".
  *
- * @param[in]   param   Profile parameter ID: @ref T_LE_BOND_PARAM_TYPE
- * @param[in,out]  p_value pointer to location to get the value. This is dependent on
+ * @param[in]   param   Profile parameter ID: @ref T_LE_BOND_PARAM_TYPE.
+ * @param[in,out]  p_value Pointer to location to get the value. This is dependent on
  *                      the parameter type and will be cast to the appropriate
  *                      data type (For example: if data type param is uint16, p_value will be cast to
  *                      pointer of uint16_t).
  *
- * @return Get result
+ * @return Get result.
  * @retval GAP_CAUSE_SUCCESS Get parameter success.
  * @retval other Get parameter failed.
  *
@@ -161,8 +161,9 @@ T_GAP_CAUSE le_bond_get_param(T_LE_BOND_PARAM_TYPE param, void *p_value);
 /**
  * @brief   Start authentication the link.
  *
- *          NOTE: If the link has not been bonded, it will trigger pairing procedure, otherwise
+ * @note If the link has not been bonded, it will trigger pairing procedure, otherwise
  *          it will trigger the link encryption procedure.
+ *
  * @param[in] conn_id Connection ID.
  * @return Operation result.
  * @retval GAP_CAUSE_SUCCESS Operation success.
@@ -216,9 +217,10 @@ T_GAP_CAUSE le_bond_pair(uint8_t conn_id);
 /**
  * @brief   Get type of LE pair procedure.
  *
- *          NOTE: The API should only be used when receive @ref GAP_MSG_LE_BOND_JUST_WORK,
+ * @note The API should only be used when receive @ref GAP_MSG_LE_BOND_JUST_WORK,
  *                @ref GAP_MSG_LE_BOND_PASSKEY_DISPLAY, @ref GAP_MSG_LE_BOND_PASSKEY_INPUT,
  *                @ref GAP_MSG_LE_BOND_USER_CONFIRMATION, @ref GAP_MSG_LE_BOND_OOB_INPUT.
+ * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
  * @param[in]     conn_id       Connection ID.
  * @param[in,out] p_value       Pointer to location to get the value.
  *                                  Value of LE pair procedure type:
@@ -285,10 +287,10 @@ T_GAP_CAUSE le_bond_pair(uint8_t conn_id);
 T_GAP_CAUSE le_bond_get_pair_procedure_type(uint8_t conn_id, uint8_t *p_value);
 
 /**
- * @brief   Get the display key information
+ * @brief   Get the display key information.
  *
  * @param[in] conn_id   Connection ID.
- * @param[in,out] p_key    Passkey valueto be displayed as a 6 digit decimal number.
+ * @param[in,out] p_key    Passkey value to be displayed as a 6 digit decimal number.
  * @return Operation result.
  * @retval GAP_CAUSE_SUCCESS    Operation success.
  * @retval GAP_CAUSE_NON_CONN   Operation failure. No connection.
@@ -323,7 +325,7 @@ T_GAP_CAUSE le_bond_get_pair_procedure_type(uint8_t conn_id, uint8_t *p_value);
 T_GAP_CAUSE le_bond_get_display_key(uint8_t conn_id, uint32_t *p_key);
 
 /**
- * @brief   Send passkey to gap bond manager when pairing with passkey entry,
+ * @brief   Send passkey to GAP bond manager when pairing with passkey entry,
  *          and local should input passkey.
  *
  * @param[in] conn_id Connection ID.
@@ -363,10 +365,10 @@ T_GAP_CAUSE le_bond_passkey_input_confirm(uint8_t conn_id, uint32_t passcode,
                                           T_GAP_CFM_CAUSE cause);
 
 /**
- * @brief   Send oob data to gap bond manager when pairing with out of bond,
- *          and local should input oob data.
- * @param[in] conn_id connection ID.
- * @param[in] cause   User confirm result.
+ * @brief   Send OOB data to GAP bond manager when pairing with out of band,
+ *          and the local device should input OOB data.
+ * @param[in] conn_id Connection ID.
+ * @param[in] cause   User confirmation result.
  * @return Operation result.
  * @retval GAP_CAUSE_SUCCESS    Operation success.
  * @retval GAP_CAUSE_NON_CONN   Operation failure. No connection.
@@ -401,10 +403,10 @@ T_GAP_CAUSE le_bond_passkey_input_confirm(uint8_t conn_id, uint32_t passcode,
 T_GAP_CAUSE le_bond_oob_input_confirm(uint8_t conn_id, T_GAP_CFM_CAUSE cause);
 
 /**
- * @brief   Send user confirmation request to confirm result to upper stack when
-             pairing with jsut work.
+ * @brief   Send user confirmation request to confirm the result to the Bluetooth Host when
+             pairing with Just Works.
  * @param[in] conn_id   Connection ID.
- * @param[in] cause     User confirm result.
+ * @param[in] cause     User confirmation result.
  * @return Operation result.
  * @retval GAP_CAUSE_SUCCESS    Operation success.
  * @retval GAP_CAUSE_NON_CONN   Operation failure. No connection.
@@ -438,10 +440,10 @@ T_GAP_CAUSE le_bond_just_work_confirm(uint8_t conn_id, T_GAP_CFM_CAUSE cause);
 
 
 /**
- * @brief   Send user confirmation request to confirm result to upper stack  when
-             pairing with passkey entry, and local shall display a passkey.
+ * @brief   Send user confirmation request to confirm the result to the Bluetooth Host when
+             pairing with passkey entry, and the local device shall display a passkey.
  * @param[in] conn_id   Connection ID.
- * @param[in] cause     User confirm result.
+ * @param[in] cause     User confirmation result.
  * @return Operation result.
  * @retval GAP_CAUSE_SUCCESS    Operation success.
  * @retval GAP_CAUSE_NON_CONN   Operation failure. No connection.
@@ -463,7 +465,7 @@ T_GAP_CAUSE le_bond_just_work_confirm(uint8_t conn_id, T_GAP_CFM_CAUSE cause);
         uint32_t display_value = 0;
         conn_id = gap_msg.msg_data.gap_bond_passkey_display.conn_id;
         le_bond_get_display_key(conn_id, &display_value);
-        APP_PRINT_INFO1("GAP_MSG_LE_BOND_PASSKEY_DISPLAY:passkey %d", display_value);
+        APP_PRINT_INFO1("GAP_MSG_LE_BOND_PASSKEY_DISPLAY: passkey %d", display_value);
         le_bond_passkey_display_confirm(conn_id, GAP_CFM_CAUSE_ACCEPT);
         }
         break;
@@ -476,9 +478,9 @@ T_GAP_CAUSE le_bond_just_work_confirm(uint8_t conn_id, T_GAP_CFM_CAUSE cause);
 T_GAP_CAUSE le_bond_passkey_display_confirm(uint8_t conn_id, T_GAP_CFM_CAUSE cause);
 
 /**
- * @brief   Send user confirmation request to confirm result to upper stack
+ * @brief   Send user confirmation request to confirm the result to the Bluetooth Host.
  * @param[in] conn_id   Connection ID.
- * @param[in] cause     User confirm result.
+ * @param[in] cause     User confirmation result.
  * @return Operation result.
  * @retval GAP_CAUSE_SUCCESS    Operation success.
  * @retval GAP_CAUSE_NON_CONN   Operation failure. No connection.
@@ -513,7 +515,7 @@ T_GAP_CAUSE le_bond_passkey_display_confirm(uint8_t conn_id, T_GAP_CFM_CAUSE cau
 T_GAP_CAUSE le_bond_user_confirm(uint8_t conn_id, T_GAP_CFM_CAUSE cause);
 
 /**
- * @brief   Send keypress notification to upper stack
+ * @brief   Send keypress notification to Bluetooth Host.
  * @param[in] conn_id   Connection ID.
  * @param[in] type     Keypress notify type @ref T_GAP_KEYPRESS_NOTIF_TYPE.
  * @return Operation result.
@@ -527,7 +529,7 @@ T_GAP_CAUSE le_bond_user_confirm(uint8_t conn_id, T_GAP_CFM_CAUSE cause);
         T_APP_RESULT result = APP_RESULT_SUCCESS;
         T_LE_CB_DATA cb_data;
         memcpy(&cb_data, p_cb_data, sizeof(T_LE_CB_DATA));
-        APP_PRINT_TRACE1("app_gap_callback: cb_type = %d", cb_type);
+        APP_PRINT_TRACE1("app_gap_callback: cb_type %d", cb_type);
         switch (cb_type)
         {
         ...
@@ -549,7 +551,7 @@ T_GAP_CAUSE le_bond_user_confirm(uint8_t conn_id, T_GAP_CFM_CAUSE cause);
 T_GAP_CAUSE le_bond_keypress_notify(uint8_t conn_id, T_GAP_KEYPRESS_NOTIF_TYPE type);
 
 /**
- * @brief   Set local key distribution field
+ * @brief   Set local key distribution field.
  * @param[in] init_dist   Initiator key distribution.
  * @param[in] rsp_dist    Responder key distribution.
  * @return Operation result.
@@ -571,61 +573,34 @@ T_GAP_CAUSE le_bond_cfg_local_key_distribute(uint8_t init_dist, uint8_t rsp_dist
 
 
 /**
- * @brief   Initialize local out of bond data
- * @param[in] p_ecc_rand_in     Poniter to ecc rand.
- * @param[in] local_rand        Poniter to local rand.
- * @param[in] p_local_oob_data  Poniter to local oob data.
+ * @brief   Initialize local Out of Band data.
+ *
+ * @note APP should call this API if OOB for LE Secure Connections pairing will be used.
+ *
+ * @param[in] p_ecc_rand_in     Pointer to ecc rand.
+ * @param[in] local_rand        Pointer to local rand.
+ * @param[in,out] p_local_oob_data  Pointer to local oob data.
  * @return Operation result.
  * @retval GAP_CAUSE_SUCCESS    Operation success.
- * @retval Others               Operation failure. No connection.
+ * @retval Others               Operation failure.
  *
  * <b>Example usage</b>
  * \code{.c}
-    static T_USER_CMD_PARSE_RESULT cmd_scoob(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        int idx = p_parse_value->dw_param[0];
-        bool ret;
-        T_GAP_LE_PEER_OOB_DATA peer_oob_data;
+        T_GAP_CAUSE ret;
+        uint64_t ecc_rand_in[4];
+        uint8_t local_rand[16];
+
+        // APP set parameters value according to requirements
 
         if (idx == 1)
         {
-            uint64_t ecc_rand_in[4] = {0x1111111111111111, 0x1111111111111111, 0x1111111111111111, 0x1111111111111111};
-            uint8_t local_rand[16] = {0x11, 0x11};
-            T_GAP_LE_LOCAL_OOB_DATA local_oob_data;
-            ret = le_bond_sc_local_oob_init(ecc_rand_in, local_rand, &local_oob_data);
-
-            uint8_t bd_from[6] = {0x00, 0x80, 0x25, 0x49, 0x78, 0x43};
-            uint8_t peer_rand[16] = {0x22, 0x22};
-            uint8_t confirm[16] = {0x56, 0x3E, 0x60, 0x47, 0xA4, 0xF3, 0x13, 0x6D, 0x45, 0x52, 0x72, 0x36, 0x0B, 0x4B, 0x37, 0xA3};
-            memcpy(peer_oob_data.bd_addr_from, bd_from, 6);
-            memcpy(peer_oob_data.rand, peer_rand, 16);
-            memcpy(peer_oob_data.confirm, confirm, 16);
+            ret = le_bond_sc_local_oob_init(NULL, local_rand, &local_oob_data);
         }
         else
         {
-            uint64_t ecc_rand_in[4] = {0x2222222222222222, 0x2222222222222222, 0x2222222222222222, 0x2222222222222222};
-            uint8_t local_rand[16] = {0x22, 0x22};
-            T_GAP_LE_LOCAL_OOB_DATA local_oob_data;
             ret = le_bond_sc_local_oob_init(ecc_rand_in, local_rand, &local_oob_data);
-
-            uint8_t bd_from[6] = {0x00, 0x80, 0x25, 0x48, 0x19, 0x3d};
-            uint8_t peer_rand[16] = {0x11, 0x11};
-            uint8_t confirm[16] = {0xC3, 0x66, 0x45, 0x51, 0x1B, 0xC7, 0x58, 0x22, 0xB5, 0xE1, 0xF3, 0x40, 0x48, 0xB1, 0x52, 0xEF};
-            memcpy(peer_oob_data.bd_addr_from, bd_from, 6);
-            memcpy(peer_oob_data.rand, peer_rand, 16);
-            memcpy(peer_oob_data.confirm, confirm, 16);
-        }
-        if (ret)
-        {
-            ret = le_bond_sc_peer_oob_init(&peer_oob_data);
-        }
-        if (ret)
-        {
-            return RESULT_SUCESS;
-        }
-        else
-        {
-            return RESULT_ERR;
         }
     }
  * \endcode
@@ -634,17 +609,42 @@ T_GAP_CAUSE le_bond_sc_local_oob_init(uint64_t *p_ecc_rand_in, uint8_t *local_ra
                                       T_GAP_LE_LOCAL_OOB_DATA *p_local_oob_data);
 
 /**
- * @brief   Initialize peer out of bond data
- * @param[in] p_peer_oob_data  Poniter to peer out of bond data.
+ * @brief   Initialize peer Out of Band data.
+ * @param[in] p_peer_oob_data  Pointer to peer Out of Band data.
  * @return Operation result.
  * @retval GAP_CAUSE_SUCCESS    Operation success.
- * @retval Others               Operation failure. No connection.
+ * @retval Others               Operation failure.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+    void test(void)
+    {
+        T_GAP_CAUSE ret;
+        T_GAP_LE_PEER_OOB_DATA peer_oob_data;
+        uint8_t bd_addr[6];
+        uint8_t confirmation[16];
+        uint8_t random_number[16];
+
+        // APP set parameters value according to requirements
+
+        peer_oob_data.present = peer_oob_data_present_flag;
+
+        memcpy(peer_oob_data.rand, random_number, 16);
+        memcpy(peer_oob_data.confirm, confirmation, 16);
+        memcpy(peer_oob_data.bd_addr_from, bd_addr, 6);
+
+        ret = le_bond_sc_peer_oob_init(&peer_oob_data);
+
+        // APP call gap_set_param(GAP_PARAM_BOND_OOB_ENABLED,), and value is same as value of peer_oob_data.present
+        // APP call gap_set_pairable_mode()
+    }
+ * \endcode
  */
 T_GAP_CAUSE le_bond_sc_peer_oob_init(T_GAP_LE_PEER_OOB_DATA *p_peer_oob_data);
 
 /**
- * @brief   Erase all link keys of bonded devices
- * @return  void
+ * @brief   Erase all link keys of bonded devices.
+ * @return  void.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -656,14 +656,12 @@ T_GAP_CAUSE le_bond_sc_peer_oob_init(T_GAP_LE_PEER_OOB_DATA *p_peer_oob_data);
         switch (cb_type)
         {
         ...
-#if APP_PRIVACY_EN
         case GAP_MSG_LE_BOND_MODIFY_INFO:
             APP_PRINT_INFO1("GAP_MSG_LE_BOND_MODIFY_INFO: type 0x%x",
                             p_data->p_le_bond_modify_info->type);
             privacy_handle_bond_modify_msg(p_data->p_le_bond_modify_info->type,
                                            p_data->p_le_bond_modify_info->p_entry, true);
             break;
-#endif
         ...
         }
     }
@@ -706,7 +704,7 @@ T_GAP_CAUSE le_bond_sc_peer_oob_init(T_GAP_LE_PEER_OOB_DATA *p_peer_oob_data);
 void le_bond_clear_all_keys(void);
 
 /**
- * @brief   Delete bond information by index
+ * @brief   Delete bond information by index.
  * @param[in] idx   Index of key entry.
  * @return Operation result.
  * @retval GAP_CAUSE_SUCCESS:   Operation success.
@@ -722,14 +720,12 @@ void le_bond_clear_all_keys(void);
         switch (cb_type)
         {
         ...
-#if APP_PRIVACY_EN
         case GAP_MSG_LE_BOND_MODIFY_INFO:
             APP_PRINT_INFO1("GAP_MSG_LE_BOND_MODIFY_INFO: type 0x%x",
                             p_data->p_le_bond_modify_info->type);
             privacy_handle_bond_modify_msg(p_data->p_le_bond_modify_info->type,
                                            p_data->p_le_bond_modify_info->p_entry, true);
             break;
-#endif
         ...
         }
     }
@@ -772,7 +768,7 @@ void le_bond_clear_all_keys(void);
 T_GAP_CAUSE le_bond_delete_by_idx(uint8_t idx);
 
 /**
- * @brief   Delete bond information by bluetooth device address and address type
+ * @brief   Delete bond information by bluetooth device address and address type.
  * @param[in] bd_addr   Bonded bluetooth device address.
  * @param[in] bd_type   Bonded bluetooth device address type.
  * @return Operation result.
@@ -789,14 +785,12 @@ T_GAP_CAUSE le_bond_delete_by_idx(uint8_t idx);
         switch (cb_type)
         {
         ...
-#if APP_PRIVACY_EN
         case GAP_MSG_LE_BOND_MODIFY_INFO:
             APP_PRINT_INFO1("GAP_MSG_LE_BOND_MODIFY_INFO: type 0x%x",
                             p_data->p_le_bond_modify_info->type);
             privacy_handle_bond_modify_msg(p_data->p_le_bond_modify_info->type,
                                            p_data->p_le_bond_modify_info->p_entry, true);
             break;
-#endif
         ...
         }
     }
@@ -880,10 +874,6 @@ T_GAP_CAUSE le_bond_delete_by_bd(uint8_t *bd_addr, T_GAP_REMOTE_ADDR_TYPE bd_typ
  * \endcode
  */
 T_GAP_CAUSE le_bond_get_sec_level(uint8_t conn_id, T_GAP_SEC_LEVEL *p_type);
-
-bool le_bond_set_cccd_data_pending(T_LE_KEY_ENTRY *p_entry, uint16_t handle, bool data_pending);
-bool gap_bond_set_cccd_data_pending(uint8_t *bd_addr, uint8_t bd_type, uint16_t handle,
-                                    bool data_pending);
 
 /** End of GAP_LE_BONDMGR_Exported_Functions
   * @}

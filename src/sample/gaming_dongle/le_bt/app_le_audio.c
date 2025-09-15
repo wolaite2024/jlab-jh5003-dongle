@@ -29,6 +29,8 @@
 #include "le_unicast_gaming.h"
 #include "le_mic_service.h"
 #include "app_usb.h"
+#include "app_link_util.h"
+#include "ual_api_types.h"
 
 #if DONGLE_LE_AUDIO
 #include "app_le_audio.h"
@@ -1570,6 +1572,21 @@ static void app_lea_handle_scan_result_info(uint8_t *p_data, uint8_t len)
         * NOTE: dev is still in dev_list.
         * auto_pair_create_bond() would take care of this case.
         * */
+        ble_set_default_conn_interval(BLE_CONN_NORMAL_CI_DEF);
+
+        if (le_audio_check_cis_exist())
+        {
+            T_APP_LE_LINK *p_le_link = app_link_get_connected_le_link();
+            uint16_t conn_interval;
+
+            if (p_le_link != NULL)
+            {
+                le_get_conn_param(GAP_PARAM_CONN_INTERVAL, &conn_interval, p_le_link->conn_id);
+
+                ble_set_default_conn_interval(conn_interval);
+            }
+        }
+
         auto_pair_create_bond(bd_addr, bd_type);
 #if (F_APP_LEA_DONGLE_BINDING == 0)
         if (app_lea_db->lea_state == LEA_STATE_PAIRING)
@@ -2176,6 +2193,9 @@ void app_le_audio_get_stream_state(void)
 bool le_audio_ready_to_start(void)
 {
     uint8_t ret = 0;
+    uint8_t le_acl_cnt = 0;
+    uint8_t bap_disc_all_done_cnt = 0;
+    uint8_t csis_ready_result_cnt = 0;
     uint16_t snk_context = AUDIO_CONTEXT_CONVERSATIONAL | AUDIO_CONTEXT_MEDIA |
                            AUDIO_CONTEXT_UNSPECIFIED;
     T_UALIST_HEAD *pos = NULL;
@@ -2242,7 +2262,58 @@ bool le_audio_ready_to_start(void)
             return false;
         }
 
+    }
+
+    pos = NULL;
+    n = NULL;
+
+    ualist_for_each_safe(pos, n, &app_lea_db->dev_list)
+    {
+        p_dev = ualist_entry(pos, T_DEV_DB, list);
+        if (p_dev == NULL)
+        {
+            continue;
+        }
+
+        p_bt_dev = ual_find_device_by_addr(p_dev->bd_addr);
+        if (p_bt_dev == NULL)
+        {
+            continue;
+        }
+
+        p_link = ble_audio_find_by_conn_id(p_bt_dev->le_conn_id);
+        if (p_link == NULL)
+        {
+            continue;
+        }
+
+        if (p_link->state == BT_CONN_STATE_CONNECTED)
+        {
+            le_acl_cnt++;
+        }
+
+        if (p_link->bap_disc_all_done)
+        {
+            bap_disc_all_done_cnt++;
+        }
+
+        if (p_link->csis_ready_result)
+        {
+            csis_ready_result_cnt++;
+        }
+    }
+
+    APP_PRINT_INFO3("le_audio_ready_to_start: le_acl_cnt %d, bap_disc_all_done_cnt %d, csis_ready_result_cnt %d",
+                    le_acl_cnt, bap_disc_all_done_cnt, csis_ready_result_cnt);
+
+    if ((le_acl_cnt != 0 && bap_disc_all_done_cnt != 0 && csis_ready_result_cnt != 0) &&
+        (le_acl_cnt == bap_disc_all_done_cnt && bap_disc_all_done_cnt == csis_ready_result_cnt))
+    {
         return true;
+    }
+    else
+    {
+        return false;
     }
 
 FAIL_EMPTY:
@@ -4041,6 +4112,17 @@ void app_le_audio_gap_cback(uint8_t cb_type, void *p_cb_data)
             APP_PRINT_TRACE0("app_le_audio_gap_cback: LEA gaming dongle would not handle GAP_MSG_LE_CONN_UPDATE_IND!");
         }
         break;
+
+#if F_APP_GAMING_LE_FIX_CHANNEL_SUPPORT
+    case GAP_MSG_LE_FIXED_CHANN_DATA_IND:
+        {
+            T_LE_CB_DATA *p_le_cb_data = p_cb_data;
+            T_LE_FIXED_CHANN_DATA_IND *data_ind = p_le_cb_data->p_le_fixed_chann_data_ind;
+
+            app_gaming_sync_disassemble_data(NULL, data_ind->p_data, data_ind->value_len);
+        }
+        break;
+#endif
 
     default:
         break;

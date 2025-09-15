@@ -2,18 +2,18 @@
 *****************************************************************************************
 *     Copyright(c) 2016, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
-  * @file     transmit_client.h
-  * @brief    Head file for using transmit BLE Client.
+  * @file     transmit_gatt_client.h
+  * @brief    Head file for using transmit gatt Client.
   * @details  transmit data structs and external functions declaration.
-  * @author   ken
-  * @date     2017-12-04
-  * @version  v0.1
+  * @author   cen
+  * @date     2024-05-31
+  * @version  v1.1
   * *************************************************************************************
   */
 
 /* Define to prevent recursive inclusion */
-#ifndef _TRANSMIT_CLIENT_H_
-#define _TRANSMIT_CLIENT_H_
+#ifndef _TRANSMIT_GATT_CLIENT_H_
+#define _TRANSMIT_GATT_CLIENT_H_
 
 #ifdef  __cplusplus
 extern "C" {
@@ -21,7 +21,6 @@ extern "C" {
 
 /* Add Includes here */
 #include "bt_gatt_client.h"
-//#include "profile_client_ext.h"
 
 /** @defgroup TRANSMIT_Client transmit service client
   * @brief transmit service client
@@ -150,4 +149,4 @@ bool transmit_data_write(uint16_t conn_handle, uint8_t *p_transmit_data, uint16_
 }
 #endif      /*  __cplusplus */
 
-#endif  /* _TRANSMIT_CLIENT_H_ */
+#endif  /* _TRANSMIT_GATT_CLIENT_H_ */

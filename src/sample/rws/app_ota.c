@@ -789,7 +789,7 @@ static void app_ota_service_prepare_send_notify(uint16_t conn_handle, uint16_t c
                                                 uint16_t len, uint8_t *data)
 {
     uint8_t *p_buffer = NULL;
-    uint16_t mtu_size = 23;
+    uint16_t mtu_size = 102;
     uint16_t remain_size = len;
     uint8_t *p_data = data;
     uint16_t send_len;
@@ -809,6 +809,10 @@ static void app_ota_service_prepare_send_notify(uint16_t conn_handle, uint16_t c
     {
         le_get_conn_id_by_handle(conn_handle, &conn_id);
         le_get_conn_param(GAP_PARAM_CONN_MTU_SIZE, &mtu_size, conn_id);
+    }
+    else if (p_info.chann_type == GAP_CHANN_TYPE_BREDR_ATT)
+    {
+        mtu_size = IMG_INFO_LEN + 2;
     }
 
     p_buffer = malloc(mtu_size);
@@ -1574,7 +1578,7 @@ void app_ota_get_brief_img_version_for_dongle(uint8_t *p_data)
     * @param    ota_mode  spp ota or ble ota
     * @return   void
     */
-void app_ota_get_device_info(DEVICE_INFO *p_deviceinfo)
+void app_ota_get_device_info(SPP_DEVICE_INFO *p_deviceinfo)
 {
     if (p_deviceinfo == NULL)
     {
@@ -1586,7 +1590,7 @@ void app_ota_get_device_info(DEVICE_INFO *p_deviceinfo)
         ota_struct = (T_APP_OTA_DB *)calloc(1, sizeof(T_APP_OTA_DB));
     }
 
-    memset(p_deviceinfo, 0, sizeof(DEVICE_INFO));
+    memset(p_deviceinfo, 0, sizeof(SPP_DEVICE_INFO));
     p_deviceinfo->ic_type = app_ota_get_ic_type();
     p_deviceinfo->mode.buffercheck_en = ota_struct->test.t_buffercheck_disable ? 0 : 1;
     p_deviceinfo->mode.aes_en = app_ota_enc_setting();
@@ -1658,7 +1662,7 @@ void app_ota_cmd_handle(uint8_t path, uint16_t length, uint8_t *p_value, uint8_t
         {
             if (length == OTA_LENGTH_OTA_GET_INFO)
             {
-                DEVICE_INFO dev_info;
+                SPP_DEVICE_INFO dev_info;
 
                 memcpy(ota_struct->bd_addr, app_db.br_link[app_idx].bd_addr, sizeof(ota_struct->bd_addr));
                 app_report_event(path, EVENT_ACK, app_idx, ack_pkt, 3);
@@ -2007,6 +2011,23 @@ T_APP_RESULT app_ota_ble_handle_cp_req(uint16_t conn_handle, uint16_t cid, uint1
         {
             if (length == DFU_LENGTH_START_DFU + DATA_PADDING)   /* 4 bytes is pending for encrypt */
             {
+                gap_chann_get_info(conn_handle, cid, &p_info);
+                if (p_info.chann_type == GAP_CHANN_TYPE_BREDR_ATT)
+                {
+                    uint8_t addr_type;
+                    if (!gap_chann_get_addr(conn_handle, ota_struct->bd_addr, &addr_type))
+                    {
+                        APP_PRINT_ERROR0("app_ota_ble_handle_cp_req get bredr addr error");
+                    }
+                    app_sniff_mode_b2s_disable(ota_struct->bd_addr, SNIFF_DISABLE_MASK_OTA);
+                    APP_PRINT_INFO1("app_ota_ble_handle_cp_req, ota_struct bd_addr %s",
+                                    TRACE_BDADDR(ota_struct->bd_addr));
+                }
+                else
+                {
+                    memcpy(ota_struct->bd_addr, app_cfg_nv.bud_peer_addr, sizeof(ota_struct->bd_addr));
+                    app_sniff_mode_b2s_disable(ota_struct->bd_addr, SNIFF_DISABLE_MASK_OTA);
+                }
                 cause = APP_RESULT_SUCCESS;
                 results = app_ota_start_dfu_handle(p);
                 app_ota_service_prepare_send_notify(conn_handle, cid, DFU_OPCODE_START_DFU, sizeof(results),
@@ -2057,8 +2078,10 @@ T_APP_RESULT app_ota_ble_handle_cp_req(uint16_t conn_handle, uint16_t cid, uint1
     case DFU_OPCODE_ACTIVE_IMAGE_RESET:
         {
             cause = APP_RESULT_SUCCESS;
-            ota_struct->ota_flag.is_ota_process = false;
             app_stop_timer(&timer_idx_ota_transfer);
+            gap_chann_get_info(conn_handle, cid, &p_info);
+            ota_struct->ota_flag.is_ota_process = false;
+
             if (app_ota_check_ota_mode() != RWS_B2B_CONNECT)
             {
                 if (ota_struct->ota_flag.is_rws)
@@ -2074,17 +2097,30 @@ T_APP_RESULT app_ota_ble_handle_cp_req(uint16_t conn_handle, uint16_t cid, uint1
                 {
                     app_ota_le_disconnect(conn_id, LE_LOCAL_DISC_CAUSE_OTA_RESET);
                 }
+                else if (p_info.chann_type == GAP_CHANN_TYPE_BREDR_ATT)
+                {
+                    app_ota_disc_b2s_profile();
+                    app_start_timer(&timer_idx_ota_reset, "ota_reset",
+                                    ota_timer_id, APP_TIMER_OTA_RESET, 0, false,
+                                    3000);
+                }
             }
             else
             {
+                ota_struct->rws_mode.valid_ret.cur_bud = 1;
+                app_ota_rws_send_msg(BLE_OTA_MODE, RWS_OTA_UPDATE_RET, UPDATE_SUCCESS);
                 if ((p_info.chann_type == GAP_CHANN_TYPE_LE_ATT) ||
                     (p_info.chann_type == GAP_CHANN_TYPE_LE_ECFC))
                 {
                     app_ota_le_disconnect(conn_id, LE_LOCAL_DISC_CAUSE_RWS_OTA_SUCCESS);
                 }
-
-                ota_struct->rws_mode.valid_ret.cur_bud = 1;
-                app_ota_rws_send_msg(BLE_OTA_MODE, RWS_OTA_UPDATE_RET, UPDATE_SUCCESS);
+                else if (p_info.chann_type == GAP_CHANN_TYPE_BREDR_ATT)
+                {
+                    if (ota_struct->rws_mode.valid_ret.oth_bud == 0)
+                    {
+                        app_mmi_handle_action(MMI_START_ROLESWAP);
+                    }
+                }
             }
         }
         break;

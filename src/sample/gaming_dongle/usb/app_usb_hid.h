@@ -20,6 +20,7 @@
 #define USB_HID_MSG_TYPE_HID_IN_REQUEST             0xF2
 #define USB_HID_MSG_TYPE_HID_IN_COMPLETE            0xF3
 #define USB_HID_MSG_TYPE_CTRL_DATA_REQUEST          REPORT_ID_CTRL_DATA_OUT_REQUEST
+#define USB_HID_MSG_TYPE_HID_BUFFERED_REPORT        0xFA
 
 #if 0
 #define TELEPHONY_SEND_BIT_CALL_ANSWER              0x0001
@@ -171,5 +172,6 @@ bool app_usb_hid_send_consumer_ctrl_key_down(enum CONSUMER_CTRL_KEY_CODE
                                              key);//key see CONSUMER_CTRL_KEY_CODE
 bool app_usb_hid_send_consumer_ctrl_all_key_release(void);
 bool app_usb_hid_send_telephony_ctrl_code(uint16_t *code); //code see define TELEPHONY_SEND*
+bool app_usb_hid_send_telephony_mute_ctrl(bool mute);
 uint16_t app_usb_hid_get_telephony_output(void);
 #endif

@@ -75,7 +75,7 @@ typedef struct _string_tab
  * @brief   USB dev vendor callback
  *
  */
-typedef int (*INT_VENDOR_FUNC)(uint16_t request_cmd, void *buf, uint16_t len);
+typedef int (*INT_VENDOR_FUNC)(T_USB_DEVICE_REQUEST *ctrl_request, void *buf);
 
 /**
  *

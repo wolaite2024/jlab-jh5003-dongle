@@ -172,6 +172,7 @@ static const T_AUDIO_PLUGIN_POLICY app_amp_policies[] =
     { AUDIO_CATEGORY_ANALOG, AUDIO_PLUGIN_OCCASION_ANALOG_DOMAIN_ON, app_amp_poweron },
     { AUDIO_CATEGORY_TONE, AUDIO_PLUGIN_OCCASION_ANALOG_DOMAIN_ON, app_amp_poweron },
     { AUDIO_CATEGORY_VP, AUDIO_PLUGIN_OCCASION_ANALOG_DOMAIN_ON, app_amp_poweron },
+    { AUDIO_CATEGORY_APT, AUDIO_PLUGIN_OCCASION_ANALOG_DOMAIN_ON, app_amp_poweron },
     { AUDIO_CATEGORY_LLAPT, AUDIO_PLUGIN_OCCASION_ANALOG_DOMAIN_ON, app_amp_poweron },
     { AUDIO_CATEGORY_ANC, AUDIO_PLUGIN_OCCASION_ANALOG_DOMAIN_ON, app_amp_poweron },
 
@@ -180,6 +181,7 @@ static const T_AUDIO_PLUGIN_POLICY app_amp_policies[] =
     { AUDIO_CATEGORY_ANALOG, AUDIO_PLUGIN_OCCASION_DIGITAL_DOMAIN_ON, app_amp_run },
     { AUDIO_CATEGORY_TONE, AUDIO_PLUGIN_OCCASION_DIGITAL_DOMAIN_ON, app_amp_run },
     { AUDIO_CATEGORY_VP, AUDIO_PLUGIN_OCCASION_DIGITAL_DOMAIN_ON, app_amp_run },
+    { AUDIO_CATEGORY_APT, AUDIO_PLUGIN_OCCASION_DIGITAL_DOMAIN_ON, app_amp_run },
     { AUDIO_CATEGORY_LLAPT, AUDIO_PLUGIN_OCCASION_DIGITAL_DOMAIN_ON, app_amp_run },
     { AUDIO_CATEGORY_ANC, AUDIO_PLUGIN_OCCASION_DIGITAL_DOMAIN_ON, app_amp_run },
 
@@ -188,6 +190,7 @@ static const T_AUDIO_PLUGIN_POLICY app_amp_policies[] =
     { AUDIO_CATEGORY_ANALOG, AUDIO_PLUGIN_OCCASION_DIGITAL_DOMAIN_OFF, app_amp_poweroff },
     { AUDIO_CATEGORY_TONE, AUDIO_PLUGIN_OCCASION_DIGITAL_DOMAIN_OFF, app_amp_poweroff },
     { AUDIO_CATEGORY_VP, AUDIO_PLUGIN_OCCASION_DIGITAL_DOMAIN_OFF, app_amp_poweroff },
+    { AUDIO_CATEGORY_APT, AUDIO_PLUGIN_OCCASION_DIGITAL_DOMAIN_OFF, app_amp_poweroff },
     { AUDIO_CATEGORY_LLAPT, AUDIO_PLUGIN_OCCASION_DIGITAL_DOMAIN_OFF, app_amp_poweroff },
     { AUDIO_CATEGORY_ANC, AUDIO_PLUGIN_OCCASION_DIGITAL_DOMAIN_OFF, app_amp_poweroff },
 };
@@ -204,10 +207,16 @@ bool app_amp_is_off_state(void)
 bool app_amp_init(void)
 {
     int32_t ret = 0;
-    T_GPIO_PULL_VALUE pull_mode;
 
-    pull_mode = (app_cfg_const.enable_ext_amp_high_active) ? GPIO_PULL_DOWN : GPIO_PULL_UP;
-    hal_gpio_init_pin(app_cfg_const.ext_amp_pinmux, GPIO_TYPE_CORE, GPIO_DIR_OUTPUT, pull_mode);
+    hal_gpio_init_pin(app_cfg_const.ext_amp_pinmux, GPIO_TYPE_AON, GPIO_DIR_OUTPUT, GPIO_PULL_NONE);
+    if (app_cfg_const.enable_ext_amp_high_active)
+    {
+        hal_gpio_set_level(app_cfg_const.ext_amp_pinmux, GPIO_LEVEL_LOW);
+    }
+    else
+    {
+        hal_gpio_set_level(app_cfg_const.ext_amp_pinmux, GPIO_LEVEL_HIGH);
+    }
 
     if (app_timer_reg_cb(app_amp_timeout_cb, &amp_timer_id) != 0)
     {

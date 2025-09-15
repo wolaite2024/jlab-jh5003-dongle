@@ -14,6 +14,9 @@ bool app_gaming_ctrl_data_send_to_dongle(uint8_t *data, uint16_t size, bool flus
 void app_gaming_handle_usb_spk_vol(void);
 void app_dongle_send_vol_ctrl_cmd(uint8_t vol_cmd);
 void app_dongle_data_ctrl_init(void);
+#if F_APP_ERWS_SUPPORT
+bool app_dongle_relay_b2b_data(uint8_t *data, uint16_t len);
+#endif
 #endif
 
 #endif

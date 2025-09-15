@@ -22,6 +22,10 @@
  *
  * \ingroup USB_AUDIO_IF
  */
+
+#define USB_AUDIO_DS_INTERVAL   4
+#define USB_AUDIO_US_INTERVAL   4
+
 typedef enum
 {
     USB_AUDIO_VOL_TYPE_CUR,

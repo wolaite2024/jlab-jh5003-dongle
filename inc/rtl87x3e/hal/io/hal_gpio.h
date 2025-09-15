@@ -1,6 +1,6 @@
 /**
 *********************************************************************************************************
-*               Copyright(c) 2021, Realtek Semiconductor Corporation. All rights reserved.
+*               Copyright(c) 2024, Realtek Semiconductor Corporation. All rights reserved.
 *********************************************************************************************************
 * @file      hal_gpio.h
 * @brief
@@ -22,14 +22,19 @@
 extern "C" {
 #endif
 
-/** @addtogroup 87x3e_HAL_GPIO_H_   _HAL_GPIO_H_
-  * @brief HAL GPIO device driver module
+/** @addtogroup HAL_GPIO_H_ HAL GPIO
+  * @brief HAL GPIO device driver module.
   * @{
   */
 
 /*============================================================================*
  *                         Constants
  *============================================================================*/
+
+/** @defgroup HAL_GPIO_Exported_Constants HAL GPIO Exported Constants
+  * @{
+  */
+
 typedef enum
 {
     GPIO_STATUS_ERROR              = -3,        /**< The GPIO function failed to execute.*/
@@ -44,9 +49,9 @@ typedef enum
                                     use aon GPIO in low power mode.*/
     GPIO_TYPE_CORE      = 1,    /**< The GPIO function in core domain, only works when active mode.
                                     Support all the features. */
-    GPIO_TYPE_AON       = 2,    /**< The GPIO function in aon domain, works in dlps/power down,
-                                    much slower than CORE mode,
-                                    not support read level and debounce.*/
+    GPIO_TYPE_AON       = 2,    /**< The GPIO function in aon domain, works in DLPS/power down,
+                                    much slower than CORE mode. Reading level and interrupt are not supported for GPIO_TYPE_AON.
+                                    If gpio type set to GPIO_TYPE_AON in input mode, hal_gpio will switch to GPIO_TYPE_AUTO. */
 } T_GPIO_TYPE;
 
 typedef enum
@@ -81,27 +86,52 @@ typedef enum
     GPIO_PULL_NONE    //        PAD_PULL_NONE
 } T_GPIO_PULL_VALUE;
 
+/** End of group HAL_GPIO_Exported_Constants
+  * @}
+  */
+
+/*============================================================================*
+ *                         Types
+ *============================================================================*/
+
+
+/** @defgroup HAL_GPIO_Exported_Types HAL GPIO Exported Types
+  * @brief  GPIO callback.
+  * @{
+  */
+
 typedef void (*P_GPIO_CBACK)(uint32_t context);
+
+/** End of group HAL_GPIO_Exported_Types
+  * @}
+  */
 
 /*============================================================================*
  *                         Functions
  *============================================================================*/
+
+/** @defgroup HAL_GPIO_Exported_Functions HAL GPIO Exported Functions
+  * @{
+  */
+
 /**
  * hal_gpio.h
  *
- * \brief   Initialize a pin to gpio mode.
+ * \brief   Initialize a pin to GPIO mode.
  *
- * \param[in]  pin_index    The pin index, please refer to rtl876x.h "Pin_Number" part.
+ * \param[in]  pin_index    The pin index, please refer to rtl876x.h 'Pin_Number' part.
  *
- * \param[in]   type        The TYPE of GPIO mode to be used.
+ * \param[in]  type         The TYPE of GPIO mode to be used, could be auto, core and aon type.
  *
- * \param[in]   direction   The direction GPIO is set to, could be output mode or input mode.
+ * \param[in]  direction    The direction of GPIO is set to, could be output mode or input mode.
  *
- * \param[in]   pull_value   The GPIO pull value is set to , could be pull high low or none.
+ * \param[in]  pull_value   The GPIO pull value is set to , could be pull up, down or none.
  *
- * \return                   The status of the gpio pin initialization.
+ * \return The status of the GPIO pin initialization.
  * \retval GPIO_STATUS_OK        The GPIO pin was initialized successfully.
- * \retval GPIO_STATUS_ERROR_PIN     The GPIO pin was failed to initialized due to invalid pin number.
+ * \retval GPIO_STATUS_ERROR_PIN The GPIO pin was failed to initialized due to invalid pin number.
+ * \retval GPIO_STATUS_ERROR     The GPIO pin was failed to initialized due to malloc failure.
+ * \retval GPIO_STATUS_INVALID_PARAMETER  The GPIO pin was failed to initialized due to invalid input paramter.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -112,7 +142,7 @@ typedef void (*P_GPIO_CBACK)(uint32_t context);
  * }
  * \endcode
  *
- * \ingroup  GPIO
+ * \ingroup  HAL_GPIO_Exported_Functions
  */
 T_GPIO_STATUS hal_gpio_init_pin(uint8_t pin_index, T_GPIO_TYPE type, T_GPIO_DIRECTION direction,
                                 T_GPIO_PULL_VALUE pull_value);
@@ -120,41 +150,18 @@ T_GPIO_STATUS hal_gpio_init_pin(uint8_t pin_index, T_GPIO_TYPE type, T_GPIO_DIRE
 /**
  * hal_gpio.h
  *
- * \brief   De-Initialize the pin to shutdown.
- *
- * \param[in]  pin_index    The pin index, please refer to rtl876x.h "Pin_Number" part.
- *
- *
- * \return                   The status of the gpio pin initialization.
- * \retval GPIO_STATUS_OK        The GPIO pin was de-initialized successfully.
- * \retval GPIO_STATUS_ERROR_PIN     The GPIO pin was failed to de-initialized due to invalid pin number.
- *
- * <b>Example usage</b>
- * \code{.c}
- * int test(void)
- * {
- *     hal_gpio_deinit(TEST_PIN);
- *     hal_gpio_deinit(TEST_PIN_2);
- * }
- * \endcode
- *
- * \ingroup  GPIO
- */
-T_GPIO_STATUS gpio_deinit_pin(uint8_t pin_index);
-
-/**
- * hal_gpio.h
- *
- * \brief   Change gpio direction
+ * \brief    Change GPIO direction.
  * \xrefitem Added_API_2_13_0_0 "Added Since 2.13.0.0" "Added API"
  *
- * \param[in]  pin_index    The pin index, please refer to rtl876x.h "Pin_Number" part.
+ * \param[in]  pin_index    The pin index, please refer to rtl876x.h 'Pin_Number' part.
  *
  * \param[in]  direction    The direction GPIO is set to, could be output mode or input mode.
  *
- * \return                       The status of the gpio changing direction.
+ * \return                       The status of changing direction of the GPIO pin.
  * \retval GPIO_STATUS_OK        The GPIO pin changes direction successfully.
  * \retval GPIO_STATUS_ERROR_PIN The GPIO pin was failed to change direction due to invalid pin number.
+ * \retval GPIO_STATUS_ERROR     The GPIO pin was failed to change direction due to malloc failure.
+ * \retval GPIO_STATUS_INVALID_PARAMETER  The GPIO pin was failed to change direction due to invalid input paramter.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -172,16 +179,19 @@ T_GPIO_STATUS hal_gpio_change_direction(uint8_t pin_index, T_GPIO_DIRECTION dire
 /**
  * hal_gpio.h
  *
- * \brief   Set the pin pull value.
+ * \brief   Set the GPIO pin pull value.
  *
  * \xrefitem Added_API_2_11_1_0 "Added Since 2.11.1.0" "Added API"
  *
- * \param[in]  pin_index    The pin index, please refer to rtl876x.h "Pin_Number" part.
+ * \param[in]  pin_index    The pin index, please refer to rtl876x.h 'Pin_Number' part.
  *
- * \param[in]  pull_value        The value for the specific pin to pull, up down or none
+ * \param[in]  pull_value        The value for the specific pin to pull up, down or none.
  *
- *
- * \return                   none.
+ * \return                   The status of setting pull level of the specific GPIO pin.
+ * \retval GPIO_STATUS_OK        The GPIO pin set pull level successfully.
+ * \retval GPIO_STATUS_ERROR_PIN The GPIO pin was failed to set pull level due to invalid pin number.
+ * \retval GPIO_STATUS_ERROR     The GPIO pin was failed to set pull level due to malloc failure.
+ * \retval GPIO_STATUS_INVALID_PARAMETER  The GPIO pin was failed to set pull level due to invalid input paramter.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -191,46 +201,24 @@ T_GPIO_STATUS hal_gpio_change_direction(uint8_t pin_index, T_GPIO_DIRECTION dire
  * }
  * \endcode
  *
- * \ingroup  GPIO
+ * \ingroup  HAL_GPIO_Exported_Functions
  */
 T_GPIO_STATUS hal_gpio_set_pull_value(uint8_t pin_index, T_GPIO_PULL_VALUE pull_value);
-/**
- * hal_gpio.h
- *
- * \brief   Set the pin output level.
- *
- * \param[in]  pin_index    The pin index, please refer to rtl876x.h "Pin_Number" part.
- *
- * \param[in]  level        The level for the specific pin to output
- *
- *
- * \return                   The status of the gpio pin initialization.
- * \retval GPIO_STATUS_OK        The GPIO pin was de-initialized successfully.
- * \retval GPIO_STATUS_ERROR_PIN     The GPIO pin was failed to de-initialized due to invalid pin number.
- *
- * <b>Example usage</b>
- * \code{.c}
- * int test(void)
- * {
- *     hal_gpio_init_pin(TEST_PIN, GPIO_TYPE_CORE, GPIO_DIR_OUTPUT);
- *     gpio_set_level(TEST_PIN_2, GPIO_LEVEL_HIGH);
- * }
- * \endcode
- *
- * \ingroup  GPIO
- */
-T_GPIO_STATUS hal_gpio_set_level(uint8_t pin_index, T_GPIO_LEVEL level);
 
 /**
  * hal_gpio.h
  *
- * \brief   Get the pin current level.
+ * \brief   Set the GPIO pin output level.
  *
- * \param[in]  pin_index    The pin index, please refer to rtl876x.h "Pin_Number" part. *
+ * \param[in]  pin_index    The pin index, please refer to rtl876x.h 'Pin_Number' part.
  *
- * \return                   The current pin level.
- * \retval GPIO_STATUS_OK        The GPIO pin was de-initialized successfully.
- * \retval GPIO_STATUS_ERROR_PIN     The GPIO pin was failed to de-initialized due to invalid pin number.
+ * \param[in]  level        The level for the specific pin to output, can be set to high or low level.
+ *
+ * \return                   The status of setting the output level of the specific GPIO pin.
+ * \retval GPIO_STATUS_OK        The GPIO pin set the output level successfully.
+ * \retval GPIO_STATUS_ERROR_PIN The GPIO pin was failed to set the output level due to invalid pin number.
+ * \retval GPIO_STATUS_ERROR     The GPIO pin was failed to set the output level due to malloc failure.
+ * \retval GPIO_STATUS_INVALID_PARAMETER  The GPIO pin was failed to set the output level due to invalid input paramter.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -241,29 +229,59 @@ T_GPIO_STATUS hal_gpio_set_level(uint8_t pin_index, T_GPIO_LEVEL level);
  * }
  * \endcode
  *
- * \ingroup  GPIO
+ * \ingroup  HAL_GPIO_Exported_Functions
  */
-T_GPIO_LEVEL hal_gpio_get_input_level(uint8_t pin_index);
+T_GPIO_STATUS hal_gpio_set_level(uint8_t pin_index, T_GPIO_LEVEL level);
 
 /**
  * hal_gpio.h
  *
  * \brief   Get the pin current level.
  *
- * \param[in]  pin_index          The pin index, please refer to rtl876x.h "Pin_Number" part. *
- * \param[in]  mode               The interrupt mode to be set to.
- * \param[in]  polarity           The polarity for the interrupt to be set to.
- * \param[in]  debounce_enable    Enable or Disable the pin hardware debounce feature.
- * \param[in]  callback           The callback to be called when the specific interrupt happened.
- * \param[in]  context            The user data when callback is called.
+ * \param[in]  pin_index    The pin index, please refer to rtl876x.h 'Pin_Number' part.
  *
- * \return                   The current pin level.
- * \retval GPIO_STATUS_OK        The GPIO pin was de-initialized successfully.
- * \retval GPIO_STATUS_ERROR_PIN     The GPIO pin was failed to de-initialized due to invalid pin number.
+ * \return                   The current pin level of the specific GPIO pin.
+ * \retval GPIO_LEVEL_LOW    The pin is low level.
+ * \retval GPIO_LEVEL_HIGH   The pin is high level.
  *
+ * <b>Example usage</b>
+ * \code{.c}
+ * int test(void)
+ * {
+ *     T_GPIO_LEVEL gpio_level = hal_gpio_get_input_level(TEST_PIN);
+ * }
  * \endcode
  *
- * \ingroup  GPIO
+ * \ingroup  HAL_GPIO_Exported_Functions
+ */
+T_GPIO_LEVEL hal_gpio_get_input_level(uint8_t pin_index);
+
+/**
+ * hal_gpio.h
+ *
+ * \brief   Set up the IRQ trigger mode of the specified pin.
+ *
+ * \param[in]  pin_index          The pin index, please refer to rtl876x.h 'Pin_Number' part.
+ * \param[in]  mode               The interrupt mode to be set to, can be level or edge trigger.
+ * \param[in]  polarity           The polarity for the interrupt to be set to, can be high or low active.
+ * \param[in]  debounce_enable    Enable or Disable the pin hardware debounce feature.
+ *
+ * \return                   The status of setting up IRQ trigger mode of the specific GPIO pin.
+ * \retval GPIO_STATUS_OK        The GPIO pin set up IRQ trigger mode successfully.
+ * \retval GPIO_STATUS_ERROR_PIN The GPIO pin was failed to set up IRQ trigger mode due to invalid pin number.
+ * \retval GPIO_STATUS_ERROR     The GPIO pin was failed to set up IRQ trigger mode due to malloc failure.
+ * \retval GPIO_STATUS_INVALID_PARAMETER  The GPIO pin was failed to set up IRQ trigger mode due to invalid input paramter.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ * int test(void)
+ * {
+ *     hal_gpio_init_pin(TEST_PIN, GPIO_TYPE_AUTO, GPIO_DIR_INPUT, GPIO_PULL_UP);
+ *     hal_gpio_set_up_irq(TEST_PIN, GPIO_IRQ_EDGE, GPIO_IRQ_ACTIVE_LOW, true);
+ * }
+ * \endcode
+ *
+ * \ingroup  HAL_GPIO_Exported_Functions
  */
 T_GPIO_STATUS hal_gpio_set_up_irq(uint8_t pin_index, T_GPIO_IRQ_MODE mode,
                                   T_GPIO_IRQ_POLARITY polarity,
@@ -272,17 +290,27 @@ T_GPIO_STATUS hal_gpio_set_up_irq(uint8_t pin_index, T_GPIO_IRQ_MODE mode,
 /**
  * hal_gpio.h
  *
- * \brief   Enable the interrupt of the pin.
+ * \brief   Enable the interrupt of the specified pin.
  *
- * \param[in]  pin_index          The pin index, please refer to rtl876x.h "Pin_Number" part. *
+ * \param[in]  pin_index          The pin index, please refer to rtl876x.h 'Pin_Number' part.
  *
- * \return                   The status of enable interrupt.
- * \retval GPIO_STATUS_OK        The GPIO pin was de-initialized successfully.
- * \retval GPIO_STATUS_ERROR_PIN     The GPIO pin was failed to de-initialized due to invalid pin number.
+ * \return                   The status of enable interrupt of the specific GPIO pin.
+ * \retval GPIO_STATUS_OK        The GPIO pin enables interrupt successfully.
+ * \retval GPIO_STATUS_ERROR_PIN The GPIO pin was failed to enable interrupt due to invalid pin number.
+ * \retval GPIO_STATUS_ERROR     The GPIO pin was failed to enable interrupt due to malloc failure.
+ * \retval GPIO_STATUS_INVALID_PARAMETER  The GPIO pin was failed to enable interrupt due to invalid input paramter.
  *
+ * <b>Example usage</b>
+ * \code{.c}
+ * int test(void)
+ * {
+ *     hal_gpio_set_up_irq(TEST_PIN, GPIO_IRQ_EDGE, GPIO_IRQ_ACTIVE_LOW, true);
+ *     hal_gpio_register_isr_callback(TEST_PIN, gpio_isr_cb, GPIO_DEMO_INPUT_PIN0);
+ *     hal_gpio_irq_enable(TEST_PIN);
+ * }
  * \endcode
  *
- * \ingroup  GPIO
+ * \ingroup  HAL_GPIO_Exported_Functions
  */
 T_GPIO_STATUS hal_gpio_irq_enable(uint8_t pin_index);
 
@@ -290,34 +318,52 @@ T_GPIO_STATUS hal_gpio_irq_enable(uint8_t pin_index);
 /**
  * hal_gpio.h
  *
- * \brief   Disable the interrupt of the pin.
+ * \brief   Disable the interrupt of the specified pin.
  *
- * \param[in]  pin_index          The pin index, please refer to rtl876x.h "Pin_Number" part. *
+ * \param[in]  pin_index          The pin index, please refer to rtl876x.h 'Pin_Number' part.
  *
- * \return                   The status of disable interrupt.
- * \retval GPIO_STATUS_OK        The GPIO pin was de-initialized successfully.
- * \retval GPIO_STATUS_ERROR_PIN     The GPIO pin was failed to de-initialized due to invalid pin number.
+ * \return                   The status of disable interrupt of the specific GPIO pin.
+ * \retval GPIO_STATUS_OK        The GPIO pin disables interrupt successfully.
+ * \retval GPIO_STATUS_ERROR_PIN The GPIO pin was failed to disable interrupt due to invalid pin number.
+ * \retval GPIO_STATUS_ERROR     The GPIO pin was failed to disable interrupt due to malloc failure.
+ * \retval GPIO_STATUS_INVALID_PARAMETER  The GPIO pin was failed to disable interrupt due to invalid input paramter.
  *
+ * <b>Example usage</b>
+ * \code{.c}
+ * int test(void)
+ * {
+ *     hal_gpio_irq_disable(TEST_PIN);
+ * }
  * \endcode
  *
- * \ingroup  GPIO
+ * \ingroup  HAL_GPIO_Exported_Functions
  */
 T_GPIO_STATUS hal_gpio_irq_disable(uint8_t pin_index);
 
 /**
  * hal_gpio.h
  *
- * \brief   Set the hardware debounce time. the interrupt could be triggered after 1 to 2 of debounce time.
+ * \brief   Set the hardware debounce time. The interrupt could be triggered after 1 to 2 of debounce time.
  *
- * \param[in]  ms          The pin index, please refer to rtl876x.h "Pin_Number" part. *
+ * \param[in]  ms          The debounce time, unit ms, can be 1~64 ms.
  *
  * \return                   The status of setting debounce time.
- * \retval GPIO_STATUS_OK        The GPIO pin was de-initialized successfully.
- * \retval GPIO_STATUS_ERROR_PIN     The GPIO pin was failed to de-initialized due to invalid pin number.
+ * \retval GPIO_STATUS_OK        The GPIO pin set debounce time successfully.
+ * \retval GPIO_STATUS_ERROR_PIN The GPIO pin was failed to set debounce time due to invalid pin number.
+ * \retval GPIO_STATUS_ERROR     The GPIO pin was failed to set debounce time due to malloc failure.
+ * \retval GPIO_STATUS_INVALID_PARAMETER  The GPIO pin was failed to set debounce time due to invalid input paramter.
  *
+ * <b>Example usage</b>
+ * \code{.c}
+ * int test(void)
+ * {
+ *     hal_gpio_init();
+ *     hal_gpio_int_init();
+ *     hal_gpio_set_debounce_time(30);
+ * }
  * \endcode
  *
- * \ingroup  GPIO
+ * \ingroup  HAL_GPIO_Exported_Functions
  */
 T_GPIO_STATUS hal_gpio_set_debounce_time(uint8_t ms);
 
@@ -326,15 +372,27 @@ T_GPIO_STATUS hal_gpio_set_debounce_time(uint8_t ms);
  *
  * \brief   Change the interrupt polarity of GPIO current mode.
  *
- * \param[in]  pin_index          The pin index, please refer to rtl876x.h "Pin_Number" part. *
+ * \param[in]  pin_index          The pin index, please refer to rtl876x.h 'Pin_Number' part.
+ * \param[in]  polarity           The polarity for the interrupt to be set to, can be high or low active.
  *
- * \return                   The status of change polarity.
- * \retval GPIO_STATUS_OK        The GPIO pin was de-initialized successfully.
- * \retval GPIO_STATUS_ERROR_PIN     The GPIO pin was failed to de-initialized due to invalid pin number.
+ * \return                   The status of change interrupt polarity of the specific GPIO pin.
+ * \retval GPIO_STATUS_OK        The GPIO pin changes interrupt polarity successfully.
+ * \retval GPIO_STATUS_ERROR_PIN The GPIO pin was failed to change interrupt polarity due to invalid pin number.
+ * \retval GPIO_STATUS_ERROR     The GPIO pin was failed to change interrupt polarity due to malloc failure.
+ * \retval GPIO_STATUS_INVALID_PARAMETER  The GPIO pin was failed to change interrupt polarity due to invalid input paramter.
  *
+ * <b>Example usage</b>
+ * \code{.c}
+ * int test(void)
+ * {
+ *     if (gpio_level == GPIO_LEVEL_LOW)
+ *     {
+ *        hal_gpio_irq_change_polarity(pin_index, GPIO_IRQ_ACTIVE_HIGH);
+ *     }
+ * }
  * \endcode
  *
- * \ingroup  GPIO
+ * \ingroup  HAL_GPIO_Exported_Functions
  */
 T_GPIO_STATUS hal_gpio_irq_change_polarity(uint8_t pin_index, T_GPIO_IRQ_POLARITY polarity);
 
@@ -342,28 +400,40 @@ T_GPIO_STATUS hal_gpio_irq_change_polarity(uint8_t pin_index, T_GPIO_IRQ_POLARIT
 /**
  * hal_gpio.h
  *
- * \brief   Init the hal gpio module, gpio clock would be enabled, and hal gpio function could be used after this function called.
+ * \brief   Init the HAL GPIO module, GPIO clock would be enabled, and HAL GPIO function could be used after this function called.
  *
- * \param   None
+ * \param   None.
  * \return  None.
  *
+ * <b>Example usage</b>
+ * \code{.c}
+ * int test(void)
+ * {
+ *     hal_gpio_init();
+ * }
  * \endcode
  *
- * \ingroup  GPIO
+ * \ingroup  HAL_GPIO_Exported_Functions
  */
 void hal_gpio_init(void);
 
 /**
  * hal_gpio.h
  *
- * \brief   De-Init the hal gpio module, gpio clock would be enabled, and hal gpio function could not be used after this function called.
+ * \brief   De-Init the HAL GPIO module, GPIO clock would be disabled, and HAL GPIO function could not be used after this function called.
  *
- * \param   None
+ * \param   None.
  * \return  None.
  *
+ * <b>Example usage</b>
+ * \code{.c}
+ * int test(void)
+ * {
+ *     hal_gpio_deinit();
+ * }
  * \endcode
  *
- * \ingroup  GPIO
+ * \ingroup  HAL_GPIO_Exported_Functions
  */
 void hal_gpio_deinit(void);
 
@@ -374,6 +444,7 @@ void hal_gpio_deinit(void);
 
 #endif
 
-/** @} */ /* End of group 87x3e_HAL_GPIO_H_ */
+/** @} */ /* End of group HAL_GPIO_Exported_Functions */
+/** @} */ /* End of group HAL_GPIO_H_ */
 
-/******************* (C) COPYRIGHT 2021 Realtek Semiconductor *****END OF FILE****/
+/******************* (C) COPYRIGHT 2024 Realtek Semiconductor *****END OF FILE****/

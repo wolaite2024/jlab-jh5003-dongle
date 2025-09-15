@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>BT AUDIO SDK: Adc Manager Exported Functions</title>
+<title>BT AUDIO SDK: ADC Manager Exported Functions</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,38 +45,38 @@ $(function() {
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">Adc Manager Exported Functions<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___p_l_a_t_f_o_r_m.html">Platform</a> &raquo; <a class="el" href="group___p_l_a_t_f_o_r_m__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___a_d_c___m_a_n_a_g_e_r.html">ADC Manager</a></div></div>  </div>
+<div class="title">ADC Manager Exported Functions<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___p_l_a_t_f_o_r_m.html">Platform</a> &raquo; <a class="el" href="group___p_l_a_t_f_o_r_m__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___a_d_c___m_a_n_a_g_e_r.html">ADC Manager</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga8928fd7711de778c61d9bd88f856ae35"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___a_d_c___m_a_n_a_g_e_r___exported___functions.html#ga8928fd7711de778c61d9bd88f856ae35">adc_mgr_deinit</a> (void)</td></tr>
-<tr class="memdesc:ga8928fd7711de778c61d9bd88f856ae35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close ADC Manager module.  <a href="#ga8928fd7711de778c61d9bd88f856ae35">More...</a><br /></td></tr>
+<tr class="memdesc:ga8928fd7711de778c61d9bd88f856ae35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close ADC Manager module, disable the ADC peripheral clock, and restore registers to their default values.  <a href="#ga8928fd7711de778c61d9bd88f856ae35">More...</a><br /></td></tr>
 <tr class="separator:ga8928fd7711de778c61d9bd88f856ae35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga004c94e664d1cc3548758e06e24f3cc3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___a_d_c___m_a_n_a_g_e_r___exported___functions.html#ga004c94e664d1cc3548758e06e24f3cc3">adc_struct_init_req</a> (<a class="el" href="struct_a_d_c___init_type_def.html">ADC_InitTypeDef</a> *p_adc_init)</td></tr>
-<tr class="memdesc:ga004c94e664d1cc3548758e06e24f3cc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill in adc_driver structure default value.  <a href="#ga004c94e664d1cc3548758e06e24f3cc3">More...</a><br /></td></tr>
+<tr class="memdesc:ga004c94e664d1cc3548758e06e24f3cc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills each p_adc_init member with its default value.  <a href="#ga004c94e664d1cc3548758e06e24f3cc3">More...</a><br /></td></tr>
 <tr class="separator:ga004c94e664d1cc3548758e06e24f3cc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga963ef466cd276d8ed8a2c1c0bfd2670c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___a_d_c___m_a_n_a_g_e_r___exported___functions.html#ga963ef466cd276d8ed8a2c1c0bfd2670c">adc_mgr_set_int_para</a> (uint8_t index, uint32_t enable_intr_bit_map)</td></tr>
-<tr class="memdesc:ga963ef466cd276d8ed8a2c1c0bfd2670c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set interrupt related parameters.  <a href="#ga963ef466cd276d8ed8a2c1c0bfd2670c">More...</a><br /></td></tr>
+<tr class="memdesc:ga963ef466cd276d8ed8a2c1c0bfd2670c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the specified ADC interrupts.  <a href="#ga963ef466cd276d8ed8a2c1c0bfd2670c">More...</a><br /></td></tr>
 <tr class="separator:ga963ef466cd276d8ed8a2c1c0bfd2670c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga30c669478504a2ad95d346e736262a97"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___a_d_c___m_a_n_a_g_e_r___exported___functions.html#ga30c669478504a2ad95d346e736262a97">adc_mgr_read_data_req</a> (uint8_t index, uint16_t *output_data, uint16_t sched_bit_map)</td></tr>
-<tr class="memdesc:ga30c669478504a2ad95d346e736262a97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read one shot mode data from adc driver.  <a href="#ga30c669478504a2ad95d346e736262a97">More...</a><br /></td></tr>
+<tr class="memdesc:ga30c669478504a2ad95d346e736262a97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read ADC data according to the ADC schedule table bitmap.  <a href="#ga30c669478504a2ad95d346e736262a97">More...</a><br /></td></tr>
 <tr class="separator:ga30c669478504a2ad95d346e736262a97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:gace6d96e03f640cf72ee9e3f2360219ee"><td class="memItemLeft" align="right" valign="top">bool(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___a_d_c___m_a_n_a_g_e_r___exported___functions.html#gace6d96e03f640cf72ee9e3f2360219ee">adc_mgr_init</a> )(uint8_t req_num)</td></tr>
-<tr class="memdesc:gace6d96e03f640cf72ee9e3f2360219ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initiate ADC Manager module.  <a href="#gace6d96e03f640cf72ee9e3f2360219ee">More...</a><br /></td></tr>
+<tr class="memdesc:gace6d96e03f640cf72ee9e3f2360219ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize ADC Manager module.  <a href="#gace6d96e03f640cf72ee9e3f2360219ee">More...</a><br /></td></tr>
 <tr class="separator:gace6d96e03f640cf72ee9e3f2360219ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2be5a7b77f49c65671bf25891c48e6f4"><td class="memItemLeft" align="right" valign="top">bool(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___a_d_c___m_a_n_a_g_e_r___exported___functions.html#ga2be5a7b77f49c65671bf25891c48e6f4">adc_mgr_register_req</a> )(<a class="el" href="struct_a_d_c___init_type_def.html">ADC_InitTypeDef</a> *p_adc_init, <a class="el" href="group__x3e___a_d_c___m_a_n_a_g_e_r___exported___types.html#ga8a66d0cddd729f870ffe7df4d6fc7ce1">adc_callback_function_t</a> cb, uint8_t *adc_mgr_index)</td></tr>
-<tr class="memdesc:ga2be5a7b77f49c65671bf25891c48e6f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request for a channel in adc_manager.  <a href="#ga2be5a7b77f49c65671bf25891c48e6f4">More...</a><br /></td></tr>
+<tr class="memdesc:ga2be5a7b77f49c65671bf25891c48e6f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request for a channel in ADC manager.  <a href="#ga2be5a7b77f49c65671bf25891c48e6f4">More...</a><br /></td></tr>
 <tr class="separator:ga2be5a7b77f49c65671bf25891c48e6f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga372e0bd9cf4ce44b5ec56f393f029bfd"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___a_d_c___m_a_n_a_g_e_r___exported___functions.html#ga372e0bd9cf4ce44b5ec56f393f029bfd">adc_mgr_free_chann</a> )(uint8_t index)</td></tr>
 <tr class="memdesc:ga372e0bd9cf4ce44b5ec56f393f029bfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free the index corresponding channel.  <a href="#ga372e0bd9cf4ce44b5ec56f393f029bfd">More...</a><br /></td></tr>
 <tr class="separator:ga372e0bd9cf4ce44b5ec56f393f029bfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa50b41c4821dcddbae2a2d868ceb7eb9"><td class="memItemLeft" align="right" valign="top">bool(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___a_d_c___m_a_n_a_g_e_r___exported___functions.html#gaa50b41c4821dcddbae2a2d868ceb7eb9">adc_mgr_enable_req</a> )(uint8_t index)</td></tr>
-<tr class="memdesc:gaa50b41c4821dcddbae2a2d868ceb7eb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start up a one shot mode adc.  <a href="#gaa50b41c4821dcddbae2a2d868ceb7eb9">More...</a><br /></td></tr>
+<tr class="memdesc:gaa50b41c4821dcddbae2a2d868ceb7eb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start up a one shot mode ADC.  <a href="#gaa50b41c4821dcddbae2a2d868ceb7eb9">More...</a><br /></td></tr>
 <tr class="separator:gaa50b41c4821dcddbae2a2d868ceb7eb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -97,8 +97,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Close ADC Manager module. </p>
-<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
+<p>Close ADC Manager module, disable the ADC peripheral clock, and restore registers to their default values. </p>
 
 </div>
 </div>
@@ -118,14 +117,13 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Fill in adc_driver structure default value. </p>
+<p>Fills each p_adc_init member with its default value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">p_adc_init</td><td>the point to adc_driver structure </td></tr>
+    <tr><td class="paramname">p_adc_init</td><td>Pointer to a <a class="el" href="struct_a_d_c___init_type_def.html" title="ADC initialize parameters. ">ADC_InitTypeDef</a> structure which will be initialized. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
 </div>
 </div>
@@ -155,27 +153,27 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set interrupt related parameters. </p>
-<dl class="section note"><dt>Note</dt><dd>Make sure the index corresponding channel is valid </dd></dl>
+<p>Enable the specified ADC interrupts. </p>
+<dl class="section note"><dt>Note</dt><dd>Make sure the index corresponding channel is valid. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">index</td><td>the number corresponding to a channel </td></tr>
-    <tr><td class="paramname">enable_intr_bit_map</td><td>specifies the interrupt pending bit to enable. This parameter can be any combination of the following values: <ul>
-<li>ADC_INT_ONE_SHOT_DONE: ADC one convert end interrupt </li>
-<li>ADC_INT_FIFO_OVERFLOW: ADC FIFO overflow interrupt </li>
-<li>ADC_INT_FIFO_RD_REQ: ADC read FIFO request interrupt </li>
-<li>ADC_INT_FIFO_RD_ERR: ADC read FIFO error interrupt </li>
-<li>ADC_INT_FIFO_TH: fifo larger than threshold </li>
+    <tr><td class="paramname">index</td><td>The number corresponding to a channel. </td></tr>
+    <tr><td class="paramname">enable_intr_bit_map</td><td>Specifies the ADC interrupt sources to be enabled. This parameter can be one of the following values:<ul>
+<li>ADC_INT_ONE_SHOT_DONE: ADC one shot mode done interrupt.</li>
+<li>ADC_INT_FIFO_OVERFLOW: ADC FIFO full interrupt.</li>
+<li>ADC_INT_FIFO_RD_REQ: ADC GDMA request interrupt.</li>
+<li>ADC_INT_FIFO_RD_ERR: ADC FIFO read error interrupt.</li>
+<li>ADC_INT_FIFO_TH: ADC FIFO threshold interrupt. </li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>status </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of ADC interrupts enable. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>status successful </td></tr>
-    <tr><td class="paramname">false</td><td>status fail </td></tr>
+    <tr><td class="paramname">true</td><td>Enable ADC interrupts successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Enable ADC interrupts failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -214,21 +212,21 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Read one shot mode data from adc driver. </p>
-<dl class="section note"><dt>Note</dt><dd>Please call adc_mgr_read_data_req when callback function is called </dd></dl>
+<p>Read ADC data according to the ADC schedule table bitmap. </p>
+<dl class="section note"><dt>Note</dt><dd>Please call <a class="el" href="group__x3e___a_d_c___m_a_n_a_g_e_r___exported___functions.html#ga30c669478504a2ad95d346e736262a97">adc_mgr_read_data_req</a> when callback function is called. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">index</td><td>the number corresponding to a channel </td></tr>
-    <tr><td class="paramname">output_data</td><td>the pointer to the output data buffer </td></tr>
-    <tr><td class="paramname">sched_bit_map</td><td>ADC schedule table bit map </td></tr>
+    <tr><td class="paramname">index</td><td>The number corresponding to a channel. </td></tr>
+    <tr><td class="paramname">output_data</td><td>The pointer to the output data buffer. </td></tr>
+    <tr><td class="paramname">sched_bit_map</td><td>ADC schedule table bitmap. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>status </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of data reading. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>status successful </td></tr>
-    <tr><td class="paramname">false</td><td>status fail </td></tr>
+    <tr><td class="paramname">true</td><td>Read data successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>Reading data failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -248,13 +246,19 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initiate ADC Manager module. </p>
-<dl class="section note"><dt>Note</dt><dd>Don't call this function unless call adc_mgr_deinit before </dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>status </dd></dl>
+<p>Initialize ADC Manager module. </p>
+<dl class="section note"><dt>Note</dt><dd>Don't call this function unless call <a class="el" href="group__x3e___a_d_c___m_a_n_a_g_e_r___exported___functions.html#ga8928fd7711de778c61d9bd88f856ae35">adc_mgr_deinit</a> before. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">req_num</td><td>The number of ADC manager channels that need to be requested. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The initialization status of ADC manager. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>status successful </td></tr>
-    <tr><td class="paramname">false</td><td>status fail </td></tr>
+    <tr><td class="paramname">true</td><td>ADC manager initialization successful. </td></tr>
+    <tr><td class="paramname">false</td><td>ADC manager initialization failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -273,21 +277,21 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Request for a channel in adc_manager. </p>
-<dl class="section note"><dt>Note</dt><dd>If return successful, this channel will be reserved before free </dd></dl>
+<p>Request for a channel in ADC manager. </p>
+<dl class="section note"><dt>Note</dt><dd>If return successful, this channel will be reserved before free. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">p_adc_init</td><td>the configuration for adc_driver </td></tr>
-    <tr><td class="paramname">cb</td><td>register callback for adc interrupt notify </td></tr>
-    <tr><td class="paramname">adc_mgr_index</td><td>the pointer to the return index corresponding to a channel </td></tr>
+    <tr><td class="paramname">p_adc_init</td><td>Pointer to a <a class="el" href="struct_a_d_c___init_type_def.html" title="ADC initialize parameters. ">ADC_InitTypeDef</a> structure which will be initialized. </td></tr>
+    <tr><td class="paramname">cb</td><td>Register callback for ADC interrupt notify. </td></tr>
+    <tr><td class="paramname">adc_mgr_index</td><td>The pointer to the return index corresponding to a channel. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>status </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of the channel request. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>status successful and adc_mgr_index is valid </td></tr>
-    <tr><td class="paramname">false</td><td>status fail and adc_mgr_index is meaningless </td></tr>
+    <tr><td class="paramname">true</td><td>Request successful, and adc_mgr_index is valid. </td></tr>
+    <tr><td class="paramname">false</td><td>Request failed, and adc_mgr_index is not defined. </td></tr>
   </table>
   </dd>
 </dl>
@@ -309,11 +313,10 @@ Variables</h2></td></tr>
 <p>Free the index corresponding channel. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">index</td><td>the number corresponding to a channel </td></tr>
+    <tr><td class="paramname">index</td><td>The number corresponding to a channel. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
 </div>
 </div>
@@ -329,19 +332,19 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Start up a one shot mode adc. </p>
-<dl class="section note"><dt>Note</dt><dd>Please call adc_mgr_read_data_req when callback </dd></dl>
+<p>Start up a one shot mode ADC. </p>
+<dl class="section note"><dt>Note</dt><dd>Please call <a class="el" href="group__x3e___a_d_c___m_a_n_a_g_e_r___exported___functions.html#ga30c669478504a2ad95d346e736262a97">adc_mgr_read_data_req</a> when callback function is called. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">index</td><td>the number corresponding to a channel </td></tr>
+    <tr><td class="paramname">index</td><td>The number corresponding to a channel. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>status </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of the ADC manager enable. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>status successful </td></tr>
-    <tr><td class="paramname">false</td><td>status fail </td></tr>
+    <tr><td class="paramname">true</td><td>Enable ADC manager successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>Enable ADC manager failed. </td></tr>
   </table>
   </dd>
 </dl>

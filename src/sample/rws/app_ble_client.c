@@ -5,7 +5,6 @@
 #include "trace.h"
 #include "app_ble_client.h"
 #include "ancs_client.h"
-#include "stdlib.h"
 #include "app_main.h"
 #include "app_report.h"
 #include "app_cmd.h"

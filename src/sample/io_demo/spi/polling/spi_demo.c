@@ -17,7 +17,6 @@
  *============================================================================*/
 #include "rtl876x_rcc.h"
 #include "rtl876x_spi.h"
-#include "rtl876x_nvic.h"
 #include "rtl876x_pinmux.h"
 #include "trace.h"
 

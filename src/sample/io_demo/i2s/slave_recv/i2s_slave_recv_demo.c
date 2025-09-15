@@ -15,7 +15,6 @@
 #include "rtl876x_i2s.h"
 #include "rtl876x_nvic.h"
 #include "rtl876x_pinmux.h"
-#include "rtl876x_rcc.h"
 #include "trace.h"
 #include "vector_table.h"
 
@@ -64,7 +63,7 @@ static void driver_i2s_init(void)
     /* BCLK & LRCK divider setting is invalid when slave mode, it depends on I2S master */
     I2S_InitStruct.I2S_DeviceMode       = I2S_DeviceMode_Slave;
     I2S_InitStruct.I2S_RxChannelType    = I2S_Channel_Stereo;
-    I2S_InitStruct.I2S_RxDataWidth      = I2S_Width_24Bits;
+    I2S_InitStruct.I2S_RxDataWidth      = I2S_Data_Width_24Bits;
     I2S_InitStruct.I2S_RxDataFormat     = I2S_Mode;
     I2S_InitStruct.I2S_DMACmd           = I2S_DMA_DISABLE;
     I2S_Init(I2S_NUM, &I2S_InitStruct);

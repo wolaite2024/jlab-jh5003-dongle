@@ -8,8 +8,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "a2dp.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
@@ -54,37 +52,65 @@ typedef enum t_avdtp_msg
     AVDTP_MSG_STREAM_DATA_RSP          = 0x26,
 } T_AVDTP_MSG;
 
+typedef enum t_avdtp_codec_type
+{
+    AVDTP_CODEC_TYPE_SBC     = 0x00,
+    AVDTP_CODEC_TYPE_AAC     = 0x02,
+    AVDTP_CODEC_TYPE_USAC    = 0x03,
+    AVDTP_CODEC_TYPE_LDAC    = 0xf0,
+    AVDTP_CODEC_TYPE_LC3     = 0xf1,
+    AVDTP_CODEC_TYPE_LHDC    = 0xf2,
+    AVDTP_CODEC_TYPE_VENDOR  = 0xff,
+} T_AVDTP_CODEC_TYPE;
+
+typedef struct t_roleswap_avdtp_info
+{
+    uint16_t sig_cid;
+    uint16_t stream_cid;
+    uint8_t  int_flag;
+    uint8_t  int_seid;
+    uint8_t  acp_seid_idx;
+    uint8_t  acp_seid;
+    uint8_t  delay_report;
+    uint8_t  data_offset;
+    uint8_t  sig_state;
+    uint8_t  tx_trans_label;
+    uint8_t  rx_start_trans_label;
+    uint8_t  cmd_flag;
+} T_ROLESWAP_AVDTP_INFO;
+
 typedef void(*P_AVDTP_CBACK)(uint16_t     cid,
                              T_AVDTP_MSG  msg_type,
                              void        *msg_buf);
 
-bool avdtp_init(uint8_t       link_num,
-                uint16_t      latency,
-                uint8_t       service_capabilities,
+bool avdtp_init(uint8_t       service_capabilities,
                 P_AVDTP_CBACK cback);
 
-bool avdtp_codec_add(uint8_t            role,
-                     T_A2DP_CODEC_TYPE  codec_type,
-                     uint8_t           *media_codec_info);
+
+bool avdtp_codec_add(uint8_t             role,
+                     T_AVDTP_CODEC_TYPE  codec_type,
+                     uint8_t            *media_codec_info);
 
 bool avdtp_codec_delete(uint8_t            role,
-                        T_A2DP_CODEC_TYPE  codec_type);
+                        T_AVDTP_CODEC_TYPE codec_type);
 
 bool avdtp_stream_data_send(uint8_t   bd_addr[6],
                             uint16_t  seq_num,
                             uint32_t  time_stamp,
                             uint8_t   frame_num,
-                            uint8_t  *p_data,
+                            uint8_t  *data,
                             uint16_t  len);
 
 void avdtp_signal_connect_req(uint8_t  bd_addr[6],
                               uint16_t avdtp_ver,
-                              uint8_t  role);
+                              uint8_t  role,
+                              uint16_t mtu_size);
 
 void avdtp_stream_connect_req(uint8_t bd_addr[6]);
 
-bool avdtp_signal_connect_cfm(uint8_t bd_addr[6],
-                              bool    accept);
+bool avdtp_signal_connect_cfm(uint8_t  bd_addr[6],
+                              uint16_t mtu_size,
+                              bool     accept);
 
 bool avdtp_signal_discover_req(uint8_t bd_addr[6]);
 
@@ -100,7 +126,7 @@ bool avdtp_signal_recfg_req(uint8_t bd_addr[6],
                             uint8_t role);
 
 bool avdtp_signal_delay_report_req(uint8_t  bd_addr[6],
-                                   uint16_t latency);
+                                   uint16_t delay);
 
 bool avdtp_signal_start_req(uint8_t bd_addr[6]);
 
@@ -117,13 +143,13 @@ bool avdtp_signal_disconnect_req(uint8_t bd_addr[6]);
 
 void avdtp_stream_disconnect_req(uint8_t bd_addr[6]);
 
-bool avdtp_get_roleswap_info(uint8_t               bd_addr[6],
-                             T_ROLESWAP_A2DP_INFO *p_info);
+bool avdtp_roleswap_info_get(uint8_t                bd_addr[6],
+                             T_ROLESWAP_AVDTP_INFO *info);
 
-bool avdtp_set_roleswap_info(uint8_t               bd_addr[6],
-                             T_ROLESWAP_A2DP_INFO *p_info);
+bool avdtp_roleswap_info_set(uint8_t                bd_addr[6],
+                             T_ROLESWAP_AVDTP_INFO *info);
 
-bool avdtp_del_roleswap_info(uint8_t bd_addr[6]);
+bool avdtp_roleswap_info_del(uint8_t bd_addr[6]);
 
 #ifdef __cplusplus
 }

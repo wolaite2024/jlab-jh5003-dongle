@@ -8,9 +8,11 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "tts.h"
+#include "app_cfg.h"
 #include "btm.h"
 #include "os_queue.h"
 #include "audio_type.h"
+#include "app_cfg.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -227,8 +229,10 @@ typedef struct
 
     uint16_t            embedded_cmd_len;
     uint16_t            mtu_size;
+    uint16_t            conn_handle;
     uint8_t             state;
     uint8_t             conn_id;
+    T_DEVICE_BUD_SIDE   bud_side;
     uint8_t             rx_cmd_seqn;
     uint8_t             tx_event_seqn;
     uint8_t             transmit_srv_tx_enable_fg;
@@ -353,7 +357,17 @@ T_APP_BR_LINK *app_find_b2s_link(uint8_t *bd_addr);
     */
 uint8_t app_find_b2s_link_num(void);
 
+T_APP_LE_LINK *app_link_find_le_link_by_conn_id(uint8_t conn_id);
 
+T_APP_LE_LINK *app_link_alloc_le_link_by_conn_id(uint8_t conn_id);
+
+T_APP_LE_LINK *app_link_get_connected_le_link(void);
+
+bool app_link_free_le_link(T_APP_LE_LINK *p_link);
+
+bool app_link_reg_le_link_disc_cb(uint8_t conn_id, P_FUN_LE_LINK_DISC_CB p_fun_cb);
+
+T_APP_LE_LINK *app_link_find_le_link_by_bud_side(T_DEVICE_BUD_SIDE bud_side);
 /** End of APP_LINK
 * @}
 */

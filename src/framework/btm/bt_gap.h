@@ -14,7 +14,7 @@ extern "C" {
 void bt_gap_cback(void         *p_buf,
                   T_GAP_BR_MSG  br_msg);
 
-void bt_gap_init(void);
+bool bt_gap_init(void);
 
 #ifdef __cplusplus
 }

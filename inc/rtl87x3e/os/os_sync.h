@@ -13,7 +13,7 @@ extern "C" {
 #endif
 
 /**
- * \defgroup    OS_87x3e_Synchronization     Inter-Task Communication
+ * \addtogroup    OS_87x3e_Synchronization     Inter-Task Communication
  *
  * \brief   Manage Inter-task communication functions.
  * \details Tasks need to communicate with each other or access shared resources together.
@@ -25,16 +25,23 @@ extern "C" {
  * \arg <b>Lock</b>
  * \arg <b>Semaphore</b>
  * \arg <b>Mutex</b>
- *
+ * @{
  */
 
+/*============================================================================*
+ *                         Functions
+ *============================================================================*/
+
+/** @defgroup OS_87x3e_Synchronization_Exported_functions Inter-Task Communication Exported Functions
+ * @{
+ */
 
 /**
  * os_sync.h
  *
  * \brief   Enter the critical region. Disable preemptive context switch and interrupts.
  *
- * \param   None
+ * \param   None.
  *
  * \return      Interrupt mask flag.
  *
@@ -53,7 +60,7 @@ extern "C" {
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Synchronization
+ *
  */
 extern uint32_t (*os_lock)(void);
 
@@ -62,7 +69,7 @@ extern uint32_t (*os_lock)(void);
  *
  * \brief   Exit the critical region. Enable preemptive context switch and interrupts.
  *
- * \param[in]   s   Interrupt mask flag to be restored.
+ * \param   s   Interrupt mask flag to be restored.
  *
  * \return      None.
  *
@@ -81,7 +88,7 @@ extern uint32_t (*os_lock)(void);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Synchronization
+ *
  */
 extern void (*os_unlock)(uint32_t s);
 
@@ -102,13 +109,13 @@ extern void (*os_unlock)(uint32_t s);
  *
  * \image html OS-semaphore-overview.jpg "Semaphore Overview" width=496px height=346px
  *
- * \param[out]  pp_handle   Used to pass back the created semaphore handle.
+ * \param  pp_handle   Used to pass back the created semaphore handle.
  *
- * \param[in]   p_name  A descriptive name for the semaphore.
+ * \param   p_name  A descriptive name for the semaphore.
  *
- * \param[in]   init_count  The count value assigned to the semaphore when created.
+ * \param   init_count  The count value assigned to the semaphore when created.
  *
- * \param[in]   max_count   The maximum count value that can be reached. If the max_count is 1,
+ * \param   max_count   The maximum count value that can be reached. If the max_count is 1,
  *                          a binary semaphore is being created.
  *
  * \return           The status of the semaphore creation.
@@ -136,7 +143,7 @@ extern void (*os_unlock)(uint32_t s);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Synchronization
+ *
  */
 extern bool (*os_sem_create)(void **pp_handle, const char *p_name, uint32_t init_count,
                              uint32_t max_count);
@@ -146,7 +153,7 @@ extern bool (*os_sem_create)(void **pp_handle, const char *p_name, uint32_t init
  *
  * \brief   Delete a semaphore.
  *
- * \param[in]   p_handle    The handle of the semaphore to be deleted.
+ * \param   p_handle    The handle of the semaphore to be deleted.
  *
  * \return           The status of the semaphore deletion.
  * \retval true      Semaphore was deleted successfully.
@@ -176,7 +183,7 @@ extern bool (*os_sem_create)(void **pp_handle, const char *p_name, uint32_t init
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Synchronization
+ *
  */
 extern bool (*os_sem_delete)(void *p_handle);
 
@@ -185,9 +192,9 @@ extern bool (*os_sem_delete)(void *p_handle);
  *
  * \brief   Take a semaphore.
  *
- * \param[in]   p_handle    The handle of the semaphore to be taken.
+ * \param   p_handle    The handle of the semaphore to be taken.
  *
- * \param[in]   wait_ms     The time in milliseconds to wait for the semaphore to become
+ * \param   wait_ms     The time in milliseconds to wait for the semaphore to become
  *                          available.
  * \arg \c 0           No blocking and return immediately.
  * \arg \c 0xFFFFFFFF  Block infinitely until the semaphore taken.
@@ -227,7 +234,7 @@ extern bool (*os_sem_delete)(void *p_handle);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Synchronization
+ *
  */
 extern bool (*os_sem_take)(void *p_handle, uint32_t wait_ms);
 
@@ -236,7 +243,7 @@ extern bool (*os_sem_take)(void *p_handle, uint32_t wait_ms);
  *
  * \brief   Give a semaphore.
  *
- * \param[in]   p_handle    The handle of the semaphore to be given.
+ * \param   p_handle    The handle of the semaphore to be given.
  *
  * \return           The status of the semaphore giving.
  * \retval true      Semaphore was given successfully.
@@ -269,7 +276,7 @@ extern bool (*os_sem_take)(void *p_handle, uint32_t wait_ms);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Synchronization
+ *
  */
 extern bool (*os_sem_give)(void *p_handle);
 
@@ -287,7 +294,7 @@ extern bool (*os_sem_give)(void *p_handle);
  *
  * \image html OS-mutex-overview.jpg "Mutex Overview" width=451px height=196px
  *
- * \param[out]  pp_handle   Used to pass back the created mutex handle.
+ * \param  pp_handle   Used to pass back the created mutex handle.
  *
  * \return           The status of the mutex creation.
  * \retval true      Mutex was created successfully.
@@ -308,7 +315,7 @@ extern bool (*os_sem_give)(void *p_handle);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Synchronization
+ *
  */
 extern bool (*os_mutex_create)(void **pp_handle);
 
@@ -317,7 +324,7 @@ extern bool (*os_mutex_create)(void **pp_handle);
  *
  * \brief   Delete a mutex.
  *
- * \param[in]   p_handle    The handle of the mutex to be deleted.
+ * \param   p_handle    The handle of the mutex to be deleted.
  *
  * \return           The status of the Mutex deletion.
  * \retval true      Mutex was deleted successfully.
@@ -347,7 +354,7 @@ extern bool (*os_mutex_create)(void **pp_handle);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Synchronization
+ *
  */
 extern bool (*os_mutex_delete)(void *p_handle);
 
@@ -356,9 +363,9 @@ extern bool (*os_mutex_delete)(void *p_handle);
  *
  * \brief   Take a mutex.
  *
- * \param[in]   p_handle    The handle of the mutex to be taken.
+ * \param   p_handle    The handle of the mutex to be taken.
  *
- * \param[in]   wait_ms     The time in milliseconds to wait for the mutex to become
+ * \param   wait_ms     The time in milliseconds to wait for the mutex to become
  *                          available.
  * \arg \c 0           No blocking and return immediately.
  * \arg \c 0xFFFFFFFF  Block infinitely until the mutex taken.
@@ -409,7 +416,7 @@ extern bool (*os_mutex_delete)(void *p_handle);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Synchronization
+ *
  */
 extern bool (*os_mutex_take)(void *p_handle, uint32_t wait_ms);
 
@@ -418,7 +425,7 @@ extern bool (*os_mutex_take)(void *p_handle, uint32_t wait_ms);
  *
  * \brief   Give a mutex.
  *
- * \param[in]   p_handle    The handle of the mutex to be given.
+ * \param   p_handle    The handle of the mutex to be given.
  *
  * \return           The status of the mutex giving.
  * \retval true      Mutex was given successfully.
@@ -465,7 +472,7 @@ extern bool (*os_mutex_take)(void *p_handle, uint32_t wait_ms);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Synchronization
+ *
  */
 extern bool (*os_mutex_give)(void *p_handle);
 
@@ -482,6 +489,8 @@ bool os_mutex_delete_rom(void *p_handle);
 bool os_mutex_take_rom(void *p_handle, uint32_t wait_ms);
 bool os_mutex_give_rom(void *p_handle);
 
+/** @} */ /* End of group OS_87x3e_Synchronization_Exported_Functions */
+/** @} */ /* End of group OS_87x3e_Synchronization */
 
 #ifdef __cplusplus
 }

@@ -53,20 +53,20 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
+<tr class="memitem:group___w_s_s___service___exported___functions"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_s_s___service___exported___functions.html">WSS Exported Functions</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___w_s_s___exported___macros"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_s_s___exported___macros.html">WSS Exported Macros</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group___w_s_s___service___exported___functions"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_s_s___service___exported___functions.html">WSS Service Exported Functions</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group___w_s_s___service___exported___types"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_s_s___service___exported___types.html">WSS Service Exported Types</a></td></tr>
+<tr class="memitem:group___w_s_s___service___exported___types"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___w_s_s___service___exported___types.html">WSS Exported Types</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Weight Scale Service. </p>
 <p>The Weight Scale (WS) Service exposes weight and related data from a weight scale (Server) intended for consumer healthcare as well as sports/fitness applications.</p>
 <p>Weight Scale Feature and Weight Measurement are exposed in the Weight Scale Service. Only one instance of each characteristic is permitted within this service. The Weight Scale Feature characteristic shall be used to describe the supported features of the Server. When read, the Weight Scale Feature characteristic returns a value that is used by a Client to determine the supported features of the Server. The Weight Measurement characteristic is used to send weight-related data to the Client. Included in the characteristic value are a Flags field (for showing the presence of optional fields and measurement units), a Weight field, and depending upon the contents of the Flags field, may include one or more optional fields.</p>
-<p>Application shall register weight scale service when initialization through <a class="el" href="group___w_s_s___service___exported___functions.html#gaed3b6bd1670bb3bf6220f9b5631f73fd">wss_add_service</a> function.</p>
-<p>Application can set the weight scale service parameters through <a class="el" href="group___w_s_s___service___exported___functions.html#ga17957595f19f5de55d304be6b02c2311">wss_set_parameter</a> function.</p>
-<p>Application can send the weight-related data of WSS to the client through <a class="el" href="group___w_s_s___service___exported___functions.html#gade55982ce31738ae6b3aa7c8202e571b">wss_measurement_indicate</a> function. </p>
+<p>Applications shall register weight scale service during initialization through <a class="el" href="group___w_s_s___service___exported___functions.html#gaed3b6bd1670bb3bf6220f9b5631f73fd">wss_add_service</a> function.</p>
+<p>Applications can set the weight scale service parameters through <a class="el" href="group___w_s_s___service___exported___functions.html#ga17957595f19f5de55d304be6b02c2311">wss_set_parameter</a> function.</p>
+<p>Applications can send the weight-related data of WSS to the client through <a class="el" href="group___w_s_s___service___exported___functions.html#gade55982ce31738ae6b3aa7c8202e571b">wss_measurement_indicate</a> function. </p>
 </div><!-- contents -->
 
 <HR SIZE=5>

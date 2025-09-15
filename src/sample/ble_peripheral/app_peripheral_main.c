@@ -22,7 +22,8 @@
 #include <app_peripheral_gap.h>
 #include "app_peripheral_service.h"
 #include "app_peripheral_client.h"
-#if F_BT_DLPS_EN
+#include "bt_bond_api.h"
+#if F_DLPS_EN
 #include "pm.h"
 #endif
 
@@ -66,7 +67,7 @@ void driver_init(void)
  */
 void pwr_mgr_init(void)
 {
-#if F_BT_DLPS_EN
+#if F_DLPS_EN
     bt_power_mode_set(BTPOWER_DEEP_SLEEP);
     power_mode_set(POWER_DLPS_MODE);
 #endif
@@ -91,6 +92,7 @@ void task_init(void)
 int main(void)
 {
     board_init();
+    bt_bond_init();
     le_gap_init(APP_MAX_LINKS);
     gap_lib_init();
     app_peripheral_gap_init();

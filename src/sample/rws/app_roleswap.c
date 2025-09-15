@@ -104,6 +104,12 @@ static void app_roleswap_bud_sync(void)
     }
 #endif
 
+    if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY)
+    {
+        app_relay_async_add(relay_msg_handle, APP_MODULE_TYPE_AUDIO_POLICY,
+                            APP_REMOTE_MSG_SYNC_SUSPEND_A2DP_BY_OUT_EAR);
+    }
+
 #if F_APP_LISTENING_MODE_SUPPORT
     if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_SECONDARY)
     {
@@ -129,7 +135,7 @@ static void app_roleswap_bud_sync(void)
     {
         if (app_link_get_b2s_link_num() > 0)
         {
-            if (app_cfg_const.enable_low_bat_role_swap)
+            if (app_cfg_const.disable_low_bat_role_swap == 0)
             {
                 app_roleswap_req_battery_level();
             }
@@ -254,7 +260,7 @@ static void app_roleswap_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16
                 if (p_link)
                 {
                     p_link->connected_profile |= A2DP_PROFILE_MASK;
-                    p_link->streaming_fg = param->remote_roleswap_status.u.a2dp.streaming_fg;
+                    app_link_update_a2dp_streaming(p_link, param->remote_roleswap_status.u.a2dp.streaming_fg);
                     app_multi_judge_active_a2dp_idx_and_qos(p_link->id, JUDGE_EVENT_A2DP_CONNECTED);
                 }
             }

@@ -51,13 +51,13 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga36e47839cbcb9ebe0b26db746772dc94"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_s___exported___functions.html#ga36e47839cbcb9ebe0b26db746772dc94">sps_set_parameter</a> (<a class="el" href="group___s_p_s___p_a_r_a_m___t_y_p_e.html#ga72cf54e772a0ee012684cdef39445bca">T_SPS_PARAM_TYPE</a> param_type, uint8_t len, void *p_value)</td></tr>
-<tr class="memdesc:ga36e47839cbcb9ebe0b26db746772dc94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a scan paramter service parameter.  <a href="#ga36e47839cbcb9ebe0b26db746772dc94">More...</a><br /></td></tr>
+<tr class="memdesc:ga36e47839cbcb9ebe0b26db746772dc94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a scan parameter service parameter.  <a href="#ga36e47839cbcb9ebe0b26db746772dc94">More...</a><br /></td></tr>
 <tr class="separator:ga36e47839cbcb9ebe0b26db746772dc94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab0bc9a2c14900f9e88b831a4d176787a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_s___exported___functions.html#gab0bc9a2c14900f9e88b831a4d176787a">sps_add_service</a> (void *p_func)</td></tr>
-<tr class="memdesc:gab0bc9a2c14900f9e88b831a4d176787a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add scan parameters service to the BLE stack database.  <a href="#gab0bc9a2c14900f9e88b831a4d176787a">More...</a><br /></td></tr>
+<tr class="memdesc:gab0bc9a2c14900f9e88b831a4d176787a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add scan parameters service to the Bluetooth Host.  <a href="#gab0bc9a2c14900f9e88b831a4d176787a">More...</a><br /></td></tr>
 <tr class="separator:gab0bc9a2c14900f9e88b831a4d176787a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5ef2d236eb632441b5ea4d0682b151c4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_s___exported___functions.html#ga5ef2d236eb632441b5ea4d0682b151c4">sps_scan_interval_window_value_notify</a> (uint8_t conn_id, uint8_t service_id, uint8_t sps_refresh_value)</td></tr>
-<tr class="memdesc:ga5ef2d236eb632441b5ea4d0682b151c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">send notification.  <a href="#ga5ef2d236eb632441b5ea4d0682b151c4">More...</a><br /></td></tr>
+<tr class="memdesc:ga5ef2d236eb632441b5ea4d0682b151c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send notification.  <a href="#ga5ef2d236eb632441b5ea4d0682b151c4">More...</a><br /></td></tr>
 <tr class="separator:ga5ef2d236eb632441b5ea4d0682b151c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -94,13 +94,13 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set a scan paramter service parameter. </p>
-<p>NOTE: You can call this function with a scan paramter service parameter type and it will set the scan paramter service parameter. Scan paramter service parameters are defined in <a class="el" href="group___s_p_s___p_a_r_a_m___t_y_p_e.html#ga72cf54e772a0ee012684cdef39445bca">T_SPS_PARAM_TYPE</a>. If the "len" field sets to the size of a "uint16_t" ,the "p_value" field must point to a data with type of "uint16_t".</p>
+<p>Set a scan parameter service parameter. </p>
+<p>This function can be called with a scan parameter service parameter type and it will set the scan parameter service parameter. Scan parameter service parameters are defined in <a class="el" href="group___s_p_s___p_a_r_a_m___t_y_p_e.html#ga72cf54e772a0ee012684cdef39445bca">T_SPS_PARAM_TYPE</a>. If the "len" field is set to the size of a "uint16_t", the "p_value" field must point to data of type "uint16_t".</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">param_type</td><td>Scan paramter service parameter type: <a class="el" href="group___s_p_s___p_a_r_a_m___t_y_p_e.html#ga72cf54e772a0ee012684cdef39445bca">T_SPS_PARAM_TYPE</a> </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of data to write </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_value</td><td>Pointer to data to write. This is dependent on the parameter type and WILL be cast to the appropriate data type (For example: if data type of param is uint16_t, p_value will be cast to pointer of uint16_t).</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">param_type</td><td>Scan parameter service parameter type: <a class="el" href="group___s_p_s___p_a_r_a_m___t_y_p_e.html#ga72cf54e772a0ee012684cdef39445bca">T_SPS_PARAM_TYPE</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of data to write. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_value</td><td>Pointer to data to write. This is dependent on the parameter type and WILL be cast to the appropriate data type (For example: if data type of param is uint16_t, p_value will be cast to a pointer of uint16_t).</td></tr>
   </table>
   </dd>
 </dl>
@@ -112,7 +112,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t refresh_value = 10;</div><div class="line">    <a class="code" href="group___s_p_s___exported___functions.html#ga36e47839cbcb9ebe0b26db746772dc94">sps_set_parameter</a>(<a class="code" href="group___s_p_s___p_a_r_a_m___t_y_p_e.html#gga72cf54e772a0ee012684cdef39445bcaac0e9d6b41bd642eb94a7ff011cbf2736">SPS_PARAM_SCAN_REFRESH</a>, 1, &amp;refresh_value);</div><div class="line">}</div></div><!-- fragment --> 
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keywordtype">bool</span> ret = <a class="code" href="group___s_p_s___exported___functions.html#ga36e47839cbcb9ebe0b26db746772dc94">sps_set_parameter</a>(<a class="code" href="group___s_p_s___p_a_r_a_m___t_y_p_e.html#gga72cf54e772a0ee012684cdef39445bcaac0e9d6b41bd642eb94a7ff011cbf2736">SPS_PARAM_SCAN_REFRESH</a>, 1, &amp;refresh_value);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="gab0bc9a2c14900f9e88b831a4d176787a"></a>
@@ -131,22 +131,22 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Add scan parameters service to the BLE stack database. </p>
+<p>Add scan parameters service to the Bluetooth Host. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_func</td><td>Callback when service attribute was read, write or cccd update. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_func</td><td>Callback when service attribute was read, write or CCCD update. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Service id generated by the BLE stack: <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Service ID generated by the Bluetooth Host: <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a>. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">0xFF</td><td>Operation failure. </td></tr>
-    <tr><td class="paramname">others</td><td>Service id assigned by stack.</td></tr>
+    <tr><td class="paramname">others</td><td>Service ID assigned by Bluetooth Host.</td></tr>
   </table>
   </dd>
 </dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> profile_init()</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga69f3a8c88a1c2d5255f87e69e135311b">server_init</a>(1);</div><div class="line">    sps_id = <a class="code" href="group___s_p_s___exported___functions.html#gab0bc9a2c14900f9e88b831a4d176787a">sps_add_service</a>(app_handle_profile_message);</div><div class="line">}</div></div><!-- fragment --> 
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> profile_init()</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga69f3a8c88a1c2d5255f87e69e135311b">server_init</a>(service_num);</div><div class="line">    sps_id = <a class="code" href="group___s_p_s___exported___functions.html#gab0bc9a2c14900f9e88b831a4d176787a">sps_add_service</a>(app_handle_profile_message);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga5ef2d236eb632441b5ea4d0682b151c4"></a>
@@ -181,24 +181,24 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>send notification. </p>
+<p>Send notification. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection id. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection ID. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service ID of service. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">sps_refresh_value</td><td>characteristic value to notify </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">sps_refresh_value</td><td>Characteristic value to notify. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>notification action result </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Notification action result. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">1</td><td>TRUE </td></tr>
-    <tr><td class="paramname">0</td><td>FALSE</td></tr>
+    <tr><td class="paramname">true</td><td>Operation success. </td></tr>
+    <tr><td class="paramname">false</td><td>Operation failed.</td></tr>
   </table>
   </dd>
 </dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t sps_refresh_value = 10;</div><div class="line">    <a class="code" href="group___s_p_s___exported___functions.html#ga5ef2d236eb632441b5ea4d0682b151c4">sps_scan_interval_window_value_notify</a>(conn_id, sps_id, sps_refresh_value);</div><div class="line">}</div></div><!-- fragment --> 
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">     <span class="keywordtype">bool</span> ret = <a class="code" href="group___s_p_s___exported___functions.html#ga5ef2d236eb632441b5ea4d0682b151c4">sps_scan_interval_window_value_notify</a>(conn_id, sps_id, sps_refresh_value);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

@@ -213,7 +213,7 @@ static void *app_cfu_tpl_open(void)
     };
     return usb_hid_data_pipe_open(HID_INT_IN_EP_1, attr, CFU_MAX_PENDING_REQ_NUM, NULL);
 }
-static bool app_cfu_tpl_xmit(void *buf, uint32_t len)
+bool app_cfu_tpl_xmit(void *buf, uint32_t len)
 {
     if (tpl_handle == NULL)
     {

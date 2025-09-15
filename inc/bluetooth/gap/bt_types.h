@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2017, Realtek Semiconductor Corporation. All rights reserved.
  */
 
@@ -10,21 +10,18 @@ extern "C" {
 #endif
 
 /**
- * \defgroup    BT_TYPES    BT Types
+ * \defgroup    BT_TYPES    Bluetooth Types
  *
- * \brief   Defines BT related macros for the upper layers.
+ * \brief   Defines Bluetooth related macros for the Bluetooth Host.
  *
+ * \{
  */
 
 /**
- * bt_types.h
- *
- * \name    BT_COD_MAJOR_CLASS
- * \brief   BT Major device class definitions.
- * \anchor  BT_COD_MAJOR_CLASS
- */
-/**
+ * \defgroup    BT_COD_MAJOR_CLASS      Bluetooth COD Major Class
+ * \brief       Bluetooth Major device class definitions.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define MAJOR_DEVICE_CLASS_MISCELLANEOUS          ((uint32_t)0x000000)
 #define MAJOR_DEVICE_CLASS_COMPUTER               ((uint32_t)0x000100)
@@ -35,28 +32,28 @@ extern "C" {
 #define MAJOR_DEVICE_CLASS_IMAGING                ((uint32_t)0x000600)
 #define MAJOR_DEVICE_CLASS_HEALTH                 ((uint32_t)0x000900)
 #define MAJOR_DEVICE_CLASS_UNCLASSIFIED           ((uint32_t)0x001F00)
+/**
+ * End of BT_COD_MAJOR_CLASS
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_UNCLASSIFIED_MINOR_CLASS
- * \brief   BT Unclassified minor device class definition.
- * \anchor  BT_UNCLASSIFIED_MINOR_CLASS
- */
-/**
+ * \defgroup    BT_UNCLASSIFIED_MINOR_CLASS     Bluetooth Unclassified Minor Class
+ * \brief       Bluetooth Unclassified minor device class definition.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define MINOR_DEVICE_CLASS_UNCLASSIFIED           ((uint32_t)0x000000)
+/**
+ * End of BT_UNCLASSIFIED_MINOR_CLASS
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_COMPUTER_MINOR_CLASS
- * \brief   BT Minor device class definitions for major class COMPUTER.
- * \anchor  BT_COMPUTER_MINOR_CLASS
- */
-/**
+ * \defgroup    BT_COMPUTER_MINOR_CLASS     Bluetooth COMPUTER Minor Class
+ * \brief       Bluetooth Minor device class definitions for major class COMPUTER.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define MINOR_DEVICE_CLASS_DESKTOP_WORKSTATION    ((uint32_t)0x000004)
 #define MINOR_DEVICE_CLASS_SERVER_CLASS_COMPUTER  ((uint32_t)0x000008)
@@ -64,16 +61,16 @@ extern "C" {
 #define MINOR_DEVICE_CLASS_HANDHELD               ((uint32_t)0x000010)
 #define MINOR_DEVICE_CLASS_PALM_SIZED             ((uint32_t)0x000014)
 #define MINOR_DEVICE_CLASS_WEARABLE_COMPUTER      ((uint32_t)0x000018)
+/**
+ * End of BT_COMPUTER_MINOR_CLASS
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_PHONE_MINOR_CLASS
- * \brief   BT Minor device class definitions for major class PHONE.
- * \anchor  BT_PHONE_MINOR_CLASS
- */
-/**
+ * \defgroup    BT_PHONE_MINOR_CLASS    Bluetooth PHONE Minor Class
+ * \brief       Bluetooth Minor device class definitions for major class PHONE.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define MINOR_DEVICE_CLASS_CELLULAR               ((uint32_t)0x000004)
 #define MINOR_DEVICE_CLASS_CORDLESS               ((uint32_t)0x000008)
@@ -81,16 +78,16 @@ extern "C" {
 #define MINOR_DEVICE_CLASS_WIRED_MODEM            ((uint32_t)0x000010)
 #define MINOR_DEVICE_CLASS_VOICE_GATEWAY          ((uint32_t)0x000010)
 #define MINOR_DEVICE_CLASS_ISDN_GATEWAY           ((uint32_t)0x000014)
+/**
+ * End of BT_PHONE_MINOR_CLASS
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_LAN_ACCESS_POINT_MINOR_CLASS
- * \brief   BT Minor device class definitions for major class LAN_ACCESS_POINT.
- * \anchor  BT_LAN_ACCESS_POINT_MINOR_CLASS
- */
-/**
+ * \defgroup    BT_LAN_ACCESS_POINT_MINOR_CLASS     Bluetooth LAN_ACCESS_POINT Minor Class
+ * \brief       Bluetooth Minor device class definitions for major class LAN_ACCESS_POINT.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define MINOR_DEVICE_CLASS_FULLY_AVAILABLE        ((uint32_t)0x000000)
 #define MINOR_DEVICE_CLASS_1_17_PERCENT_UTILIZED  ((uint32_t)0x000020)
@@ -100,16 +97,16 @@ extern "C" {
 #define MINOR_DEVICE_CLASS_67_83_PERCENT_UTILIZED ((uint32_t)0x0000A0)
 #define MINOR_DEVICE_CLASS_83_99_PERCENT_UTILIZED ((uint32_t)0x0000C0)
 #define MINOR_DEVICE_CLASS_NO_SERVICE_AVAILABLE   ((uint32_t)0x0000E0)
+/**
+ * End of BT_LAN_ACCESS_POINT_MINOR_CLASS
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_AV_MINOR_CLASS
- * \brief   BT Minor device class definitions for major class AUDIO/VIDEO.
- * \anchor  BT_AV_MINOR_CLASS
- */
-/**
+ * \defgroup    BT_AV_MINOR_CLASS       Bluetooth AUDIO/VIDEO Minor Class
+ * \brief       Bluetooth Minor device class definitions for major class AUDIO/VIDEO.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define MINOR_DEVICE_CLASS_HEADSET                ((uint32_t)0x000004)
 #define MINOR_DEVICE_CLASS_HANDSFREE              ((uint32_t)0x000008)
@@ -127,16 +124,16 @@ extern "C" {
 #define MINOR_DEVICE_CLASS_VIDEODISPLAYSPEAKER    ((uint32_t)0x00003c)
 #define MINOR_DEVICE_CLASS_VIDEOCONFERENCING      ((uint32_t)0x000040)
 #define MINOR_DEVICE_CLASS_GAMINGTOY              ((uint32_t)0x000048)
+/**
+ * End of BT_AV_MINOR_CLASS
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_PERIPHERAL_MINOR_CLASS
- * \brief   BT Minor device class definitions for major class PERIPHERAL.
- * \anchor  BT_PERIPHERAL_MINOR_CLASS
- */
-/**
+ * \defgroup    BT_PERIPHERAL_MINOR_CLASS       Bluetooth PERIPHERAL Minor Class
+ * \brief       Bluetooth Minor device class definitions for major class PERIPHERAL.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define MINOR_DEVICE_CLASS_KEYBOARD               ((uint32_t)0x000040)
 #define MINOR_DEVICE_CLASS_POINTING_DEVICE        ((uint32_t)0x000080)
@@ -148,31 +145,31 @@ extern "C" {
 #define MINOR_DEVICE_CLASS_PERIMULT_SENSING       ((uint32_t)0x000010)
 #define MINOR_DEVICE_CLASS_PERIMULT_DIGITIZER     ((uint32_t)0x000014)
 #define MINOR_DEVICE_CLASS_PERIMULT_CARDREADER    ((uint32_t)0x000018)
+/**
+ * End of BT_PERIPHERAL_MINOR_CLASS
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_IMAGING_MINOR_CLASS
- * \brief   BT Minor device class definitions for major class IMAGING. May be combined use as mask.
- * \anchor  BT_IMAGING_MINOR_CLASS
- */
-/**
+ * \defgroup    BT_IMAGING_MINOR_CLASS      Bluetooth IMAGING Minor Class
+ * \brief       Bluetooth Minor device class definitions for major class IMAGING. May be combined use as mask.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define MINOR_DEVICE_IMAGE_DISPLAY                ((uint32_t)0x000010)
 #define MINOR_DEVICE_IMAGE_CAMERA                 ((uint32_t)0x000020)
 #define MINOR_DEVICE_IMAGE_SCANNER                ((uint32_t)0x000040)
 #define MINOR_DEVICE_IMAGE_PRINTER                ((uint32_t)0x000080)
+/**
+ * End of BT_IMAGING_MINOR_CLASS
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_HEALTH_MINOR_CLASS
- * \brief   BT Minor device class definitions for major class HEALTH.
- * \anchor  BT_HEALTH_MINOR_CLASS
- */
-/**
+ * \defgroup    BT_HEALTH_MINOR_CLASS       Bluetooth HEALTH Minor Class
+ * \brief       Bluetooth Minor device class definitions for major class HEALTH.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define MINOR_DEVICE_HEALTH_BLOODPRESSURE         ((uint32_t)0x0004)
 #define MINOR_DEVICE_HEALTH_THERMOMETER           ((uint32_t)0x0008)
@@ -182,16 +179,16 @@ extern "C" {
 #define MINOR_DEVICE_HEALTH_HEARTPULSERATE        ((uint32_t)0x0018)
 #define MINOR_DEVICE_HEALTH_DATADISPLAY           ((uint32_t)0x001C)
 #define MINOR_DEVICE_HEALTH_STEPCOUNTER           ((uint32_t)0x0020)
+/**
+ * End of BT_HEALTH_MINOR_CLASS
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_SERVICE_CLASS
- * \brief   BT Service class definitions.
- * \anchor  BT_SERVICE_CLASS
- */
-/**
+ * \defgroup    BT_SERVICE_CLASS    Bluetooth Service Class
+ * \brief       Bluetooth Service class definitions.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define SERVICE_CLASS_LIMITED_DISCOVERABLE_MODE   ((uint32_t)0x002000)
 #define SERVICE_CLASS_RESERVED1                   ((uint32_t)0x004000)
@@ -204,29 +201,29 @@ extern "C" {
 #define SERVICE_CLASS_AUDIO                       ((uint32_t)0x200000)
 #define SERVICE_CLASS_TELEPHONY                   ((uint32_t)0x400000)
 #define SERVICE_CLASS_INFORMATION                 ((uint32_t)0x800000)
+/**
+ * End of BT_SERVICE_CLASS
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_COD_MASK
- * \brief   BT Device and service bitmask in COD.
- * \anchor  BT_COD_MASK
- */
-/**
+ * \defgroup    BT_COD_MASK     Bluetooth COD Mask
+ * \brief       Bluetooth Device and service bitmask in COD.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define SERVICE_CLASS_DEVICE_MASK                 ((uint32_t)0x00001FFF)
 #define SERVICE_CLASS_SERVICE_MASK                ((uint32_t)0x00FFE000)
+/**
+ * End of BT_COD_MASK
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_UUID
- * \brief   BT Protocol/Profile UUID definitions.
- * \anchor  BT_UUID
- */
-/**
+ * \defgroup    BT_UUID     Bluetooth Protocol/Profile UUID
+ * \brief       Bluetooth Protocol/Profile UUID definitions.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define UUID_SDP                            0x0001
 #define UUID_UDP                            0x0002
@@ -317,19 +314,20 @@ extern "C" {
 #define UUID_HDP_PROFILE_SINK               0x1402
 #define UUID_GAP                            0x1800
 #define UUID_GATT                           0x1801
+/**
+ * End of BT_UUID
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_PSM
- * \brief   BT Protocol/Service Multiplexer definitions.
- * \anchor  BT_PSM
- */
-/**
+ * \defgroup    BT_PSM      Bluetooth Protocol/Service Multiplexer
+ * \brief       Bluetooth Protocol/Service Multiplexer definitions.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define PSM_SDP                             0x0001
 #define PSM_RFCOMM                          0x0003
+#define PSM_BNEP                            0x000F
 #define PSM_HID_CONTROL                     0x0011
 #define PSM_HID_INTERRUPT                   0x0013
 #define PSM_AVCTP                           0x0017
@@ -338,38 +336,38 @@ extern "C" {
 #define PSM_ATT                             0x001F
 #define PSM_RDTP                            0x00D1
 #define PSM_EATT                            0x0027
+/**
+ * End of BT_PSM
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_SDP_HEADER
- * \brief   BT SDP Header definitions.
- * \anchor  BT_SDP_HEADER
- */
-/**
+ * \defgroup    BT_SDP_HEADER   Bluetooth SDP Header
+ * \brief       Bluetooth SDP Header definitions.
  * \ingroup     BT_TYPES
+ * \{
  */
-#define SDP_UUID16_HDR                      0x19  /**< 00011 001 type:3 UUID; size: 2 bytes */
-#define SDP_UUID32_HDR                      0x1a  /**< 00011 010 type:3 UUID; size: 4 bytes */
-#define SDP_UUID128_HDR                     0x1c  /**< 00011 010 type:3 UUID; size: 16 bytes */
-#define SDP_DATA_ELEM_SEQ_HDR               0x35  /**< 00110 101 type:6 size:5(next byte) */
-#define SDP_DATA_ELEM_SEQ_HDR_2BYTE         0x36  /**< 00110 110 type:6 size:6(next two bytes) */
+#define SDP_UUID16_HDR                      0x19  /**< 00011 001 type:3 UUID; size: 2 bytes. */
+#define SDP_UUID32_HDR                      0x1a  /**< 00011 010 type:3 UUID; size: 4 bytes. */
+#define SDP_UUID128_HDR                     0x1c  /**< 00011 010 type:3 UUID; size: 16 bytes. */
+#define SDP_DATA_ELEM_SEQ_HDR               0x35  /**< 00110 101 type:6 size:5(next byte). */
+#define SDP_DATA_ELEM_SEQ_HDR_2BYTE         0x36  /**< 00110 110 type:6 size:6(next two bytes). */
 #define SDP_STRING_HDR                      0x25
 
 #define SDP_UNSIGNED_ONE_BYTE               0x08
 #define SDP_UNSIGNED_TWO_BYTE               0x09
 #define SDP_UNSIGNED_FOUR_BYTE              0x0A
 #define SDP_BOOL_ONE_BYTE                   0x28
+/**
+ * End of BT_SDP_HEADER
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_SDP_ATTRIBUTES
- * \brief   BT SDP Attribute definitions.
- * \anchor  BT_SDP_ATTRIBUTES
- */
-/**
+ * \defgroup    BT_SDP_ATTRIBUTES       Bluetooth SDP Attributes
+ * \brief       Bluetooth SDP Attribute definitions.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define SDP_ATTR_SRV_RECORD_HANDLE          0x0000
 #define SDP_ATTR_SRV_CLASS_ID_LIST          0x0001
@@ -386,29 +384,29 @@ extern "C" {
 #define SDP_ATTR_ICON_URL                   0x000C
 #define SDP_ATTR_ADD_PROTO_DESC_LIST        0x000D
 
-#define SDP_ATTR_SRV_NAME                   0x0000  /**< these attrib values are base values */
-#define SDP_ATTR_SRV_DESC                   0x0001  /**< these attrib values are base values */
-#define SDP_ATTR_PROVIDER_NAME              0x0002  /**< these attrib values are base values */
+#define SDP_ATTR_SRV_NAME                   0x0000  /**< These attrib values are base values. */
+#define SDP_ATTR_SRV_DESC                   0x0001  /**< These attrib values are base values. */
+#define SDP_ATTR_PROVIDER_NAME              0x0002  /**< These attrib values are base values. */
 
 #define SDP_ATTR_VER_NUMBER_LIST            0x0200
 #define SDP_ATTR_GROUP_ID                   0x0200
 #define SDP_ATTR_IP_SUBNET                  0x0200
 #define SDP_ATTR_SRV_DB_STATE               0x0201
 
-#define SDP_BASE_LANG_OFFSET                0x0100  /**< offset to base language */
-#define SDP_LANG_ENGLISH                    0x656e  /**< this is "en", according to ISO 639:1988 */
-#define SDP_LANG_GERMAN                     0x6465  /**< this is "de", according to ISO 639:1988 */
-#define SDP_CHARACTER_UTF8                  106     /**< UTF8 encoding, cf. http://www.isi.edu/in-notes/iana/assignments/character-sets */
+#define SDP_BASE_LANG_OFFSET                0x0100  /**< Offset to base language. */
+#define SDP_LANG_ENGLISH                    0x656e  /**< This is "en", according to ISO 639:1988. */
+#define SDP_LANG_GERMAN                     0x6465  /**< This is "de", according to ISO 639:1988. */
+#define SDP_CHARACTER_UTF8                  106     /**< UTF8 encoding, cf. http://www.isi.edu/in-notes/iana/assignments/character-sets . */
+/**
+ * End of BT_SDP_ATTRIBUTES
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_SDP_PROFILE_ATTRIBUTES
- * \brief   BT SDP Profile Attribute definitions.
- * \anchor  BT_SDP_PROFILE_ATTRIBUTES
- */
-/**
+ * \defgroup    BT_SDP_PROFILE_ATTRIBUTES   Bluetooth SDP Profile Attributes
+ * \brief       Bluetooth SDP Profile Attribute definitions.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define SDP_ATTR_L2C_PSM                    0x0200
 
@@ -427,6 +425,8 @@ extern "C" {
 #define SDP_ATTR_SECURITY_DESC              0x030A
 #define SDP_ATTR_NET_ACCESS_TYPE            0x030B
 #define SDP_ATTR_MAX_NET_ACCESS_RATE        0x030C
+#define SDP_ATTR_IPV4_SUBNET                0x030D
+#define SDP_ATTR_IPV6_SUBNET                0x030E
 #define SDP_ATTR_SUPPORTED_CAPABILITIES     0x0310
 #define SDP_ATTR_SUPPORTED_FEATURES         0x0311
 #define SDP_ATTR_SUPPORTED_FUNCTIONS        0x0312
@@ -461,28 +461,28 @@ extern "C" {
 #define SDP_ATTR_DIP_PRODUCT_VERSION        0x0203
 #define SDP_ATTR_DIP_PRIMARY_RECORD         0x0204
 #define SDP_ATTR_DIP_VENDOR_ID_SOURCE       0x0205
+/**
+ * End of BT_SDP_PROFILE_ATTRIBUTES
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_L2CAP_FIXED_CID
- * \brief   BT L2CAP Fixed cid definitions.
- * \anchor  BT_L2CAP_FIXED_CID
- */
-/**
+ * \defgroup    BT_LE_L2CAP_FIXED_CID      Bluetooth LE L2CAP Fixed CID
+ * \brief       Bluetooth LE L2CAP Fixed CID definitions.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define L2C_FIXED_CID_ATT                   0x0004
+/**
+ * End of BT_LE_L2CAP_FIXED_CID
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_LE_LOCAL_SUPPORTED_FEATURES
- * \brief   BT LE Local Supported Features definitions.
- * \anchor  BT_LE_LOCAL_SUPPORTED_FEATURES
- */
-/**
+ * \defgroup    BT_LE_LOCAL_SUPPORTED_FEATURES  Bluetooth LE Local Supported Features
+ * \brief       Bluetooth LE Local Supported Features definitions.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define LE_SUPPORT_FEATURES_MASK_ARRAY_INDEX0                           0
 
@@ -534,16 +534,16 @@ extern "C" {
 #define LE_SUPPORT_FEATURES_LE_POWER_CONTROL_REQUEST_MASK_BIT           ((uint8_t)0x02)
 #define LE_SUPPORT_FEATURES_LE_POWER_CHANGE_INDICATION_MASK_BIT         ((uint8_t)0x04)
 #define LE_SUPPORT_FEATURES_LE_PATH_LOSS_MONITORING_MASK_BIT            ((uint8_t)0x08)
+/**
+ * End of BT_LE_LOCAL_SUPPORTED_FEATURES
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_LE_SET_HOST_FEATURE
- * \brief   BT LE Set Host Feature definitions.
- * \anchor  BT_LE_SET_HOST_FEATURE
- */
-/**
- * \ingroup     BTTYPES
+ * \defgroup    BT_LE_SET_HOST_FEATURE      Bluetooth LE Set Host Feature
+ * \brief       Bluetooth LE Set Host Feature definitions.
+ * \ingroup     BT_TYPES
+ * \{
  */
 #define LE_SET_HOST_FEATURE_BIT_VALUE_DISABLE                            ((uint8_t)0x00)
 #define LE_SET_HOST_FEATURE_BIT_VALUE_ENABLE                             ((uint8_t)0x01)
@@ -551,16 +551,16 @@ extern "C" {
 
 #define LE_SET_HOST_FEATURE_BIT_NUMBER_CIS_HOST_SUPPORT                  ((uint8_t)0x20)
 #define LE_SET_HOST_FEATURE_BIT_NUMBER_RFU                               ((uint8_t)0xFF)
+/**
+ * End of BT_LE_SET_HOST_FEATURE
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_STACK_MODULE_ERROR
- * \brief   BT stack module error code mask.
- * \anchor  BT_STACK_MODULE_ERROR
- */
-/**
+ * \defgroup    BT_HOST_MODULE_ERROR   Bluetooth Host Module Error Code
+ * \brief       Bluetooth Host module error code mask.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define GAP_ERR                 0x0000
 #define HCI_ERR                 0x0100
@@ -572,18 +572,16 @@ extern "C" {
 #define RFC_ERR                 0x0B00
 #define GATT_ERR                0x0C00
 #define APP_ERR                 0x0D00
-#define IAP_ERR                 0x0E00
-#define SPP_ERR                 0x0F00
+/**
+ * End of BT_HOST_MODULE_ERROR
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_HCI_ERROR
- * \brief   BT hci error code definitions.
- * \anchor  BT_HCI_ERROR
- */
-/**
+ * \defgroup    BT_HCI_ERROR    Bluetooth HCI Error Code
+ * \brief       Bluetooth HCI error code definitions.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define HCI_SUCCESS                             0x00
 #define HCI_ERR_UNKNOWN_CMD                     0x01
@@ -641,7 +639,7 @@ extern "C" {
 #define HCI_ERR_HOST_BUSY_PAIRING               0x38  /* 56 */
 #define HCI_ERR_REJECT_NO_SUITABLE_CHANN        0x39  /* 57 */
 #define HCI_ERR_CONTROLLER_BUSY                 0x3A  /* 58 */
-#define HCI_ERR_UNACCEPTABLE_CONN_INTERVAL      0x3B  /* 59 */
+#define HCI_ERR_UNACCEPTABLE_CONN_PARAMS        0x3B  /* 59 */
 #define HCI_ERR_DIRECTED_ADV_TIMEOUT            0x3C  /* 60 */
 #define HCI_ERR_MIC_FAILURE                     0x3D  /* 61 */
 #define HCI_ERR_FAIL_TO_ESTABLISH_CONN          0x3E  /* 62 */
@@ -653,7 +651,7 @@ extern "C" {
 #define HCI_ERR_OPERATION_CANCELLED_BY_HOST     0x44
 #define HCI_ERR_OPERATION_PACKET_TOO_LONG       0x45
 
-/* hci local error code */
+/* HCI local error code */
 #define HCI_ERR_INVALID_ADDR                    0x64  /* 100 */
 #define HCI_ERR_TIMEOUT                         0x65  /* 101 */
 #define HCI_ERR_OUT_OF_SYNC                     0x66  /* 102 */
@@ -663,16 +661,16 @@ extern "C" {
 #define HCI_ERR_LOCAL_KEY_MISSING               0x6A  /* 106 */
 #define HCI_ERR_AUDIO_STOP                      0xFE  /* 254 */
 #define HCI_ERR_CONN_ROLESWAP                   0xFF  /* 255 */
+/**
+ * End of BT_HCI_ERROR
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_L2CAP_ERROR
- * \brief   BT l2cap error code definitions.
- * \anchor  BT_L2CAP_ERROR
- */
-/**
+ * \defgroup    BT_L2CAP_ERROR      Bluetooth L2CAP Error Code
+ * \brief       Bluetooth L2CAP error code definitions.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define L2C_SUCCESS                             0x00
 
@@ -685,7 +683,7 @@ extern "C" {
 #define L2C_CONN_RSP_INVALID_SOURCE_CID         0x0006
 #define L2C_CONN_RSP_SOURCE_CID_ALLOCATED       0x0007
 
-/* requset cmd reject reasons */
+/* request cmd reject reasons */
 #define L2C_CMD_REJ_NOT_UNDERSTOOD              0x0000
 #define L2C_CMD_REJ_SIGNAL_MTU_EXCEEDED         0x0001
 #define L2C_CMD_REJ_INVALID_CID_IN_REQ          0x0002
@@ -731,12 +729,12 @@ extern "C" {
 #define L2C_ECFC_RCFG_RSP_INVALID_DCID                          0x0003
 #define L2C_ECFC_RCFG_RSP_UNACCEPTABLE_PARAMS                   0x0004
 
-/* status for connection updata response */
+/* status for connection update response */
 #define L2C_LE_CONN_UPDATE_ACCEPT               0x0000
 #define L2C_LE_CONN_UPDATE_RSP_REJECT           0x0001
 #define L2C_LE_CONN_UPDATE_RSP_TOUT             0x0002
 
-/* l2cap error code */
+/* L2CAP error code */
 #define L2C_ERR_REJ_BASE                        0x0010
 #define L2C_ERR_CFG_BASE                        0x0020
 #define L2C_ERR_LE_CREDIT_BASE                  0x0030
@@ -785,16 +783,16 @@ extern "C" {
 #define L2C_ERR_VND_INVALID_MODE                (L2C_ERR_VND_BASE + 0x07)
 #define L2C_ERR_VND_REMOTE_DISCONNECT           (L2C_ERR_VND_BASE + 0x08)
 #define L2C_ERR_VND_INVALID_PARAM               (L2C_ERR_VND_BASE + 0x09)
+/**
+ * End of BT_L2CAP_ERROR
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_SDP_ERROR
- * \brief   BT sdp error code definitions.
- * \anchor  BT_SDP_ERROR
- */
-/**
+ * \defgroup    BT_SDP_ERROR    Bluetooth SDP Error Code
+ * \brief       Bluetooth SDP error code definitions.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define SDP_ERR_INVALID_VERSION                 0x01
 #define SDP_ERR_INVALID_SRV_RECORD_HANDLE       0x02
@@ -803,86 +801,86 @@ extern "C" {
 #define SDP_ERR_INVALID_CONTINUATION_STATE      0x05
 #define SDP_ERR_INSUFFICIENT_RESOURCE           0x06
 
-/* sdp local error code */
+/* SDP local error code */
 #define SDP_ERR_NO_RESOURCE                     0x61
 #define SDP_ERR_INVALID_PARAM                   0x62
 #define SDP_ERR_INVALID_STATE                   0x63
-#define SDP_ERR_UNHANDLED_CODE                  0x64  /**< 100 Client received unhandled SDP opcode */
-#define SDP_ERR_TIMEOUT                         0x65  /**< 101 No answer from server (timeout)      */
-#define SDP_ERR_INVALID_RSP_SYNTAX              0x66  /**< 102 Syntax Error in Response             */
-#define SDP_ERR_NOT_FOUND                       0xC8  /**< 200 not really an error code             */
+#define SDP_ERR_UNHANDLED_CODE                  0x64
+#define SDP_ERR_TIMEOUT                         0x65
+#define SDP_ERR_INVALID_RSP_SYNTAX              0x66
+#define SDP_ERR_NOT_FOUND                       0xC8
+/**
+ * End of BT_SDP_ERROR
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_ATT_ERROR
- * \brief   BT att error code definitions.
- * \anchor  BT_ATT_ERROR
- */
-/**
+ * \defgroup    BT_ATT_ERROR    Bluetooth ATT Error Code
+ * \brief       Bluetooth ATT error code definitions.
  * \ingroup     BT_TYPES
+ * \{
  */
-#define ATT_SUCCESS                         0    /**< internal value .. */
-#define ATT_ERR_INVALID_HANDLE              0x01 /**< Attribute handle value given was not valid on this attribute server */
-#define ATT_ERR_READ_NOT_PERMITTED          0x02 /**< Attribute cannot be read */
-#define ATT_ERR_WRITE_NOT_PERMITTED         0x03 /**< Attribute cannot be written */
-#define ATT_ERR_INVALID_PDU                 0x04 /**< The attribute PDU was invalid */
-#define ATT_ERR_INSUFFICIENT_AUTHEN         0x05 /**< The attribute requires authentication before it can be read or written */
-#define ATT_ERR_UNSUPPORTED_REQ             0x06 /**< Attribute server doesn't support the request received from the attribute client */
-#define ATT_ERR_INVALID_OFFSET              0x07 /**< Offset specified was past the end of the attribute */
-#define ATT_ERR_INSUFFICIENT_AUTHOR         0x08 /**< The attribute requires an authorization before it can be read or written */
-#define ATT_ERR_PREP_QUEUE_FULL             0x09 /**< Too many prepare writes have been queued */
-#define ATT_ERR_ATTR_NOT_FOUND              0x0A /**< No attribute found within the given attribute handle range */
-#define ATT_ERR_ATTR_NOT_LONG               0x0B /**< Attribute cannot be read or written using the Read Blob Request or Prepare Write Request */
-#define ATT_ERR_INSUFFICIENT_KEY_SIZE       0x0C /**< The Encryption Key Size used for encrypting this link is insufficient */
-#define ATT_ERR_INVALID_VALUE_SIZE          0x0D /**< The attribute value length is invalid for the operation */
-#define ATT_ERR_UNLIKELY                    0x0E /**< The attribute request that was requested has encountered an error that was very unlikely, and therefore could not be completed as requested */
-#define ATT_ERR_INSUFFICIENT_ENCRYPT        0x0F /**< The attribute requires encryption before it can be read or written */
-#define ATT_ERR_UNSUPPORTED_GROUP_TYPE      0x10 /**< The attribute type is not a supported grouping attribute as defined by a higher layer specification */
-#define ATT_ERR_INSUFFICIENT_RESOURCES      0x11 /**< Insufficient Resources to complete the request */
+#define ATT_SUCCESS                         0    /**< Success. */
+#define ATT_ERR_INVALID_HANDLE              0x01 /**< Attribute handle value given was not valid on this attribute server. */
+#define ATT_ERR_READ_NOT_PERMITTED          0x02 /**< Attribute cannot be read. */
+#define ATT_ERR_WRITE_NOT_PERMITTED         0x03 /**< Attribute cannot be written. */
+#define ATT_ERR_INVALID_PDU                 0x04 /**< The attribute PDU was invalid. */
+#define ATT_ERR_INSUFFICIENT_AUTHEN         0x05 /**< The attribute requires authentication before it can be read or written. */
+#define ATT_ERR_UNSUPPORTED_REQ             0x06 /**< Attribute server doesn't support the request received from the attribute client. */
+#define ATT_ERR_INVALID_OFFSET              0x07 /**< Offset specified was past the end of the attribute. */
+#define ATT_ERR_INSUFFICIENT_AUTHOR         0x08 /**< The attribute requires an authorization before it can be read or written. */
+#define ATT_ERR_PREP_QUEUE_FULL             0x09 /**< Too many prepare writes have been queued. */
+#define ATT_ERR_ATTR_NOT_FOUND              0x0A /**< No attribute found within the given attribute handle range. */
+#define ATT_ERR_ATTR_NOT_LONG               0x0B /**< Attribute cannot be read or written using the Read Blob Request or Prepare Write Request. */
+#define ATT_ERR_INSUFFICIENT_KEY_SIZE       0x0C /**< The Encryption Key Size used for encrypting this link is insufficient. */
+#define ATT_ERR_INVALID_VALUE_SIZE          0x0D /**< The attribute value length is invalid for the operation. */
+#define ATT_ERR_UNLIKELY                    0x0E /**< The attribute request that was requested has encountered an error that was very unlikely, and therefore could not be completed as requested. */
+#define ATT_ERR_INSUFFICIENT_ENCRYPT        0x0F /**< The attribute requires encryption before it can be read or written. */
+#define ATT_ERR_UNSUPPORTED_GROUP_TYPE      0x10 /**< The attribute type is not a supported grouping attribute as defined by a higher layer specification. */
+#define ATT_ERR_INSUFFICIENT_RESOURCES      0x11 /**< Insufficient Resources to complete the request. */
 #define ATT_ERR_DATABASE_OUT_OF_SYNC        0x12 /**< The server requests the client to rediscover the database. */
 #define ATT_ERR_VALUE_NOT_ALLOWED           0x13 /**< The attribute parameter value was not allowed. */
 
 /* Application Error 0x80 - 0x9F */
-#define ATT_ERR_INVALID_VALUE               0x80 /**< The attribute value is invalid for the operation */
+#define ATT_ERR_INVALID_VALUE               0x80 /**< The attribute value is invalid for the operation. */
 
-/* manufacturer specific error codes that are "missing" in GATT spec. >= 0xC0:   */
-#define ATT_ERR_INVALID_CCC_BITS            0xC0 /**< Invalid client char. config. bits */
-#define ATT_ERR_INVALID_SIGNED_COUNT        0xC1 /**< Invalid sign count */
-#define ATT_ERR_INVALID_SIGNED_MAC_FAILED   0xC2 /**< Invalid sign mac value */
+/* Manufacturer specific error codes that are "missing" in GATT spec. >= 0xC0:   */
+#define ATT_ERR_INVALID_CCC_BITS            0xC0 /**< Invalid client characteristic config bits. */
+#define ATT_ERR_INVALID_SIGNED_COUNT        0xC1 /**< Invalid sign count. */
+#define ATT_ERR_INVALID_SIGNED_MAC_FAILED   0xC2 /**< Invalid sign mac value. */
 #define ATT_ERR_MIN_APPLIC_CODE             0xC3
 
-/* error codes common to various profiles >= 0xE0 (CSS)*/
-#define ATT_ERR_WRITE_REQUEST_REJECTED      0xFC /**< Write Request Rejected */
-#define ATT_ERR_CCCD_IMPROPERLY_CONFIGURED  0xFD /**< CCCD improperly configured */
-#define ATT_ERR_PROC_ALREADY_IN_PROGRESS    0xFE /**< Procedure Already in Progress */
+/* Common profile and service error codes >= 0xE0 (CSS)*/
+#define ATT_ERR_WRITE_REQUEST_REJECTED      0xFC /**< Write Request Rejected. */
+#define ATT_ERR_CCCD_IMPROPERLY_CONFIGURED  0xFD /**< CCCD improperly configured. */
+#define ATT_ERR_PROC_ALREADY_IN_PROGRESS    0xFE /**< Procedure Already in Progress. */
 #define ATT_ERR_OUT_OF_RANGE                0xFF /**< An attribute value is out of range as defined by a profile or service specification. */
+/**
+ * End of BT_ATT_ERROR
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_RFC_ERROR
- * \brief   BT rfcomm error code definitions.
- * \anchor  BT_RFC_ERROR
- */
-/**
+ * \defgroup    BT_RFC_ERROR    Bluetooth RFCOMM Error Code
+ * \brief       Bluetooth RFCOMM error code definitions.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define RFC_SUCCESS                     0x00
 #define RFC_ERR_TIMEOUT                 0x01
 #define RFC_ERR_NSC                     0x02
 #define RFC_ERR_INVALID_STATE           0x03
 #define RFC_ERR_REJECT_SECURITY         0x04
+/**
+ * End of BT_RFC_ERROR
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_GATT_ERROR
- * \brief   BT gatt error code definitions.
- * \anchor  BT_GATT_ERROR
- */
-/**
+ * \defgroup    BT_GATT_ERROR   Bluetooth GATT Error Code
+ * \brief       Bluetooth GATT error code definitions.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define GATT_SUCCESS                        0x00
 #define GATT_ERR_OUT_OF_RESOURCE            0x01
@@ -902,8 +900,18 @@ extern "C" {
 #define GATT_ERR_NOT_AUTHENTICATED          0x0F
 #define GATT_ERR_NOT_ENCRYPTED              0x10
 #define GATT_ERR_PROC_FAIL                  0x11
+/**
+ * End of BT_GATT_ERROR
+ * \}
+ */
 
-/* sm error code */
+/**
+ * \defgroup    BT_SM_ERROR     Bluetooth SM Error Code
+ * \brief       Bluetooth SM error code definitions.
+ * \ingroup     BT_TYPES
+ * \{
+ */
+/* SM error code */
 #define SM_SUCCESS                          0x00
 /* SMP_OP_PAIRING_FAILED causes */
 #define SMP_ERR_SUCCESS                         0x00
@@ -937,16 +945,16 @@ extern "C" {
 #define SM_ERR_UNKNOWN                          0xED
 #define SM_ERR_LINK_DEACTIVATED                 0xEE
 #define SM_ERR_NO_PAIRABLE_MODE                 0xEF
+/**
+ * End of BT_SM_ERROR
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_BTIF_ERROR
- * \brief   BT btif error code definitions.
- * \anchor  BT_BTIF_ERROR
- */
-/**
+ * \defgroup    BT_BTIF_ERROR   Bluetooth BTIF Error Code
+ * \brief       Bluetooth BTIF error code definitions.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define BTIF_ERR                0x0000
 #define BTIF_SUCCESS                        0x00
@@ -967,16 +975,16 @@ extern "C" {
 
 #define BTIF_ERR_UNSPECIFIED                0xFD
 #define BTIF_ERR_NOT_SUPPORTED              0xFE
+/**
+ * End of BT_BTIF_ERROR
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_GAP_ERROR
- * \brief   BT GAP error code definitions.
- * \anchor  BT_GAP_ERROR
- */
-/**
+ * \defgroup    BT_GAP_ERROR    Bluetooth GAP Error Code
+ * \brief       Bluetooth GAP error code definitions.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define GAP_SUCCESS                         0x00
 #define GAP_ACCEPT                          0x01
@@ -998,40 +1006,34 @@ extern "C" {
 #define GAP_ERR_SW_RESET                    0xFC
 #define GAP_ERR_UNSPECIFIED                 0xFD
 #define GAP_ERR_NOT_SUPPORTED               0xFE
+/**
+ * End of BT_GAP_ERROR
+ * \}
+ */
 
 /**
- * bt_types.h
- *
- * \name    BT_APP_ERROR
- * \brief   BT APP error code definitions.
- * \anchor  BT_APP_ERROR
- */
-/**
+ * \defgroup    BT_APP_ERROR    Bluetooth APP Error Code
+ * \brief       Bluetooth APP error code definitions.
  * \ingroup     BT_TYPES
+ * \{
  */
 #define APP_SUCCESS                             0x00
 #define APP_ERR_PENDING                         0x01
 #define APP_ERR_ACCEPT                          0x03
 #define APP_ERR_REJECT                          0x04
 #define APP_ERR_NOT_RELEASE                     0x05
-
-#define IAP_SUCCESS                             0x00
-#define IAP_ERR_RETRANS_CNT_EXCEED              0x01
-
-#define SPP_SUCCESS                             0x00
-#define SPP_ERR_BROKEN_LINK                     0x01
-
 /**
- * bt_types.h
- *
- * \name    BT_BYTE_ORDER
- * \brief   BT buffer/array byte-order utility macros.
- * \anchor  BT_BYTE_ORDER
+ * End of BT_APP_ERROR
+ * \}
  */
+
 /**
+ * \defgroup    BT_BYTE_ORDER       Bluetooth Byte-order
+ * \brief       Bluetooth buffer/array byte-order utility macros.
  * \ingroup     BT_TYPES
+ * \{
  */
-/** Calculate integer bit count of b'1 */
+/** Calculate integer bit count of b'1. */
 #define INT_BIT_COUNT(integer, count)   {               \
         count = 0;                                      \
         while (integer)                                 \
@@ -1041,12 +1043,12 @@ extern "C" {
         }                                               \
     }
 
-/** Stream skip len */
+/** Stream skip len. */
 #define STREAM_SKIP_LEN(s, len)     {                   \
         s += len;                                       \
     }
 
-/** Stream to array */
+/** Stream to array. */
 #define STREAM_TO_ARRAY(a, s, len)  {                   \
         uint32_t ii;                                    \
         for (ii = 0; ii < len; ii++)                    \
@@ -1055,7 +1057,7 @@ extern "C" {
         }                                               \
     }
 
-/** Array to stream */
+/** Array to stream. */
 #define ARRAY_TO_STREAM(s, a, len)  {                   \
         uint32_t ii;                                    \
         for (ii = 0; ii < len; ii++)                    \
@@ -1064,20 +1066,20 @@ extern "C" {
         }                                               \
     }
 
-/** Little Endian stream to uint8 */
+/** Little Endian stream to uint8. */
 #define LE_STREAM_TO_UINT8(u8, s)   {                   \
         u8  = (uint8_t)(*s);                            \
         s  += 1;                                        \
     }
 
-/** Little Endian stream to uint16 */
+/** Little Endian stream to uint16. */
 #define LE_STREAM_TO_UINT16(u16, s) {                   \
         u16  = ((uint16_t)(*(s + 0)) << 0) +            \
                ((uint16_t)(*(s + 1)) << 8);             \
         s   += 2;                                       \
     }
 
-/** Little Endian stream to uint24 */
+/** Little Endian stream to uint24. */
 #define LE_STREAM_TO_UINT24(u24, s) {                   \
         u24  = ((uint32_t)(*(s + 0)) <<  0) +           \
                ((uint32_t)(*(s + 1)) <<  8) +           \
@@ -1085,7 +1087,7 @@ extern "C" {
         s   += 3;                                       \
     }
 
-/** Little Endian stream to uint32 */
+/** Little Endian stream to uint32. */
 #define LE_STREAM_TO_UINT32(u32, s) {                   \
         u32  = ((uint32_t)(*(s + 0)) <<  0) +           \
                ((uint32_t)(*(s + 1)) <<  8) +           \
@@ -1094,7 +1096,7 @@ extern "C" {
         s   += 4;                                       \
     }
 
-/** Little Endian stream to uint64 */
+/** Little Endian stream to uint64. */
 #define LE_STREAM_TO_UINT64(u64, s) {                   \
         u64  = ((uint64_t)(*(s + 0)) <<  0) +           \
                ((uint64_t)(*(s + 1)) <<  8) +           \
@@ -1107,25 +1109,25 @@ extern "C" {
         s   += 8;                                       \
     }
 
-/** Little Endian uint8 to stream */
+/** Little Endian uint8 to stream. */
 #define LE_UINT8_TO_STREAM(s, u8)   {                   \
         *s++ = (uint8_t)(u8);                           \
     }
 
-/** Little Endian uint16 to stream */
+/** Little Endian uint16 to stream. */
 #define LE_UINT16_TO_STREAM(s, u16) {                   \
         *s++ = (uint8_t)((u16) >> 0);                   \
         *s++ = (uint8_t)((u16) >> 8);                   \
     }
 
-/** Little Endian uint24 to stream */
+/** Little Endian uint24 to stream. */
 #define LE_UINT24_TO_STREAM(s, u24) {                   \
         *s++ = (uint8_t)((u24) >>  0);                  \
         *s++ = (uint8_t)((u24) >>  8);                  \
         *s++ = (uint8_t)((u24) >> 16);                  \
     }
 
-/** Little Endian uint32 to stream */
+/** Little Endian uint32 to stream. */
 #define LE_UINT32_TO_STREAM(s, u32) {                   \
         *s++ = (uint8_t)((u32) >>  0);                  \
         *s++ = (uint8_t)((u32) >>  8);                  \
@@ -1133,7 +1135,7 @@ extern "C" {
         *s++ = (uint8_t)((u32) >> 24);                  \
     }
 
-/** Little Endian uint64 to stream */
+/** Little Endian uint64 to stream. */
 #define LE_UINT64_TO_STREAM(s, u64) {                   \
         *s++ = (uint8_t)((u64) >>  0);                  \
         *s++ = (uint8_t)((u64) >>  8);                  \
@@ -1145,25 +1147,25 @@ extern "C" {
         *s++ = (uint8_t)((u64) >> 56);                  \
     }
 
-/** Little Endian array to uint8 */
+/** Little Endian array to uint8. */
 #define LE_ARRAY_TO_UINT8(u8, a)    {                   \
         u8  = (uint8_t)(*(a + 0));                      \
     }
 
-/** Little Endian array to uint16 */
+/** Little Endian array to uint16. */
 #define LE_ARRAY_TO_UINT16(u16, a)  {                   \
         u16 = ((uint16_t)(*(a + 0)) << 0) +             \
               ((uint16_t)(*(a + 1)) << 8);              \
     }
 
-/** Little Endian array to uint24 */
+/** Little Endian array to uint24. */
 #define LE_ARRAY_TO_UINT24(u24, a)  {                   \
         u24 = ((uint32_t)(*(a + 0)) <<  0) +            \
               ((uint32_t)(*(a + 1)) <<  8) +            \
               ((uint32_t)(*(a + 2)) << 16);             \
     }
 
-/** Little Endian array to uint32 */
+/** Little Endian array to uint32. */
 #define LE_ARRAY_TO_UINT32(u32, a) {                    \
         u32 = ((uint32_t)(*(a + 0)) <<  0) +            \
               ((uint32_t)(*(a + 1)) <<  8) +            \
@@ -1171,7 +1173,7 @@ extern "C" {
               ((uint32_t)(*(a + 3)) << 24);             \
     }
 
-/** Little Endian array to uint64 */
+/** Little Endian array to uint64. */
 #define LE_ARRAY_TO_UINT64(u64, a) {                    \
         u64 = ((uint64_t)(*(a + 0)) <<  0) +            \
               ((uint64_t)(*(a + 1)) <<  8) +            \
@@ -1183,25 +1185,25 @@ extern "C" {
               ((uint64_t)(*(a + 7)) << 56);             \
     }
 
-/** Little Endian uint8 to array */
+/** Little Endian uint8 to array. */
 #define LE_UINT8_TO_ARRAY(a, u8)    {                   \
         *((uint8_t *)(a) + 0) = (uint8_t)(u8);          \
     }
 
-/** Little Endian uint16 to array */
+/** Little Endian uint16 to array. */
 #define LE_UINT16_TO_ARRAY(a, u16)  {                   \
         *((uint8_t *)(a) + 0) = (uint8_t)((u16) >> 0);  \
         *((uint8_t *)(a) + 1) = (uint8_t)((u16) >> 8);  \
     }
 
-/** Little Endian uint24 to array */
+/** Little Endian uint24 to array. */
 #define LE_UINT24_TO_ARRAY(a, u24) {                    \
         *((uint8_t *)(a) + 0) = (uint8_t)((u24) >>  0); \
         *((uint8_t *)(a) + 1) = (uint8_t)((u24) >>  8); \
         *((uint8_t *)(a) + 2) = (uint8_t)((u24) >> 16); \
     }
 
-/** Little Endian uint32 to array */
+/** Little Endian uint32 to array. */
 #define LE_UINT32_TO_ARRAY(a, u32) {                    \
         *((uint8_t *)(a) + 0) = (uint8_t)((u32) >>  0); \
         *((uint8_t *)(a) + 1) = (uint8_t)((u32) >>  8); \
@@ -1209,7 +1211,7 @@ extern "C" {
         *((uint8_t *)(a) + 3) = (uint8_t)((u32) >> 24); \
     }
 
-/** Little Endian uint64 to array */
+/** Little Endian uint64 to array. */
 #define LE_UINT64_TO_ARRAY(a, u64) {                    \
         *((uint8_t *)(a) + 0) = (uint8_t)((u64) >>  0); \
         *((uint8_t *)(a) + 1) = (uint8_t)((u64) >>  8); \
@@ -1221,20 +1223,20 @@ extern "C" {
         *((uint8_t *)(a) + 7) = (uint8_t)((u64) >> 56); \
     }
 
-/** Big Endian stream to uint8 */
+/** Big Endian stream to uint8. */
 #define BE_STREAM_TO_UINT8(u8, s)   {                   \
         u8   = (uint8_t)(*(s + 0));                     \
         s   += 1;                                       \
     }
 
-/** Big Endian stream to uint16 */
+/** Big Endian stream to uint16. */
 #define BE_STREAM_TO_UINT16(u16, s) {                   \
         u16  = ((uint16_t)(*(s + 0)) << 8) +            \
                ((uint16_t)(*(s + 1)) << 0);             \
         s   += 2;                                       \
     }
 
-/** Big Endian stream to uint24 */
+/** Big Endian stream to uint24. */
 #define BE_STREAM_TO_UINT24(u24, s) {                   \
         u24  = ((uint32_t)(*(s + 0)) << 16) +           \
                ((uint32_t)(*(s + 1)) <<  8) +           \
@@ -1242,7 +1244,7 @@ extern "C" {
         s   += 3;                                       \
     }
 
-/** Big Endian stream to uint32 */
+/** Big Endian stream to uint32. */
 #define BE_STREAM_TO_UINT32(u32, s) {                   \
         u32  = ((uint32_t)(*(s + 0)) << 24) +           \
                ((uint32_t)(*(s + 1)) << 16) +           \
@@ -1251,7 +1253,7 @@ extern "C" {
         s   += 4;                                       \
     }
 
-/** Big Endian stream to uint64 */
+/** Big Endian stream to uint64. */
 #define BE_STREAM_TO_UINT64(u64, s) {                   \
         u64  = ((uint64_t)(*(s + 0)) << 56) +           \
                ((uint64_t)(*(s + 1)) << 48) +           \
@@ -1264,25 +1266,25 @@ extern "C" {
         s   += 8;                                       \
     }
 
-/** Big Endian uint8 to stream */
+/** Big Endian uint8 to stream. */
 #define BE_UINT8_TO_STREAM(s, u8)   {                   \
         *s++ = (uint8_t)(u8);                           \
     }
 
-/** Big Endian uint16 to stream */
+/** Big Endian uint16 to stream. */
 #define BE_UINT16_TO_STREAM(s, u16) {                   \
         *s++ = (uint8_t)((u16) >> 8);                   \
         *s++ = (uint8_t)((u16) >> 0);                   \
     }
 
-/** Big Endian uint24 to stream */
+/** Big Endian uint24 to stream. */
 #define BE_UINT24_TO_STREAM(s, u24) {                   \
         *s++ = (uint8_t)((u24) >> 16);                  \
         *s++ = (uint8_t)((u24) >>  8);                  \
         *s++ = (uint8_t)((u24) >>  0);                  \
     }
 
-/** Big Endian uint32 to stream */
+/** Big Endian uint32 to stream. */
 #define BE_UINT32_TO_STREAM(s, u32) {                   \
         *s++ = (uint8_t)((u32) >> 24);                  \
         *s++ = (uint8_t)((u32) >> 16);                  \
@@ -1290,7 +1292,7 @@ extern "C" {
         *s++ = (uint8_t)((u32) >>  0);                  \
     }
 
-/** Big Endian uint64 to stream */
+/** Big Endian uint64 to stream. */
 #define BE_UINT64_TO_STREAM(s, u64) {                   \
         *s++ = (uint8_t)((u64) >> 56);                  \
         *s++ = (uint8_t)((u64) >> 48);                  \
@@ -1302,25 +1304,25 @@ extern "C" {
         *s++ = (uint8_t)((u64) >>  0);                  \
     }
 
-/** Big Endian array to uint8 */
+/** Big Endian array to uint8. */
 #define BE_ARRAY_TO_UINT8(u8, a)    {                   \
         u8  = (uint8_t)(*(a + 0));                      \
     }
 
-/** Big Endian array to uint16 */
+/** Big Endian array to uint16. */
 #define BE_ARRAY_TO_UINT16(u16, a)  {                   \
         u16 = ((uint16_t)(*(a + 0)) << 8) +             \
               ((uint16_t)(*(a + 1)) << 0);              \
     }
 
-/** Big Endian array to uint24 */
+/** Big Endian array to uint24. */
 #define BE_ARRAY_TO_UINT24(u24, a)  {                   \
         u24 = ((uint32_t)(*(a + 0)) << 16) +            \
               ((uint32_t)(*(a + 1)) <<  8) +            \
               ((uint32_t)(*(a + 2)) <<  0);             \
     }
 
-/** Big Endian array to uint32 */
+/** Big Endian array to uint32. */
 #define BE_ARRAY_TO_UINT32(u32, a)  {                   \
         u32 = ((uint32_t)(*(a + 0)) << 24) +            \
               ((uint32_t)(*(a + 1)) << 16) +            \
@@ -1328,7 +1330,7 @@ extern "C" {
               ((uint32_t)(*(a + 3)) <<  0);             \
     }
 
-/** Big Endian array to uint64 */
+/** Big Endian array to uint64. */
 #define BE_ARRAY_TO_UINT64(u64, a)  {                   \
         u64 = ((uint64_t)(*(a + 0)) << 56) +            \
               ((uint64_t)(*(a + 1)) << 48) +            \
@@ -1340,25 +1342,25 @@ extern "C" {
               ((uint64_t)(*(a + 7)) <<  0);             \
     }
 
-/** Big Endian uint8 to array */
+/** Big Endian uint8 to array. */
 #define BE_UINT8_TO_ARRAY(a, u8)    {                   \
         *((uint8_t *)(a) + 0) = (uint8_t)(u8);          \
     }
 
-/** Big Endian uint16 to array */
+/** Big Endian uint16 to array. */
 #define BE_UINT16_TO_ARRAY(a, u16)  {                   \
         *((uint8_t *)(a) + 0) = (uint8_t)((u16) >> 8);  \
         *((uint8_t *)(a) + 1) = (uint8_t)((u16) >> 0);  \
     }
 
-/** Big Endian uint24 to array */
+/** Big Endian uint24 to array. */
 #define BE_UINT24_TO_ARRAY(a, u24)  {                   \
         *((uint8_t *)(a) + 0) = (uint8_t)((u24) >> 16); \
         *((uint8_t *)(a) + 1) = (uint8_t)((u24) >>  8); \
         *((uint8_t *)(a) + 2) = (uint8_t)((u24) >>  0); \
     }
 
-/** Big Endian uint32 to array */
+/** Big Endian uint32 to array. */
 #define BE_UINT32_TO_ARRAY(a, u32)  {                   \
         *((uint8_t *)(a) + 0) = (uint8_t)((u32) >> 24); \
         *((uint8_t *)(a) + 1) = (uint8_t)((u32) >> 16); \
@@ -1366,7 +1368,7 @@ extern "C" {
         *((uint8_t *)(a) + 3) = (uint8_t)((u32) >>  0); \
     }
 
-/** Big Endian uint64 to array */
+/** Big Endian uint64 to array. */
 #define BE_UINT64_TO_ARRAY(a, u64)  {                   \
         *((uint8_t *)(a) + 0) = (uint8_t)((u64) >> 56); \
         *((uint8_t *)(a) + 1) = (uint8_t)((u64) >> 48); \
@@ -1377,9 +1379,18 @@ extern "C" {
         *((uint8_t *)(a) + 6) = (uint8_t)((u64) >>  8); \
         *((uint8_t *)(a) + 7) = (uint8_t)((u64) >>  0); \
     }
+/**
+ * End of BT_BYTE_ORDER
+ * \}
+ */
 
 #ifdef __cplusplus
 }
 #endif
+
+/**
+ * End of BT_TYPES
+ * \}
+ */
 
 #endif /* _BT_TYPES_H_ */

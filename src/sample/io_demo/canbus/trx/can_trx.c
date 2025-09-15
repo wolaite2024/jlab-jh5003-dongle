@@ -57,12 +57,12 @@ static void can_board_init(void)
 
 static void can_driver_init(void)
 {
-    CAN_DeInit();
+    CAN_DeInit(CAN0);
 
     /* Enable rcc for CAN before initialize. */
-    RCC_PeriphClockCmd(APBPeriph_CAN, APBPeriph_CAN_CLOCK, ENABLE);
+    RCC_PeriphClockCmd(APBPeriph_CAN0, APBPeriph_CAN0_CLOCK, ENABLE);
 
-    IO_PRINT_INFO1("can_driver_init: BUS state: %d, waiting...", CAN_GetBusState());
+    IO_PRINT_INFO1("can_driver_init: BUS state: %d, waiting...", CAN_GetBusState(CAN0));
 
     /* Initialize CAN. */
     CAN_InitTypeDef init_struct = {0};
@@ -84,7 +84,7 @@ static void can_driver_init(void)
     init_struct.CAN_FdBitTiming.b.can_fd_sjw = 1;
     init_struct.CAN_FdBitTiming.b.can_fd_tseg1 = 1;
     init_struct.CAN_FdBitTiming.b.can_fd_tseg2 = 4;
-    init_struct.CAN_FdSspCal.b.can_fd_ssp_auto = ENABLE;
+    init_struct.CAN_FdSspAutoEn = ENABLE;
     init_struct.CAN_FdSspCal.b.can_fd_ssp_dco = \
                                                 (init_struct.CAN_FdBitTiming.b.can_fd_tseg1 + 2) * (init_struct.CAN_FdBitTiming.b.can_fd_brp + 1);
     init_struct.CAN_FdSspCal.b.can_fd_ssp_min = 0;
@@ -101,14 +101,14 @@ static void can_driver_init(void)
 
     RamVectorTableUpdate(CAN_VECTORn, (IRQ_Fun)can_trx_handler);
 
-    CAN_Init(&init_struct);
+    CAN_Init(CAN0, &init_struct);
 
     /* CAN enable */
-    CAN_Cmd(ENABLE);
+    CAN_Cmd(CAN0, ENABLE);
 
     /* CAN interrupts enable */
-    CAN_INTConfig((CAN_BUS_OFF_INT | CAN_WAKE_UP_INT | CAN_ERROR_INT |
-                   CAN_RX_INT | CAN_TX_INT), ENABLE);
+    CAN_INTConfig(CAN0, (CAN_BUS_OFF_INT | CAN_ERROR_INT |
+                         CAN_RX_INT | CAN_TX_INT), ENABLE);
 
     /* NVIC enable */
     NVIC_InitTypeDef NVIC_InitStruct;
@@ -118,7 +118,7 @@ static void can_driver_init(void)
     NVIC_Init(&NVIC_InitStruct);
 
     /* polling CAN bus on status */
-    while (CAN_GetBusState() != CAN_BUS_STATE_ON)
+    while (CAN_GetBusState(CAN0) != CAN_BUS_STATE_ON)
     {
         __asm volatile
         (
@@ -126,11 +126,11 @@ static void can_driver_init(void)
         );
     }
 
-    IO_PRINT_INFO1("can_driver_init: BUS ON %d", CAN_GetBusState());
+    IO_PRINT_INFO1("can_driver_init: BUS ON %d", CAN_GetBusState(CAN0));
 }
 
-void can_basic_tx(uint32_t buf_id, CANDataFrameSel_TypeDef frame_type, \
-                  uint16_t frame_id, uint32_t ext_id, uint8_t *tx_data, uint8_t data_len)
+static void can_basic_tx(uint32_t buf_id, CANDataFrameSel_TypeDef frame_type, \
+                         uint16_t frame_id, uint32_t ext_id, uint8_t *tx_data, uint8_t data_len)
 {
     /* Set CAN Tx message buffer. */
     CANError_TypeDef tx_error;
@@ -142,6 +142,7 @@ void can_basic_tx(uint32_t buf_id, CANDataFrameSel_TypeDef frame_type, \
     tx_frame_type.standard_frame_id = frame_id;
     tx_frame_type.frame_brs_bit = CAN_BRS_NO_SWITCH_BIT_TIMING;
     tx_frame_type.auto_reply_bit = DISABLE;
+    tx_frame_type.extend_frame_id = 0;
 
     switch (frame_type)
     {
@@ -158,10 +159,10 @@ void can_basic_tx(uint32_t buf_id, CANDataFrameSel_TypeDef frame_type, \
         break;
     }
 
-    CAN_MBTxINTConfig(tx_frame_type.msg_buf_id, ENABLE);
-    tx_error = CAN_SetMsgBufTxMode(&tx_frame_type, tx_data, data_len);
+    CAN_MBTxINTConfig(CAN0, tx_frame_type.msg_buf_id, ENABLE);
+    tx_error = CAN_SetMsgBufTxMode(CAN0, &tx_frame_type, tx_data, data_len);
 
-    while (CAN_GetRamState() != CAN_RAM_STATE_IDLE)
+    while (CAN_GetRamState(CAN0) != CAN_RAM_STATE_IDLE)
     {
         __asm volatile
         (
@@ -175,7 +176,7 @@ void can_basic_tx(uint32_t buf_id, CANDataFrameSel_TypeDef frame_type, \
     }
 }
 
-void can_basic_rx(void)
+static void can_basic_rx(void)
 {
     CANError_TypeDef rx_error;
     CANRxFrame_TypeDef rx_frame_type;
@@ -193,11 +194,11 @@ void can_basic_rx(void)
     rx_frame_type.frame_id_mask = CAN_FRAME_ID_MASK_MAX_VALUE;
     rx_frame_type.rx_dma_en = RESET;
     rx_frame_type.auto_reply_bit = RESET;
-    rx_error = CAN_SetMsgBufRxMode(&rx_frame_type);
+    rx_error = CAN_SetMsgBufRxMode(CAN0, &rx_frame_type);
 
-    CAN_MBRxINTConfig(rx_frame_type.msg_buf_id, ENABLE);
+    CAN_MBRxINTConfig(CAN0, rx_frame_type.msg_buf_id, ENABLE);
 
-    while (CAN_GetRamState() != CAN_RAM_STATE_IDLE)
+    while (CAN_GetRamState(CAN0) != CAN_RAM_STATE_IDLE)
     {
         __asm volatile
         (
@@ -271,132 +272,124 @@ void can_trx_demo(void)
     /* Waiting for rx data to generate interrupt. */
 }
 
-void can_trx_handler(void)
+static void can_trx_handler(void)
 {
 #if CAN_TIME_STAMP_EN
-    uint16_t time_stamp = CAN_GetTimeStampCount();
+    uint16_t time_stamp = CAN_GetTimeStampCount(CAN0);
     IO_PRINT_INFO1("can_trx_handler: time_stamp = %d", time_stamp);
 #endif
 
-    if (SET == CAN_GetINTStatus(CAN_BUS_OFF_INT_FLAG))
+    if (SET == CAN_GetINTStatus(CAN0, CAN_BUS_OFF_INT_FLAG))
     {
         IO_PRINT_INFO0("can_trx_handler: CAN BUS OFF");
-        CAN_ClearINTPendingBit(CAN_BUS_OFF_INT_FLAG);
+        CAN_ClearINTPendingBit(CAN0, CAN_BUS_OFF_INT_FLAG);
 
         /* Add user code. */
     }
 
-    if (SET == CAN_GetINTStatus(CAN_WAKE_UP_INT_FLAG))
-    {
-        IO_PRINT_INFO0("can_trx_handler: CAN WAKE UP");
-        CAN_ClearINTPendingBit(CAN_WAKE_UP_INT_FLAG);
-
-        /* Add user code. */
-    }
-
-    if (SET == CAN_GetINTStatus(CAN_ERROR_INT_FLAG))
+    if (SET == CAN_GetINTStatus(CAN0, CAN_ERROR_INT_FLAG))
     {
         IO_PRINT_INFO0("can_trx_handler: CAN ERROR");
-        CAN_ClearINTPendingBit(CAN_ERROR_INT_FLAG);
+        CAN_ClearINTPendingBit(CAN0, CAN_ERROR_INT_FLAG);
 
-        if (SET == CAN_GetErrorStatus(CAN_ERROR_RX))
+        if (SET == CAN_GetErrorStatus(CAN0, CAN_ERROR_RX))
         {
             IO_PRINT_INFO0("can_trx_handler: CAN ERROR RX");
-            CAN_CLearErrorStatus(CAN_ERROR_RX);
+            CAN_CLearErrorStatus(CAN0, CAN_ERROR_RX);
 
             /* Add user code. */
         }
 
-        if (SET == CAN_GetErrorStatus(CAN_ERROR_TX))
+        if (SET == CAN_GetErrorStatus(CAN0, CAN_ERROR_TX))
         {
             IO_PRINT_INFO0("can_trx_handler: CAN ERROR TX");
-            CAN_CLearErrorStatus(CAN_ERROR_TX);
+            CAN_CLearErrorStatus(CAN0, CAN_ERROR_TX);
 
             for (uint8_t index = 0; index < CAN_MESSAGE_BUFFER_MAX_CNT; index++)
             {
-                if (SET == CAN_GetMBnTxErrorFlag(index))
+                if (SET == CAN_GetMBnTxErrorFlag(CAN0, index))
                 {
                     IO_PRINT_INFO1("can_trx_handler: CAN ERROR TX MB_%d", index);
-                    CAN_ClearMBnTxErrorFlag(index);
+                    CAN_ClearMBnTxErrorFlag(CAN0, index);
 
                     /* Add user code. */
                 }
             }
         }
 
-        if (SET == CAN_GetErrorStatus(CAN_ERROR_ACK))
+        if (SET == CAN_GetErrorStatus(CAN0, CAN_ERROR_ACK))
         {
             IO_PRINT_INFO0("can_trx_handler: CAN ERROR ACK");
-            CAN_CLearErrorStatus(CAN_ERROR_ACK);
+            CAN_CLearErrorStatus(CAN0, CAN_ERROR_ACK);
             /* Add user code. */
         }
 
-        if (SET == CAN_GetErrorStatus(CAN_ERROR_STUFF))
+        if (SET == CAN_GetErrorStatus(CAN0, CAN_ERROR_STUFF))
         {
             IO_PRINT_INFO0("can_trx_handler: CAN ERROR STUFF");
-            CAN_CLearErrorStatus(CAN_ERROR_STUFF);
+            CAN_CLearErrorStatus(CAN0, CAN_ERROR_STUFF);
 
             /* Add user code. */
         }
 
-        if (SET == CAN_GetErrorStatus(CAN_ERROR_CRC))
+        if (SET == CAN_GetErrorStatus(CAN0, CAN_ERROR_CRC))
         {
             IO_PRINT_INFO0("can_trx_handler: CAN_ERROR_CRC");
-            CAN_CLearErrorStatus(CAN_ERROR_CRC);
+            CAN_CLearErrorStatus(CAN0, CAN_ERROR_CRC);
 
             /* Add user code. */
         }
 
-        if (SET == CAN_GetErrorStatus(CAN_ERROR_FORM))
+        if (SET == CAN_GetErrorStatus(CAN0, CAN_ERROR_FORM))
         {
             IO_PRINT_INFO0("can_trx_handler: CAN ERROR FORM");
-            CAN_CLearErrorStatus(CAN_ERROR_FORM);
+            CAN_CLearErrorStatus(CAN0, CAN_ERROR_FORM);
 
             /* Add user code. */
         }
 
-        if (SET == CAN_GetErrorStatus(CAN_ERROR_BIT1))
+        if (SET == CAN_GetErrorStatus(CAN0, CAN_ERROR_BIT1))
         {
             IO_PRINT_INFO0("can_trx_handler: CAN ERROR BIT1");
-            CAN_CLearErrorStatus(CAN_ERROR_BIT1);
+            CAN_CLearErrorStatus(CAN0, CAN_ERROR_BIT1);
 
             /* Add user code. */
         }
 
-        if (SET == CAN_GetErrorStatus(CAN_ERROR_BIT0))
+        if (SET == CAN_GetErrorStatus(CAN0, CAN_ERROR_BIT0))
         {
             IO_PRINT_INFO0("can_trx_handler: CAN ERROR BIT0");
-            CAN_CLearErrorStatus(CAN_ERROR_BIT0);
+            CAN_CLearErrorStatus(CAN0, CAN_ERROR_BIT0);
 
             /* Add user code. */
         }
     }
 
-    if (SET == CAN_GetINTStatus(CAN_RX_INT_FLAG))
+    if (SET == CAN_GetINTStatus(CAN0, CAN_RX_INT_FLAG))
     {
-        CAN_ClearINTPendingBit(CAN_RX_INT_FLAG);
+        CAN_ClearINTPendingBit(CAN0, CAN_RX_INT_FLAG);
 
         for (uint8_t index = 0; index < CAN_MESSAGE_BUFFER_MAX_CNT; index++)
         {
-            if (SET == CAN_GetMBnRxDoneFlag(index))
+            if (SET == CAN_GetMBnRxDoneFlag(CAN0, index))
             {
                 IO_PRINT_INFO1("can_trx_handler: MB_%d rx done", index);
-                CAN_ClearMBnRxDoneFlag(index);
+                CAN_ClearMBnRxDoneFlag(CAN0, index);
 
 #if CAN_RX_FIFO_EN
                 if (index == CAN_MESSAGE_FIFO_START_ID)
                 {
                     CANFifoStatus_TypeDef fifo_status;
-                    CAN_GetFifoStatus(&fifo_status);
+                    CAN_GetFifoStatus(CAN0, &fifo_status);
 
                     while (fifo_status.fifo_msg_empty == RESET)
                     {
                         CANMsgBufInfo_TypeDef mb_info;
-                        CAN_GetMsgBufInfo(index, &mb_info);
+                        CAN_GetMsgBufInfo(CAN0, index, &mb_info);
 
                         uint8_t rx_data[64];
                         memset(rx_data, 0, 64);
-                        CAN_GetRamData(mb_info.data_length, rx_data);
+                        CAN_GetRamData(CAN0, mb_info.data_length, rx_data);
 
                         CANDataFrameSel_TypeDef frame_type = CAN_CheckFrameType(mb_info.rtr_bit, mb_info.ide_bit,
                                                                                 mb_info.edl_bit);
@@ -409,7 +402,7 @@ void can_trx_handler(void)
                             IO_PRINT_INFO2("can_trx_handler: rx_fifo_data [%d] 0x%02X", index, rx_data[index]);
                         }
 
-                        CAN_GetFifoStatus(&fifo_status);
+                        CAN_GetFifoStatus(CAN0, &fifo_status);
 
                         /* Send back frame here. */
                         can_basic_tx(0, frame_type, mb_info.standard_frame_id, \
@@ -423,16 +416,16 @@ void can_trx_handler(void)
 #endif
                 {
                     CANMsgBufInfo_TypeDef mb_info;
-                    CAN_GetMsgBufInfo(index, &mb_info);
+                    CAN_GetMsgBufInfo(CAN0, index, &mb_info);
 
                     uint8_t rx_data[64];
                     memset(rx_data, 0, 64);
-                    CAN_GetRamData(mb_info.data_length, rx_data);
+                    CAN_GetRamData(CAN0, mb_info.data_length, rx_data);
 
                     CANDataFrameSel_TypeDef frame_type = CAN_CheckFrameType(mb_info.rtr_bit, mb_info.ide_bit,
                                                                             mb_info.edl_bit);
 
-                    IO_PRINT_INFO3("[can_trx_handler: frame_type %d, frame_id = 0x%03x, ext_frame_id = 0x%05x", \
+                    IO_PRINT_INFO3("can_trx_handler: frame_type %d, frame_id = 0x%03x, ext_frame_id = 0x%05x", \
                                    frame_type, mb_info.standard_frame_id, mb_info.extend_frame_id);
 
                     for (uint8_t index = 0; index < mb_info.data_length; index++)
@@ -451,16 +444,16 @@ void can_trx_handler(void)
         }
     }
 
-    if (SET == CAN_GetINTStatus(CAN_TX_INT_FLAG))
+    if (SET == CAN_GetINTStatus(CAN0, CAN_TX_INT_FLAG))
     {
-        CAN_ClearINTPendingBit(CAN_TX_INT_FLAG);
+        CAN_ClearINTPendingBit(CAN0, CAN_TX_INT_FLAG);
 
         for (uint8_t index = 0; index < CAN_MESSAGE_BUFFER_MAX_CNT; index++)
         {
-            if (SET == CAN_GetMBnTxDoneFlag(index))
+            if (SET == CAN_GetMBnTxDoneFlag(CAN0, index))
             {
                 IO_PRINT_INFO1("can_trx_handler: MB_%d tx done", index);
-                CAN_ClearMBnTxDoneFlag(index);
+                CAN_ClearMBnTxDoneFlag(CAN0, index);
 
                 /* Add user code. */
             }

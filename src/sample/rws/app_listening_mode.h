@@ -129,7 +129,7 @@ typedef enum
     APPLY_LISTENING_MODE_CALL_NOT_IDLE            = 0x04,
     APPLY_LISTENING_MODE_CALL_IDLE                = 0x05,
     APPLY_LISTENING_MODE_VOICE_TRACE_RELEASE      = 0x06,
-    APPLY_LISTENING_MODE_AVRCP_PLAY_STATUS_CHANGE = 0x07,
+    APPLY_LISTENING_MODE_MUSIC_PLAY_STATUS_CHANGE = 0x07,
     APPLY_LISTENING_MODE_VOICE_TRACE_CREATE       = 0x08,
 } T_APPLY_LISTENING_MODE_EVENT;
 
@@ -180,6 +180,7 @@ typedef enum
     ANC_APT_CMD_POSTPONE_ANC_WAIT_MEDIA_BUFFER   = 0x01,
     ANC_APT_CMD_POSTPONE_LLAPT_WAIT_MEDIA_BUFFER = 0x02,
     ANC_APT_CMD_POSTPONE_WAIT_USER_MODE_CLOSE    = 0x03,
+    ANC_APT_CMD_POSTPONE_WAIT_ANC_OFF            = 0x04,
 } T_ANC_APT_CMD_POSTPONE_REASON;
 
 typedef struct
@@ -198,6 +199,7 @@ typedef struct
 
 void app_listening_state_machine(T_ANC_APT_EVENT event, bool is_need_push_tone, bool update_final);
 void app_listening_apply_when_power_on(void);
+void app_listening_apply_final_state_when_power_on(T_ANC_APT_STATE state, bool is_need_push_tone);
 void app_listening_anc_apt_cfg_pointer_change(uint8_t *ptr);
 void app_listening_apply_when_power_off(void);
 void app_listening_set_disallow_trigger_again(void);

@@ -118,6 +118,7 @@ static void spi_tx_dma_init(void)
 
     /*---------------------GDMA init----------------------------------*/
     GDMA_InitTypeDef GDMA_InitStruct;
+    GDMA_StructInit(&GDMA_InitStruct);
     GDMA_InitStruct.GDMA_ChannelNum          = SPI_DMA_CHANNEL_NUM;
     GDMA_InitStruct.GDMA_DIR                 = GDMA_DIR_MemoryToPeripheral;
     GDMA_InitStruct.GDMA_BufferSize          = RGB_DATA_LEN;
@@ -206,6 +207,7 @@ static void spi_tx_dma_handler(void)
     IO_PRINT_INFO0("spi_tx_dma_handler");
     GDMA_INTConfig(SPI_DMA_CHANNEL_NUM, GDMA_INT_Transfer, DISABLE);
     GDMA_ClearINTPendingBit(SPI_DMA_CHANNEL_NUM, GDMA_INT_Transfer);
+    /* It is recommended to post the os msg to the task thread for data processing. */
 }
 
 /** @} */ /* End of group Spi_Master_Dma_Demo_Exported_Functions */

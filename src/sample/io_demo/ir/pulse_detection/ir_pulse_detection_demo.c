@@ -136,6 +136,7 @@ void ir_pulse_detection_demo(void)
 {
     uint32_t high_cnt = 0;
     uint32_t low_cnt = 0;
+    uint32_t total_cnt = 0;
     uint32_t freq = 0;
     /* Initialize IR */
     board_ir_init();
@@ -158,8 +159,11 @@ void ir_pulse_detection_demo(void)
                     low_cnt = IR_DataStruct[i] + 1;
                 }
             }
-
-            freq = 40000000 / (high_cnt + low_cnt);   //Hz
+            total_cnt = high_cnt + low_cnt;
+            if (total_cnt != 0)
+            {
+                freq = 40000000 / total_cnt;   //Hz
+            }
             IO_PRINT_INFO3("ir_pulse_detection_demo: freq %d, high_cnt %d, low_cnt %d", freq, high_cnt,
                            low_cnt);
             rx_finish_flag = 0;

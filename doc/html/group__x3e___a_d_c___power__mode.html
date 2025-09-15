@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>BT AUDIO SDK: ADC Power Mode  0x50 bit 19 adc_manual_poweron</title>
+<title>BT AUDIO SDK: ADC Power Mode</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -44,17 +44,20 @@ $(function() {
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">ADC Power Mode 0x50 bit 19 adc_manual_poweron<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___a_d_c.html">ADC</a> &raquo; <a class="el" href="group__x3e___a_d_c___exported___constants.html">ADC Exported Constants</a></div></div>  </div>
+<div class="title">ADC Power Mode<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___a_d_c.html">ADC</a> &raquo; <a class="el" href="group__x3e___a_d_c___exported___constants.html">ADC Exported Constants</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga1e361799257e19fb713513a960af373e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___a_d_c___power__mode.html#ga1e361799257e19fb713513a960af373e">ADC_POWER_MANNUAL</a>&#160;&#160;&#160;((uint32_t)(1 &lt;&lt; 19))</td></tr>
+<tr class="memdesc:ga1e361799257e19fb713513a960af373e"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC power on is manually controlled.  <a href="#ga1e361799257e19fb713513a960af373e">More...</a><br /></td></tr>
 <tr class="separator:ga1e361799257e19fb713513a960af373e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga83ad1ab27648a99c237d8b9d895666ea"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___a_d_c___power__mode.html#ga83ad1ab27648a99c237d8b9d895666ea">ADC_POWER_AUTO</a>&#160;&#160;&#160;((uint32_t)(0 &lt;&lt; 19))</td></tr>
+<tr class="memdesc:ga83ad1ab27648a99c237d8b9d895666ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC power on is automatically controlled.  <a href="#ga83ad1ab27648a99c237d8b9d895666ea">More...</a><br /></td></tr>
 <tr class="separator:ga83ad1ab27648a99c237d8b9d895666ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga928cd663365ba5618862e8d196e58f96"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___a_d_c___power__mode.html#ga928cd663365ba5618862e8d196e58f96">IS_ADC_POWER_MODE</a>(MODE)&#160;&#160;&#160;(((MODE) == <a class="el" href="group__x3e___a_d_c___power__mode.html#ga1e361799257e19fb713513a960af373e">ADC_POWER_MANNUAL</a>) || ((MODE) == <a class="el" href="group__x3e___a_d_c___power__mode.html#ga83ad1ab27648a99c237d8b9d895666ea">ADC_POWER_AUTO</a>))</td></tr>
+<tr class="memdesc:ga928cd663365ba5618862e8d196e58f96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether is the ADC power mode.  <a href="#ga928cd663365ba5618862e8d196e58f96">More...</a><br /></td></tr>
 <tr class="separator:ga928cd663365ba5618862e8d196e58f96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -71,6 +74,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>ADC power on is manually controlled. </p>
+
 </div>
 </div>
 <a id="ga83ad1ab27648a99c237d8b9d895666ea"></a>
@@ -84,6 +89,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>ADC power on is automatically controlled. </p>
 
 </div>
 </div>
@@ -102,6 +109,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Check whether is the ADC power mode. </p>
 
 </div>
 </div>

@@ -40,8 +40,8 @@
 
 typedef struct
 {
-    uint8_t Length;            /**< Keyscan state register */
-    uint16_t key[10];
+    uint16_t Length;            /**< Keyscan state register */
+    uint16_t key[26];
 } KeyScanDataStruct, *pKeyScanDataStruct;
 
 /* keyscan message type */
@@ -71,6 +71,8 @@ typedef struct
 #define COLUMN1               ADC_1
 #define ROW0                  ADC_2
 #define ROW1                  ADC_3
+
+#define KEYSCAN_FIFO_SIZE           26
 
 /* queue size */
 #define IO_DEMO_EVENT_QUEUE_SIZE        0x10
@@ -179,7 +181,7 @@ static void io_demo_task(void *param)
             if (msg.msgType == IO_DEMO_EVENT_KEYSCAN_SCAN_END)
             {
                 pKeyScanDataStruct pKeyData = (pKeyScanDataStruct)(msg.pBuf);
-                for (uint8_t i = 0; i < pKeyData->Length; i++)
+                for (uint16_t i = 0; i < pKeyData->Length; i++)
                 {
                     IO_PRINT_INFO2("io_demo_task: pKeyData->key[%d] 0x%x", i, pKeyData->key[i]);
                 }
@@ -226,7 +228,11 @@ static void keyscan_handler(void)
         if (KeyScan_GetFlagState(KEYSCAN, KEYSCAN_FLAG_EMPTY) != SET)
         {
             /* Read fifo data */
-            uint8_t len = KeyScan_GetFifoDataNum(KEYSCAN);
+            uint16_t len = KeyScan_GetFifoDataNum(KEYSCAN);
+            if (len > KEYSCAN_FIFO_SIZE)
+            {
+                len = KEYSCAN_FIFO_SIZE;
+            }
             KeyScan_Read(KEYSCAN, &pKeyData->key[0], len);
             pKeyData->Length = len;
 

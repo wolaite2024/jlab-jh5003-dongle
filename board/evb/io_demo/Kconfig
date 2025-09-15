@@ -1,0 +1,11 @@
+mainmenu "realtek iodemo mainmenu"
+
+menu "iodemo"
+rsource "../../../src/Kconfig"
+endmenu
+
+config REALTEK_IO_DEMO_APP
+   bool
+   default y
+
+rsource "../../../Kconfig"

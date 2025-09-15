@@ -171,8 +171,8 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The result of updating broadcast id of broadcast source. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Update broadcast id of broadcast source success. </td></tr>
-    <tr><td class="paramname">false</td><td>Update broadcast id of broadcast source failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Updating broadcast id of broadcast source is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Updating broadcast id of broadcast source failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -283,8 +283,8 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Broadcast source handle: <a class="el" href="group___broadcast___source___s_m___exported___macros.html#ga2e05baca97c114d85ba6b37ee9d15c49">T_BROADCAST_SOURCE_HANDLE</a>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">adv_sid</td><td>Value of the Advertising SID subfield in the ADI field of the PDU Range: 0x00 to 0x0F. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">primary_adv_interval_min</td><td>Minimum advertising interval for undirected and low duty cycle directed advertising. Range: 0x000020 to 0xFFFFFF. Time = N * 0.625 ms, Time Range: 20 ms to 10,485.759375 s. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">primary_adv_interval_max</td><td>Maximum advertising interval for undirected and low duty cycle directed advertising. Range: 0x000020 to 0xFFFFFF Time = N * 0.625 ms, Time Range: 20 ms to 10,485.759375 s. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">primary_adv_interval_min</td><td>Minimum advertising interval for undirected and low duty cycle directed advertising. Range: 0x000020 to 0xFFFFFF. Time = N * 0.625 ms. Time Range: 20 ms to 10,485.759375 s. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">primary_adv_interval_max</td><td>Maximum advertising interval for undirected and low duty cycle directed advertising. Range: 0x000020 to 0xFFFFFF Time = N * 0.625 ms. Time Range: 20 ms to 10,485.759375 s. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">primary_adv_channel_map</td><td>Primary advertising channel map: <a class="el" href="group___a_d_v___c_h_a_n_n_e_l___m_a_p.html">Advertising Channel Map</a>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">own_address_type</td><td>Own address type: <a class="el" href="group___g_a_p___l_e___t_y_p_e_s___exported___types.html#ga6a4a22188186cb0102eafa5628d4cb98">T_GAP_LOCAL_ADDR_TYPE</a>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_local_rand_addr</td><td>Pointer to local random device address. </td></tr>
@@ -301,8 +301,8 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The result of broadcast source set extended advertising parameters. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Broadcast source set extended advertising parameters success. </td></tr>
-    <tr><td class="paramname">false</td><td>Broadcast source set extended advertising parameters failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Set extended advertising parameters is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Set extended advertising parameters failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -364,8 +364,8 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Broadcast source handle: <a class="el" href="group___broadcast___source___s_m___exported___macros.html#ga2e05baca97c114d85ba6b37ee9d15c49">T_BROADCAST_SOURCE_HANDLE</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">periodic_adv_interval_min</td><td>Minimum advertising interval for periodic advertising. Range: 0x0006 to 0xFFFF. Time = N * 1.25 ms, Time Range: 7.5 ms to 81.91875 s. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">periodic_adv_interval_max</td><td>Maximum advertising interval for periodic advertising. Range: 0x0006 to 0xFFFF. Time = N * 1.25 ms, Time Range: 7.5 ms to 81.91875 s. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">periodic_adv_interval_min</td><td>Minimum advertising interval for periodic advertising. Range: 0x0006 to 0xFFFF. Time = N * 1.25 ms. Time Range: 7.5 ms to 81.91875 s. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">periodic_adv_interval_max</td><td>Maximum advertising interval for periodic advertising. Range: 0x0006 to 0xFFFF. Time = N * 1.25 ms. Time Range: 7.5 ms to 81.91875 s. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">periodic_adv_prop</td><td>Periodic advertising properties. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">basic_data_len</td><td>Length of basic data. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_basic_data</td><td>Pointer to basic data.</td></tr>
@@ -375,8 +375,8 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The result of broadcast source set periodic advertising parameters. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Broadcast source set periodic advertising parameters success. </td></tr>
-    <tr><td class="paramname">false</td><td>Broadcast source set periodic advertising parameters failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Set periodic advertising parameters is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Set periodic advertising parameters failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -421,8 +421,8 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The result of getting broadcast source information. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Get broadcast source information success. </td></tr>
-    <tr><td class="paramname">false</td><td>Get broadcast source information failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Getting broadcast source information is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Getting broadcast source information failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -456,7 +456,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The result of broadcast source action stream configuration procedure. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Broadcast source action stream configuration procedure success. </td></tr>
+    <tr><td class="paramname">true</td><td>Broadcast source action stream configuration procedure is successful. </td></tr>
     <tr><td class="paramname">false</td><td>Broadcast source action stream configuration procedure failed. </td></tr>
   </table>
   </dd>
@@ -509,7 +509,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The result of broadcast source action stream reconfiguration procedure. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Broadcast source action stream reconfiguration procedure success. </td></tr>
+    <tr><td class="paramname">true</td><td>Broadcast source action stream reconfiguration procedure is successful. </td></tr>
     <tr><td class="paramname">false</td><td>Broadcast source action stream reconfiguration procedure failed. </td></tr>
   </table>
   </dd>
@@ -562,7 +562,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The result of broadcast source action PA data update procedure. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Broadcast source action PA data update procedure success. </td></tr>
+    <tr><td class="paramname">true</td><td>Broadcast source action PA data update procedure is successful. </td></tr>
     <tr><td class="paramname">false</td><td>Broadcast source action PA data update procedure failed. </td></tr>
   </table>
   </dd>
@@ -608,7 +608,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The result of broadcast source action stream establishment procedure. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Broadcast source action stream establishment procedure success. </td></tr>
+    <tr><td class="paramname">true</td><td>Broadcast source action stream establishment procedure is successful. </td></tr>
     <tr><td class="paramname">false</td><td>Broadcast source action stream establishment procedure failed. </td></tr>
   </table>
   </dd>
@@ -643,7 +643,8 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Broadcast source action stream establishment procedure using test command. </p>
-<p><a class="el" href="broadcast__source__sm_8h_source.html">broadcast_source_sm.h</a> </p><dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000028">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<p><a class="el" href="broadcast__source__sm_8h_source.html">broadcast_source_sm.h</a></p>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000025">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Broadcast source handle: <a class="el" href="group___broadcast___source___s_m___exported___macros.html#ga2e05baca97c114d85ba6b37ee9d15c49">T_BROADCAST_SOURCE_HANDLE</a>. </td></tr>
@@ -654,7 +655,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The result of broadcast source action stream establishment procedure. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Broadcast source action stream establishment procedure success. </td></tr>
+    <tr><td class="paramname">true</td><td>Broadcast source action stream establishment procedure is successful. </td></tr>
     <tr><td class="paramname">false</td><td>Broadcast source action stream establishment procedure failed. </td></tr>
   </table>
   </dd>
@@ -693,14 +694,14 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Broadcast source handle: <a class="el" href="group___broadcast___source___s_m___exported___macros.html#ga2e05baca97c114d85ba6b37ee9d15c49">T_BROADCAST_SOURCE_HANDLE</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">reason</td><td>The reason of stream disable: <a class="el" href="group___b_t___t_y_p_e_s.html#BT_HCI_ERROR">BT_HCI_ERROR</a>.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">reason</td><td>The reason of stream disable: <a class="el" href="group___b_t___h_c_i___e_r_r_o_r.html">Bluetooth HCI Error Code</a>.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The result of broadcast source action stream disable procedure. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Broadcast source action stream disable procedure success. </td></tr>
+    <tr><td class="paramname">true</td><td>Broadcast source action stream disable procedure is successful. </td></tr>
     <tr><td class="paramname">false</td><td>Broadcast source action stream disable procedure failed. </td></tr>
   </table>
   </dd>
@@ -735,7 +736,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The result of broadcast source action stream release procedure. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Broadcast source action stream release procedure success. </td></tr>
+    <tr><td class="paramname">true</td><td>Broadcast source action stream release procedure is successful. </td></tr>
     <tr><td class="paramname">false</td><td>Broadcast source action stream release procedure failed. </td></tr>
   </table>
   </dd>
@@ -785,7 +786,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The result of broadcast source configure big sync mode. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Broadcast source configure big sync mode success. </td></tr>
+    <tr><td class="paramname">true</td><td>Broadcast source configure big sync mode is successful. </td></tr>
     <tr><td class="paramname">false</td><td>Broadcast source configure big sync mode failed. </td></tr>
   </table>
   </dd>
@@ -859,7 +860,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The result of broadcast source setup data path. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Broadcast source setup data path success. </td></tr>
+    <tr><td class="paramname">true</td><td>Broadcast source setup data path is successful. </td></tr>
     <tr><td class="paramname">false</td><td>Broadcast source setup data path failed. </td></tr>
   </table>
   </dd>
@@ -905,7 +906,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The result of broadcast source remove data path. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Broadcast source remove data path success. </td></tr>
+    <tr><td class="paramname">true</td><td>Broadcast source remove data path is successful. </td></tr>
     <tr><td class="paramname">false</td><td>Broadcast source remove data path failed. </td></tr>
   </table>
   </dd>

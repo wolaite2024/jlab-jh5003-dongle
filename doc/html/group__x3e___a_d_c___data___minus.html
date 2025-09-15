@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>BT AUDIO SDK: ADC data minuses the offset before writes to reg/fifo</title>
+<title>BT AUDIO SDK: ADC Data Minus</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -44,20 +44,27 @@ $(function() {
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">ADC data minuses the offset before writes to reg/fifo<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___a_d_c.html">ADC</a> &raquo; <a class="el" href="group__x3e___a_d_c___exported___constants.html">ADC Exported Constants</a></div></div>  </div>
+<div class="title">ADC Data Minus<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___a_d_c.html">ADC</a> &raquo; <a class="el" href="group__x3e___a_d_c___exported___constants.html">ADC Exported Constants</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>ADC data minuses the offset before writes to register/FIFO.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga9948efef99d40dd56c9b51445c4f2db2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___a_d_c___data___minus.html#ga9948efef99d40dd56c9b51445c4f2db2">ADC_DATA_MINUS_DIS</a>&#160;&#160;&#160;(uint32_t)(0 &lt;&lt; 31)</td></tr>
+<tr class="memdesc:ga9948efef99d40dd56c9b51445c4f2db2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable the function that data minuses the offset before writing to register/FIFO.  <a href="#ga9948efef99d40dd56c9b51445c4f2db2">More...</a><br /></td></tr>
 <tr class="separator:ga9948efef99d40dd56c9b51445c4f2db2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga24c5dfcb45261898551aaadbc99a7ece"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___a_d_c___data___minus.html#ga24c5dfcb45261898551aaadbc99a7ece">ADC_DATA_MINUS_EN</a>&#160;&#160;&#160;((uint32_t)1 &lt;&lt; 31)</td></tr>
+<tr class="memdesc:ga24c5dfcb45261898551aaadbc99a7ece"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the function that data minuses the offset before writing to register/FIFO.  <a href="#ga24c5dfcb45261898551aaadbc99a7ece">More...</a><br /></td></tr>
 <tr class="separator:ga24c5dfcb45261898551aaadbc99a7ece"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7359b095ef22edf8bdc7114db5937971"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___a_d_c___data___minus.html#ga7359b095ef22edf8bdc7114db5937971">IS_ADC_DATA_MINUS</a>(DATA_MINUS)&#160;&#160;&#160;(((DATA_MINUS) == <a class="el" href="group__x3e___a_d_c___data___minus.html#ga9948efef99d40dd56c9b51445c4f2db2">ADC_DATA_MINUS_DIS</a>) || ((DATA_MINUS) == <a class="el" href="group__x3e___a_d_c___data___minus.html#ga24c5dfcb45261898551aaadbc99a7ece">ADC_DATA_MINUS_EN</a>))</td></tr>
+<tr class="memdesc:ga7359b095ef22edf8bdc7114db5937971"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether is the ADC data minus.  <a href="#ga7359b095ef22edf8bdc7114db5937971">More...</a><br /></td></tr>
 <tr class="separator:ga7359b095ef22edf8bdc7114db5937971"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>ADC data minuses the offset before writes to register/FIFO. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ga9948efef99d40dd56c9b51445c4f2db2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga9948efef99d40dd56c9b51445c4f2db2">&#9670;&nbsp;</a></span>ADC_DATA_MINUS_DIS</h2>
@@ -70,6 +77,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Disable the function that data minuses the offset before writing to register/FIFO. </p>
 
 </div>
 </div>
@@ -84,6 +93,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Enable the function that data minuses the offset before writing to register/FIFO. </p>
 
 </div>
 </div>
@@ -102,6 +113,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Check whether is the ADC data minus. </p>
 
 </div>
 </div>

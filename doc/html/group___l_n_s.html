@@ -48,7 +48,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Location And Navigation service.  
+<p>Location and Navigation service.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
@@ -61,16 +61,16 @@ Modules</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Location And Navigation service. </p>
+<p>Location and Navigation service. </p>
 <p>The Location and Navigation Service (LN Service) exposes location and navigation-related data from a Location and Navigation sensor (Server) intended for outdoor activity applications.</p>
-<p>Application shall register LN Service when initialization through <a class="el" href="group___l_n_s___exported___functions.html#ga9fdb74245b73e61bc4d2c9c267d29cf5">lns_add_service</a> function.</p>
+<p>Applications shall register LN Service during initialization through <a class="el" href="group___l_n_s___exported___functions.html#ga9fdb74245b73e61bc4d2c9c267d29cf5">lns_add_service</a> function.</p>
 <p>The LN Feature characteristic shall be used to describe the supported features of the Server. Reserved for Future Use (RFU) bits in the LN Feature characteristic value shall be set to 0.</p>
 <p>The Location and Speed characteristic is used to send location and speed related data.</p>
-<p>Application can send location and speed related data through <a class="el" href="group___l_n_s___exported___functions.html#gad32c414f8315de37d9b9a492b6517c02">lns_location_and_speed_value_notify</a> function.</p>
+<p>Applications can send location and speed related data through <a class="el" href="group___l_n_s___exported___functions.html#gad32c414f8315de37d9b9a492b6517c02">lns_location_and_speed_value_notify</a> function.</p>
 <p>The Position Quality characteristic is used to send position quality-related data.</p>
 <p>If the LN Control Point is supported, profiles utilizing this service are required to ensure that the Client configures the LN Control Point characteristic for indications (i.e., via the Client Characteristic Configuration descriptor) at the first connection. Support for this characteristic is mandatory if the Server supports any of the features requiring control point procedures.</p>
-<p>The Navigation characteristic is used to send navigation-related data. Application can send navigation-related data through <a class="el" href="group___l_n_s___exported___functions.html#ga5197a6f6775763295d875bc99d959058">lns_navigation_value_notify</a> function.</p>
-<p>Application can set the parameters of LNS through <a class="el" href="group___l_n_s___exported___functions.html#gaa4aa7c8c2b0a663757d2d9a60ada1bd2">lns_set_parameter</a> function. </p>
+<p>The Navigation characteristic is used to send navigation-related data. Applications can send navigation-related data through <a class="el" href="group___l_n_s___exported___functions.html#ga5197a6f6775763295d875bc99d959058">lns_navigation_value_notify</a> function.</p>
+<p>Applications can set the parameters of LNS through <a class="el" href="group___l_n_s___exported___functions.html#gaa4aa7c8c2b0a663757d2d9a60ada1bd2">lns_set_parameter</a> function. </p>
 </div><!-- contents -->
 
 <HR SIZE=5>

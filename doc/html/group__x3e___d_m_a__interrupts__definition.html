@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>BT AUDIO SDK: DMA Interrupts Definition</title>
+<title>BT AUDIO SDK: GDMA Interrupts Definition</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -44,32 +44,30 @@ $(function() {
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">DMA Interrupts Definition<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___g_d_m_a.html">GDMA</a> &raquo; <a class="el" href="group__x3e___g_d_m_a___exported___constants.html">GDMA Exported Constants</a></div></div>  </div>
+<div class="title">GDMA Interrupts Definition<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___g_d_m_a.html">GDMA</a> &raquo; <a class="el" href="group__x3e___g_d_m_a___exported___constants.html">GDMA Exported Constants</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga09f396d999a6f1ab84cff66b5c9ce33b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___d_m_a__interrupts__definition.html#ga09f396d999a6f1ab84cff66b5c9ce33b">GDMA_INT_Transfer</a>&#160;&#160;&#160;((uint32_t)0x00000001)</td></tr>
+<tr class="memdesc:ga09f396d999a6f1ab84cff66b5c9ce33b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The interrupt is generated on GDMA transfer completion to the destination.  <a href="#ga09f396d999a6f1ab84cff66b5c9ce33b">More...</a><br /></td></tr>
 <tr class="separator:ga09f396d999a6f1ab84cff66b5c9ce33b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1835acd0c660cf5b6dde4ed91afc34c7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___d_m_a__interrupts__definition.html#ga1835acd0c660cf5b6dde4ed91afc34c7">GDMA_INT_Block</a>&#160;&#160;&#160;((uint32_t)0x00000002)</td></tr>
+<tr class="memdesc:ga1835acd0c660cf5b6dde4ed91afc34c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The interrupt is generated on GDMA block transfer completion to the destination.  <a href="#ga1835acd0c660cf5b6dde4ed91afc34c7">More...</a><br /></td></tr>
 <tr class="separator:ga1835acd0c660cf5b6dde4ed91afc34c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac498dff4b215886261fd9b3e4ecd6e92"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___d_m_a__interrupts__definition.html#gac498dff4b215886261fd9b3e4ecd6e92">GDMA_INT_SrcTransfer</a>&#160;&#160;&#160;((uint32_t)0x00000004)</td></tr>
+<tr class="memdesc:gac498dff4b215886261fd9b3e4ecd6e92"><td class="mdescLeft">&#160;</td><td class="mdescRight">The interrupt is generated after completion of the last OCP transfer of the requested single/burst transaction from the handshaking interface.  <a href="#gac498dff4b215886261fd9b3e4ecd6e92">More...</a><br /></td></tr>
 <tr class="separator:gac498dff4b215886261fd9b3e4ecd6e92"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7080b087665c4b4c26d5cd3aaddaf6a3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___d_m_a__interrupts__definition.html#ga7080b087665c4b4c26d5cd3aaddaf6a3">GDMA_INT_DstTransfer</a>&#160;&#160;&#160;((uint32_t)0x00000008)</td></tr>
+<tr class="memdesc:ga7080b087665c4b4c26d5cd3aaddaf6a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The interrupt is generated on GDMA transfer completion to the destination peripheral.  <a href="#ga7080b087665c4b4c26d5cd3aaddaf6a3">More...</a><br /></td></tr>
 <tr class="separator:ga7080b087665c4b4c26d5cd3aaddaf6a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8f5ae5218f5f5f5292b737e0f2c0411c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___d_m_a__interrupts__definition.html#ga8f5ae5218f5f5f5292b737e0f2c0411c">GDMA_INT_Error</a>&#160;&#160;&#160;((uint32_t)0x00000010)</td></tr>
+<tr class="memdesc:ga8f5ae5218f5f5f5292b737e0f2c0411c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The interrupt is generated when an ERROR response is received from the slave on the SRESP bus during a GDMA transfer.  <a href="#ga8f5ae5218f5f5f5292b737e0f2c0411c">More...</a><br /></td></tr>
 <tr class="separator:ga8f5ae5218f5f5f5292b737e0f2c0411c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2be8d1557ce232857504b3bfd27fc605"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___d_m_a__interrupts__definition.html#ga2be8d1557ce232857504b3bfd27fc605">IS_GDMA_CONFIG_IT</a>(IT)&#160;&#160;&#160;((((IT) &amp; 0xFFFFFE00) == 0x00) &amp;&amp; ((IT) != 0x00))</td></tr>
+<tr class="memdesc:ga2be8d1557ce232857504b3bfd27fc605"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether is the GDMA interrupt.  <a href="#ga2be8d1557ce232857504b3bfd27fc605">More...</a><br /></td></tr>
 <tr class="separator:ga2be8d1557ce232857504b3bfd27fc605"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7b9324a8d0ebbc305d11cf789203d076"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___d_m_a__interrupts__definition.html#ga7b9324a8d0ebbc305d11cf789203d076">GDMA_SUSPEND_TRANSMISSSION</a>&#160;&#160;&#160;(<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(8))</td></tr>
-<tr class="separator:ga7b9324a8d0ebbc305d11cf789203d076"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeda893221cf74de0d9d54c72a96f1df1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___d_m_a__interrupts__definition.html#gaeda893221cf74de0d9d54c72a96f1df1">GDMA_FIFO_STATUS</a>&#160;&#160;&#160;(<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(9))</td></tr>
-<tr class="separator:gaeda893221cf74de0d9d54c72a96f1df1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5045b90c166a46a89b31355f85e2def6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___d_m_a__interrupts__definition.html#ga5045b90c166a46a89b31355f85e2def6">GDMA_SUSPEND_CHANNEL_STATUS</a>&#160;&#160;&#160;(<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(0))</td></tr>
-<tr class="separator:ga5045b90c166a46a89b31355f85e2def6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9840894fee98d5ce2bc11ab295bc9a9b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___d_m_a__interrupts__definition.html#ga9840894fee98d5ce2bc11ab295bc9a9b">GDMA_SUSPEND_CMD_STATUS</a>&#160;&#160;&#160;(<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(2) | <a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(1))</td></tr>
-<tr class="separator:ga9840894fee98d5ce2bc11ab295bc9a9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Macro Definition Documentation</h2>
@@ -85,6 +83,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>The interrupt is generated on GDMA transfer completion to the destination. </p>
+
 </div>
 </div>
 <a id="ga1835acd0c660cf5b6dde4ed91afc34c7"></a>
@@ -98,6 +98,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The interrupt is generated on GDMA block transfer completion to the destination. </p>
 
 </div>
 </div>
@@ -113,6 +115,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>The interrupt is generated after completion of the last OCP transfer of the requested single/burst transaction from the handshaking interface. </p>
+
 </div>
 </div>
 <a id="ga7080b087665c4b4c26d5cd3aaddaf6a3"></a>
@@ -127,6 +131,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>The interrupt is generated on GDMA transfer completion to the destination peripheral. </p>
+
 </div>
 </div>
 <a id="ga8f5ae5218f5f5f5292b737e0f2c0411c"></a>
@@ -140,6 +146,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The interrupt is generated when an ERROR response is received from the slave on the SRESP bus during a GDMA transfer. </p>
 
 </div>
 </div>
@@ -159,61 +167,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="ga7b9324a8d0ebbc305d11cf789203d076"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7b9324a8d0ebbc305d11cf789203d076">&#9670;&nbsp;</a></span>GDMA_SUSPEND_TRANSMISSSION</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define GDMA_SUSPEND_TRANSMISSSION&#160;&#160;&#160;(<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(8))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="gaeda893221cf74de0d9d54c72a96f1df1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaeda893221cf74de0d9d54c72a96f1df1">&#9670;&nbsp;</a></span>GDMA_FIFO_STATUS</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define GDMA_FIFO_STATUS&#160;&#160;&#160;(<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(9))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ga5045b90c166a46a89b31355f85e2def6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga5045b90c166a46a89b31355f85e2def6">&#9670;&nbsp;</a></span>GDMA_SUSPEND_CHANNEL_STATUS</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define GDMA_SUSPEND_CHANNEL_STATUS&#160;&#160;&#160;(<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(0))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ga9840894fee98d5ce2bc11ab295bc9a9b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga9840894fee98d5ce2bc11ab295bc9a9b">&#9670;&nbsp;</a></span>GDMA_SUSPEND_CMD_STATUS</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define GDMA_SUSPEND_CMD_STATUS&#160;&#160;&#160;(<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(2) | <a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(1))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>Check whether is the GDMA interrupt. </p>
 
 </div>
 </div>

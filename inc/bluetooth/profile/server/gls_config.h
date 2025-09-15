@@ -3,8 +3,8 @@
 *     Copyright(c) 2017, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * @file     gls_config.h
-  * @brief    glucose service configuration file.
-  * @details  Configure the optional characteristic and fields in the glucose service.
+  * @brief    Glucose Service configuration file.
+  * @details  Configure the optional characteristic and fields in the Glucose Service.
   * @author   bill
   * @date     2017-6-8
   * @version  v1.0
@@ -15,13 +15,13 @@
 #define _GLS_CONFIG_H_
 
 /** @defgroup GLS Glucose Service
-  * @brief Glucose service
+  * @brief Glucose Service
   * @{
   */
 
 
-/** @defgroup GLS_CONFIG Glusose Service Config
-  * @brief Glusose service configuration file
+/** @defgroup GLS_CONFIG GLS Config
+  * @brief Glucose service configuration file
   * @{
   */
 
@@ -33,26 +33,26 @@
   * @{
   */
 
-/** @brief glucose maximum number of records in database */
+/** @brief Glucose maximum number of records in database. */
 #define GLC_RACP_MAX_NBR_OF_STORED_RECS             10
 
 /** @defgroup GLS_Optional_Characteristic GLS Optional Characteristic
-  * @brief  glucose optional characteristic configuration
+  * @brief  Glucose optional characteristic configuration.
   * @{
   */
 #define GLC_MEASUREMENT_CONTEXT_SUPPORT             1
 /** @} */
 
 /** @defgroup GLS_Optional_Field GLS Optional Field
-  * @brief  glucose optional field.
+  * @brief  Glucose optional field.
   * @{
   */
-/** glucose measurement optional fields configuration */
+/* Glucose measurement optional fields configuration. */
 #define GLC_INCLUDE_TIME_OFFSET                     1
 #define GLC_INCLUDE_CONC_TS_LOC                     1
 #define GLC_INCLUDE_SS_ANNUNC                       1
 
-/** glucose measurement context optional fields configuration */
+/* Glucose measurement context optional fields configuration. */
 #if (GLC_MEASUREMENT_CONTEXT_SUPPORT)
 #define GLC_INCLUDE_CARBOHYDRATE                    1
 #define GLC_INCLUDE_MEAL                            1

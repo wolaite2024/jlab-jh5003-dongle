@@ -24,6 +24,7 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 #include "bt_gatt_client.h"
+#include "hids_gatt_def.h"
 
 /*============================================================================*
  *                         Macros
@@ -32,14 +33,6 @@ extern "C" {
   * @brief
   * @{
   */
-
-
-#define GATT_UUID_HIDS                          0x1812
-#define GATT_UUID_CHAR_PROTOCOL_MODE            0x2A4E
-#define GATT_UUID_CHAR_REPORT                   0x2A4D
-#define GATT_UUID_CHAR_REPORT_MAP               0x2A4B
-#define GATT_UUID_CHAR_HID_INFO                 0x2A4A
-#define GATT_UUID_CHAR_HID_CONTROL_POINT        0x2A4C
 
 /** @defgroup HIDS_CLT_CB_MSG
   * @brief HIDS client callback messages
@@ -71,12 +64,6 @@ typedef T_APP_RESULT(*P_FUN_HIDS_CLIENT_APP_CB)(uint16_t conn_handle, uint8_t ty
  * @brief hid report type
  *
  */
-typedef enum
-{
-    HID_INPUT_TYPE   = 1,
-    HID_OUTPUT_TYPE  = 2,
-    HID_FEATURE_TYPE = 3
-} T_HID_REPORT_TYPE;
 
 /** @brief BLE hid client discovery done*/
 typedef struct
@@ -111,6 +98,7 @@ typedef struct
     {
         T_HIDS_CLIENT_REPORT_MAP    hids_report_map;
         T_HIDS_CLIENT_REPORT        hids_report;
+        T_HIDS_PROTOCOL_MODE        protocol_mode;
     } data;
 } T_HIDS_CLIENT_READ_RESULT;
 
@@ -133,7 +121,7 @@ typedef struct
     uint8_t *p_data;
 } T_HIDS_CLIENT_NOTIFY_DATA;
 
-/** End of HIDS_CLIENT_Exported_Types
+/** End of HIDS_GATT_CLIENT_Exported_Types
 * @}
 */
 
@@ -141,7 +129,7 @@ typedef struct
 /*============================================================================*
  *                         Functions
  *============================================================================*/
-/** @defgroup HIDS_CLIENT_Exported_Functions HIDS Client Exported Functions
+/** @defgroup HIDS_GATT_CLIENT_Exported_Functions HIDS GATT Client Exported Functions
   * @brief
   * @{
   */
@@ -153,6 +141,16 @@ typedef struct
  * @return service number
  */
 uint8_t hids_client_get_service_num(uint16_t conn_handle);
+
+/**
+ * @brief api of hids read protocol mode
+ *
+ * @param conn_handle le link connect handle
+ * @param srv_instance_id service instance id
+ * @return true
+ * @return false
+ */
+bool hids_client_read_protocol_mode(uint16_t conn_handle, uint8_t srv_instance_id);
 
 /**
  * @brief api of read hids report map value
@@ -184,7 +182,7 @@ bool hids_add_client(P_FUN_HIDS_CLIENT_APP_CB app_cb, uint8_t link_num);
  * @return false
  */
 bool hids_client_read_report(uint8_t conn_handle, uint8_t srv_instance_id, uint8_t report_id,
-                             T_HID_REPORT_TYPE report_type);
+                             T_HIDS_REPORT_TYPE report_type);
 
 /**
  * @brief api of hids write report
@@ -199,7 +197,7 @@ bool hids_client_read_report(uint8_t conn_handle, uint8_t srv_instance_id, uint8
  * @return false
  */
 bool hids_client_write_report(uint16_t conn_handle, uint8_t srv_instance_id, uint8_t report_id,
-                              T_HID_REPORT_TYPE report_type, uint16_t length,
+                              T_HIDS_REPORT_TYPE report_type, uint16_t length,
                               uint8_t *p_data);
 
 /** @} End of HIDS_GATT_CLIENT_Exported_Functions */

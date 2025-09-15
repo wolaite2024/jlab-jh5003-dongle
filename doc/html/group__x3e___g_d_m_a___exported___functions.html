@@ -52,64 +52,67 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga8d0cb4e6f6b228ce970f565565d9bb8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___g_d_m_a___exported___functions.html#ga8d0cb4e6f6b228ce970f565565d9bb8d">GDMA_DeInit</a> (void)</td></tr>
-<tr class="memdesc:ga8d0cb4e6f6b228ce970f565565d9bb8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the GDMA registers to their default reset values.  <a href="#ga8d0cb4e6f6b228ce970f565565d9bb8d">More...</a><br /></td></tr>
+<tr class="memdesc:ga8d0cb4e6f6b228ce970f565565d9bb8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the GDMA registers to their default reset values and GDMA clock will be closed.  <a href="#ga8d0cb4e6f6b228ce970f565565d9bb8d">More...</a><br /></td></tr>
 <tr class="separator:ga8d0cb4e6f6b228ce970f565565d9bb8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0c4386a76f776a50aba1b2ecb6c665c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___g_d_m_a___exported___functions.html#ga0c4386a76f776a50aba1b2ecb6c665c5">GDMA_StructInit</a> (<a class="el" href="struct_g_d_m_a___init_type_def.html">GDMA_InitTypeDef</a> *GDMA_InitStruct)</td></tr>
 <tr class="memdesc:ga0c4386a76f776a50aba1b2ecb6c665c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills each GDMA_InitStruct member with its default value.  <a href="#ga0c4386a76f776a50aba1b2ecb6c665c5">More...</a><br /></td></tr>
 <tr class="separator:ga0c4386a76f776a50aba1b2ecb6c665c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4d6b9a94e20aad58fbff8de25c0f5d8c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___g_d_m_a___exported___functions.html#ga4d6b9a94e20aad58fbff8de25c0f5d8c">GDMA_INTConfig</a> (uint8_t GDMA_Channel_Num, uint32_t GDMA_IT, <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gac9a7e9a35d2513ec15c3b537aaa4fba1">FunctionalState</a> NewState)</td></tr>
-<tr class="memdesc:ga4d6b9a94e20aad58fbff8de25c0f5d8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables the specified DMAy Channelx interrupts.  <a href="#ga4d6b9a94e20aad58fbff8de25c0f5d8c">More...</a><br /></td></tr>
+<tr class="memdesc:ga4d6b9a94e20aad58fbff8de25c0f5d8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable the specified GDMA channelx interrupt source.  <a href="#ga4d6b9a94e20aad58fbff8de25c0f5d8c">More...</a><br /></td></tr>
 <tr class="separator:ga4d6b9a94e20aad58fbff8de25c0f5d8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf12b6b0f74a8b013f4f2fc49a2025aab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___g_d_m_a___exported___functions.html#gaf12b6b0f74a8b013f4f2fc49a2025aab">GDMA_ClearINTPendingBit</a> (uint8_t GDMA_Channel_Num, uint32_t GDMA_IT)</td></tr>
-<tr class="memdesc:gaf12b6b0f74a8b013f4f2fc49a2025aab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables the specified DMAy Channelx interrupts.  <a href="#gaf12b6b0f74a8b013f4f2fc49a2025aab">More...</a><br /></td></tr>
+<tr class="memdesc:gaf12b6b0f74a8b013f4f2fc49a2025aab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the specified GDMA channelx interrupt pending bit.  <a href="#gaf12b6b0f74a8b013f4f2fc49a2025aab">More...</a><br /></td></tr>
 <tr class="separator:gaf12b6b0f74a8b013f4f2fc49a2025aab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0bdf8c5d667a8cafa724102e4e706206"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___g_d_m_a___exported___functions.html#ga0bdf8c5d667a8cafa724102e4e706206">GDMA_SafeSuspend</a> (<a class="el" href="struct_g_d_m_a___channel_type_def.html">GDMA_ChannelTypeDef</a> *GDMA_Channelx)</td></tr>
-<tr class="memdesc:ga0bdf8c5d667a8cafa724102e4e706206"><td class="mdescLeft">&#160;</td><td class="mdescRight">Suspend GDMA transmission safe from the source.Please check GDMA FIFO empty to guarnatee without losing data.  <a href="#ga0bdf8c5d667a8cafa724102e4e706206">More...</a><br /></td></tr>
+<tr class="memdesc:ga0bdf8c5d667a8cafa724102e4e706206"><td class="mdescLeft">&#160;</td><td class="mdescRight">Suspend GDMA transmission safe from the source. Please check GDMA FIFO empty to guarnatee without losing data.  <a href="#ga0bdf8c5d667a8cafa724102e4e706206">More...</a><br /></td></tr>
 <tr class="separator:ga0bdf8c5d667a8cafa724102e4e706206"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3e1698fa8c49cc1fdf017c55b4513cd7"><td class="memItemLeft" align="right" valign="top">static __forceinline <a class="el" href="group__x3d___r_t_l876x___exported__types.html#ga89136caac2e14c55151f527ac02daaff">FlagStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___g_d_m_a___exported___functions.html#ga3e1698fa8c49cc1fdf017c55b4513cd7">GDMA_GetChannelStatus</a> (uint8_t GDMA_Channel_Num)</td></tr>
-<tr class="memdesc:ga3e1698fa8c49cc1fdf017c55b4513cd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks selected GDMA Channel status.  <a href="#ga3e1698fa8c49cc1fdf017c55b4513cd7">More...</a><br /></td></tr>
+<tr class="memdesc:ga3e1698fa8c49cc1fdf017c55b4513cd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the selected GDMA channel status.  <a href="#ga3e1698fa8c49cc1fdf017c55b4513cd7">More...</a><br /></td></tr>
 <tr class="separator:ga3e1698fa8c49cc1fdf017c55b4513cd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga828d2b120e4364aaf2df69cbaba11974"><td class="memItemLeft" align="right" valign="top">static __forceinline <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gaacbd7ed539db0aacd973a0f6eca34074">ITStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___g_d_m_a___exported___functions.html#ga828d2b120e4364aaf2df69cbaba11974">GDMA_GetTransferINTStatus</a> (uint8_t GDMA_Channel_Num)</td></tr>
-<tr class="memdesc:ga828d2b120e4364aaf2df69cbaba11974"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks GDMA Channel transfer interrupt.  <a href="#ga828d2b120e4364aaf2df69cbaba11974">More...</a><br /></td></tr>
+<tr class="memdesc:ga828d2b120e4364aaf2df69cbaba11974"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether GDMA Channel transfer interrupt is set.  <a href="#ga828d2b120e4364aaf2df69cbaba11974">More...</a><br /></td></tr>
 <tr class="separator:ga828d2b120e4364aaf2df69cbaba11974"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8031ba4931a7bfd92e03c83af31da3a8"><td class="memItemLeft" align="right" valign="top">static __forceinline void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___g_d_m_a___exported___functions.html#ga8031ba4931a7bfd92e03c83af31da3a8">GDMA_ClearAllTypeINT</a> (uint8_t GDMA_Channel_Num)</td></tr>
-<tr class="memdesc:ga8031ba4931a7bfd92e03c83af31da3a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">clear the GDMA Channelx all interrupt.  <a href="#ga8031ba4931a7bfd92e03c83af31da3a8">More...</a><br /></td></tr>
+<tr class="memdesc:ga8031ba4931a7bfd92e03c83af31da3a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear GDMA channelx all type interrupt.  <a href="#ga8031ba4931a7bfd92e03c83af31da3a8">More...</a><br /></td></tr>
 <tr class="separator:ga8031ba4931a7bfd92e03c83af31da3a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga16a7db81aa8f0a53ac889938ccd9e9fd"><td class="memItemLeft" align="right" valign="top">static __forceinline void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___g_d_m_a___exported___functions.html#ga16a7db81aa8f0a53ac889938ccd9e9fd">GDMA_SetSourceAddress</a> (<a class="el" href="struct_g_d_m_a___channel_type_def.html">GDMA_ChannelTypeDef</a> *GDMA_Channelx, uint32_t Address)</td></tr>
-<tr class="memdesc:ga16a7db81aa8f0a53ac889938ccd9e9fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">set GDMA source address .  <a href="#ga16a7db81aa8f0a53ac889938ccd9e9fd">More...</a><br /></td></tr>
+<tr class="memdesc:ga16a7db81aa8f0a53ac889938ccd9e9fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set GDMA transmission source address.  <a href="#ga16a7db81aa8f0a53ac889938ccd9e9fd">More...</a><br /></td></tr>
 <tr class="separator:ga16a7db81aa8f0a53ac889938ccd9e9fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga811ff00cfe2e36df5848ffe7cc6c2933"><td class="memItemLeft" align="right" valign="top">static __forceinline void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___g_d_m_a___exported___functions.html#ga811ff00cfe2e36df5848ffe7cc6c2933">GDMA_SetDestinationAddress</a> (<a class="el" href="struct_g_d_m_a___channel_type_def.html">GDMA_ChannelTypeDef</a> *GDMA_Channelx, uint32_t Address)</td></tr>
-<tr class="memdesc:ga811ff00cfe2e36df5848ffe7cc6c2933"><td class="mdescLeft">&#160;</td><td class="mdescRight">set GDMA destination address .  <a href="#ga811ff00cfe2e36df5848ffe7cc6c2933">More...</a><br /></td></tr>
+<tr class="memdesc:ga811ff00cfe2e36df5848ffe7cc6c2933"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set GDMA transmission destination address.  <a href="#ga811ff00cfe2e36df5848ffe7cc6c2933">More...</a><br /></td></tr>
 <tr class="separator:ga811ff00cfe2e36df5848ffe7cc6c2933"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae37b74963579e99a20486c0fb247db55"><td class="memItemLeft" align="right" valign="top">static __forceinline void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___g_d_m_a___exported___functions.html#gae37b74963579e99a20486c0fb247db55">GDMA_SetBufferSize</a> (<a class="el" href="struct_g_d_m_a___channel_type_def.html">GDMA_ChannelTypeDef</a> *GDMA_Channelx, uint32_t buffer_size)</td></tr>
-<tr class="memdesc:gae37b74963579e99a20486c0fb247db55"><td class="mdescLeft">&#160;</td><td class="mdescRight">set GDMA buffer size.  <a href="#gae37b74963579e99a20486c0fb247db55">More...</a><br /></td></tr>
+<tr class="memdesc:gae37b74963579e99a20486c0fb247db55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set GDMA buffer size.  <a href="#gae37b74963579e99a20486c0fb247db55">More...</a><br /></td></tr>
 <tr class="separator:gae37b74963579e99a20486c0fb247db55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0523ed4d45ba525c5cc6352ee03e09d7"><td class="memItemLeft" align="right" valign="top">static __forceinline void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___g_d_m_a___exported___functions.html#ga0523ed4d45ba525c5cc6352ee03e09d7">GDMA_SuspendCmd</a> (<a class="el" href="struct_g_d_m_a___channel_type_def.html">GDMA_ChannelTypeDef</a> *GDMA_Channelx, <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gac9a7e9a35d2513ec15c3b537aaa4fba1">FunctionalState</a> NewState)</td></tr>
-<tr class="memdesc:ga0523ed4d45ba525c5cc6352ee03e09d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Suspend GDMA transmission from the source.Please check GDMA FIFO empty to guarnatee without losing data.  <a href="#ga0523ed4d45ba525c5cc6352ee03e09d7">More...</a><br /></td></tr>
+<tr class="memdesc:ga0523ed4d45ba525c5cc6352ee03e09d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Suspend GDMA transmission from the source. Please check GDMA FIFO empty to guarnatee without losing data.  <a href="#ga0523ed4d45ba525c5cc6352ee03e09d7">More...</a><br /></td></tr>
 <tr class="separator:ga0523ed4d45ba525c5cc6352ee03e09d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gace6a678988ec4eef1c9fe2b67b30f00d"><td class="memItemLeft" align="right" valign="top">static __forceinline <a class="el" href="group__x3d___r_t_l876x___exported__types.html#ga89136caac2e14c55151f527ac02daaff">FlagStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___g_d_m_a___exported___functions.html#gace6a678988ec4eef1c9fe2b67b30f00d">GDMA_GetFIFOStatus</a> (<a class="el" href="struct_g_d_m_a___channel_type_def.html">GDMA_ChannelTypeDef</a> *GDMA_Channelx)</td></tr>
-<tr class="memdesc:gace6a678988ec4eef1c9fe2b67b30f00d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check GDMA FIFO status.  <a href="#gace6a678988ec4eef1c9fe2b67b30f00d">More...</a><br /></td></tr>
+<tr class="memdesc:gace6a678988ec4eef1c9fe2b67b30f00d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether GDMA FIFO is empty.  <a href="#gace6a678988ec4eef1c9fe2b67b30f00d">More...</a><br /></td></tr>
 <tr class="separator:gace6a678988ec4eef1c9fe2b67b30f00d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga63e5495f02178a40ffdd7a1dbd0692e9"><td class="memItemLeft" align="right" valign="top">static __forceinline uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___g_d_m_a___exported___functions.html#ga63e5495f02178a40ffdd7a1dbd0692e9">GDMA_GetTransferLen</a> (<a class="el" href="struct_g_d_m_a___channel_type_def.html">GDMA_ChannelTypeDef</a> *GDMA_Channelx)</td></tr>
-<tr class="memdesc:ga63e5495f02178a40ffdd7a1dbd0692e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">get GDMA FIFO Length.  <a href="#ga63e5495f02178a40ffdd7a1dbd0692e9">More...</a><br /></td></tr>
+<tr class="memdesc:ga63e5495f02178a40ffdd7a1dbd0692e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get GDMA transfer data length.  <a href="#ga63e5495f02178a40ffdd7a1dbd0692e9">More...</a><br /></td></tr>
 <tr class="separator:ga63e5495f02178a40ffdd7a1dbd0692e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaca0857579050e9ba2ae1a19f8578e671"><td class="memItemLeft" align="right" valign="top">static __forceinline void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___g_d_m_a___exported___functions.html#gaca0857579050e9ba2ae1a19f8578e671">GDMA_SetLLPAddress</a> (<a class="el" href="struct_g_d_m_a___channel_type_def.html">GDMA_ChannelTypeDef</a> *GDMA_Channelx, uint32_t Address)</td></tr>
-<tr class="memdesc:gaca0857579050e9ba2ae1a19f8578e671"><td class="mdescLeft">&#160;</td><td class="mdescRight">set GDMA LLP address .  <a href="#gaca0857579050e9ba2ae1a19f8578e671">More...</a><br /></td></tr>
+<tr class="memdesc:gaca0857579050e9ba2ae1a19f8578e671"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set GDMA LLP stucture address.  <a href="#gaca0857579050e9ba2ae1a19f8578e671">More...</a><br /></td></tr>
 <tr class="separator:gaca0857579050e9ba2ae1a19f8578e671"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga937495c066e249ecf296345710bc1490"><td class="memItemLeft" align="right" valign="top">static __forceinline <a class="el" href="group__x3d___r_t_l876x___exported__types.html#ga89136caac2e14c55151f527ac02daaff">FlagStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___g_d_m_a___exported___functions.html#ga937495c066e249ecf296345710bc1490">GDMA_GetSuspendChannelStatus</a> (<a class="el" href="struct_g_d_m_a___channel_type_def.html">GDMA_ChannelTypeDef</a> *GDMA_Channelx)</td></tr>
 <tr class="memdesc:ga937495c066e249ecf296345710bc1490"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check GDMA suspend channel status.  <a href="#ga937495c066e249ecf296345710bc1490">More...</a><br /></td></tr>
 <tr class="separator:ga937495c066e249ecf296345710bc1490"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacdec7e6bcda4c12cbd3554f2f3e9b121"><td class="memItemLeft" align="right" valign="top">static __forceinline <a class="el" href="group__x3d___r_t_l876x___exported__types.html#ga89136caac2e14c55151f527ac02daaff">FlagStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___g_d_m_a___exported___functions.html#gacdec7e6bcda4c12cbd3554f2f3e9b121">GDMA_GetSuspendCmdStatus</a> (<a class="el" href="struct_g_d_m_a___channel_type_def.html">GDMA_ChannelTypeDef</a> *GDMA_Channelx)</td></tr>
-<tr class="memdesc:gacdec7e6bcda4c12cbd3554f2f3e9b121"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check GDMA suspend status.  <a href="#gacdec7e6bcda4c12cbd3554f2f3e9b121">More...</a><br /></td></tr>
+<tr class="memdesc:gacdec7e6bcda4c12cbd3554f2f3e9b121"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check GDMA suspend command status.  <a href="#gacdec7e6bcda4c12cbd3554f2f3e9b121">More...</a><br /></td></tr>
 <tr class="separator:gacdec7e6bcda4c12cbd3554f2f3e9b121"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafcacd82de3ec0f4612d66d4e6bbbb6db"><td class="memItemLeft" align="right" valign="top">static __forceinline void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___g_d_m_a___exported___functions.html#gafcacd82de3ec0f4612d66d4e6bbbb6db">GDMA_SetLLPMode</a> (<a class="el" href="struct_g_d_m_a___channel_type_def.html">GDMA_ChannelTypeDef</a> *GDMA_Channelx, uint32_t mode)</td></tr>
+<tr class="memdesc:gafcacd82de3ec0f4612d66d4e6bbbb6db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update GDMA LLP mode in multi-block.  <a href="#gafcacd82de3ec0f4612d66d4e6bbbb6db">More...</a><br /></td></tr>
+<tr class="separator:gafcacd82de3ec0f4612d66d4e6bbbb6db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:ga1a3498cf6a9b61faecede7c2181e8c93"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___g_d_m_a___exported___functions.html#ga1a3498cf6a9b61faecede7c2181e8c93">GDMA_Init</a> )(<a class="el" href="struct_g_d_m_a___channel_type_def.html">GDMA_ChannelTypeDef</a> *GDMA_Channelx, <a class="el" href="struct_g_d_m_a___init_type_def.html">GDMA_InitTypeDef</a> *GDMA_InitStruct)</td></tr>
-<tr class="memdesc:ga1a3498cf6a9b61faecede7c2181e8c93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the GDMA Channelx according to the specified parameters in the GDMA_InitStruct.  <a href="#ga1a3498cf6a9b61faecede7c2181e8c93">More...</a><br /></td></tr>
+<tr class="memdesc:ga1a3498cf6a9b61faecede7c2181e8c93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the GDMA channelx according to the specified parameters in the GDMA_InitStruct.  <a href="#ga1a3498cf6a9b61faecede7c2181e8c93">More...</a><br /></td></tr>
 <tr class="separator:ga1a3498cf6a9b61faecede7c2181e8c93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga81023d249b49c999c523b9b5a2c93ade"><td class="memItemLeft" align="right" valign="top">uint8_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___g_d_m_a___exported___functions.html#ga81023d249b49c999c523b9b5a2c93ade">GDMA_Cmd</a> )(uint8_t GDMA_Channel_Num, <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gac9a7e9a35d2513ec15c3b537aaa4fba1">FunctionalState</a> NewState)</td></tr>
-<tr class="memdesc:ga81023d249b49c999c523b9b5a2c93ade"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables the specified GDMA Channelx.  <a href="#ga81023d249b49c999c523b9b5a2c93ade">More...</a><br /></td></tr>
+<tr class="memdesc:ga81023d249b49c999c523b9b5a2c93ade"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables the selected GDMA channel.  <a href="#ga81023d249b49c999c523b9b5a2c93ade">More...</a><br /></td></tr>
 <tr class="separator:ga81023d249b49c999c523b9b5a2c93ade"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -130,7 +133,8 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Deinitializes the GDMA registers to their default reset values. </p>
+<p>Deinitializes the GDMA registers to their default reset values and GDMA clock will be closed. </p>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_gdma_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_d_m_a___exported___functions.html#ga8d0cb4e6f6b228ce970f565565d9bb8d">GDMA_DeInit</a>();</div><div class="line">}</div></div><!-- fragment --><p>Deinitializes the GDMA registers to their default reset values and GDMA clock will be closed.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">None</td><td></td></tr>
@@ -164,6 +168,67 @@ Variables</h2></td></tr>
 
 <p>Fills each GDMA_InitStruct member with its default value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">GDMA_InitStruct</td><td>Pointer to a <a class="el" href="struct___x3_e___g_d_m_a___init_type_def.html">_X3E_GDMA_InitTypeDef</a> structure which will be initialized.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>The default settings for the GDMA_InitStruct member are shown in the following table: <table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadCenter">GDMA_InitStruct Member  </th><th class="markdownTableHeadCenter">Default Value   </th></tr>
+<tr class="markdownTableBody" class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">GDMA_ChannelNum  </td><td class="markdownTableBodyCenter">0   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">GDMA_DIR  </td><td class="markdownTableBodyCenter"><a class="el" href="group__x3e___g_d_m_a__data__transfer__direction.html#ga98ab5e79de5534ff2f41f3773ce060a1">GDMA_DIR_PeripheralToMemory</a>   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">GDMA_BufferSize  </td><td class="markdownTableBodyCenter">200   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">GDMA_SourceInc  </td><td class="markdownTableBodyCenter"><a class="el" href="group__x3e___g_d_m_a__source__incremented__mode.html#ga7ebc23b20b558d5c91abff9e4e6d889a">DMA_SourceInc_Fix</a>   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">GDMA_DestinationInc  </td><td class="markdownTableBodyCenter"><a class="el" href="group__x3e___g_d_m_a__destination__incremented__mode.html#ga7ef00ff55b0cdf54a0a64087d6fffcd7">DMA_DestinationInc_Inc</a>   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">GDMA_SourceDataSize  </td><td class="markdownTableBodyCenter"><a class="el" href="group__x3e___g_d_m_a__data__size.html#gab1856b5f84dc4af7ac5429110e12e68a">GDMA_DataSize_Byte</a>   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">GDMA_DestinationDataSize  </td><td class="markdownTableBodyCenter"><a class="el" href="group__x3e___g_d_m_a__data__size.html#gab1856b5f84dc4af7ac5429110e12e68a">GDMA_DataSize_Byte</a>   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">GDMA_SourceMsize  </td><td class="markdownTableBodyCenter"><a class="el" href="group__x3e___g_d_m_a___msize.html#gad3ff1fc80a11967b7ac6feaab6f7bf9f">GDMA_Msize_1</a>   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">GDMA_DestinationMsize  </td><td class="markdownTableBodyCenter"><a class="el" href="group__x3e___g_d_m_a___msize.html#gad3ff1fc80a11967b7ac6feaab6f7bf9f">GDMA_Msize_1</a>   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">GDMA_SourceAddr  </td><td class="markdownTableBodyCenter">0   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">GDMA_DestinationAddr  </td><td class="markdownTableBodyCenter">0   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">GDMA_ChannelPriority  </td><td class="markdownTableBodyCenter">0   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">GDMA_Multi_Block_Mode  </td><td class="markdownTableBodyCenter"><a class="el" href="group___l_c_d_c___d_m_a___multiblock___mode.html#ga134913224190480c660b565b6654ee8e">LLI_TRANSFER</a>   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">GDMA_SourceHandshake  </td><td class="markdownTableBodyCenter">0   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">GDMA_DestHandshake  </td><td class="markdownTableBodyCenter">0   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">GDMA_Multi_Block_En  </td><td class="markdownTableBodyCenter">DISABLE   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">GDMA_Scatter_En  </td><td class="markdownTableBodyCenter">DISABLE   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">GDMA_Gather_En  </td><td class="markdownTableBodyCenter">DISABLE   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">GDMA_Source_Cir_Gather_Num  </td><td class="markdownTableBodyCenter">1   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">GDMA_Dest_Cir_Sca_Num  </td><td class="markdownTableBodyCenter">1   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">GDMA_Multi_Block_Struct  </td><td class="markdownTableBodyCenter">0   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">GDMA_ScatterCount  </td><td class="markdownTableBodyCenter">0   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">GDMA_ScatterInterval  </td><td class="markdownTableBodyCenter">0   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">GDMA_GatherCount  </td><td class="markdownTableBodyCenter">0   </td></tr>
+<tr class="markdownTableBody" class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">GDMA_GatherInterval  </td><td class="markdownTableBodyCenter">0   </td></tr>
+</table>
+</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line">uint8_t uart_tx_dma_ch_num = 0xa5;</div><div class="line">uint8_t UART_TX_DMA_CHANNEL_NUM = uart_tx_dma_ch_num;</div><div class="line"><span class="preprocessor">#define UART_TX_DMA_CHANNEL    DMA_CH_BASE(uart_tx_dma_ch_num)</span></div><div class="line"><span class="preprocessor">#define UART_TX_DMA_IRQ        DMA_CH_IRQ(uart_tx_dma_ch_num)</span></div><div class="line">uint8_t GDMA_SendBuffer[100];</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> driver_gdma_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint16_t  strLen = 0;</div><div class="line">    <span class="keywordtype">char</span> *demoStr = <span class="stringliteral">&quot;### Welcome to use RealTek Bumblebee ###\r\n&quot;</span>;</div><div class="line">    strLen = strlen(demoStr);</div><div class="line">    memcpy(GDMA_SendBuffer, demoStr, strLen);</div><div class="line"></div><div class="line">    <a class="code" href="struct_g_d_m_a___init_type_def.html">GDMA_InitTypeDef</a> GDMA_InitStruct;</div><div class="line">    <a class="code" href="group___g_d_m_a___exported___functions.html#ga0c4386a76f776a50aba1b2ecb6c665c5">GDMA_StructInit</a>(&amp;GDMA_InitStruct);</div><div class="line">    GDMA_InitStruct.<a class="code" href="struct_g_d_m_a___init_type_def.html#afa81d74400498ca459fba1bb20101b74">GDMA_ChannelNum</a>      = UART_TX_DMA_CHANNEL_NUM;</div><div class="line">    GDMA_InitStruct.<a class="code" href="struct_g_d_m_a___init_type_def.html#aee96bc8a1d8ef85f2ffc64d02274fe67">GDMA_DIR</a>             = <a class="code" href="group___g_d_m_a__data__transfer__direction.html#ga257d48aeb412e7914a71e44625467575">GDMA_DIR_MemoryToPeripheral</a>;</div><div class="line">    GDMA_InitStruct.<a class="code" href="struct_g_d_m_a___init_type_def.html#a672455687defa33a421d78eea9d8309c">GDMA_BufferSize</a>      = strLen;<span class="comment">//determine total transfer size</span></div><div class="line">    GDMA_InitStruct.<a class="code" href="struct_g_d_m_a___init_type_def.html#ae185e562e3c1d62fb4a533b2a9af2125">GDMA_SourceInc</a>       = <a class="code" href="group___g_d_m_a__source__incremented__mode.html#ga96d0ea1d643d85940bfdd7df670409bd">DMA_SourceInc_Inc</a>;</div><div class="line">    GDMA_InitStruct.<a class="code" href="struct_g_d_m_a___init_type_def.html#a33ccc00cfcca94735c63e6a85d33735b">GDMA_DestinationInc</a>  = <a class="code" href="group___g_d_m_a__destination__incremented__mode.html#gaad2e94b4db87adb93e92888c9e719359">DMA_DestinationInc_Fix</a>;</div><div class="line">    GDMA_InitStruct.<a class="code" href="struct_g_d_m_a___init_type_def.html#aa2ab817e5b8f8c9e79f7d07c1afa8069">GDMA_SourceDataSize</a>  = <a class="code" href="group___g_d_m_a__data__size.html#gab1856b5f84dc4af7ac5429110e12e68a">GDMA_DataSize_Byte</a>;</div><div class="line">    GDMA_InitStruct.<a class="code" href="struct_g_d_m_a___init_type_def.html#a6e2cad942d5a4b533fec712c06b402e1">GDMA_DestinationDataSize</a> = <a class="code" href="group___g_d_m_a__data__size.html#gab1856b5f84dc4af7ac5429110e12e68a">GDMA_DataSize_Byte</a>;</div><div class="line">    GDMA_InitStruct.<a class="code" href="struct_g_d_m_a___init_type_def.html#aca898ef64b30b1eeca934c1dcfad946b">GDMA_SourceMsize</a>      = <a class="code" href="group___g_d_m_a___msize.html#gad3ff1fc80a11967b7ac6feaab6f7bf9f">GDMA_Msize_1</a>;</div><div class="line">    GDMA_InitStruct.<a class="code" href="struct_g_d_m_a___init_type_def.html#ab0482d07c0511e055d22a991adce1893">GDMA_DestinationMsize</a> = <a class="code" href="group___g_d_m_a___msize.html#gad3ff1fc80a11967b7ac6feaab6f7bf9f">GDMA_Msize_1</a>;</div><div class="line">    GDMA_InitStruct.<a class="code" href="struct_g_d_m_a___init_type_def.html#a32b5468d324eb9b8ea93431393bb0918">GDMA_SourceAddr</a>      = (uint32_t)GDMA_SendBuffer;</div><div class="line">    GDMA_InitStruct.<a class="code" href="struct_g_d_m_a___init_type_def.html#a426621ee71bcccf5c85db9678d68a037">GDMA_DestinationAddr</a> = (uint32_t)(&amp;(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gaf7cb12b462b4594bd759d1b4e241ec4c">UART</a>-&gt;RB_THR));</div><div class="line">    GDMA_InitStruct.<a class="code" href="struct_g_d_m_a___init_type_def.html#aa76ac5f0162de6fe56840c2f2594badb">GDMA_DestHandshake</a>   = <a class="code" href="group___g_d_m_a___handshake___type.html#ga694e9fe844f4532afc55f9a908613f42">GDMA_Handshake_UART0_TX</a>;</div><div class="line">    <a class="code" href="group__x3e___g_d_m_a___exported___functions.html#ga1a3498cf6a9b61faecede7c2181e8c93">GDMA_Init</a>(UART_TX_DMA_CHANNEL, &amp;GDMA_InitStruct);</div><div class="line">}</div></div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">GDMA_InitStruct</td><td>: pointer to a <a class="el" href="struct_g_d_m_a___init_type_def.html" title="GDMA Init structure definition. ">GDMA_InitTypeDef</a> structure which will be initialized. </td></tr>
   </table>
@@ -210,28 +275,28 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Enables or disables the specified DMAy Channelx interrupts. </p>
+<p>Enable or disable the specified GDMA channelx interrupt source. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GDMA_Channel_Num</td><td>GDMA channel number. </td></tr>
-    <tr><td class="paramname">GDMA_IT</td><td>specifies the GDMA interrupts sources to be enabled or disabled. This parameter can be any combination of the following values: <ul>
-<li>GDMA_INT_Transfer: Transfer complete interrupt unmask </li>
-<li>GDMA_INT_Block: Block transfer interrupt unmask </li>
-<li>GDMA_INT_SrcTransfer: SourceTransfer interrupt unmask </li>
-<li>GDMA_INT_DstTransfer: Destination Transfer interrupt unmask </li>
-<li>GDMA_INT_Error: Transfer error interrupt unmask </li>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GDMA_Channel_Num</td><td>GDMA channel number, which can be 0~8. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GDMA_IT</td><td>Specifies the GDMA interrupt source to be enabled or disabled. <a class="el" href="group__x3e___d_m_a__interrupts__definition.html">GDMA Interrupts Definition</a>. This parameter can be any combination of the following values:<ul>
+<li>GDMA_INT_Transfer: The interrupt is generated on GDMA transfer completion to the destination.</li>
+<li>GDMA_INT_Block: The interrupt is generated on GDMA block transfer completion to the destination.</li>
+<li>GDMA_INT_SrcTransfer: The interrupt is generated after completion of the last OCP transfer of the requested single/burst transaction from the handshaking interface.</li>
+<li>GDMA_INT_DstTransfer: The interrupt is generated on GDMA transfer completion to the destination peripheral.</li>
+<li>GDMA_INT_Error: The interrupt is generated when an ERROR response is received from the slave on the SRESP bus during a GDMA transfer. </li>
 </ul>
 </td></tr>
-    <tr><td class="paramname">NewState</td><td>new state of the specified DMA interrupts. This parameter can be: ENABLE or DISABLE. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">NewState</td><td>New state of the specified GDMA interrupt source. This parameter can be one of the following values:<ul>
+<li>ENABLE: Enable the specified GDMA channelx interrupt source.</li>
+<li>DISABLE: Disable the specified GDMA channelx interrupt source.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td>Enables or disables the specified GDMA Channelx interrupts.</td></tr>
-  </table>
-  </dd>
-</dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line">uint8_t uart_tx_dma_ch_num = 0xa5;</div><div class="line">uint8_t UART_TX_DMA_CHANNEL_NUM = uart_tx_dma_ch_num;</div><div class="line"><span class="preprocessor">#define UART_TX_DMA_CHANNEL    DMA_CH_BASE(uart_tx_dma_ch_num)</span></div><div class="line"><span class="preprocessor">#define UART_TX_DMA_IRQ        DMA_CH_IRQ(uart_tx_dma_ch_num)</span></div><div class="line">uint8_t GDMA_SendBuffer[100];</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> driver_gdma_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_d_m_a___exported___functions.html#ga4d6b9a94e20aad58fbff8de25c0f5d8c">GDMA_INTConfig</a>(UART_TX_DMA_CHANNEL_NUM, <a class="code" href="group___d_m_a__interrupts__definition.html#ga09f396d999a6f1ab84cff66b5c9ce33b">GDMA_INT_Transfer</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line"></div><div class="line">    <a class="code" href="struct_n_v_i_c___init_type_def.html">NVIC_InitTypeDef</a> NVIC_InitStruct;</div><div class="line">    NVIC_InitStruct.<a class="code" href="struct_n_v_i_c___init_type_def.html#a921af0ab04e071d7d276c003e0048123">NVIC_IRQChannel</a> = UART_TX_DMA_IRQ;</div><div class="line">    NVIC_InitStruct.<a class="code" href="struct_n_v_i_c___init_type_def.html#acd582bc2edce30e9d7ab5e0ede400f36">NVIC_IRQChannelPriority</a> = 3;</div><div class="line">    NVIC_InitStruct.<a class="code" href="struct_n_v_i_c___init_type_def.html#a3c5567ef024a0489884083c88f17b4d5">NVIC_IRQChannelCmd</a> = (<a class="code" href="group__x3d___r_t_l876x___exported__types.html#gac9a7e9a35d2513ec15c3b537aaa4fba1">FunctionalState</a>)<a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>;</div><div class="line">    <a class="code" href="group__x3e___n_v_i_c___exported___functions.html#ga4e06b4f5c9109d6bc8990adf77e5f8d3">NVIC_Init</a>(&amp;NVIC_InitStruct);</div><div class="line">}</div></div><!-- fragment --><p>Enable or disable the specified GDMA channelx interrupt source.</p>
+<p>Enable or disable the specified DMA channelx interrupt source.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">GDMA_Channelx</td><td>where x can be 0 to 6 to select the GDMA Channel. </td></tr>
@@ -282,27 +347,23 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Enables or disables the specified DMAy Channelx interrupts. </p>
+<p>Clear the specified GDMA channelx interrupt pending bit. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GDMA_Channel_Num</td><td>GDMA channel number. </td></tr>
-    <tr><td class="paramname">GDMA_IT</td><td>specifies the GDMA interrupts sources to be enabled or disabled. This parameter can be any combination of the following values: <ul>
-<li>GDMA_INT_Transfer: clear transfer complete interrupt </li>
-<li>GDMA_INT_Block: clear Block transfer interrupt </li>
-<li>GDMA_INT_SrcTransfer: clear SourceTransfer interrupt </li>
-<li>GDMA_INT_DstTransfer: clear Destination Transfer interrupt </li>
-<li>GDMA_INT_Error: clear Transfer error interrupt </li>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GDMA_Channel_Num</td><td>GDMA channel number, which can be 0~8.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GDMA_IT</td><td>Specifies the GDMA interrupt source to be enabled or disabled. <a class="el" href="group__x3e___d_m_a__interrupts__definition.html">GDMA Interrupts Definition</a>. This parameter can be any combination of the following values:<ul>
+<li>GDMA_INT_Transfer: The interrupt is generated on GDMA transfer completion to the destination.</li>
+<li>GDMA_INT_Block: The interrupt is generated on GDMA block transfer completion to the destination.</li>
+<li>GDMA_INT_SrcTransfer: The interrupt is generated after completion of the last OCP transfer of the requested single/burst transaction from the handshaking interface.</li>
+<li>GDMA_INT_DstTransfer: The interrupt is generated on GDMA transfer completion to the destination peripheral.</li>
+<li>GDMA_INT_Error: The interrupt is generated when an ERROR response is received from the slave on the SRESP bus during a GDMA transfer.</li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line">uint8_t uart_tx_dma_ch_num = 0xa5;</div><div class="line">uint8_t UART_TX_DMA_CHANNEL_NUM = uart_tx_dma_ch_num;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> UART_TX_GDMA_Handler(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_d_m_a___exported___functions.html#gaf12b6b0f74a8b013f4f2fc49a2025aab">GDMA_ClearINTPendingBit</a>(UART_TX_DMA_CHANNEL_NUM, <a class="code" href="group___d_m_a__interrupts__definition.html#ga09f396d999a6f1ab84cff66b5c9ce33b">GDMA_INT_Transfer</a>);</div><div class="line">    <span class="comment">//Add user code here.</span></div><div class="line">}</div></div><!-- fragment --><p>Clear the specified GDMA channelx interrupt pending bit.</p>
+<p>Clear the specified DMA channelx interrupt pending bit.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">GDMA_Channelx</td><td>where x can be 0 to 6 to select the GDMA Channel. </td></tr>
@@ -343,20 +404,22 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Suspend GDMA transmission safe from the source.Please check GDMA FIFO empty to guarnatee without losing data. </p>
-<dl class="Added_API_2_12_0_0"><dt><b><a class="el" href="_added__a_p_i_2_12_0_0.html#_Added_API_2_12_0_0000042">Added Since 2.12.0.0:</a></b></dt><dd></dd></dl>
+<p>Suspend GDMA transmission safe from the source. Please check GDMA FIFO empty to guarnatee without losing data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GDMA_Channelx</td><td>where x can be 0 to 8 to select the GDMA Channel. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GDMA_Channelx</td><td>Where x can be 0 to 8 to select the GDMA Channel. <a class="el" href="group__x3e___g_d_m_a___declaration.html">GDMA Declaration</a>.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of suspend GDMA transmission. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>suspend success, false: suspend failed</td></tr>
+    <tr><td class="paramname">true</td><td>Suspend GDMA transmission success. </td></tr>
+    <tr><td class="paramname">false</td><td>Suspend GDMA transmission failed.</td></tr>
   </table>
   </dd>
 </dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line">uint8_t uart_rx_dma_ch_num = 0xa5;</div><div class="line"><span class="preprocessor">#define UART_RX_DMA_CHANNEL_NUM   uart_rx_dma_ch_num</span></div><div class="line"><span class="preprocessor">#define UART_RX_DMA_CHANNEL       DMA_CH_BASE(uart_rx_dma_ch_num)</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> gdma_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_d_m_a___exported___functions.html#ga0bdf8c5d667a8cafa724102e4e706206">GDMA_SafeSuspend</a>(UART_RX_DMA_CHANNEL);</div><div class="line">    <span class="comment">//Add user code here.</span></div><div class="line">}</div></div><!-- fragment --><p>Suspend GDMA transmission safe from the source. Please check GDMA FIFO empty to guarnatee without losing data.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">GDMA_Channelx</td><td>where x can be 0 to 8 to select the GDMA Channel. </td></tr>
@@ -396,15 +459,22 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Checks selected GDMA Channel status. </p>
+<p>Get the selected GDMA channel status. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GDMA_Channel_Num</td><td>GDMA channel number. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GDMA_Channel_Num</td><td>GDMA channel number, which can be 0~8.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>GDMA channel status: SET: channel is be used, RESET: channel is free. </dd></dl>
-
+<dl class="section return"><dt>Returns</dt><dd>The status of GDMA channel. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">SET</td><td>Channel is be used. </td></tr>
+    <tr><td class="paramname">RESET</td><td>Channel is free.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> Data_Uart_Handler(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___u_a_r_t___exported___functions.html#gaf8ec7481e29957fa07c40a211309fb9e">UART_GetFlagState</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gaf7cb12b462b4594bd759d1b4e241ec4c">UART</a>, <a class="code" href="group___u_a_r_t___flag.html#ga3b23374a31fc004d9075cab4fcbc1b5d">UART_FLAG_RX_IDLE</a>) == <a class="code" href="group__x3e___r_t_l876x___exported__types.html#gga89136caac2e14c55151f527ac02daaffab44c8101cc294c074709ec1b14211792">SET</a>)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___u_a_r_t___exported___functions.html#gadbb607b47f810ed2c3314663a5de1201">UART_INTConfig</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gaf7cb12b462b4594bd759d1b4e241ec4c">UART</a>, <a class="code" href="group___u_a_r_t___interrupts___definition.html#gab95dc75d54f24e5b99daf54f7d30348e">UART_INT_IDLE</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1ad3a9df141be0ccf10389b640f492b26d">DISABLE</a>);</div><div class="line">        <span class="keywordflow">if</span> (<a class="code" href="group___g_d_m_a___exported___functions.html#ga281681a3df6aa9b62cf474b07b025351">GDMA_GetChannelStatus</a>(UART_RX_DMA_CHANNEL_NUM))</div><div class="line">        {</div><div class="line">            <a class="code" href="group___g_d_m_a___exported___functions.html#ga961f1405ab49c574e2bb766ca3e2ff45">GDMA_SuspendCmd</a>(UART_RX_DMA_CHANNEL, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga828d2b120e4364aaf2df69cbaba11974"></a>
@@ -431,15 +501,22 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Checks GDMA Channel transfer interrupt. </p>
+<p>Check whether GDMA Channel transfer interrupt is set. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GDMA_Channel_Num</td><td>GDMA channel number. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GDMA_Channel_Num</td><td>GDMA channel number, which can be 0~8.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>transfer type interrupt status value. </dd></dl>
-
+<dl class="section return"><dt>Returns</dt><dd>Transfer interrupt status, SET or RESET. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">SET</td><td>GDMA Channel transfer interrupt is set. </td></tr>
+    <tr><td class="paramname">RESET</td><td>GDMA Channel transfer interrupt is unset.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#define LCD_RST                          P4_0</span></div><div class="line"><span class="preprocessor">#define LCD_DMA_CHANNEL_NUM              lcd_dma_ch_num</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> lcd_wait_dma_transfer(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keywordflow">while</span> (<a class="code" href="group___g_d_m_a___exported___functions.html#ga7e5a7a6b39173c91196a112af36568f9">GDMA_GetTransferINTStatus</a>(LCD_DMA_CHANNEL_NUM) != <a class="code" href="group__x3e___r_t_l876x___exported__types.html#gga89136caac2e14c55151f527ac02daaffab44c8101cc294c074709ec1b14211792">SET</a>);</div><div class="line">    <a class="code" href="group___g_d_m_a___exported___functions.html#gaf12b6b0f74a8b013f4f2fc49a2025aab">GDMA_ClearINTPendingBit</a>(LCD_DMA_CHANNEL_NUM, <a class="code" href="group___d_m_a__interrupts__definition.html#ga09f396d999a6f1ab84cff66b5c9ce33b">GDMA_INT_Transfer</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga8031ba4931a7bfd92e03c83af31da3a8"></a>
@@ -466,20 +543,14 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>clear the GDMA Channelx all interrupt. </p>
+<p>Clear GDMA channelx all type interrupt. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GDMA_Channel_Num</td><td>GDMA channel number. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GDMA_Channel_Num</td><td>GDMA channel number, which can be 0~8.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<p><b>Example usage</b> </p><div class="fragment"><div class="line">uint8_t uart_tx_dma_ch_num = 0xa5;</div><div class="line">uint8_t UART_TX_DMA_CHANNEL_NUM = uart_tx_dma_ch_num;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> gdma_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_d_m_a___exported___functions.html#gaf4893a969cc19fee9bd6a4ebc30e7abb">GDMA_ClearAllTypeINT</a>(UART_TX_DMA_CHANNEL_NUM);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga16a7db81aa8f0a53ac889938ccd9e9fd"></a>
@@ -516,21 +587,15 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>set GDMA source address . </p>
+<p>Set GDMA transmission source address. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GDMA_Channelx</td><td>where x can be 0 to 7 to select the DMA Channel. </td></tr>
-    <tr><td class="paramname">Address</td><td>destination address. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GDMA_Channelx</td><td>Where x can be 0 to 8 to select the GDMA Channel. <a class="el" href="group__x3e___g_d_m_a___declaration.html">GDMA Declaration</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">Address</td><td>Source address.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<p><b>Example usage</b> </p><div class="fragment"><div class="line">uint8_t console_tx_dma_ch_num = 0xa5;</div><div class="line"><span class="preprocessor">#define UART_TX_DMA_CHANNEL         DMA_CH_BASE(console_tx_dma_ch_num)</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> gdma_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint32_t data_buf[10] = {0};</div><div class="line">    <a class="code" href="group___g_d_m_a___exported___functions.html#gacdc7c64adca060c22fde455e6c09316c">GDMA_SetSourceAddress</a>(UART_TX_DMA_CHANNEL, (uint32_t)data_buf);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga811ff00cfe2e36df5848ffe7cc6c2933"></a>
@@ -567,21 +632,15 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>set GDMA destination address . </p>
+<p>Set GDMA transmission destination address. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GDMA_Channelx</td><td>where x can be 0 to 5 to select the GDMA Channel. </td></tr>
-    <tr><td class="paramname">Address</td><td>destination address. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GDMA_Channelx</td><td>Where x can be 0 to 8 to select the GDMA Channel. <a class="el" href="group__x3e___g_d_m_a___declaration.html">GDMA Declaration</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">Address</td><td>Destination address.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<p><b>Example usage</b> </p><div class="fragment"><div class="line">uint8_t console_rx_dma_ch_num = 0xa5;</div><div class="line"><span class="preprocessor">#define UART_RX_DMA_CHANNEL    DMA_CH_BASE(console_rx_dma_ch_num)</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> gdma_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint32_t data_buf[10] = {0};</div><div class="line">    <a class="code" href="group___g_d_m_a___exported___functions.html#gabb17d75833fda0dcf9f88e3c9fd291ba">GDMA_SetDestinationAddress</a>(UART_RX_DMA_CHANNEL, (uint32_t)data_buf);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="gae37b74963579e99a20486c0fb247db55"></a>
@@ -618,16 +677,15 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>set GDMA buffer size. </p>
+<p>Set GDMA buffer size. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GDMA_Channelx</td><td>where x can be 0 to 5 to select the GDMA Channel. </td></tr>
-    <tr><td class="paramname">buffer_size</td><td>set size of GDMA_BufferSize. </td></tr>
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GDMA_Channelx</td><td>Where x can be 0 to 8 to select the GDMA Channel. <a class="el" href="group__x3e___g_d_m_a___declaration.html">GDMA Declaration</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buffer_size</td><td>Set GDMA BufferSize, max size is 0xffff.</td></tr>
   </table>
   </dd>
 </dl>
-
+<p><b>Example usage</b> </p><div class="fragment"><div class="line">uint8_t console_tx_dma_ch_num = 0xa5;</div><div class="line"><span class="preprocessor">#define UART_TX_DMA_CHANNEL         DMA_CH_BASE(console_tx_dma_ch_num)</span></div><div class="line"></div><div class="line"><span class="keywordtype">void</span> gdma_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint32_t data_buf_size = 4095;</div><div class="line">    <a class="code" href="group___g_d_m_a___exported___functions.html#ga380aa8509d7495e4f1edcee53f40ee3c">GDMA_SetBufferSize</a>(UART_TX_DMA_CHANNEL, data_buf_size);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga0523ed4d45ba525c5cc6352ee03e09d7"></a>
@@ -664,21 +722,20 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Suspend GDMA transmission from the source.Please check GDMA FIFO empty to guarnatee without losing data. </p>
+<p>Suspend GDMA transmission from the source. Please check GDMA FIFO empty to guarnatee without losing data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GDMA_Channelx</td><td>where x can be 0 to 5 to select the GDMA Channel. </td></tr>
-    <tr><td class="paramname">NewState</td><td>new state of the DMA Channelx. This parameter can be: ENABLE or DISABLE. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GDMA_Channelx</td><td>Where x can be 0 to 8 to select the GDMA Channel. <a class="el" href="group__x3e___g_d_m_a___declaration.html">GDMA Declaration</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">NewState</td><td>Enable or disable suspend GDMA transmission. This parameter can be one of the following values:<ul>
+<li>ENABLE: Enable suspend GDMA transmission.</li>
+<li>DISABLE: Disable suspend GDMA transmission.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section note"><dt>Note</dt><dd>To prevent data loss, it is necessary to check whether FIFO data transmission is completed after suspend, and judge by checking whether GDMA FIFO is empty.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> Data_Uart_Handler(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint16_t rx_count;</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___u_a_r_t___exported___functions.html#gaf8ec7481e29957fa07c40a211309fb9e">UART_GetFlagState</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gaf7cb12b462b4594bd759d1b4e241ec4c">UART</a>, <a class="code" href="group___u_a_r_t___flag.html#ga3b23374a31fc004d9075cab4fcbc1b5d">UART_FLAG_RX_IDLE</a>) == <a class="code" href="group__x3e___r_t_l876x___exported__types.html#gga89136caac2e14c55151f527ac02daaffab44c8101cc294c074709ec1b14211792">SET</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">//restart GDMA receive</span></div><div class="line">        <a class="code" href="group___g_d_m_a___exported___functions.html#gabb17d75833fda0dcf9f88e3c9fd291ba">GDMA_SetDestinationAddress</a>(UART_RX_DMA_CHANNEL, (uint32_t)uart_receive_buf);</div><div class="line">        <a class="code" href="group___g_d_m_a___exported___functions.html#ga961f1405ab49c574e2bb766ca3e2ff45">GDMA_SuspendCmd</a>(UART_RX_DMA_CHANNEL, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1ad3a9df141be0ccf10389b640f492b26d">DISABLE</a>);</div><div class="line">        <a class="code" href="group__x3e___g_d_m_a___exported___functions.html#ga81023d249b49c999c523b9b5a2c93ade">GDMA_Cmd</a>(UART_RX_DMA_CHANNEL_NUM, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line"></div><div class="line">        <a class="code" href="group___u_a_r_t___exported___functions.html#gadbb607b47f810ed2c3314663a5de1201">UART_INTConfig</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga0508661f121639ffdee7de2353a0def2">UART0</a>, <a class="code" href="group___u_a_r_t___interrupts___definition.html#gab95dc75d54f24e5b99daf54f7d30348e">UART_INT_IDLE</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="gace6a678988ec4eef1c9fe2b67b30f00d"></a>
@@ -705,15 +762,22 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Check GDMA FIFO status. </p>
+<p>Check whether GDMA FIFO is empty. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GDMA_Channelx</td><td>where x can be 0 to 5 to select the GDMA Channel. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GDMA_Channelx</td><td>Where x can be 0 to 8 to select the GDMA Channel. <a class="el" href="group__x3e___g_d_m_a___declaration.html">GDMA Declaration</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>GDMA FIFO status: SET: empty, RESET:not empty. </dd></dl>
-
+<dl class="section return"><dt>Returns</dt><dd>The status of GDMA FIFO. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">SET</td><td>GDMA FIFO is empty. </td></tr>
+    <tr><td class="paramname">RESET</td><td>GDMA FIFO is not empty.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> Data_Uart_Handler(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint16_t rx_count;</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___u_a_r_t___exported___functions.html#gaf8ec7481e29957fa07c40a211309fb9e">UART_GetFlagState</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gaf7cb12b462b4594bd759d1b4e241ec4c">UART</a>, <a class="code" href="group___u_a_r_t___flag.html#ga3b23374a31fc004d9075cab4fcbc1b5d">UART_FLAG_RX_IDLE</a>) == <a class="code" href="group__x3e___r_t_l876x___exported__types.html#gga89136caac2e14c55151f527ac02daaffab44c8101cc294c074709ec1b14211792">SET</a>)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___u_a_r_t___exported___functions.html#gadbb607b47f810ed2c3314663a5de1201">UART_INTConfig</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gaf7cb12b462b4594bd759d1b4e241ec4c">UART</a>, <a class="code" href="group___u_a_r_t___interrupts___definition.html#gab95dc75d54f24e5b99daf54f7d30348e">UART_INT_IDLE</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1ad3a9df141be0ccf10389b640f492b26d">DISABLE</a>);</div><div class="line">        <span class="keywordflow">if</span> (<a class="code" href="group___g_d_m_a___exported___functions.html#ga281681a3df6aa9b62cf474b07b025351">GDMA_GetChannelStatus</a>(UART_RX_DMA_CHANNEL_NUM))</div><div class="line">        {</div><div class="line">            <a class="code" href="group___g_d_m_a___exported___functions.html#ga961f1405ab49c574e2bb766ca3e2ff45">GDMA_SuspendCmd</a>(UART_RX_DMA_CHANNEL, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line">        }</div><div class="line">        <span class="keywordflow">while</span> (<a class="code" href="group___g_d_m_a___exported___functions.html#gaa9a7db79cb3574950522ee0b5334c905">GDMA_GetFIFOStatus</a>(UART_RX_DMA_CHANNEL) != <a class="code" href="group__x3e___r_t_l876x___exported__types.html#gga89136caac2e14c55151f527ac02daaffab44c8101cc294c074709ec1b14211792">SET</a>);</div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga63e5495f02178a40ffdd7a1dbd0692e9"></a>
@@ -740,15 +804,15 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>get GDMA FIFO Length. </p>
+<p>Get GDMA transfer data length. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GDMA_Channelx</td><td>where x can be 0 to 5 to select the GDMA Channel. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GDMA_Channelx</td><td>Where x can be 0 to 8 to select the GDMA Channel. <a class="el" href="group__x3e___g_d_m_a___declaration.html">GDMA Declaration</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>GDMA FIFO length. </dd></dl>
-
+<dl class="section return"><dt>Returns</dt><dd>GDMA transfer data length.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> Data_Uart_Handler(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint16_t rx_count;</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___u_a_r_t___exported___functions.html#gaf8ec7481e29957fa07c40a211309fb9e">UART_GetFlagState</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gaf7cb12b462b4594bd759d1b4e241ec4c">UART</a>, <a class="code" href="group___u_a_r_t___flag.html#ga3b23374a31fc004d9075cab4fcbc1b5d">UART_FLAG_RX_IDLE</a>) == <a class="code" href="group__x3e___r_t_l876x___exported__types.html#gga89136caac2e14c55151f527ac02daaffab44c8101cc294c074709ec1b14211792">SET</a>)</div><div class="line">    {</div><div class="line">        <span class="comment">//read GDMA total transfer count</span></div><div class="line">        rx_count = <a class="code" href="group___g_d_m_a___exported___functions.html#ga22235d599d446d5b64d3eb85cfdf1a80">GDMA_GetTransferLen</a>(UART_RX_DMA_CHANNEL);</div><div class="line">        <a class="code" href="group__x3d___t_r_a_c_e.html#ga81687b044a4d8600c4be891734f4839a">APP_PRINT_INFO1</a>(<span class="stringliteral">&quot;rx_count:%d&quot;</span>, rx_count);</div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="gaca0857579050e9ba2ae1a19f8578e671"></a>
@@ -785,21 +849,15 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>set GDMA LLP address . </p>
+<p>Set GDMA LLP stucture address. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GDMA_Channelx</td><td>Only for GDMA_Channel0&amp;2. </td></tr>
-    <tr><td class="paramname">Address</td><td>destination address. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GDMA_Channelx</td><td>Where x can be 0 to 8 to select the GDMA Channel. <a class="el" href="group__x3e___g_d_m_a___declaration.html">GDMA Declaration</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">Address</td><td>The address of LLP stucture.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> gdma_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="struct_g_d_m_a___l_l_i_def.html">GDMA_LLIDef</a> GDMA_LLIStruct[4000];</div><div class="line">    <a class="code" href="group___g_d_m_a___exported___functions.html#ga03ba9933594a65584c5b13ec1d0d657f">GDMA_SetLLPAddress</a>(GDMA2_Channel0,(uint32_t)GDMA_LLIStruct);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga937495c066e249ecf296345710bc1490"></a>
@@ -829,12 +887,19 @@ Variables</h2></td></tr>
 <p>Check GDMA suspend channel status. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GDMA_Channelx</td><td>where x can be 0 to 5 to select the GDMA Channel. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GDMA_Channelx</td><td>Where x can be 0 to 8 to select the GDMA Channel. <a class="el" href="group__x3e___g_d_m_a___declaration.html">GDMA Declaration</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>GDMA suspend status: SET: inactive, RESET: active. </dd></dl>
-
+<dl class="section return"><dt>Returns</dt><dd>GDMA suspend channel status. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">SET</td><td>The GDMA suspend channel is inactive. </td></tr>
+    <tr><td class="paramname">RESET</td><td>The GDMA suspend channel is active.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> gdma_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">//add user code here.</span></div><div class="line">    <span class="keywordflow">while</span> (<a class="code" href="group___g_d_m_a___exported___functions.html#ga1316c58f7c7f108bb8bb77d5b6b56a79">GDMA_GetSuspendChannelStatus</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga85a9d9a6f6f8c3f5918c1623084d8965">GDMA_Channel0</a>) != <a class="code" href="group__x3e___r_t_l876x___exported__types.html#gga89136caac2e14c55151f527ac02daaffab44c8101cc294c074709ec1b14211792">SET</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="gacdec7e6bcda4c12cbd3554f2f3e9b121"></a>
@@ -861,15 +926,67 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Check GDMA suspend status. </p>
+<p>Check GDMA suspend command status. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GDMA_Channelx</td><td>where x can be 0 to 5 to select the GDMA Channel. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GDMA_Channelx</td><td>Where x can be 0 to 8 to select the GDMA Channel. <a class="el" href="group__x3e___g_d_m_a___declaration.html">GDMA Declaration</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>GDMA suspend status: SET: suspend, RESET:not suspend. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>GDMA suspend command status. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">SET</td><td>The GDMA channel is suspended. </td></tr>
+    <tr><td class="paramname">RESET</td><td>The GDMA channel is not suspended.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> gdma_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group__x3d___r_t_l876x___exported__types.html#ga89136caac2e14c55151f527ac02daaff">FlagStatus</a> flag_status = <a class="code" href="group___g_d_m_a___exported___functions.html#gad53f925399ffabf39f24cff8798d4330">GDMA_GetSuspendCmdStatus</a>(GDMA2_Channel0);</div><div class="line">}</div></div><!-- fragment --> 
+</div>
+</div>
+<a id="gafcacd82de3ec0f4612d66d4e6bbbb6db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafcacd82de3ec0f4612d66d4e6bbbb6db">&#9670;&nbsp;</a></span>GDMA_SetLLPMode()</h2>
 
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static __forceinline void GDMA_SetLLPMode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_g_d_m_a___channel_type_def.html">GDMA_ChannelTypeDef</a> *&#160;</td>
+          <td class="paramname"><em>GDMA_Channelx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Update GDMA LLP mode in multi-block. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">GDMA_Channelx</td><td>Where x can be 0 to 8 to select the GDMA Channel. <a class="el" href="group__x3e___g_d_m_a___declaration.html">GDMA Declaration</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GDMA</td><td>LLP mode. <a class="el" href="group__x3e___g_d_m_a___multiblock___mode.html">GDMA Multi-block Mode</a>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> gdma_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group__x3e___g_d_m_a___exported___functions.html#gafcacd82de3ec0f4612d66d4e6bbbb6db">GDMA_SetLLPMode</a>(<a class="code" href="group___g_d_m_a___multiblock___mode.html#ga134913224190480c660b565b6654ee8e">LLI_TRANSFER</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
@@ -885,21 +1002,15 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initializes the GDMA Channelx according to the specified parameters in the GDMA_InitStruct. </p>
+<p>Initializes the GDMA channelx according to the specified parameters in the GDMA_InitStruct. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GDMA_Channelx</td><td>where x can be 0 to 7 to select the DMA Channel. </td></tr>
-    <tr><td class="paramname">GDMA_InitStruct</td><td>pointer to a <a class="el" href="struct_g_d_m_a___init_type_def.html" title="GDMA Init structure definition. ">GDMA_InitTypeDef</a> structure that contains the configuration information for the specified DMA Channel. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GDMA_Channelx</td><td>Where x can be 0 to 8 to select the GDMA Channel. <a class="el" href="group__x3e___g_d_m_a___declaration.html">GDMA Declaration</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GDMA_InitStruct</td><td>Pointer to a <a class="el" href="struct___x3_e___g_d_m_a___init_type_def.html">_X3E_GDMA_InitTypeDef</a> structure that contains the configuration information for the specified GDMA Channel.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<p><b>Example usage</b> </p><div class="fragment"><div class="line">uint8_t uart_tx_dma_ch_num = 0xa5;</div><div class="line">uint8_t UART_TX_DMA_CHANNEL_NUM = uart_tx_dma_ch_num;</div><div class="line"><span class="preprocessor">#define UART_TX_DMA_CHANNEL    DMA_CH_BASE(uart_tx_dma_ch_num)</span></div><div class="line"><span class="preprocessor">#define UART_TX_DMA_IRQ        DMA_CH_IRQ(uart_tx_dma_ch_num)</span></div><div class="line">uint8_t GDMA_SendBuffer[100];</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> driver_gdma_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint16_t  strLen = 0;</div><div class="line">    <span class="keywordtype">char</span> *demoStr = <span class="stringliteral">&quot;### Welcome to use RealTek Bumblebee ###\r\n&quot;</span>;</div><div class="line">    strLen = strlen(demoStr);</div><div class="line">    memcpy(GDMA_SendBuffer, demoStr, strLen);</div><div class="line"></div><div class="line">    <a class="code" href="struct_g_d_m_a___init_type_def.html">GDMA_InitTypeDef</a> GDMA_InitStruct;</div><div class="line">    <a class="code" href="group___g_d_m_a___exported___functions.html#ga0c4386a76f776a50aba1b2ecb6c665c5">GDMA_StructInit</a>(&amp;GDMA_InitStruct);</div><div class="line">    GDMA_InitStruct.<a class="code" href="struct_g_d_m_a___init_type_def.html#afa81d74400498ca459fba1bb20101b74">GDMA_ChannelNum</a>      = UART_TX_DMA_CHANNEL_NUM;</div><div class="line">    GDMA_InitStruct.<a class="code" href="struct_g_d_m_a___init_type_def.html#aee96bc8a1d8ef85f2ffc64d02274fe67">GDMA_DIR</a>             = <a class="code" href="group___g_d_m_a__data__transfer__direction.html#ga257d48aeb412e7914a71e44625467575">GDMA_DIR_MemoryToPeripheral</a>;</div><div class="line">    GDMA_InitStruct.<a class="code" href="struct_g_d_m_a___init_type_def.html#a672455687defa33a421d78eea9d8309c">GDMA_BufferSize</a>      = strLen;<span class="comment">//determine total transfer size</span></div><div class="line">    GDMA_InitStruct.<a class="code" href="struct_g_d_m_a___init_type_def.html#ae185e562e3c1d62fb4a533b2a9af2125">GDMA_SourceInc</a>       = <a class="code" href="group___g_d_m_a__source__incremented__mode.html#ga96d0ea1d643d85940bfdd7df670409bd">DMA_SourceInc_Inc</a>;</div><div class="line">    GDMA_InitStruct.<a class="code" href="struct_g_d_m_a___init_type_def.html#a33ccc00cfcca94735c63e6a85d33735b">GDMA_DestinationInc</a>  = <a class="code" href="group___g_d_m_a__destination__incremented__mode.html#gaad2e94b4db87adb93e92888c9e719359">DMA_DestinationInc_Fix</a>;</div><div class="line">    GDMA_InitStruct.<a class="code" href="struct_g_d_m_a___init_type_def.html#aa2ab817e5b8f8c9e79f7d07c1afa8069">GDMA_SourceDataSize</a>  = <a class="code" href="group___g_d_m_a__data__size.html#gab1856b5f84dc4af7ac5429110e12e68a">GDMA_DataSize_Byte</a>;</div><div class="line">    GDMA_InitStruct.<a class="code" href="struct_g_d_m_a___init_type_def.html#a6e2cad942d5a4b533fec712c06b402e1">GDMA_DestinationDataSize</a> = <a class="code" href="group___g_d_m_a__data__size.html#gab1856b5f84dc4af7ac5429110e12e68a">GDMA_DataSize_Byte</a>;</div><div class="line">    GDMA_InitStruct.<a class="code" href="struct_g_d_m_a___init_type_def.html#aca898ef64b30b1eeca934c1dcfad946b">GDMA_SourceMsize</a>      = <a class="code" href="group___g_d_m_a___msize.html#gad3ff1fc80a11967b7ac6feaab6f7bf9f">GDMA_Msize_1</a>;</div><div class="line">    GDMA_InitStruct.<a class="code" href="struct_g_d_m_a___init_type_def.html#ab0482d07c0511e055d22a991adce1893">GDMA_DestinationMsize</a> = <a class="code" href="group___g_d_m_a___msize.html#gad3ff1fc80a11967b7ac6feaab6f7bf9f">GDMA_Msize_1</a>;</div><div class="line">    GDMA_InitStruct.<a class="code" href="struct_g_d_m_a___init_type_def.html#a32b5468d324eb9b8ea93431393bb0918">GDMA_SourceAddr</a>      = (uint32_t)GDMA_SendBuffer;</div><div class="line">    GDMA_InitStruct.<a class="code" href="struct_g_d_m_a___init_type_def.html#a426621ee71bcccf5c85db9678d68a037">GDMA_DestinationAddr</a> = (uint32_t)(&amp;(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gaf7cb12b462b4594bd759d1b4e241ec4c">UART</a>-&gt;RB_THR));</div><div class="line">    GDMA_InitStruct.<a class="code" href="struct_g_d_m_a___init_type_def.html#aa76ac5f0162de6fe56840c2f2594badb">GDMA_DestHandshake</a>   = <a class="code" href="group___g_d_m_a___handshake___type.html#ga694e9fe844f4532afc55f9a908613f42">GDMA_Handshake_UART0_TX</a>;</div><div class="line">    <a class="code" href="group__x3e___g_d_m_a___exported___functions.html#ga1a3498cf6a9b61faecede7c2181e8c93">GDMA_Init</a>(UART_TX_DMA_CHANNEL, &amp;GDMA_InitStruct);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga81023d249b49c999c523b9b5a2c93ade"></a>
@@ -914,21 +1025,19 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Enables or disables the specified GDMA Channelx. </p>
+<p>Enables or disables the selected GDMA channel. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GDMA_Channel_Num</td><td>GDMA channel number </td></tr>
-    <tr><td class="paramname">NewState</td><td>new state of the DMA Channelx. This parameter can be: ENABLE or DISABLE. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GDMA_Channel_Num</td><td>GDMA channel number, which can be 0~8. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">NewState</td><td>New state of the selected GDMA channel. This parameter can be one of the following values:<ul>
+<li>ENABLE: Enable the selected GDMA channel.</li>
+<li>DISABLE: Disable the selected GDMA channel.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<p><b>Example usage</b> </p><div class="fragment"><div class="line">uint8_t uart_tx_dma_ch_num = 0xa5;</div><div class="line">uint8_t UART_TX_DMA_CHANNEL_NUM = uart_tx_dma_ch_num;</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> driver_gdma_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group__x3e___g_d_m_a___exported___functions.html#ga81023d249b49c999c523b9b5a2c93ade">GDMA_Cmd</a>(UART_TX_DMA_CHANNEL_NUM, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

@@ -67,7 +67,11 @@ static const T_ATTRIB_APPL gatt_extended_service_table[] =
     /*--------------------------OTA Service ---------------------------*/
     /* <<Primary Service>>, .. 0 */
     {
-        (ATTRIB_FLAG_VOID | ATTRIB_FLAG_LE),        /* flags */
+#if F_APP_GATT_OVER_BREDR_SUPPORT
+        (ATTRIB_FLAG_VOID | ATTRIB_FLAG_LE | ATTRIB_FLAG_BREDR),   /* flags     */
+#else
+        (ATTRIB_FLAG_VOID | ATTRIB_FLAG_LE),   /* flags     */
+#endif
         {
             LO_WORD(GATT_UUID_PRIMARY_SERVICE),
             HI_WORD(GATT_UUID_PRIMARY_SERVICE),     /* type_value */
@@ -341,7 +345,11 @@ static const T_ATTRIB_APPL gatt_extended_service_table[] =
     /*-------------------------- DFU Service ---------------------------*/
     /* <<Primary Service>>, .. */
     {
-        (ATTRIB_FLAG_VOID | ATTRIB_FLAG_LE),                /* flags */
+#if F_APP_GATT_OVER_BREDR_SUPPORT
+        (ATTRIB_FLAG_VOID | ATTRIB_FLAG_LE | ATTRIB_FLAG_BREDR),   /* flags     */
+#else
+        (ATTRIB_FLAG_VOID | ATTRIB_FLAG_LE),   /* flags     */
+#endif
         {
             LO_WORD(GATT_UUID_PRIMARY_SERVICE),
             HI_WORD(GATT_UUID_PRIMARY_SERVICE),             /* type_value */
@@ -599,16 +607,21 @@ static T_APP_RESULT ota_service_attr_read_cb(uint16_t conn_handle, uint16_t cid,
         break;
     case BLE_SERVICE_CHAR_DEVICE_INFO_INDEX:
         {
+            uint8_t conn_id = 0xFF;
+            T_GAP_CHANN_INFO p_info;
+            BLE_DEVICE_INFO *device_info;
 
-            DEVICE_INFO *device_info;
-            device_info = malloc(sizeof(DEVICE_INFO));
-            app_ota_get_device_info(device_info);
+            device_info = malloc(sizeof(BLE_DEVICE_INFO));
+            app_ota_get_device_info((SPP_DEVICE_INFO *)device_info);
             device_info->spec_ver = BLE_OTA_VERSION;
+            le_get_conn_id_by_handle(conn_handle, &conn_id);
             le_get_conn_param(GAP_PARAM_CONN_MTU_SIZE, &device_info->mtu_size, conn_id);
-
+            gap_chann_get_info(conn_handle, cid, &p_info);
+            device_info->type.chann_type = p_info.chann_type;
+            APP_PRINT_INFO1("ota_service_attr_read_cb: chann_type %d", p_info.chann_type);
             if (gatt_svc_read_confirm(conn_handle, cid, service_id,
                                       attr_index, (uint8_t *)device_info + offset,
-                                      sizeof(DEVICE_INFO) - offset, sizeof(DEVICE_INFO), APP_RESULT_SUCCESS))
+                                      sizeof(BLE_DEVICE_INFO) - offset, sizeof(BLE_DEVICE_INFO), APP_RESULT_SUCCESS))
             {
                 cause = APP_RESULT_PENDING;
             }

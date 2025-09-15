@@ -23,27 +23,19 @@ extern "C" {
  */
 
 /**
- * btm.h
- *
  * \brief Define BT device mode.
  *
  * \ingroup BT_BTM
- * @{
  */
 typedef enum t_bt_device_mode
 {
-    BT_DEVICE_MODE_IDLE                     = 0x00, /**< Page scan and inquiry scan disabled */
-    BT_DEVICE_MODE_DISCOVERABLE             = 0x01, /**< Inquiry scan enabled */
-    BT_DEVICE_MODE_CONNECTABLE              = 0x02, /**< Page scan enabled */
-    BT_DEVICE_MODE_DISCOVERABLE_CONNECTABLE = 0x03, /**< Page scan and inquiry scan enabled */
+    BT_DEVICE_MODE_IDLE                     = 0x00, /**< Page scan and inquiry scan disabled. */
+    BT_DEVICE_MODE_DISCOVERABLE             = 0x01, /**< Inquiry scan enabled. */
+    BT_DEVICE_MODE_CONNECTABLE              = 0x02, /**< Page scan enabled. */
+    BT_DEVICE_MODE_DISCOVERABLE_CONNECTABLE = 0x03, /**< Page scan and inquiry scan enabled. */
 } T_BT_DEVICE_MODE;
-/**
- * @}
- */
 
 /**
- * btm.h
- *
  * \brief    BR/EDR link role.
  *
  * \ingroup  BT_BTM
@@ -55,8 +47,6 @@ typedef enum t_bt_link_role
 } T_BT_LINK_ROLE;
 
 /**
- * btm.h
- *
  * \brief    BT link packet type.
  *
  * \ingroup  BT_BTM
@@ -69,29 +59,25 @@ typedef enum t_bt_acl_pkt_type
 } T_BT_ACL_PKT_TYPE;
 
 /**
- * btm.h
- *
  * \brief    BT link data rate.
  *
  * \ingroup  BT_BTM
  */
 typedef enum t_bt_link_data_rate
 {
-    BT_LINK_1M1S = 0x01,    /* 1M 1 slot packet*/
-    BT_LINK_1M3S = 0x02,    /* 1M 3 slot packet*/
-    BT_LINK_1M5S = 0x03,    /* 1M 5 slot packet*/
-    BT_LINK_2M1S = 0x05,    /* 2M 1 slot packet*/
-    BT_LINK_2M3S = 0x09,    /* 2M 3 slot packet*/
-    BT_LINK_2M5S = 0x0d,    /* 2M 5 slot packet*/
-    BT_LINK_3M1S = 0x06,    /* 3M 1 slot packet*/
-    BT_LINK_3M3S = 0x0a,    /* 3M 3 slot packet*/
-    BT_LINK_3M5S = 0x0e,    /* 3M 5 slot packet*/
+    BT_LINK_1M1S = 0x01,    /* 1M 1 slot packet. */
+    BT_LINK_1M3S = 0x02,    /* 1M 3 slot packet. */
+    BT_LINK_1M5S = 0x03,    /* 1M 5 slot packet. */
+    BT_LINK_2M1S = 0x05,    /* 2M 1 slot packet. */
+    BT_LINK_2M3S = 0x09,    /* 2M 3 slot packet. */
+    BT_LINK_2M5S = 0x0d,    /* 2M 5 slot packet. */
+    BT_LINK_3M1S = 0x06,    /* 3M 1 slot packet. */
+    BT_LINK_3M3S = 0x0a,    /* 3M 3 slot packet. */
+    BT_LINK_3M5S = 0x0e,    /* 3M 5 slot packet. */
 } T_BT_LINK_DATA_RATE;
 
 /**
- * btm.h
- *
- * \brief    Reason to reject an acl connection from remote device.
+ * \brief    Reason to reject an ACL connection from remote device.
  *
  * \ingroup  BT_BTM
  */
@@ -103,8 +89,6 @@ typedef enum t_bt_acl_reject_reason
 } T_BT_ACL_REJECT_REASON;
 
 /**
- * btm.h
- *
  * \brief    BT link key type.
  *
  * \ingroup  BT_BTM
@@ -123,8 +107,6 @@ typedef enum t_bt_link_key_type
 } T_BT_LINK_KEY_TYPE;
 
 /**
- * btm.h
- *
  * \brief    BT QoS type.
  *
  * \ingroup  BT_BTM
@@ -137,8 +119,19 @@ typedef enum t_bt_qos_type
 } T_BT_QOS_TYPE;
 
 /**
- * btm.h
+ * \brief    BT traffic QoS type.
  *
+ * \ingroup  BT_BTM
+ */
+typedef enum t_bt_traffic_qos_type
+{
+    BT_RANDOM_TRAFFIC_QOS                 = 0x00,
+    BT_PERIODIC_SYNC_TRAFFIC_QOS          = 0x01,
+    BT_NON_NEGOTIATE_PERIODIC_TRAFFIC_QOS = 0x02,
+    BT_NEGOTIATE_PERIODIC_TRAFFIC_QOS     = 0x03,
+} T_BT_TRAFFIC_QOS_TYPE;
+
+/**
  * \brief  BT manager event type for \ref P_BT_MGR_CBACK.
  *
  * \ingroup BT_BTM
@@ -214,87 +207,87 @@ typedef enum t_bt_event
     BT_EVENT_LOCAL_OOB_EXTENDED_DATA_RSP              = 0x000d,
 
     /**
-     * \brief Information of set paging tx power rsp \ref T_BT_EVENT_PARAM_PAGING_TX_POWER_SET_RSP.
+     * \brief Information of set paging tx power response \ref T_BT_EVENT_PARAM_PAGING_TX_POWER_SET_RSP.
      */
     BT_EVENT_PAGING_TX_POWER_SET_RSP                  = 0x000e,
 
     /**
-     * \brief Indicate acl connection request from remote device \ref T_BT_EVENT_PARAM_ACL_CONN_IND.
+     * \brief Indicate ACL connection request from remote device \ref T_BT_EVENT_PARAM_ACL_CONN_IND.
      */
     BT_EVENT_ACL_CONN_IND                             = 0x1000,
 
     /**
-     * \brief Indicate acl connection disconnected \ref T_BT_EVENT_PARAM_ACL_CONN_DISCONN.
+     * \brief Indicate ACL connection disconnected \ref T_BT_EVENT_PARAM_ACL_CONN_DISCONN.
      */
     BT_EVENT_ACL_CONN_DISCONN                         = 0x1001,
 
     /**
-     * \brief Indicate acl connection fail \ref T_BT_EVENT_PARAM_ACL_CONN_FAIL.
+     * \brief Indicate ACL connection fail \ref T_BT_EVENT_PARAM_ACL_CONN_FAIL.
      */
     BT_EVENT_ACL_CONN_FAIL                            = 0x1002,
 
     /**
-     * \brief Indicate acl connection success \ref T_BT_EVENT_PARAM_ACL_CONN_SUCCESS.
+     * \brief Indicate ACL connection success \ref T_BT_EVENT_PARAM_ACL_CONN_SUCCESS.
      */
     BT_EVENT_ACL_CONN_SUCCESS                         = 0x1003,
 
     /**
-     * \brief Indicate acl connection ready \ref T_BT_EVENT_PARAM_ACL_CONN_READY.
+     * \brief Indicate ACL connection ready \ref T_BT_EVENT_PARAM_ACL_CONN_READY.
      */
     BT_EVENT_ACL_CONN_READY                           = 0x1004,
 
     /**
-     * \brief Indicate acl authentication start \ref T_BT_EVENT_PARAM_ACL_AUTHEN_START.
+     * \brief Indicate ACL authentication start \ref T_BT_EVENT_PARAM_ACL_AUTHEN_START.
      */
     BT_EVENT_ACL_AUTHEN_START                         = 0x1005,
 
     /**
-     * \brief Indicate acl authentication success \ref T_BT_EVENT_PARAM_ACL_AUTHEN_SUCCESS.
+     * \brief Indicate ACL authentication success \ref T_BT_EVENT_PARAM_ACL_AUTHEN_SUCCESS.
      */
     BT_EVENT_ACL_AUTHEN_SUCCESS                       = 0x1006,
 
     /**
-     * \brief Indicate acl authentication fail \ref T_BT_EVENT_PARAM_ACL_AUTHEN_FAIL.
+     * \brief Indicate ACL authentication fail \ref T_BT_EVENT_PARAM_ACL_AUTHEN_FAIL.
      */
     BT_EVENT_ACL_AUTHEN_FAIL                          = 0x1007,
 
     /**
-     * \brief Indicate acl connection br sc start \ref T_BT_EVENT_PARAM_ACL_CONN_BR_SC_START.
+     * \brief Indicate ACL connection br sc start \ref T_BT_EVENT_PARAM_ACL_CONN_BR_SC_START.
      */
     BT_EVENT_ACL_CONN_BR_SC_START                     = 0x1008,
 
     /**
-     * \brief Indicate acl connection br sc completed \ref T_BT_EVENT_PARAM_ACL_CONN_BR_SC_CMPL.
+     * \brief Indicate ACL connection br sc completed \ref T_BT_EVENT_PARAM_ACL_CONN_BR_SC_CMPL.
      */
     BT_EVENT_ACL_CONN_BR_SC_CMPL                      = 0x1009,
 
     /**
-     * \brief Indicate acl connection encrypted \ref T_BT_EVENT_PARAM_ACL_CONN_ENCRYPTED.
+     * \brief Indicate ACL connection encrypted \ref T_BT_EVENT_PARAM_ACL_CONN_ENCRYPTED.
      */
     BT_EVENT_ACL_CONN_ENCRYPTED                       = 0x100a,
 
     /**
-     * \brief Indicate acl connection not encrypted \ref T_BT_EVENT_PARAM_ACL_CONN_NOT_ENCRYPTED.
+     * \brief Indicate ACL connection not encrypted \ref T_BT_EVENT_PARAM_ACL_CONN_NOT_ENCRYPTED.
      */
     BT_EVENT_ACL_CONN_NOT_ENCRYPTED                   = 0x100b,
 
     /**
-     * \brief Indicate acl connection active \ref T_BT_EVENT_PARAM_ACL_CONN_ACTIVE.
+     * \brief Indicate ACL connection active \ref T_BT_EVENT_PARAM_ACL_CONN_ACTIVE.
      */
     BT_EVENT_ACL_CONN_ACTIVE                          = 0x100c,
 
     /**
-     * \brief Indicate acl connection sniff \ref T_BT_EVENT_PARAM_ACL_CONN_SNIFF.
+     * \brief Indicate ACL connection sniff \ref T_BT_EVENT_PARAM_ACL_CONN_SNIFF.
      */
     BT_EVENT_ACL_CONN_SNIFF                           = 0x100d,
 
     /**
-     * \brief Indicate acl role master \ref T_BT_EVENT_PARAM_ACL_ROLE_MASTER.
+     * \brief Indicate ACL role master \ref T_BT_EVENT_PARAM_ACL_ROLE_MASTER.
      */
     BT_EVENT_ACL_ROLE_MASTER                          = 0x100e,
 
     /**
-     * \brief Indicate acl role slave \ref T_BT_EVENT_PARAM_ACL_ROLE_SLAVE.
+     * \brief Indicate ACL role slave \ref T_BT_EVENT_PARAM_ACL_ROLE_SLAVE.
      */
     BT_EVENT_ACL_ROLE_SLAVE                           = 0x100f,
 
@@ -304,12 +297,12 @@ typedef enum t_bt_event
     BT_EVENT_ACL_ROLE_SWITCH_FAIL                     = 0x1010,
 
     /**
-     * \brief Indicate acl sniffing connection complete \ref T_BT_EVENT_PARAM_ACL_SNIFFING_CONN_CMPL.
+     * \brief Indicate ACL sniffing connection complete \ref T_BT_EVENT_PARAM_ACL_SNIFFING_CONN_CMPL.
      */
     BT_EVENT_ACL_SNIFFING_CONN_CMPL                   = 0x1011,
 
     /**
-     * \brief Indicate acl sniffing disconnection complete \ref T_BT_EVENT_PARAM_ACL_SNIFFING_DISCONN_CMPL.
+     * \brief Indicate ACL sniffing disconnection complete \ref T_BT_EVENT_PARAM_ACL_SNIFFING_DISCONN_CMPL.
      */
     BT_EVENT_ACL_SNIFFING_DISCONN_CMPL                = 0x1012,
 
@@ -394,61 +387,68 @@ typedef enum t_bt_event
     BT_EVENT_LINK_USER_PASSKEY_NOTIF                  = 0x1205,
 
     /**
-     * \brief Information of acl link PER information \ref T_BT_EVENT_PARAM_LINK_PER_INFO.
+     * \brief Information of ACL link PER information \ref T_BT_EVENT_PARAM_LINK_PER_INFO.
      */
     BT_EVENT_LINK_PER_INFO                            = 0x1206,
 
     /**
-     * \brief Information of acl link RSSI information \ref T_BT_EVENT_PARAM_LINK_RSSI_INFO.
+     * \brief Information of ACL link RSSI information \ref T_BT_EVENT_PARAM_LINK_RSSI_INFO.
      */
     BT_EVENT_LINK_RSSI_INFO                           = 0x1207,
 
     /**
-     * \brief Information of read rssi rsp \ref T_BT_EVENT_PARAM_LINK_READ_RSSI_RSP.
+     * \brief Information of read rssi response \ref T_BT_EVENT_PARAM_LINK_READ_RSSI_RSP.
      */
     BT_EVENT_LINK_READ_RSSI_RSP                       = 0x1208,
 
     /**
-     * \brief Information of set link tx power rsp \ref T_BT_EVENT_PARAM_LINK_TX_POWER_SET_RSP.
+     * \brief Information of set link tx power response \ref T_BT_EVENT_PARAM_LINK_TX_POWER_SET_RSP.
      */
     BT_EVENT_LINK_TX_POWER_SET_RSP                    = 0x1209,
 
     /**
-     * \brief Information of set link qos rsp \ref T_BT_EVENT_PARAM_LINK_QOS_SET_RSP.
+     * \brief Information of set link QoS response \ref T_BT_EVENT_PARAM_LINK_QOS_SET_RSP.
      */
     BT_EVENT_LINK_QOS_SET_RSP                         = 0x120a,
 
     /**
-     * \brief Information of set link qos cmpl \ref T_BT_EVENT_PARAM_LINK_QOS_SET_CMPL.
+     * \brief Information of set link QoS complete \ref T_BT_EVENT_PARAM_LINK_QOS_SET_CMPL.
      */
     BT_EVENT_LINK_QOS_SET_CMPL                        = 0x120b,
 
     /**
-     * \brief Information of set link rssi golden range rsp \ref T_BT_EVENT_PARAM_LINK_RSSI_GOLDEN_RANGE_SET_RSP.
+     * \brief Information of set link RSSI golden range response \ref T_BT_EVENT_PARAM_LINK_RSSI_GOLDEN_RANGE_SET_RSP.
      */
     BT_EVENT_LINK_RSSI_GOLDEN_RANGE_SET_RSP           = 0x120c,
 
     /**
-     * \brief Information of set link idle zone rsp \ref T_BT_EVENT_PARAM_LINK_IDLE_ZONE_SET_RSP.
+     * \brief Information of set link idle zone response \ref T_BT_EVENT_PARAM_LINK_IDLE_ZONE_SET_RSP.
      *
      * \xrefitem Added_API_2_12_0_0 "Added Since 2.12.0.0" "Added API"
      */
     BT_EVENT_LINK_IDLE_ZONE_SET_RSP                   = 0x120d,
 
     /**
-     * \brief Information of traffic qos rsp \ref T_BT_EVENT_PARAM_TRAFFIC_QOS_RSP.
+     * \brief Information of traffic QoS response \ref T_BT_EVENT_PARAM_TRAFFIC_QOS_RSP.
      *
      * \xrefitem Added_API_2_13_0_0 "Added Since 2.13.0.0" "Added API"
      */
     BT_EVENT_TRAFFIC_QOS_RSP                          = 0x120e,
 
     /**
-     * \brief Indicate add sdp record rsp \ref T_BT_EVENT_PARAM_ADD_SDP_RECORD_RSP.
+     * \brief Information of traffic QoS complete \ref T_BT_EVENT_PARAM_TRAFFIC_QOS_CMPL.
+     *
+     * \xrefitem Added_API_2_13_0_0 "Added Since 2.13.0.0" "Added API"
+     */
+    BT_EVENT_TRAFFIC_QOS_CMPL                         = 0x120f,
+
+    /**
+     * \brief Indicate add SDP record response \ref T_BT_EVENT_PARAM_ADD_SDP_RECORD_RSP.
      */
     BT_EVENT_ADD_SDP_RECORD_RSP                       = 0x2000,
 
     /**
-     * \brief Indicate delete sdp record rsp \ref T_BT_EVENT_PARAM_DEL_SDP_RECORD_RSP.
+     * \brief Indicate delete SDP record response \ref T_BT_EVENT_PARAM_DEL_SDP_RECORD_RSP.
      */
     BT_EVENT_DEL_SDP_RECORD_RSP                       = 0x2001,
 
@@ -543,74 +543,79 @@ typedef enum t_bt_event
     BT_EVENT_A2DP_CONFIG_CMPL                         = 0x3104,
 
     /**
+     * \brief Indicate A2DP delay report indication \ref T_BT_EVENT_PARAM_A2DP_DELAY_REPORT.
+     */
+    BT_EVENT_A2DP_DELAY_REPORT                        = 0x3105,
+
+    /**
      * \brief Indicate A2DP stream open \ref T_BT_EVENT_PARAM_A2DP_STREAM_OPEN.
      */
-    BT_EVENT_A2DP_STREAM_OPEN                         = 0x3105,
+    BT_EVENT_A2DP_STREAM_OPEN                         = 0x3106,
 
     /**
      * \brief Indicate A2DP stream open fail \ref T_BT_EVENT_PARAM_A2DP_STREAM_OPEN_FAIL.
      */
-    BT_EVENT_A2DP_STREAM_OPEN_FAIL                    = 0x3106,
+    BT_EVENT_A2DP_STREAM_OPEN_FAIL                    = 0x3107,
 
     /**
      * \brief Indicate A2DP stream start indication \ref T_BT_EVENT_PARAM_A2DP_STREAM_START_IND.
      */
-    BT_EVENT_A2DP_STREAM_START_IND                    = 0x3107,
+    BT_EVENT_A2DP_STREAM_START_IND                    = 0x3108,
 
     /**
      * \brief Indicate A2DP stream start response \ref T_BT_EVENT_PARAM_A2DP_STREAM_START_RSP.
      */
-    BT_EVENT_A2DP_STREAM_START_RSP                    = 0x3108,
+    BT_EVENT_A2DP_STREAM_START_RSP                    = 0x3109,
 
     /**
      * \brief Indicate A2DP stream data indication \ref T_BT_EVENT_PARAM_A2DP_STREAM_DATA_IND.
      */
-    BT_EVENT_A2DP_STREAM_DATA_IND                     = 0x3109,
+    BT_EVENT_A2DP_STREAM_DATA_IND                     = 0x310a,
 
     /**
      * \brief Indicate A2DP stream data response \ref T_BT_EVENT_PARAM_A2DP_STREAM_DATA_RSP.
      */
-    BT_EVENT_A2DP_STREAM_DATA_RSP                     = 0x310a,
+    BT_EVENT_A2DP_STREAM_DATA_RSP                     = 0x310b,
 
     /**
      * \brief Indicate A2DP stream stop \ref T_BT_EVENT_PARAM_A2DP_STREAM_STOP.
      */
-    BT_EVENT_A2DP_STREAM_STOP                         = 0x310b,
+    BT_EVENT_A2DP_STREAM_STOP                         = 0x310c,
 
     /**
      * \brief Indicate A2DP stream close \ref T_BT_EVENT_PARAM_A2DP_STREAM_CLOSE.
      */
-    BT_EVENT_A2DP_STREAM_CLOSE                        = 0x310c,
+    BT_EVENT_A2DP_STREAM_CLOSE                        = 0x310d,
 
     /**
      * \brief Indicate A2DP sniffing connection complete \ref T_BT_EVENT_PARAM_A2DP_SNIFFING_CONN_CMPL.
      */
-    BT_EVENT_A2DP_SNIFFING_CONN_CMPL                  = 0x310d,
+    BT_EVENT_A2DP_SNIFFING_CONN_CMPL                  = 0x310e,
 
     /**
      * \brief Indicate A2DP sniffing start indication \ref T_BT_EVENT_PARAM_A2DP_SNIFFING_START_IND.
      */
-    BT_EVENT_A2DP_SNIFFING_START_IND                  = 0x310e,
+    BT_EVENT_A2DP_SNIFFING_START_IND                  = 0x310f,
 
     /**
      * \brief Indicate A2DP sniffing started \ref T_BT_EVENT_PARAM_A2DP_SNIFFING_STARTED.
      */
-    BT_EVENT_A2DP_SNIFFING_STARTED                    = 0x310f,
+    BT_EVENT_A2DP_SNIFFING_STARTED                    = 0x3110,
 
     /**
      * \brief Indicate A2DP sniffing config completed \ref T_BT_EVENT_PARAM_A2DP_SNIFFING_CONFIG_CMPL.
      */
-    BT_EVENT_A2DP_SNIFFING_CONFIG_CMPL                = 0x3110,
+    BT_EVENT_A2DP_SNIFFING_CONFIG_CMPL                = 0x3111,
 
     /**
      * \brief Indicate A2DP sniffing stopped \ref T_BT_EVENT_PARAM_A2DP_SNIFFING_STOPPED.
      */
-    BT_EVENT_A2DP_SNIFFING_STOPPED                    = 0x3111,
+    BT_EVENT_A2DP_SNIFFING_STOPPED                    = 0x3112,
 
     /**
      * \brief Indicate A2DP sniffing disconnection complete \ref T_BT_EVENT_PARAM_A2DP_SNIFFING_DISCONN_CMPL.
      */
-    BT_EVENT_A2DP_SNIFFING_DISCONN_CMPL               = 0x3112,
+    BT_EVENT_A2DP_SNIFFING_DISCONN_CMPL               = 0x3113,
 
     /**
      * \brief Indicate AVRCP connection indication \ref T_BT_EVENT_PARAM_AVRCP_CONN_IND.
@@ -633,238 +638,268 @@ typedef enum t_bt_event
     BT_EVENT_AVRCP_DISCONN_CMPL                       = 0x3203,
 
     /**
+     * \brief Indicate AVRCP get capabilities response \ref T_BT_EVENT_PARAM_AVRCP_GET_CAPABILITIES_RSP.
+     */
+    BT_EVENT_AVRCP_GET_CAPABILITIES_RSP               = 0x3204,
+
+    /**
      * \brief Indicate AVRCP element attribute \ref T_BT_EVENT_PARAM_AVRCP_ELEM_ATTR.
      */
-    BT_EVENT_AVRCP_ELEM_ATTR                          = 0x3204,
+    BT_EVENT_AVRCP_ELEM_ATTR                          = 0x3205,
 
     /**
      * \brief Indicate AVRCP get play status response \ref T_BT_EVENT_PARAM_AVRCP_GET_PLAY_STATUS_RSP.
      */
-    BT_EVENT_AVRCP_GET_PLAY_STATUS_RSP                = 0x3205,
+    BT_EVENT_AVRCP_GET_PLAY_STATUS_RSP                = 0x3206,
 
     /**
      * \brief Indicate AVRCP remote TG device set absolute volume \ref T_BT_EVENT_PARAM_AVRCP_ABSOLUTE_VOLUME_SET.
      */
-    BT_EVENT_AVRCP_ABSOLUTE_VOLUME_SET                = 0x3206,
+    BT_EVENT_AVRCP_ABSOLUTE_VOLUME_SET                = 0x3207,
 
     /**
      * \brief Indicate AVRCP key volume up \ref T_BT_EVENT_PARAM_AVRCP_VOLUME_UP.
      */
-    BT_EVENT_AVRCP_VOLUME_UP                          = 0x3207,
+    BT_EVENT_AVRCP_VOLUME_UP                          = 0x3208,
 
     /**
      * \brief Indicate AVRCP key volume down \ref T_BT_EVENT_PARAM_AVRCP_VOLUME_DOWN.
      */
-    BT_EVENT_AVRCP_VOLUME_DOWN                        = 0x3208,
+    BT_EVENT_AVRCP_VOLUME_DOWN                        = 0x3209,
 
     /**
      * \brief Indicate AVRCP register volume changed \ref T_BT_EVENT_PARAM_AVRCP_REG_VOLUME_CHANGED.
      */
-    BT_EVENT_AVRCP_REG_VOLUME_CHANGED                 = 0x3209,
+    BT_EVENT_AVRCP_REG_VOLUME_CHANGED                 = 0x320a,
 
     /**
      * \brief Indicate AVRCP track changed \ref T_BT_EVENT_PARAM_AVRCP_TRACK_CHANGED.
      */
-    BT_EVENT_AVRCP_TRACK_CHANGED                      = 0x320a,
+    BT_EVENT_AVRCP_TRACK_CHANGED                      = 0x320b,
+
+    /**
+     * \brief Indicate AVRCP track reached end \ref T_BT_EVENT_PARAM_AVRCP_TRACK_REACHED_END.
+     */
+    BT_EVENT_AVRCP_TRACK_REACHED_END                  = 0x320c,
+
+    /**
+     * \brief Indicate AVRCP track reached start \ref T_BT_EVENT_PARAM_AVRCP_TRACK_REACHED_START.
+     */
+    BT_EVENT_AVRCP_TRACK_REACHED_START                = 0x320d,
+
+    /**
+     * \brief Indicate AVRCP playback position changed \ref T_BT_EVENT_PARAM_AVRCP_PLAYBACK_POS_CHANGED.
+     */
+    BT_EVENT_AVRCP_PLAYBACK_POS_CHANGED               = 0x320e,
+
+    /**
+     * \brief Indicate AVRCP battery status changed \ref T_BT_EVENT_PARAM_AVRCP_BATT_STATUS_CHANGED.
+     */
+    BT_EVENT_AVRCP_BATT_STATUS_CHANGED                = 0x320f,
+
+    /**
+     * \brief Indicate AVRCP system status changed \ref T_BT_EVENT_PARAM_AVRCP_SYSTEM_STATUS_CHANGED.
+     */
+    BT_EVENT_AVRCP_SYSTEM_STATUS_CHANGED              = 0x3210,
 
     /**
      * \brief Indicate AVRCP play status changed \ref T_BT_EVENT_PARAM_AVRCP_PLAY_STATUS_CHANGED.
      */
-    BT_EVENT_AVRCP_PLAY_STATUS_CHANGED                = 0x320b,
+    BT_EVENT_AVRCP_PLAY_STATUS_CHANGED                = 0x3211,
 
     /**
      * \brief Indicate AVRCP sniffing connection complete \ref T_BT_EVENT_PARAM_AVRCP_SNIFFING_CONN_CMPL.
      */
-    BT_EVENT_AVRCP_SNIFFING_CONN_CMPL                 = 0x320c,
+    BT_EVENT_AVRCP_SNIFFING_CONN_CMPL                 = 0x3212,
 
     /**
      * \brief Indicate AVRCP sniffing disconnection complete \ref T_BT_EVENT_PARAM_AVRCP_SNIFFING_DISCONN_CMPL.
      */
-    BT_EVENT_AVRCP_SNIFFING_DISCONN_CMPL              = 0x320d,
+    BT_EVENT_AVRCP_SNIFFING_DISCONN_CMPL              = 0x3213,
 
     /**
      * \brief Indicate AVRCP player app setting changed \ref T_BT_EVENT_PARAM_AVRCP_APP_SETTING_CHANGED.
      */
-    BT_EVENT_AVRCP_APP_SETTING_CHANGED                = 0x320e,
+    BT_EVENT_AVRCP_APP_SETTING_CHANGED                = 0x3214,
 
     /**
      * \brief Indicate AVRCP playing content changed \ref T_BT_EVENT_PARAM_AVRCP_PLAYING_CONTENT_CHANGED.
      */
-    BT_EVENT_AVRCP_PLAYING_CONTENT_CHANGED            = 0x320f,
+    BT_EVENT_AVRCP_PLAYING_CONTENT_CHANGED            = 0x3215,
 
     /**
      * \brief Indicate AVRCP available player changed \ref T_BT_EVENT_PARAM_AVRCP_AVAILABLE_PLAYER_CHANGED.
      */
-    BT_EVENT_AVRCP_AVAILABLE_PLAYER_CHANGED           = 0x3210,
+    BT_EVENT_AVRCP_AVAILABLE_PLAYER_CHANGED           = 0x3216,
 
     /**
      * \brief Indicate AVRCP addressed player changed \ref T_BT_EVENT_PARAM_AVRCP_ADDRESSED_PLAYER_CHANGED.
      */
-    BT_EVENT_AVRCP_ADDRESSED_PLAYER_CHANGED           = 0x3211,
+    BT_EVENT_AVRCP_ADDRESSED_PLAYER_CHANGED           = 0x3217,
 
     /**
      * \brief Indicate AVRCP UID changed \ref T_BT_EVENT_PARAM_AVRCP_UID_CHANGED.
      */
-    BT_EVENT_AVRCP_UID_CHANGED                        = 0x3212,
+    BT_EVENT_AVRCP_UID_CHANGED                        = 0x3218,
 
     /**
      * \brief Indicate AVRCP player app setting attributes list response \ref T_BT_EVENT_PARAM_AVRCP_APP_SETTING_ATTRS_LIST_RSP.
      */
-    BT_EVENT_AVRCP_APP_SETTING_ATTRS_LIST_RSP         = 0x3213,
+    BT_EVENT_AVRCP_APP_SETTING_ATTRS_LIST_RSP         = 0x3219,
 
     /**
      * \brief Indicate AVRCP player app setting values list response \ref T_BT_EVENT_PARAM_AVRCP_APP_SETTING_VALUES_LIST_RSP.
      */
-    BT_EVENT_AVRCP_APP_SETTING_VALUES_LIST_RSP        = 0x3214,
+    BT_EVENT_AVRCP_APP_SETTING_VALUES_LIST_RSP        = 0x321a,
 
     /**
      * \brief Indicate AVRCP player app current setting get response \ref T_BT_EVENT_PARAM_AVRCP_APP_SETTING_GET_RSP.
      */
-    BT_EVENT_AVRCP_APP_SETTING_GET_RSP                = 0x3215,
+    BT_EVENT_AVRCP_APP_SETTING_GET_RSP                = 0x321b,
 
     /**
      * \brief Indicate AVRCP addressed player set response \ref T_BT_EVENT_PARAM_AVRCP_ADDRESSED_PLAYER_SET_RSP.
      */
-    BT_EVENT_AVRCP_ADDRESSED_PLAYER_SET_RSP           = 0x3216,
+    BT_EVENT_AVRCP_ADDRESSED_PLAYER_SET_RSP           = 0x321c,
 
     /**
      * \brief Indicate AVRCP item play response \ref T_BT_EVENT_PARAM_AVRCP_ITEM_PLAY_RSP.
      */
-    BT_EVENT_AVRCP_ITEM_PLAY_RSP                      = 0x3217,
+    BT_EVENT_AVRCP_ITEM_PLAY_RSP                      = 0x321d,
 
     /**
      * \brief Indicate AVRCP folder items get response \ref T_BT_EVENT_PARAM_AVRCP_FOLDER_ITEMS_GET_RSP.
      */
-    BT_EVENT_AVRCP_FOLDER_ITEMS_GET_RSP               = 0x3218,
+    BT_EVENT_AVRCP_FOLDER_ITEMS_GET_RSP               = 0x321e,
 
     /**
      * \brief Indicate AVRCP item attribute get response \ref T_BT_EVENT_PARAM_AVRCP_ITEM_ATTR_GET_RSP.
      */
-    BT_EVENT_AVRCP_ITEM_ATTR_GET_RSP                  = 0x3219,
+    BT_EVENT_AVRCP_ITEM_ATTR_GET_RSP                  = 0x321f,
 
     /**
      * \brief Indicate AVRCP search response \ref T_BT_EVENT_PARAM_AVRCP_SEARCH_RSP.
      */
-    BT_EVENT_AVRCP_SEARCH_RSP                         = 0x321a,
+    BT_EVENT_AVRCP_SEARCH_RSP                         = 0x3220,
 
     /**
      * \brief Indicate AVRCP browsed player set response \ref T_BT_EVENT_PARAM_AVRCP_BROWSED_PLAYER_SET_RSP.
      */
-    BT_EVENT_AVRCP_BROWSED_PLAYER_SET_RSP             = 0x321b,
+    BT_EVENT_AVRCP_BROWSED_PLAYER_SET_RSP             = 0x3221,
 
     /**
      * \brief Indicate AVRCP path change response \ref T_BT_EVENT_PARAM_AVRCP_PATH_CHANGE_RSP.
      */
-    BT_EVENT_AVRCP_PATH_CHANGE_RSP                    = 0x321c,
+    BT_EVENT_AVRCP_PATH_CHANGE_RSP                    = 0x3222,
 
     /**
      * \brief Indicate AVRCP register play status changed \ref T_BT_EVENT_PARAM_AVRCP_REG_PLAY_STATUS_CHANGED.
      */
-    BT_EVENT_AVRCP_PLAY_STATUS_CHANGED_REG_REQ        = 0x321d,
+    BT_EVENT_AVRCP_PLAY_STATUS_CHANGED_REG_REQ        = 0x3223,
 
     /**
      * \brief Indicate AVRCP remote CT device volume changed \ref T_BT_EVENT_PARAM_AVRCP_VOLUME_CHANGED.
      */
-    BT_EVENT_AVRCP_VOLUME_CHANGED                     = 0x321e,
+    BT_EVENT_AVRCP_VOLUME_CHANGED                     = 0x3224,
 
     /**
      * \brief Indicate AVRCP play key release \ref T_BT_EVENT_PARAM_AVRCP_PLAY.
      */
-    BT_EVENT_AVRCP_PLAY                               = 0x321f,
+    BT_EVENT_AVRCP_PLAY                               = 0x3225,
 
     /**
      * \brief Indicate AVRCP stop key release \ref T_BT_EVENT_PARAM_AVRCP_STOP.
      */
-    BT_EVENT_AVRCP_STOP                               = 0x3220,
+    BT_EVENT_AVRCP_STOP                               = 0x3226,
 
     /**
      * \brief Indicate AVRCP pause key release \ref T_BT_EVENT_PARAM_AVRCP_PAUSE.
      */
-    BT_EVENT_AVRCP_PAUSE                              = 0x3221,
+    BT_EVENT_AVRCP_PAUSE                              = 0x3227,
 
     /**
      * \brief Indicate AVRCP rewind key press \ref T_BT_EVENT_PARAM_AVRCP_REWIND_START.
      */
-    BT_EVENT_AVRCP_REWIND_START                       = 0x3222,
+    BT_EVENT_AVRCP_REWIND_START                       = 0x3228,
 
     /**
      * \brief Indicate AVRCP rewind key release \ref T_BT_EVENT_PARAM_AVRCP_REWIND_STOP.
      */
-    BT_EVENT_AVRCP_REWIND_STOP                        = 0x3223,
+    BT_EVENT_AVRCP_REWIND_STOP                        = 0x3229,
 
     /**
      * \brief Indicate AVRCP fast forward key press \ref T_BT_EVENT_PARAM_AVRCP_FAST_FORWARD_START.
      */
-    BT_EVENT_AVRCP_FAST_FORWARD_START                 = 0x3224,
+    BT_EVENT_AVRCP_FAST_FORWARD_START                 = 0x322a,
 
     /**
      * \brief Indicate AVRCP fast forward key release \ref T_BT_EVENT_PARAM_AVRCP_FAST_FORWARD_STOP.
      */
-    BT_EVENT_AVRCP_FAST_FORWARD_STOP                  = 0x3225,
+    BT_EVENT_AVRCP_FAST_FORWARD_STOP                  = 0x322b,
 
     /**
      * \brief Indicate AVRCP forward key release \ref T_BT_EVENT_PARAM_AVRCP_FORWARD.
      */
-    BT_EVENT_AVRCP_FORWARD                            = 0x3226,
+    BT_EVENT_AVRCP_FORWARD                            = 0x322c,
 
     /**
      * \brief Indicate AVRCP backward key release \ref T_BT_EVENT_PARAM_AVRCP_BACKWARD.
      */
-    BT_EVENT_AVRCP_BACKWARD                           = 0x3227,
+    BT_EVENT_AVRCP_BACKWARD                           = 0x322d,
 
     /**
      * \brief Indicate AVRCP passthrough play status response \ref T_BT_EVENT_PARAM_AVRCP_PLAY_STATUS_RSP.
      */
-    BT_EVENT_AVRCP_PLAY_STATUS_RSP                    = 0x3228,
+    BT_EVENT_AVRCP_PLAY_STATUS_RSP                    = 0x322e,
 
     /**
     * \brief Indicate AVRCP remote CT device get play status \ref T_BT_EVENT_PARAM_AVRCP_PLAY_STATUS_GET.
     */
-    BT_EVENT_AVRCP_PLAY_STATUS_GET                    = 0x3229,
+    BT_EVENT_AVRCP_PLAY_STATUS_GET                    = 0x322f,
 
     /**
     * \brief Indicate AVRCP remote CT device get element attributes \ref T_BT_EVENT_PARAM_AVRCP_ELEM_ATTRS_GET.
     */
-    BT_EVENT_AVRCP_ELEM_ATTRS_GET                     = 0x322a,
+    BT_EVENT_AVRCP_ELEM_ATTRS_GET                     = 0x3230,
 
     /**
      * \brief Indicate AVRCP register track changed \ref T_BT_EVENT_PARAM_AVRCP_REG_TRACK_CHANGED.
      */
-    BT_EVENT_AVRCP_TRACK_CHANGED_REG_REQ              = 0x322b,
+    BT_EVENT_AVRCP_TRACK_CHANGED_REG_REQ              = 0x3231,
 
     /**
     * \brief Indicate AVRCP remote CT device set addressed player \ref T_BT_EVENT_PARAM_AVRCP_ADDRESSED_PLAYER_SET.
     */
-    BT_EVENT_AVRCP_ADDRESSED_PLAYER_SET               = 0x322c,
+    BT_EVENT_AVRCP_ADDRESSED_PLAYER_SET               = 0x3232,
 
     /**
      * \brief Indicate AVRCP register addressed player changed \ref T_BT_EVENT_PARAM_AVRCP_REG_ADDRESSED_PLAYER_CHANGED.
      */
-    BT_EVENT_AVRCP_ADDRESSED_PLAYER_CHANGED_REG_REQ   = 0x322d,
+    BT_EVENT_AVRCP_ADDRESSED_PLAYER_CHANGED_REG_REQ   = 0x3233,
 
     /**
      * \brief Indicate AVRCP remote CT device get folder items \ref T_BT_EVENT_PARAM_AVRCP_FOLDER_ITEMS_GET.
      */
-    BT_EVENT_AVRCP_FOLDER_ITEMS_GET                   = 0x322e,
+    BT_EVENT_AVRCP_FOLDER_ITEMS_GET                   = 0x3234,
 
     /**
-     * \brief Indicate AVRCP remote CT device get total num of items \ref T_BT_EVENT_PARAM_AVRCP_TOTAL_NUM_OF_ITEMS_GET.
+     * \brief Indicate AVRCP remote CT device get total number of items \ref T_BT_EVENT_PARAM_AVRCP_TOTAL_NUM_OF_ITEMS_GET.
      */
-    BT_EVENT_AVRCP_TOTAL_NUM_OF_ITEMS_GET             = 0x322f,
+    BT_EVENT_AVRCP_TOTAL_NUM_OF_ITEMS_GET             = 0x3235,
 
     /**
      * \brief Indicate AVRCP absolute volume set response \ref T_BT_EVENT_PARAM_AVRCP_ABSOLUTE_VOLUME_SET_RSP.
      */
-    BT_EVENT_AVRCP_ABSOLUTE_VOLUME_SET_RSP            = 0x3230,
+    BT_EVENT_AVRCP_ABSOLUTE_VOLUME_SET_RSP            = 0x3236,
 
     /**
      * \brief Indicate AVRCP key power \ref T_BT_EVENT_PARAM_AVRCP_POWER.
      */
-    BT_EVENT_AVRCP_POWER                              = 0x3231,
+    BT_EVENT_AVRCP_POWER                              = 0x3237,
     /**
      * \brief Indicate AVRCP key mute \ref T_BT_EVENT_PARAM_AVRCP_MUTE.
      */
-    BT_EVENT_AVRCP_MUTE                               = 0x3232,
+    BT_EVENT_AVRCP_MUTE                               = 0x3238,
 
     /**
      * \brief Indicate AVRCP browsing connection indication \ref T_BT_EVENT_PARAM_AVRCP_BROWSING_CONN_IND.
@@ -962,7 +997,7 @@ typedef enum t_bt_event
     BT_EVENT_IAP_IDENTITY_INFO_REQ                    = 0x330a,
 
     /**
-     * \brief Indicate iAP resetted \ref T_BT_EVENT_PARAM_IAP_RESET.
+     * \brief Indicate iAP reset \ref T_BT_EVENT_PARAM_IAP_RESET.
      */
     BT_EVENT_IAP_RESET                                = 0x330b,
 
@@ -1072,9 +1107,9 @@ typedef enum t_bt_event
     BT_EVENT_HFP_CODEC_TYPE_SELECTED                  = 0x3411,
 
     /**
-     * \brief Indicate HFP unknown command \ref T_BT_EVENT_PARAM_HFP_UNKNOWN_COMMAND.
+     * \brief Indicate HFP vendor command \ref T_BT_EVENT_PARAM_HFP_VENDOR_COMMAND.
      */
-    BT_EVENT_HFP_UNKNOWN_CMD                          = 0x3412,
+    BT_EVENT_HFP_VENDOR_CMD                           = 0x3412,
 
     /**
      * \brief Indicate HFP vendor command result \ref T_BT_EVENT_PARAM_HFP_VENDOR_CMD_RESULT.
@@ -1260,9 +1295,9 @@ typedef enum t_bt_event
     BT_EVENT_HFP_AG_VOICE_RECOGNITION_DEACTIVATION    = 0x34bc,
 
     /**
-    * \brief Indicate HFP AG received unknown command \ref T_BT_EVENT_PARAM_HFP_AG_UNKNOWN_CMD.
+    * \brief Indicate HFP AG received vendor command \ref T_BT_EVENT_PARAM_HFP_AG_VENDOR_CMD.
     */
-    BT_EVENT_HFP_AG_UNKNOWN_CMD                       = 0x34bd,
+    BT_EVENT_HFP_AG_VENDOR_CMD                        = 0x34bd,
 
     /**
      * \brief Indicate PBAP connection complete \ref T_BT_EVENT_PARAM_PBAP_CONN_CMPL.
@@ -1310,67 +1345,67 @@ typedef enum t_bt_event
     BT_EVENT_PBAP_GET_PHONE_BOOK_SIZE_CMPL            = 0x3508,
 
     /**
-    * \brief Indicate HID Device control connection indication \ref T_BT_EVENT_PARAM_HID_DEVICE_CONN_IND.
+    * \brief Indicate HID device control connection indication \ref T_BT_EVENT_PARAM_HID_DEVICE_CONN_IND.
     */
     BT_EVENT_HID_DEVICE_CONN_IND                      = 0x3600,
 
     /**
-     * \brief Indicate HID Device control connection complete \ref T_BT_EVENT_PARAM_HID_DEVICE_CONN_CMPL.
+     * \brief Indicate HID device control connection complete \ref T_BT_EVENT_PARAM_HID_DEVICE_CONN_CMPL.
      */
     BT_EVENT_HID_DEVICE_CONN_CMPL                     = 0x3601,
 
     /**
-     * \brief Indicate HID Device control connection fail \ref T_BT_EVENT_PARAM_HID_DEVICE_CONN_FAIL.
+     * \brief Indicate HID device control connection fail \ref T_BT_EVENT_PARAM_HID_DEVICE_CONN_FAIL.
      */
     BT_EVENT_HID_DEVICE_CONN_FAIL                     = 0x3602,
 
     /**
-     * \brief Indicate HID Device control disconnection complete \ref T_BT_EVENT_PARAM_HID_DEVICE_DISCONN_CMPL.
+     * \brief Indicate HID device control disconnection complete \ref T_BT_EVENT_PARAM_HID_DEVICE_DISCONN_CMPL.
      */
     BT_EVENT_HID_DEVICE_DISCONN_CMPL                  = 0x3603,
 
     /**
-     * \brief Indicate HID Device data indication \ref T_BT_EVENT_PARAM_HID_DEVICE_CONTROL_DATA_IND.
+     * \brief Indicate HID device data indication \ref T_BT_EVENT_PARAM_HID_DEVICE_CONTROL_DATA_IND.
      */
     BT_EVENT_HID_DEVICE_CONTROL_DATA_IND              = 0x3604,
 
     /**
-     * \brief Indicate HID Device get report indication \ref T_BT_EVENT_PARAM_HID_DEVICE_GET_REPORT_IND.
+     * \brief Indicate HID device get report indication \ref T_BT_EVENT_PARAM_HID_DEVICE_GET_REPORT_IND.
      */
     BT_EVENT_HID_DEVICE_GET_REPORT_IND                = 0x3605,
 
     /**
-     * \brief Indicate HID Device set report indication \ref T_BT_EVENT_PARAM_HID_DEVICE_SET_REPORT_IND.
+     * \brief Indicate HID device set report indication \ref T_BT_EVENT_PARAM_HID_DEVICE_SET_REPORT_IND.
      */
     BT_EVENT_HID_DEVICE_SET_REPORT_IND                = 0x3606,
 
     /**
-     * \brief Indicate HID Device get protocol indication \ref T_BT_EVENT_PARAM_HID_DEVICE_GET_PROTOCOL_IND.
+     * \brief Indicate HID device get protocol indication \ref T_BT_EVENT_PARAM_HID_DEVICE_GET_PROTOCOL_IND.
      */
     BT_EVENT_HID_DEVICE_GET_PROTOCOL_IND              = 0x3607,
 
     /**
-     * \brief Indicate HID Device set protocol indication \ref T_BT_EVENT_PARAM_HID_DEVICE_SET_PROTOCOL_IND.
+     * \brief Indicate HID device set protocol indication \ref T_BT_EVENT_PARAM_HID_DEVICE_SET_PROTOCOL_IND.
      */
     BT_EVENT_HID_DEVICE_SET_PROTOCOL_IND              = 0x3608,
 
     /**
-     * \brief Indicate HID Device set idle indication \ref T_BT_EVENT_PARAM_HID_DEVICE_SET_IDLE_IND.
+     * \brief Indicate HID device set idle indication \ref T_BT_EVENT_PARAM_HID_DEVICE_SET_IDLE_IND.
      */
     BT_EVENT_HID_DEVICE_SET_IDLE_IND                  = 0x3609,
 
     /**
-     * \brief Indicate HID Device sniffing connection complete \ref T_BT_EVENT_PARAM_HID_DEVICE_SNIFFING_CONN_CMPL.
+     * \brief Indicate HID device sniffing connection complete \ref T_BT_EVENT_PARAM_HID_DEVICE_SNIFFING_CONN_CMPL.
      */
     BT_EVENT_HID_DEVICE_SNIFFING_CONN_CMPL            = 0x360a,
 
     /**
-     * \brief Indicate HID Device sniffing disconnection complete \ref T_BT_EVENT_PARAM_HID_DEVICE_SNIFFING_DISCONN_CMPL.
+     * \brief Indicate HID device sniffing disconnection complete \ref T_BT_EVENT_PARAM_HID_DEVICE_SNIFFING_DISCONN_CMPL.
      */
     BT_EVENT_HID_DEVICE_SNIFFING_DISCONN_CMPL         = 0x360b,
 
     /**
-     * \brief Indicate HID Device interrupt data indication \ref T_BT_EVENT_PARAM_HID_DEVICE_INTERRUPT_DATA_IND.
+     * \brief Indicate HID device interrupt data indication \ref T_BT_EVENT_PARAM_HID_DEVICE_INTERRUPT_DATA_IND.
      */
     BT_EVENT_HID_DEVICE_INTERRUPT_DATA_IND            = 0x360c,
 
@@ -1395,7 +1430,7 @@ typedef enum t_bt_event
     BT_EVENT_HID_HOST_DISCONN_CMPL                    = 0x3683,
 
     /**
-     * \brief Indicate HID Host hid control indication \ref T_BT_EVENT_PARAM_HID_HOST_HID_CONTROL_IND.
+     * \brief Indicate HID Host HID control indication \ref T_BT_EVENT_PARAM_HID_HOST_HID_CONTROL_IND.
      */
     BT_EVENT_HID_HOST_HID_CONTROL_IND                 = 0x3684,
 
@@ -1561,8 +1596,6 @@ typedef enum t_bt_event
 } T_BT_EVENT;
 
 /**
- * btm.h
- *
  * \brief  BT manager roleswap status.
  *
  * \ingroup BT_BTM
@@ -1592,74 +1625,64 @@ typedef enum t_bt_roleswap_status
 } T_BT_ROLESWAP_STATUS;
 
 /**
- * btm.h
- *
- * \brief    BT SDP UUID TYPE.
+ * \brief    BT SDP UUID type.
  *
  * \ingroup  BT_BTM
  */
 typedef enum t_bt_sdp_uuid_type
 {
-    BT_SDP_UUID16,    /**< UUID type 16 bits */
-    BT_SDP_UUID32,    /**< UUID type 32 bits */
-    BT_SDP_UUID128    /**< UUID type 128 bits */
+    BT_SDP_UUID16,    /**< UUID type 16 bits. */
+    BT_SDP_UUID32,    /**< UUID type 32 bits. */
+    BT_SDP_UUID128    /**< UUID type 128 bits. */
 } T_BT_SDP_UUID_TYPE;
 
 /**
- * btm.h
- *
- * \brief    BT SDP UUID DATA.
+ * \brief    BT SDP UUID data.
  *
  * \ingroup  BT_BTM
  */
 typedef union t_bt_sdp_uuid_data
 {
-    uint16_t    uuid_16;        /**< UUID data in 16 bits */
-    uint32_t    uuid_32;        /**< UUID data in 32 bits */
-    uint8_t     uuid_128[16];   /**< UUID data in 128 bits */
+    uint16_t    uuid_16;        /**< UUID data in 16 bits. */
+    uint32_t    uuid_32;        /**< UUID data in 32 bits. */
+    uint8_t     uuid_128[16];   /**< UUID data in 128 bits. */
 } T_BT_SDP_UUID_DATA;
 
 /**
- * btm.h
- *
  * \brief    BT SCO packet status.
  *
  * \ingroup  BT_BTM
  */
 typedef enum t_bt_sco_pkt_status
 {
-    BT_SCO_PKT_STATUS_OK           = 0x00,  /**< SCO packet status for correctly received data */
-    BT_SCO_PKT_STATUS_INVALID      = 0x01,  /**< SCO packet status for invalid data */
-    BT_SCO_PKT_STATUS_NO_DATA      = 0x02,  /**< SCO packet status for no data received */
-    BT_SCO_PKT_STATUS_PARTIAL_LOST = 0x03,  /**< SCO packet status for data partially lost */
+    BT_SCO_PKT_STATUS_OK           = 0x00,  /**< SCO packet status for correctly received data. */
+    BT_SCO_PKT_STATUS_INVALID      = 0x01,  /**< SCO packet status for invalid data. */
+    BT_SCO_PKT_STATUS_NO_DATA      = 0x02,  /**< SCO packet status for no data received. */
+    BT_SCO_PKT_STATUS_PARTIAL_LOST = 0x03,  /**< SCO packet status for data partially lost. */
 } T_BT_SCO_PKT_STATUS;
 
 /**
- * btm.h
- *
  * \brief Define BT SDP attribute information.
  *
  * \ingroup BT_BTM
  */
 typedef struct t_bt_sdp_attr_info
 {
-    T_BT_SDP_UUID_TYPE   srv_class_uuid_type;    /**< Service class UUID type */
-    T_BT_SDP_UUID_DATA   srv_class_uuid_data;    /**< Service class UUID data */
-    uint16_t             profile_version;        /**< Remote profile version */
-    uint16_t             protocol_version;       /**< Remote protocol version */
-    uint8_t              server_channel;         /**< Server channel number */
-    uint16_t             supported_feat;         /**< Supported features */
-    uint16_t             l2c_psm;                /**< L2CAP PSM value */
-    uint8_t              supported_repos;        /**< Supported repositories */
-    uint32_t             pbap_supported_feat;    /**< PBAP supported features */
-    uint8_t             *p_attr;                 /**< Address of attribute */
-    uint16_t             attr_len;               /**< Attribute len */
+    T_BT_SDP_UUID_TYPE   srv_class_uuid_type;    /**< Service class UUID type. */
+    T_BT_SDP_UUID_DATA   srv_class_uuid_data;    /**< Service class UUID data. */
+    uint16_t             profile_version;        /**< Remote profile version. */
+    uint16_t             protocol_version;       /**< Remote protocol version. */
+    uint8_t              server_channel;         /**< Server channel number. */
+    uint16_t             supported_feat;         /**< Supported features. */
+    uint16_t             l2c_psm;                /**< L2CAP PSM value. */
+    uint8_t              supported_repos;        /**< Supported repositories. */
+    uint32_t             pbap_supported_feat;    /**< PBAP supported features. */
+    uint8_t             *p_attr;                 /**< Address of attribute. */
+    uint16_t             attr_len;               /**< Attribute length. */
 } T_BT_SDP_ATTR_INFO;
 
 /**
- * btm.h
- *
- * \brief BT hfp command result.
+ * \brief BT HFP command result.
  *
  * \ingroup BT_BTM
  */
@@ -1671,9 +1694,7 @@ typedef enum t_bt_hfp_cmd_result
 } T_BT_HFP_CMD_RESULT;
 
 /**
- * btm.h
- *
- * \brief BT hfp codec type.
+ * \brief BT HFP codec type.
  *
  * \ingroup BT_BTM
  */
@@ -1686,8 +1707,42 @@ typedef enum t_bt_hfp_codec_type
 } T_BT_HFP_CODEC_TYPE;
 
 /**
- * btm.h
+ * \brief BT traffic QoS command parameters.
  *
+ * \ingroup BT_BTM
+ */
+typedef struct t_bt_traffic_qos_param
+{
+    union
+    {
+        struct
+        {
+            uint8_t  rsvd_slots;    /* The reserved slots in 625us slot unit. */
+            uint16_t traffic_mask;  /* The traffic bitmask, bitmask set to 0 means corresponding traffic set to background. */
+        } random_param;
+
+        struct
+        {
+            uint16_t interval;      /* The interval ranged from 0x06 to 0x1000 in 625us slot unit. */
+            uint8_t rsvd_slots;     /* The reserved slots in 625us slot unit. */
+            uint16_t traffic_mask;  /* The traffic bitmask, bitmask set to 0 means corresponding traffic set to background. */
+        } none_negotiate_periodic_param;
+        struct
+        {
+            uint16_t interval;      /* The interval ranged from 0x06 to 0x1000 in 625us slot unit. */
+            uint8_t rsvd_slots;     /* The reserved slots in 625us slot unit. */
+        } negotiate_periodic_param;
+
+        struct
+        {
+            uint8_t sync_weighting; /* The weighting to be scheduled for bd_addr, ranged from 0x01 to 0x10. */
+            uint8_t rsvd_slots;     /* The reserved slots in 625us slot unit. */
+            uint16_t traffic_mask;  /* The traffic bitmask, bitmask set to 0 means corresponding traffic set to background. */
+        } periodic_sync_param;
+    } u;
+} T_BT_TRAFFIC_QOS_PARAM;
+
+/**
  * \brief  BT manager event parameter BT ready.
  *
  * \ingroup BT_BTM
@@ -1698,8 +1753,6 @@ typedef struct t_bt_event_param_ready
 } T_BT_EVENT_PARAM_READY;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter local BT address changed.
  *
  * \ingroup BT_BTM
@@ -1711,8 +1764,6 @@ typedef struct t_bt_event_param_local_addr_changed
 } T_BT_EVENT_PARAM_LOCAL_ADDR_CHANGED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter local BT device name changed.
  *
  * \ingroup BT_BTM
@@ -1723,9 +1774,7 @@ typedef struct t_bt_event_param_local_name_changed
 } T_BT_EVENT_PARAM_LOCAL_NAME_CHANGED;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter BT device mode rsp.
+ * \brief  BT manager event parameter BT device mode response.
  *
  * \ingroup BT_BTM
  */
@@ -1736,22 +1785,18 @@ typedef struct t_bt_event_param_device_mode_rsp
 } T_BT_EVENT_PARAM_DEVICE_MODE_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter reply remote name.
  *
  * \ingroup BT_BTM
  */
 typedef struct t_bt_event_param_remote_name_rsp
 {
-    uint8_t     bd_addr[6];                 /**< Bluetooth address of remote device */
-    uint16_t    cause;                      /**< Result of getting remote device's name */
-    char        name[40];                   /**< Name of remote device */
+    uint8_t     bd_addr[6];                 /**< Bluetooth address of remote device. */
+    uint16_t    cause;                      /**< Result of getting remote device's name. */
+    char        name[40];                   /**< Name of remote device. */
 } T_BT_EVENT_PARAM_REMOTE_NAME_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter inquiry result information.
  *
  * \ingroup BT_BTM
@@ -1767,8 +1812,6 @@ typedef struct t_bt_event_param_inquiry_result
 } T_BT_EVENT_PARAM_INQUIRY_RESULT;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter inquiry response.
  *
  * \ingroup BT_BTM
@@ -1780,8 +1823,6 @@ typedef struct t_bt_event_param_inquiry_rsp
 
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter inquiry completed.
  *
  * \ingroup BT_BTM
@@ -1792,8 +1833,6 @@ typedef struct t_bt_event_param_inquiry_cmpl
 } T_BT_EVENT_PARAM_INQUIRY_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter inquiry cancel response.
  *
  * \ingroup BT_BTM
@@ -1804,8 +1843,6 @@ typedef struct t_bt_event_param_inquiry_cancel_rsp
 } T_BT_EVENT_PARAM_INQUIRY_CANCEL_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter periodic inquiry response.
  *
  * \ingroup BT_BTM
@@ -1816,8 +1853,6 @@ typedef struct t_bt_event_param_periodic_inquiry_rsp
 } T_BT_EVENT_PARAM_PERIODIC_INQUIRY_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter periodic inquiry cancel response.
  *
  * \ingroup BT_BTM
@@ -1828,9 +1863,7 @@ typedef struct t_bt_event_param_periodic_inquiry_cancel_rsp
 } T_BT_EVENT_PARAM_PERIODIC_INQUIRY_CANCEL_RSP;
 
 /**
- * btm.h
- *
- * \brief BT manager event parameter set paging tx power rsp.
+ * \brief BT manager event parameter set paging tx power response.
  *
  * \ingroup BT_BTM
  */
@@ -1842,8 +1875,6 @@ typedef struct t_bt_event_param_set_paging_tx_power_rsp
 } T_BT_EVENT_PARAM_PAGING_TX_POWER_SET_RSP;
 
 /**
- * btm.h
- *
  * \brief BT manager event parameter local OOB data response.
  *
  * \ingroup BT_BTM
@@ -1856,8 +1887,6 @@ typedef struct t_bt_event_param_local_oob_data_rsp
 } T_BT_EVENT_PARAM_LOCAL_OOB_DATA_RSP;
 
 /**
- * btm.h
- *
  * \brief BT manager event parameter local OOB extended data response.
  *
  * \ingroup BT_BTM
@@ -1872,8 +1901,6 @@ typedef struct t_bt_event_param_local_oob_extended_data_rsp
 } T_BT_EVENT_PARAM_LOCAL_OOB_EXTENDED_DATA_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter SCO connection indication.
  *
  * \ingroup BT_BTM
@@ -1885,8 +1912,6 @@ typedef struct t_bt_event_param_sco_conn_ind
 } T_BT_EVENT_PARAM_SCO_CONN_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter SCO connection response.
  *
  * \ingroup BT_BTM
@@ -1898,8 +1923,6 @@ typedef struct t_bt_event_param_sco_conn_rsp
 } T_BT_EVENT_PARAM_SCO_CONN_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter SCO connection completed.
  *
  * \ingroup BT_BTM
@@ -1916,8 +1939,6 @@ typedef struct t_bt_event_param_sco_conn_cmpl
 } T_BT_EVENT_PARAM_SCO_CONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter SCO packet received.
  *
  * \ingroup BT_BTM
@@ -1933,8 +1954,6 @@ typedef struct t_bt_event_param_sco_data_ind
 } T_BT_EVENT_PARAM_SCO_DATA_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter SCO disconnected.
  *
  * \ingroup BT_BTM
@@ -1946,8 +1965,6 @@ typedef struct t_bt_event_param_sco_disconnected
 } T_BT_EVENT_PARAM_SCO_DISCONNECTED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter SCO link switch.
  *
  * \ingroup BT_BTM
@@ -1959,8 +1976,6 @@ typedef struct t_bt_event_param_sco_link_switch
 } T_BT_EVENT_PARAM_SCO_LINK_SWITCH;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter SCO sniffing connection completed.
  *
  * \ingroup BT_BTM
@@ -1976,8 +1991,6 @@ typedef struct t_bt_event_param_sco_sniffing_conn_cmpl
 } T_BT_EVENT_PARAM_SCO_SNIFFING_CONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter SCO sniffing started.
  *
  * \ingroup BT_BTM
@@ -1993,8 +2006,6 @@ typedef struct t_bt_event_param_sco_sniffing_started
 } T_BT_EVENT_PARAM_SCO_SNIFFING_STARTED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter SCO sniffing stopped.
  *
  * \ingroup BT_BTM
@@ -2006,8 +2017,6 @@ typedef struct t_bt_event_param_sco_sniffing_stopped
 } T_BT_EVENT_PARAM_SCO_SNIFFING_STOPPED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter SCO sniffing disconnection complete.
  *
  * \ingroup BT_BTM
@@ -2019,9 +2028,7 @@ typedef struct t_bt_event_param_sco_sniffing_disconn_cmpl
 } T_BT_EVENT_PARAM_SCO_SNIFFING_DISCONN_CMPL;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter acl link connection request indication.
+ * \brief  BT manager event parameter ACL link connection request indication.
  *
  * \ingroup BT_BTM
  */
@@ -2032,9 +2039,7 @@ typedef struct t_bt_event_param_acl_conn_ind
 } T_BT_EVENT_PARAM_ACL_CONN_IND;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter acl connection disconnected.
+ * \brief  BT manager event parameter ACL connection disconnected.
  *
  * \ingroup BT_BTM
  */
@@ -2045,9 +2050,7 @@ typedef struct t_bt_event_param_acl_conn_disconn
 } T_BT_EVENT_PARAM_ACL_CONN_DISCONN;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter acl connection fail.
+ * \brief  BT manager event parameter ACL connection fail.
  *
  * \ingroup BT_BTM
  */
@@ -2058,9 +2061,7 @@ typedef struct t_bt_event_param_acl_conn_fail
 } T_BT_EVENT_PARAM_ACL_CONN_FAIL;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter acl connection success.
+ * \brief  BT manager event parameter ACL connection success.
  *
  * \ingroup BT_BTM
  */
@@ -2071,9 +2072,7 @@ typedef struct t_bt_event_param_acl_conn_success
 } T_BT_EVENT_PARAM_ACL_CONN_SUCCESS;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter acl connection ready.
+ * \brief  BT manager event parameter ACL connection ready.
  *
  * \ingroup BT_BTM
  */
@@ -2083,9 +2082,7 @@ typedef struct t_bt_event_param_acl_conn_ready
 } T_BT_EVENT_PARAM_ACL_CONN_READY;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter acl authentication start.
+ * \brief  BT manager event parameter ACL authentication start.
  *
  * \ingroup BT_BTM
  */
@@ -2095,9 +2092,7 @@ typedef struct t_bt_event_param_acl_authen_start
 } T_BT_EVENT_PARAM_ACL_AUTHEN_START;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter acl authentication success.
+ * \brief  BT manager event parameter ACL authentication success.
  *
  * \ingroup BT_BTM
  */
@@ -2107,9 +2102,7 @@ typedef struct t_bt_event_param_acl_authen_success
 } T_BT_EVENT_PARAM_ACL_AUTHEN_SUCCESS;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter acl authentication fail.
+ * \brief  BT manager event parameter ACL authentication fail.
  *
  * \ingroup BT_BTM
  */
@@ -2120,9 +2113,7 @@ typedef struct t_bt_event_param_acl_authen_fail
 } T_BT_EVENT_PARAM_ACL_AUTHEN_FAIL;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter acl connection br sc start.
+ * \brief  BT manager event parameter ACL connection BR security start.
  *
  * \ingroup BT_BTM
  */
@@ -2132,9 +2123,7 @@ typedef struct t_bt_event_param_acl_conn_br_sc_start
 } T_BT_EVENT_PARAM_ACL_CONN_BR_SC_START;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter acl connection br sc completed.
+ * \brief  BT manager event parameter ACL connection BR security completed.
  *
  * \ingroup BT_BTM
  */
@@ -2145,9 +2134,7 @@ typedef struct t_bt_event_param_acl_conn_br_sc_cmpl
 } T_BT_EVENT_PARAM_ACL_CONN_BR_SC_CMPL;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter acl connection encrypted.
+ * \brief  BT manager event parameter ACL connection encrypted.
  *
  * \ingroup BT_BTM
  */
@@ -2157,9 +2144,7 @@ typedef struct t_bt_event_param_acl_conn_encrypted
 } T_BT_EVENT_PARAM_ACL_CONN_ENCRYPTED;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter acl connection not encrypted.
+ * \brief  BT manager event parameter ACL connection not encrypted.
  *
  * \ingroup BT_BTM
  */
@@ -2170,9 +2155,7 @@ typedef struct t_bt_event_param_acl_conn_not_encrypted
 } T_BT_EVENT_PARAM_ACL_CONN_NOT_ENCRYPTED;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter acl connection active.
+ * \brief  BT manager event parameter ACL connection active.
  *
  * \ingroup BT_BTM
  */
@@ -2182,9 +2165,7 @@ typedef struct t_bt_event_param_acl_conn_active
 } T_BT_EVENT_PARAM_ACL_CONN_ACTIVE;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter acl connection sniff.
+ * \brief  BT manager event parameter ACL connection sniff.
  *
  * \ingroup BT_BTM
  */
@@ -2195,9 +2176,7 @@ typedef struct t_bt_event_param_acl_conn_sniff
 } T_BT_EVENT_PARAM_ACL_CONN_SNIFF;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter acl role master.
+ * \brief  BT manager event parameter ACL role master.
  *
  * \ingroup BT_BTM
  */
@@ -2207,9 +2186,7 @@ typedef struct t_bt_event_param_acl_role_master
 } T_BT_EVENT_PARAM_ACL_ROLE_MASTER;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter acl role slave.
+ * \brief  BT manager event parameter ACL role slave.
  *
  * \ingroup BT_BTM
  */
@@ -2219,9 +2196,7 @@ typedef struct t_bt_event_param_acl_role_slave
 } T_BT_EVENT_PARAM_ACL_ROLE_SLAVE;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter acl role switch fail.
+ * \brief  BT manager event parameter ACL role switch fail.
  *
  * \ingroup BT_BTM
  */
@@ -2232,9 +2207,7 @@ typedef struct t_bt_event_param_acl_role_switch_fail
 } T_BT_EVENT_PARAM_ACL_ROLE_SWITCH_FAIL;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter acl sniffing connection completed.
+ * \brief  BT manager event parameter ACL sniffing connection completed.
  *
  * \ingroup BT_BTM
  */
@@ -2245,9 +2218,7 @@ typedef struct t_bt_event_param_acl_sniffing_conn_cmpl
 } T_BT_EVENT_PARAM_ACL_SNIFFING_CONN_CMPL;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter acl sniffing disconnection completed.
+ * \brief  BT manager event parameter ACL sniffing disconnection completed.
  *
  * \ingroup BT_BTM
  */
@@ -2258,8 +2229,6 @@ typedef struct t_bt_event_param_acl_sniffing_disconn_cmpl
 } T_BT_EVENT_PARAM_ACL_SNIFFING_DISCONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter SPP credit received.
  *
  * \ingroup BT_BTM
@@ -2272,8 +2241,6 @@ typedef struct t_bt_event_param_spp_credit_rcvd
 } T_BT_EVENT_PARAM_SPP_CREDIT_RCVD;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter SPP data transfer.
  *
  * \ingroup BT_BTM
@@ -2287,9 +2254,7 @@ typedef struct t_bt_event_param_spp_data_ind
 } T_BT_EVENT_PARAM_SPP_DATA_IND;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter SPP data response with ack flag set.
+ * \brief  BT manager event parameter SPP data response with ACK flag set.
  *
  * \ingroup BT_BTM
  */
@@ -2300,8 +2265,6 @@ typedef struct t_bt_event_param_spp_data_rsp
 } T_BT_EVENT_PARAM_SPP_DATA_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter SPP connection indication.
  *
  * \ingroup BT_BTM
@@ -2314,8 +2277,6 @@ typedef struct t_bt_event_param_sdpp_conn_ind
 } T_BT_EVENT_PARAM_SPP_CONN_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter SPP connection completed.
  *
  * \ingroup BT_BTM
@@ -2329,8 +2290,6 @@ typedef struct t_bt_event_param_spp_conn_cmpl
 } T_BT_EVENT_PARAM_SPP_CONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter SPP connection fail.
  *
  * \ingroup BT_BTM
@@ -2342,8 +2301,6 @@ typedef struct
 } T_BT_EVENT_PARAM_SPP_CONN_FAIL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter SPP disconnection completed.
  *
  * \ingroup BT_BTM
@@ -2356,8 +2313,6 @@ typedef struct t_bt_event_param_spp_disconn_cmpl
 } T_BT_EVENT_PARAM_SPP_DISCONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter SPP sniffing connection completed.
  *
  * \ingroup BT_BTM
@@ -2369,8 +2324,6 @@ typedef struct t_bt_event_param_spp_sniffing_conn_cmpl
 } T_BT_EVENT_PARAM_SPP_SNIFFING_CONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter SPP sniffing disconnection completed.
  *
  * \ingroup BT_BTM
@@ -2383,8 +2336,6 @@ typedef struct t_bt_event_param_spp_sniffing_disconn_cmpl
 } T_BT_EVENT_PARAM_SPP_SNIFFING_DISCONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter A2DP connection indication.
  *
  * \ingroup BT_BTM
@@ -2395,8 +2346,6 @@ typedef struct t_bt_event_param_a2dp_conn_ind
 } T_BT_EVENT_PARAM_A2DP_CONN_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter A2DP connection completed.
  *
  * \ingroup BT_BTM
@@ -2407,8 +2356,6 @@ typedef struct t_bt_event_param_a2dp_conn_cmpl
 } T_BT_EVENT_PARAM_A2DP_CONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter A2DP connection fail.
  *
  * \ingroup BT_BTM
@@ -2420,8 +2367,6 @@ typedef struct t_bt_event_param_a2dp_conn_fail
 } T_BT_EVENT_PARAM_A2DP_CONN_FAIL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter A2DP disconnection completed.
  *
  * \ingroup BT_BTM
@@ -2433,8 +2378,6 @@ typedef struct t_bt_event_param_a2dp_disconn_cmpl
 } T_BT_EVENT_PARAM_A2DP_DISCONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter A2DP config completed.
  *
  * \ingroup BT_BTM
@@ -2495,10 +2438,18 @@ typedef struct t_bt_event_param_a2dp_config_cmpl
     } codec_info;
 } T_BT_EVENT_PARAM_A2DP_CONFIG_CMPL;
 
+/**
+ * \brief  BT manager event parameter A2DP delay report indication.
+ *
+ * \ingroup BT_BTM
+ */
+typedef struct t_bt_event_param_a2dp_delay_report
+{
+    uint8_t  bd_addr[6];
+    uint16_t delay;
+} T_BT_EVENT_PARAM_A2DP_DELAY_REPORT;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter A2DP stream start indication.
  *
  * \ingroup BT_BTM
@@ -2530,14 +2481,36 @@ typedef struct t_bt_event_param_a2dp_stream_start_ind
         } aac;
         struct
         {
+            uint8_t sampling_frequency;
+            uint8_t channel_mode;
+        } ldac;
+        struct
+        {
+            uint8_t  sampling_frequency;
+            uint8_t  channel_number;
+            uint8_t  frame_duration;
+            uint16_t frame_length;
+        } lc3;
+        struct
+        {
+            uint8_t  sampling_frequency;
+            uint8_t  min_bitrate;
+            uint8_t  max_bitrate;
+            uint8_t  bit_depth;
+            uint8_t  version_number;
+            bool     low_latency;
+            bool     meta;
+            bool     jas;
+            bool     ar;
+        } lhdc;
+        struct
+        {
             uint8_t  info[12];
         } vendor;
     } codec_info;
 } T_BT_EVENT_PARAM_A2DP_STREAM_START_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter A2DP stream start response.
  *
  * \ingroup BT_BTM
@@ -2548,8 +2521,6 @@ typedef struct t_bt_event_param_a2dp_stream_start_rsp
 } T_BT_EVENT_PARAM_A2DP_STREAM_START_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter A2DP stream data indication.
  *
  * \ingroup BT_BTM
@@ -2566,9 +2537,7 @@ typedef struct t_bt_event_param_a2dp_stream_data_ind
 } T_BT_EVENT_PARAM_A2DP_STREAM_DATA_IND;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter A2DP stream data response with ack flag set.
+ * \brief  BT manager event parameter A2DP stream data response with ACK flag set.
  *
  * \ingroup BT_BTM
  */
@@ -2578,8 +2547,6 @@ typedef struct t_bt_event_param_a2dp_stream_data_rsp
 } T_BT_EVENT_PARAM_A2DP_STREAM_DATA_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter A2DP stream stop.
  *
  * \ingroup BT_BTM
@@ -2590,8 +2557,6 @@ typedef struct t_bt_event_param_a2dp_stream_stop
 } T_BT_EVENT_PARAM_A2DP_STREAM_STOP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter A2DP stream open.
  *
  * \ingroup BT_BTM
@@ -2603,8 +2568,6 @@ typedef struct t_bt_event_param_a2dp_stream_open
 } T_BT_EVENT_PARAM_A2DP_STREAM_OPEN;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter A2DP stream open fail.
  *
  * \ingroup BT_BTM
@@ -2616,8 +2579,6 @@ typedef struct t_bt_event_param_a2dp_stream_open_fail
 } T_BT_EVENT_PARAM_A2DP_STREAM_OPEN_FAIL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter A2DP stream close.
  *
  * \ingroup BT_BTM
@@ -2629,8 +2590,6 @@ typedef struct t_bt_event_param_a2dp_stream_close
 } T_BT_EVENT_PARAM_A2DP_STREAM_CLOSE;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter A2DP sniffing connection completed.
  *
  * \ingroup BT_BTM
@@ -2662,14 +2621,36 @@ typedef struct t_bt_event_param_a2dp_sniffing_conn_cmpl
         } aac;
         struct
         {
+            uint8_t sampling_frequency;
+            uint8_t channel_mode;
+        } ldac;
+        struct
+        {
+            uint8_t  sampling_frequency;
+            uint8_t  channel_number;
+            uint8_t  frame_duration;
+            uint16_t frame_length;
+        } lc3;
+        struct
+        {
+            uint8_t  sampling_frequency;
+            uint8_t  min_bitrate;
+            uint8_t  max_bitrate;
+            uint8_t  bit_depth;
+            uint8_t  version_number;
+            bool     low_latency;
+            bool     meta;
+            bool     jas;
+            bool     ar;
+        } lhdc;
+        struct
+        {
             uint8_t  info[12];
         } vendor;
     } codec_info;
 } T_BT_EVENT_PARAM_A2DP_SNIFFING_CONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter A2DP sniffing start indication.
  *
  * \ingroup BT_BTM
@@ -2701,14 +2682,36 @@ typedef struct t_bt_event_param_a2dp_sniffing_start_ind
         } aac;
         struct
         {
+            uint8_t sampling_frequency;
+            uint8_t channel_mode;
+        } ldac;
+        struct
+        {
+            uint8_t  sampling_frequency;
+            uint8_t  channel_number;
+            uint8_t  frame_duration;
+            uint16_t frame_length;
+        } lc3;
+        struct
+        {
+            uint8_t  sampling_frequency;
+            uint8_t  min_bitrate;
+            uint8_t  max_bitrate;
+            uint8_t  bit_depth;
+            uint8_t  version_number;
+            bool     low_latency;
+            bool     meta;
+            bool     jas;
+            bool     ar;
+        } lhdc;
+        struct
+        {
             uint8_t  info[12];
         } vendor;
     } codec_info;
 } T_BT_EVENT_PARAM_A2DP_SNIFFING_START_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter A2DP sniffing started.
  *
  * \ingroup BT_BTM
@@ -2717,37 +2720,9 @@ typedef struct t_bt_event_param_a2dp_sniffing_started
 {
     uint8_t  bd_addr[6];
     uint16_t cause;
-    uint8_t  codec_type;
-    union
-    {
-        struct
-        {
-            uint8_t sampling_frequency;
-            uint8_t channel_mode;
-            uint8_t block_length;
-            uint8_t subbands;
-            uint8_t allocation_method;
-            uint8_t min_bitpool;
-            uint8_t max_bitpool;
-        } sbc;
-        struct
-        {
-            uint8_t  object_type;
-            uint16_t sampling_frequency;
-            uint8_t  channel_number;
-            bool     vbr_supported;
-            uint32_t bit_rate;
-        } aac;
-        struct
-        {
-            uint8_t  info[12];
-        } vendor;
-    } codec_info;
 } T_BT_EVENT_PARAM_A2DP_SNIFFING_STARTED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter A2DP sniffing config completed.
  *
  * \ingroup BT_BTM
@@ -2759,8 +2734,6 @@ typedef struct t_bt_event_param_a2dp_sniffing_config_cmpl
 } T_BT_EVENT_PARAM_A2DP_SNIFFING_CONFIG_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter A2DP sniffing stopped.
  *
  * \ingroup BT_BTM
@@ -2772,8 +2745,6 @@ typedef struct t_bt_event_param_a2dp_sniffing_stopped
 } T_BT_EVENT_PARAM_A2DP_SNIFFING_STOPPED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter A2DP sniffing disconnection completed.
  *
  * \ingroup BT_BTM
@@ -2785,8 +2756,19 @@ typedef struct t_bt_event_param_a2dp_sniffing_disconn_cmpl
 } T_BT_EVENT_PARAM_A2DP_SNIFFING_DISCONN_CMPL;
 
 /**
- * btm.h
+ * \brief  BT manager event parameter AVRCP get capabilities response.
  *
+ * \ingroup BT_BTM
+ */
+typedef struct t_bt_event_param_avrcp_get_capabilities_rsp
+{
+    uint8_t  bd_addr[6];
+    uint8_t  state;
+    uint8_t  capability_count;
+    uint8_t *capabilities;
+} T_BT_EVENT_PARAM_AVRCP_GET_CAPABILITIES_RSP;
+
+/**
  * \brief  BT manager event parameter AVRCP element attribute.
  *
  * \ingroup BT_BTM
@@ -2800,8 +2782,6 @@ typedef struct t_bt_event_param_avrcp_elem_attr
 } T_BT_EVENT_PARAM_AVRCP_ELEM_ATTR;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP play status response.
  *
  * \ingroup BT_BTM
@@ -2816,8 +2796,6 @@ typedef struct t_bt_event_param_avrcp_get_play_status_rsp
 } T_BT_EVENT_PARAM_AVRCP_GET_PLAY_STATUS_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP set absolute volume indication.
  *
  * \ingroup BT_BTM
@@ -2829,8 +2807,6 @@ typedef struct t_bt_event_param_avrcp_absolute_volume_set
 } T_BT_EVENT_PARAM_AVRCP_ABSOLUTE_VOLUME_SET;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP set absolute volume response.
  *
  * \ingroup BT_BTM
@@ -2843,8 +2819,6 @@ typedef struct t_bt_event_param_avrcp_absolute_volume_set_rsp
 } T_BT_EVENT_PARAM_AVRCP_ABSOLUTE_VOLUME_SET_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP volume up.
  *
  * \ingroup BT_BTM
@@ -2855,8 +2829,6 @@ typedef struct t_bt_event_param_avrcp_volume_up
 } T_BT_EVENT_PARAM_AVRCP_VOLUME_UP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP volume down.
  *
  * \ingroup BT_BTM
@@ -2867,8 +2839,6 @@ typedef struct t_bt_event_param_avrcp_volume_down
 } T_BT_EVENT_PARAM_AVRCP_VOLUME_DOWN;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP play.
  *
  * \ingroup BT_BTM
@@ -2879,8 +2849,6 @@ typedef struct t_bt_event_param_avrcp_play
 } T_BT_EVENT_PARAM_AVRCP_PLAY;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP stop.
  *
  * \ingroup BT_BTM
@@ -2891,8 +2859,6 @@ typedef struct t_bt_event_param_avrcp_stop
 } T_BT_EVENT_PARAM_AVRCP_STOP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP pause.
  *
  * \ingroup BT_BTM
@@ -2903,8 +2869,6 @@ typedef struct t_bt_event_param_avrcp_pause
 } T_BT_EVENT_PARAM_AVRCP_PAUSE;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP rewind start.
  *
  * \ingroup BT_BTM
@@ -2915,8 +2879,6 @@ typedef struct t_bt_event_param_avrcp_rewind_start
 } T_BT_EVENT_PARAM_AVRCP_REWIND_START;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP rewind stop.
  *
  * \ingroup BT_BTM
@@ -2927,8 +2889,6 @@ typedef struct t_bt_event_param_avrcp_rewind_stop
 } T_BT_EVENT_PARAM_AVRCP_REWIND_STOP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP fast forward start.
  *
  * \ingroup BT_BTM
@@ -2939,8 +2899,6 @@ typedef struct t_bt_event_param_avrcp_fast_forward_start
 } T_BT_EVENT_PARAM_AVRCP_FAST_FORWARD_START;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP fast forward stop.
  *
  * \ingroup BT_BTM
@@ -2951,8 +2909,6 @@ typedef struct t_bt_event_param_avrcp_fast_forward_stop
 } T_BT_EVENT_PARAM_AVRCP_FAST_FORWARD_STOP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP forward.
  *
  * \ingroup BT_BTM
@@ -2963,8 +2919,6 @@ typedef struct t_bt_event_param_avrcp_forward
 } T_BT_EVENT_PARAM_AVRCP_FORWARD;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP backward.
  *
  * \ingroup BT_BTM
@@ -2975,8 +2929,6 @@ typedef struct t_bt_event_param_avrcp_backward
 } T_BT_EVENT_PARAM_AVRCP_BACKWARD;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP set addressed player indication.
  *
  * \ingroup BT_BTM
@@ -2988,8 +2940,6 @@ typedef struct t_bt_event_param_avrcp_addressed_player_set
 } T_BT_EVENT_PARAM_AVRCP_ADDRESSED_PLAYER_SET;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP register addressed player changed.
  *
  * \ingroup BT_BTM
@@ -3000,8 +2950,6 @@ typedef struct t_bt_event_param_avrcp_reg_addressed_player_changed
 } T_BT_EVENT_PARAM_AVRCP_REG_ADDRESSED_PLAYER_CHANGED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP get folder items request.
  *
  * \ingroup BT_BTM
@@ -3017,8 +2965,6 @@ typedef struct t_bt_event_param_avrcp_folder_items_get
 } T_BT_EVENT_PARAM_AVRCP_FOLDER_ITEMS_GET;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP get folder items request.
  *
  * \ingroup BT_BTM
@@ -3030,8 +2976,6 @@ typedef struct t_bt_event_param_avrcp_total_num_of_items_get
 } T_BT_EVENT_PARAM_AVRCP_TOTAL_NUM_OF_ITEMS_GET;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP register volume changed.
  *
  * \ingroup BT_BTM
@@ -3042,8 +2986,6 @@ typedef struct t_bt_event_param_avrcp_reg_volume_changed
 } T_BT_EVENT_PARAM_AVRCP_REG_VOLUME_CHANGED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP register track changed.
  *
  * \ingroup BT_BTM
@@ -3054,8 +2996,6 @@ typedef struct t_bt_event_param_avrcp_reg_track_changed
 } T_BT_EVENT_PARAM_AVRCP_REG_TRACK_CHANGED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP register play status changed.
  *
  * \ingroup BT_BTM
@@ -3066,8 +3006,6 @@ typedef struct t_bt_event_param_avrcp_reg_play_status_changed
 } T_BT_EVENT_PARAM_AVRCP_REG_PLAY_STATUS_CHANGED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP remote CT device volume changed.
  *
  * \ingroup BT_BTM
@@ -3079,8 +3017,6 @@ typedef struct t_bt_event_param_avrcp_volume_changed
 } T_BT_EVENT_PARAM_AVRCP_VOLUME_CHANGED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP connection indication.
  *
  * \ingroup BT_BTM
@@ -3091,8 +3027,6 @@ typedef struct t_bt_event_param_avrcp_conn_ind
 } T_BT_EVENT_PARAM_AVRCP_CONN_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP connection completed.
  *
  * \ingroup BT_BTM
@@ -3103,8 +3037,6 @@ typedef struct t_bt_event_param_avrcp_conn_cmpl
 } T_BT_EVENT_PARAM_AVRCP_CONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP connection fail.
  *
  * \ingroup BT_BTM
@@ -3116,8 +3048,6 @@ typedef struct
 } T_BT_EVENT_PARAM_AVRCP_CONN_FAIL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP disconnection completed.
  *
  * \ingroup BT_BTM
@@ -3129,8 +3059,6 @@ typedef struct t_bt_event_param_avrcp_disconn_cmpl
 } T_BT_EVENT_PARAM_AVRCP_DISCONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP track changed.
  *
  * \ingroup BT_BTM
@@ -3142,8 +3070,59 @@ typedef struct t_bt_event_param_avrcp_track_changed
 } T_BT_EVENT_PARAM_AVRCP_TRACK_CHANGED;
 
 /**
- * btm.h
+ * \brief  BT manager event parameter AVRCP track reached end.
  *
+ * \ingroup BT_BTM
+ */
+typedef struct t_bt_event_param_avrcp_track_reached_end
+{
+    uint8_t  bd_addr[6];
+} T_BT_EVENT_PARAM_AVRCP_TRACK_REACHED_END;
+
+/**
+ * \brief  BT manager event parameter AVRCP track reached start.
+ *
+ * \ingroup BT_BTM
+ */
+typedef struct t_bt_event_param_avrcp_track_reached_start
+{
+    uint8_t  bd_addr[6];
+} T_BT_EVENT_PARAM_AVRCP_TRACK_REACHED_START;
+
+/**
+ * \brief  BT manager event parameter AVRCP playback position changed.
+ *
+ * \ingroup BT_BTM
+ */
+typedef struct t_bt_event_param_avrcp_playback_pos_changed
+{
+    uint8_t  bd_addr[6];
+    uint16_t playback_pos;
+} T_BT_EVENT_PARAM_AVRCP_PLAYBACK_POS_CHANGED;
+
+/**
+ * \brief  BT manager event parameter AVRCP battery status changed.
+ *
+ * \ingroup BT_BTM
+ */
+typedef struct t_bt_event_param_avrcp_batt_status_changed
+{
+    uint8_t  bd_addr[6];
+    uint8_t  batt_status;
+} T_BT_EVENT_PARAM_AVRCP_BATT_STATUS_CHANGED;
+
+/**
+ * \brief  BT manager event parameter AVRCP system status changed.
+ *
+ * \ingroup BT_BTM
+ */
+typedef struct t_bt_event_param_avrcp_system_status_changed
+{
+    uint8_t  bd_addr[6];
+    uint8_t  system_status;
+} T_BT_EVENT_PARAM_AVRCP_SYSTEM_STATUS_CHANGED;
+
+/**
  * \brief  BT manager event parameter AVRCP play status changed.
  *
  * \ingroup BT_BTM
@@ -3155,8 +3134,6 @@ typedef struct t_bt_event_param_avrcp_play_status_changed
 } T_BT_EVENT_PARAM_AVRCP_PLAY_STATUS_CHANGED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP get element attributes request.
  *
  * \ingroup BT_BTM
@@ -3169,8 +3146,6 @@ typedef struct t_bt_event_param_avrcp_elem_attrs_get
 } T_BT_EVENT_PARAM_AVRCP_ELEM_ATTRS_GET;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP get play status request.
  *
  * \ingroup BT_BTM
@@ -3181,8 +3156,6 @@ typedef struct t_bt_event_param_avrcp_play_status_get
 } T_BT_EVENT_PARAM_AVRCP_PLAY_STATUS_GET;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP passthrough play status response.
  *
  * \ingroup BT_BTM
@@ -3194,8 +3167,6 @@ typedef struct t_bt_event_param_avrcp_play_status_rsp
 } T_BT_EVENT_PARAM_AVRCP_PLAY_STATUS_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP power.
  *
  * \ingroup BT_BTM
@@ -3206,8 +3177,6 @@ typedef struct t_bt_event_param_avrcp_power
 } T_BT_EVENT_PARAM_AVRCP_POWER;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP mute.
  *
  * \ingroup BT_BTM
@@ -3218,8 +3187,6 @@ typedef struct t_bt_event_param_avrcp_mute
 } T_BT_EVENT_PARAM_AVRCP_MUTE;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP sniffing connection completed.
  *
  * \ingroup BT_BTM
@@ -3230,8 +3197,6 @@ typedef struct t_bt_event_param_avrcp_sniffing_conn_cmpl
 } T_BT_EVENT_PARAM_AVRCP_SNIFFING_CONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP sniffing disconnection completed.
  *
  * \ingroup BT_BTM
@@ -3243,8 +3208,6 @@ typedef struct t_bt_event_param_avrcp_sniffing_disconn_cmpl
 } T_BT_EVENT_PARAM_AVRCP_SNIFFING_DISCONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP player app setting changed.
  *
  * \ingroup BT_BTM
@@ -3257,8 +3220,6 @@ typedef struct t_bt_event_param_avrcp_app_setting_changed
 } T_BT_EVENT_PARAM_AVRCP_APP_SETTING_CHANGED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP playing content changed.
  *
  * \ingroup BT_BTM
@@ -3269,8 +3230,6 @@ typedef struct t_bt_event_param_avrcp_playing_content_changed
 } T_BT_EVENT_PARAM_AVRCP_PLAYING_CONTENT_CHANGED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP available player changed.
  *
  * \ingroup BT_BTM
@@ -3281,8 +3240,6 @@ typedef struct t_bt_event_param_avrcp_available_player_changed
 } T_BT_EVENT_PARAM_AVRCP_AVAILABLE_PLAYER_CHANGED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP addressed player changed.
  *
  * \ingroup BT_BTM
@@ -3295,8 +3252,6 @@ typedef struct t_bt_event_param_avrcp_addressed_player_changed
 } T_BT_EVENT_PARAM_AVRCP_ADDRESSED_PLAYER_CHANGED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP UID changed.
  *
  * \ingroup BT_BTM
@@ -3308,8 +3263,6 @@ typedef struct t_bt_event_param_avrcp_uid_changed
 } T_BT_EVENT_PARAM_AVRCP_UID_CHANGED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP player app setting attributes list response.
  *
  * \ingroup BT_BTM
@@ -3323,8 +3276,6 @@ typedef struct t_bt_event_param_avrcp_app_setting_attrs_list_rsp
 } T_BT_EVENT_PARAM_AVRCP_APP_SETTING_ATTRS_LIST_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP player app setting values list response.
  *
  * \ingroup BT_BTM
@@ -3338,8 +3289,6 @@ typedef struct t_bt_event_param_avrcp_app_setting_values_list_rsp
 } T_BT_EVENT_PARAM_AVRCP_APP_SETTING_VALUES_LIST_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP player app current setting get response.
  *
  * \ingroup BT_BTM
@@ -3353,8 +3302,6 @@ typedef struct t_bt_event_param_avrcp_app_setting_get_rsp
 } T_BT_EVENT_PARAM_AVRCP_APP_SETTING_GET_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP addressed player set response.
  *
  * \ingroup BT_BTM
@@ -3366,8 +3313,6 @@ typedef struct t_bt_event_param_avrcp_addressed_player_set_rsp
 } T_BT_EVENT_PARAM_AVRCP_ADDRESSED_PLAYER_SET_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP play item play response.
  *
  * \ingroup BT_BTM
@@ -3379,8 +3324,6 @@ typedef struct t_bt_event_param_avrcp_item_play_rsp
 } T_BT_EVENT_PARAM_AVRCP_ITEM_PLAY_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP folder items get response.
  *
  * \ingroup BT_BTM
@@ -3401,8 +3344,6 @@ typedef struct t_bt_event_param_avrcp_folder_items_get_rsp
 } T_BT_EVENT_PARAM_AVRCP_FOLDER_ITEMS_GET_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP item attribute get response.
  *
  * \ingroup BT_BTM
@@ -3416,8 +3357,6 @@ typedef struct t_bt_event_param_avrcp_item_attr_get_rsp
 } T_BT_EVENT_PARAM_AVRCP_ITEM_ATTR_GET_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP search response.
  *
  * \ingroup BT_BTM
@@ -3431,8 +3370,6 @@ typedef struct t_bt_event_param_avrcp_search_rsp
 } T_BT_EVENT_PARAM_AVRCP_SEARCH_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP browsed player set response.
  *
  * \ingroup BT_BTM
@@ -3449,8 +3386,6 @@ typedef struct t_bt_event_param_avrcp_browsed_player_set_rsp
 } T_BT_EVENT_PARAM_AVRCP_BROWSED_PLAYER_SET_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP path change response.
  *
  * \ingroup BT_BTM
@@ -3463,8 +3398,6 @@ typedef struct t_bt_event_param_avrcp_path_change_rsp
 } T_BT_EVENT_PARAM_AVRCP_PATH_CHANGE_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP browsing connection indication.
  *
  * \ingroup BT_BTM
@@ -3475,8 +3408,6 @@ typedef struct t_bt_event_param_avrcp_browsing_conn_ind
 } T_BT_EVENT_PARAM_AVRCP_BROWSING_CONN_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP browsing connection completed.
  *
  * \ingroup BT_BTM
@@ -3487,8 +3418,6 @@ typedef struct t_bt_event_param_avrcp_browsing_conn_cmpl
 } T_BT_EVENT_PARAM_AVRCP_BROWSING_CONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP browsing disconnection completed.
  *
  * \ingroup BT_BTM
@@ -3500,8 +3429,6 @@ typedef struct t_bt_event_param_avrcp_browsing_disconn_cmpl
 } T_BT_EVENT_PARAM_AVRCP_BROWSING_DISCONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP cover art connection completed.
  *
  * \ingroup BT_BTM
@@ -3512,8 +3439,6 @@ typedef struct t_bt_event_param_avrcp_cover_art_conn_cmpl
 } T_BT_EVENT_PARAM_AVRCP_COVER_ART_CONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP cover art disconnection completed.
  *
  * \ingroup BT_BTM
@@ -3525,8 +3450,6 @@ typedef struct t_bt_event_param_avrcp_cover_art_disconn_cmpl
 } T_BT_EVENT_PARAM_AVRCP_COVER_ART_DISCONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP cover art data indication.
  *
  * \ingroup BT_BTM
@@ -3540,8 +3463,6 @@ typedef struct t_bt_event_param_avrcp_cover_art_data_ind
 } T_BT_EVENT_PARAM_AVRCP_COVER_ART_DATA_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP vendor command indication.
  *
  * \ingroup BT_BTM
@@ -3556,8 +3477,6 @@ typedef struct t_bt_event_param_avrcp_vendor_cmd_ind
 } T_BT_EVENT_PARAM_AVRCP_VENDOR_CMD_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AVRCP vendor response.
  *
  * \ingroup BT_BTM
@@ -3572,8 +3491,6 @@ typedef struct t_bt_event_param_avrcp_vendor_rsp
 } T_BT_EVENT_PARAM_AVRCP_VENDOR_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter iAP authentication completed.
  *
  * \ingroup BT_BTM
@@ -3585,8 +3502,6 @@ typedef struct t_bt_event_param_iap_authen_cmpl
 } T_BT_EVENT_PARAM_IAP_AUTHEN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter iAP data session open.
  *
  * \ingroup BT_BTM
@@ -3599,8 +3514,6 @@ typedef struct t_bt_event_param_iap_data_session_open
 } T_BT_EVENT_PARAM_IAP_DATA_SESSION_OPEN;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter iAP data session close.
  *
  * \ingroup BT_BTM
@@ -3613,8 +3526,6 @@ typedef struct t_bt_event_param_iap_data_session_close
 } T_BT_EVENT_PARAM_IAP_DATA_SESSION_CLOSE;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter iAP data session status.
  *
  * \ingroup BT_BTM
@@ -3627,8 +3538,6 @@ typedef struct
 } T_BT_EVENT_PARAM_IAP_DATA_SESSION_STATUS;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter iAP send data finish.
  *
  * \ingroup BT_BTM
@@ -3641,8 +3550,6 @@ typedef struct t_bt_event_param_iap_data_sent
 } T_BT_EVENT_PARAM_IAP_DATA_SENT;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter iAP connection indication.
  *
  * \ingroup BT_BTM
@@ -3654,8 +3561,6 @@ typedef struct t_bt_event_param_iap_conn_ind
 } T_BT_EVENT_PARAM_IAP_CONN_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter iAP connection completed.
  *
  * \ingroup BT_BTM
@@ -3667,8 +3572,6 @@ typedef struct t_bt_event_param_iap_conn_cmpl
 } T_BT_EVENT_PARAM_IAP_CONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter iAP connection fail.
  *
  * \ingroup BT_BTM
@@ -3680,8 +3583,6 @@ typedef struct t_bt_event_param_iap_conn_fail
 } T_BT_EVENT_PARAM_IAP_CONN_FAIL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter iAP disconnection completed.
  *
  * \ingroup BT_BTM
@@ -3693,8 +3594,6 @@ typedef struct t_bt_event_param_iap_disconn_cmpl
 } T_BT_EVENT_PARAM_IAP_DISCONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter iAP data indication.
  *
  * \ingroup BT_BTM
@@ -3709,8 +3608,6 @@ typedef struct t_bt_event_param_iap_data_ind
 } T_BT_EVENT_PARAM_IAP_DATA_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter iAP identify information request.
  *
  * \ingroup BT_BTM
@@ -3721,8 +3618,6 @@ typedef struct t_bt_event_param_iap_identity_info_req
 } T_BT_EVENT_PARAM_IAP_IDENTITY_INFO_REQ;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter iAP reset.
  *
  * \ingroup BT_BTM
@@ -3733,8 +3628,6 @@ typedef struct t_bt_event_param_iap_reset
 } T_BT_EVENT_PARAM_IAP_RESET;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter iAP control session message indication.
  *
  * \ingroup BT_BTM
@@ -3748,8 +3641,6 @@ typedef struct t_bt_event_param_iap_ctrl_msg_ind
 } T_BT_EVENT_PARAM_IAP_CTRL_MSG_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter iAP sniffing connection completed.
  *
  * \ingroup BT_BTM
@@ -3760,8 +3651,6 @@ typedef struct t_bt_event_param_iap_sniffing_conn_cmpl
 } T_BT_EVENT_PARAM_IAP_SNIFFING_CONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter iAP sniffing disconnection completed.
  *
  * \ingroup BT_BTM
@@ -3773,8 +3662,6 @@ typedef struct t_bt_event_param_iap_sniffing_disconn_cmpl
 } T_BT_EVENT_PARAM_IAP_SNIFFING_DISCONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP speaker volume changed.
  *
  * \ingroup BT_BTM
@@ -3786,8 +3673,6 @@ typedef struct t_bt_event_param_hfp_spk_volume_changed
 } T_BT_EVENT_PARAM_HFP_SPK_VOLUME_CHANGED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP microphone volume changed.
  *
  * \ingroup BT_BTM
@@ -3799,8 +3684,6 @@ typedef struct t_bt_event_param_hfp_mic_volume_changed
 } T_BT_EVENT_PARAM_HFP_MIC_VOLUME_CHANGED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP call status.
  *
  * \ingroup BT_BTM
@@ -3813,8 +3696,6 @@ typedef struct t_bt_event_param_hfp_call_status
 } T_BT_EVENT_PARAM_HFP_CALL_STATUS;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP service status.
  *
  * \ingroup BT_BTM
@@ -3826,8 +3707,6 @@ typedef struct t_bt_event_param_hfp_service_status
 } T_BT_EVENT_PARAM_HFP_SERVICE_STATUS;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP caller number.
  *
  * \ingroup BT_BTM
@@ -3840,8 +3719,6 @@ typedef struct t_bt_event_param_hfp_caller_id_ind
 } T_BT_EVENT_PARAM_HFP_CALLER_ID_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP network operator.
  *
  * \ingroup BT_BTM
@@ -3855,8 +3732,6 @@ typedef struct t_bt_event_param_hfp_network_operator_ind
 } T_BT_EVENT_PARAM_HFP_NETWORK_OPERATOR_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP subscriber number.
  *
  * \ingroup BT_BTM
@@ -3870,8 +3745,6 @@ typedef struct t_bt_event_param_hfp_subscriber_number_ind
 } T_BT_EVENT_PARAM_HFP_SUBSCRIBER_NUMBER_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP current calls.
  *
  * \ingroup BT_BTM
@@ -3889,8 +3762,6 @@ typedef struct t_bt_event_param_hfp_current_call_list_ind
 } T_BT_EVENT_PARAM_HFP_CURRENT_CALL_LIST_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP call waiting.
  *
  * \ingroup BT_BTM
@@ -3903,8 +3774,6 @@ typedef struct t_bt_event_param_hfp_call_waiting_ind
 } T_BT_EVENT_PARAM_HFP_CALL_WAITING_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP signal indicator.
  *
  * \ingroup BT_BTM
@@ -3916,8 +3785,6 @@ typedef struct t_bt_event_param_hfp_signal_ind
 } T_BT_EVENT_PARAM_HFP_SIGNAL_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP roam indicator.
  *
  * \ingroup BT_BTM
@@ -3929,8 +3796,6 @@ typedef struct t_bt_event_param_hfp_roam_ind
 } T_BT_EVENT_PARAM_HFP_ROAM_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP battery indicator.
  *
  * \ingroup BT_BTM
@@ -3942,8 +3807,6 @@ typedef struct t_bt_event_param_hfp_battery_ind
 } T_BT_EVENT_PARAM_HFP_BATTERY_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG supported features.
  *
  * \ingroup BT_BTM
@@ -3955,22 +3818,18 @@ typedef struct t_bt_event_param_hfp_supported_features_ind
 } T_BT_EVENT_PARAM_HFP_SUPPORTED_FEATURES_IND;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter HFP unknown command.
+ * \brief  BT manager event parameter HFP vendor command.
  *
  * \ingroup BT_BTM
  */
-typedef struct t_bt_event_param_hfp_unknown_cmd
+typedef struct t_bt_event_param_hfp_vendor_cmd
 {
     uint8_t   bd_addr[6];
     uint8_t  *cmd;
     uint16_t  len;
-} T_BT_EVENT_PARAM_HFP_UNKNOWN_CMD;
+} T_BT_EVENT_PARAM_HFP_VENDOR_CMD;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP ring alert.
  *
  * \ingroup BT_BTM
@@ -3982,8 +3841,6 @@ typedef struct t_bt_event_param_hfp_ring_alert
 } T_BT_EVENT_PARAM_HFP_RING_ALERT;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP vendor AT command result.
  *
  * \ingroup BT_BTM
@@ -3995,8 +3852,6 @@ typedef struct t_bt_event_param_hfp_vendor_cmd_result
 } T_BT_EVENT_PARAM_HFP_VENDOR_CMD_RESULT;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP voice recognition activation.
  *
  * \ingroup BT_BTM
@@ -4008,8 +3863,6 @@ typedef struct t_bt_event_param_hfp_voice_recognition_activation
 } T_BT_EVENT_PARAM_HFP_VOICE_RECOGNITION_ACTIVATION;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP voice recognition deactivation.
  *
  * \ingroup BT_BTM
@@ -4021,8 +3874,6 @@ typedef struct t_bt_event_param_hfp_voice_recognition_deactivation
 } T_BT_EVENT_PARAM_HFP_VOICE_RECOGNITION_DEACTIVATION;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP dial with number result.
  *
  * \ingroup BT_BTM
@@ -4034,8 +3885,6 @@ typedef struct t_bt_event_param_hfp_dial_with_number_result
 } T_BT_EVENT_PARAM_HFP_DIAL_WITH_NUMBER_RESULT;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP connection indication.
  *
  * \ingroup BT_BTM
@@ -4046,8 +3895,6 @@ typedef struct t_bt_event_param_hfp_conn_ind
 } T_BT_EVENT_PARAM_HFP_CONN_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP connection completed.
  *
  * \ingroup BT_BTM
@@ -4059,8 +3906,6 @@ typedef struct t_bt_event_param_hfp_conn_cmpl
 } T_BT_EVENT_PARAM_HFP_CONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP connection fail.
  *
  * \ingroup BT_BTM
@@ -4073,8 +3918,6 @@ typedef struct
 } T_BT_EVENT_PARAM_HFP_CONN_FAIL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP disconnection completed.
  *
  * \ingroup BT_BTM
@@ -4087,8 +3930,6 @@ typedef struct t_bt_event_param_hfp_disconn_cmpl
 } T_BT_EVENT_PARAM_HFP_DISCONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter codec type that selected.
  *
  * \ingroup BT_BTM
@@ -4100,8 +3941,6 @@ typedef struct t_bt_event_param_hfp_codec_type_selected
 } T_BT_EVENT_PARAM_HFP_CODEC_TYPE_SELECTED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP sniffing connection completed.
  *
  * \ingroup BT_BTM
@@ -4113,8 +3952,6 @@ typedef struct t_bt_event_param_hfp_sniffing_conn_cmpl
 } T_BT_EVENT_PARAM_HFP_SNIFFING_CONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP sniffing disconnection completed.
  *
  * \ingroup BT_BTM
@@ -4127,8 +3964,6 @@ typedef struct t_bt_event_param_hfp_sniffing_disconn_cmpl
 } T_BT_EVENT_PARAM_HFP_SNIFFING_DISCONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG connection indication.
  *
  * \ingroup BT_BTM
@@ -4139,8 +3974,6 @@ typedef struct t_bt_event_param_hfp_ag_conn_ind
 } T_BT_EVENT_PARAM_HFP_AG_CONN_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG connection completed.
  *
  * \ingroup BT_BTM
@@ -4152,8 +3985,6 @@ typedef struct t_bt_event_param_hfp_ag_conn_cmpl
 } T_BT_EVENT_PARAM_HFP_AG_CONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG disconnection completed.
  *
  * \ingroup BT_BTM
@@ -4166,8 +3997,6 @@ typedef struct t_bt_event_param_hfp_ag_disconn_cmpl
 } T_BT_EVENT_PARAM_HFP_AG_DISCONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG microphone volume changed.
  *
  * \ingroup BT_BTM
@@ -4179,8 +4008,6 @@ typedef struct t_bt_event_param_hfp_ag_mic_volume_changed
 } T_BT_EVENT_PARAM_HFP_AG_MIC_VOLUME_CHANGED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG speaker volume changed.
  *
  * \ingroup BT_BTM
@@ -4192,8 +4019,6 @@ typedef struct t_bt_event_param_hfp_ag_spk_volume_changed
 } T_BT_EVENT_PARAM_HFP_AG_SPK_VOLUME_CHANGED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG call status.
  *
  * \ingroup BT_BTM
@@ -4206,8 +4031,6 @@ typedef struct t_bt_event_param_hfp_ag_call_status_changed
 } T_BT_EVENT_PARAM_HFP_AG_CALL_STATUS_CHANGED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter AG call indicators status request.
  *
  * \ingroup BT_BTM
@@ -4218,8 +4041,6 @@ typedef struct t_bt_event_param_hfp_ag_indicators_status_req
 } T_BT_EVENT_PARAM_HFP_AG_INDICATORS_STATUS_REQ;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HF battery level.
  *
  * \ingroup BT_BTM
@@ -4231,8 +4052,6 @@ typedef struct t_bt_event_param_hfp_ag_battery_level
 } T_BT_EVENT_PARAM_HFP_AG_BATTERY_LEVEL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter codec type that HF selected.
  *
  * \ingroup BT_BTM
@@ -4244,8 +4063,6 @@ typedef struct t_bt_event_param_hfp_ag_codec_type_selected
 } T_BT_EVENT_PARAM_HFP_AG_CODEC_TYPE_SELECTED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP HF supported features.
  *
  * \ingroup BT_BTM
@@ -4257,8 +4074,6 @@ typedef struct t_bt_event_param_hfp_ag_supported_features
 } T_BT_EVENT_PARAM_HFP_AG_SUPPORTED_FEATURES;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG in-band ring tone indication.
  *
  * \ingroup BT_BTM
@@ -4269,8 +4084,6 @@ typedef struct t_bt_event_param_hfp_ag_inband_ringing_req
 } T_BT_EVENT_PARAM_HFP_AG_INBAND_RINGING_REQ;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG accept call .
  *
  * \ingroup BT_BTM
@@ -4281,8 +4094,6 @@ typedef struct t_bt_event_param_hfp_ag_call_answer_req
 } T_BT_EVENT_PARAM_HFP_AG_CALL_ANSWER_REQ;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG reject or hang up call.
  *
  * \ingroup BT_BTM
@@ -4293,8 +4104,6 @@ typedef struct t_bt_event_param_hfp_ag_call_terminate_req
 } T_BT_EVENT_PARAM_HFP_AG_CALL_TERMINATE_REQ;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG query current calls list.
  *
  * \ingroup BT_BTM
@@ -4305,8 +4114,6 @@ typedef struct t_bt_event_param_hfp_ag_curr_calls_list_query
 } T_BT_EVENT_PARAM_HFP_AG_CURR_CALLS_LIST_QUERY;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG DTMF code.
  *
  * \ingroup BT_BTM
@@ -4318,8 +4125,6 @@ typedef struct t_bt_event_param_hfp_ag_dtmf_code
 } T_BT_EVENT_PARAM_HFP_AG_DTMF_CODE;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG placing a call to a phone number.
  *
  * \ingroup BT_BTM
@@ -4331,8 +4136,6 @@ typedef struct t_bt_event_param_hfp_ag_dial_with_number
 } T_BT_EVENT_PARAM_HFP_AG_DIAL_WITH_NUMBER;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG placing a call to the phone number stored in memory.
  *
  * \ingroup BT_BTM
@@ -4344,8 +4147,6 @@ typedef struct t_bt_event_param_hfp_ag_dial_with_memory
 } T_BT_EVENT_PARAM_HFP_AG_DIAL_WITH_MEMORY;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG memory dialing.
  *
  * \ingroup BT_BTM
@@ -4356,8 +4157,6 @@ typedef struct t_bt_event_param_hfp_ag_dial_last_number
 } T_BT_EVENT_PARAM_HFP_AG_DIAL_LAST_NUMBER;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG releases all held calls or sets
  *         User Determined User Busy (UDUB) for a waiting call.
  *
@@ -4369,8 +4168,6 @@ typedef struct t_bt_event_param_hfp_ag_3way_held_call_released
 } T_BT_EVENT_PARAM_HFP_AG_3WAY_HELD_CALL_RELEASED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG releases all active calls (if any exist) and
  *         accepts the other (held or waiting) call.
  *
@@ -4382,8 +4179,6 @@ typedef struct t_bt_event_param_hfp_ag_3way_active_call_released
 } T_BT_EVENT_PARAM_HFP_AG_3WAY_ACTIVE_CALL_RELEASED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG places all active calls (if any exist) on
  *         hold and accepts the other (held or waiting) call.
  *
@@ -4395,8 +4190,6 @@ typedef struct t_bt_event_param_hfp_ag_3way_switched
 } T_BT_EVENT_PARAM_HFP_AG_3WAY_SWITCHED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG adds a held call to the conversation.
  *
  * \ingroup BT_BTM
@@ -4407,8 +4200,6 @@ typedef struct t_bt_event_param_hfp_ag_3way_merged
 } T_BT_EVENT_PARAM_HFP_AG_3WAY_MERGED;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG retrieve subscriber number information.
  *
  * \ingroup BT_BTM
@@ -4419,8 +4210,6 @@ typedef struct t_bt_event_param_hfp_ag_subscriber_number_query
 } T_BT_EVENT_PARAM_HFP_AG_SUBSCRIBER_NUMBER_QUERY;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG set name format to long alphanumeric.
  *
  * \ingroup BT_BTM
@@ -4431,8 +4220,6 @@ typedef struct t_bt_event_param_hfp_ag_network_name_format_set
 } T_BT_EVENT_PARAM_HFP_AG_NETWORK_NAME_FORMAT_SET;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG enhanced safety status.
  *
  * \ingroup BT_BTM
@@ -4444,8 +4231,6 @@ typedef struct t_bt_event_param_hfp_ag_enhanced_safety_status
 } T_BT_EVENT_PARAM_HFP_AG_ENHANCED_SAFETY_STATUS;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG noise reduction and echo canceling status.
  *
  * \ingroup BT_BTM
@@ -4457,8 +4242,6 @@ typedef struct t_bt_event_param_hfp_ag_nrec_status
 } T_BT_EVENT_PARAM_HFP_AG_NREC_STATUS;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG query the currently selected operator.
  *
  * \ingroup BT_BTM
@@ -4469,8 +4252,6 @@ typedef struct t_bt_event_param_hfp_ag_curr_operator_query
 } T_BT_EVENT_PARAM_HFP_AG_CURR_OPERATOR_QUERY;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG voice recognition activation.
  *
  * \ingroup BT_BTM
@@ -4481,8 +4262,6 @@ typedef struct t_bt_event_param_hfp_ag_voice_recognition_activation
 } T_BT_EVENT_PARAM_HFP_AG_VOICE_RECOGNITION_ACTIVATION;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HFP AG voice recognition deactivation.
  *
  * \ingroup BT_BTM
@@ -4493,22 +4272,18 @@ typedef struct t_bt_event_param_hfp_ag_voice_recognition_deactivation
 } T_BT_EVENT_PARAM_HFP_AG_VOICE_RECOGNITION_DEACTIVATION;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter HFP unknown command.
+ * \brief  BT manager event parameter HFP vendor command.
  *
  * \ingroup BT_BTM
  */
-typedef struct t_bt_event_param_hfp_ag_unknown_cmd
+typedef struct t_bt_event_param_hfp_ag_vendor_cmd
 {
     uint8_t   bd_addr[6];
     uint8_t  *cmd;
     uint16_t  len;
-} T_BT_EVENT_PARAM_HFP_AG_UNKNOWN_CMD;
+} T_BT_EVENT_PARAM_HFP_AG_VENDOR_CMD;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter PBAP caller id name.
  *
  * \ingroup BT_BTM
@@ -4521,8 +4296,6 @@ typedef struct t_bt_event_param_pbap_caller_id_name
 } T_BT_EVENT_PARAM_PBAP_CALLER_ID_NAME;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter PBAP set phone book completed.
  *
  * \ingroup BT_BTM
@@ -4535,8 +4308,6 @@ typedef struct t_bt_event_param_pbap_set_phone_book_cmpl
 } T_BT_EVENT_PARAM_PBAP_SET_PHONE_BOOK_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter PBAP pull phone book completed.
  *
  * \ingroup BT_BTM
@@ -4552,8 +4323,6 @@ typedef struct t_bt_event_param_pbap_get_phone_book_cmpl
 } T_BT_EVENT_PARAM_PBAP_GET_PHONE_BOOK_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter PBAP pull phone book completed.
  *
  * \ingroup BT_BTM
@@ -4566,8 +4335,6 @@ typedef struct t_bt_event_param_pbap_get_phone_book_size_cmpl
 } T_BT_EVENT_PARAM_PBAP_GET_PHONE_BOOK_SIZE_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter PBAP connection completed.
  *
  * \ingroup BT_BTM
@@ -4578,8 +4345,6 @@ typedef struct t_bt_event_param_pbap_conn_cmpl
 } T_BT_EVENT_PARAM_PBAP_CONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter PBAP connection fail.
  *
  * \ingroup BT_BTM
@@ -4591,8 +4356,6 @@ typedef struct t_bt_event_param_pbap_conn_fail
 } T_BT_EVENT_PARAM_PBAP_CONN_FAIL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter PBAP disconnection completed.
  *
  * \ingroup BT_BTM
@@ -4604,8 +4367,6 @@ typedef struct t_bt_event_param_pbap_disconn_cmpl
 } T_BT_EVENT_PARAM_PBAP_DISCONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter PBAP sniffing connection completed.
  *
  * \ingroup BT_BTM
@@ -4616,8 +4377,6 @@ typedef struct t_bt_event_param_pbap_sniffing_conn_cmpl
 } T_BT_EVENT_PARAM_PBAP_SNIFFING_CONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter PBAP sniffing disconnection completed.
  *
  * \ingroup BT_BTM
@@ -4629,9 +4388,7 @@ typedef struct t_bt_event_param_pbap_sniffing_disconn_cmpl
 } T_BT_EVENT_PARAM_PBAP_SNIFFING_DISCONN_CMPL;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter HID Device connection indication.
+ * \brief  BT manager event parameter HID device connection indication.
  *
  * \ingroup BT_BTM
  */
@@ -4641,9 +4398,7 @@ typedef struct t_bt_event_param_hid_device_conn_ind
 } T_BT_EVENT_PARAM_HID_DEVICE_CONN_IND;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter HID Device connection completed.
+ * \brief  BT manager event parameter HID device connection completed.
  *
  * \ingroup BT_BTM
  */
@@ -4653,9 +4408,7 @@ typedef struct t_bt_event_param_hid_device_conn_cmpl
 } T_BT_EVENT_PARAM_HID_DEVICE_CONN_CMPL;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter HID Device connection fail.
+ * \brief  BT manager event parameter HID device connection fail.
  *
  * \ingroup BT_BTM
  */
@@ -4666,9 +4419,7 @@ typedef struct t_bt_event_param_hid_device_conn_fail
 } T_BT_EVENT_PARAM_HID_DEVICE_CONN_FAIL;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter HID Device disconnection completed.
+ * \brief  BT manager event parameter HID device disconnection completed.
  *
  * \ingroup BT_BTM
  */
@@ -4679,9 +4430,7 @@ typedef struct t_bt_event_param_hid_device_disconn_cmpl
 } T_BT_EVENT_PARAM_HID_DEVICE_DISCONN_CMPL;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter HID Device control data indication.
+ * \brief  BT manager event parameter HID device control data indication.
  *
  * \ingroup BT_BTM
  */
@@ -4689,15 +4438,13 @@ typedef struct t_bt_event_param_hid_device_control_data_ind
 {
     uint8_t    bd_addr[6];
     uint8_t    report_type;
-    uint16_t   report_id;
+    uint8_t    report_id;
     uint16_t   report_size;
     uint8_t   *p_data;
 } T_BT_EVENT_PARAM_HID_DEVICE_CONTROL_DATA_IND;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter HID Device get report indication.
+ * \brief  BT manager event parameter HID device get report indication.
  *
  * \ingroup BT_BTM
  */
@@ -4705,14 +4452,12 @@ typedef struct t_bt_event_param_hid_device_get_report_ind
 {
     uint8_t    bd_addr[6];
     uint8_t    report_type;
-    uint16_t   report_id;
+    uint8_t    report_id;
     uint16_t   report_size;
 } T_BT_EVENT_PARAM_HID_DEVICE_GET_REPORT_IND;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter HID Device set report indication.
+ * \brief  BT manager event parameter HID device set report indication.
  *
  * \ingroup BT_BTM
  */
@@ -4720,15 +4465,13 @@ typedef struct t_bt_event_param_hid_device_set_report_ind
 {
     uint8_t    bd_addr[6];
     uint8_t    report_type;
-    uint16_t   report_id;
+    uint8_t    report_id;
     uint16_t   report_size;
     uint8_t   *p_data;
 } T_BT_EVENT_PARAM_HID_DEVICE_SET_REPORT_IND;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter HID Device get protocol indication.
+ * \brief  BT manager event parameter HID device get protocol indication.
  *
  * \ingroup BT_BTM
  */
@@ -4739,9 +4482,7 @@ typedef struct t_bt_event_param_hid_device_get_protocol_ind
 } T_BT_EVENT_PARAM_HID_DEVICE_GET_PROTOCOL_IND;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter HID Device set protocol indication.
+ * \brief  BT manager event parameter HID device set protocol indication.
  *
  * \ingroup BT_BTM
  */
@@ -4752,9 +4493,7 @@ typedef struct t_bt_event_param_hid_device_set_protocol_ind
 } T_BT_EVENT_PARAM_HID_DEVICE_SET_PROTOCOL_IND;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter HID Device set idle indication.
+ * \brief  BT manager event parameter HID device set idle indication.
  *
  * \ingroup BT_BTM
  */
@@ -4765,9 +4504,7 @@ typedef struct t_bt_event_param_hid_device_set_idle_ind
 } T_BT_EVENT_PARAM_HID_DEVICE_SET_IDLE_IND;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter HID Device interrupt data indication.
+ * \brief  BT manager event parameter HID device interrupt data indication.
  *
  * \ingroup BT_BTM
  */
@@ -4775,15 +4512,13 @@ typedef struct t_bt_event_param_hid_device_interrupt_data_ind
 {
     uint8_t    bd_addr[6];
     uint8_t    report_type;
-    uint16_t   report_id;
+    uint8_t    report_id;
     uint16_t   report_size;
     uint8_t   *p_data;
 } T_BT_EVENT_PARAM_HID_DEVICE_INTERRUPT_DATA_IND;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter HID Device sniffing connection completed.
+ * \brief  BT manager event parameter HID device sniffing connection completed.
  *
  * \ingroup BT_BTM
  */
@@ -4793,9 +4528,7 @@ typedef struct t_bt_event_param_hid_device_sniffing_conn_cmpl
 } T_BT_EVENT_PARAM_HID_DEVICE_SNIFFING_CONN_CMPL;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter HID Device sniffing disconnection completed.
+ * \brief  BT manager event parameter HID device sniffing disconnection completed.
  *
  * \ingroup BT_BTM
  */
@@ -4806,8 +4539,6 @@ typedef struct t_bt_event_param_hid_device_sniffing_disconn_cmpl
 } T_BT_EVENT_PARAM_HID_DEVICE_SNIFFING_DISCONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HID Host connection indication.
  *
  * \ingroup BT_BTM
@@ -4818,8 +4549,6 @@ typedef struct t_bt_event_param_hid_host_conn_ind
 } T_BT_EVENT_PARAM_HID_HOST_CONN_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HID Host connection completed.
  *
  * \ingroup BT_BTM
@@ -4830,8 +4559,6 @@ typedef struct t_bt_event_param_hid_host_conn_cmpl
 } T_BT_EVENT_PARAM_HID_HOST_CONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HID Host connection fail.
  *
  * \ingroup BT_BTM
@@ -4843,8 +4570,6 @@ typedef struct t_bt_event_param_hid_host_conn_fail
 } T_BT_EVENT_PARAM_HID_HOST_CONN_FAIL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HID Host disconnection completed.
  *
  * \ingroup BT_BTM
@@ -4853,12 +4578,11 @@ typedef struct t_bt_event_param_hid_host_disconn_cmpl
 {
     uint8_t  bd_addr[6];
     uint16_t cause;
+    bool     virtual_unplug;
 } T_BT_EVENT_PARAM_HID_HOST_DISCONN_CMPL;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter HID Host hid control indication.
+ * \brief  BT manager event parameter HID Host HID control indication.
  *
  * \ingroup BT_BTM
  */
@@ -4869,8 +4593,6 @@ typedef struct t_bt_event_param_hid_host_hid_control_ind
 } T_BT_EVENT_PARAM_HID_HOST_HID_CONTROL_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HID Host get report response.
  *
  * \ingroup BT_BTM
@@ -4885,8 +4607,6 @@ typedef struct t_bt_event_param_hid_host_get_report_rsp
 } T_BT_EVENT_PARAM_HID_HOST_GET_REPORT_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HID Host set report response.
  *
  * \ingroup BT_BTM
@@ -4898,8 +4618,6 @@ typedef struct t_bt_event_param_hid_host_set_report_rsp
 } T_BT_EVENT_PARAM_HID_HOST_SET_REPORT_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HID Host get protocol response.
  *
  * \ingroup BT_BTM
@@ -4911,8 +4629,6 @@ typedef struct t_bt_event_param_hid_host_get_protocol_rsp
 } T_BT_EVENT_PARAM_HID_HOST_GET_PROTOCOL_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HID Host set protocol response.
  *
  * \ingroup BT_BTM
@@ -4924,8 +4640,6 @@ typedef struct t_bt_event_param_hid_host_set_protocol_rsp
 } T_BT_EVENT_PARAM_HID_HOST_SET_PROTOCOL_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HID Host interrupt data indication.
  *
  * \ingroup BT_BTM
@@ -4934,14 +4648,12 @@ typedef struct t_bt_event_param_hid_host_interrupt_data_ind
 {
     uint8_t    bd_addr[6];
     uint8_t    report_type;
-    uint16_t   report_id;
+    uint8_t    report_id;
     uint16_t   report_size;
     uint8_t   *p_data;
 } T_BT_EVENT_PARAM_HID_HOST_INTERRUPT_DATA_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HID Host sniffing connection completed.
  *
  * \ingroup BT_BTM
@@ -4952,8 +4664,6 @@ typedef struct t_bt_event_param_hid_host_sniffing_conn_cmpl
 } T_BT_EVENT_PARAM_HID_HOST_SNIFFING_CONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter HID Host sniffing disconnection completed.
  *
  * \ingroup BT_BTM
@@ -4962,11 +4672,10 @@ typedef struct t_bt_event_param_hid_host_sniffing_disconn_cmpl
 {
     uint8_t  bd_addr[6];
     uint16_t cause;
+    bool     virtual_unplug;
 } T_BT_EVENT_PARAM_HID_HOST_SNIFFING_DISCONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter MAP MNS connection indication.
  *
  * \ingroup BT_BTM
@@ -4977,8 +4686,6 @@ typedef struct
 } T_BT_EVENT_PARAM_MAP_MNS_CONN_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter MAP MNS connection completed.
  *
  * \ingroup BT_BTM
@@ -4989,8 +4696,6 @@ typedef struct
 } T_BT_EVENT_PARAM_MAP_MNS_CONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter MAP MNS connection fail.
  *
  * \ingroup BT_BTM
@@ -5002,8 +4707,6 @@ typedef struct
 } T_BT_EVENT_PARAM_MAP_MNS_CONN_FAIL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter MAP MNS disconnection completed.
  *
  * \ingroup BT_BTM
@@ -5015,8 +4718,6 @@ typedef struct
 } T_BT_EVENT_PARAM_MAP_MNS_DISCONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter MAP MAS connection completed.
  *
  * \ingroup BT_BTM
@@ -5028,8 +4729,6 @@ typedef struct
 } T_BT_EVENT_PARAM_MAP_MAS_CONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter MAP MAS connection fail.
  *
  * \ingroup BT_BTM
@@ -5041,8 +4740,6 @@ typedef struct
 } T_BT_EVENT_PARAM_MAP_MAS_CONN_FAIL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter MAP MAS disconnection completed.
  *
  * \ingroup BT_BTM
@@ -5054,8 +4751,6 @@ typedef struct
 } T_BT_EVENT_PARAM_MAP_MAS_DISCONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter MAP set folder completed.
  *
  * \ingroup BT_BTM
@@ -5067,8 +4762,6 @@ typedef struct
 } T_BT_EVENT_PARAM_MAP_SET_FOLDER_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter MAP register message notification completed.
  *
  * \ingroup BT_BTM
@@ -5080,8 +4773,6 @@ typedef struct
 } T_BT_EVENT_PARAM_MAP_REG_NOTIF_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter MAP get folder listing completed.
  *
  * \ingroup BT_BTM
@@ -5096,8 +4787,6 @@ typedef struct
 } T_BT_EVENT_PARAM_MAP_GET_FOLDER_LISTING_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter MAP get message listing completed.
  *
  * \ingroup BT_BTM
@@ -5113,8 +4802,6 @@ typedef struct
 } T_BT_EVENT_PARAM_MAP_GET_MSG_LISTING_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter MAP get message completed.
  *
  * \ingroup BT_BTM
@@ -5128,8 +4815,6 @@ typedef struct
 } T_BT_EVENT_PARAM_MAP_GET_MSG_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter MAP push message completed.
  *
  * \ingroup BT_BTM
@@ -5144,8 +4829,6 @@ typedef struct
 } T_BT_EVENT_PARAM_MAP_PUSH_MSG_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter MAP remote report message notification.
  *
  * \ingroup BT_BTM
@@ -5159,8 +4842,6 @@ typedef struct
 } T_BT_EVENT_PARAM_MAP_MSG_NOTIFICATION;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter OPP connection indication.
  *
  * \ingroup BT_BTM
@@ -5171,8 +4852,6 @@ typedef struct t_bt_event_param_opp_conn_ind
 } T_BT_EVENT_PARAM_OPP_CONN_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter OPP connection completed.
  *
  * \ingroup BT_BTM
@@ -5183,8 +4862,6 @@ typedef struct t_bt_event_param_opp_conn_cmpl
 } T_BT_EVENT_PARAM_OPP_CONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter OPP connection fail.
  *
  * \ingroup BT_BTM
@@ -5196,8 +4873,6 @@ typedef struct t_bt_event_param_opp_conn_fail
 } T_BT_EVENT_PARAM_OPP_CONN_FAIL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter OPP disconnection completed.
  *
  * \ingroup BT_BTM
@@ -5209,8 +4884,6 @@ typedef struct t_bt_event_param_opp_disconn_cmpl
 } T_BT_EVENT_PARAM_OPP_DISCONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter OPP data header indication.
  *
  * \ingroup BT_BTM
@@ -5218,16 +4891,14 @@ typedef struct t_bt_event_param_opp_disconn_cmpl
 typedef struct t_bt_event_param_opp_data_header_ind
 {
     uint8_t     bd_addr[6];
-    uint8_t    *name;        /* Unicode String */
+    uint8_t    *name;        /* Unicode string. */
     uint16_t    name_len;
-    uint8_t    *type;        /* ASCII String */
+    uint8_t    *type;        /* ASCII string. */
     uint16_t    type_len;
     uint32_t    total_data_len;
 } T_BT_EVENT_PARAM_OPP_DATA_HEADER_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter OPP data indication.
  *
  * \ingroup BT_BTM
@@ -5241,8 +4912,6 @@ typedef struct t_bt_event_param_opp_data_ind
 } T_BT_EVENT_PARAM_OPP_DATA_IND;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter OPP put data response.
  *
  * \ingroup BT_BTM
@@ -5254,8 +4923,6 @@ typedef struct t_bt_event_param_opp_data_rsp
 } T_BT_EVENT_PARAM_OPP_DATA_RSP;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter add SDP record response.
  *
  * \ingroup BT_BTM
@@ -5267,8 +4934,6 @@ typedef struct t_bt_event_param_sdp_add_record
 } T_BT_EVENT_PARAM_SDP_ADD_RECORD;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter delete SDP record response.
  *
  * \ingroup BT_BTM
@@ -5280,8 +4945,6 @@ typedef struct t_bt_event_param_sdp_del_record
 } T_BT_EVENT_PARAM_SDP_DEL_RECORD;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter SDP attribute information.
  *
  * \ingroup BT_BTM
@@ -5293,8 +4956,6 @@ typedef struct t_bt_event_param_sdp_attr_info
 } T_BT_EVENT_PARAM_SDP_ATTR_INFO;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter DID attribute information.
  *
  * \ingroup BT_BTM
@@ -5310,8 +4971,6 @@ typedef struct t_bt_event_param_did_attr_info
 } T_BT_EVENT_PARAM_DID_ATTR_INFO;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter SDP discover completed.
  *
  * \ingroup BT_BTM
@@ -5323,8 +4982,6 @@ typedef struct t_bt_event_param_sdp_discov_cmpl
 } T_BT_EVENT_PARAM_SDP_DISCOV_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter SDP discover stop.
  *
  * \ingroup BT_BTM
@@ -5337,8 +4994,6 @@ typedef struct t_bt_event_param_sdp_discov_stop
 
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter link key information.
  *
  * \ingroup BT_BTM
@@ -5351,8 +5006,6 @@ typedef struct t_bt_event_param_link_key_info
 } T_BT_EVENT_PARAM_LINK_KEY_INFO;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter link key request.
  *
  * \ingroup BT_BTM
@@ -5363,8 +5016,6 @@ typedef struct t_bt_event_param_link_key_req
 } T_BT_EVENT_PARAM_LINK_KEY_REQ;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter link pin code request.
  *
  * \ingroup BT_BTM
@@ -5375,8 +5026,6 @@ typedef struct t_bt_event_param_link_pin_code_req
 } T_BT_EVENT_PARAM_LINK_PIN_CODE_REQ;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter user confirmation request.
  *
  * \ingroup BT_BTM
@@ -5389,9 +5038,7 @@ typedef struct t_bt_event_param_link_user_confirmation_req
 } T_BT_EVENT_PARAM_LINK_USER_CONFIRMATION_REQ;
 
 /**
- * btm.h
- *
- * \brief  BT manager event parameter link read rssi response.
+ * \brief  BT manager event parameter link read RSSI response.
  *
  * \ingroup BT_BTM
  */
@@ -5403,8 +5050,6 @@ typedef struct t_bt_event_param_link_read_rssi_rsp
 } T_BT_EVENT_PARAM_LINK_READ_RSSI_RSP;
 
 /**
- * btm.h
- *
  * \brief Define BT link PER information.
  *
  * \ingroup BT_BTM
@@ -5417,8 +5062,6 @@ typedef struct t_bt_event_param_link_per_info
 } T_BT_EVENT_PARAM_LINK_PER_INFO;
 
 /**
- * btm.h
- *
  * \brief Define BT link RSSI information.
  *
  * \ingroup BT_BTM
@@ -5430,8 +5073,6 @@ typedef struct t_bt_event_param_link_rssi_info
 } T_BT_EVENT_PARAM_LINK_RSSI_INFO;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter link user passkey request.
  *
  * \ingroup BT_BTM
@@ -5443,8 +5084,6 @@ typedef struct t_bt_event_param_link_user_passkey_req
 } T_BT_EVENT_PARAM_LINK_USER_PASSKEY_REQ;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter link user passkey notification information.
  *
  * \ingroup BT_BTM
@@ -5456,9 +5095,7 @@ typedef struct t_bt_event_param_link_user_passkey_notif
 } T_BT_EVENT_PARAM_LINK_USER_PASSKEY_NOTIF;
 
 /**
- * btm.h
- *
- * \brief BT manager event parameter set link tx power rsp.
+ * \brief BT manager event parameter set link tx power response.
  *
  * \ingroup BT_BTM
  */
@@ -5471,9 +5108,7 @@ typedef struct t_bt_event_param_set_link_tx_power_rsp
 } T_BT_EVENT_PARAM_LINK_TX_POWER_SET_RSP;
 
 /**
- * btm.h
- *
- * \brief BT manager event parameter set link qos rsp.
+ * \brief BT manager event parameter set link QoS response.
  *
  * \ingroup BT_BTM
  */
@@ -5484,9 +5119,7 @@ typedef struct t_bt_event_param_link_qos_set_rsp
 } T_BT_EVENT_PARAM_LINK_QOS_SET_RSP;
 
 /**
- * btm.h
- *
- * \brief BT manager event parameter set link qos cmpl.
+ * \brief BT manager event parameter set link QoS cmpl.
  *
  * \ingroup BT_BTM
  */
@@ -5498,9 +5131,7 @@ typedef struct t_bt_event_param_link_qos_set_cmpl
 } T_BT_EVENT_PARAM_LINK_QOS_SET_CMPL;
 
 /**
- * btm.h
- *
- * \brief BT manager event parameter set link rssi golden range rsp.
+ * \brief BT manager event parameter set link RSSI golden range response.
  *
  * \ingroup BT_BTM
  */
@@ -5513,9 +5144,7 @@ typedef struct t_bt_event_param_link_rssi_golden_range_set_rsp
 } T_BT_EVENT_PARAM_LINK_RSSI_GOLDEN_RANGE_SET_RSP;
 
 /**
- * btm.h
- *
- * \brief BT manager event parameter set idle zone rsp.
+ * \brief BT manager event parameter set idle zone response.
  *
  * \ingroup BT_BTM
  */
@@ -5529,20 +5158,54 @@ typedef struct t_bt_event_param_link_idle_zone_set_rsp
 } T_BT_EVENT_PARAM_LINK_IDLE_ZONE_SET_RSP;
 
 /**
- * btm.h
- *
- * \brief BT manager event parameter traffic qos rsp.
+ * \brief BT manager event parameter traffic QoS response.
  *
  * \ingroup BT_BTM
  */
 typedef struct t_bt_event_param_traffic_qos_rsp
 {
     uint16_t cause;
+    uint8_t  negotiate;
 } T_BT_EVENT_PARAM_TRAFFIC_QOS_RSP;
 
 /**
- * btm.h
+ * \brief BT manager event parameter traffic QoS complete.
  *
+ * \ingroup BT_BTM
+ */
+typedef struct t_bt_event_param_traffic_qos_cmpl
+{
+    uint8_t               bd_addr[6];
+    uint16_t              cause;
+    T_BT_TRAFFIC_QOS_TYPE type;
+    uint8_t               enable;
+    union
+    {
+        struct
+        {
+            uint8_t  rsvd_slots;
+        } random_param;
+
+        struct
+        {
+            uint16_t interval;
+            uint8_t  rsvd_slots;
+        } none_negotiate_periodic_param;
+        struct
+        {
+            uint16_t interval;
+            uint8_t  rsvd_slots;
+        } negotiate_periodic_param;
+
+        struct
+        {
+            uint8_t sync_weighting;
+            uint8_t rsvd_slots;
+        } periodic_sync_param;
+    } u;
+} T_BT_EVENT_PARAM_TRAFFIC_QOS_CMPL;
+
+/**
  * \brief  BT manager event parameter remote roleswap status.
  *
  * \ingroup BT_BTM
@@ -5640,8 +5303,6 @@ typedef struct t_bt_event_param_remote_roleswap_status
 } T_BT_EVENT_PARAM_REMOTE_ROLESWAP_STATUS;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter remote state.
  *
  * \ingroup BT_BTM
@@ -5652,8 +5313,6 @@ typedef struct t_bt_event_param_remote_state
 } T_BT_EVENT_PARAM_REMOTE_STATE;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter remote connection completed.
  *
  * \ingroup BT_BTM
@@ -5665,8 +5324,6 @@ typedef struct t_bt_event_param_remote_conn_cmpl
 } T_BT_EVENT_PARAM_REMOTE_CONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter remote connection fail.
  *
  * \ingroup BT_BTM
@@ -5678,8 +5335,6 @@ typedef struct
 } T_BT_EVENT_PARAM_REMOTE_CONN_FAIL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event parameter remote disconnection completed.
  *
  * \ingroup BT_BTM
@@ -5691,8 +5346,6 @@ typedef struct t_bt_event_param_remote_disconn_cmpl
 } T_BT_EVENT_PARAM_REMOTE_DISCONN_CMPL;
 
 /**
- * btm.h
- *
  * \brief  BT manager event.
  *
  * \ingroup BT_BTM
@@ -5714,6 +5367,7 @@ typedef union
     T_BT_EVENT_PARAM_LOCAL_OOB_EXTENDED_DATA_RSP    local_oob_extended_data_rsp;
     T_BT_EVENT_PARAM_PAGING_TX_POWER_SET_RSP        paging_tx_power_set_rsp;
     T_BT_EVENT_PARAM_TRAFFIC_QOS_RSP                traffic_qos_rsp;
+    T_BT_EVENT_PARAM_TRAFFIC_QOS_CMPL               traffic_qos_cmpl;
 
     T_BT_EVENT_PARAM_SCO_CONN_IND                   sco_conn_ind;
     T_BT_EVENT_PARAM_SCO_CONN_RSP                   sco_conn_rsp;
@@ -5776,6 +5430,7 @@ typedef union
     T_BT_EVENT_PARAM_A2DP_CONN_FAIL                 a2dp_conn_fail;
     T_BT_EVENT_PARAM_A2DP_DISCONN_CMPL              a2dp_disconn_cmpl;
     T_BT_EVENT_PARAM_A2DP_CONFIG_CMPL               a2dp_config_cmpl;
+    T_BT_EVENT_PARAM_A2DP_DELAY_REPORT              a2dp_delay_report;
     T_BT_EVENT_PARAM_A2DP_STREAM_OPEN               a2dp_stream_open;
     T_BT_EVENT_PARAM_A2DP_STREAM_OPEN_FAIL          a2dp_stream_open_fail;
     T_BT_EVENT_PARAM_A2DP_STREAM_START_IND          a2dp_stream_start_ind;
@@ -5795,6 +5450,7 @@ typedef union
     T_BT_EVENT_PARAM_AVRCP_CONN_CMPL                        avrcp_conn_cmpl;
     T_BT_EVENT_PARAM_AVRCP_CONN_FAIL                        avrcp_conn_fail;
     T_BT_EVENT_PARAM_AVRCP_DISCONN_CMPL                     avrcp_disconn_cmpl;
+    T_BT_EVENT_PARAM_AVRCP_GET_CAPABILITIES_RSP             avrcp_get_capabilities_rsp;
     T_BT_EVENT_PARAM_AVRCP_ELEM_ATTR                        avrcp_elem_attr;
     T_BT_EVENT_PARAM_AVRCP_GET_PLAY_STATUS_RSP              avrcp_get_play_status_rsp;
     T_BT_EVENT_PARAM_AVRCP_ABSOLUTE_VOLUME_SET              avrcp_absolute_volume_set;
@@ -5823,6 +5479,11 @@ typedef union
     T_BT_EVENT_PARAM_AVRCP_REG_PLAY_STATUS_CHANGED          avrcp_reg_play_status_changed;
     T_BT_EVENT_PARAM_AVRCP_VOLUME_CHANGED                   avrcp_volume_changed;
     T_BT_EVENT_PARAM_AVRCP_TRACK_CHANGED                    avrcp_track_changed;
+    T_BT_EVENT_PARAM_AVRCP_TRACK_REACHED_END                avrcp_track_reached_end;
+    T_BT_EVENT_PARAM_AVRCP_TRACK_REACHED_START              avrcp_track_reached_start;
+    T_BT_EVENT_PARAM_AVRCP_PLAYBACK_POS_CHANGED             avrcp_playback_pos_changed;
+    T_BT_EVENT_PARAM_AVRCP_BATT_STATUS_CHANGED              avrcp_batt_status_changed;
+    T_BT_EVENT_PARAM_AVRCP_SYSTEM_STATUS_CHANGED            avrcp_system_status_changed;
     T_BT_EVENT_PARAM_AVRCP_PLAY_STATUS_CHANGED              avrcp_play_status_changed;
     T_BT_EVENT_PARAM_AVRCP_PLAY_STATUS_RSP                  avrcp_play_status_rsp;
     T_BT_EVENT_PARAM_AVRCP_SNIFFING_CONN_CMPL               avrcp_sniffing_conn_cmpl;
@@ -5884,7 +5545,7 @@ typedef union
     T_BT_EVENT_PARAM_HFP_ROAM_IND                          hfp_roam_ind;
     T_BT_EVENT_PARAM_HFP_BATTERY_IND                       hfp_battery_ind;
     T_BT_EVENT_PARAM_HFP_SUPPORTED_FEATURES_IND            hfp_supported_features_ind;
-    T_BT_EVENT_PARAM_HFP_UNKNOWN_CMD                       hfp_unknown_cmd;
+    T_BT_EVENT_PARAM_HFP_VENDOR_CMD                        hfp_vendor_cmd;
     T_BT_EVENT_PARAM_HFP_VENDOR_CMD_RESULT                 hfp_vendor_cmd_result;
     T_BT_EVENT_PARAM_HFP_RING_ALERT                        hfp_ring_alert;
     T_BT_EVENT_PARAM_HFP_VOICE_RECOGNITION_ACTIVATION      hfp_voice_recognition_activation;
@@ -5923,7 +5584,7 @@ typedef union
     T_BT_EVENT_PARAM_HFP_AG_NREC_STATUS                       hfp_ag_nrec_status;
     T_BT_EVENT_PARAM_HFP_AG_VOICE_RECOGNITION_ACTIVATION      hfp_ag_voice_recognition_activation;
     T_BT_EVENT_PARAM_HFP_AG_VOICE_RECOGNITION_DEACTIVATION    hfp_ag_voice_recognition_deactivation;
-    T_BT_EVENT_PARAM_HFP_AG_UNKNOWN_CMD                       hfp_ag_unknown_cmd;
+    T_BT_EVENT_PARAM_HFP_AG_VENDOR_CMD                        hfp_ag_vendor_cmd;
 
     T_BT_EVENT_PARAM_PBAP_CONN_CMPL                 pbap_conn_cmpl;
     T_BT_EVENT_PARAM_PBAP_CONN_FAIL                 pbap_conn_fail;
@@ -6000,8 +5661,6 @@ typedef union
 } T_BT_EVENT_PARAM;
 
 /**
- * btm.h
- *
  * \brief  BT manager event callback prototype.
  *
  * \param[in] event_type   BT manager event type.
@@ -6015,11 +5674,9 @@ typedef void (*P_BT_MGR_CBACK)(T_BT_EVENT  event_type,
                                uint16_t    buf_len);
 
 /**
- * btm.h
- *
  * \brief   BT manager event callback register.
  *
- * \param[in] cback       Callback function \ref P_BT_MGR_CBACK
+ * \param[in] cback       Callback function \ref P_BT_MGR_CBACK.
  *
  * \return                The status of BT manager event callback register.
  * \retval    true        BT manager event callback was registered successfully.
@@ -6030,11 +5687,9 @@ typedef void (*P_BT_MGR_CBACK)(T_BT_EVENT  event_type,
 bool bt_mgr_cback_register(P_BT_MGR_CBACK cback);
 
 /**
- * btm.h
- *
  * \brief   BT manager event callback unregister.
  *
- * \param[in] cback       Callback function \ref P_BT_MGR_CBACK
+ * \param[in] cback       Callback function \ref P_BT_MGR_CBACK.
  *
  * \return                The status of BT manager event callback unregister.
  * \retval    true        BT manager event callback was unregistered successfully.
@@ -6045,11 +5700,7 @@ bool bt_mgr_cback_register(P_BT_MGR_CBACK cback);
 bool bt_mgr_cback_unregister(P_BT_MGR_CBACK cback);
 
 /**
- * btm.h
- *
  * \brief   Initialize bluetooth manager.
- *
- * \param[in] link_num   BR/EDR maximum connected link num.
  *
  * \return               The status of initializing bluetooth manager.
  * \retval    true       Bluetooth manager was initialized successfully.
@@ -6057,11 +5708,9 @@ bool bt_mgr_cback_unregister(P_BT_MGR_CBACK cback);
  *
  * \ingroup BT_BTM
  */
-bool bt_mgr_init(uint8_t link_num);
+bool bt_mgr_init(void);
 
 /**
- * btm.h
- *
  * \brief   Set local BT device name.
  *
  * \param[in] p_name    Local BT device name.
@@ -6077,8 +5726,6 @@ bool bt_local_name_set(uint8_t *p_name,
                        uint8_t  len);
 
 /**
- * btm.h
- *
  * \brief   Send a request to get remote device name.
  *
  * \param[in] bd_addr    Remote BT address.
@@ -6092,8 +5739,6 @@ bool bt_local_name_set(uint8_t *p_name,
 bool bt_remote_name_req(uint8_t bd_addr[6]);
 
 /**
- * btm.h
- *
  * \brief   Start inquiry.
  *
  * \param[in] limited_inquiry     Limited inquiry or general inquiry.
@@ -6110,8 +5755,6 @@ bool bt_inquiry_start(bool    limited_inquiry,
                       uint8_t inquiry_length);
 
 /**
- * btm.h
- *
  * \brief   Stop inquiry.
  *
  * \return The status of stopping inquiry.
@@ -6123,8 +5766,6 @@ bool bt_inquiry_start(bool    limited_inquiry,
 bool bt_inquiry_stop(void);
 
 /**
- * btm.h
- *
  * \brief   Start periodic periodic inquiry.
  *
  * \param[in] limited_inquiry     Limited periodic inquiry or general periodic inquiry.
@@ -6146,8 +5787,6 @@ bool bt_periodic_inquiry_start(bool     limited_inquiry,
                                uint16_t min_period_length,
                                uint8_t  inquiry_length);
 /**
- * btm.h
- *
  * \brief   Stop periodic inquiry.
  *
  * \return The status of stopping periodic inquiry.
@@ -6159,18 +5798,16 @@ bool bt_periodic_inquiry_start(bool     limited_inquiry,
 bool bt_periodic_inquiry_stop(void);
 
 /**
- * btm.h
- *
- * \brief   Accept acl connection request from remote device.
+ * \brief   Accept ACL connection request from remote device.
  *
  * \param[in] bd_addr    Remote BT address.
- * \param[in] role       Expected acl link role.
+ * \param[in] role       Expected ACL link role.
  * \arg    BT_LINK_ROLE_MASTER     Perform a role switch to become master of the link.
  * \arg    BT_LINK_ROLE_SLAVE      Stay slave role of the link.
  *
  * \return The status of sending accept connection confirmation.
- * \retval true     Accpet acl connection confirmation was sent successfully.
- * \retval false    Accept acl connection confirmation was failed to send.
+ * \retval true     Accpet ACL connection confirmation was sent successfully.
+ * \retval false    Accept ACL connection confirmation was failed to send.
  *
  * \ingroup BT_BTM
  */
@@ -6178,16 +5815,14 @@ bool bt_acl_conn_accept(uint8_t        bd_addr[6],
                         T_BT_LINK_ROLE role);
 
 /**
- * btm.h
- *
- * \brief   Reject acl connection request from remote device.
+ * \brief   Reject ACL connection request from remote device.
  *
  * \param[in] bd_addr    Remote BT address.
  * \param[in] reason     Reject reason.
  *
  * \return The status of sending reject connection confirmation.
- * \retval true     Reject acl connection confirmation was sent successfully.
- * \retval false    Reject acl connection confirmation was failed to send.
+ * \retval true     Reject ACL connection confirmation was sent successfully.
+ * \retval false    Reject ACL connection confirmation was failed to send.
  *
  * \ingroup BT_BTM
  */
@@ -6195,8 +5830,6 @@ bool bt_acl_conn_reject(uint8_t                bd_addr[6],
                         T_BT_ACL_REJECT_REASON reason);
 
 /**
- * btm.h
- *
  * \brief   Send confirmation for link key request during authentication.
  *
  * \param[in] bd_addr    Remote BT address.
@@ -6216,8 +5849,6 @@ bool bt_link_key_cfm(uint8_t             bd_addr[6],
                      uint8_t            *p_key);
 
 /**
- * btm.h
- *
  * \brief   Send confirmation for link pin code request during authentication.
  *
  * \param[in] bd_addr    Remote BT address.
@@ -6237,8 +5868,7 @@ bool bt_link_pin_code_cfm(uint8_t  bd_addr[6],
                           bool     accept);
 
 /**
- * btm.h
- *
+ * bt
  * \brief   Send a request to set BT link encryption.
  *
  * \param[in] bd_addr    Remote BT address.
@@ -6254,8 +5884,6 @@ bool bt_link_encryption_set(uint8_t bd_addr[6],
                             bool    enable);
 
 /**
- * btm.h
- *
  * \brief   Send a SCO connection request.
  *
  * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
@@ -6267,10 +5895,10 @@ bool bt_link_encryption_set(uint8_t bd_addr[6],
  *                             synchronous interval. Valid values are 0x0004 to 0xFFFE.
  * \param[in] voice_setting    Voice setting bitmap.
  * \param[in] retrans_effort   Retransmit effort.
- *                             0x00 : no retransmissions
- *                             0x01 : at least one retransmission, optimize for power consumption
- *                             0x02 : at least one retransmission, optimize for link quality
- *                             0xFF : donot care
+ *                             0x00 : No retransmissions.
+ *                             0x01 : At least one retransmission, optimize for power consumption.
+ *                             0x02 : At least one retransmission, optimize for link quality.
+ *                             0xFF : Do not care.
  * \param[in] packet_type      Transmit packet type. Values are combinations of GAP_SCO_PACKET_TYPE.
  *
  * \return The status of sending SCO connection request.
@@ -6288,8 +5916,6 @@ bool bt_sco_conn_req(uint8_t  bd_addr[6],
                      uint16_t packet_type);
 
 /**
- * btm.h
- *
  * \brief   Send a SCO connection confirmation.
  *
  * \param[in] bd_addr              Remote BT address.
@@ -6319,8 +5945,6 @@ bool bt_sco_conn_cfm(uint8_t  bd_addr[6],
                      bool     accept);
 
 /**
- * btm.h
- *
  * \brief   Send a SCO disconnection request.
  *
  * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
@@ -6336,8 +5960,6 @@ bool bt_sco_conn_cfm(uint8_t  bd_addr[6],
 bool bt_sco_disconn_req(uint8_t bd_addr[6]);
 
 /**
- * btm.h
- *
  * \brief   Switch active sco link.
  *
  * \param[in] bd_addr    Remote BT address.
@@ -6351,8 +5973,6 @@ bool bt_sco_disconn_req(uint8_t bd_addr[6]);
 bool bt_sco_link_switch(uint8_t bd_addr[6]);
 
 /**
- * btm.h
- *
  * \brief   Set sco retransmission window.
  *
  * \param[in] bd_addr           Remote BT address.
@@ -6370,8 +5990,6 @@ bool bt_sco_link_retrans_window_set(uint8_t bd_addr[6],
                                     uint8_t retrans_window);
 
 /**
- * btm.h
- *
  * \brief   Send SCO data after SCO connection setup.
  *
  * \param[in] bd_addr    Remote BT address.
@@ -6391,8 +6009,6 @@ bool bt_sco_data_send(uint8_t  bd_addr[6],
                       uint8_t  len);
 
 /**
- * btm.h
- *
  * \brief   Switch BT link role to master or slave.
  *
  * \param[in] bd_addr    Bluetooth device address.
@@ -6408,8 +6024,6 @@ bool bt_link_role_switch(uint8_t bd_addr[6],
                          bool    set_master);
 
 /**
- * btm.h
- *
  * \brief   Set BT device mode.
  *
  * \param[in] device_mode   BT device mode defined in \ref T_BT_DEVICE_MODE.
@@ -6423,8 +6037,6 @@ bool bt_link_role_switch(uint8_t bd_addr[6],
 bool bt_device_mode_set(T_BT_DEVICE_MODE device_mode);
 
 /**
- * btm.h
- *
  * \brief   Get BT device mode.
  *
  * \return  BT device mode defined in \ref T_BT_DEVICE_MODE.
@@ -6434,16 +6046,14 @@ bool bt_device_mode_set(T_BT_DEVICE_MODE device_mode);
 T_BT_DEVICE_MODE bt_device_mode_get(void);
 
 /**
- * btm.h
- *
- * \brief   Set BT acl packet type.
+ * \brief   Set BT ACL packet type.
  *
  * \param[in] bd_addr      Bluetooth device address.
  * \param[in] acl_pkt_type Link packet type defined in \ref T_BT_ACL_PKT_TYPE.
  *
- * \return The status of set acl packet type.
- * \retval true     BT acl packet was set successfully.
- * \retval false    BT acl packet was failed to set.
+ * \return The status of set ACL packet type.
+ * \retval true     BT ACL packet was set successfully.
+ * \retval false    BT ACL packet was failed to set.
  *
  * \ingroup BT_BTM
  */
@@ -6451,8 +6061,6 @@ bool bt_acl_pkt_type_set(uint8_t           bd_addr[6],
                          T_BT_ACL_PKT_TYPE acl_pkt_type);
 
 /**
- * btm.h
- *
  * \brief   Set BT link preferred data rate.
  *
  * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
@@ -6474,8 +6082,6 @@ bool bt_link_preferred_data_rate_set(uint8_t             bd_addr[6],
                                      T_BT_LINK_DATA_RATE enhanced_data_rate);
 
 /**
- * btm.h
- *
  * \brief   Set BT link QoS.
  *
  * \param[in] bd_addr    Bluetooth device address.
@@ -6493,25 +6099,23 @@ bool bt_link_qos_set(uint8_t       bd_addr[6],
                      uint16_t      tpoll);
 
 /**
- * btm.h
- *
  * \brief   Enable BT sniff mode.
  *
  *
  * \param[in] bd_addr         Bluetooth device address.
- * \param[in] min_interval    Min sniff interval ranges from 0x0002 to 0x0540 in 625us slot units,
+ * \param[in] min_interval    Minimum sniff interval ranges from 0x0002 to 0x0540 in 625us slot units,
  *                            and only even values are valid.
- * \param[in] max_interval    Max sniff interval ranges from 0x0002 to 0x0540 in 625us slot units,
+ * \param[in] max_interval    Maximum sniff interval ranges from 0x0002 to 0x0540 in 625us slot units,
  *                            and only even values are valid.
  * \param[in] sniff_attempt   Number of baseband receive slots for sniff attempt that ranges from
  *                            0x0001 to 0x7FFF.
  * \param[in] sniff_timeout   Number of baseband receive slots for sniff timeout that ranges from
  *                            0x0000 to 0x0028.
- * \note   If the parameters min_interval and max_interval are both set to 0, the Bluetooth Manager
+ * \note   If the parameters min_interval and max_interval are both set to 0, the Bluetooth manager
  *         will use the default interval configurations or the last interval configurations.
- *         If the parameters sniff_attempt is set to 0, the Bluetooth Manager will use the default
+ *         If the parameters sniff_attempt is set to 0, the Bluetooth manager will use the default
  *         sniff attempt configuration or the last sniff attempt configuration.
- *         If the parameters sniff_timeout is set to 0, the Bluetooth Manager will use the default
+ *         If the parameters sniff_timeout is set to 0, the Bluetooth manager will use the default
  *         sniff timeout configuration or the last sniff timeout configuration.
  *
  * \return The status of enabling BT sniff mode.
@@ -6527,8 +6131,6 @@ bool bt_sniff_mode_enable(uint8_t  bd_addr[6],
                           uint16_t sniff_timeout);
 
 /**
- * btm.h
- *
  * \brief   Disable BT sniff mode.
  *
  * \param[in] bd_addr    Bluetooth device address.
@@ -6542,8 +6144,23 @@ bool bt_sniff_mode_enable(uint8_t  bd_addr[6],
 bool bt_sniff_mode_disable(uint8_t bd_addr[6]);
 
 /**
- * btm.h
+ * \brief   Exit BT sniff mode.
  *
+ * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
+ *
+ * \param[in] bd_addr    Bluetooth device address.
+ * \param[in] refresh    Refresh the sniff mode timeout value.
+ *
+ * \return The status of exiting BT sniff mode.
+ * \retval true     BT sniff mode was exited successfully.
+ * \retval false    BT sniff mode was failed to exit.
+ *
+ * \ingroup BT_BTM
+ */
+bool bt_sniff_mode_exit(uint8_t bd_addr[6],
+                        bool    refresh);
+
+/**
  * \brief   Enable BT role switch.
  *
  * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
@@ -6559,8 +6176,6 @@ bool bt_sniff_mode_disable(uint8_t bd_addr[6]);
 bool bt_role_switch_enable(uint8_t bd_addr[6]);
 
 /**
- * btm.h
- *
  * \brief   Disable BT role switch.
  *
  * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
@@ -6576,8 +6191,6 @@ bool bt_role_switch_enable(uint8_t bd_addr[6]);
 bool bt_role_switch_disable(uint8_t bd_addr[6]);
 
 /**
- * btm.h
- *
  * \brief   Enable/disable PER report on BT link.
  *
  * \param[in] bd_addr    Bluetooth device address.
@@ -6595,8 +6208,6 @@ bool bt_link_per_report(uint8_t  bd_addr[6],
                         uint16_t period);
 
 /**
- * btm.h
- *
  * \brief   Enable/disable RSSI report on BT link.
  *
  * \param[in] bd_addr    Bluetooth device address.
@@ -6614,8 +6225,6 @@ bool bt_link_rssi_report(uint8_t  bd_addr[6],
                          uint16_t period);
 
 /**
- * btm.h
- *
  * \brief    Read the Received Signal Strength Indication (RSSI) value.
  *
  * \param[in]  bd_addr        Bluetooth device address.
@@ -6629,8 +6238,6 @@ bool bt_link_rssi_report(uint8_t  bd_addr[6],
 bool bt_link_rssi_read(uint8_t bd_addr[6]);
 
 /**
- * btm.h
- *
  * \brief   Set pairing tx power.
  *
  * \param[in] offset_level     The offset level to be modified, range from -2 to 2.
@@ -6644,8 +6251,6 @@ bool bt_link_rssi_read(uint8_t bd_addr[6]);
 bool bt_pairing_tx_power_set(int8_t offset_level);
 
 /**
- * btm.h
- *
  * \brief   Set tx power on BT link.
  *
  * \param[in] bd_addr          Bluetooth device address.
@@ -6661,16 +6266,14 @@ bool bt_link_tx_power_set(uint8_t bd_addr[6],
                           int8_t  offset_level);
 
 /**
- * btm.h
- *
  * \brief   Set RSSI golden range on BT link.
  *
  * \note    Parameter max_rssi and min_rssi set to 0 means using default golden range,
  *          otherwise, max_rssi shoule be greater than min_rssi.
  *
  * \param[in] bd_addr      Bluetooth device address.
- * \param[in] max_rssi     The max rssi value in dBm, range from -32768 ~ 32767.
- * \param[in] min_rssi     The min rssi value in dBm, range from -32768 ~ 32767.
+ * \param[in] max_rssi     The maximum rssi value in dBm, range from -32768 ~ 32767.
+ * \param[in] min_rssi     The minimum rssi value in dBm, range from -32768 ~ 32767.
  *
  * \return The status of set RSSI golden range.
  * \retval true     RSSI golden range was set successfully.
@@ -6683,8 +6286,6 @@ bool bt_link_rssi_golden_range_set(uint8_t bd_addr[6],
                                    int16_t min_rssi);
 
 /**
- * btm.h
- *
  * \brief   Set acceptable range for link tpoll.
  *
  * \param[in] bd_addr    Bluetooth device address.
@@ -6704,79 +6305,25 @@ bool bt_link_tpoll_range_set(uint8_t  bd_addr[6],
                              uint16_t max_tpoll);
 
 /**
- * btm.h
+ * \brief   Set traffic quality of service.
  *
- * \brief   Set random traffic quality of service.
+ * \xrefitem Added_API_2_14_0_0 "Added Since 2.14.0.0" "Added API"
  *
- * \xrefitem Added_API_2_12_0_0 "Added Since 2.12.0.0" "Added API"
- *
- * \param[in] bd_addr       Bluetooth device address.
- * \param[in] rsvd_slots    The reserved slots in 625us slot unit.
- * \param[in] traffic_mask  The traffic bitmask, bitmask set to 0 means corresponding traffic set to backgroud.
+ * \param[in] bd_addr   Bluetooth device address.
+ * \param[in] type      The traffic QoS type defined in \ref T_BT_TRAFFIC_QOS_TYPE.
+ * \param[in] param     The traffic QoS parameter \ref T_BT_TRAFFIC_QOS_PARAM.
  *
  * \return The result of this function.
- * \retval true     Set random traffic quality of service successfully.
- * \retval false    Set random traffic quality of service failed.
+ * \retval true     Set traffic quality of service successfully.
+ * \retval false    Set traffic quality of service failed.
  *
  * \ingroup BT_BTM
  */
-bool bt_link_random_traffic_qos_set(uint8_t  bd_addr[6],
-                                    uint8_t  rsvd_slots,
-                                    uint16_t traffic_mask);
+bool bt_link_traffic_qos_set(uint8_t                bd_addr[6],
+                             T_BT_TRAFFIC_QOS_TYPE  type,
+                             T_BT_TRAFFIC_QOS_PARAM param);
 
 /**
- * btm.h
- *
- * \brief   Set periodic traffic quality of service.
- *
- * \xrefitem Added_API_2_12_0_0 "Added Since 2.12.0.0" "Added API"
- *
- * \param[in] bd_addr        Bluetooth device address.
- * \param[in] interval       The interval ranged from 0x06 to 0x1000 in 625us slot unit.
- * \param[in] rsvd_slots     The reserved slots in 625us slot unit, must smaller than interval.
- * \param[in] traffic_mask   The traffic bitmask, bitmask set to 0 means corresponding traffic set to backgroud.
- * \param[in] negotiate      Whether negotiate setting parameters with the remote device.
- * \arg    true     Negotiate setting parameters with the remote device.
- * \arg    false    Not negotiate setting parameters with the remote device.
- *
- * \return The result of this function.
- * \retval true     Set periodic traffic quality of service successfully.
- * \retval false    Set periodic traffic quality of service failed.
- *
- * \ingroup BT_BTM
- */
-bool bt_link_periodic_traffic_qos_set(uint8_t  bd_addr[6],
-                                      uint16_t interval,
-                                      uint8_t  rsvd_slots,
-                                      uint16_t traffic_mask,
-                                      bool     negotiate);
-
-/**
- * btm.h
- *
- * \brief   Set periodic sync traffic quality of service. Periodic traffic shoule be set before calling this function.
- *
- * \xrefitem Added_API_2_12_0_0 "Added Since 2.12.0.0" "Added API"
- *
- * \param[in] bd_addr          Bluetooth device address.
- * \param[in] sync_weighting   The weighting to be scheduled for bd_addr, ranged from 0x01 to 0x10.
- * \param[in] rsvd_slots       The reserved slots in 625us slot unit.
- * \param[in] traffic_mask     The traffic bitmask, bitmask set to 0 means corresponding traffic set to backgroud.
- *
- * \return The result of this function.
- * \retval true     Set periodic sync traffic quality of service successfully.
- * \retval false    Set periodic sync traffic quality of service failed.
- *
- * \ingroup BT_BTM
- */
-bool bt_link_periodic_sync_traffic_qos_set(uint8_t  bd_addr[6],
-                                           uint8_t  sync_weighting,
-                                           uint8_t  rsvd_slots,
-                                           uint16_t traffic_mask);
-
-/**
- * btm.h
- *
  * \brief   Set idle zone. Periodic sync traffic quality of service should be set before calling this function.
  *
  * \xrefitem Added_API_2_12_0_0 "Added Since 2.12.0.0" "Added API"
@@ -6798,13 +6345,12 @@ bool bt_link_idle_zone_set(uint8_t bd_addr[6],
                            uint8_t idle_skip);
 
 /**
- * btm.h
- *
  * \brief   Clear traffic quality of service.
  *
  * \xrefitem Added_API_2_12_0_0 "Added Since 2.12.0.0" "Added API"
  *
  * \param[in] bd_addr       Bluetooth device address.
+ * \param[in] type          The traffic QoS type defined in \ref T_BT_TRAFFIC_QOS_TYPE.
  *
  * \return The result of this function.
  * \retval true     Clear traffic quality of service successfully.
@@ -6812,11 +6358,10 @@ bool bt_link_idle_zone_set(uint8_t bd_addr[6],
  *
  * \ingroup BT_BTM
  */
-bool bt_link_traffic_qos_clear(uint8_t bd_addr[6]);
+bool bt_link_traffic_qos_clear(uint8_t               bd_addr[6],
+                               T_BT_TRAFFIC_QOS_TYPE type);
 
 /**
- * btm.h
- *
  * \brief   Set periodic traffic.
  *
  * \xrefitem Added_API_2_12_0_0 "Added Since 2.12.0.0" "Added API"
@@ -6832,8 +6377,6 @@ bool bt_link_traffic_qos_clear(uint8_t bd_addr[6]);
 bool bt_link_periodic_traffic_set(uint8_t bd_addr[6]);
 
 /**
- * btm.h
- *
  * \brief   Connect the sniffing link.
  *
  * \param[in] bd_addr    Bluetooth device address.
@@ -6847,8 +6390,6 @@ bool bt_link_periodic_traffic_set(uint8_t bd_addr[6]);
 bool bt_sniffing_link_connect(uint8_t bd_addr[6]);
 
 /**
- * btm.h
- *
  * \brief   Disconnect the sniffing link.
  *
  * \param[in] bd_addr    Bluetooth device address.
@@ -6862,8 +6403,6 @@ bool bt_sniffing_link_connect(uint8_t bd_addr[6]);
 bool bt_sniffing_link_disconnect(uint8_t bd_addr[6]);
 
 /**
- * btm.h
- *
  * \brief   Start the audio sniffing link.
  *
  * \param[in] bd_addr       Bluetooth device address.
@@ -6887,8 +6426,6 @@ bool bt_sniffing_link_audio_start(uint8_t  bd_addr[6],
                                   uint8_t  idle_skip);
 
 /**
- * btm.h
- *
  * \brief   Stop the audio sniffing link.
  *
  * \param[in] bd_addr    Bluetooth device address.
@@ -6904,8 +6441,6 @@ bool bt_sniffing_link_audio_stop(uint8_t bd_addr[6],
                                  uint8_t reason);
 
 /**
- * btm.h
- *
  * \brief   Set parameters for the audio sniffing link.
  *
  * \param[in] bd_addr       Bluetooth device address.
@@ -6929,8 +6464,6 @@ bool bt_sniffing_link_audio_cfg(uint8_t  bd_addr[6],
                                 uint8_t  idle_skip);
 
 /**
- * btm.h
- *
  * \brief   Start voice sniffing link.
  *
  * \param[in] bd_addr    Bluetooth device address.
@@ -6944,8 +6477,6 @@ bool bt_sniffing_link_audio_cfg(uint8_t  bd_addr[6],
 bool bt_sniffing_link_voice_start(uint8_t bd_addr[6]);
 
 /**
- * btm.h
- *
  * \brief   Stop voice sniffing link.
  *
  * \param[in] bd_addr    Bluetooth device address.
@@ -6961,13 +6492,11 @@ bool bt_sniffing_link_voice_stop(uint8_t bd_addr[6],
                                  uint8_t reason);
 
 /**
- * btm.h
- *
  * \brief   Set a2dp packet nack number.
  *
- * \param[in] enable        enable or disable.
- * \param[in] nack_num      nack num for a2dp packet.
- * \param[in] quick_flush   quick flush a2dp packet
+ * \param[in] enable        Enable or disable.
+ * \param[in] nack_num      Nack num for a2dp packet.
+ * \param[in] quick_flush   Quick flush a2dp packet.
  *
  * \return The result of this function.
  * \retval true     set successfully.

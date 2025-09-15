@@ -3,7 +3,7 @@
 *     Copyright(c) 2017, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * @file    hmac.h
-  * @brief   sha256hkdf algorithm
+  * @brief   SHA256HKDF algorithm
   * @author
   * @date    2023-4-27
   * @version v1.0
@@ -16,12 +16,12 @@
 #ifndef HMAC_H
 #define HMAC_H
 
-/** @defgroup  HAL_sha256hkdf    sha256hkdf api
-    * @brief This file introduces sha256hkdf APIs
+/** @defgroup  HAL_SHA256HKDF    SHA256HKDF
+    * @brief This file introduces SHA256HKDF APIs
     * @{
     */
 
-/** @defgroup HAL_sha256hkdf_Exported_Functions sha256hkdf Exported Functions
+/** @defgroup HAL_SHA256HKDF_Exported_Functions SHA256HKDF Exported Functions
     * @brief
     * @{
     */
@@ -37,14 +37,14 @@ extern "C" {
 
 
 /**
- * \brief          Output = Generic_HMAC( hmac key, input buffer )
+ * \brief          Output = Generic_HMAC( hmac key, input buffer ).
  * \xrefitem       Experimental_Added_API_2_13_0_0 " Experimental Added Since 2.13.0.0" "Added API"
- * \param md_info  message digest info
- * \param key      HMAC secret key
- * \param keylen   length of the HMAC key in bytes
- * \param input    buffer holding the  data
- * \param ilen     length of the input data
- * \param output   Generic HMAC-result
+ * \param md_info  Message digest info.
+ * \param key      HMAC secret key.
+ * \param keylen   Length of the HMAC key in bytes.
+ * \param input    Buffer holding the  data.
+ * \param ilen     Length of the input data.
+ * \param output   Generic HMAC-result.
  *
  * \returns        0 on success, MBEDTLS_ERR_MD_BAD_INPUT_DATA if parameter
  *                 verification fails.
@@ -57,7 +57,7 @@ uint32_t sha256_hkdf(const uint8_t *key, uint32_t key_len, const uint8_t *salt, 
 #ifdef __cplusplus
 }
 #endif
-/** @} */ /* End of group HAL_sha256hkdf_Exported_Functions */
-/** @} */ /* End of group HAL_sha256hkdf */
+/** @} */ /* End of group HAL_SHA256HKDF_Exported_Functions */
+/** @} */ /* End of group HAL_SHA256HKDF */
 
 #endif /* hmac.h */

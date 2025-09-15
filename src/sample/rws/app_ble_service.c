@@ -18,6 +18,7 @@
 #include "app_transfer.h"
 #include "app_cfg.h"
 #include "app_ble_gap.h"
+#include "app_lea_unicast_audio.h"
 #include "bas.h"
 #include "dis.h"
 #if F_APP_CFU_BLE_CHANNEL_SUPPORT
@@ -104,6 +105,10 @@
 #include "app_ble_hid_controller.h"
 #endif
 
+#if F_APP_GATT_OVER_BREDR_SUPPORT
+#include "rtk_vendor_dis_gatt_svc.h"
+#endif
+
 #define MAX_BLE_SRV_NUM 16
 
 static T_APP_RESULT app_ble_service_general_srv_cb(T_SERVER_ID service_id, void *p_data)
@@ -119,7 +124,8 @@ static T_APP_RESULT app_ble_service_general_srv_cb(T_SERVER_ID service_id, void 
     conn_id = p_para->event_data.send_data_result.conn_id;
 #endif
 
-    APP_PRINT_INFO2("app_ble_service_general_srv_cb: conn_id %d, event %d", conn_id, p_para->eventId);
+    APP_PRINT_INFO3("app_ble_service_general_srv_cb: conn_id %d eventId %d attrib_idx %d", conn_id,
+                    p_para->eventId, p_para->event_data.send_data_result.attrib_idx);
 
     switch (p_para->eventId)
     {
@@ -132,7 +138,17 @@ static T_APP_RESULT app_ble_service_general_srv_cb(T_SERVER_ID service_id, void 
                          p_para->event_data.send_data_result.attrib_idx);*/
         if (p_para->event_data.send_data_result.attrib_idx == TRANSMIT_SVC_TX_DATA_INDEX)
         {
-            app_transfer_pop_data_queue(CMD_PATH_LE, true);
+            T_CMD_PATH cmd_path = CMD_PATH_NONE;
+            if (app_link_find_le_link_by_conn_handle(p_para->event_data.send_data_result.conn_handle))
+            {
+                cmd_path = CMD_PATH_LE;
+            }
+            else if (app_link_find_br_link_by_conn_handle(p_para->event_data.send_data_result.conn_handle))
+            {
+                cmd_path = CMD_PATH_GATT_OVER_BREDR;
+            }
+            APP_PRINT_INFO1("app_ble_service common_cb: PROFILE_EVT_SEND_DATA_COMPLETE cmd_path %d", cmd_path);
+            app_transfer_pop_data_queue(cmd_path, false);
         }
 
 #if AMA_FEATURE_SUPPORT
@@ -202,8 +218,9 @@ static T_APP_RESULT app_ble_service_general_srv_cb(T_SERVER_ID service_id, void 
     return app_result;
 }
 
-static void app_ble_service_handle_rx_data(T_APP_LE_LINK *p_link, uint8_t *p_data,
-                                           uint16_t data_len)
+static void app_ble_service_handle_rx_data(T_CMD_PATH cmd_path, T_APP_VENDOR_CMD *p_cmd,
+                                           uint8_t *p_data,
+                                           uint16_t data_len, uint8_t link_idx)
 {
     uint16_t total_len;
 
@@ -211,7 +228,7 @@ static void app_ble_service_handle_rx_data(T_APP_LE_LINK *p_link, uint8_t *p_dat
     {
         uint8_t rx_seqn;
 
-        if (p_link->p_embedded_cmd == NULL)
+        if (p_cmd->buf == NULL)
         {
             uint16_t cmd_len;
 
@@ -223,7 +240,7 @@ static void app_ble_service_handle_rx_data(T_APP_LE_LINK *p_link, uint8_t *p_dat
                     cmd_len = (p_data[2] | (p_data[3] << 8)) + 4; //sync_byte, seqn, length
                     if (data_len >= cmd_len)
                     {
-                        app_cmd_handler(&p_data[4], (cmd_len - 4), CMD_PATH_LE, rx_seqn, p_link->id);
+                        app_cmd_handler(&p_data[4], (cmd_len - 4), cmd_path, rx_seqn, link_idx);
                         data_len -= cmd_len;
                         p_data += cmd_len;
                     }
@@ -241,11 +258,11 @@ static void app_ble_service_handle_rx_data(T_APP_LE_LINK *p_link, uint8_t *p_dat
 
             if (data_len)
             {
-                p_link->p_embedded_cmd = malloc(data_len);
-                if (p_link->p_embedded_cmd != NULL)
+                p_cmd->buf = malloc(data_len);
+                if (p_cmd->buf != NULL)
                 {
-                    memcpy(p_link->p_embedded_cmd, p_data, data_len);
-                    p_link->embedded_cmd_len = data_len;
+                    memcpy(p_cmd->buf, p_data, data_len);
+                    p_cmd->len = data_len;
                 }
             }
         }
@@ -254,23 +271,23 @@ static void app_ble_service_handle_rx_data(T_APP_LE_LINK *p_link, uint8_t *p_dat
             uint8_t *p_temp;
             uint16_t cmd_len;
 
-            p_temp = p_link->p_embedded_cmd;
-            total_len = p_link->embedded_cmd_len + data_len;
-            p_link->p_embedded_cmd = malloc(total_len);
-            if (p_link->p_embedded_cmd != NULL)
+            p_temp = p_cmd->buf;
+            total_len = p_cmd->len + data_len;
+            p_cmd->buf = malloc(total_len);
+            if (p_cmd->buf != NULL)
             {
-                memcpy(p_link->p_embedded_cmd, p_temp, p_link->embedded_cmd_len);
+                memcpy(p_cmd->buf, p_temp, p_cmd->len);
                 free(p_temp);
-                memcpy(p_link->p_embedded_cmd + p_link->embedded_cmd_len, p_data, data_len);
-                p_link->embedded_cmd_len = total_len;
+                memcpy(p_cmd->buf + p_cmd->len, p_data, data_len);
+                p_cmd->len = total_len;
                 data_len = total_len;
             }
             else
             {
-                p_link->p_embedded_cmd = p_temp;
-                data_len = p_link->embedded_cmd_len;
+                p_cmd->buf = p_temp;
+                data_len = p_cmd->len;
             }
-            p_data = p_link->p_embedded_cmd;
+            p_data = p_cmd->buf;
 
             //ios will auto combine two cmd into one pkt
             while (data_len > 5)
@@ -281,7 +298,7 @@ static void app_ble_service_handle_rx_data(T_APP_LE_LINK *p_link, uint8_t *p_dat
                     cmd_len = (p_data[2] | (p_data[3] << 8)) + 4;
                     if (data_len >= cmd_len)
                     {
-                        app_cmd_handler(&p_data[4], (cmd_len - 4), CMD_PATH_LE, rx_seqn, p_link->id);
+                        app_cmd_handler(&p_data[4], (cmd_len - 4), cmd_path, rx_seqn, link_idx);
                         data_len -= cmd_len;
                         p_data += cmd_len;
                     }
@@ -299,12 +316,12 @@ static void app_ble_service_handle_rx_data(T_APP_LE_LINK *p_link, uint8_t *p_dat
 
             if (data_len && p_data != NULL)
             {
-                p_temp = p_link->p_embedded_cmd;
-                p_link->p_embedded_cmd = malloc(data_len);
-                if (p_link->p_embedded_cmd != NULL)
+                p_temp = p_cmd->buf;
+                p_cmd->buf = malloc(data_len);
+                if (p_cmd->buf != NULL)
                 {
-                    memcpy(p_link->p_embedded_cmd, p_data, data_len);
-                    p_link->embedded_cmd_len = data_len;
+                    memcpy(p_cmd->buf, p_data, data_len);
+                    p_cmd->len = data_len;
                     free(p_temp);
                 }
             }
@@ -343,7 +360,7 @@ static void app_ble_service_handle_rx_data(T_APP_LE_LINK *p_link, uint8_t *p_dat
             tx_ptr = malloc(pkt_len + 6);
             if (tx_ptr != NULL)
             {
-                tx_ptr[0] = p_link->id;
+                tx_ptr[0] = link_idx;
                 tx_ptr[1] = pkt_type;
                 tx_ptr[2] = (uint8_t)total_len;
                 tx_ptr[3] = (uint8_t)(total_len >> 8);
@@ -369,6 +386,9 @@ static T_APP_RESULT app_ble_service_transmit_srv_cb(T_SERVER_ID service_id, void
 {
     T_APP_RESULT app_result = APP_RESULT_SUCCESS;
     T_TRANSMIT_SRV_CALLBACK_DATA *p_callback = (T_TRANSMIT_SRV_CALLBACK_DATA *)p_data;
+    T_CMD_PATH cmd_path = CMD_PATH_LE;
+    T_APP_LE_LINK *p_le_link = NULL;
+    T_APP_BR_LINK *p_br_link = NULL;
 
     APP_PRINT_INFO2("app_ble_service_transmit_srv_cb: conn_id %d, msg_type %d", p_callback->conn_id,
                     p_callback->msg_type);
@@ -376,37 +396,63 @@ static T_APP_RESULT app_ble_service_transmit_srv_cb(T_SERVER_ID service_id, void
     if ((p_callback->chann_type == GAP_CHANN_TYPE_LE_ATT) ||
         (p_callback->chann_type == GAP_CHANN_TYPE_LE_ECFC))
     {
-        T_APP_LE_LINK *p_link;
-        p_link = app_link_find_le_link_by_conn_id(p_callback->conn_id);
-        if (p_link != NULL)
-        {
-            if (p_callback->msg_type == SERVICE_CALLBACK_TYPE_WRITE_CHAR_VALUE)
-            {
-                if (p_callback->attr_index == TRANSMIT_SVC_RX_DATA_INDEX)
-                {
-                    uint8_t         *p_data;
-                    uint16_t        data_len;
+        cmd_path = CMD_PATH_LE;
+        p_le_link = app_link_find_le_link_by_conn_id(p_callback->conn_id);
+    }
+    else
+    {
+        cmd_path = CMD_PATH_GATT_OVER_BREDR;
+        p_br_link = app_link_find_br_link_by_conn_handle(p_callback->conn_handle);
+    }
 
-                    p_data = p_callback->msg_data.rx_data.p_value;
-                    data_len = p_callback->msg_data.rx_data.len;
-                    app_ble_service_handle_rx_data(p_link, p_data, data_len);
-                }
-            }
-            else if (p_callback->msg_type == SERVICE_CALLBACK_TYPE_INDIFICATION_NOTIFICATION)
+    if (p_callback->msg_type == SERVICE_CALLBACK_TYPE_WRITE_CHAR_VALUE)
+    {
+        if (p_callback->attr_index == TRANSMIT_SVC_RX_DATA_INDEX)
+        {
+            uint8_t         *p_data;
+            uint16_t        data_len;
+
+            p_data = p_callback->msg_data.rx_data.p_value;
+            data_len = p_callback->msg_data.rx_data.len;
+            if ((cmd_path == CMD_PATH_LE) && (p_le_link != NULL))
             {
-                if (p_callback->attr_index == TRANSMIT_SVC_TX_DATA_CCCD_INDEX)
+                p_le_link->cmd.tx_mask |= TX_ENABLE_CCCD_BIT;
+                app_ble_service_handle_rx_data(cmd_path, &p_le_link->cmd, p_data, data_len, p_le_link->id);
+            }
+            else if ((cmd_path == CMD_PATH_GATT_OVER_BREDR) && (p_br_link != NULL))
+            {
+                p_br_link->cmd.tx_mask |= TX_ENABLE_CCCD_BIT;
+                app_ble_service_handle_rx_data(cmd_path, &p_br_link->cmd, p_data, data_len, p_br_link->id);
+            }
+        }
+    }
+    else if (p_callback->msg_type == SERVICE_CALLBACK_TYPE_INDIFICATION_NOTIFICATION)
+    {
+        if (p_callback->attr_index == TRANSMIT_SVC_TX_DATA_CCCD_INDEX)
+        {
+            if (p_callback->msg_data.notification_indification_value == TRANSMIT_SVC_TX_DATA_CCCD_ENABLE)
+            {
+                if ((cmd_path == CMD_PATH_LE) && (p_le_link != NULL))
                 {
-                    if (p_callback->msg_data.notification_indification_value == TRANSMIT_SVC_TX_DATA_CCCD_ENABLE)
-                    {
-                        p_link->transmit_srv_tx_enable_fg |= TX_ENABLE_CCCD_BIT;
-                        APP_PRINT_INFO0("app_ble_service_transmit_srv_cb: TRANSMIT_SVC_TX_DATA_CCCD_ENABLE");
-                    }
-                    else if (p_callback->msg_data.notification_indification_value == TRANSMIT_SVC_TX_DATA_CCCD_DISABLE)
-                    {
-                        p_link->transmit_srv_tx_enable_fg &= ~TX_ENABLE_CCCD_BIT;
-                        APP_PRINT_INFO0("app_ble_service_transmit_srv_cb: TRANSMIT_SVC_TX_DATA_CCCD_DISABLE");
-                    }
+                    p_le_link->cmd.tx_mask |= TX_ENABLE_CCCD_BIT;
                 }
+                else if ((cmd_path == CMD_PATH_GATT_OVER_BREDR) && (p_br_link != NULL))
+                {
+                    p_br_link->cmd.tx_mask |= TX_ENABLE_CCCD_BIT;
+                }
+                APP_PRINT_INFO0("app_ble_service_transmit_srv_cb: TRANSMIT_SVC_TX_DATA_CCCD_ENABLE");
+            }
+            else if (p_callback->msg_data.notification_indification_value == TRANSMIT_SVC_TX_DATA_CCCD_DISABLE)
+            {
+                if ((cmd_path == CMD_PATH_LE) && (p_le_link != NULL))
+                {
+                    p_le_link->cmd.tx_mask &= ~TX_ENABLE_CCCD_BIT;
+                }
+                else if ((cmd_path == CMD_PATH_GATT_OVER_BREDR) && (p_br_link != NULL))
+                {
+                    p_br_link->cmd.tx_mask &= ~TX_ENABLE_CCCD_BIT;
+                }
+                APP_PRINT_INFO0("app_ble_service_transmit_srv_cb: TRANSMIT_SVC_TX_DATA_CCCD_DISABLE");
             }
         }
     }
@@ -435,12 +481,12 @@ static T_APP_RESULT app_ble_service_transmit_srv_dongle_cb(T_SERVER_ID service_i
 
                 p_data = p_callback->msg_data.rx_data.p_value;
                 data_len = p_callback->msg_data.rx_data.len;
-                app_ble_service_handle_rx_data(p_link, p_data, data_len);
+                app_ble_service_handle_rx_data(CMD_PATH_LE, &p_link->cmd, p_data, data_len, p_link->id);
             }
             else if (p_callback->attr_index == TRANSMIT_SVC_DONGLE_DEVICE_INFO_INDEX)
             {
 #if F_APP_TEAMS_BLE_POLICY
-                T_TRANSMIT_SRV_DEVICE_INFO *p_teams_ble_dev_info = &(p_callback->msg_data.device_info);
+                T_TRANSMIT_SRV_DONGLE_DEVICE_INFO *p_teams_ble_dev_info = &(p_callback->msg_data.device_info);
                 app_teams_ble_policy_set_dev_bond_info(p_teams_ble_dev_info->bd_addr,
                                                        APP_TEAMS_BLE_POLICY_SET_DEVICE_TYPE, sizeof(p_teams_ble_dev_info->device_type),
                                                        &(p_teams_ble_dev_info->device_type));
@@ -462,7 +508,12 @@ static T_APP_RESULT app_ble_service_transmit_srv_dongle_cb(T_SERVER_ID service_i
 #endif
                 }
 #else
-                app_report_gaming_mode_info();
+                if (app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SECONDARY)
+                {
+                    app_report_gaming_mode_info(app_db.gaming_mode);
+                }
+
+                app_lea_uca_pwr_on_enter_gaming_mode();
 #endif
                 APP_PRINT_TRACE1("app_ble_service_transmit_srv_dongle_cb: device type %d",
                                  p_link->remote_device_type);
@@ -474,13 +525,13 @@ static T_APP_RESULT app_ble_service_transmit_srv_dongle_cb(T_SERVER_ID service_i
             {
                 if (p_callback->msg_data.notification_indification_value == TRANSMIT_SVC_DONGLE_TX_DATA_CCCD_ENABLE)
                 {
-                    p_link->transmit_srv_dongle_tx_enable_fg |= TX_ENABLE_CCCD_BIT;
+                    p_link->cmd.dongle_tx_mask |= TX_ENABLE_CCCD_BIT;
                     APP_PRINT_INFO0("app_ble_service_transmit_srv_dongle_cb: TRANSMIT_SVC_DONGLE_TX_DATA_CCCD_ENABLE");
                 }
                 else if (p_callback->msg_data.notification_indification_value ==
                          TRANSMIT_SVC_DONGLE_TX_DATA_CCCD_DISABLE)
                 {
-                    p_link->transmit_srv_dongle_tx_enable_fg &= ~TX_ENABLE_CCCD_BIT;
+                    p_link->cmd.dongle_tx_mask &= ~TX_ENABLE_CCCD_BIT;
                     APP_PRINT_INFO0("app_ble_service_transmit_srv_dongle_cb: TRANSMIT_SVC_DONGLE_TX_DATA_CCCD_DISABLE");
                 }
             }
@@ -626,13 +677,20 @@ static T_APP_RESULT app_ble_service_dis_srv_cb(T_SERVER_ID service_id, void *p_d
             if (p_dis_cb_data->msg_data.read_value_index == DIS_READ_FIRMWARE_REV_INDEX)
             {
 #if CONFIG_REALTEK_GFPS_FEATURE_SUPPORT
-                const uint8_t DISFirmwareRev[] = GFPS_FIRMWARE_VERSION;
-#else
-                const uint8_t DISFirmwareRev[] = "1.0.0";
+                if (extend_app_cfg_const.gfps_support)
+                {
+                    dis_set_parameter(DIS_PARAM_FIRMWARE_REVISION,
+                                      sizeof(extend_app_cfg_const.gfps_version),
+                                      (void *)extend_app_cfg_const.gfps_version);
+                }
+                else
 #endif
-                dis_set_parameter(DIS_PARAM_FIRMWARE_REVISION,
-                                  sizeof(DISFirmwareRev),
-                                  (void *)DISFirmwareRev);
+                {
+                    const uint8_t DISFirmwareRev[] = "1.0.0";
+                    dis_set_parameter(DIS_PARAM_FIRMWARE_REVISION,
+                                      sizeof(DISFirmwareRev),
+                                      (void *)DISFirmwareRev);
+                }
             }
             else if (p_dis_cb_data->msg_data.read_value_index == DIS_READ_PNP_ID_INDEX)
             {
@@ -979,13 +1037,79 @@ static T_APP_RESULT app_ble_service_hids_cfu_srv_cb(T_SERVER_ID service_id, void
 }
 #endif
 
+#if F_APP_GATT_OVER_BREDR_SUPPORT
+T_APP_RESULT app_ble_service_rvdis_gatt_svc_cb(uint16_t conn_handle, uint16_t cid, uint8_t type,
+                                               void *p_data)
+{
+    bool ret = true;
+    if (type == GATT_MSG_RVDIS_SERVER_READ_CHAR_IND)
+    {
+        T_RVDIS_SERVER_READ_CHAR_IND *p_read = (T_RVDIS_SERVER_READ_CHAR_IND *)p_data;
+
+        APP_PRINT_INFO3("app_ble_service_rvdis_gatt_svc_cb: service id %d, char_uuid 0x%x, offset %d",
+                        p_read->service_id, p_read->char_uuid, p_read->offset);
+
+        switch (p_read->char_uuid)
+        {
+        case GATT_UUID_CHAR_PREFERRED_GATT_TRANSPORT_TYPE:
+            {
+                uint8_t preferred_transport_type = RVDIS_PREFERRED_GATT_TRANSPORT_TYPE_LE;
+
+#if F_APP_GATT_OVER_BREDR_SUPPORT
+                preferred_transport_type = RVDIS_PREFERRED_GATT_TRANSPORT_TYPE_BREDR;
+#endif
+                ret = rvdis_char_read_confirm(conn_handle, cid, p_read->service_id, p_read->char_uuid,
+                                              p_read->offset, GATT_CHAR_PREFERRED_GATT_TRANSPORT_TYPE_LEN, &preferred_transport_type);
+            }
+            break;
+
+        case GATT_UUID_CHAR_CURRENT_GATT_TRANSPORT_TYPE:
+            {
+                uint8_t current_transport_type = RVDIS_PREFERRED_GATT_TRANSPORT_TYPE_LE;
+
+                if (cid == L2C_FIXED_CID_ATT)
+                {
+                    current_transport_type = RVDIS_PREFERRED_GATT_TRANSPORT_TYPE_LE;
+                }
+                else
+                {
+                    current_transport_type = RVDIS_PREFERRED_GATT_TRANSPORT_TYPE_BREDR;
+                }
+
+
+                ret = rvdis_char_read_confirm(conn_handle, cid, p_read->service_id, p_read->char_uuid,
+                                              p_read->offset, GATT_CHAR_CURRENT_GATT_TRANSPORT_TYPE_LEN, &current_transport_type);
+            }
+            break;
+
+        default:
+            break;
+        }
+    }
+
+    if (ret)
+    {
+        return APP_RESULT_SUCCESS;
+    }
+    else
+    {
+        return APP_RESULT_APP_ERR;
+    }
+}
+#endif
+
 void app_ble_service_init(void)
 {
     /** NOTES: 4 includes transimit service, ota service, bas, dis service.
+     *  transimit service dongle is added when use LEA.
      *  if more ble service are added, you need to modify this value.
      * */
 
+#if F_APP_LEA_SUPPORT
+    uint8_t server_num = 5;
+#else
     uint8_t server_num = 4;
+#endif
 
 #if XM_XIAOAI_FEATURE_SUPPORT
     if (extend_app_cfg_const.xiaoai_support)
@@ -997,47 +1121,89 @@ void app_ble_service_init(void)
 #if F_APP_LOCAL_PLAYBACK_SUPPORT
     if (app_cfg_const.local_playback_support)
     {
-        server_num = server_num + 1;
+        server_num++;
     }
 #endif
 
 #if F_APP_XIAOWEI_FEATURE_SUPPORT
-    server_num = server_num + 1;
+    server_num++;
 #endif
 
 #if BISTO_FEATURE_SUPPORT
-    server_num = server_num + BISTO_GATT_SERVICE_NUM;
+    server_num += BISTO_GATT_SERVICE_NUM;
 #endif
 
 #if CONFIG_REALTEK_GFPS_FEATURE_SUPPORT
-    server_num = server_num + 1;
+    server_num++;
+#if CONFIG_REALTEK_GFPS_FINDER_SUPPORT
+    server_num++;
+#endif
 #endif
 
 #if CONFIG_REALTEK_APP_TEAMS_FEATURE_SUPPORT
-    server_num = server_num + 1;
+    server_num++;
 #endif
 
 #if F_APP_CFU_BLE_CHANNEL_SUPPORT
-    server_num = server_num + 1;
+    server_num++;
 #endif
 
 #if F_APP_TUYA_SUPPORT
     if (extend_app_cfg_const.tuya_support)
     {
-        server_num = server_num + 1;
+        server_num++;
     }
 #endif
 
 #if F_APP_FINDMY_FEATURE_SUPPORT
 #if F_APP_FINDMY_USE_UARP
-    server_num = server_num + 4;
+    server_num += 4;
 #else
-    server_num = server_num + 3;
+    server_num += 3;
 #endif
 #endif
 
 #if F_APP_BLE_HID_CONTROLLER_SUPPORT
     server_num = server_num + 1;
+#endif
+
+#if F_APP_TMAP_CT_SUPPORT || F_APP_TMAP_UMR_SUPPORT
+    server_num += 3; //ASCS, PACS and CAS
+#endif
+
+#if F_APP_TMAP_BMR_SUPPORT
+    server_num++; // BASS
+#endif
+
+#if F_APP_VCS_SUPPORT
+    server_num++;
+#if F_APP_AICS_SUPPORT
+    server_num++;
+#endif
+#endif
+
+#if F_APP_MICS_SUPPORT
+    server_num++;
+#endif
+
+#if F_APP_CSIS_SUPPORT
+    server_num++;
+#endif
+
+#if F_APP_TMAS_SUPPORT
+    server_num++;
+#endif
+
+#if F_APP_HAS_SUPPORT
+    server_num++;
+#endif
+
+#if F_APP_CHATGPT_SUPPORT
+    server_num++;
+#endif
+
+#if F_APP_GATT_OVER_BREDR_SUPPORT
+    server_num++;
 #endif
 
 #if F_APP_GATT_SERVER_EXT_API_SUPPORT
@@ -1047,11 +1213,8 @@ void app_ble_service_init(void)
 #else
     server_register_app_cb(app_ble_service_general_srv_cb);
 #endif
-#if F_APP_TMAP_CT_SUPPORT || F_APP_TMAP_UMR_SUPPORT || F_APP_TMAP_BMR_SUPPORT
-    server_init(server_num + MAX_BLE_SRV_NUM);
-#else
+
     server_init(server_num);
-#endif
 
 #if F_APP_GATT_SERVER_EXT_API_SUPPORT
     gatt_svc_init(GATT_SVC_USE_EXT_SERVER, 0);
@@ -1063,13 +1226,19 @@ void app_ble_service_init(void)
 
 #else
     transmit_srv_add(app_ble_service_transmit_srv_cb);
+
 #if F_APP_LEA_SUPPORT
     transmit_srv_dongle_add(app_ble_service_transmit_srv_dongle_cb);
 #endif
+
+#if F_APP_GATT_OVER_BREDR_SUPPORT
+    ota_add_service(app_ble_service_ota_srv_cb);
+#else
     if (app_cfg_const.rtk_app_adv_support)
     {
         ota_add_service(app_ble_service_ota_srv_cb);
     }
+#endif
 
 #if F_APP_TEAMS_BT_POLICY
     teams_bas_id = bas_add_service(app_ble_service_bas_srv_cb);
@@ -1114,6 +1283,10 @@ void app_ble_service_init(void)
     hids_add_service(app_ble_service_hids_cfu_srv_cb);
 #endif
 
+#if F_APP_GATT_OVER_BREDR_SUPPORT
+    rvdis_add_service(app_ble_service_rvdis_gatt_svc_cb);
+#endif
+
 #if CONFIG_REALTEK_APP_TEAMS_FEATURE_SUPPORT
     app_asp_device_init();
     app_teams_hid_init();
@@ -1144,5 +1317,6 @@ void app_ble_service_init(void)
     }
     app_findmy_adv_init();
 #endif
-#endif
+
+#endif // F_APP_DURIAN_SUPPORT
 }

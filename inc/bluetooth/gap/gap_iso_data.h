@@ -26,7 +26,7 @@ extern "C"
  *                        Header Files
  *============================================================================*/
 
-/** @addtogroup GAP GAP Module
+/** @addtogroup BT_Host Bluetooth Host
   * @{
   */
 
@@ -35,29 +35,8 @@ extern "C"
   */
 
 /** @addtogroup GAP_LE_ISO_DATA GAP LE ISO Data Module
+  * @brief GAP LE ISO Data Module
   * @{
-  */
-
-/*============================================================================*
- *                         Macros
- *============================================================================*/
-/** @defgroup GAP_LE_ISO_DATA_Exported_Macros GAP LE ISO Data Exported Macros
-  * @{
-  */
-
-/** End of GAP_LE_ISO_DATA_Exported_Macros
-  * @}
-  */
-
-/*============================================================================*
- *                         Types
- *============================================================================*/
-/** @defgroup GAP_LE_ISO_DATA_Exported_Types GAP LE ISO Data Exported Types
-  * @{
-  */
-
-/** End of GAP_LE_ISO_DATA_Exported_Types
-  * @}
   */
 
 /*============================================================================*
@@ -71,7 +50,7 @@ extern "C"
 /**
  * @brief       Release the ISO Data buffer that GAP supplied.
  *
- *              NOTE: This function is used for @ref ISOCH_ROLE_INITIATOR, @ref ISOCH_ROLE_ACCEPTOR and @ref BIG_MGR_ROLE_SYNC_RECEIVER.
+ * @note This function is used for @ref ISOCH_ROLE_INITIATOR, @ref ISOCH_ROLE_ACCEPTOR and @ref BIG_MGR_ROLE_SYNC_RECEIVER.
  *
  * @param[in]   p_buf   Point the buffer that needs to release.
  *
@@ -107,15 +86,15 @@ bool gap_iso_data_cfm(void *p_buf);
 /**
  * @brief       Send isochronous data to Controller.
  *
- *              NOTE: This function is used for @ref ISOCH_ROLE_INITIATOR, @ref ISOCH_ROLE_ACCEPTOR and @ref BIG_MGR_ROLE_ISOC_BROADCASTER.
+ * @note This function is used for @ref ISOCH_ROLE_INITIATOR, @ref ISOCH_ROLE_ACCEPTOR and @ref BIG_MGR_ROLE_ISOC_BROADCASTER.
  *
  * @param[in]   p_data        Point to data to be sent.
  * @param[in]   handle        Connection handle of the CIS or BIS.
  * @param[in]   iso_sdu_len   Length of the SDU to be sent.
- * @param[in]   ts_flag       Indicates whether contains time_stamp.
+ * @param[in]   ts_flag       Indicates whether it contains time_stamp.
  *                            True: contain time_stamp.
- *                            False: not contain time_stamp.
- * @param[in]   time_stamp    A time in microseconds. time_stamp is used when @ref ts_flag is True.
+ *                            False: does not contain time_stamp.
+ * @param[in]   time_stamp    A time in microseconds. The time_stamp is used when @ref ts_flag is True.
  * @param[in]   pkt_seq_num   The sequence number of the SDU.
  *
  * @return Send request operation.
@@ -145,7 +124,7 @@ T_GAP_CAUSE gap_iso_send_data(uint8_t *p_data, uint16_t handle, uint16_t iso_sdu
   * @}
   */
 
-/** End of GAP
+/** End of BT_Host
   * @}
   */
 

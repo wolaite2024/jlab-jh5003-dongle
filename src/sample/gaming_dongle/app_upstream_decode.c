@@ -147,6 +147,8 @@ static void upstream_pipe_event_cback(T_APP_PIPE_EVENT event)
     if (event == PIPE_EVENT_CREATED || event == PIPE_EVENT_STARTED)
     {
         us_pipe_info.decoding_pcm_size = 0;
+
+        ring_buffer_clear(&us_codec_ring_buf);
     }
 }
 
@@ -158,6 +160,20 @@ void us_handle_rcv_pkt(uint8_t *buf, uint16_t len)
     uint16_t frame_size = data_len / frame_cnt;
     uint16_t pre_codec_size = ring_buffer_get_data_count(&us_codec_ring_buf);
     uint16_t new_codec_size = pre_codec_size;
+    T_APP_PIPE_STATE pipe_state = app_pipe_get_state(AUDIO_PIPE_UPSTREAM);
+    uint16_t codec_frame_size = app_pipe_get_codec_frame_size(us_pipe_info.src_codec_type);
+
+    if (pipe_state != PIPE_STATE_STARTED)
+    {
+        APP_PRINT_ERROR1("us_handle_rcv_pkt: pipe not ready state %d", pipe_state);
+        return;
+    }
+
+    if (frame_size != codec_frame_size)
+    {
+        APP_PRINT_ERROR2("us_handle_rcv_pkt: frame size not match (%d:%d)", frame_size, codec_frame_size);
+        return;
+    }
 
     us_pipe_info.us_pkt_xmitting = true;
     app_start_timer(&timer_idx_us_pkt_xmit, "us_pkt_xmit",
@@ -504,12 +520,12 @@ void us_handle_lea_data(T_BT_DIRECT_ISO_DATA_IND *p_iso)
         return;
     }
 
-    if (fill_size != app_pipe_get_codec_frame_size(us_pipe_info.codec_type))
+    if (fill_size != app_pipe_get_codec_frame_size(us_pipe_info.src_codec_type))
     {
         cause = 3;
 
         APP_PRINT_ERROR2("us_handle_lea_data: frame_size %d not equal to codec frame size %d",
-                         fill_size, app_pipe_get_codec_frame_size(us_pipe_info.codec_type));
+                         fill_size, app_pipe_get_codec_frame_size(us_pipe_info.src_codec_type));
 
         goto failed;
     }
@@ -670,7 +686,7 @@ void upstream_pipe_create(T_GAMING_CODEC src_codec)
     app_pipe_create(AUDIO_PIPE_UPSTREAM, &pipe_param);
 
     us_pipe_info.expect_pcm_frame_len = app_pipe_get_codec_frame_size(snk_codec);
-    us_pipe_info.codec_type = src_codec;
+    us_pipe_info.src_codec_type = src_codec;
 
     APP_PRINT_TRACE2("upstream_pipe_create: type %d expect_pcm_frame_len %d", src_codec,
                      us_pipe_info.expect_pcm_frame_len);
@@ -686,24 +702,52 @@ void app_upstream_lea_pipe_create(T_CODEC_CFG *p_lea_codec)
 {
     if (p_lea_codec->frame_duration == FRAME_DURATION_CFG_10_MS)
     {
-        if (upstream_is_stereo)
+        if (p_lea_codec->sample_frequency == SAMPLING_FREQUENCY_CFG_16K)
         {
-            upstream_pipe_create(LC3_16K_16BIT_STEREO_10MS);
+            if (upstream_is_stereo)
+            {
+                upstream_pipe_create(LC3_16K_16BIT_STEREO_10MS);
+            }
+            else
+            {
+                upstream_pipe_create(LC3_16K_16BIT_MONO_10MS);
+            }
         }
-        else
+        else if (p_lea_codec->sample_frequency == SAMPLING_FREQUENCY_CFG_32K)
         {
-            upstream_pipe_create(LC3_16K_16BIT_MONO_10MS);
+            if (upstream_is_stereo)
+            {
+                upstream_pipe_create(LC3_32K_16BIT_STEREO_10MS);
+            }
+            else
+            {
+                upstream_pipe_create(LC3_32K_16BIT_MONO_10MS);
+            }
         }
     }
     else if (p_lea_codec->frame_duration == FRAME_DURATION_CFG_7_5_MS)
     {
-        if (upstream_is_stereo)
+        if (p_lea_codec->sample_frequency == SAMPLING_FREQUENCY_CFG_16K)
         {
-            upstream_pipe_create(LC3_16K_16BIT_STEREO_7_5MS);
+            if (upstream_is_stereo)
+            {
+                upstream_pipe_create(LC3_16K_16BIT_STEREO_7_5MS);
+            }
+            else
+            {
+                upstream_pipe_create(LC3_16K_16BIT_MONO_7_5MS);
+            }
         }
-        else
+        else if (p_lea_codec->sample_frequency == SAMPLING_FREQUENCY_CFG_32K)
         {
-            upstream_pipe_create(LC3_16K_16BIT_MONO_7_5MS);
+            if (upstream_is_stereo)
+            {
+                upstream_pipe_create(LC3_32K_16BIT_STEREO_7_5MS);
+            }
+            else
+            {
+                upstream_pipe_create(LC3_32K_16BIT_MONO_7_5MS);
+            }
         }
     }
 }

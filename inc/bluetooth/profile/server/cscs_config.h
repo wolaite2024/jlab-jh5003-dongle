@@ -8,7 +8,7 @@
   * @{
   */
 
-/** @defgroup CSCS_CONFIG Cycling Speed and Cadence Service Config
+/** @defgroup CSCS_CONFIG CSCS Config
   * @brief Cycling Speed and Cadence service configuration file
   * @{
   */

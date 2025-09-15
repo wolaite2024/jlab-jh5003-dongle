@@ -39,22 +39,9 @@ typedef struct
     uint32_t lr;
 } GDMA_ChInfoTypeDef;
 
-#define DMA_CHANNEL_DSP_RESERVED (BIT2|BIT3|BIT4|BIT5|BIT8)
-#define DMA_CHANNEL_LOG_RESERVED (BIT7)
+#define DMA_CHANNEL_DSP_RESERVED (BIT2|BIT3|BIT4|BIT5)      /* Indicates the default value. APP do not modify it. */
+#define DMA_CHANNEL_LOG_RESERVED (BIT7)                     /* Indicates the default value. APP do not modify it. */
 /** End of Group 87x3e_PLATFORM_GDMA_Exported_Types
-  * @}
-  */
-
-/*============================================================================*
- *                         Constants
- *============================================================================*/
-
-/** @defgroup 87x3e_PLATFORM_GDMA_Exported_Constants GDMA Exported Constants
-  * @{
-  */
-
-
-/** End of Group 87x3e_PLATFORM_GDMA_Exported_Constants
   * @}
   */
 

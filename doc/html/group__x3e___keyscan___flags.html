@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>BT AUDIO SDK: Keyscan Flags</title>
+<title>BT AUDIO SDK: KeyScan Flags</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -44,35 +44,47 @@ $(function() {
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Keyscan Flags<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___key_scan.html">KeyScan</a> &raquo; <a class="el" href="group__x3e___key_scan___exported___constants.html">KeyScan Exported Constants</a></div></div>  </div>
+<div class="title">KeyScan Flags<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___key_scan.html">KeyScan</a> &raquo; <a class="el" href="group__x3e___key_scan___exported___constants.html">KeyScan Exported Constants</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga5192346580d64a24c407217c9980c9db"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___keyscan___flags.html#ga5192346580d64a24c407217c9980c9db">KEYSCAN_FLAG_FIFOLIMIT</a>&#160;&#160;&#160;((uint32_t)(0x1 &lt;&lt; 20))</td></tr>
+<tr class="memdesc:ga5192346580d64a24c407217c9980c9db"><td class="mdescLeft">&#160;</td><td class="mdescRight">When data filtering occurs, this bit will be set to 1.  <a href="#ga5192346580d64a24c407217c9980c9db">More...</a><br /></td></tr>
 <tr class="separator:ga5192346580d64a24c407217c9980c9db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga659432d0dd050c3965906a7cfe4eea89"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___keyscan___flags.html#ga659432d0dd050c3965906a7cfe4eea89">KEYSCAN_INT_FLAG_THRESHOLD</a>&#160;&#160;&#160;((uint32_t)(0x1 &lt;&lt; 19))</td></tr>
+<tr class="memdesc:ga659432d0dd050c3965906a7cfe4eea89"><td class="mdescLeft">&#160;</td><td class="mdescRight">FIFO threshold interrupt status.  <a href="#ga659432d0dd050c3965906a7cfe4eea89">More...</a><br /></td></tr>
 <tr class="separator:ga659432d0dd050c3965906a7cfe4eea89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga366184038f7d0f968feb2270bfc9a37a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___keyscan___flags.html#ga366184038f7d0f968feb2270bfc9a37a">KEYSCAN_INT_FLAG_OVER_READ</a>&#160;&#160;&#160;((uint32_t)(0x1 &lt;&lt; 18))</td></tr>
+<tr class="memdesc:ga366184038f7d0f968feb2270bfc9a37a"><td class="mdescLeft">&#160;</td><td class="mdescRight">FIFO over read interrupt status.  <a href="#ga366184038f7d0f968feb2270bfc9a37a">More...</a><br /></td></tr>
 <tr class="separator:ga366184038f7d0f968feb2270bfc9a37a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1d7c09f8467c2ea5b921ffe74ab160bd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___keyscan___flags.html#ga1d7c09f8467c2ea5b921ffe74ab160bd">KEYSCAN_INT_FLAG_SCAN_END</a>&#160;&#160;&#160;((uint32_t)(0x1 &lt;&lt; 17))</td></tr>
+<tr class="memdesc:ga1d7c09f8467c2ea5b921ffe74ab160bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scan finish interrupt status.  <a href="#ga1d7c09f8467c2ea5b921ffe74ab160bd">More...</a><br /></td></tr>
 <tr class="separator:ga1d7c09f8467c2ea5b921ffe74ab160bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac4e9f2daacc160e465cd82e021d20e30"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___keyscan___flags.html#gac4e9f2daacc160e465cd82e021d20e30">KEYSCAN_INT_FLAG_FIFO_NOT_EMPTY</a>&#160;&#160;&#160;((uint32_t)(0x1 &lt;&lt; 16))</td></tr>
+<tr class="memdesc:gac4e9f2daacc160e465cd82e021d20e30"><td class="mdescLeft">&#160;</td><td class="mdescRight">FIFO not empty interrupt status.  <a href="#gac4e9f2daacc160e465cd82e021d20e30">More...</a><br /></td></tr>
 <tr class="separator:gac4e9f2daacc160e465cd82e021d20e30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga01f024829563834ee81141709dee173c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___keyscan___flags.html#ga01f024829563834ee81141709dee173c">KEYSCAN_INT_FLAG_ALL_RELEASE</a>&#160;&#160;&#160;((uint32_t)(0x1 &lt;&lt; 15))</td></tr>
+<tr class="memdesc:ga01f024829563834ee81141709dee173c"><td class="mdescLeft">&#160;</td><td class="mdescRight">All release interrupt status.  <a href="#ga01f024829563834ee81141709dee173c">More...</a><br /></td></tr>
 <tr class="separator:ga01f024829563834ee81141709dee173c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0864b30aff0769b3ddfd8e307875f58b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___keyscan___flags.html#ga0864b30aff0769b3ddfd8e307875f58b">KEYSCAN_FLAG_DATAFILTER</a>&#160;&#160;&#160;((uint32_t)(0x1 &lt;&lt; 3))</td></tr>
+<tr class="memdesc:ga0864b30aff0769b3ddfd8e307875f58b"><td class="mdescLeft">&#160;</td><td class="mdescRight">FIFO data filter status.  <a href="#ga0864b30aff0769b3ddfd8e307875f58b">More...</a><br /></td></tr>
 <tr class="separator:ga0864b30aff0769b3ddfd8e307875f58b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga359b4db80077b547bed38c81548c33f1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___keyscan___flags.html#ga359b4db80077b547bed38c81548c33f1">KEYSCAN_FLAG_OVR</a>&#160;&#160;&#160;((uint32_t)(0x1 &lt;&lt; 2))</td></tr>
+<tr class="memdesc:ga359b4db80077b547bed38c81548c33f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">FIFO overflow status.  <a href="#ga359b4db80077b547bed38c81548c33f1">More...</a><br /></td></tr>
 <tr class="separator:ga359b4db80077b547bed38c81548c33f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacda9c7562bd052288aeb4758fbdcc73d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___keyscan___flags.html#gacda9c7562bd052288aeb4758fbdcc73d">KEYSCAN_FLAG_FULL</a>&#160;&#160;&#160;((uint32_t)(0x1 &lt;&lt; 1))</td></tr>
+<tr class="memdesc:gacda9c7562bd052288aeb4758fbdcc73d"><td class="mdescLeft">&#160;</td><td class="mdescRight">FIFO full status.  <a href="#gacda9c7562bd052288aeb4758fbdcc73d">More...</a><br /></td></tr>
 <tr class="separator:gacda9c7562bd052288aeb4758fbdcc73d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabb03d1f43197d3856a921dbc27c97f7d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___keyscan___flags.html#gabb03d1f43197d3856a921dbc27c97f7d">KEYSCAN_FLAG_EMPTY</a>&#160;&#160;&#160;((uint32_t)(0x1 &lt;&lt; 0))</td></tr>
+<tr class="memdesc:gabb03d1f43197d3856a921dbc27c97f7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">FIFO empty status.  <a href="#gabb03d1f43197d3856a921dbc27c97f7d">More...</a><br /></td></tr>
 <tr class="separator:gabb03d1f43197d3856a921dbc27c97f7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5957c5204f0a54c1384e8e7c3886c2ba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___keyscan___flags.html#ga5957c5204f0a54c1384e8e7c3886c2ba">IS_KEYSCAN_FLAG</a>(FLAG)&#160;&#160;&#160;((((FLAG) &amp; (uint32_t)0x01FF) == 0x00) &amp;&amp; ((FLAG) != (uint32_t)0x00))</td></tr>
+<tr class="memdesc:ga5957c5204f0a54c1384e8e7c3886c2ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether is the KeyScan flag.  <a href="#ga5957c5204f0a54c1384e8e7c3886c2ba">More...</a><br /></td></tr>
 <tr class="separator:ga5957c5204f0a54c1384e8e7c3886c2ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8ba10a71c7740901cddf6dce62ff4cfa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___keyscan___flags.html#ga8ba10a71c7740901cddf6dce62ff4cfa">IS_KEYSCAN_CLEAR_FLAG</a>(FLAG)&#160;&#160;&#160;((((FLAG) &amp; (uint32_t)0x00C0) == 0x00) &amp;&amp; ((FLAG) != (uint32_t)0x00))</td></tr>
+<tr class="memdesc:ga8ba10a71c7740901cddf6dce62ff4cfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether is the definition of KeyScan flag clear.  <a href="#ga8ba10a71c7740901cddf6dce62ff4cfa">More...</a><br /></td></tr>
 <tr class="separator:ga8ba10a71c7740901cddf6dce62ff4cfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -89,6 +101,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>When data filtering occurs, this bit will be set to 1. </p>
+
 </div>
 </div>
 <a id="ga659432d0dd050c3965906a7cfe4eea89"></a>
@@ -102,6 +116,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>FIFO threshold interrupt status. </p>
 
 </div>
 </div>
@@ -117,6 +133,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>FIFO over read interrupt status. </p>
+
 </div>
 </div>
 <a id="ga1d7c09f8467c2ea5b921ffe74ab160bd"></a>
@@ -130,6 +148,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Scan finish interrupt status. </p>
 
 </div>
 </div>
@@ -145,6 +165,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>FIFO not empty interrupt status. </p>
+
 </div>
 </div>
 <a id="ga01f024829563834ee81141709dee173c"></a>
@@ -158,6 +180,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>All release interrupt status. </p>
 
 </div>
 </div>
@@ -173,6 +197,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>FIFO data filter status. </p>
+
 </div>
 </div>
 <a id="ga359b4db80077b547bed38c81548c33f1"></a>
@@ -186,6 +212,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>FIFO overflow status. </p>
 
 </div>
 </div>
@@ -201,6 +229,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>FIFO full status. </p>
+
 </div>
 </div>
 <a id="gabb03d1f43197d3856a921dbc27c97f7d"></a>
@@ -214,6 +244,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>FIFO empty status. </p>
 
 </div>
 </div>
@@ -233,6 +265,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Check whether is the KeyScan flag. </p>
+
 </div>
 </div>
 <a id="ga8ba10a71c7740901cddf6dce62ff4cfa"></a>
@@ -250,6 +284,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Check whether is the definition of KeyScan flag clear. </p>
 
 </div>
 </div>

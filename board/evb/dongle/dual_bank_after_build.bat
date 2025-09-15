@@ -30,6 +30,14 @@ mkdir "%TARGET_DIR%\%TARGET_BANK%"
 
 rem generate bin and disasm from axf
 %FROMELF_EXE%  --bin -o "%TARGET_DIR%\%TARGET_BANK%" %AXF_FILE%
+REM ---------------------------------------------
+REM Optional: Generate a disassembly file for debugging.
+REM To enable, remove the "::" at the beginning of the command.
+REM Note: The "--interleave=source" flag interleaves source code with disassembled code.
+REM This helps in correlating the source with its machine code, but the file will
+REM contain your source code. Make sure to protect its confidentiality.
+REM ---------------------------------------------
+::%FROMELF_EXE%  -acd --interleave=source -o "%TARGET_DIR%\%TARGET_BANK%\%TARGET_NAME%_%TARGET_BANK%.disasm" %AXF_FILE%
 copy "%TARGET_DIR%\%TARGET_BANK%\%TARGET_NAME%.bin" "%TARGET_DIR%\%TARGET_BANK%\%TARGET_NAME%_%TARGET_BANK%.bin"
 copy "%TARGET_DIR%\%TARGET_BANK%\%TARGET_NAME%.trace" "%TARGET_DIR%\%TARGET_BANK%\%TARGET_NAME%_%TARGET_BANK%.trace"
 del "%TARGET_DIR%\%TARGET_BANK%\%TARGET_NAME%.bin"

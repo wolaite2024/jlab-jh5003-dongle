@@ -101,8 +101,16 @@ void usb_host_detect_hid_info_register(T_USB_HOST_DETECT_HID_INFO info);
 
 /**
  *
+ * \brief   Register usb host detect callback function.
+ * \param   cb: callback function.
+ *
+ */
+bool usb_host_detect_cback_register(HOST_DETECT_CB cb);
+
+/**
+ *
  * \brief   Initialize USB host detect.
  */
-void usb_host_detect_init(HOST_DETECT_CB cb);
+void usb_host_detect_init(void);
 
 #endif

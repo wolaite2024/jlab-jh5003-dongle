@@ -70,9 +70,9 @@ Typedefs</h2></td></tr>
 <tr class="memitem:ga3da3516f4a8690ba8cf8deb95f33bf3a"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="struct__usb__interface.html">_usb_interface</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___composite.html#ga3da3516f4a8690ba8cf8deb95f33bf3a">T_USB_INTERFACE</a></td></tr>
 <tr class="memdesc:ga3da3516f4a8690ba8cf8deb95f33bf3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Core structure to realize interface.  <a href="#ga3da3516f4a8690ba8cf8deb95f33bf3a">More...</a><br /></td></tr>
 <tr class="separator:ga3da3516f4a8690ba8cf8deb95f33bf3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga19240aa8f6833eaf852bd7052cfe1174"><td class="memItemLeft" align="right" valign="top">typedef int(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___composite.html#ga19240aa8f6833eaf852bd7052cfe1174">INT_VENDOR_FUNC</a>) (uint16_t request_cmd, void *buf, uint16_t len)</td></tr>
-<tr class="memdesc:ga19240aa8f6833eaf852bd7052cfe1174"><td class="mdescLeft">&#160;</td><td class="mdescRight">USB composite dev callback.  <a href="#ga19240aa8f6833eaf852bd7052cfe1174">More...</a><br /></td></tr>
-<tr class="separator:ga19240aa8f6833eaf852bd7052cfe1174"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf3a0a93504fa023b6f83d53611ea54d5"><td class="memItemLeft" align="right" valign="top">typedef int(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___composite.html#gaf3a0a93504fa023b6f83d53611ea54d5">INT_VENDOR_FUNC</a>) (<a class="el" href="struct__usb__device__request.html">T_USB_DEVICE_REQUEST</a> *ctrl_request, void *buf)</td></tr>
+<tr class="memdesc:gaf3a0a93504fa023b6f83d53611ea54d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">USB composite dev callback.  <a href="#gaf3a0a93504fa023b6f83d53611ea54d5">More...</a><br /></td></tr>
+<tr class="separator:gaf3a0a93504fa023b6f83d53611ea54d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga09d36ba9cf423cef0b1f2dac34e17800"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="struct__usb__composite__vendor__cbs.html">_usb_composite_vendor_cbs</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b___composite.html#ga09d36ba9cf423cef0b1f2dac34e17800">T_USB_COMPOSITE_VENDOR_CBS</a></td></tr>
 <tr class="memdesc:ga09d36ba9cf423cef0b1f2dac34e17800"><td class="mdescLeft">&#160;</td><td class="mdescRight">USB composite dev callback to support cfu get_vendor: this api will be called when receiving composite get vendor request set_vendor: this api will be called when receiving composite set vendor request.  <a href="#ga09d36ba9cf423cef0b1f2dac34e17800">More...</a><br /></td></tr>
 <tr class="separator:ga09d36ba9cf423cef0b1f2dac34e17800"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -192,14 +192,14 @@ Definitions</h1>
 
 </div>
 </div>
-<a id="ga19240aa8f6833eaf852bd7052cfe1174"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga19240aa8f6833eaf852bd7052cfe1174">&#9670;&nbsp;</a></span>INT_VENDOR_FUNC</h2>
+<a id="gaf3a0a93504fa023b6f83d53611ea54d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf3a0a93504fa023b6f83d53611ea54d5">&#9670;&nbsp;</a></span>INT_VENDOR_FUNC</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef int(* INT_VENDOR_FUNC) (uint16_t request_cmd, void *buf, uint16_t len)</td>
+          <td class="memname">typedef int(* INT_VENDOR_FUNC) (<a class="el" href="struct__usb__device__request.html">T_USB_DEVICE_REQUEST</a> *ctrl_request, void *buf)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -250,7 +250,7 @@ Definitions</h1>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h"</dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000222">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000241">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -273,7 +273,7 @@ Definitions</h1>
 <p>unregister composite device vendor callbacks </p>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h"</dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000223">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000242">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -296,7 +296,7 @@ Definitions</h1>
 <p>Get ep0 maxpacket size. </p>
 <dl class="section return"><dt>Returns</dt><dd>uint8_t Get ep0 maxpacket size</dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000224">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000243">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -344,7 +344,7 @@ Definitions</h1>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section user"><dt>Example</dt><dd>Please refer to <a class="el" href="group___u_s_b___composite.html#USB_Composite_Usage_Chapter_Device">How to init USB device &amp; configuration</a></dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000225">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000244">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -391,7 +391,7 @@ Definitions</h1>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h"</dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000226">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000245">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -421,7 +421,7 @@ Definitions</h1>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section user"><dt>Example</dt><dd>Please refer to <a class="el" href="group___u_s_b___composite.html#USB_Composite_Usage_Chapter_Device">How to init USB device &amp; configuration</a></dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000227">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000246">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -451,7 +451,7 @@ Definitions</h1>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section user"><dt>Example</dt><dd>Please refer to <a class="el" href="group___u_s_b___composite.html#USB_Composite_Usage_Chapter_Device">How to init USB device &amp; configuration</a></dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000228">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000247">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -492,7 +492,7 @@ Definitions</h1>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section user"><dt>Example</dt><dd>Please refer to <a class="el" href="group___u_s_b___composite.html#USB_Composite_Usage_Chapter_Interface">How to realize USB interfaces</a></dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000229">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000248">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -532,7 +532,7 @@ Definitions</h1>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000230">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000249">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -554,7 +554,7 @@ Definitions</h1>
 
 <p>get enum speed, it's the actual running speed after speed enum </p>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000231">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000250">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>T_HAL_USB_SPEED </dd></dl>
 
 </div>
@@ -578,7 +578,7 @@ Definitions</h1>
 <p>Remote wakeup. </p>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000232">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000251">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -607,7 +607,7 @@ Definitions</h1>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h"</dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000233">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000252">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -637,7 +637,7 @@ Definitions</h1>
 <dl class="section return"><dt>Returns</dt><dd>int result, refer to "errno.h" </dd></dl>
 <dl class="section user"><dt>Example</dt><dd>Please refer to <a class="el" href="group___u_s_b___composite.html#USB_Composite_Usage_Chapter_Device">How to init USB device &amp; configuration</a></dd></dl>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000234">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000253">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>
@@ -659,7 +659,7 @@ Definitions</h1>
 
 <p>deinit USB composite device </p>
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000235">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000254">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>

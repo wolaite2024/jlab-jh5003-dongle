@@ -51,16 +51,16 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga257122d508f811ce241df3a3b59637ea"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___h_t_s___exported___functions.html#ga257122d508f811ce241df3a3b59637ea">hts_add_service</a> (void *p_func)</td></tr>
-<tr class="memdesc:ga257122d508f811ce241df3a3b59637ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add health thermometer service to the BLE stack database.  <a href="#ga257122d508f811ce241df3a3b59637ea">More...</a><br /></td></tr>
+<tr class="memdesc:ga257122d508f811ce241df3a3b59637ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add health thermometer service to the Bluetooth Host.  <a href="#ga257122d508f811ce241df3a3b59637ea">More...</a><br /></td></tr>
 <tr class="separator:ga257122d508f811ce241df3a3b59637ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga538dd03e20042e9deefd8f18816746df"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___h_t_s___exported___functions.html#ga538dd03e20042e9deefd8f18816746df">hts_set_parameter</a> (<a class="el" href="group___h_t_s___exported___types.html#ga1bf72ccc88b053fa00d1138e4ab3ce9a">T_HTS_PARAM_TYPE</a> param_type, uint8_t len, void *p_value)</td></tr>
 <tr class="memdesc:ga538dd03e20042e9deefd8f18816746df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a health thermometer service parameter.  <a href="#ga538dd03e20042e9deefd8f18816746df">More...</a><br /></td></tr>
 <tr class="separator:ga538dd03e20042e9deefd8f18816746df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga015410290d0b5004e0834f7c0ebd2462"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___h_t_s___exported___functions.html#ga015410290d0b5004e0834f7c0ebd2462">hts_measurement_value_indicate</a> (uint8_t conn_id, uint8_t service_id)</td></tr>
-<tr class="memdesc:ga015410290d0b5004e0834f7c0ebd2462"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send measurement value indication data . Application shall call <a class="el" href="group___h_t_s___exported___functions.html#ga538dd03e20042e9deefd8f18816746df">hts_set_parameter</a> to set intermediate temperature value first, and the call this api to send the notication value.  <a href="#ga015410290d0b5004e0834f7c0ebd2462">More...</a><br /></td></tr>
+<tr class="memdesc:ga015410290d0b5004e0834f7c0ebd2462"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send measurement value indication data. Applications shall call <a class="el" href="group___h_t_s___exported___functions.html#ga538dd03e20042e9deefd8f18816746df">hts_set_parameter</a> to set intermediate temperature value first, and then call this API to send the indication value.  <a href="#ga015410290d0b5004e0834f7c0ebd2462">More...</a><br /></td></tr>
 <tr class="separator:ga015410290d0b5004e0834f7c0ebd2462"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae650fba8a5c9bbbcd1b1c8d788d51f09"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___h_t_s___exported___functions.html#gae650fba8a5c9bbbcd1b1c8d788d51f09">hts_intermediate_temperature_value_notify</a> (uint8_t conn_id, uint8_t service_id)</td></tr>
-<tr class="memdesc:gae650fba8a5c9bbbcd1b1c8d788d51f09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send intermediate temperature notification data. Application shall call <a class="el" href="group___h_t_s___exported___functions.html#ga538dd03e20042e9deefd8f18816746df">hts_set_parameter</a> to set intermediate temperature value first, and the call this api to send the notication value.  <a href="#gae650fba8a5c9bbbcd1b1c8d788d51f09">More...</a><br /></td></tr>
+<tr class="memdesc:gae650fba8a5c9bbbcd1b1c8d788d51f09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send intermediate temperature notification data. Applications shall call <a class="el" href="group___h_t_s___exported___functions.html#ga538dd03e20042e9deefd8f18816746df">hts_set_parameter</a> to set intermediate temperature value first, and then call this API to send the notification value.  <a href="#gae650fba8a5c9bbbcd1b1c8d788d51f09">More...</a><br /></td></tr>
 <tr class="separator:gae650fba8a5c9bbbcd1b1c8d788d51f09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga285b64ed76ea04c85b6037db00ba302e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___h_t_s___exported___functions.html#ga285b64ed76ea04c85b6037db00ba302e">hts_measurement_interval_notify</a> (uint8_t conn_id, uint8_t service_id, uint16_t seconds)</td></tr>
 <tr class="memdesc:ga285b64ed76ea04c85b6037db00ba302e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send measurement interval notification data.  <a href="#ga285b64ed76ea04c85b6037db00ba302e">More...</a><br /></td></tr>
@@ -84,22 +84,22 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Add health thermometer service to the BLE stack database. </p>
+<p>Add health thermometer service to the Bluetooth Host. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_func</td><td>Callback when service attribute was read, write or cccd update. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_func</td><td>Callback when service attribute was read, write or CCCD update. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Service id generated by the BLE stack: <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Service ID generated by the Bluetooth Host: <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a>. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">0xFF</td><td>Operation failure. </td></tr>
-    <tr><td class="paramname">others</td><td>Service id assigned by stack.</td></tr>
+    <tr><td class="paramname">others</td><td>Service ID assigned by Bluetooth Host.</td></tr>
   </table>
   </dd>
 </dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> profile_init()</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga69f3a8c88a1c2d5255f87e69e135311b">server_init</a>(1);</div><div class="line">    hts_id = <a class="code" href="group___h_t_s___exported___functions.html#ga257122d508f811ce241df3a3b59637ea">hts_add_service</a>(app_handle_profile_message);</div><div class="line">}</div></div><!-- fragment --> 
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> profile_init()</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga69f3a8c88a1c2d5255f87e69e135311b">server_init</a>(service_num);</div><div class="line">    hts_id = <a class="code" href="group___h_t_s___exported___functions.html#ga257122d508f811ce241df3a3b59637ea">hts_add_service</a>(app_handle_profile_message);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga538dd03e20042e9deefd8f18816746df"></a>
@@ -135,11 +135,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Set a health thermometer service parameter. </p>
-<p>NOTE: You can call this function with a health thermometer service parameter type and it will set the health thermometer service parameter. Health thermometer service parameters are defined in <a class="el" href="group___h_t_s___exported___types.html#ga1bf72ccc88b053fa00d1138e4ab3ce9a">T_HTS_PARAM_TYPE</a>. If the "len" field sets to the size of a "uint16_t" ,the "p_value" field must point to a data with type of "uint16_t".</p>
+<p>Call this function with a health thermometer service parameter type and it will set the health thermometer service parameter. Health thermometer service parameters are defined in <a class="el" href="group___h_t_s___exported___types.html#ga1bf72ccc88b053fa00d1138e4ab3ce9a">T_HTS_PARAM_TYPE</a>. If the "len" field is set to the size of a "uint16_t", the "p_value" field must point to data with type "uint16_t".</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">param_type</td><td>Health thermometer service parameter type: <a class="el" href="group___h_t_s___exported___types.html#ga1bf72ccc88b053fa00d1138e4ab3ce9a">T_HTS_PARAM_TYPE</a> </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of data to write </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">param_type</td><td>Health thermometer service parameter type: <a class="el" href="group___h_t_s___exported___types.html#ga1bf72ccc88b053fa00d1138e4ab3ce9a">T_HTS_PARAM_TYPE</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of data to write. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_value</td><td>Pointer to data to write. This is dependent on the parameter type and WILL be cast to the appropriate data type (For example: if data type of param is uint16_t, p_value will be cast to pointer of uint16_t).</td></tr>
   </table>
   </dd>
@@ -181,16 +181,23 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Send measurement value indication data . Application shall call <a class="el" href="group___h_t_s___exported___functions.html#ga538dd03e20042e9deefd8f18816746df">hts_set_parameter</a> to set intermediate temperature value first, and the call this api to send the notication value. </p>
+<p>Send measurement value indication data. Applications shall call <a class="el" href="group___h_t_s___exported___functions.html#ga538dd03e20042e9deefd8f18816746df">hts_set_parameter</a> to set intermediate temperature value first, and then call this API to send the indication value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection id. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service id.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection ID. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service ID.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>service id <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a>.</dd></dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t hts_flag = <a class="code" href="group___h_t_s___measurement___flag.html#gabc0c0a9f57198265921d6d9861877e21">HTS_FLAG_MEASUREMENT_UINT_BIT</a> | <a class="code" href="group___h_t_s___measurement___flag.html#ga5481d81390bf10086ff52df9bab1b44c">HTS_FLAG_MEASUREMENT_TIMESTAMP_PRESENT_BIT</a> |</div><div class="line">                       <a class="code" href="group___h_t_s___measurement___flag.html#ga6d83d317395016fdd54ff58b954c4870">HTS_FLAG_MEASUREMENT_TYPE_PRESNET_BIT</a>;</div><div class="line">    <a class="code" href="group___h_t_s___exported___types.html#ga0b287ff78fa8a2422a9c184609a9f29d">T_HTS_TEMPERATURE_TYPE</a> temperature_type = <a class="code" href="group___h_t_s___exported___types.html#gga0b287ff78fa8a2422a9c184609a9f29dad8ece6dce03fe46c9836a79a4b2c2336">HTS_TEMPERATURE_TYPE_ARMPIT</a>;</div><div class="line"></div><div class="line">    hts_measure_time_stamp.seconds += hts_measurement_interval;</div><div class="line"></div><div class="line">    <a class="code" href="group___h_t_s___exported___functions.html#ga538dd03e20042e9deefd8f18816746df">hts_set_parameter</a>(<a class="code" href="group___h_t_s___exported___types.html#gga1bf72ccc88b053fa00d1138e4ab3ce9aafb9184c2aadf07014f77318bae986dbb">HTS_PARAM_MEASUREMENT_TEMPPARAM_FLAG</a>, <span class="keyword">sizeof</span>(hts_flag), &amp;hts_flag);</div><div class="line">    <a class="code" href="group___h_t_s___exported___functions.html#ga538dd03e20042e9deefd8f18816746df">hts_set_parameter</a>(<a class="code" href="group___h_t_s___exported___types.html#gga1bf72ccc88b053fa00d1138e4ab3ce9aaf8a435b5f793a8033fea8c494d71f5e2">HTS_PARAM_MEASUREMENT_TIME_STAMP</a>, <span class="keyword">sizeof</span>(hts_measure_time_stamp),</div><div class="line">                      &amp;hts_measure_time_stamp);</div><div class="line">    <a class="code" href="group___h_t_s___exported___functions.html#ga538dd03e20042e9deefd8f18816746df">hts_set_parameter</a>(<a class="code" href="group___h_t_s___exported___types.html#gga1bf72ccc88b053fa00d1138e4ab3ce9aa0735fe73ba2cd8d4a7ef502b4251f406">HTS_PARAM_MEASUREMENT_TEMPERATURE_TYPE</a>, 1, &amp;temperature_type);</div><div class="line"></div><div class="line">    <a class="code" href="group___h_t_s___exported___functions.html#ga015410290d0b5004e0834f7c0ebd2462">hts_measurement_value_indicate</a>(p_parse_value-&gt;dw_param[0], hts_id);</div><div class="line">}</div></div><!-- fragment --> 
+<dl class="section return"><dt>Returns</dt><dd>Operation result. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>Operation success. </td></tr>
+    <tr><td class="paramname">false</td><td>Operation failure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t hts_flag = <a class="code" href="group___h_t_s___measurement___flag.html#gabc0c0a9f57198265921d6d9861877e21">HTS_FLAG_MEASUREMENT_UINT_BIT</a> | <a class="code" href="group___h_t_s___measurement___flag.html#ga5481d81390bf10086ff52df9bab1b44c">HTS_FLAG_MEASUREMENT_TIMESTAMP_PRESENT_BIT</a> |</div><div class="line">                       <a class="code" href="group___h_t_s___measurement___flag.html#ga6d83d317395016fdd54ff58b954c4870">HTS_FLAG_MEASUREMENT_TYPE_PRESNET_BIT</a>;</div><div class="line">    <a class="code" href="group___h_t_s___exported___types.html#ga0b287ff78fa8a2422a9c184609a9f29d">T_HTS_TEMPERATURE_TYPE</a> temperature_type = <a class="code" href="group___h_t_s___exported___types.html#gga0b287ff78fa8a2422a9c184609a9f29dad8ece6dce03fe46c9836a79a4b2c2336">HTS_TEMPERATURE_TYPE_ARMPIT</a>;</div><div class="line"></div><div class="line">    hts_measure_time_stamp.seconds += hts_measurement_interval;</div><div class="line"></div><div class="line">    <a class="code" href="group___h_t_s___exported___functions.html#ga538dd03e20042e9deefd8f18816746df">hts_set_parameter</a>(<a class="code" href="group___h_t_s___exported___types.html#gga1bf72ccc88b053fa00d1138e4ab3ce9aafb9184c2aadf07014f77318bae986dbb">HTS_PARAM_MEASUREMENT_TEMPPARAM_FLAG</a>, <span class="keyword">sizeof</span>(hts_flag), &amp;hts_flag);</div><div class="line">    <a class="code" href="group___h_t_s___exported___functions.html#ga538dd03e20042e9deefd8f18816746df">hts_set_parameter</a>(<a class="code" href="group___h_t_s___exported___types.html#gga1bf72ccc88b053fa00d1138e4ab3ce9aaf8a435b5f793a8033fea8c494d71f5e2">HTS_PARAM_MEASUREMENT_TIME_STAMP</a>, <span class="keyword">sizeof</span>(hts_measure_time_stamp),</div><div class="line">                      &amp;hts_measure_time_stamp);</div><div class="line">    <a class="code" href="group___h_t_s___exported___functions.html#ga538dd03e20042e9deefd8f18816746df">hts_set_parameter</a>(<a class="code" href="group___h_t_s___exported___types.html#gga1bf72ccc88b053fa00d1138e4ab3ce9aa0735fe73ba2cd8d4a7ef502b4251f406">HTS_PARAM_MEASUREMENT_TEMPERATURE_TYPE</a>, 1, &amp;temperature_type);</div><div class="line"></div><div class="line">    <span class="keywordtype">bool</span> ret = <a class="code" href="group___h_t_s___exported___functions.html#ga015410290d0b5004e0834f7c0ebd2462">hts_measurement_value_indicate</a>(conn_id, hts_id);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="gae650fba8a5c9bbbcd1b1c8d788d51f09"></a>
@@ -219,16 +226,23 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Send intermediate temperature notification data. Application shall call <a class="el" href="group___h_t_s___exported___functions.html#ga538dd03e20042e9deefd8f18816746df">hts_set_parameter</a> to set intermediate temperature value first, and the call this api to send the notication value. </p>
+<p>Send intermediate temperature notification data. Applications shall call <a class="el" href="group___h_t_s___exported___functions.html#ga538dd03e20042e9deefd8f18816746df">hts_set_parameter</a> to set intermediate temperature value first, and then call this API to send the notification value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection id. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service id.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection ID. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service ID.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>service id <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a>.</dd></dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t hts_flag = <a class="code" href="group___h_t_s___measurement___flag.html#gabc0c0a9f57198265921d6d9861877e21">HTS_FLAG_MEASUREMENT_UINT_BIT</a></div><div class="line">                       | <a class="code" href="group___h_t_s___measurement___flag.html#ga5481d81390bf10086ff52df9bab1b44c">HTS_FLAG_MEASUREMENT_TIMESTAMP_PRESENT_BIT</a></div><div class="line">                       | <a class="code" href="group___h_t_s___measurement___flag.html#ga6d83d317395016fdd54ff58b954c4870">HTS_FLAG_MEASUREMENT_TYPE_PRESNET_BIT</a>;</div><div class="line">    <a class="code" href="group___h_t_s___exported___types.html#ga0b287ff78fa8a2422a9c184609a9f29d">T_HTS_TEMPERATURE_TYPE</a> temperature_type = <a class="code" href="group___h_t_s___exported___types.html#gga0b287ff78fa8a2422a9c184609a9f29dad8ece6dce03fe46c9836a79a4b2c2336">HTS_TEMPERATURE_TYPE_ARMPIT</a>;</div><div class="line"></div><div class="line">    <a class="code" href="group___h_t_s___exported___functions.html#ga538dd03e20042e9deefd8f18816746df">hts_set_parameter</a>(<a class="code" href="group___h_t_s___exported___types.html#gga1bf72ccc88b053fa00d1138e4ab3ce9aafb9184c2aadf07014f77318bae986dbb">HTS_PARAM_MEASUREMENT_TEMPPARAM_FLAG</a>, <span class="keyword">sizeof</span>(hts_flag), &amp;hts_flag);</div><div class="line">    <a class="code" href="group___h_t_s___exported___functions.html#ga538dd03e20042e9deefd8f18816746df">hts_set_parameter</a>(<a class="code" href="group___h_t_s___exported___types.html#gga1bf72ccc88b053fa00d1138e4ab3ce9aaf8a435b5f793a8033fea8c494d71f5e2">HTS_PARAM_MEASUREMENT_TIME_STAMP</a>, <span class="keyword">sizeof</span>(hts_measure_time_stamp),</div><div class="line">                      &amp;hts_measure_time_stamp);</div><div class="line">    <a class="code" href="group___h_t_s___exported___functions.html#ga538dd03e20042e9deefd8f18816746df">hts_set_parameter</a>(<a class="code" href="group___h_t_s___exported___types.html#gga1bf72ccc88b053fa00d1138e4ab3ce9aa0735fe73ba2cd8d4a7ef502b4251f406">HTS_PARAM_MEASUREMENT_TEMPERATURE_TYPE</a>, 1, &amp;temperature_type);</div><div class="line"></div><div class="line">    <a class="code" href="group___h_t_s___exported___functions.html#gae650fba8a5c9bbbcd1b1c8d788d51f09">hts_intermediate_temperature_value_notify</a>(p_parse_value-&gt;dw_param[0], hts_id);</div><div class="line"></div><div class="line">    <span class="keywordflow">return</span> <a class="code" href="group___u_s_e_r___c_m_d___p_a_r_s_e___exported___types.html#ggab7f77eecc3c723d439e610daa838aceca0acf8b75f6fcf2284c37a773d30b5864">RESULT_SUCESS</a>;</div><div class="line"></div><div class="line">}</div></div><!-- fragment --> 
+<dl class="section return"><dt>Returns</dt><dd>Operation result. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>Operation success. </td></tr>
+    <tr><td class="paramname">false</td><td>Operation failure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t hts_flag = <a class="code" href="group___h_t_s___measurement___flag.html#gabc0c0a9f57198265921d6d9861877e21">HTS_FLAG_MEASUREMENT_UINT_BIT</a></div><div class="line">                       | <a class="code" href="group___h_t_s___measurement___flag.html#ga5481d81390bf10086ff52df9bab1b44c">HTS_FLAG_MEASUREMENT_TIMESTAMP_PRESENT_BIT</a></div><div class="line">                       | <a class="code" href="group___h_t_s___measurement___flag.html#ga6d83d317395016fdd54ff58b954c4870">HTS_FLAG_MEASUREMENT_TYPE_PRESNET_BIT</a>;</div><div class="line">    <a class="code" href="group___h_t_s___exported___types.html#ga0b287ff78fa8a2422a9c184609a9f29d">T_HTS_TEMPERATURE_TYPE</a> temperature_type = <a class="code" href="group___h_t_s___exported___types.html#gga0b287ff78fa8a2422a9c184609a9f29dad8ece6dce03fe46c9836a79a4b2c2336">HTS_TEMPERATURE_TYPE_ARMPIT</a>;</div><div class="line"></div><div class="line">    <a class="code" href="group___h_t_s___exported___functions.html#ga538dd03e20042e9deefd8f18816746df">hts_set_parameter</a>(<a class="code" href="group___h_t_s___exported___types.html#gga1bf72ccc88b053fa00d1138e4ab3ce9aafb9184c2aadf07014f77318bae986dbb">HTS_PARAM_MEASUREMENT_TEMPPARAM_FLAG</a>, <span class="keyword">sizeof</span>(hts_flag), &amp;hts_flag);</div><div class="line">    <a class="code" href="group___h_t_s___exported___functions.html#ga538dd03e20042e9deefd8f18816746df">hts_set_parameter</a>(<a class="code" href="group___h_t_s___exported___types.html#gga1bf72ccc88b053fa00d1138e4ab3ce9aaf8a435b5f793a8033fea8c494d71f5e2">HTS_PARAM_MEASUREMENT_TIME_STAMP</a>, <span class="keyword">sizeof</span>(hts_measure_time_stamp),</div><div class="line">                      &amp;hts_measure_time_stamp);</div><div class="line">    <a class="code" href="group___h_t_s___exported___functions.html#ga538dd03e20042e9deefd8f18816746df">hts_set_parameter</a>(<a class="code" href="group___h_t_s___exported___types.html#gga1bf72ccc88b053fa00d1138e4ab3ce9aa0735fe73ba2cd8d4a7ef502b4251f406">HTS_PARAM_MEASUREMENT_TEMPERATURE_TYPE</a>, 1, &amp;temperature_type);</div><div class="line"></div><div class="line">    <span class="keywordtype">bool</span> ret = <a class="code" href="group___h_t_s___exported___functions.html#gae650fba8a5c9bbbcd1b1c8d788d51f09">hts_intermediate_temperature_value_notify</a>(conn_id, hts_id);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga285b64ed76ea04c85b6037db00ba302e"></a>
@@ -266,14 +280,21 @@ Functions</h2></td></tr>
 <p>Send measurement interval notification data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection id. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service id. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection ID. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service ID. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">seconds</td><td>Measurement interval.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>service id <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a>.</dd></dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint16_t interval = 90;</div><div class="line">    <a class="code" href="group___h_t_s___exported___functions.html#ga285b64ed76ea04c85b6037db00ba302e">hts_measurement_interval_notify</a>(p_parse_value-&gt;dw_param[0], hts_id, interval);</div><div class="line">}</div></div><!-- fragment --> 
+<dl class="section return"><dt>Returns</dt><dd>Operation result. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>Operation success. </td></tr>
+    <tr><td class="paramname">false</td><td>Operation failure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keywordtype">bool</span> ret = <a class="code" href="group___h_t_s___exported___functions.html#ga285b64ed76ea04c85b6037db00ba302e">hts_measurement_interval_notify</a>(conn_id, hts_id, interval);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

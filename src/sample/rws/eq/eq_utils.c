@@ -103,8 +103,8 @@ static uint16_t eq_utils_dsp_param_get(T_EQ_TYPE eq_type, T_EQ_STREAM_TYPE strea
     uint8_t *p_param;
     uint32_t eq_sample_rate = 0;
 
-    APP_PRINT_INFO6("eq_utils_dsp_param_get: eq_type %d, stream %d, dsp cfg index %d, p_data %p, len %u, sample_rate %d",
-                    eq_type, stream_type, index, p_data, len, sample_rate);
+    APP_PRINT_INFO6("eq_utils_dsp_param_get: eq_type %d, dsp cfg index %d, stream_type %d, p_data %p, len %u, sample_rate %d",
+                    eq_type, index, stream_type, p_data, len, sample_rate);
 
     if ((index <= EQ_MAX_INDEX) && (p_data != NULL) && (len >= EQ_COEFF_SIZE))
     {

@@ -567,8 +567,8 @@ static void sport_mgr_param_init(uint32_t sport_handle)
         sport_drv_mclk_conifg_set(sport_mclk_pinmux, freq_mclk);
     }
 
-    sport_drv_enable_module(sport_id, enable);
     sport_drv_clock_src_sel(sport_id, SPORT_CLK_XTAL);
+    sport_drv_enable_module(sport_id, enable);
     /* Select SPORT RX connected CODEC. SPORT TX will be forked to pinmux
      * when sport_tx_bridge is External, so cannot be selected individually.
      */

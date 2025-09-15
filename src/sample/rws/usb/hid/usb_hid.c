@@ -18,6 +18,9 @@
 #include "app_usb_vol_control.h"
 #endif
 #include "errno.h"
+#include "app_usb_hid_report.h"
+#include "app_usb_audio_hid.h"
+
 static const char report_descs[] =
 {
     HID_REPORT_DESCS
@@ -86,7 +89,7 @@ static const T_USB_ENDPOINT_DESC int_in_ep_desc_hs =
     .bInterval         = 4,
 };
 
-static const void *hid_if_descs_fs[] =
+static void *const hid_if_descs_fs[] =
 {
     (void *) &hid_std_if_desc,
     (void *) &hid_cs_if_desc,
@@ -94,7 +97,7 @@ static const void *hid_if_descs_fs[] =
     NULL,
 };
 
-static const void *hid_if_descs_hs[] =
+static void *const hid_if_descs_hs[] =
 {
     (void *) &hid_std_if_desc,
     (void *) &hid_cs_if_desc,
@@ -182,39 +185,32 @@ int32_t usb_hid_set_report(T_HID_DRIVER_REPORT_REQ_VAL req_value, void *buf, uin
 #if F_APP_USB_AUDIO_SUPPORT
 void usb_hid_pipe_open(void)
 {
-    if (hid_mmi_handle == NULL)
-    {
-        T_USB_HID_ATTR attr =
-        {
-            .zlp = 0,
-            .high_throughput = 0,
-            .congestion_ctrl = HID_CONGESTION_CTRL_DROP_CUR,
-            .rsv = 0,
-            .mtu = CONSUMER_CTRL_MAX_TRANSMISSION_UNIT
-        };
-        hid_mmi_handle = usb_hid_data_pipe_open(HID_INT_IN_EP_1, attr,
-                                                CONSUMER_CTRL_MAX_PENDING_REQ_NUM, NULL);
-    }
+    return;
 }
 
 void usb_hid_volume_up(void)
 {
     uint8_t report[] = {HID_REPORT_ID_AUDIO_CONTROL, 0x01};
-    usb_hid_data_pipe_send(hid_mmi_handle, report, sizeof(report));
+    usb_hid_report_buffered_send(report, sizeof(report));
 }
 
 void usb_hid_volume_down(void)
 {
     uint8_t report[] = {HID_REPORT_ID_AUDIO_CONTROL, 0x02};
-    usb_hid_data_pipe_send(hid_mmi_handle, report, sizeof(report));
+    usb_hid_report_buffered_send(report, sizeof(report));
 }
 
 void usb_hid_volume_release(void)
 {
     uint8_t report[] = {HID_REPORT_ID_AUDIO_CONTROL, 0x00};
-    usb_hid_data_pipe_send(hid_mmi_handle, report, sizeof(report));
+    usb_hid_report_buffered_send(report, sizeof(report));
 }
 #endif
+
+bool usb_hid_interrupt_in(uint8_t *data, uint8_t size)
+{
+    return usb_hid_data_pipe_send(hid_mmi_handle, data, size);
+}
 
 void usb_hid_init(void)
 {
@@ -228,6 +224,22 @@ void usb_hid_init(void)
     cbs.set_report = usb_hid_set_report;
     usb_hid_driver_cbs_register(inst, &cbs);
     usb_hid_driver_init();
+
+    T_USB_HID_ATTR attr =
+    {
+        .zlp = 0,
+        .high_throughput = 0,
+        .congestion_ctrl = HID_CONGESTION_CTRL_DROP_CUR,
+        .rsv = 0,
+        .mtu = CONSUMER_CTRL_MAX_TRANSMISSION_UNIT
+    };
+
+    hid_mmi_handle = usb_hid_data_pipe_open(HID_INT_IN_EP_1, attr,
+                                            CONSUMER_CTRL_MAX_PENDING_REQ_NUM, NULL);
+
+    usb_hid_report_register_cb(usb_hid_interrupt_in, 256, IO_MSG_TYPE_USB_HID,
+                               USB_HID_MSG_TYPE_HID_BUFFERED_REPORT);
+
 #if F_APP_USB_AUDIO_SUPPORT
     T_USB_HOST_DETECT_HID_INFO hid_info =
     {
@@ -239,7 +251,9 @@ void usb_hid_init(void)
         .volume_release = usb_hid_volume_release
     };
     usb_host_detect_hid_info_register(hid_info);
+#if F_APP_GAMING_DONGLE_TRANS_UAC_VOL_TO_HEADSET
     app_vol_control_hid_info_register(hid_info);
+#endif
 #endif
 }
 #endif

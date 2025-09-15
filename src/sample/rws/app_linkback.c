@@ -17,6 +17,7 @@
 #include "bt_pbap.h"
 #include "bt_hid_device.h"
 #include "bt_spp.h"
+#include "bt_att.h"
 #include "gap_le.h"
 
 #include "engage.h"
@@ -63,6 +64,7 @@ const uint32_t prof_arr[] =
     IAP_PROFILE_MASK,
     HID_PROFILE_MASK,
     PBAP_PROFILE_MASK,
+    GATT_PROFILE_MASK,
 };
 
 const uint32_t prof_relation[3][2] =
@@ -72,16 +74,15 @@ const uint32_t prof_relation[3][2] =
     {HSP_PROFILE_MASK, PBAP_PROFILE_MASK},
 };
 
-
-
 static T_LINKBACK_NODE_ITEM *linkback_node_item[LINKBACK_NODE_ITEM_NUM] = {0};
 static T_LINKBACK_TODO_QUEUE linkback_todo_queue = {0};
 T_LINKBACK_ACTIVE_NODE linkback_active_node = {0};
 
 static void linkback_print_active_node(void)
 {
-    ENGAGE_PRINT_TRACE2("linkback_print_active_node: bd_addr %s, total retry time %d ms",
-                        TRACE_BDADDR(linkback_active_node.linkback_node.bd_addr), linkback_active_node.retry_timeout);
+    ENGAGE_PRINT_TRACE4("linkback_print_active_node: bd_addr %s, total retry time %d ms, plan_lea %d, remain_lea %d",
+                        TRACE_BDADDR(linkback_active_node.linkback_node.bd_addr), linkback_active_node.retry_timeout,
+                        linkback_active_node.linkback_node.plan_lea, linkback_active_node.remain_lea);
 
     ENGAGE_PRINT_TRACE8("linkback_print_active_node: is_valid %d, is_exit %d, is_force %d, is_sdp_ok %d, plan_profs 0x%08x, remain_profs 0x%08x, doing_prof 0x%08x, prof_retry_cnt %d",
                         linkback_active_node.is_valid, linkback_active_node.is_exit,
@@ -253,6 +254,14 @@ bool linkback_profile_search_start(uint8_t *bd_addr, uint32_t prof, bool is_spec
         break;
 #endif
 
+#if F_APP_GATT_OVER_BREDR_SUPPORT
+    case GATT_PROFILE_MASK:
+        {
+            uuid.uuid_16 = UUID_ATT;
+        }
+        break;
+#endif
+
     default:
         {
             ret = false;
@@ -281,7 +290,7 @@ bool linkback_profile_connect_start(uint8_t *bd_addr, uint32_t prof, T_LINKBACK_
     switch (prof)
     {
     case A2DP_PROFILE_MASK:
-        ret = bt_a2dp_connect_req(bd_addr, param->protocol_version, BT_A2DP_ROLE_SRC);
+        ret = bt_a2dp_connect_req(bd_addr, param->protocol_version, BT_A2DP_ROLE_SRC, 0);
         break;
 
     case AVRCP_PROFILE_MASK:
@@ -307,6 +316,12 @@ bool linkback_profile_connect_start(uint8_t *bd_addr, uint32_t prof, T_LINKBACK_
     case PBAP_PROFILE_MASK:
         ret = bt_pbap_connect_over_rfc_req(bd_addr, param->server_channel, param->feature);
         break;
+
+#if F_APP_GATT_OVER_BREDR_SUPPORT
+    case GATT_PROFILE_MASK:
+        ret = bt_att_connect_req(bd_addr);
+        break;
+#endif
 
 #if F_APP_HID_SUPPORT
     case HID_PROFILE_MASK:
@@ -354,10 +369,19 @@ void linkback_profile_disconnect_start(uint8_t *bd_addr, uint32_t profs)
             bt_iap_disconnect_req(bd_addr);
         }
 
+#if F_APP_BT_PROFILE_PBAP_SUPPORT
         if (profs & PBAP_PROFILE_MASK)
         {
             bt_pbap_disconnect_req(bd_addr);
         }
+#endif
+
+#if F_APP_GATT_OVER_BREDR_SUPPORT
+        if (profs & GATT_PROFILE_MASK)
+        {
+            bt_att_disconnect_req(bd_addr);
+        }
+#endif
 
 #if F_APP_HID_SUPPORT
         if (profs & HID_PROFILE_MASK)
@@ -366,10 +390,12 @@ void linkback_profile_disconnect_start(uint8_t *bd_addr, uint32_t profs)
         }
 #endif
 
+#if F_APP_ERWS_SUPPORT
         if (profs & RDTP_PROFILE_MASK)
         {
             bt_rdtp_disconnect_req(bd_addr);
         }
+#endif
 
 #if F_APP_DURIAN_SUPPORT
         app_durian_link_disconn_req(bd_addr);
@@ -492,10 +518,17 @@ void linkback_todo_queue_insert_normal_node(uint8_t *bd_addr, uint32_t plan_prof
                                             uint32_t retry_timeout, bool is_group_member)
 {
     T_LINKBACK_NODE_ITEM *p_item;
+    bool plan_lea = false;
 
     if (bd_addr == NULL || plan_profs == 0)
     {
         return;
+    }
+
+    if (plan_profs & UCA_PROFILE_MASK)
+    {
+        plan_profs &= ~UCA_PROFILE_MASK;
+        plan_lea = true;
     }
 
 #if F_APP_LEGACY_DONGLE_BINDING || F_APP_GAMING_LEA_A2DP_SWITCH_SUPPORT
@@ -515,6 +548,7 @@ void linkback_todo_queue_insert_normal_node(uint8_t *bd_addr, uint32_t plan_prof
         if (!is_group_member)
         {
             p_item->linkback_node.plan_profs |= plan_profs;
+            p_item->linkback_node.plan_lea = plan_lea;
             p_item->linkback_node.retry_timeout = retry_timeout;
             p_item->linkback_node.is_group_member = false;
         }
@@ -526,6 +560,7 @@ void linkback_todo_queue_insert_normal_node(uint8_t *bd_addr, uint32_t plan_prof
         {
             memcpy(p_item->linkback_node.bd_addr, bd_addr, 6);
             p_item->linkback_node.plan_profs = plan_profs;
+            p_item->linkback_node.plan_lea = plan_lea;
             p_item->linkback_node.is_force = false;
             p_item->linkback_node.is_special = false;
             p_item->linkback_node.retry_timeout = retry_timeout;
@@ -554,10 +589,17 @@ void linkback_todo_queue_insert_force_node(uint8_t *bd_addr, uint32_t plan_profs
                                            uint32_t retry_timeout, bool is_group_member)
 {
     T_LINKBACK_NODE_ITEM *p_item;
+    bool plan_lea = false;
 
     if (bd_addr == NULL || plan_profs == 0)
     {
         return;
+    }
+
+    if (plan_profs & UCA_PROFILE_MASK)
+    {
+        plan_profs &= ~UCA_PROFILE_MASK;
+        plan_lea = true;
     }
 
 #if F_APP_LEGACY_DONGLE_BINDING
@@ -577,6 +619,7 @@ void linkback_todo_queue_insert_force_node(uint8_t *bd_addr, uint32_t plan_profs
         if (!is_group_member)
         {
             p_item->linkback_node.plan_profs |= plan_profs;
+            p_item->linkback_node.plan_lea = plan_lea;
             p_item->linkback_node.is_force = true;
             p_item->linkback_node.is_special = is_special;
             p_item->linkback_node.retry_timeout = retry_timeout;
@@ -595,6 +638,7 @@ void linkback_todo_queue_insert_force_node(uint8_t *bd_addr, uint32_t plan_profs
         {
             memcpy(p_item->linkback_node.bd_addr, bd_addr, 6);
             p_item->linkback_node.plan_profs = plan_profs;
+            p_item->linkback_node.plan_lea = plan_lea;
             p_item->linkback_node.is_force = true;
             p_item->linkback_node.is_special = is_special;
             p_item->linkback_node.retry_timeout = retry_timeout;
@@ -1050,9 +1094,24 @@ void linkback_load_bond_list(uint8_t skip_node_num, uint16_t retry_timeout)
                     }
                 }
 #endif
+
+#if F_APP_LEA_SUPPORT
+                if (bond_flag & (BOND_FLAG_HFP | BOND_FLAG_HSP | BOND_FLAG_A2DP | BOND_FLAG_UCA))
+                {
+                    plan_profs = app_bt_policy_get_profs_by_bond_flag(bond_flag);
+                    if (app_cfg_const.link_scenario <= LINKBACK_SCENARIO_A2DP_BASE)
+                    {
+                        if (bond_flag & BOND_FLAG_UCA)
+                        {
+                            plan_profs |= UCA_PROFILE_MASK;
+                        }
+                    }
+
+#else
                 if (bond_flag & (BOND_FLAG_HFP | BOND_FLAG_HSP | BOND_FLAG_A2DP))
                 {
                     plan_profs = app_bt_policy_get_profs_by_bond_flag(bond_flag);
+#endif
                     linkback_todo_queue_insert_normal_node(bd_addr, plan_profs, retry_timeout * 1000, true);
 
 #if F_APP_LEGACY_DONGLE_BINDING || F_APP_GAMING_LEA_A2DP_SWITCH_SUPPORT

@@ -1,0 +1,5 @@
+config REALTEK_APP_BLE_BROADCASTER
+   bool 
+   default y
+
+rsource "../../../Kconfig"

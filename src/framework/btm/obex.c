@@ -3,6 +3,7 @@
  */
 
 #include <string.h>
+#include <stdlib.h>
 #include "os_mem.h"
 #include "os_queue.h"
 #include "trace.h"
@@ -11,48 +12,143 @@
 #include "rfc.h"
 #include "obex.h"
 
-#define OBEX_PROFILE_NUM                4
-#define OBEX_OVER_RFC_MAX_PKT_LEN       1011    // 1021-4(l2c hdr)-5(rfc hdr)-1(crc)
-#define OBEX_OVER_L2C_MAX_PKT_LEN       1015    // 1021-6(l2c ertm hdr/fcs)
+#define OBEX_SUCCESS            0x00
+#define OBEX_FAIL               0x01
+
+#define FLAG_CONNECTION_ID      0x01
+#define FLAG_BODY               0x02
+#define FLAG_AUTHEN_CHALLENGE   0x04
+#define FLAG_SRM_ENABLE         0x08
+#define FLAG_SRMP_WAIT          0x10
+
+#define OBEX_VERSION            0x10 /* version 1.0 */
+
+/************opcode definition**************/
+#define OBEX_OPCODE_CONNECT             0x80
+#define OBEX_OPCODE_DISCONNECT          0x81
+#define OBEX_OPCODE_PUT                 0x02
+#define OBEX_OPCODE_FPUT                0x82
+#define OBEX_OPCODE_GET                 0x03
+#define OBEX_OPCODE_FGET                0x83
+#define OBEX_OPCODE_SET_PATH            0x85
+#define OBEX_OPCODE_ACTION              0x06
+#define OBEX_OPCODE_FACTION             0x86
+#define OBEX_OPCODE_SESSION             0x87
+#define OBEX_OPCODE_ABORT               0xFF
+
+#define OBEX_BASE_LEN     3  /* 1 byte opcode + 2 byte pkt_len*/
+#define OBEX_CONNECT_LEN  7
+#define OBEX_SET_PATH_LEN 5
+
+#define OBEX_OVER_RFC_MAX_PKT_LEN       1011    /* 1021-4(l2c hdr)-5(rfc hdr)-1(crc) */
+#define OBEX_OVER_L2C_MAX_PKT_LEN       1015    /* 1021-6(l2c ertm hdr/fcs) */
+
+/* F, G and H are basic MD5 functions: selection, majority, parity */
+#define F(x, y, z) (((x) & (y)) | ((~x) & (z)))
+#define G(x, y, z) (((x) & (z)) | ((y) & (~z)))
+#define H(x, y, z) ((x) ^ (y) ^ (z))
+#define I(x, y, z) ((y) ^ ((x) | (~z)))
+
+/* ROTATE_LEFT rotates x left n bits */
+#define ROTATE_LEFT(x, n) (((x) << (n)) | ((x) >> (32-(n))))
+
+/* FF, GG, HH, and II transformations for rounds 1, 2, 3, and 4 */
+/* Rotation is separate from addition to prevent recomputation */
+#define FF(a, b, c, d, x, s, ac) \
+    {(a) += F ((b), (c), (d)) + (x) + (uint32_t)(ac); \
+        (a) = ROTATE_LEFT ((a), (s)); \
+        (a) += (b); \
+    }
+#define GG(a, b, c, d, x, s, ac) \
+    {(a) += G ((b), (c), (d)) + (x) + (uint32_t)(ac); \
+        (a) = ROTATE_LEFT ((a), (s)); \
+        (a) += (b); \
+    }
+#define HH(a, b, c, d, x, s, ac) \
+    {(a) += H ((b), (c), (d)) + (x) + (uint32_t)(ac); \
+        (a) = ROTATE_LEFT ((a), (s)); \
+        (a) += (b); \
+    }
+#define II(a, b, c, d, x, s, ac) \
+    {(a) += I ((b), (c), (d)) + (x) + (uint32_t)(ac); \
+        (a) = ROTATE_LEFT ((a), (s)); \
+        (a) += (b); \
+    }
+
+typedef struct t_obex_md5
+{
+    uint32_t    buf[4];
+    uint32_t    bytes[2];
+    uint8_t     in[64];
+    uint8_t     digest[16];
+} T_OBEX_MD5;
+
+typedef struct t_obex_connect
+{
+    uint8_t     opcode;
+    uint16_t    packet_len;
+    uint8_t     obex_version;
+    uint8_t     flags;
+    uint16_t    max_packet_len;
+} T_OBEX_CONNECT;
+
+typedef struct t_obex_set_path
+{
+    uint8_t     opcode;
+    uint16_t    packet_len;
+    uint8_t     flags;
+    uint8_t     constants;
+} T_OBEX_SET_PATH;
 
 typedef struct t_obex_link
 {
-    struct t_obex_link *p_next;
-
-    const uint8_t      *con_param_ptr;
-    uint32_t            connection_id;
-
-    uint8_t            *p_rx_data;
-    uint16_t            rx_len;
-    uint16_t            total_len;
-
+    struct t_obex_link *next;
     uint8_t             bd_addr[6];
     uint16_t            cid;
     uint16_t            psm;
     uint8_t             dlci;
-    T_OBEX_STATE        state;
-    uint8_t             wait_credit_flag;
-    uint8_t             srm_status;
     uint8_t             server_chann;
     uint8_t             queue_id;
-    P_OBEX_PROFILE_CB   cb;
-
+    T_OBEX_STATE        state;
+    T_OBEX_ROLE         role;
+    uint8_t             srm_status;
+    uint32_t            conn_id;
+    const uint8_t      *conn_param;
+    uint8_t            *p_rx_data;
+    uint16_t            rx_len;
+    uint16_t            total_len;
+    uint8_t             wait_credit_flag;
+    P_OBEX_CBACK        cback;
     uint16_t            local_max_pkt_len;
     uint16_t            remote_max_pkt_len;
-    T_OBEX_ROLE         role;
 } T_OBEX_LINK;
+
+typedef struct t_obex_rfc_cback
+{
+    struct t_obex_rfc_cback *next;
+    P_OBEX_CBACK             cback;
+    uint8_t                  service_id;
+    uint8_t                  server_chann;
+} T_OBEX_RFC_CBACK;
+
+typedef struct t_obex_l2c_cback
+{
+    struct t_obex_l2c_cback *next;
+    P_OBEX_CBACK             cback;
+    uint16_t                 psm;
+    uint8_t                  queue_id;
+} T_OBEX_L2C_CBACK;
 
 typedef struct t_obex
 {
-    T_OBEX_RFC_PROFILE *rfc_prof_cb;
-    T_OBEX_L2C_PROFILE *l2c_prof_cb;
-    T_OS_QUEUE          link_queue;
-
-    uint16_t            ds_data_offset;
-    uint8_t             rfc_index;
+    T_OS_QUEUE rfc_cback_list;
+    T_OS_QUEUE l2c_cback_list;
+    T_OS_QUEUE link_queue;
+    uint8_t    service_id;
+    uint16_t   ds_data_offset;
 } T_OBEX;
 
-T_OBEX *p_obex;
+static T_OBEX *obex = NULL;
 
 const uint8_t md5_padding[64] =
 {
@@ -148,29 +244,29 @@ void transfrom(uint32_t *buf,  uint32_t *in)
     buf[3] += d;
 }
 
-void md5_update(T_MD5         *md5_context,
-                const uint8_t *in_ptr,
-                uint16_t       in_len)
+void md5_update(T_OBEX_MD5    *context,
+                const uint8_t *data,
+                uint16_t       len)
 {
     uint32_t         temp[16];
     uint16_t         mdi;
     uint16_t         i, j;
 
     /* compute number of bytes mod 64 */
-    mdi = (int)((md5_context->bytes[0] >> 3) & 0x3F);
+    mdi = (int)((context->bytes[0] >> 3) & 0x3F);
 
     /* update number of bits */
-    if ((md5_context->bytes[0] + ((uint32_t)in_len << 3)) < md5_context->bytes[0])
+    if ((context->bytes[0] + ((uint32_t)len << 3)) < context->bytes[0])
     {
-        md5_context->bytes[1]++;
+        context->bytes[1]++;
     }
-    md5_context->bytes[0] += ((uint32_t)in_len << 3);
-    //md5_context->bytes[1] += ((uint32_t)in_len >> 29);
+    context->bytes[0] += ((uint32_t)len << 3);
+    //context->bytes[1] += ((uint32_t)len >> 29);
 
-    while (in_len--)
+    while (len--)
     {
         /* add new character to buffer, increment mdi */
-        md5_context->in[mdi] = *in_ptr++;
+        context->in[mdi] = *data++;
         mdi++;
 
         /* transform if necessary */
@@ -178,16 +274,16 @@ void md5_update(T_MD5         *md5_context,
         {
             for (i = 0, j = 0; i < 16; i++, j += 4)
             {
-                temp[i] = (((uint32_t)md5_context->in[j + 3]) << 24) | (((uint32_t)md5_context->in[j + 2]) << 16)
-                          | (((uint32_t)md5_context->in[j + 1]) << 8) | ((uint32_t)md5_context->in[j]);
+                temp[i] = (((uint32_t)context->in[j + 3]) << 24) | (((uint32_t)context->in[j + 2]) << 16)
+                          | (((uint32_t)context->in[j + 1]) << 8) | ((uint32_t)context->in[j]);
             }
-            transfrom(md5_context->buf, temp);
+            transfrom(context->buf, temp);
             mdi = 0;
         }
     }
 }
 
-void md5_final(T_MD5 *md5_context)
+void md5_final(T_OBEX_MD5 *context)
 {
     uint32_t         in[16];
     uint16_t         mdi;
@@ -195,56 +291,56 @@ void md5_final(T_MD5 *md5_context)
     uint16_t         pad_len;
 
     /* save number of bits */
-    in[14] = md5_context->bytes[0];
-    in[15] = md5_context->bytes[1];
+    in[14] = context->bytes[0];
+    in[15] = context->bytes[1];
 
     /* compute number of bytes mod 64 */
-    mdi = (uint16_t)((md5_context->bytes[0] >> 3) & 0x3F);
+    mdi = (uint16_t)((context->bytes[0] >> 3) & 0x3F);
 
     /* pad out to 56 mod 64 */
     pad_len = (mdi < 56) ? (56 - mdi) : (120 - mdi);
-    md5_update(md5_context, md5_padding, pad_len);
+    md5_update(context, md5_padding, pad_len);
 
     /* append length in bits and transform */
     for (i = 0, j = 0; i < 14; i++, j += 4)
     {
-        in[i] = (((uint32_t)md5_context->in[j + 3]) << 24) | (((uint32_t)md5_context->in[j + 2]) << 16)
-                | (((uint32_t)md5_context->in[j + 1]) << 8) | ((uint32_t)md5_context->in[j]);
+        in[i] = (((uint32_t)context->in[j + 3]) << 24) | (((uint32_t)context->in[j + 2]) << 16)
+                | (((uint32_t)context->in[j + 1]) << 8) | ((uint32_t)context->in[j]);
     }
-    transfrom(md5_context->buf, in);
+    transfrom(context->buf, in);
 
     /* store buffer in digest */
     for (i = 0, j = 0; i < 4; i++, j += 4)
     {
-        md5_context->digest[j] = (uint8_t)(md5_context->buf[i]);
-        md5_context->digest[j + 1] = (uint8_t)(md5_context->buf[i] >> 8);
-        md5_context->digest[j + 2] = (uint8_t)(md5_context->buf[i] >> 16);
-        md5_context->digest[j + 3] = (uint8_t)(md5_context->buf[i] >> 24);
+        context->digest[j] = (uint8_t)(context->buf[i]);
+        context->digest[j + 1] = (uint8_t)(context->buf[i] >> 8);
+        context->digest[j + 2] = (uint8_t)(context->buf[i] >> 16);
+        context->digest[j + 3] = (uint8_t)(context->buf[i] >> 24);
     }
 }
 
 T_OBEX_LINK *obex_alloc_link(uint8_t bd_addr[6])
 {
-    T_OBEX_LINK *p_link;
+    T_OBEX_LINK *link;
 
-    p_link = os_mem_zalloc2(sizeof(T_OBEX_LINK));
-    if (p_link != NULL)
+    link = calloc(1, sizeof(T_OBEX_LINK));
+    if (link != NULL)
     {
-        memcpy(p_link->bd_addr, bd_addr, 6);
-        p_link->state = OBEX_STATE_IDLE;
+        memcpy(link->bd_addr, bd_addr, 6);
+        link->state = OBEX_STATE_IDLE;
 
-        os_queue_in(&p_obex->link_queue, p_link);
+        os_queue_in(&obex->link_queue, link);
     }
 
-    return p_link;
+    return link;
 }
 
-void obex_free_link(T_OBEX_LINK *p_link)
+void obex_free_link(T_OBEX_LINK *link)
 {
-    if (p_link != NULL)
+    if (link != NULL)
     {
-        os_queue_delete(&p_obex->link_queue, p_link);
-        os_mem_free(p_link);
+        os_queue_delete(&obex->link_queue, link);
+        free(link);
     }
 }
 
@@ -252,18 +348,19 @@ T_OBEX_LINK *obex_find_link_by_server_chann(uint8_t     bd_addr[6],
                                             uint8_t     server_chann,
                                             T_OBEX_ROLE role)
 {
-    T_OBEX_LINK *p_link;
+    T_OBEX_LINK *link;
 
-    p_link = os_queue_peek(&p_obex->link_queue, 0);
-    while (p_link != NULL)
+    link = os_queue_peek(&obex->link_queue, 0);
+    while (link != NULL)
     {
-        if (memcmp(p_link->bd_addr, bd_addr, 6) == 0 &&
-            p_link->server_chann == server_chann &&
-            p_link->role == role)
+        if (!memcmp(link->bd_addr, bd_addr, 6) &&
+            link->server_chann == server_chann &&
+            link->role == role)
         {
-            return p_link;
+            return link;
         }
-        p_link = p_link->p_next;
+
+        link = link->next;
     }
 
     return NULL;
@@ -272,17 +369,18 @@ T_OBEX_LINK *obex_find_link_by_server_chann(uint8_t     bd_addr[6],
 T_OBEX_LINK *obex_find_link_by_dlci(uint8_t bd_addr[6],
                                     uint8_t dlci)
 {
-    T_OBEX_LINK *p_link;
+    T_OBEX_LINK *link;
 
-    p_link = os_queue_peek(&p_obex->link_queue, 0);
-    while (p_link != NULL)
+    link = os_queue_peek(&obex->link_queue, 0);
+    while (link != NULL)
     {
-        if (memcmp(p_link->bd_addr, bd_addr, 6) == 0 &&
-            p_link->dlci == dlci)
+        if (!memcmp(link->bd_addr, bd_addr, 6) &&
+            link->dlci == dlci)
         {
-            return p_link;
+            return link;
         }
-        p_link = p_link->p_next;
+
+        link = link->next;
     }
 
     return NULL;
@@ -291,16 +389,18 @@ T_OBEX_LINK *obex_find_link_by_dlci(uint8_t bd_addr[6],
 T_OBEX_LINK *obex_find_link_by_queue_id(uint8_t bd_addr[6],
                                         uint8_t queue_id)
 {
-    T_OBEX_LINK *p_link;
+    T_OBEX_LINK *link;
 
-    p_link = os_queue_peek(&p_obex->link_queue, 0);
-    while (p_link != NULL)
+    link = os_queue_peek(&obex->link_queue, 0);
+    while (link != NULL)
     {
-        if (memcmp(p_link->bd_addr, bd_addr, 6) == 0 && p_link->queue_id == queue_id)
+        if (!memcmp(link->bd_addr, bd_addr, 6) &&
+            link->queue_id == queue_id)
         {
-            return p_link;
+            return link;
         }
-        p_link = p_link->p_next;
+
+        link = link->next;
     }
 
     return NULL;
@@ -308,16 +408,17 @@ T_OBEX_LINK *obex_find_link_by_queue_id(uint8_t bd_addr[6],
 
 T_OBEX_LINK *obex_find_link_by_cid(uint16_t cid)
 {
-    T_OBEX_LINK *p_link;
+    T_OBEX_LINK *link;
 
-    p_link = os_queue_peek(&p_obex->link_queue, 0);
-    while (p_link != NULL)
+    link = os_queue_peek(&obex->link_queue, 0);
+    while (link != NULL)
     {
-        if (p_link->cid == cid)
+        if (link->cid == cid)
         {
-            return p_link;
+            return link;
         }
-        p_link = p_link->p_next;
+
+        link = link->next;
     }
 
     return NULL;
@@ -325,16 +426,17 @@ T_OBEX_LINK *obex_find_link_by_cid(uint16_t cid)
 
 T_OBEX_LINK *obex_find_link_by_conn_id(uint32_t conn_id)
 {
-    T_OBEX_LINK *p_link;
+    T_OBEX_LINK *link;
 
-    p_link = os_queue_peek(&p_obex->link_queue, 0);
-    while (p_link != NULL)
+    link = os_queue_peek(&obex->link_queue, 0);
+    while (link != NULL)
     {
-        if (p_link->connection_id == conn_id)
+        if (link->conn_id == conn_id)
         {
-            return p_link;
+            return link;
         }
-        p_link = p_link->p_next;
+
+        link = link->next;
     }
 
     return NULL;
@@ -356,65 +458,63 @@ uint32_t obex_get_free_conn_id(void)
     return 0;
 }
 
-bool obex_send_data(T_OBEX_LINK *p_link,
+bool obex_send_data(T_OBEX_LINK *link,
                     uint8_t     *p_data,
                     uint16_t     data_len,
                     bool         ack)
 {
-    if (p_link->psm)
+    if (link->psm)
     {
         uint8_t *p_buf;
 
-        p_buf = mpa_get_l2c_buf(p_link->queue_id, p_link->cid, 0, data_len, p_obex->ds_data_offset, ack);
+        p_buf = mpa_get_l2c_buf(link->queue_id, link->cid, 0, data_len, obex->ds_data_offset, ack);
         if (p_buf != NULL)
         {
-            memcpy(&p_buf[p_obex->ds_data_offset], p_data, data_len);
-            mpa_send_l2c_data_req(p_buf, p_obex->ds_data_offset, p_link->cid, data_len, false);
+            memcpy(&p_buf[obex->ds_data_offset], p_data, data_len);
+            mpa_send_l2c_data_req(p_buf, obex->ds_data_offset, link->cid, data_len, false);
 
             return true;
         }
     }
     else
     {
-        return rfc_data_req(p_link->bd_addr, p_link->dlci, p_data, data_len, ack);
+        return rfc_data_req(link->bd_addr, link->dlci, p_data, data_len, ack);
     }
 
     return false;
 }
 
-void obex_connect(T_OBEX_LINK *p_link)
+void obex_connect(T_OBEX_LINK *link)
 {
     uint16_t    pkt_len;
     uint8_t    *pkt_ptr;
     uint16_t    param_len;
     uint8_t     index;
 
-    param_len = p_link->con_param_ptr[0];
+    param_len = link->conn_param[0];
     pkt_len = OBEX_CONNECT_LEN + param_len;
 
-    pkt_ptr = os_mem_zalloc2(pkt_len);
-    if (pkt_ptr == NULL)
+    pkt_ptr = calloc(1, pkt_len);
+    if (pkt_ptr != NULL)
     {
-        return;
+        pkt_ptr[0] = OBEX_OPCODE_CONNECT;
+        pkt_ptr[1] = (uint8_t)(pkt_len >> 8);
+        pkt_ptr[2] = (uint8_t)pkt_len;
+        pkt_ptr[3] = OBEX_VERSION;
+        pkt_ptr[4] = 0x00;
+        pkt_ptr[5] = (uint8_t)(link->local_max_pkt_len >> 8);
+        pkt_ptr[6] = (uint8_t)link->local_max_pkt_len;
+
+        index = OBEX_CONNECT_LEN;
+        memcpy(&pkt_ptr[index], &link->conn_param[1], param_len);
+
+        obex_send_data(link, pkt_ptr, pkt_len, false);
+        free(pkt_ptr);
+        link->state = OBEX_STATE_OBEX_CONNECTING;
     }
-
-    pkt_ptr[0] = OBEX_OPCODE_CONNECT;
-    pkt_ptr[1] = (uint8_t)(pkt_len >> 8);
-    pkt_ptr[2] = (uint8_t)pkt_len;
-    pkt_ptr[3] = OBEX_VERSION;
-    pkt_ptr[4] = 0x00;
-    pkt_ptr[5] = (uint8_t)(p_link->local_max_pkt_len >> 8);
-    pkt_ptr[6] = (uint8_t)p_link->local_max_pkt_len;
-
-    index = OBEX_CONNECT_LEN;
-    memcpy(&pkt_ptr[index], &p_link->con_param_ptr[1], param_len);
-
-    obex_send_data(p_link, pkt_ptr, pkt_len, false);
-    os_mem_free(pkt_ptr);
-    p_link->state = OBEX_STATE_OBEX_CONNECTING;
 }
 
-void obex_connect_with_auth_rsp(T_OBEX_LINK *p_link,
+void obex_connect_with_auth_rsp(T_OBEX_LINK *link,
                                 uint8_t     *auth_rsp)
 {
     uint16_t pkt_len;
@@ -422,34 +522,33 @@ void obex_connect_with_auth_rsp(T_OBEX_LINK *p_link,
     uint32_t index;
     uint8_t  param_len;
 
-    param_len = p_link->con_param_ptr[0];
+    param_len = link->conn_param[0];
     pkt_len = OBEX_CONNECT_LEN + OBEX_HDR_AUTHEN_RSP_LEN + param_len;
-    pkt_ptr = os_mem_alloc2(pkt_len);
-    if (pkt_ptr == NULL)
+
+    pkt_ptr = malloc(pkt_len);
+    if (pkt_ptr != NULL)
     {
-        return;
+        pkt_ptr[0] = OBEX_OPCODE_CONNECT;
+        pkt_ptr[1] = (uint8_t)(pkt_len >> 8);
+        pkt_ptr[2] = (uint8_t)pkt_len;
+        pkt_ptr[3] = OBEX_VERSION;
+        pkt_ptr[4] = 0x00;
+        pkt_ptr[5] = (uint8_t)(link->local_max_pkt_len >> 8);
+        pkt_ptr[6] = (uint8_t)link->local_max_pkt_len;
+
+        index = OBEX_CONNECT_LEN;
+        pkt_ptr[index] = OBEX_HI_AUTHEN_RSP;
+        pkt_ptr[index + 1] = (uint8_t)OBEX_HDR_AUTHEN_RSP_LEN >> 8;
+        pkt_ptr[index + 2] = (uint8_t)OBEX_HDR_AUTHEN_RSP_LEN;
+        pkt_ptr[index + 3] = 0x00;
+        pkt_ptr[index + 4] = 0x10;
+        memcpy(&pkt_ptr[index + 5], auth_rsp, 16);
+        index += OBEX_HDR_AUTHEN_RSP_LEN;
+        memcpy(&pkt_ptr[index], &link->conn_param[1], param_len);
+
+        obex_send_data(link, pkt_ptr, pkt_len, false);
+        free(pkt_ptr);
     }
-
-    pkt_ptr[0] = OBEX_OPCODE_CONNECT;
-    pkt_ptr[1] = (uint8_t)(pkt_len >> 8);
-    pkt_ptr[2] = (uint8_t)pkt_len;
-    pkt_ptr[3] = OBEX_VERSION;
-    pkt_ptr[4] = 0x00;
-    pkt_ptr[5] = (uint8_t)(p_link->local_max_pkt_len >> 8);
-    pkt_ptr[6] = (uint8_t)p_link->local_max_pkt_len;
-
-    index = OBEX_CONNECT_LEN;
-    pkt_ptr[index] = OBEX_HI_AUTHEN_RSP;
-    pkt_ptr[index + 1] = (uint8_t)OBEX_HDR_AUTHEN_RSP_LEN >> 8;
-    pkt_ptr[index + 2] = (uint8_t)OBEX_HDR_AUTHEN_RSP_LEN;
-    pkt_ptr[index + 3] = 0x00;
-    pkt_ptr[index + 4] = 0x10;
-    memcpy(&pkt_ptr[index + 5], auth_rsp, 16);
-    index += OBEX_HDR_AUTHEN_RSP_LEN;
-    memcpy(&pkt_ptr[index], &p_link->con_param_ptr[1], param_len);
-
-    obex_send_data(p_link, pkt_ptr, pkt_len, false);
-    os_mem_free(pkt_ptr);
 }
 
 bool obex_set_path(T_OBEX_HANDLE  handle,
@@ -457,13 +556,13 @@ bool obex_set_path(T_OBEX_HANDLE  handle,
                    const uint8_t *path_ptr,
                    uint16_t       path_len)
 {
-    T_OBEX_LINK *p_link;
+    T_OBEX_LINK *link;
     uint8_t *pkt_ptr;
     uint16_t pkt_len;
     bool ret;
 
-    p_link = (T_OBEX_LINK *)handle;
-    if (p_link == NULL)
+    link = (T_OBEX_LINK *)handle;
+    if (link == NULL)
     {
         return false;
     }
@@ -481,10 +580,10 @@ bool obex_set_path(T_OBEX_HANDLE  handle,
     pkt_ptr[3] = flag;  // Bit_1: Don't create directory if it does not exist, return an error instead
     pkt_ptr[4] = 0x00;
     pkt_ptr[5] = OBEX_HI_CONNECTION_ID;
-    pkt_ptr[6] = (uint8_t)(p_link->connection_id >> 24);
-    pkt_ptr[7] = (uint8_t)(p_link->connection_id >> 16);
-    pkt_ptr[8] = (uint8_t)(p_link->connection_id >> 8);
-    pkt_ptr[9] = (uint8_t)(p_link->connection_id);
+    pkt_ptr[6] = (uint8_t)(link->conn_id >> 24);
+    pkt_ptr[7] = (uint8_t)(link->conn_id >> 16);
+    pkt_ptr[8] = (uint8_t)(link->conn_id >> 8);
+    pkt_ptr[9] = (uint8_t)(link->conn_id);
     pkt_ptr[10] = OBEX_HI_NAME;
     pkt_ptr[11] = (uint8_t)((OBEX_HDR_PREFIXED_LEN_BASE + path_len) >> 8);
     pkt_ptr[12] = (uint8_t)(OBEX_HDR_PREFIXED_LEN_BASE + path_len);
@@ -493,11 +592,11 @@ bool obex_set_path(T_OBEX_HANDLE  handle,
         memcpy(&pkt_ptr[13], path_ptr, path_len);
     }
 
-    ret = obex_send_data(p_link, pkt_ptr, pkt_len, false);
+    ret = obex_send_data(link, pkt_ptr, pkt_len, false);
 
     if (ret == true)
     {
-        p_link->state = OBEX_STATE_SET_PATH;
+        link->state = OBEX_STATE_SET_PATH;
     }
 
     os_mem_free(pkt_ptr);
@@ -512,21 +611,21 @@ bool obex_put_data(T_OBEX_HANDLE  handle,
                    uint16_t       body_len,
                    bool           ack)
 {
-    T_OBEX_LINK *p_link;
+    T_OBEX_LINK *link;
     uint8_t *p_buf;
     uint16_t buf_len;
     uint8_t *p;
     bool ret;
 
-    p_link = (T_OBEX_LINK *)handle;
-    if (p_link == NULL)
+    link = (T_OBEX_LINK *)handle;
+    if (link == NULL)
     {
         return false;
     }
 
     buf_len = OBEX_HDR_PUT_LEN + header_len;
 
-    if (p_link->connection_id != 0)
+    if (link->conn_id != 0)
     {
         buf_len += OBEX_HDR_CONN_ID_LEN;
     }
@@ -553,10 +652,10 @@ bool obex_put_data(T_OBEX_HANDLE  handle,
     }
     BE_UINT16_TO_STREAM(p, buf_len);
 
-    if (p_link->connection_id != 0)
+    if (link->conn_id != 0)
     {
         BE_UINT8_TO_STREAM(p, OBEX_HI_CONNECTION_ID);
-        BE_UINT32_TO_STREAM(p, p_link->connection_id);
+        BE_UINT32_TO_STREAM(p, link->conn_id);
     }
 
     ARRAY_TO_STREAM(p, header_ptr, header_len);
@@ -575,11 +674,11 @@ bool obex_put_data(T_OBEX_HANDLE  handle,
         ARRAY_TO_STREAM(p, body_ptr, body_len);
     }
 
-    ret = obex_send_data(p_link, p_buf, buf_len, ack);
+    ret = obex_send_data(link, p_buf, buf_len, ack);
 
     if (ret == true)
     {
-        p_link->state = OBEX_STATE_PUT;
+        link->state = OBEX_STATE_PUT;
     }
 
     os_mem_free(p_buf);
@@ -591,14 +690,14 @@ bool obex_get_object(T_OBEX_HANDLE  handle,
                      uint8_t       *content_ptr,
                      uint16_t       content_len)
 {
-    T_OBEX_LINK *p_link;
+    T_OBEX_LINK *link;
     uint8_t     *pkt_ptr;
     uint16_t     pkt_len;
     uint32_t     index;
     bool ret;
 
-    p_link = (T_OBEX_LINK *)handle;
-    if (p_link == NULL)
+    link = (T_OBEX_LINK *)handle;
+    if (link == NULL)
     {
         return false;
     }
@@ -617,20 +716,20 @@ bool obex_get_object(T_OBEX_HANDLE  handle,
     pkt_ptr[2] = (uint8_t)pkt_len;
     index = OBEX_BASE_LEN;
     pkt_ptr[index] = OBEX_HI_CONNECTION_ID;
-    pkt_ptr[index + 1] = (uint8_t)(p_link->connection_id >> 24);
-    pkt_ptr[index + 2] = (uint8_t)(p_link->connection_id >> 16);
-    pkt_ptr[index + 3] = (uint8_t)(p_link->connection_id >> 8);
-    pkt_ptr[index + 4] = (uint8_t)(p_link->connection_id);
+    pkt_ptr[index + 1] = (uint8_t)(link->conn_id >> 24);
+    pkt_ptr[index + 2] = (uint8_t)(link->conn_id >> 16);
+    pkt_ptr[index + 3] = (uint8_t)(link->conn_id >> 8);
+    pkt_ptr[index + 4] = (uint8_t)(link->conn_id);
     index += OBEX_HDR_CONN_ID_LEN;
-    p_link->srm_status = SRM_DISABLE;
+    link->srm_status = SRM_DISABLE;
     memcpy(&pkt_ptr[index], content_ptr, content_len);
 
-    ret = obex_send_data(p_link, pkt_ptr, pkt_len, false);
-    os_mem_free(pkt_ptr);
+    ret = obex_send_data(link, pkt_ptr, pkt_len, false);
+    free(pkt_ptr);
 
     if (ret)
     {
-        p_link->state = OBEX_STATE_GET;
+        link->state = OBEX_STATE_GET;
     }
 
     return ret;
@@ -639,11 +738,11 @@ bool obex_get_object(T_OBEX_HANDLE  handle,
 bool obex_send_rsp(T_OBEX_HANDLE handle,
                    uint8_t       rsp_code)
 {
-    T_OBEX_LINK *p_link;
+    T_OBEX_LINK *link;
     uint8_t pkt_ptr[3];
 
-    p_link = (T_OBEX_LINK *)handle;
-    if (p_link == NULL)
+    link = (T_OBEX_LINK *)handle;
+    if (link == NULL)
     {
         return false;
     }
@@ -652,16 +751,16 @@ bool obex_send_rsp(T_OBEX_HANDLE handle,
     pkt_ptr[1] = 0x00;
     pkt_ptr[2] = 0x03;
 
-    return obex_send_data(p_link, pkt_ptr, 3, false);
+    return obex_send_data(link, pkt_ptr, 3, false);
 }
 
 bool obex_get_object_continue(T_OBEX_HANDLE handle)
 {
-    T_OBEX_LINK *p_link;
+    T_OBEX_LINK *link;
     uint8_t pkt_ptr[3];
 
-    p_link = (T_OBEX_LINK *)handle;
-    if (p_link == NULL)
+    link = (T_OBEX_LINK *)handle;
+    if (link == NULL)
     {
         return false;
     }
@@ -670,17 +769,17 @@ bool obex_get_object_continue(T_OBEX_HANDLE handle)
     pkt_ptr[1] = 0x00;
     pkt_ptr[2] = 0x03;
 
-    return obex_send_data(p_link, pkt_ptr, 3, false);
+    return obex_send_data(link, pkt_ptr, 3, false);
 }
 
 bool obex_abort(T_OBEX_HANDLE handle)
 {
-    T_OBEX_LINK *p_link;
+    T_OBEX_LINK *link;
     uint8_t pkt_ptr[3];
     bool ret;
 
-    p_link = (T_OBEX_LINK *)handle;
-    if (p_link == NULL)
+    link = (T_OBEX_LINK *)handle;
+    if (link == NULL)
     {
         return false;
     }
@@ -688,11 +787,11 @@ bool obex_abort(T_OBEX_HANDLE handle)
     pkt_ptr[0] = OBEX_OPCODE_ABORT;
     pkt_ptr[1] = 0x00;
     pkt_ptr[2] = 0x03;
-    ret = obex_send_data(p_link, pkt_ptr, 3, false);
+    ret = obex_send_data(link, pkt_ptr, 3, false);
 
     if (ret == true)
     {
-        p_link->state = OBEX_STATE_ABORT;
+        link->state = OBEX_STATE_ABORT;
     }
 
     return ret;
@@ -796,7 +895,7 @@ bool obex_find_value_in_app_param(uint8_t   *p_param,
     return false;
 }
 
-void obex_handle_req_pkt(T_OBEX_LINK *p_link,
+void obex_handle_req_pkt(T_OBEX_LINK *link,
                          uint8_t     *p_pkt,
                          uint16_t     pkt_len)
 {
@@ -810,28 +909,31 @@ void obex_handle_req_pkt(T_OBEX_LINK *p_link,
     switch (opcode)
     {
     case OBEX_OPCODE_CONNECT:
-        if (p_link->cb)
+        if (link->cback)
         {
             uint8_t *p_hdr_data;
             uint16_t hdr_data_len;
             T_OBEX_CONN_IND_DATA data;
 
-            if (obex_find_hdr_in_pkt(p_pkt + OBEX_HDR_CONNECT_LEN, pkt_len - OBEX_HDR_CONNECT_LEN,
-                                     OBEX_HI_SRM, &p_hdr_data, &hdr_data_len))
+            if (obex_find_hdr_in_pkt(p_pkt + OBEX_HDR_CONNECT_LEN,
+                                     pkt_len - OBEX_HDR_CONNECT_LEN,
+                                     OBEX_HI_SRM,
+                                     &p_hdr_data,
+                                     &hdr_data_len))
             {
                 if (*p_hdr_data == 0x01)
                 {
-                    p_link->srm_status = SRM_ENABLE;
+                    link->srm_status = SRM_ENABLE;
                 }
             }
 
-            data.handle = p_link;
-            memcpy(data.bd_addr, p_link->bd_addr, 6);
+            data.handle = link;
+            memcpy(data.bd_addr, link->bd_addr, 6);
 
             p += 4; //pkt len(2), version(1), flag(1)
-            BE_STREAM_TO_UINT16(p_link->remote_max_pkt_len, p);
+            BE_STREAM_TO_UINT16(link->remote_max_pkt_len, p);
 
-            p_link->cb(OBEX_CB_MSG_CONN_IND, &data);
+            link->cback(OBEX_MSG_CONN_IND, &data);
         }
         break;
 
@@ -842,20 +944,23 @@ void obex_handle_req_pkt(T_OBEX_LINK *p_link,
             pkt_ptr[0] = OBEX_RSP_SUCCESS;
             pkt_ptr[1] = 0x00;
             pkt_ptr[2] = 0x03;
-            obex_send_data(p_link, pkt_ptr, 3, false);
+            obex_send_data(link, pkt_ptr, 3, false);
         }
         break;
 
     case OBEX_OPCODE_PUT:
         {
-            if (p_link->psm && p_link->srm_status == SRM_DISABLE)
+            if (link->psm && link->srm_status == SRM_DISABLE)
             {
                 uint8_t *p_hdr_data;
                 uint16_t hdr_data_len;
                 uint8_t  pkt_ptr[5];
 
-                if (obex_find_hdr_in_pkt(p_pkt + OBEX_HDR_PUT_LEN, pkt_len - OBEX_HDR_PUT_LEN,
-                                         OBEX_HI_SRM, &p_hdr_data, &hdr_data_len))
+                if (obex_find_hdr_in_pkt(p_pkt + OBEX_HDR_PUT_LEN,
+                                         pkt_len - OBEX_HDR_PUT_LEN,
+                                         OBEX_HI_SRM,
+                                         &p_hdr_data,
+                                         &hdr_data_len))
                 {
                     if (*p_hdr_data == 0x01)
                     {
@@ -865,39 +970,39 @@ void obex_handle_req_pkt(T_OBEX_LINK *p_link,
                         pkt_ptr[3] = OBEX_HI_SRM;
                         pkt_ptr[4] = 0x01;
 
-                        obex_send_data(p_link, pkt_ptr, 5, false);
-                        p_link->srm_status = SRM_ENABLE;
+                        obex_send_data(link, pkt_ptr, 5, false);
+                        link->srm_status = SRM_ENABLE;
                     }
                 }
             }
 
-            if (p_link->cb)
+            if (link->cback)
             {
                 T_OBEX_REMOTE_PUT_DATA data;
 
-                data.handle = p_link;
-                memcpy(data.bd_addr, p_link->bd_addr, 6);
+                data.handle = link;
+                memcpy(data.bd_addr, link->bd_addr, 6);
                 data.data_len = pkt_len - OBEX_HDR_PUT_LEN;
                 data.p_data = p_pkt + OBEX_HDR_PUT_LEN;
-                data.srm_status = p_link->srm_status;
+                data.srm_status = link->srm_status;
 
-                p_link->cb(OBEX_CB_MSG_REMOTE_PUT, &data);
+                link->cback(OBEX_MSG_REMOTE_PUT, &data);
             }
         }
         break;
 
     case OBEX_OPCODE_FPUT:
-        if (p_link->cb)
+        if (link->cback)
         {
             T_OBEX_REMOTE_PUT_DATA data;
 
-            data.handle = p_link;
-            memcpy(data.bd_addr, p_link->bd_addr, 6);
+            data.handle = link;
+            memcpy(data.bd_addr, link->bd_addr, 6);
             data.data_len = pkt_len - OBEX_HDR_PUT_LEN;
             data.p_data = p_pkt + OBEX_HDR_PUT_LEN;
-            data.srm_status = p_link->srm_status;
+            data.srm_status = link->srm_status;
 
-            p_link->cb(OBEX_CB_MSG_REMOTE_PUT, &data);
+            link->cback(OBEX_MSG_REMOTE_PUT, &data);
         }
         break;
 
@@ -908,7 +1013,7 @@ void obex_handle_req_pkt(T_OBEX_LINK *p_link,
     case OBEX_OPCODE_FACTION:
     case OBEX_OPCODE_SESSION:
         {
-            obex_send_rsp(p_link, OBEX_RSP_NOT_IMPLEMENT);
+            obex_send_rsp(link, OBEX_RSP_NOT_IMPLEMENT);
         }
         break;
 
@@ -917,7 +1022,7 @@ void obex_handle_req_pkt(T_OBEX_LINK *p_link,
     }
 }
 
-void obex_handle_rsp_pkt(T_OBEX_LINK *p_link,
+void obex_handle_rsp_pkt(T_OBEX_LINK *link,
                          uint8_t     *p_pkt,
                          uint16_t     pkt_len)
 {
@@ -929,9 +1034,9 @@ void obex_handle_rsp_pkt(T_OBEX_LINK *p_link,
     BE_STREAM_TO_UINT8(rsp_code, p);
 
     PROTOCOL_PRINT_INFO3("obex_handle_rsp_pkt: response code 0x%x, pkt len %d, link state %d",
-                         rsp_code, pkt_len, p_link->state);
+                         rsp_code, pkt_len, link->state);
 
-    switch (p_link->state)
+    switch (link->state)
     {
     case OBEX_STATE_OBEX_CONNECTING:
         {
@@ -943,26 +1048,26 @@ void obex_handle_rsp_pkt(T_OBEX_LINK *p_link,
             if (rsp_code == OBEX_RSP_SUCCESS)
             {
                 p += 4;
-                BE_STREAM_TO_UINT16(p_link->remote_max_pkt_len, p);
+                BE_STREAM_TO_UINT16(link->remote_max_pkt_len, p);
 
-                if (obex_find_hdr_in_pkt(p_pkt + OBEX_CONNECT_LEN, pkt_len - OBEX_CONNECT_LEN,
-                                         OBEX_HI_CONNECTION_ID, &p_hdr_data, &hdr_data_len))
+                if (obex_find_hdr_in_pkt(p_pkt + OBEX_CONNECT_LEN,
+                                         pkt_len - OBEX_CONNECT_LEN,
+                                         OBEX_HI_CONNECTION_ID,
+                                         &p_hdr_data,
+                                         &hdr_data_len))
                 {
-                    BE_STREAM_TO_UINT32(p_link->connection_id, p_hdr_data);
+                    BE_STREAM_TO_UINT32(link->conn_id, p_hdr_data);
                 }
 
-                PROTOCOL_PRINT_INFO2("obex_handle_rsp_pkt: obex connected, remote max len %d, connection id 0x%x",
-                                     p_link->remote_max_pkt_len, p_link->connection_id);
-
-                if (p_link->cb)
+                if (link->cback)
                 {
                     T_OBEX_CONN_CMPL_DATA data;
 
-                    data.handle = p_link;
-                    data.max_pkt_len = p_link->remote_max_pkt_len;
-                    memcpy(data.bd_addr, p_link->bd_addr, 6);
+                    data.handle = link;
+                    data.max_pkt_len = link->remote_max_pkt_len;
+                    memcpy(data.bd_addr, link->bd_addr, 6);
 
-                    if (p_link->psm)
+                    if (link->psm)
                     {
                         data.obex_over_l2c = true;
                     }
@@ -971,20 +1076,23 @@ void obex_handle_rsp_pkt(T_OBEX_LINK *p_link,
                         data.obex_over_l2c = false;
                     }
 
-                    p_link->state = OBEX_STATE_CONNECTED;
+                    link->state = OBEX_STATE_CONNECTED;
 
-                    p_link->cb(OBEX_CB_MSG_CONN_CMPL, (void *)&data);
+                    link->cback(OBEX_MSG_CONN_CMPL, (void *)&data);
                 }
             }
             else if (rsp_code == OBEX_RSP_UNAUTHORIZED)
             {
-                if (obex_find_hdr_in_pkt(p_pkt + OBEX_CONNECT_LEN, pkt_len - OBEX_CONNECT_LEN,
-                                         OBEX_HI_AUTHEN_CHALLENGE, &p_hdr_data, &hdr_data_len))
+                if (obex_find_hdr_in_pkt(p_pkt + OBEX_CONNECT_LEN,
+                                         pkt_len - OBEX_CONNECT_LEN,
+                                         OBEX_HI_AUTHEN_CHALLENGE,
+                                         &p_hdr_data,
+                                         &hdr_data_len))
                 {
-                    T_MD5     *md5_context;
-                    uint8_t    password[5] = {0x3A, 0x30, 0x30, 0x30, 0x30};
+                    T_OBEX_MD5 *md5_context;
+                    uint8_t     password[5] = {0x3A, 0x30, 0x30, 0x30, 0x30};
 
-                    md5_context = os_mem_alloc2(sizeof(T_MD5));
+                    md5_context = malloc(sizeof(T_OBEX_MD5));
                     if (md5_context == NULL)
                     {
                         status = OBEX_FAIL;
@@ -1016,7 +1124,7 @@ void obex_handle_rsp_pkt(T_OBEX_LINK *p_link,
 
                         if (ret_flag & FLAG_AUTHEN_CHALLENGE)
                         {
-                            obex_connect_with_auth_rsp(p_link, md5_context->digest);
+                            obex_connect_with_auth_rsp(link, md5_context->digest);
                         }
                         os_mem_free(md5_context);
                     }
@@ -1033,15 +1141,15 @@ void obex_handle_rsp_pkt(T_OBEX_LINK *p_link,
 
             if (status == OBEX_FAIL)
             {
-                if (p_link->psm)
+                if (link->psm)
                 {
-                    mpa_send_l2c_disconn_req(p_link->cid);
+                    mpa_send_l2c_disconn_req(link->cid);
                 }
                 else
                 {
-                    rfc_disconn_req(p_link->bd_addr, p_link->dlci);
+                    rfc_disconn_req(link->bd_addr, link->dlci);
                 }
-                p_link->state = OBEX_STATE_IDLE;
+                link->state = OBEX_STATE_IDLE;
             }
         }
         break;
@@ -1050,12 +1158,12 @@ void obex_handle_rsp_pkt(T_OBEX_LINK *p_link,
         {
             T_OBEX_SET_PATH_CMPL_DATA data;
 
-            data.handle = p_link;
-            memcpy(data.bd_addr, p_link->bd_addr, 6);
+            data.handle = link;
+            memcpy(data.bd_addr, link->bd_addr, 6);
             data.cause = rsp_code;
-            if (p_link->cb)
+            if (link->cback)
             {
-                p_link->cb(OBEX_CB_MSG_SET_PATH_DONE, (void *)&data);
+                link->cback(OBEX_MSG_SET_PATH_DONE, (void *)&data);
             }
         }
         break;
@@ -1071,22 +1179,28 @@ void obex_handle_rsp_pkt(T_OBEX_LINK *p_link,
             {
                 if (rsp_code == OBEX_RSP_SUCCESS)
                 {
-                    p_link->state = OBEX_STATE_IDLE;
+                    link->state = OBEX_STATE_IDLE;
                 }
                 else if (rsp_code == OBEX_RSP_CONTINUE)
                 {
                     uint8_t ret_flag = 0;
 
-                    if (obex_find_hdr_in_pkt(p_pkt + OBEX_BASE_LEN, pkt_len - OBEX_BASE_LEN,
-                                             OBEX_HI_SRM, &p_hdr_data, &hdr_data_len))
+                    if (obex_find_hdr_in_pkt(p_pkt + OBEX_BASE_LEN,
+                                             pkt_len - OBEX_BASE_LEN,
+                                             OBEX_HI_SRM,
+                                             &p_hdr_data,
+                                             &hdr_data_len))
                     {
                         if (*p_hdr_data == 0x01)
                         {
                             ret_flag |= FLAG_SRM_ENABLE;
                         }
                     }
-                    if (obex_find_hdr_in_pkt(p_pkt + OBEX_BASE_LEN, pkt_len - OBEX_BASE_LEN,
-                                             OBEX_HI_SRMP, &p_hdr_data, &hdr_data_len))
+                    if (obex_find_hdr_in_pkt(p_pkt + OBEX_BASE_LEN,
+                                             pkt_len - OBEX_BASE_LEN,
+                                             OBEX_HI_SRMP,
+                                             &p_hdr_data,
+                                             &hdr_data_len))
                     {
                         if (*p_hdr_data == 0x01)
                         {
@@ -1094,25 +1208,25 @@ void obex_handle_rsp_pkt(T_OBEX_LINK *p_link,
                         }
                     }
 
-                    if (p_link->srm_status == SRM_DISABLE)
+                    if (link->srm_status == SRM_DISABLE)
                     {
                         if (ret_flag & FLAG_SRM_ENABLE)
                         {
                             if (ret_flag & FLAG_SRMP_WAIT)
                             {
-                                p_link->srm_status = SRM_WAIT;
+                                link->srm_status = SRM_WAIT;
                             }
                             else
                             {
-                                p_link->srm_status = SRM_ENABLE;
+                                link->srm_status = SRM_ENABLE;
                             }
                         }
                     }
-                    else if (p_link->srm_status == SRM_WAIT)
+                    else if (link->srm_status == SRM_WAIT)
                     {
                         if ((ret_flag & FLAG_SRMP_WAIT) == 0)
                         {
-                            p_link->srm_status = SRM_ENABLE;
+                            link->srm_status = SRM_ENABLE;
                         }
                     }
                 }
@@ -1125,14 +1239,14 @@ void obex_handle_rsp_pkt(T_OBEX_LINK *p_link,
                 }
             }
 
-            data.handle = p_link;
-            memcpy(data.bd_addr, p_link->bd_addr, 6);
+            data.handle = link;
+            memcpy(data.bd_addr, link->bd_addr, 6);
             data.cause = rsp_code;
-            data.srm_status = p_link->srm_status;
+            data.srm_status = link->srm_status;
 
-            if (p_link->cb)
+            if (link->cback)
             {
-                p_link->cb(OBEX_CB_MSG_PUT_DONE, (void *)&data);
+                link->cback(OBEX_MSG_PUT_DONE, (void *)&data);
             }
         }
         break;
@@ -1143,22 +1257,28 @@ void obex_handle_rsp_pkt(T_OBEX_LINK *p_link,
             {
                 if (rsp_code == OBEX_RSP_SUCCESS)
                 {
-                    p_link->state = OBEX_STATE_IDLE;
+                    link->state = OBEX_STATE_IDLE;
                 }
                 else if (rsp_code == OBEX_RSP_CONTINUE)
                 {
                     uint8_t ret_flag = 0;
 
-                    if (obex_find_hdr_in_pkt(p_pkt + OBEX_BASE_LEN, pkt_len - OBEX_BASE_LEN,
-                                             OBEX_HI_SRM, &p_hdr_data, &hdr_data_len))
+                    if (obex_find_hdr_in_pkt(p_pkt + OBEX_BASE_LEN,
+                                             pkt_len - OBEX_BASE_LEN,
+                                             OBEX_HI_SRM,
+                                             &p_hdr_data,
+                                             &hdr_data_len))
                     {
                         if (*p_hdr_data == 0x01)
                         {
                             ret_flag |= FLAG_SRM_ENABLE;
                         }
                     }
-                    if (obex_find_hdr_in_pkt(p_pkt + OBEX_BASE_LEN, pkt_len - OBEX_BASE_LEN,
-                                             OBEX_HI_SRMP, &p_hdr_data, &hdr_data_len))
+                    if (obex_find_hdr_in_pkt(p_pkt + OBEX_BASE_LEN,
+                                             pkt_len - OBEX_BASE_LEN,
+                                             OBEX_HI_SRMP,
+                                             &p_hdr_data,
+                                             &hdr_data_len))
                     {
                         if (*p_hdr_data == 0x01)
                         {
@@ -1166,71 +1286,71 @@ void obex_handle_rsp_pkt(T_OBEX_LINK *p_link,
                         }
                     }
 
-                    if (p_link->srm_status == SRM_DISABLE)
+                    if (link->srm_status == SRM_DISABLE)
                     {
                         if (ret_flag & FLAG_SRM_ENABLE)
                         {
                             if (ret_flag & FLAG_SRMP_WAIT)
                             {
-                                p_link->srm_status = SRM_WAIT;
+                                link->srm_status = SRM_WAIT;
                             }
                             else
                             {
-                                p_link->srm_status = SRM_ENABLE;
+                                link->srm_status = SRM_ENABLE;
                             }
                         }
                     }
-                    else if (p_link->srm_status == SRM_WAIT)
+                    else if (link->srm_status == SRM_WAIT)
                     {
                         if ((ret_flag & FLAG_SRMP_WAIT) == 0)
                         {
-                            p_link->srm_status = SRM_ENABLE;
+                            link->srm_status = SRM_ENABLE;
                         }
                     }
                 }
 
-                if (p_link->cb)
+                if (link->cback)
                 {
                     T_OBEX_GET_OBJECT_CMPL_DATA data;
 
-                    data.handle = p_link;
-                    memcpy(data.bd_addr, p_link->bd_addr, 6);
+                    data.handle = link;
+                    memcpy(data.bd_addr, link->bd_addr, 6);
                     data.data_len = pkt_len - OBEX_BASE_LEN;
                     data.p_data = p_pkt + OBEX_BASE_LEN;
                     data.rsp_code = rsp_code;
-                    data.srm_status = p_link->srm_status;
+                    data.srm_status = link->srm_status;
 
-                    p_link->cb(OBEX_CB_MSG_GET_OBJECT, &data);
+                    link->cback(OBEX_MSG_GET_OBJECT, &data);
                 }
             }
             else
             {
-                p_link->state = OBEX_STATE_IDLE;
+                link->state = OBEX_STATE_IDLE;
 
-                if (p_link->cb)
+                if (link->cback)
                 {
                     T_OBEX_GET_OBJECT_CMPL_DATA data;
 
-                    data.handle = p_link;
-                    memcpy(data.bd_addr, p_link->bd_addr, 6);
+                    data.handle = link;
+                    memcpy(data.bd_addr, link->bd_addr, 6);
                     data.data_len = 0;
                     data.p_data = NULL;
                     data.rsp_code = rsp_code;
 
-                    p_link->cb(OBEX_CB_MSG_GET_OBJECT, &data);
+                    link->cback(OBEX_MSG_GET_OBJECT, &data);
                 }
             }
         }
         break;
 
     case OBEX_STATE_DISCONNECT:
-        if (p_link->psm)
+        if (link->psm)
         {
-            mpa_send_l2c_disconn_req(p_link->cid);
+            mpa_send_l2c_disconn_req(link->cid);
         }
         else
         {
-            rfc_disconn_req(p_link->bd_addr, p_link->dlci);
+            rfc_disconn_req(link->bd_addr, link->dlci);
         }
         break;
 
@@ -1238,14 +1358,14 @@ void obex_handle_rsp_pkt(T_OBEX_LINK *p_link,
         {
             T_OBEX_ABORT_CMPL_DATA data;
 
-            p_link->state = OBEX_STATE_IDLE;
+            link->state = OBEX_STATE_IDLE;
 
-            data.handle = p_link;
-            memcpy(data.bd_addr, p_link->bd_addr, 6);
+            data.handle = link;
+            memcpy(data.bd_addr, link->bd_addr, 6);
             data.cause = rsp_code;
-            if (p_link->cb)
+            if (link->cback)
             {
-                p_link->cb(OBEX_CB_MSG_ABORT_DONE, (void *)&data);
+                link->cback(OBEX_MSG_ABORT_DONE, (void *)&data);
             }
         }
         break;
@@ -1255,128 +1375,147 @@ void obex_handle_rsp_pkt(T_OBEX_LINK *p_link,
     }
 }
 
-void obex_handle_data_ind(T_OBEX_LINK *p_link,
+void obex_handle_data_ind(T_OBEX_LINK *link,
                           uint8_t     *p_pkt,
                           uint16_t     pkt_len)
 {
-    if (p_link->p_rx_data != NULL)
+    if (link->p_rx_data != NULL)
     {
-        if (pkt_len <= p_link->total_len - p_link->rx_len)
+        if (pkt_len <= link->total_len - link->rx_len)
         {
-            memcpy(p_link->p_rx_data + p_link->rx_len, p_pkt, pkt_len);
-            p_link->rx_len += pkt_len;
+            memcpy(link->p_rx_data + link->rx_len, p_pkt, pkt_len);
+            link->rx_len += pkt_len;
 
-            if (p_link->rx_len == p_link->total_len)
+            if (link->rx_len == link->total_len)
             {
-                if (p_link->role == OBEX_ROLE_SERVER)
+                if (link->role == OBEX_ROLE_SERVER)
                 {
-                    obex_handle_req_pkt(p_link, p_link->p_rx_data, p_link->total_len);
+                    obex_handle_req_pkt(link, link->p_rx_data, link->total_len);
                 }
                 else
                 {
-                    obex_handle_rsp_pkt(p_link, p_link->p_rx_data, p_link->total_len);
+                    obex_handle_rsp_pkt(link, link->p_rx_data, link->total_len);
                 }
 
-                os_mem_free(p_link->p_rx_data);
-                p_link->p_rx_data = NULL;
-                p_link->rx_len = 0;
-                p_link->total_len = 0;
+                free(link->p_rx_data);
+                link->p_rx_data = NULL;
+                link->rx_len = 0;
+                link->total_len = 0;
             }
         }
         else
         {
             PROTOCOL_PRINT_ERROR3("obex_handle_rcv_data: error pkt len %d, received data len %d, total data len %d",
-                                  pkt_len, p_link->rx_len, p_link->total_len);
-            os_mem_free(p_link->p_rx_data);
-            p_link->p_rx_data = NULL;
-            p_link->rx_len = 0;
-            p_link->total_len = 0;
+                                  pkt_len, link->rx_len, link->total_len);
+            free(link->p_rx_data);
+            link->p_rx_data = NULL;
+            link->rx_len = 0;
+            link->total_len = 0;
         }
     }
     else
     {
-        p_link->total_len = (p_pkt[1] << 8) | (p_pkt[2]);
+        link->total_len = (p_pkt[1] << 8) | (p_pkt[2]);
 
-        if (p_link->total_len > pkt_len)
+        if (link->total_len > pkt_len)
         {
             // this should not hanppen since we limmitted max pkt len
             PROTOCOL_PRINT_ERROR3("obex_handle_rcv_data: max pkt len %d, received pkt len %d, total data len %d",
-                                  p_link->local_max_pkt_len, pkt_len, p_link->total_len);
+                                  link->local_max_pkt_len, pkt_len, link->total_len);
 
-            p_link->p_rx_data = os_mem_alloc2(p_link->total_len);
-            if (p_link->p_rx_data == NULL)
+            link->p_rx_data = malloc(link->total_len);
+            if (link->p_rx_data == NULL)
             {
-                p_link->total_len = 0;
+                link->total_len = 0;
                 return;
             }
 
-            memcpy(p_link->p_rx_data, p_pkt, pkt_len);
-            p_link->rx_len = pkt_len;
+            memcpy(link->p_rx_data, p_pkt, pkt_len);
+            link->rx_len = pkt_len;
         }
         else
         {
-            if (p_link->role == OBEX_ROLE_SERVER)
+            if (link->role == OBEX_ROLE_SERVER)
             {
-                obex_handle_req_pkt(p_link, p_pkt, p_link->total_len);
+                obex_handle_req_pkt(link, p_pkt, link->total_len);
             }
             else
             {
-                obex_handle_rsp_pkt(p_link, p_pkt, p_link->total_len);
+                obex_handle_rsp_pkt(link, p_pkt, link->total_len);
             }
         }
     }
 }
 
-void obex_rfcomm_callback(T_RFC_MSG_TYPE  msg_type,
-                          void           *p_msg)
+void obex_rfc_cback(T_RFC_MSG_TYPE  msg_type,
+                    void           *p_msg)
 {
-    T_OBEX_LINK *p_link;
-    PROTOCOL_PRINT_TRACE1("obex_rfcomm_callback: msg_type = %d", msg_type);
+    T_OBEX_LINK *link;
+
+    PROTOCOL_PRINT_TRACE1("obex_rfc_cback: msg_type 0x%02x", msg_type);
 
     switch (msg_type)
     {
     case RFC_CONN_IND:
         {
             T_RFC_CONN_IND *p_ind = (T_RFC_CONN_IND *)p_msg;
-            uint8_t idx;
-            T_OBEX_RFC_PROFILE *p_profile_cb;
 
-            p_link = obex_find_link_by_dlci(p_ind->bd_addr, p_ind->dlci);
-            if (p_link)
+            link = obex_find_link_by_dlci(p_ind->bd_addr, p_ind->dlci);
+            if (link)
             {
-                rfc_conn_cfm(p_ind->bd_addr, p_ind->dlci, RFC_REJECT, p_ind->frame_size, RFC_DEFAULT_CREDIT);
+                rfc_conn_cfm(p_ind->bd_addr,
+                             p_ind->dlci,
+                             RFC_REJECT,
+                             p_ind->frame_size,
+                             RFC_DEFAULT_CREDIT);
                 break;
             }
 
-            p_link = obex_alloc_link(p_ind->bd_addr);
-            if (p_link)
+            link = obex_alloc_link(p_ind->bd_addr);
+            if (link)
             {
-                p_link->psm = 0;
-                p_link->dlci = p_ind->dlci;
-                p_link->role = OBEX_ROLE_SERVER;
+                T_OBEX_RFC_CBACK *rfc_cback;
 
-                for (idx = 0; idx < OBEX_PROFILE_NUM; idx++)
+                link->psm = 0;
+                link->dlci = p_ind->dlci;
+                link->role = OBEX_ROLE_SERVER;
+
+                rfc_cback = os_queue_peek(&obex->rfc_cback_list, 0);
+                while (rfc_cback != NULL)
                 {
-                    p_profile_cb = &p_obex->rfc_prof_cb[idx];
-                    if (p_profile_cb->server_chann == ((p_link->dlci >> 1) & 0x1F))
+                    if (rfc_cback->server_chann == ((link->dlci >> 1) & 0x1F))
                     {
-                        p_link->cb = p_profile_cb->cb;
+                        link->cback = rfc_cback->cback;
+                        break;
                     }
+
+                    rfc_cback = rfc_cback->next;
                 }
 
                 if (p_ind->frame_size < OBEX_OVER_RFC_MAX_PKT_LEN)
                 {
-                    rfc_conn_cfm(p_ind->bd_addr, p_ind->dlci, RFC_ACCEPT, p_ind->frame_size, RFC_DEFAULT_CREDIT);
+                    rfc_conn_cfm(p_ind->bd_addr,
+                                 p_ind->dlci,
+                                 RFC_ACCEPT,
+                                 p_ind->frame_size,
+                                 RFC_DEFAULT_CREDIT);
                 }
                 else
                 {
-                    rfc_conn_cfm(p_ind->bd_addr, p_ind->dlci, RFC_ACCEPT, OBEX_OVER_RFC_MAX_PKT_LEN,
+                    rfc_conn_cfm(p_ind->bd_addr,
+                                 p_ind->dlci,
+                                 RFC_ACCEPT,
+                                 OBEX_OVER_RFC_MAX_PKT_LEN,
                                  RFC_DEFAULT_CREDIT);
                 }
             }
             else
             {
-                rfc_conn_cfm(p_ind->bd_addr, p_ind->dlci, RFC_REJECT, p_ind->frame_size, RFC_DEFAULT_CREDIT);
+                rfc_conn_cfm(p_ind->bd_addr,
+                             p_ind->dlci,
+                             RFC_REJECT,
+                             p_ind->frame_size,
+                             RFC_DEFAULT_CREDIT);
             }
         }
         break;
@@ -1385,22 +1524,22 @@ void obex_rfcomm_callback(T_RFC_MSG_TYPE  msg_type,
         {
             T_RFC_CONN_CMPL *p_cmpl = (T_RFC_CONN_CMPL *)p_msg;
 
-            p_link = obex_find_link_by_dlci(p_cmpl->bd_addr, p_cmpl->dlci);
+            link = obex_find_link_by_dlci(p_cmpl->bd_addr, p_cmpl->dlci);
 
-            if (p_link)
+            if (link)
             {
-                p_link->state = OBEX_STATE_RFC_CONNECTED;
-                p_link->local_max_pkt_len = p_cmpl->frame_size;
+                link->state = OBEX_STATE_RFC_CONNECTED;
+                link->local_max_pkt_len = p_cmpl->frame_size;
 
-                if (p_link->role == OBEX_ROLE_CLIENT)
+                if (link->role == OBEX_ROLE_CLIENT)
                 {
                     if (p_cmpl->remain_credits)
                     {
-                        obex_connect(p_link);
+                        obex_connect(link);
                     }
                     else
                     {
-                        p_link->wait_credit_flag = 1;
+                        link->wait_credit_flag = 1;
                     }
                 }
             }
@@ -1415,21 +1554,21 @@ void obex_rfcomm_callback(T_RFC_MSG_TYPE  msg_type,
         {
             T_RFC_DISCONN_CMPL *p_disc = (T_RFC_DISCONN_CMPL *)p_msg;
 
-            p_link = obex_find_link_by_dlci(p_disc->bd_addr, p_disc->dlci);
-            if (p_link)
+            link = obex_find_link_by_dlci(p_disc->bd_addr, p_disc->dlci);
+            if (link)
             {
                 T_OBEX_DISCONN_CMPL_DATA data;
 
-                data.handle = p_link;
+                data.handle = link;
                 data.cause = p_disc->cause;
-                memcpy(data.bd_addr, p_link->bd_addr, 6);
+                memcpy(data.bd_addr, link->bd_addr, 6);
 
-                if (p_link->cb)
+                if (link->cback)
                 {
-                    p_link->cb(OBEX_CB_MSG_DISCONN, &data);
+                    link->cback(OBEX_MSG_DISCONN, &data);
                 }
 
-                obex_free_link(p_link);
+                obex_free_link(link);
             }
         }
         break;
@@ -1438,13 +1577,13 @@ void obex_rfcomm_callback(T_RFC_MSG_TYPE  msg_type,
         {
             T_RFC_CREDIT_INFO *p_info = (T_RFC_CREDIT_INFO *)p_msg;
 
-            p_link = obex_find_link_by_dlci(p_info->bd_addr, p_info->dlci);
-            if (p_link)
+            link = obex_find_link_by_dlci(p_info->bd_addr, p_info->dlci);
+            if (link)
             {
-                if ((p_info->remain_credits) && (p_link->wait_credit_flag))
+                if ((p_info->remain_credits) && (link->wait_credit_flag))
                 {
-                    obex_connect(p_link);
-                    p_link->wait_credit_flag = 0;
+                    obex_connect(link);
+                    link->wait_credit_flag = 0;
                 }
             }
         }
@@ -1454,18 +1593,18 @@ void obex_rfcomm_callback(T_RFC_MSG_TYPE  msg_type,
         {
             T_RFC_DATA_IND *p_ind = (T_RFC_DATA_IND *)p_msg;
 
-            p_link = obex_find_link_by_dlci(p_ind->bd_addr, p_ind->dlci);
-            if (p_link)
+            link = obex_find_link_by_dlci(p_ind->bd_addr, p_ind->dlci);
+            if (link)
             {
-                if ((p_ind->remain_credits) && (p_link->wait_credit_flag))
+                if ((p_ind->remain_credits) && (link->wait_credit_flag))
                 {
-                    obex_connect(p_link);
-                    p_link->wait_credit_flag = 0;
+                    obex_connect(link);
+                    link->wait_credit_flag = 0;
                 }
 
                 if (p_ind->length)
                 {
-                    obex_handle_data_ind(p_link, p_ind->buf, p_ind->length);
+                    obex_handle_data_ind(link, p_ind->buf, p_ind->length);
                 }
             }
 
@@ -1477,10 +1616,10 @@ void obex_rfcomm_callback(T_RFC_MSG_TYPE  msg_type,
         {
             T_RFC_DLCI_CHANGE_INFO *p_info = (T_RFC_DLCI_CHANGE_INFO *)p_msg;
 
-            p_link = obex_find_link_by_dlci(p_info->bd_addr, p_info->pre_dlci);
-            if (p_link)
+            link = obex_find_link_by_dlci(p_info->bd_addr, p_info->prev_dlci);
+            if (link)
             {
-                p_link->dlci = p_info->curr_dlci;
+                link->dlci = p_info->curr_dlci;
             }
         }
         break;
@@ -1493,63 +1632,50 @@ void obex_rfcomm_callback(T_RFC_MSG_TYPE  msg_type,
 void obex_l2cap_callback(void        *p_buf,
                          T_PROTO_MSG  l2c_msg)
 {
-    T_OBEX_LINK *p_link;
-    PROTOCOL_PRINT_TRACE1("obex_l2cap_callback: msg_type = %d", l2c_msg);
+    T_OBEX_LINK *link;
+
+    PROTOCOL_PRINT_TRACE1("obex_l2cap_callback: msg_type 0x%02x", l2c_msg);
 
     switch (l2c_msg)
     {
     case L2C_CONN_IND:
         {
-            uint8_t index;
             T_MPA_L2C_CONN_IND *p_ind = (T_MPA_L2C_CONN_IND *)p_buf;
-            T_OBEX_L2C_PROFILE *p_profile_cb;
 
-            p_link = obex_alloc_link(p_ind->bd_addr);
-            if (p_link == NULL)
+            link = obex_alloc_link(p_ind->bd_addr);
+            if (link == NULL)
             {
-                mpa_send_l2c_conn_cfm(MPA_L2C_CONN_NO_RESOURCE, p_ind->cid, 672, MPA_L2C_MODE_ERTM, 0xFFFF);
+                mpa_send_l2c_conn_cfm(MPA_L2C_CONN_NO_RESOURCE,
+                                      p_ind->cid,
+                                      672,
+                                      MPA_L2C_MODE_ERTM,
+                                      0xFFFF);
             }
             else
             {
-                p_link->cid = p_ind->cid;
-                p_link->state = OBEX_STATE_IDLE;
-                p_link->role = OBEX_ROLE_SERVER;
+                T_OBEX_L2C_CBACK *l2c_cback;
 
-                for (index = 0; index < OBEX_PROFILE_NUM; index++)
+                link->cid = p_ind->cid;
+                link->role = OBEX_ROLE_SERVER;
+
+                l2c_cback = os_queue_peek(&obex->l2c_cback_list, 0);
+                while (l2c_cback != NULL)
                 {
-                    p_profile_cb = &p_obex->l2c_prof_cb[index];
-
-                    if (p_profile_cb->queue_id == p_ind->proto_id)
+                    if (l2c_cback->queue_id == p_ind->proto_id)
                     {
-                        p_link->cb = p_profile_cb->cb;
-                        p_link->psm = p_profile_cb->psm;
+                        link->cback = l2c_cback->cback;
+                        link->psm = l2c_cback->psm;
+                        break;
                     }
+
+                    l2c_cback = l2c_cback->next;
                 }
 
-                mpa_send_l2c_conn_cfm(MPA_L2C_CONN_ACCEPT, p_ind->cid, OBEX_OVER_L2C_MAX_PKT_LEN, MPA_L2C_MODE_ERTM,
+                mpa_send_l2c_conn_cfm(MPA_L2C_CONN_ACCEPT,
+                                      p_ind->cid,
+                                      OBEX_OVER_L2C_MAX_PKT_LEN,
+                                      MPA_L2C_MODE_ERTM,
                                       0xFFFF);
-            }
-        }
-        break;
-
-    case L2C_DATA_RSP:
-        {
-            T_MPA_L2C_DATA_RSP *p_info = (T_MPA_L2C_DATA_RSP *)p_buf;
-
-            p_link = obex_find_link_by_cid(p_info->cid);
-            if (p_link)
-            {
-                if (p_link->state == OBEX_STATE_PUT)
-                {
-                    if (p_link->cb)
-                    {
-                        T_OBEX_PUT_DATA_RSP rsp;
-
-                        memcpy(rsp.bd_addr, p_link->bd_addr, 6);
-                        rsp.handle = p_link;
-                        p_link->cb(OBEX_CB_MSG_PUT_DATA_RSP, &rsp);
-                    }
-                }
             }
         }
         break;
@@ -1558,27 +1684,27 @@ void obex_l2cap_callback(void        *p_buf,
         {
             T_MPA_L2C_CONN_RSP *p_rsp = (T_MPA_L2C_CONN_RSP *)p_buf;
 
-            p_link = obex_find_link_by_queue_id(p_rsp->bd_addr, p_rsp->proto_id);
-            if (p_link)
+            link = obex_find_link_by_queue_id(p_rsp->bd_addr, p_rsp->proto_id);
+            if (link)
             {
                 if (p_rsp->cause == 0)
                 {
-                    p_link->cid = p_rsp->cid;
+                    link->cid = p_rsp->cid;
                 }
                 else
                 {
                     T_OBEX_DISCONN_CMPL_DATA data;
 
-                    data.handle = p_link;
+                    data.handle = link;
                     data.cause = p_rsp->cause;
-                    memcpy(data.bd_addr, p_link->bd_addr, 6);
+                    memcpy(data.bd_addr, link->bd_addr, 6);
 
-                    if (p_link->cb)
+                    if (link->cback)
                     {
-                        p_link->cb(OBEX_CB_MSG_DISCONN, &data);
+                        link->cback(OBEX_MSG_DISCONN, &data);
                     }
 
-                    obex_free_link(p_link);
+                    obex_free_link(link);
                 }
             }
         }
@@ -1588,33 +1714,33 @@ void obex_l2cap_callback(void        *p_buf,
         {
             T_MPA_L2C_CONN_CMPL_INFO *p_info = (T_MPA_L2C_CONN_CMPL_INFO *)p_buf;
 
-            p_link = obex_find_link_by_cid(p_info->cid);
-            if (p_link)
+            link = obex_find_link_by_cid(p_info->cid);
+            if (link)
             {
                 if (p_info->cause)
                 {
                     T_OBEX_DISCONN_CMPL_DATA data;
 
-                    data.handle = p_link;
+                    data.handle = link;
                     data.cause = p_info->cause;
-                    memcpy(data.bd_addr, p_link->bd_addr, 6);
+                    memcpy(data.bd_addr, link->bd_addr, 6);
 
-                    if (p_link->cb)
+                    if (link->cback)
                     {
-                        p_link->cb(OBEX_CB_MSG_DISCONN, &data);
+                        link->cback(OBEX_MSG_DISCONN, &data);
                     }
 
-                    obex_free_link(p_link);
+                    obex_free_link(link);
                 }
                 else
                 {
-                    p_obex->ds_data_offset = p_info->ds_data_offset;
-                    p_link->state = OBEX_STATE_L2C_CONNECTED;
-                    p_link->local_max_pkt_len = OBEX_OVER_L2C_MAX_PKT_LEN;
+                    obex->ds_data_offset = p_info->ds_data_offset;
+                    link->state = OBEX_STATE_L2C_CONNECTED;
+                    link->local_max_pkt_len = OBEX_OVER_L2C_MAX_PKT_LEN;
 
-                    if (p_link->role == OBEX_ROLE_CLIENT)
+                    if (link->role == OBEX_ROLE_CLIENT)
                     {
-                        obex_connect(p_link);
+                        obex_connect(link);
                     }
                 }
             }
@@ -1625,10 +1751,32 @@ void obex_l2cap_callback(void        *p_buf,
         {
             T_MPA_L2C_DATA_IND *p_ind = (T_MPA_L2C_DATA_IND *)p_buf;
 
-            p_link = obex_find_link_by_cid(p_ind->cid);
-            if (p_link && p_ind->length)
+            link = obex_find_link_by_cid(p_ind->cid);
+            if (link && p_ind->length)
             {
-                obex_handle_data_ind(p_link, p_ind->data + p_ind->gap, p_ind->length);
+                obex_handle_data_ind(link, p_ind->data + p_ind->gap, p_ind->length);
+            }
+        }
+        break;
+
+    case L2C_DATA_RSP:
+        {
+            T_MPA_L2C_DATA_RSP *p_info = (T_MPA_L2C_DATA_RSP *)p_buf;
+
+            link = obex_find_link_by_cid(p_info->cid);
+            if (link)
+            {
+                if (link->state == OBEX_STATE_PUT)
+                {
+                    if (link->cback)
+                    {
+                        T_OBEX_PUT_DATA_RSP rsp;
+
+                        memcpy(rsp.bd_addr, link->bd_addr, 6);
+                        rsp.handle = link;
+                        link->cback(OBEX_MSG_PUT_DATA_RSP, &rsp);
+                    }
+                }
             }
         }
         break;
@@ -1637,20 +1785,20 @@ void obex_l2cap_callback(void        *p_buf,
         {
             T_MPA_L2C_DISCONN_RSP *p_rsp = (T_MPA_L2C_DISCONN_RSP *)p_buf;
 
-            p_link = obex_find_link_by_cid(p_rsp->cid);
-            if (p_link)
+            link = obex_find_link_by_cid(p_rsp->cid);
+            if (link)
             {
                 T_OBEX_DISCONN_CMPL_DATA data;
 
-                data.handle = p_link;
+                data.handle = link;
                 data.cause = p_rsp->cause;
-                memcpy(data.bd_addr, p_link->bd_addr, 6);
+                memcpy(data.bd_addr, link->bd_addr, 6);
 
-                if (p_link->cb)
+                if (link->cback)
                 {
-                    p_link->cb(OBEX_CB_MSG_DISCONN, &data);
+                    link->cback(OBEX_MSG_DISCONN, &data);
                 }
-                obex_free_link(p_link);
+                obex_free_link(link);
             }
         }
         break;
@@ -1659,21 +1807,21 @@ void obex_l2cap_callback(void        *p_buf,
         {
             T_MPA_L2C_DISCONN_IND *p_ind = (T_MPA_L2C_DISCONN_IND *)p_buf;
 
-            p_link = obex_find_link_by_cid(p_ind->cid);
-            if (p_link)
+            link = obex_find_link_by_cid(p_ind->cid);
+            if (link)
             {
                 T_OBEX_DISCONN_CMPL_DATA data;
 
-                data.handle = p_link;
+                data.handle = link;
                 data.cause = p_ind->cause;
-                memcpy(data.bd_addr, p_link->bd_addr, 6);
+                memcpy(data.bd_addr, link->bd_addr, 6);
 
-                if (p_link->cb)
+                if (link->cback)
                 {
-                    p_link->cb(OBEX_CB_MSG_DISCONN, &data);
+                    link->cback(OBEX_MSG_DISCONN, &data);
                 }
 
-                obex_free_link(p_link);
+                obex_free_link(link);
             }
 
             mpa_send_l2c_disconn_cfm(p_ind->cid);
@@ -1685,184 +1833,110 @@ void obex_l2cap_callback(void        *p_buf,
     }
 }
 
-bool obex_conn_req_over_l2c(uint8_t            bd_addr[6],
-                            uint8_t           *p_param,
-                            uint16_t           psm,
-                            P_OBEX_PROFILE_CB  cb,
-                            T_OBEX_HANDLE     *p_handle)
-{
-    T_OBEX_LINK *p_link;
-
-    p_link = obex_alloc_link(bd_addr);
-    if (p_link == NULL)
-    {
-        return false;
-    }
-
-    if (mpa_reg_l2c_proto(psm, obex_l2cap_callback, &p_link->queue_id) == false)
-    {
-        obex_free_link(p_link);
-        PROTOCOL_PRINT_ERROR1("obex_conn_req_over_l2c: reg l2c callback for psm 0x%x fail", psm);
-        return false;
-    }
-
-    mpa_send_l2c_conn_req(psm, psm, p_link->queue_id, OBEX_OVER_L2C_MAX_PKT_LEN, bd_addr,
-                          MPA_L2C_MODE_ERTM, 0xFFFF);
-
-    p_link->con_param_ptr = p_param;
-    p_link->state = OBEX_STATE_IDLE;
-    p_link->cb = cb;
-    p_link->role = OBEX_ROLE_CLIENT;
-    p_link->psm = psm;
-
-    *p_handle = p_link;
-
-    return true;
-}
-
 bool obex_conn_cfm(T_OBEX_HANDLE  handle,
                    bool           accept,
                    uint8_t       *p_cfm_data,
                    uint16_t       data_len)
 {
-    T_OBEX_LINK *p_link;
-    uint8_t *p_buf;
-    uint16_t buf_len;
-    uint8_t *p;
-    uint32_t conn_id;
-    bool ret;
+    T_OBEX_LINK *link;
 
-    p_link = (T_OBEX_LINK *)handle;
-    if (p_link == NULL)
+    link = (T_OBEX_LINK *)handle;
+    if (link != NULL)
     {
-        return false;
-    }
+        uint32_t conn_id;
 
-    conn_id = obex_get_free_conn_id();
-    if (conn_id == 0)
-    {
-        return false;
-    }
-
-    buf_len = OBEX_CONNECT_LEN;
-    if (accept)
-    {
-        buf_len += OBEX_HDR_CONN_ID_LEN + data_len;
-    }
-
-    p_buf = os_mem_zalloc2(buf_len);
-    if (p_buf == NULL)
-    {
-        return false;
-    }
-
-    p = p_buf;
-    if (accept)
-    {
-        BE_UINT8_TO_STREAM(p, OBEX_RSP_SUCCESS);
-    }
-    else
-    {
-        BE_UINT8_TO_STREAM(p, OBEX_RSP_FORBIDDEN);
-    }
-    BE_UINT16_TO_STREAM(p, buf_len);
-    BE_UINT8_TO_STREAM(p, OBEX_VERSION);
-    BE_UINT8_TO_STREAM(p, 0x00);
-    BE_UINT16_TO_STREAM(p, p_link->local_max_pkt_len);
-
-    if (accept)
-    {
-        BE_UINT8_TO_STREAM(p, OBEX_HI_CONNECTION_ID);
-        BE_UINT32_TO_STREAM(p, conn_id);
-        ARRAY_TO_STREAM(p, p_cfm_data, data_len);
-
-        p_link->connection_id = conn_id;
-    }
-
-    ret = obex_send_data(p_link, p_buf, buf_len, false);
-    os_mem_free(p_buf);
-
-    if (accept && ret)
-    {
-        if (p_link->cb)
+        conn_id = obex_get_free_conn_id();
+        if (conn_id != 0)
         {
-            T_OBEX_CONN_CMPL_DATA data;
+            uint8_t  *p_buf;
+            uint16_t  buf_len;
 
-            data.handle = p_link;
-            data.max_pkt_len = p_link->local_max_pkt_len;
-            memcpy(data.bd_addr, p_link->bd_addr, 6);
-
-            if (p_link->psm)
+            buf_len = OBEX_CONNECT_LEN;
+            if (accept)
             {
-                data.obex_over_l2c = true;
-            }
-            else
-            {
-                data.obex_over_l2c = false;
+                buf_len += OBEX_HDR_CONN_ID_LEN + data_len;
             }
 
-            p_link->state = OBEX_STATE_CONNECTED;
+            p_buf = calloc(1, buf_len);
+            if (p_buf != NULL)
+            {
+                uint8_t *p;
 
-            p_link->cb(OBEX_CB_MSG_CONN_CMPL, (void *)&data);
+                p = p_buf;
+
+                if (accept)
+                {
+                    BE_UINT8_TO_STREAM(p, OBEX_RSP_SUCCESS);
+                }
+                else
+                {
+                    BE_UINT8_TO_STREAM(p, OBEX_RSP_FORBIDDEN);
+                }
+                BE_UINT16_TO_STREAM(p, buf_len);
+                BE_UINT8_TO_STREAM(p, OBEX_VERSION);
+                BE_UINT8_TO_STREAM(p, 0x00);
+                BE_UINT16_TO_STREAM(p, link->local_max_pkt_len);
+
+                if (accept)
+                {
+                    BE_UINT8_TO_STREAM(p, OBEX_HI_CONNECTION_ID);
+                    BE_UINT32_TO_STREAM(p, conn_id);
+                    ARRAY_TO_STREAM(p, p_cfm_data, data_len);
+
+                    link->conn_id = conn_id;
+                }
+
+                if (obex_send_data(link, p_buf, buf_len, false) == true)
+                {
+                    if (accept)
+                    {
+                        if (link->cback)
+                        {
+                            T_OBEX_CONN_CMPL_DATA data;
+
+                            data.handle = link;
+                            data.max_pkt_len = link->local_max_pkt_len;
+                            memcpy(data.bd_addr, link->bd_addr, 6);
+                            if (link->psm)
+                            {
+                                data.obex_over_l2c = true;
+                            }
+                            else
+                            {
+                                data.obex_over_l2c = false;
+                            }
+
+                            link->state = OBEX_STATE_CONNECTED;
+
+                            link->cback(OBEX_MSG_CONN_CMPL, (void *)&data);
+                        }
+                    }
+
+                    free(p_buf);
+
+                    return true;
+                }
+
+                free(p_buf);
+            }
         }
     }
 
-    return ret;
-}
-
-bool obex_conn_req_over_rfc(uint8_t            bd_addr[6],
-                            uint8_t           *p_param,
-                            uint8_t            server_chann,
-                            P_OBEX_PROFILE_CB  cb,
-                            T_OBEX_HANDLE     *p_handle)
-{
-    T_OBEX_LINK *p_link;
-    uint8_t dlci;
-
-    p_link = obex_find_link_by_server_chann(bd_addr, server_chann, OBEX_ROLE_CLIENT);
-    if (p_link)
-    {
-        return false;
-    }
-
-    p_link = obex_alloc_link(bd_addr);
-    if (p_link == NULL)
-    {
-        return false;
-    }
-
-    p_link->con_param_ptr = p_param;
-    p_link->psm = 0;
-    p_link->server_chann = server_chann;
-    p_link->cb = cb;
-    p_link->role = OBEX_ROLE_CLIENT;
-
-    if (rfc_conn_req(bd_addr, server_chann, OBEX_OVER_RFC_MAX_PKT_LEN,
-                     7, p_obex->rfc_index, &dlci) == true)
-    {
-        *p_handle = p_link;
-        p_link->dlci = dlci;
-        return true;
-    }
-    else
-    {
-        obex_free_link(p_link);
-        return false;
-    }
+    return false;
 }
 
 bool obex_disconn_req(T_OBEX_HANDLE handle)
 {
-    T_OBEX_LINK *p_link;
+    T_OBEX_LINK *link;
 
-    p_link = (T_OBEX_LINK *)handle;
-    if (p_link != NULL)
+    link = (T_OBEX_LINK *)handle;
+    if (link != NULL)
     {
-        if ((p_link->state != OBEX_STATE_L2C_CONNECTED) &&
-            (p_link->state != OBEX_STATE_RFC_CONNECTED) &&
-            (p_link->state != OBEX_STATE_OBEX_CONNECTING))
+        if ((link->state != OBEX_STATE_L2C_CONNECTED) &&
+            (link->state != OBEX_STATE_RFC_CONNECTED) &&
+            (link->state != OBEX_STATE_OBEX_CONNECTING))
         {
-            if (p_link->connection_id != 0)
+            if (link->conn_id != 0)
             {
                 uint8_t pkt_ptr[8];     //OBEX_BASE_LEN + OBEX_HDR_CONN_ID_LEN
 
@@ -1870,11 +1944,11 @@ bool obex_disconn_req(T_OBEX_HANDLE handle)
                 pkt_ptr[1] = 0x00;
                 pkt_ptr[2] = 0x08;
                 pkt_ptr[3] = OBEX_HI_CONNECTION_ID;
-                pkt_ptr[4] = (uint8_t)(p_link->connection_id >> 24);
-                pkt_ptr[5] = (uint8_t)(p_link->connection_id >> 16);
-                pkt_ptr[6] = (uint8_t)(p_link->connection_id >> 8);
-                pkt_ptr[7] = (uint8_t)(p_link->connection_id);
-                obex_send_data(p_link, pkt_ptr, 8, false);
+                pkt_ptr[4] = (uint8_t)(link->conn_id >> 24);
+                pkt_ptr[5] = (uint8_t)(link->conn_id >> 16);
+                pkt_ptr[6] = (uint8_t)(link->conn_id >> 8);
+                pkt_ptr[7] = (uint8_t)(link->conn_id);
+                obex_send_data(link, pkt_ptr, 8, false);
             }
             else
             {
@@ -1883,18 +1957,18 @@ bool obex_disconn_req(T_OBEX_HANDLE handle)
                 pkt_ptr[0] = OBEX_OPCODE_DISCONNECT;
                 pkt_ptr[1] = 0x00;
                 pkt_ptr[2] = 0x03;
-                obex_send_data(p_link, pkt_ptr, 3, false);
+                obex_send_data(link, pkt_ptr, 3, false);
             }
 
-            p_link->state = OBEX_STATE_DISCONNECT;
+            link->state = OBEX_STATE_DISCONNECT;
         }
-        else if (p_link->psm)
+        else if (link->psm)
         {
-            mpa_send_l2c_disconn_req(p_link->cid);
+            mpa_send_l2c_disconn_req(link->cid);
         }
         else
         {
-            rfc_disconn_req(p_link->bd_addr, p_link->dlci);
+            rfc_disconn_req(link->bd_addr, link->dlci);
         }
 
         return true;
@@ -1907,267 +1981,364 @@ bool obex_init(void)
 {
     int32_t ret = 0;
 
-    if (p_obex == NULL)
+    if (obex == NULL)
     {
-        p_obex = os_mem_zalloc2(sizeof(T_OBEX));
-        if (p_obex == NULL)
+        obex = calloc(1, sizeof(T_OBEX));
+        if (obex == NULL)
         {
             ret = 1;
             goto fail_alloc_obex;
         }
 
-        os_queue_init(&p_obex->link_queue);
-
-        p_obex->rfc_prof_cb = os_mem_zalloc2(OBEX_PROFILE_NUM * sizeof(T_OBEX_RFC_PROFILE));
-        if (p_obex->rfc_prof_cb == NULL)
+        if (rfc_cback_register(0xFF, obex_rfc_cback, &obex->service_id) == false)
         {
             ret = 2;
-            goto fail_alloc_rfc_cb;
+            goto fail_register_rfc;
         }
 
-        p_obex->l2c_prof_cb = os_mem_zalloc2(OBEX_PROFILE_NUM * sizeof(T_OBEX_L2C_PROFILE));
-        if (p_obex->l2c_prof_cb == NULL)
-        {
-            ret = 3;
-            goto fail_alloc_l2c_cb;
-        }
-
-        // register an invalid server channel to get an index which can be used when connect
-        if (rfc_reg_cb(0xFF, obex_rfcomm_callback, &p_obex->rfc_index) == false)
-        {
-            ret = 4;
-            goto fail_reg_rfc_cb;
-        }
+        os_queue_init(&obex->link_queue);
+        os_queue_init(&obex->rfc_cback_list);
+        os_queue_init(&obex->l2c_cback_list);
     }
 
     return true;
 
-fail_reg_rfc_cb:
-    os_mem_free(p_obex->l2c_prof_cb);
-fail_alloc_l2c_cb:
-    os_mem_free(p_obex->rfc_prof_cb);
-fail_alloc_rfc_cb:
-    os_mem_free(p_obex);
-    p_obex = NULL;
+fail_register_rfc:
+    free(obex);
+    obex = NULL;
 fail_alloc_obex:
     PROFILE_PRINT_ERROR1("obex_init: failed %d", -ret);
     return false;
 }
 
-bool obex_reg_cb_over_rfc(uint8_t chann_num, P_OBEX_PROFILE_CB callback, uint8_t *p_idx)
+bool obex_conn_req_over_rfc(uint8_t            bd_addr[6],
+                            uint8_t           *p_param,
+                            uint8_t            server_chann,
+                            P_OBEX_CBACK       cback,
+                            T_OBEX_HANDLE     *p_handle)
 {
-    uint8_t index = 0;
-    T_OBEX_RFC_PROFILE *p_profile_cb;
+    T_OBEX_LINK *link;
+    uint8_t      dlci;
+    int32_t      ret = 0;
 
-    if (p_obex == NULL)
+    if (obex == NULL)
     {
-        if (!obex_init())
+        if (obex_init() == false)
         {
-            PROTOCOL_PRINT_ERROR0("obex_reg_cb_over_rfc: init obex fail");
-            return false;
+            ret = 1;
+            goto fail_init_obex;
         }
     }
 
-    for (index = 0; index < OBEX_PROFILE_NUM; index++)
+    link = obex_find_link_by_server_chann(bd_addr, server_chann, OBEX_ROLE_CLIENT);
+    if (link != NULL)
     {
-        p_profile_cb = &p_obex->rfc_prof_cb[index];
-
-        if (p_profile_cb->server_chann == chann_num && p_profile_cb->cb != NULL)
-        {
-            PROTOCOL_PRINT_WARN1("obex_reg_cb_over_rfc: channel number %d is used", chann_num);
-            return false;
-        }
+        ret = 2;
+        goto fail_link_exist;
     }
 
-    for (index = 0; index < OBEX_PROFILE_NUM; index++)
+    link = obex_alloc_link(bd_addr);
+    if (link == NULL)
     {
-        p_profile_cb = &p_obex->rfc_prof_cb[index];
-
-        if (p_profile_cb->cb == NULL)
-        {
-            break;
-        }
+        ret = 3;
+        goto fail_alloc_link;
     }
 
-    if (index == OBEX_PROFILE_NUM)
+    link->conn_param = p_param;
+    link->psm = 0;
+    link->server_chann = server_chann;
+    link->cback = cback;
+    link->role = OBEX_ROLE_CLIENT;
+
+    if (rfc_conn_req(bd_addr,
+                     server_chann,
+                     obex->service_id,
+                     OBEX_OVER_RFC_MAX_PKT_LEN,
+                     7,
+                     &dlci) == false)
     {
-        return false;
+        ret = 4;
+        goto fail_send_rfc_conn_req;
     }
 
-    if (rfc_reg_cb(chann_num, obex_rfcomm_callback, &p_profile_cb->rfc_index) == false)
-    {
-        PROTOCOL_PRINT_ERROR1("obex_reg_cb_over_rfc: register rfc cb for chann num %d fail", chann_num);
-        return false;
-    }
-
-    p_profile_cb->server_chann = chann_num;
-    p_profile_cb->cb = callback;
-    *p_idx = index;
-
-    return true;
-}
-
-bool obex_reg_cb_over_l2c(uint16_t           psm,
-                          P_OBEX_PROFILE_CB  callback,
-                          uint8_t           *p_idx)
-{
-    uint8_t index = 0;
-    T_OBEX_L2C_PROFILE *p_profile_cb;
-
-    if (p_obex == NULL)
-    {
-        if (!obex_init())
-        {
-            PROTOCOL_PRINT_ERROR0("obex_reg_cb_over_l2c: init obex fail");
-            return false;
-        }
-    }
-
-    for (index = 0; index < OBEX_PROFILE_NUM; index++)
-    {
-        p_profile_cb = &p_obex->l2c_prof_cb[index];
-
-        if (p_profile_cb->cb != NULL && p_profile_cb->psm == psm)
-        {
-            PROTOCOL_PRINT_WARN1("obex_reg_cb_over_l2c: psm 0x%x is used", psm);
-            return false;
-        }
-    }
-
-    for (index = 0; index < OBEX_PROFILE_NUM; index++)
-    {
-        p_profile_cb = &p_obex->l2c_prof_cb[index];
-
-        if (p_profile_cb->cb == NULL)
-        {
-            break;
-        }
-    }
-
-    if (index == OBEX_PROFILE_NUM)
-    {
-        return false;
-    }
-
-    if (mpa_reg_l2c_proto(psm, obex_l2cap_callback, &p_profile_cb->queue_id) == false)
-    {
-        PROTOCOL_PRINT_ERROR1("obex_reg_cb_over_l2c: reg l2c callback for psm 0x%x fail", psm);
-        return false;
-    }
-
-    p_profile_cb->psm = psm;
-    p_profile_cb->cb  = callback;
-    *p_idx = index;
-
-    return true;
-}
-
-bool obex_get_roleswap_info(T_OBEX_HANDLE         handle,
-                            T_OBEX_ROLESWAP_INFO *p_info)
-{
-    T_OBEX_LINK *p_link;
-
-    p_link = (T_OBEX_LINK *)handle;
-    if (p_link == NULL)
-    {
-        return false;
-    }
-
-    p_info->connection_id = p_link->connection_id;
-    p_info->local_max_pkt_len = p_link->local_max_pkt_len;
-    p_info->remote_max_pkt_len = p_link->remote_max_pkt_len;
-    p_info->role = p_link->role;
-    p_info->state = p_link->state;
-    p_info->psm = p_link->psm;
-    p_info->cid = p_link->cid;
-
-    if (p_info->psm)
-    {
-        p_info->data_offset = p_obex->ds_data_offset;
-        return true;
-    }
-    else
-    {
-        p_info->rfc_dlci = p_link->dlci;
-        return rfc_get_cid(p_link->bd_addr, p_info->rfc_dlci, &p_info->cid);
-    }
-}
-
-bool obex_set_roleswap_info(uint8_t               bd_addr[6],
-                            P_OBEX_PROFILE_CB     cb,
-                            T_OBEX_ROLESWAP_INFO *p_info,
-                            T_OBEX_HANDLE        *p_handle)
-{
-    T_OBEX_LINK *p_link;
-
-    if (p_info->psm)
-    {
-        p_link = obex_find_link_by_cid(p_info->cid);
-    }
-    else
-    {
-        p_link = obex_find_link_by_dlci(bd_addr, p_info->rfc_dlci);
-    }
-
-    if (p_link == NULL)
-    {
-        p_link = obex_alloc_link(bd_addr);
-    }
-
-    if (p_link == NULL)
-    {
-        return false;
-    }
-
-    p_link->con_param_ptr = p_info->con_param_ptr;
-    p_link->connection_id = p_info->connection_id;
-    p_link->cid = p_info->cid;
-    p_link->state = p_info->state;
-    p_link->cb = cb;
-    p_link->role = p_info->role;
-    p_link->remote_max_pkt_len = p_info->remote_max_pkt_len;
-    p_link->local_max_pkt_len = p_info->local_max_pkt_len;
-    p_link->psm = p_info->psm;
-
-    *p_handle = p_link;
-
-    if (p_link->psm)
-    {
-        p_obex->ds_data_offset = p_info->data_offset;
-
-        if (mpa_reg_l2c_proto(p_link->psm, obex_l2cap_callback, &p_link->queue_id) == false)
-        {
-            goto FAIL;
-        }
-    }
-    else
-    {
-        p_link->dlci = p_info->rfc_dlci;
-    }
-
+    *p_handle = link;
+    link->dlci = dlci;
     return true;
 
-FAIL:
-    obex_free_link(p_link);
+fail_send_rfc_conn_req:
+    obex_free_link(link);
+fail_alloc_link:
+fail_link_exist:
+fail_init_obex:
+    PROTOCOL_PRINT_ERROR2("obex_conn_req_over_rfc: failed %d, server_chann %d", -ret, server_chann);
     return false;
 }
 
-bool obex_del_roleswap_info(T_OBEX_HANDLE handle)
+bool obex_register_over_rfc(uint8_t      chann_num,
+                            P_OBEX_CBACK callback)
 {
-    T_OBEX_LINK *p_link;
+    T_OBEX_RFC_CBACK *rfc_cback;
+    int32_t           ret = 0;
 
-    p_link = (T_OBEX_LINK *)handle;
-    if (p_link == NULL)
+    if (obex == NULL)
     {
-        return false;
+        if (obex_init() == false)
+        {
+            ret = 1;
+            goto fail_init_obex;
+        }
     }
 
-    obex_free_link(p_link);
+    rfc_cback = os_queue_peek(&obex->rfc_cback_list, 0);
+    while (rfc_cback != NULL)
+    {
+        if (rfc_cback->server_chann == chann_num)
+        {
+            ret = 2;
+            goto fail_invalid_chann_num;
+        }
+        rfc_cback = rfc_cback->next;
+    }
+
+    rfc_cback = calloc(1, sizeof(T_OBEX_RFC_CBACK));
+    if (rfc_cback == NULL)
+    {
+        ret = 3;
+        goto fail_alloc_cb;
+    }
+
+    if (rfc_cback_register(chann_num, obex_rfc_cback, &rfc_cback->service_id) == false)
+    {
+        ret = 4;
+        goto fail_rfc_reg_cb;
+    }
+
+    rfc_cback->server_chann = chann_num;
+    rfc_cback->cback = callback;
+    os_queue_in(&obex->rfc_cback_list, rfc_cback);
 
     return true;
+
+fail_rfc_reg_cb:
+    free(rfc_cback);
+fail_alloc_cb:
+fail_invalid_chann_num:
+fail_init_obex:
+    PROTOCOL_PRINT_ERROR2("obex_register_over_rfc: failed %d, chann_num %d", -ret, chann_num);
+    return false;
 }
 
-uint8_t obex_get_rfc_profile_idx(void)
+bool obex_conn_req_over_l2c(uint8_t        bd_addr[6],
+                            uint8_t       *p_param,
+                            uint16_t       psm,
+                            P_OBEX_CBACK   cback,
+                            T_OBEX_HANDLE *p_handle)
 {
-    return p_obex->rfc_index;
+    T_OBEX_LINK *link;
+    int32_t      ret = 0;
+
+    if (obex == NULL)
+    {
+        if (obex_init() == false)
+        {
+            ret = 1;
+            goto fail_init_obex;
+        }
+    }
+
+    link = obex_alloc_link(bd_addr);
+    if (link == NULL)
+    {
+        ret = 2;
+        goto fail_alloc_link;
+    }
+
+    if (mpa_reg_l2c_proto(psm, obex_l2cap_callback, &link->queue_id) == false)
+    {
+        ret = 3;
+        goto fail_reg_l2c_proto;
+    }
+
+    mpa_send_l2c_conn_req(psm,
+                          psm,
+                          link->queue_id,
+                          OBEX_OVER_L2C_MAX_PKT_LEN,
+                          bd_addr,
+                          MPA_L2C_MODE_ERTM,
+                          0xFFFF);
+
+    link->conn_param = p_param;
+    link->cback = cback;
+    link->role = OBEX_ROLE_CLIENT;
+    link->psm = psm;
+
+    *p_handle = link;
+
+    return true;
+
+fail_reg_l2c_proto:
+    obex_free_link(link);
+fail_alloc_link:
+fail_init_obex:
+    PROTOCOL_PRINT_ERROR2("obex_conn_req_over_l2c: failed %d, psm 0x%04x", -ret, psm);
+    return false;
+}
+
+bool obex_register_over_l2c(uint16_t     psm,
+                            P_OBEX_CBACK callback)
+{
+    T_OBEX_L2C_CBACK *l2c_cback;
+    int32_t           ret = 0;
+
+    if (obex == NULL)
+    {
+        if (obex_init() == false)
+        {
+            ret = 1;
+            goto fail_init_obex;
+        }
+    }
+
+    l2c_cback = os_queue_peek(&obex->l2c_cback_list, 0);
+    while (l2c_cback != NULL)
+    {
+        if (l2c_cback->psm == psm)
+        {
+            ret = 2;
+            goto fail_invalid_psm;
+        }
+        l2c_cback = l2c_cback->next;
+    }
+
+    l2c_cback = calloc(1, sizeof(T_OBEX_L2C_CBACK));
+    if (l2c_cback == NULL)
+    {
+        ret = 3;
+        goto fail_alloc_cb;
+    }
+
+    if (mpa_reg_l2c_proto(psm, obex_l2cap_callback, &l2c_cback->queue_id) == false)
+    {
+        ret = 4;
+        goto fail_reg_l2c_proto;
+    }
+
+    l2c_cback->psm = psm;
+    l2c_cback->cback = callback;
+    os_queue_in(&obex->l2c_cback_list, l2c_cback);
+
+    return true;
+
+fail_reg_l2c_proto:
+    free(l2c_cback);
+fail_alloc_cb:
+fail_invalid_psm:
+fail_init_obex:
+    PROTOCOL_PRINT_ERROR2("obex_register_over_l2c: failed %d, psm 0x%04x", -ret, psm);
+    return false;
+}
+
+bool obex_roleswap_info_get(T_OBEX_HANDLE         handle,
+                            T_OBEX_ROLESWAP_INFO *info)
+{
+    T_OBEX_LINK *link;
+
+    link = (T_OBEX_LINK *)handle;
+    if (link != NULL)
+    {
+        info->conn_id = link->conn_id;
+        info->local_max_pkt_len = link->local_max_pkt_len;
+        info->remote_max_pkt_len = link->remote_max_pkt_len;
+        info->role = link->role;
+        info->state = link->state;
+        info->psm = link->psm;
+        info->cid = link->cid;
+
+        if (info->psm)
+        {
+            info->data_offset = obex->ds_data_offset;
+            return true;
+        }
+        else
+        {
+            info->rfc_dlci = link->dlci;
+            return rfc_get_cid(link->bd_addr, info->rfc_dlci, &info->cid);
+        }
+    }
+
+    return false;
+}
+
+bool obex_roleswap_info_set(uint8_t               bd_addr[6],
+                            P_OBEX_CBACK          cback,
+                            T_OBEX_ROLESWAP_INFO *info,
+                            T_OBEX_HANDLE        *handle)
+{
+    T_OBEX_LINK *link;
+
+    if (info->psm)
+    {
+        link = obex_find_link_by_cid(info->cid);
+    }
+    else
+    {
+        link = obex_find_link_by_dlci(bd_addr, info->rfc_dlci);
+    }
+
+    if (link == NULL)
+    {
+        link = obex_alloc_link(bd_addr);
+    }
+
+    if (link != NULL)
+    {
+        link->conn_id = info->conn_id;
+        link->cid = info->cid;
+        link->state = info->state;
+        link->cback = cback;
+        link->role = info->role;
+        link->remote_max_pkt_len = info->remote_max_pkt_len;
+        link->local_max_pkt_len = info->local_max_pkt_len;
+        link->psm = info->psm;
+
+        *handle = link;
+
+        if (link->psm)
+        {
+            obex->ds_data_offset = info->data_offset;
+
+            if (mpa_reg_l2c_proto(link->psm, obex_l2cap_callback, &link->queue_id) == false)
+            {
+                obex_free_link(link);
+                return false;
+            }
+        }
+        else
+        {
+            link->dlci = info->rfc_dlci;
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
+bool obex_roleswap_info_del(T_OBEX_HANDLE handle)
+{
+    T_OBEX_LINK *link;
+
+    link = (T_OBEX_LINK *)handle;
+    if (link != NULL)
+    {
+        obex_free_link(link);
+        return true;
+    }
+
+    return false;
+}
+
+uint8_t obex_service_id_get(void)
+{
+    return obex->service_id;
 }

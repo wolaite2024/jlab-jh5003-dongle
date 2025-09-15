@@ -227,8 +227,11 @@
 /  Instead of private sector buffer eliminated from the file object, common sector
 /  buffer in the filesystem object (FATFS) is used for the file data transfer. */
 
-
+#if CONFIG_REALTEK_FILESYSTEM_EXFAT_SUPPORT
+#define FF_FS_EXFAT     1
+#else
 #define FF_FS_EXFAT     0
+#endif
 /* This option switches support for exFAT filesystem. (0:Disable or 1:Enable)
 /  To enable exFAT, also LFN needs to be enabled. (FF_USE_LFN >= 1)
 /  Note that enabling exFAT discards ANSI C (C89) compatibility. */

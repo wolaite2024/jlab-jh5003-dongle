@@ -58,6 +58,8 @@ uint16_t ble_audio_msg_cb(T_LE_AUDIO_MSG msg, void *buf)
                     p_link = ble_audio_find_by_conn_handle(p_dis_done->conn_handle);
                     if (p_link != NULL)
                     {
+                        p_link->bap_disc_all_done = true;
+
                         p_link->bass_brs_num = p_dis_done->brs_char_num > BASS_BRS_NUM_MAX ?
                                                BASS_BRS_NUM_MAX : p_dis_done->brs_char_num;
 

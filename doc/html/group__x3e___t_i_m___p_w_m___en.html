@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>BT AUDIO SDK: TIM PWM Mode Enable</title>
+<title>BT AUDIO SDK: PWM Mode Enable</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -44,17 +44,20 @@ $(function() {
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">TIM PWM Mode Enable<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___t_i_m.html">TIM</a> &raquo; <a class="el" href="group__x3e___t_i_m___exported__constants.html">TIM Exported Constants</a></div></div>  </div>
+<div class="title">PWM Mode Enable<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___t_i_m.html">TIM</a> &raquo; <a class="el" href="group__x3e___t_i_m___exported___constants.html">TIM Exported Constants</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:gae5421149122a9165e18f65a31b9f2cbf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___t_i_m___p_w_m___en.html#gae5421149122a9165e18f65a31b9f2cbf">PWM_ENABLE</a>&#160;&#160;&#160;((uint16_t)0x1)</td></tr>
+<tr class="memdesc:gae5421149122a9165e18f65a31b9f2cbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the PWM mode.  <a href="#gae5421149122a9165e18f65a31b9f2cbf">More...</a><br /></td></tr>
 <tr class="separator:gae5421149122a9165e18f65a31b9f2cbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9840893630142a62aa7ec53524b7ff12"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___t_i_m___p_w_m___en.html#ga9840893630142a62aa7ec53524b7ff12">PWM_DISABLE</a>&#160;&#160;&#160;((uint16_t)0x0)</td></tr>
+<tr class="memdesc:ga9840893630142a62aa7ec53524b7ff12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable the PWM mode.  <a href="#ga9840893630142a62aa7ec53524b7ff12">More...</a><br /></td></tr>
 <tr class="separator:ga9840893630142a62aa7ec53524b7ff12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac1d7be0bb065f7a0eb107622203debfa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___t_i_m___p_w_m___en.html#gac1d7be0bb065f7a0eb107622203debfa">IS_TIM_PWM_En</a>(mode)</td></tr>
+<tr class="memdesc:gac1d7be0bb065f7a0eb107622203debfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether is the status of PWM mode.  <a href="#gac1d7be0bb065f7a0eb107622203debfa">More...</a><br /></td></tr>
 <tr class="separator:gac1d7be0bb065f7a0eb107622203debfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -71,6 +74,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Enable the PWM mode. </p>
+
 </div>
 </div>
 <a id="ga9840893630142a62aa7ec53524b7ff12"></a>
@@ -84,6 +89,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Disable the PWM mode. </p>
 
 </div>
 </div>
@@ -102,9 +109,11 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">(((mode) == <a class="code" href="group__x3e___t_i_m___p_w_m___en.html#gae5421149122a9165e18f65a31b9f2cbf">PWM_ENABLE</a>) || \</div><div class="line">                             ((mode) == <a class="code" href="group__x3e___t_i_m___p_w_m___en.html#ga9840893630142a62aa7ec53524b7ff12">PWM_DISABLE</a>))</div><div class="ttc" id="group__x3e___t_i_m___p_w_m___en_html_gae5421149122a9165e18f65a31b9f2cbf"><div class="ttname"><a href="group__x3e___t_i_m___p_w_m___en.html#gae5421149122a9165e18f65a31b9f2cbf">PWM_ENABLE</a></div><div class="ttdeci">#define PWM_ENABLE</div><div class="ttdef"><b>Definition:</b> rtl876x_tim.h:155</div></div>
-<div class="ttc" id="group__x3e___t_i_m___p_w_m___en_html_ga9840893630142a62aa7ec53524b7ff12"><div class="ttname"><a href="group__x3e___t_i_m___p_w_m___en.html#ga9840893630142a62aa7ec53524b7ff12">PWM_DISABLE</a></div><div class="ttdeci">#define PWM_DISABLE</div><div class="ttdef"><b>Definition:</b> rtl876x_tim.h:156</div></div>
+<b>Value:</b><div class="fragment"><div class="line">(((mode) == <a class="code" href="group__x3e___t_i_m___p_w_m___en.html#gae5421149122a9165e18f65a31b9f2cbf">PWM_ENABLE</a>) || \</div><div class="line">                             ((mode) == <a class="code" href="group__x3e___t_i_m___p_w_m___en.html#ga9840893630142a62aa7ec53524b7ff12">PWM_DISABLE</a>))</div><div class="ttc" id="group__x3e___t_i_m___p_w_m___en_html_gae5421149122a9165e18f65a31b9f2cbf"><div class="ttname"><a href="group__x3e___t_i_m___p_w_m___en.html#gae5421149122a9165e18f65a31b9f2cbf">PWM_ENABLE</a></div><div class="ttdeci">#define PWM_ENABLE</div><div class="ttdoc">Enable the PWM mode. </div><div class="ttdef"><b>Definition:</b> rtl876x_tim.h:181</div></div>
+<div class="ttc" id="group__x3e___t_i_m___p_w_m___en_html_ga9840893630142a62aa7ec53524b7ff12"><div class="ttname"><a href="group__x3e___t_i_m___p_w_m___en.html#ga9840893630142a62aa7ec53524b7ff12">PWM_DISABLE</a></div><div class="ttdeci">#define PWM_DISABLE</div><div class="ttdoc">Disable the PWM mode. </div><div class="ttdef"><b>Definition:</b> rtl876x_tim.h:182</div></div>
 </div><!-- fragment -->
+<p>Check whether is the status of PWM mode. </p>
+
 </div>
 </div>
 </div><!-- contents -->

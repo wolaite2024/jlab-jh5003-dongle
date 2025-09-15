@@ -8,20 +8,26 @@
 #include "gap_br.h"
 #include "gap_handover_br.h"
 #include "rfc.h"
-#include "spp.h"
-#include "a2dp.h"
-#include "avrcp.h"
-#include "hfp.h"
-#include "pbap.h"
-#include "iap.h"
-#include "avp.h"
-#include "att_br.h"
 #include "bt_mgr.h"
 #include "bt_mgr_int.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#define A2DP_PROFILE_MASK               0x00000001    /* A2DP profile bitmask */
+#define AVRCP_PROFILE_MASK              0x00000002    /* AVRCP profile bitmask */
+#define HFP_PROFILE_MASK                0x00000004    /* HFP profile bitmask */
+#define HSP_PROFILE_MASK                0x00000008    /* HSP profile bitmask */
+#define SPP_PROFILE_MASK                0x00000010    /* SPP profile bitmask */
+#define IAP_PROFILE_MASK                0x00000020    /* iAP profile bitmask */
+#define PBAP_PROFILE_MASK               0x00000040    /* PBAP profile bitmask */
+#define HID_DEVICE_PROFILE_MASK         0x00000080    /* HID Device profile bitmask */
+#define HID_HOST_PROFILE_MASK           0x00000200    /* HID Host profile bitmask */
+#define MAP_PROFILE_MASK                0x00000400    /* MAP profile bitmask */
+#define OPP_PROFILE_MASK                0x00000800    /* OPP profile bitmask */
+#define PAN_PROFILE_MASK                0x00001000    /* PAN profile bitmask */
+#define RDTP_PROFILE_MASK               0x00008000    /* Remote Control vendor profile bitmask */
 
 typedef enum
 {
@@ -68,7 +74,7 @@ typedef struct
 typedef struct
 {
     uint16_t    cause;
-    void       *p_param;
+    void       *param;
 } T_ROLESWAP_RECOVERY_CONN_PARAM;
 
 bool bt_roleswap_init(void);
@@ -84,7 +90,7 @@ void bt_roleswap_handle_profile_conn(uint8_t  bd_addr[6],
                                      uint8_t  param);
 
 void bt_roleswap_handle_profile_disconn(uint8_t                           bd_addr[6],
-                                        T_ROLESWAP_PROFILE_DISCONN_PARAM *p_param);
+                                        T_ROLESWAP_PROFILE_DISCONN_PARAM *param);
 
 void bt_roleswap_handle_sco_conn(uint8_t bd_addr[6]);
 
@@ -98,15 +104,10 @@ void bt_roleswap_handle_bt_rfc_disconn(uint8_t  bd_addr[6],
                                        uint8_t  server_chann,
                                        uint16_t cause);
 
-void bt_roleswap_handle_bt_avp_control_conn(uint8_t bd_addr[6]);
+void bt_roleswap_handle_bt_avp_conn(uint8_t bd_addr[6]);
 
-void bt_roleswap_handle_bt_avp_control_disconn(uint8_t  bd_addr[6],
-                                               uint16_t cause);
-
-void bt_roleswap_handle_bt_avp_audio_conn(uint8_t bd_addr[6]);
-
-void bt_roleswap_handle_bt_avp_audio_disconn(uint8_t  bd_addr[6],
-                                             uint16_t cause);
+void bt_roleswap_handle_bt_avp_disconn(uint8_t  bd_addr[6],
+                                       uint16_t cause);
 
 void bt_roleswap_handle_bt_att_conn(uint8_t bd_addr[6]);
 
@@ -115,7 +116,7 @@ void bt_roleswap_handle_bt_att_disconn(uint8_t  bd_addr[6],
 
 void bt_roleswap_handle_ctrl_conn(void);
 
-void bt_roleswap_recv(uint8_t  *p_data,
+void bt_roleswap_recv(uint8_t  *data,
                       uint16_t  data_len);
 
 T_BT_CLK_REF bt_roleswap_get_piconet_clk(T_BT_CLK_REF  clk,

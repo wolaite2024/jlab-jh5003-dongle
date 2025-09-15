@@ -19,7 +19,6 @@
 #include "app_util.h"
 #include "app_main.h"
 #include "trace.h"
-
 #include "cli_power.h"
 #if F_APP_CLI_CFG_SUPPORT
 #include "cli_cfg.h"
@@ -79,10 +78,22 @@ static void app_console_uart_init(void)
     T_CONSOLE_OP console_op;
     T_CONSOLE_UART_CONFIG console_uart_config;
 
+#if F_APP_ONE_WIRE_UART_SUPPORT
     console_uart_config.one_wire_uart_support = app_cfg_const.one_wire_uart_support;
-    console_uart_config.uart_tx_pinmux = console_uart_config.one_wire_uart_support ?
-                                         app_cfg_const.one_wire_uart_data_pinmux : app_cfg_const.data_uart_tx_pinmux;
+#if F_APP_ONE_WIRE_UART_TX_MODE_PUSH_PULL
+    console_uart_config.uart_rx_pinmux = app_cfg_const.one_wire_uart_support ?
+                                         app_cfg_const.one_wire_uart_data_pinmux : app_cfg_const.data_uart_rx_pinmux;
+    console_uart_config.uart_tx_pinmux = app_cfg_const.data_uart_tx_pinmux;
+#else
     console_uart_config.uart_rx_pinmux = app_cfg_const.data_uart_rx_pinmux;
+    console_uart_config.uart_tx_pinmux = app_cfg_const.one_wire_uart_support ?
+                                         app_cfg_const.one_wire_uart_data_pinmux : app_cfg_const.data_uart_tx_pinmux;
+#endif
+#else
+    console_uart_config.one_wire_uart_support = 0;
+    console_uart_config.uart_rx_pinmux = app_cfg_const.data_uart_rx_pinmux;
+    console_uart_config.uart_tx_pinmux = app_cfg_const.data_uart_tx_pinmux;
+#endif
     console_uart_config.rx_wake_up_pinmux = app_cfg_const.rx_wake_up_pinmux;
     console_uart_config.enable_rx_wake_up = app_cfg_const.enable_rx_wake_up;
     console_uart_config.data_uart_baud_rate = app_cfg_const.data_uart_baud_rate;
@@ -91,7 +102,7 @@ static void app_console_uart_init(void)
     console_uart_config.uart_dma_rx_buffer_size = CONSOLE_UART_RX_BUFFER_SIZE;
 
 #if (TARGET_RTL8773DO == 1 || TARGET_RTL8773DFL == 1)
-    console_uart_config.uart_rx_dma_enable = true;
+    console_uart_config.uart_rx_dma_enable = app_cfg_const.one_wire_uart_support ? false : true;
 #else
     console_uart_config.uart_rx_dma_enable = false;
 #endif

@@ -253,7 +253,7 @@ static void app_spp_vender_passthrough_timeout_cb(uint8_t timer_evt, uint16_t pa
 
 void app_spp_vender_passthrough_init(void)
 {
-    bt_rfc_profile_register(RFC_VENDER_PASSTHROUGH_CHANN_NUM, app_spp_vender_passthrough_cback);
+    bt_rfc_service_register(RFC_VENDER_PASSTHROUGH_CHANN_NUM, app_spp_vender_passthrough_cback);
     app_timer_reg_cb(app_spp_vender_passthrough_timeout_cb,
                      &spp_vender_passthrough_timer_id);
 }

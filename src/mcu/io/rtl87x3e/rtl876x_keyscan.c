@@ -32,7 +32,6 @@ void KeyScan_Init(KEYSCAN_TypeDef *KeyScan, KEYSCAN_InitTypeDef *KeyScan_InitStr
     assert_param(IS_KEYSCAN_DEBOUNCE_EN(KeyScan_InitStruct->debounceEn));
     assert_param(IS_KEYSCAN_DETECT_MODE(KeyScan_InitStruct->detectMode));
     assert_param(IS_KEYSCAN_FIFO_OVR_CTRL(KeyScan_InitStruct->fifoOvrCtrl));
-    assert_param(IS_KEYSCAN_MAX_SCAN_DATA(KeyScan_InitStruct->maxScanData));
 
     /* Set FSM to idle state */
     KeyScan->CR &= ~BIT31;

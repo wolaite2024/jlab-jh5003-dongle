@@ -9,7 +9,6 @@
 #include "platform_utils.h"
 #include "pm.h"
 #include "sysm.h"
-#include "os_sched.h"
 #include "os_mem.h"
 #include "ble_ext_adv.h"
 #include "bt_bond.h"
@@ -25,7 +24,6 @@
 #include "app_audio_policy.h"
 #include "app_bond.h"
 #include "wdg.h"
-#include "app_ipc.h"
 #include "app_dlps.h"
 #include "app_adp_cmd.h"
 #include "app_console.h"
@@ -37,7 +35,6 @@ typedef enum
 } T_APP_ONE_WIRE_TIMER;
 
 T_ONE_WIRE_UART_STATE one_wire_state = ONE_WIRE_STATE_STOPPED;
-
 static uint8_t app_one_wire_timer_id = 0;
 static uint8_t timer_idx_one_wire_delay_wdg_reset = 0;
 static uint8_t timer_idx_one_wire_aging_test_tone_repeat = 0;
@@ -45,6 +42,10 @@ static uint8_t timer_idx_one_wire_aging_test_tone_repeat = 0;
 static uint8_t aging_test_adv_handle = 0xff;
 T_ONE_WIRE_AGING_TEST_STATE one_wire_aging_test_state = ONE_WIRE_AGING_TEST_STATE_STOPED;
 T_AUDIO_TRACK_HANDLE aging_test_audio_handle;
+
+#if F_APP_ONE_WIRE_UART_TX_MODE_PUSH_PULL
+T_ONE_WIRE_UART_TYPE cur_uart_type = ONE_WIRE_UART_RX;
+#endif
 
 static void app_one_wire_timeout_cb(uint8_t timer_evt, uint16_t param)
 {
@@ -66,6 +67,45 @@ static void app_one_wire_timeout_cb(uint8_t timer_evt, uint16_t param)
         break;
     }
 }
+
+#if F_APP_ONE_WIRE_UART_TX_MODE_PUSH_PULL
+RAM_TEXT_SECTION
+void app_one_wire_uart_switch_pinmux(T_ONE_WIRE_UART_TYPE type)
+{
+    APP_PRINT_TRACE3("app_one_wire_uart_switch_pinmux: %d -> %d, one_wire_state: %d",
+                     cur_uart_type, type, one_wire_state);
+
+    if (cur_uart_type == type || one_wire_state != ONE_WIRE_STATE_IN_ONE_WIRE)
+    {
+        return;
+    }
+    else
+    {
+        cur_uart_type = type;
+    }
+
+    if (type == ONE_WIRE_UART_TX)
+    {
+        UART_INTConfig(UART0, UART_INT_RD_AVA | UART_INT_IDLE | UART_INT_LINE_STS, DISABLE);
+
+        Pinmux_Config(app_cfg_const.one_wire_uart_data_pinmux, UART0_TX);
+        Pad_Config(app_cfg_const.one_wire_uart_data_pinmux,
+                   PAD_PINMUX_MODE, PAD_IS_PWRON, PAD_PULL_NONE, PAD_OUT_DISABLE, PAD_OUT_LOW);
+        Pad_PullConfigValue(app_cfg_const.one_wire_uart_data_pinmux, PAD_WEAKLY_PULL);
+    }
+    else
+    {
+        Pinmux_Config(app_cfg_const.one_wire_uart_data_pinmux, UART0_RX);
+        Pad_Config(app_cfg_const.one_wire_uart_data_pinmux,
+                   PAD_PINMUX_MODE, PAD_IS_PWRON, PAD_PULL_NONE, PAD_OUT_DISABLE, PAD_OUT_LOW);
+        Pad_PullConfigValue(app_cfg_const.one_wire_uart_data_pinmux, PAD_WEAKLY_PULL);
+
+        UART_ClearRxFifo(UART0);
+        UART_GetLineStatus(UART0);
+        UART_INTConfig(UART0, UART_INT_RD_AVA | UART_INT_IDLE | UART_INT_LINE_STS, ENABLE);
+    }
+}
+#endif
 
 void app_one_wire_start_aging_test(void)
 {
@@ -317,9 +357,7 @@ void app_one_wire_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_pat
 
             app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
 
-#if F_APP_ADP_CMD_SUPPORT
             app_adp_one_wire_cmd_handle_msg(adp_cmd_id, payload);
-#endif
         }
         break;
 
@@ -392,7 +430,12 @@ void app_one_wire_uart_open(void)
 
     Pinmux_Deinit(app_cfg_const.one_wire_uart_data_pinmux);
 
+#if F_APP_ONE_WIRE_UART_TX_MODE_PUSH_PULL
+    cur_uart_type = ONE_WIRE_UART_RX;
+    Pinmux_Config(app_cfg_const.one_wire_uart_data_pinmux, UART0_RX);
+#else
     Pinmux_Config(app_cfg_const.one_wire_uart_data_pinmux, UART0_TX);
+#endif
     Pad_Config(app_cfg_const.one_wire_uart_data_pinmux,
                PAD_PINMUX_MODE, PAD_IS_PWRON, PAD_PULL_NONE, PAD_OUT_DISABLE, PAD_OUT_LOW);
     Pad_PullConfigValue(app_cfg_const.one_wire_uart_data_pinmux, PAD_WEAKLY_PULL);
@@ -407,12 +450,6 @@ void app_one_wire_uart_open(void)
     UART_INTConfig(UART0, UART_INT_RD_AVA | UART_INT_IDLE | UART_INT_LINE_STS, ENABLE);
 
     platform_delay_ms(5);
-
-    if (app_cfg_const.one_wire_uart_gpio_support)
-    {
-        Pad_Config(app_cfg_const.one_wire_uart_gpio_pinmux,
-                   PAD_SW_MODE, PAD_IS_PWRON, ONE_WIRE_GPIO_COM_PULL, PAD_OUT_DISABLE, PAD_OUT_LOW);
-    }
 }
 
 void app_one_wire_uart_close(void)
@@ -429,30 +466,9 @@ void app_one_wire_uart_close(void)
     // uart INT disable
     UART_INTConfig(UART0, UART_INT_RD_AVA | UART_INT_IDLE | UART_INT_LINE_STS, DISABLE);
 
-    if (app_cfg_const.one_wire_uart_gpio_support)
-    {
-        Pad_Config(app_cfg_const.one_wire_uart_gpio_pinmux,
-                   PAD_SW_MODE, PAD_IS_PWRON, ONE_WIRE_GPIO_5V_PULL, PAD_OUT_DISABLE, PAD_OUT_LOW);
-        platform_delay_ms(10);
-
-        Pad_Config(app_cfg_const.one_wire_uart_gpio_pinmux,
-                   PAD_SW_MODE, PAD_IS_PWRON, ONE_WIRE_GPIO_COM_PULL, PAD_OUT_DISABLE, PAD_OUT_LOW);
-        platform_delay_ms(10);
-
-        Pad_Config(app_cfg_const.one_wire_uart_gpio_pinmux,
-                   PAD_SW_MODE, PAD_IS_PWRON, ONE_WIRE_GPIO_5V_PULL, PAD_OUT_DISABLE, PAD_OUT_LOW);
-        platform_delay_ms(10);
-    }
-
-    Pinmux_Config(app_cfg_const.one_wire_uart_data_pinmux, UART0_TX);
+    Pinmux_Deinit(app_cfg_const.one_wire_uart_data_pinmux);
     Pad_Config(app_cfg_const.one_wire_uart_data_pinmux,
-               PAD_PINMUX_MODE, PAD_IS_PWRON, PAD_PULL_NONE, PAD_OUT_DISABLE, PAD_OUT_LOW);
-
-    if (app_cfg_const.one_wire_uart_gpio_support)
-    {
-        Pad_Config(app_cfg_const.one_wire_uart_gpio_pinmux,
-                   PAD_SW_MODE, PAD_IS_PWRON, ONE_WIRE_GPIO_5V_PULL, PAD_OUT_DISABLE, PAD_OUT_LOW);
-    }
+               PAD_SW_MODE, PAD_IS_PWRON, PAD_PULL_NONE, PAD_OUT_DISABLE, PAD_OUT_LOW);
 }
 
 static bool app_one_wire_uart_dlps_check_cb(void)

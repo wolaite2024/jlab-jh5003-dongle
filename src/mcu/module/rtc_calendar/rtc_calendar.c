@@ -23,6 +23,20 @@ typedef struct
     T_UTC_TIME             global_time;
 } T_RTC_CLOCK_SYS;
 
+typedef struct
+{
+    bool                   is_repeat;
+    uint32_t               expiry_second;
+    uint32_t               interval_second;
+    P_RTC_ALARM_CB         callback;
+} T_ALARN_PARA;
+
+typedef struct
+{
+    COMPX_INDEX_t comp;
+    uint32_t interrupt;
+    uint32_t wakeup;
+} T_ALARN_COMP;
 /*============================================================================*
  *                         Constants
  *============================================================================*/
@@ -36,6 +50,7 @@ typedef struct
 #define CALENDAR_RTC_COMP_WK_INT            RTC_CMP0_WK_INT
 #define RTC_CALENDAR_UPDATE_TIME_MIN_S      (1)
 #define RTC_CALENDAR_UPDATE_TIME_MAX_S      (4 * 60)        //max update time (8/2=4) minutes due to overflow condition
+#define RTC_CALENDAR_ONE_CYCLE_TIME_S       (RTC_CNT_MAX_VALUE * (RTC_PRESCALER_VALUE + 1) / RTC_CLOCK_SOURCE_FREQ)
 
 #define IsLeapYear(yr) (!((yr) % 400) || (((yr) % 100) && !((yr) % 4)))
 #define YearLength(yr) (IsLeapYear(yr) ? 366 : 365)
@@ -59,8 +74,14 @@ uint32_t rtc_calendar_update_time_sec = RTC_CALENDAR_UPDATE_TIME_MAX_S;
 
 #define RTC_CALENDAR_COMP_UPDATE_CNT           ((RTC_CLOCK_SOURCE_FREQ / (RTC_PRESCALER_VALUE + 1)) * rtc_calendar_update_time_sec)
 
-static pRTCCalendarCB RTCCalendarCallBack = NULL;
-T_RTC_CLOCK_SYS RtcCalendar __attribute__((aligned(4)));
+static P_RTC_CALENDAR_CB RTCCalendarCallBack = NULL;
+static T_RTC_CLOCK_SYS RtcCalendar __attribute__((aligned(4)));
+
+static T_ALARN_PARA alarm_para[ALARM_MAX_INDEX] = {0};
+static const T_ALARN_COMP alarm[ALARM_MAX_INDEX] = {{COMP1_INDEX, RTC_INT_CMP1, RTC_CMP1_WK_INT},
+    {COMP2_INDEX, RTC_INT_CMP2, RTC_CMP2_WK_INT},
+    {COMP3_INDEX, RTC_INT_CMP3, RTC_CMP3_WK_INT}
+};
 
 static uint8_t rtc_calendar_month_length_calc(uint8_t lpyr, uint8_t mon)
 {
@@ -219,6 +240,49 @@ static void rtc_calendar_comp_update(void)
     RTC_SetComp(CALENDAR_RTC_COMPARATOR, CompareValue & RTC_CNT_MAX_VALUE);
 }
 
+static void rtc_calendar_set_alarm_cnt(COMPX_INDEX_t comp_index, uint32_t second)
+{
+    if (second > RTC_CALENDAR_ONE_CYCLE_TIME_S)
+    {
+        RTC_SetComp(comp_index, RTC_CNT_MAX_VALUE);
+        return;
+    }
+
+    uint32_t CompareValue = 0;
+    CompareValue = RTC_GetCounter() + ((RTC_CLOCK_SOURCE_FREQ / (RTC_PRESCALER_VALUE + 1)) * second);
+
+    if (CompareValue > RTC_CNT_MAX_VALUE)
+    {
+        CompareValue = CompareValue - RTC_CNT_MAX_VALUE;
+    }
+
+    RTC_SetComp(comp_index, CompareValue & RTC_CNT_MAX_VALUE);
+}
+
+static void rtc_calendar_alarm_update(T_ALARM_INDEX alarm_index)
+{
+    uint32_t current_second = rtc_calendar_get_timestamp();
+
+    if (alarm_para[alarm_index].expiry_second <= current_second)
+    {
+        T_UTC_TIME utc_time = rtc_calendar_timestamp_to_date(current_second);
+        alarm_para[alarm_index].callback(alarm_index, &utc_time);
+
+        if (alarm_para[alarm_index].is_repeat)
+        {
+            alarm_para[alarm_index].expiry_second = current_second + alarm_para[alarm_index].interval_second;
+        }
+        else
+        {
+            RTC_CompINTConfig(alarm[alarm_index].interrupt | alarm[alarm_index].wakeup, DISABLE);
+            return;
+        }
+    }
+
+    rtc_calendar_set_alarm_cnt(alarm[alarm_index].comp,
+                               alarm_para[alarm_index].expiry_second - current_second);
+}
+
 /**
   * @brief   RTC interrupt handler
   * @param   No parameter.
@@ -232,6 +296,16 @@ static void rtc_calendar_handler(void)
         rtc_calendar_comp_update();
         RTC_ClearCompINT(CALENDAR_RTC_COMPARATOR);
         RTC_ClearCompWkINT(CALENDAR_RTC_COMPARATOR);
+    }
+
+    for (T_ALARM_INDEX alarm_index = ALARM_0; alarm_index < ALARM_MAX_INDEX; alarm_index++)
+    {
+        if (RTC_GetINTStatus(alarm[alarm_index].interrupt) == SET)
+        {
+            rtc_calendar_alarm_update(alarm_index);
+            RTC_ClearCompINT(alarm[alarm_index].comp);
+            RTC_ClearCompWkINT(alarm[alarm_index].comp);
+        }
     }
 }
 
@@ -300,7 +374,7 @@ bool rtc_calendar_set_utc_time(T_UTC_TIME *utc_time)
     return true;
 }
 
-void rtc_calendar_register_callback(pRTCCalendarCB cb)
+void rtc_calendar_register_callback(P_RTC_CALENDAR_CB cb)
 {
     RTCCalendarCallBack = cb;
 }
@@ -310,10 +384,103 @@ void rtc_calendar_unregister_callback(void)
     RTCCalendarCallBack = NULL;
 }
 
-bool rtc_calendar_int(T_UTC_TIME *defut_utc_time, uint32_t update_interval_sec)
+void rtc_calendar_set_update_interval(uint32_t update_interval_sec)
+{
+    RTC_CompINTConfig(CALENDAR_RTC_COMP_INT | CALENDAR_RTC_COMP_WK_INT, DISABLE);
+    RTC_ClearCompINT(CALENDAR_RTC_COMPARATOR);
+    RTC_ClearCompWkINT(CALENDAR_RTC_COMPARATOR);
+
+    if (update_interval_sec < RTC_CALENDAR_UPDATE_TIME_MAX_S)
+    {
+        if (update_interval_sec < RTC_CALENDAR_UPDATE_TIME_MIN_S)
+        {
+            rtc_calendar_update_time_sec = RTC_CALENDAR_UPDATE_TIME_MIN_S;
+        }
+        else
+        {
+            rtc_calendar_update_time_sec =  update_interval_sec;
+        }
+    }
+
+    RtcCalendar.second_cnt_rtc = rtc_calendar_get_timestamp();
+
+    uint32_t CompareValue = 0;
+    CompareValue = RTC_GetCounter() + RTC_CALENDAR_COMP_UPDATE_CNT;
+
+    if (CompareValue > RTC_CNT_MAX_VALUE)
+    {
+        CompareValue = CompareValue - RTC_CNT_MAX_VALUE;
+    }
+    RTC_SetComp(CALENDAR_RTC_COMPARATOR, CompareValue & RTC_CNT_MAX_VALUE);
+
+    RTC_CompINTConfig(CALENDAR_RTC_COMP_INT | CALENDAR_RTC_COMP_WK_INT, ENABLE);
+}
+
+bool rtc_calendar_add_alarm_by_utc(T_ALARM_INDEX alarm_index, T_UTC_TIME *utc_time,
+                                   P_RTC_ALARM_CB cb)
+{
+    uint32_t second = rtc_calendar_date_to_timestamp(utc_time);
+    uint32_t current_second = rtc_calendar_get_timestamp();
+
+    if (second <= current_second)
+    {
+        return false;
+    }
+
+    RTC_CompINTConfig(alarm[alarm_index].interrupt | alarm[alarm_index].wakeup, DISABLE);
+    RTC_ClearCompINT(alarm[alarm_index].comp);
+    RTC_ClearCompWkINT(alarm[alarm_index].comp);
+
+    alarm_para[alarm_index].expiry_second = second;
+    alarm_para[alarm_index].interval_second = 0;
+    alarm_para[alarm_index].is_repeat = false;
+    alarm_para[alarm_index].callback = cb;
+
+    rtc_calendar_set_alarm_cnt(alarm[alarm_index].comp, second - current_second);
+
+    RTC_CompINTConfig(alarm[alarm_index].interrupt | alarm[alarm_index].wakeup, ENABLE);
+
+    return true;
+}
+
+bool rtc_calendar_add_alarm_by_second(T_ALARM_INDEX alarm_index, uint32_t second,
+                                      P_RTC_ALARM_CB cb, bool is_repeat)
 {
 
-    if (!rtc_calendar_set_utc_time(defut_utc_time))
+    if (second == 0)
+    {
+        return false;
+    }
+
+    uint32_t current_second = rtc_calendar_get_timestamp();
+
+    RTC_CompINTConfig(alarm[alarm_index].interrupt | alarm[alarm_index].wakeup, DISABLE);
+    RTC_ClearCompINT(alarm[alarm_index].comp);
+    RTC_ClearCompWkINT(alarm[alarm_index].comp);
+
+    alarm_para[alarm_index].expiry_second = current_second + second;
+    alarm_para[alarm_index].interval_second = second;
+    alarm_para[alarm_index].is_repeat = is_repeat;
+    alarm_para[alarm_index].callback = cb;
+
+    rtc_calendar_set_alarm_cnt(alarm[alarm_index].comp, second);
+
+    RTC_CompINTConfig(alarm[alarm_index].interrupt | alarm[alarm_index].wakeup, ENABLE);
+
+    return true;
+}
+
+void rtc_calendar_delete_alarm(T_ALARM_INDEX alarm_index)
+{
+    RTC_CompINTConfig(alarm[alarm_index].interrupt | alarm[alarm_index].wakeup, DISABLE);
+    RTC_ClearCompINT(alarm[alarm_index].comp);
+    RTC_ClearCompWkINT(alarm[alarm_index].comp);
+}
+
+bool rtc_calendar_int(T_UTC_TIME *default_utc_time, uint32_t update_interval_sec)
+{
+
+    if (!rtc_calendar_set_utc_time(default_utc_time))
     {
         return false;
     }

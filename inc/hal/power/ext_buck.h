@@ -1,11 +1,15 @@
-/*******************************************************************************
-* Copyright (C) 2021 Realtek Semiconductor Corporation. All Rights Reserved.
-*/
-
 /**
- * @file
- *
- */
+*********************************************************************************************************
+*               Copyright(c) 2024, Realtek Semiconductor Corporation. All rights reserved.
+*********************************************************************************************************
+* @file      ext_buck.h
+* @brief
+* @details
+* @author
+* @date      2024-10-11
+* @version   v1.0
+* *********************************************************************************************************
+*/
 
 #ifndef EXT_BUCK_H
 #define EXT_BUCK_H
@@ -13,8 +17,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-/** @addtogroup EXT_BUCK EXTERNAL BUCK
-  * @brief exteranl buck function module
+/** @addtogroup EXT_BUCK External Buck
+  * @brief Exteranl buck function module.
   * @{
   */
 
@@ -27,19 +31,23 @@
   */
 
 /**
-  * @brief  External Buck Configure structure definition
+  * @brief  External buck configure structure definition.
   */
 typedef struct _EXT_BUCK_T
 {
-    bool (*ext_buck_hw_init)(void);                     /*!< Specifies ext_buck hardware init api.
-                                                             Realize the ext_buck hardware init function */
-    bool (*ext_buck_set_voltage)(uint32_t volt_h_uv);   /*!< Specifies ext_buck set voltage api.
-                                                             Realize the ext_buck changing voltage function */
-    bool (*ext_buck_enable)(void);                      /*!< Specifies ext_buck enable api.
-                                                             Realize the ext_buck enable function */
-    bool (*ext_buck_disable)(void);                     /*!< Specifies ext_buck set voltage api.
-                                                             Realize the ext_buck disable function */
+    bool (*ext_buck_hw_init)(void);                     /*!< Specifies ext_buck hardware init API.
+                                                             Realize the ext_buck hardware init function. */
+    bool (*ext_buck_set_voltage)(uint32_t volt_h_uv);   /*!< Specifies ext_buck set voltage API.
+                                                             Realize the ext_buck changing voltage function. */
+    bool (*ext_buck_enable)(void);                      /*!< Specifies ext_buck enable API.
+                                                             Realize the ext_buck enable function. */
+    bool (*ext_buck_disable)(void);                     /*!< Specifies ext_buck disable API.
+                                                             Realize the ext_buck disable function. */
 } EXT_BUCK_T;
+
+/** End of group EXT_BUCK_Exported_Types
+  * @}
+  */
 
 /*============================================================================*
  *                         Functions
@@ -52,8 +60,9 @@ typedef struct _EXT_BUCK_T
 /**
   * @brief  Register the buck driver functions.
   * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
-  * @param  ext_buck: register the ext_buck set voltage/ enable / disable function
-  * @retval None.
+  * @param  ext_buck: Register the ext_buck to set voltage/ enable / disable function.
+  * @return None.
+  *
   * <b>Example usage</b>
   * \code{.c}
   *
@@ -72,18 +81,18 @@ typedef struct _EXT_BUCK_T
 void ext_buck_init(EXT_BUCK_T *ext_buck);
 
 /**
-  * @brief  Enable the vore2 and external buck, this function is reserved for dsp2 driver.
+  * @brief  Enable the vore2 and external buck, this function is reserved for DSP2 driver.
   * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
-  * @retval true: enable the vcore2 success
-  *         false: enable the vcore2 failed
+  * @retval true: Enable the vcore2 success.
+  * @retval false: Enable the vcore2 failed.
   */
 bool ext_buck_vcore2_enable(void);
 
 /**
-  * @brief  Disable the vcore2 and external buck, this function is reserved for dsp2 driver.
+  * @brief  Disable the vcore2 and external buck, this function is reserved for DSP2 driver.
   * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
-  * @retval true: disable the vcore2 success
-  *         false: disable the vcore2 failed
+  * @retval true: Disable the vcore2 success.
+  * @retval false: Disable the vcore2 failed.
   */
 bool ext_buck_vcore2_disable(void);
 
@@ -91,3 +100,5 @@ bool ext_buck_vcore2_disable(void);
 /** @} */ /* End of group EXT_BUCK */
 
 #endif /* EXT_BUCK_H */
+
+/******************* (C) COPYRIGHT 2024 Realtek Semiconductor *****END OF FILE****/

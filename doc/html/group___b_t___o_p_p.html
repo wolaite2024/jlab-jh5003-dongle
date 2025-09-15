@@ -96,9 +96,9 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga2623f1a24e719f549faa85a0727949bf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___o_p_p.html#ga2623f1a24e719f549faa85a0727949bf">bt_opp_init</a> (uint8_t link_num, uint8_t server_chann, uint16_t l2c_psm)</td></tr>
-<tr class="memdesc:ga2623f1a24e719f549faa85a0727949bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize OPP profile.  <a href="#ga2623f1a24e719f549faa85a0727949bf">More...</a><br /></td></tr>
-<tr class="separator:ga2623f1a24e719f549faa85a0727949bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga50960ee2e09fac843c11d5e12d4da501"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___o_p_p.html#ga50960ee2e09fac843c11d5e12d4da501">bt_opp_init</a> (uint8_t server_chann, uint16_t l2c_psm)</td></tr>
+<tr class="memdesc:ga50960ee2e09fac843c11d5e12d4da501"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize OPP profile.  <a href="#ga50960ee2e09fac843c11d5e12d4da501">More...</a><br /></td></tr>
+<tr class="separator:ga50960ee2e09fac843c11d5e12d4da501"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaebfc8d6d6f3aeed821fc4e3b1aa26c53"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___o_p_p.html#gaebfc8d6d6f3aeed821fc4e3b1aa26c53">bt_opp_connect_cfm</a> (uint8_t bd_addr[6], bool accept)</td></tr>
 <tr class="memdesc:gaebfc8d6d6f3aeed821fc4e3b1aa26c53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accept or reject the incoming OPP Connection.  <a href="#gaebfc8d6d6f3aeed821fc4e3b1aa26c53">More...</a><br /></td></tr>
 <tr class="separator:gaebfc8d6d6f3aeed821fc4e3b1aa26c53"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -118,7 +118,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga07d764602ad814b54ceb7d287999df2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request to push data.  <a href="#ga07d764602ad814b54ceb7d287999df2f">More...</a><br /></td></tr>
 <tr class="separator:ga07d764602ad814b54ceb7d287999df2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae7f33cfd1dc944159b1fa16656b7bd26"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___o_p_p.html#gae7f33cfd1dc944159b1fa16656b7bd26">bt_opp_send_data_rsp</a> (uint8_t bd_addr[6], <a class="el" href="group___b_t___o_p_p.html#ga464c6b1ee80a51b47fec691d4aa2fdc3">T_BT_OPP_RESPONSE_CODE</a> rsp_code)</td></tr>
-<tr class="memdesc:gae7f33cfd1dc944159b1fa16656b7bd26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Acknowledge on receiving an OPP data Indication.  <a href="#gae7f33cfd1dc944159b1fa16656b7bd26">More...</a><br /></td></tr>
+<tr class="memdesc:gae7f33cfd1dc944159b1fa16656b7bd26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Acknowledge on receiving an OPP data indication.  <a href="#gae7f33cfd1dc944159b1fa16656b7bd26">More...</a><br /></td></tr>
 <tr class="separator:gae7f33cfd1dc944159b1fa16656b7bd26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad0a85ddad1e6aa46a4ae9f2b3edd5c7d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___o_p_p.html#gad0a85ddad1e6aa46a4ae9f2b3edd5c7d">bt_opp_push_abort</a> (uint8_t bd_addr[6])</td></tr>
 <tr class="memdesc:gad0a85ddad1e6aa46a4ae9f2b3edd5c7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request to terminate the push operation.  <a href="#gad0a85ddad1e6aa46a4ae9f2b3edd5c7d">More...</a><br /></td></tr>
@@ -140,7 +140,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>BT OPP data header indication. </p>
-<p><a class="el" href="bt__opp_8h_source.html">bt_opp.h</a> </p>
 
 </div>
 </div>
@@ -157,7 +156,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>BT OPP data indication. </p>
-<p><a class="el" href="bt__opp_8h_source.html">bt_opp.h</a> </p>
 
 </div>
 </div>
@@ -174,7 +172,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>BT OPP response code. </p>
-<p><a class="el" href="bt__opp_8h_source.html">bt_opp.h</a> </p>
 
 </div>
 </div>
@@ -192,7 +189,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>BT OPP response code. </p>
-<p><a class="el" href="bt__opp_8h_source.html">bt_opp.h</a> </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaf52f6e692f6019678e508179c6902557a5d4fdcf605e948a196d87f4071c5e1aa"></a>BT_OPP_RSP_CONTINUE&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ggaf52f6e692f6019678e508179c6902557a2e1059d142055a3403eb277949270b62"></a>BT_OPP_RSP_SUCCESS&#160;</td><td class="fielddoc"></td></tr>
@@ -205,8 +201,8 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga2623f1a24e719f549faa85a0727949bf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga2623f1a24e719f549faa85a0727949bf">&#9670;&nbsp;</a></span>bt_opp_init()</h2>
+<a id="ga50960ee2e09fac843c11d5e12d4da501"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga50960ee2e09fac843c11d5e12d4da501">&#9670;&nbsp;</a></span>bt_opp_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -214,12 +210,6 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">bool bt_opp_init </td>
           <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>link_num</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>server_chann</em>, </td>
         </tr>
@@ -238,12 +228,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Initialize OPP profile. </p>
-<p><a class="el" href="bt__opp_8h_source.html">bt_opp.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000080">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000081">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">link_num</td><td>OPP maximum connected link number. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">server_chann</td><td>RFCOMM Server channel to be allocated for OPP. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">server_chann</td><td>RFCOMM server channel to be allocated for OPP. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">l2c_psm</td><td>L2CAP PSM to be allocated for OPP.</td></tr>
   </table>
   </dd>
@@ -286,8 +274,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Accept or reject the incoming OPP Connection. </p>
-<p><a class="el" href="bt__opp_8h_source.html">bt_opp.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000081">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000082">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
@@ -337,8 +324,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send a OPP connection request over RFCOMM. </p>
-<p><a class="el" href="bt__opp_8h_source.html">bt_opp.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000082">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000083">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
@@ -384,12 +370,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send a OPP connection request over L2CAP. </p>
-<p><a class="el" href="bt__opp_8h_source.html">bt_opp.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000083">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000084">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">l2c_psm</td><td>The remote L2CAP psm defined in SDP record.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">l2c_psm</td><td>The remote L2CAP PSM defined in SDP record.</td></tr>
   </table>
   </dd>
 </dl>
@@ -421,8 +406,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send a OPP disconnection request. </p>
-<p><a class="el" href="bt__opp_8h_source.html">bt_opp.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000084">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000085">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address.</td></tr>
@@ -497,15 +481,14 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Request to push data header. </p>
-<p><a class="el" href="bt__opp_8h_source.html">bt_opp.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000085">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000086">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">total_len</td><td>Total length of data. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>Name of the data. Unicode String. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>Name of the data. Unicode string. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">name_len</td><td>Length of name. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Type of the data. ASCII String of MIME type. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Type of the data. ASCII string of MIME type. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">type_len</td><td>Length of type. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">srm_enable</td><td>Single response mode enable or not.</td></tr>
   </table>
@@ -561,8 +544,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Request to push data. </p>
-<p><a class="el" href="bt__opp_8h_source.html">bt_opp.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000086">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000087">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
@@ -609,9 +591,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Acknowledge on receiving an OPP data Indication. </p>
-<p><a class="el" href="bt__opp_8h_source.html">bt_opp.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000087">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<p>Acknowledge on receiving an OPP data indication. </p>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000088">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
@@ -647,8 +628,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Request to terminate the push operation. </p>
-<p><a class="el" href="bt__opp_8h_source.html">bt_opp.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000088">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000089">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address.</td></tr>

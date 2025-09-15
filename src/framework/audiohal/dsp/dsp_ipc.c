@@ -2152,6 +2152,36 @@ bool dsp_ipc_signal_in_monitoring_set(uint8_t enable, uint16_t refresh_interval)
     return false;
 }
 
+bool dipc_decoder_effect_control(uint8_t category, uint8_t action)
+{
+    uint8_t cmd_buf[6];
+    uint8_t *p;
+
+    p = cmd_buf;
+
+    DIPC_LE_UINT16_TO_STREAM(p, H2D_EFFECT_CONTROL);
+    DIPC_LE_UINT16_TO_STREAM(p, 2);
+    DIPC_LE_UINT8_TO_STREAM(p, category);
+    DIPC_LE_UINT8_TO_STREAM(p, action);
+
+    return dsp_ipc_h2d_cmd_send(cmd_buf, p - cmd_buf, true);
+}
+
+bool dipc_encoder_effect_control(uint8_t category, uint8_t action)
+{
+    uint8_t cmd_buf[6];
+    uint8_t *p;
+
+    p = cmd_buf;
+
+    DIPC_LE_UINT16_TO_STREAM(p, H2D_EFFECT_CONTROL);
+    DIPC_LE_UINT16_TO_STREAM(p, 2);
+    DIPC_LE_UINT8_TO_STREAM(p, category);
+    DIPC_LE_UINT8_TO_STREAM(p, action);
+
+    return dsp_ipc_h2d_cmd_send(cmd_buf, p - cmd_buf, true);
+}
+
 void dsp_ipc_download_algo_param(uint8_t *cmd_buffer, uint16_t algo_cmd_length)
 {
     h2d_cmd_send(cmd_buffer, algo_cmd_length, true);
@@ -2665,8 +2695,8 @@ bool dipc_codec_pipe_stop(uint32_t session_id)
 }
 
 bool dipc_codec_pipe_gain_set(uint32_t session_id,
-                              uint16_t gain_step_left,
-                              uint16_t gain_step_right)
+                              int16_t  gain_step_left,
+                              int16_t  gain_step_right)
 {
     uint8_t cmd_buf[12];
     uint8_t *p;

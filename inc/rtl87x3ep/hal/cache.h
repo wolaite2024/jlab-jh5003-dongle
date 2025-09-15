@@ -9,7 +9,7 @@ void cache_flush_by_addr(uint32_t *addr, uint32_t length);
 /**
  * @brief flash cache init.
  * @param do_cache_flush not used just for 3in1
- * @return
+ * @return void
 */
 void cache_hit_init(bool do_cache_flush);
 

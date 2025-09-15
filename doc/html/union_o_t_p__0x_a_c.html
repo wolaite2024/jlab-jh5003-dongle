@@ -54,7 +54,7 @@ $(function() {
 Data Fields</h2></td></tr>
 <tr class="memitem:a7da617cb7a6042ff6874d357c09f7551"><td class="memItemLeft" align="right" valign="top">__IO uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="union_o_t_p__0x_a_c.html#a7da617cb7a6042ff6874d357c09f7551">d32</a></td></tr>
 <tr class="separator:a7da617cb7a6042ff6874d357c09f7551"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68cb5887d0231e38fcf5f91de199b868"><td class="memItemLeft" >struct {</td></tr>
+<tr class="memitem:ab015702096f90a2593a90328f5b6bfb5"><td class="memItemLeft" >struct {</td></tr>
 <tr class="memitem:afe6304c2e809923dba688df6286671bd"><td class="memItemLeft" >&#160;&#160;&#160;__IO uint32_t&#160;&#160;&#160;<a class="el" href="union_o_t_p__0x_a_c.html#afe6304c2e809923dba688df6286671bd">OTP_RWFLAG</a>: 1</td></tr>
 <tr class="separator:afe6304c2e809923dba688df6286671bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a15c138f0619637a1e4cb026240358963"><td class="memItemLeft" >&#160;&#160;&#160;__IO uint32_t&#160;&#160;&#160;<a class="el" href="union_o_t_p__0x_a_c.html#a15c138f0619637a1e4cb026240358963">reserved0</a>: 1</td></tr>
@@ -77,8 +77,8 @@ Data Fields</h2></td></tr>
 <tr class="separator:a34f4a779333f4d844ce68db1c5b70ce9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a95fe7e11278cc9bac5e9bf6092d27108"><td class="memItemLeft" >&#160;&#160;&#160;__IO uint32_t&#160;&#160;&#160;<a class="el" href="union_o_t_p__0x_a_c.html#a95fe7e11278cc9bac5e9bf6092d27108">reserved2</a>: 3</td></tr>
 <tr class="separator:a95fe7e11278cc9bac5e9bf6092d27108"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68cb5887d0231e38fcf5f91de199b868"><td class="memItemLeft" valign="top">};&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
-<tr class="separator:a68cb5887d0231e38fcf5f91de199b868"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab015702096f90a2593a90328f5b6bfb5"><td class="memItemLeft" valign="top">};&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="separator:ab015702096f90a2593a90328f5b6bfb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>0x00AC OTP controller word 0 for normal RW/Power sequence function [31:29] R/W 3'b0 reserved [28:16] R/W 13'b0 otp_reg_addr OTP address in byte (2Kx32bit OTP) [15:8] R/W 8'b0000_0000 OTP_DATA 8-bit OTP register wtite data for wtie mode , and read data will be latched by opt_rw_rdy [7] RO 1'b0 otp_pwr_down_rdy OTP power down sequence ready [6] RO 1'b0 otp_pwr_up_rdy OTP power up sequence ready, FW have to wait this signal high and setup the next command [5] R/W 1'b0 enable_otp_pg enable OTP write and program function , have to be setup to high bedore otp write command [4] R/W 1'b0 otp_pwr_up OTP power up sequence start [3] RO 1'b0 OTP_RWERR RW @ protected address, and will be latched by opt_rw_rdy [2] R/W 1'b0 reserved reserved for write one clear [1] R/W 1'b0 reserved reserved bus location for otp_reg_wr in otp_wavengen_bt [0] R/W 1'b0 OTP_RWFLAG "flag bit: will be latched by otp_rw_rdy 1: Write data to OTP register, and turn to 0 automatically whenever the loader has completed writing to the specified OTP register. 0: Read data from OTP register, and indicate 1 automatically whenever the loader has completed retrieving data from the specified OTP register." </p>
@@ -251,8 +251,8 @@ Data Fields</h2></td></tr>
 
 </div>
 </div>
-<a id="a68cb5887d0231e38fcf5f91de199b868"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a68cb5887d0231e38fcf5f91de199b868">&#9670;&nbsp;</a></span>@1964</h2>
+<a id="ab015702096f90a2593a90328f5b6bfb5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab015702096f90a2593a90328f5b6bfb5">&#9670;&nbsp;</a></span>@1983</h2>
 
 <div class="memitem">
 <div class="memproto">

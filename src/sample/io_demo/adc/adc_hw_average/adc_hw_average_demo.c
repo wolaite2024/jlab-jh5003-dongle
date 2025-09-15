@@ -35,7 +35,7 @@ static void adc_handler(void);
   */
 static void board_adc_init(void)
 {
-    Pad_Config(ADC_1, PAD_SW_MODE, PAD_IS_PWRON, PAD_PULL_NONE, PAD_OUT_DISABLE, PAD_OUT_LOW);
+    Pad_Config(ADC_1, PAD_SW_MODE, PAD_SHUTDOWN, PAD_PULL_NONE, PAD_OUT_DISABLE, PAD_OUT_LOW);
     Pinmux_Config(ADC_1, IDLE_MODE);
 }
 
@@ -97,6 +97,7 @@ static void adc_handler(void)
     if (ADC_GetIntFlagStatus(ADC, ADC_INT_ONE_SHOT_DONE) == SET)
     {
         ADC_ClearINTPendingBit(ADC, ADC_INT_ONE_SHOT_DONE);
+        ADC_Cmd(ADC, ADC_One_Shot_Mode, DISABLE);
         data = ADC_HwEvgRead(ADC);
         result = ADC_GetRes(data, EXT_SINGLE_ENDED(1));
         IO_PRINT_INFO1("adc_handler: result %d", result);

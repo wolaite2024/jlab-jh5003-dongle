@@ -9,7 +9,7 @@
 #include "errno.h"
 
 #if (FTL_POOL_ENABLE == 1)
-#define EQ_SIZE     (AUDIO_AND_APT_EQ_SIZE + VOCIE_SPK_EQ_SIZE)// audio spk eq, dsp apt eq, voice spk eq
+#define EQ_SIZE     (AUDIO_AND_APT_EQ_SIZE + VOICE_SPK_EQ_SIZE)// audio spk eq, dsp apt eq, voice spk eq
 #else
 uint16_t eq_ext_ftl_start_offset = 0;
 uint16_t eq_ext_ftl_max_offset = 0;

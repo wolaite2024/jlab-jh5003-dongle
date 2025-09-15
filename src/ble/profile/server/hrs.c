@@ -14,6 +14,8 @@
 #include <string.h>
 #include "trace.h"
 #include "profile_server.h"
+#include "gap_conn_le.h"
+#include "os_mem.h"
 #include "hrs.h"
 
 
@@ -43,16 +45,10 @@
 #define HRS_CTL_PNT_OPERATE_ACTIVE(x)                     \
     (x == HRS_HEART_RATE_CP_OPCODE_RESET_ENERGY_EXPENDED)
 
-#define Heart_Rate_Value_Format_UINT8                       0
-#define Heart_Rate_Value_Format_UINT16                      1
-
-#define HRS_HEART_RATE_MEASUREMENT_VALUE_MAX_LEN            7
-
-
+#define HEART_RATE_VALUE_FORMAT_UINT8                       0
+#define HEART_RATE_VALUE_FORMAT_UINT16                      1
 
 HRS_NOTIFY_INDICATE_FLAG hrs_notify_indicate_flag = {0};
-T_HEART_RATE_MEASUREMENT_VALUE hrs_heart_rate_measurement_value = {0};
-uint8_t hrs_body_sensor_location_value = 0;
 T_HRS_CONTROL_POINT hrs_ctl_pnt = {0};
 
 
@@ -179,205 +175,99 @@ static const T_ATTRIB_APPL hrs_attr_tbl[] =
 /**< @brief  Heart Rate service size definition.  */
 const uint16_t hrs_attr_tbl_size = sizeof(hrs_attr_tbl);
 
-/**
- * @brief       Set a heart rate service parameter.
- *
- *              NOTE: You can call this function with a heart rate service parameter type and it will set the
- *                      heart rate service parameter.  Heart rate service parameters are defined
- *                      in @ref T_HTS_TEMPERATURE_TYPE.
- *                      If the "len" field sets to the size of a "uint16_t" ,the
- *                      "p_value" field must point to a data with type of "uint16_t".
- *
- * @param[in]   param_type   Health thermometer service parameter type: @ref T_HRS_PARAM_TYPE
- * @param[in]   len       Length of data to write
- * @param[in]   p_value Pointer to data to write.  This is dependent on
- *                      the parameter type and WILL be cast to the appropriate
- *                      data type (For example: if data type of param is uint16_t, p_value will be cast to
- *                      pointer of uint16_t).
- *
- * @return Operation result.
- * @retval true Operation success.
- * @retval false Operation failure.
- *
- * <b>Example usage</b>
- * \code{.c}
-    void test(void)
-    {
-        T_HEART_RATE_MEASUREMENT_VALUE_FLAG flag;
-        flag.heart_rate_value_format_bit = 1;
-        flag.sensor_contact_status_bits = 3;
-        if (p_parse_value->param_count >= 1)
-        {
-            flag.sensor_contact_status_bits = p_parse_value->dw_param[1];
-        }
-
-        flag.energy_expended_status_bit = 1;
-        flag.rr_interval_bit = 1;
-        flag.rfu = 0;
-
-        hrs_set_parameter(HRS_HEART_RATE_MEASUREMENT_PARAM_FLAG, 1, &flag);
-    }
- * \endcode
- */
-
-bool hrs_set_parameter(T_HRS_PARAM_TYPE param_type, uint8_t len, void *p_value)
+bool hrs_body_sensor_location_read_confirm(uint8_t conn_id, T_SERVER_ID service_id,
+                                           uint8_t hrs_body_sensor_location, T_APP_RESULT cause)
 {
-    bool ret = true;
-
-    switch (param_type)
-    {
-    default:
-        {
-            ret = false;
-            PROFILE_PRINT_ERROR0("hrs_set_parameter failed\n");
-        }
-        break;
-
-    case HRS_HEART_RATE_MEASUREMENT_PARAM_FLAG:
-        {
-            if (len != sizeof(uint8_t))
-            {
-                ret = false;
-            }
-            else
-            {
-                memcpy(&hrs_heart_rate_measurement_value.flag, p_value, len);
-            }
-        }
-        break;
-
-    case HRS_HEART_RATE_MEASUREMENT_PARAM_MEASUREMENT_VALUE:
-        {
-            if (len != sizeof(uint16_t) && len != sizeof(uint8_t))
-            {
-                ret = false;
-            }
-            else
-            {
-                memcpy(&hrs_heart_rate_measurement_value.heart_rate_measurement_value, p_value, len);
-
-            }
-        }
-        break;
-
-    case HRS_HEART_RATE_MEASUREMENT_PARAM_ENERGY_EXPENDED:
-        {
-            if (len != sizeof(uint16_t))
-            {
-                ret = false;
-            }
-            else
-            {
-                memcpy(&hrs_heart_rate_measurement_value.energy_expended, p_value, len);
-
-            }
-        }
-        break;
-
-    case HRS_HEART_RATE_MEASUREMENT_PARAM_RR_INTERVAL:
-        {
-            if (len != sizeof(uint16_t))
-            {
-                ret = false;
-            }
-            else
-            {
-                memcpy(&hrs_heart_rate_measurement_value.rr_interval, p_value, len);
-
-            }
-        }
-        break;
-
-    case HRS_BODY_SENSOR_LOCATION_PARAM_VALUE:
-        {
-            if (len != sizeof(uint8_t))
-            {
-                ret = false;
-            }
-            else
-            {
-                memcpy(&hrs_body_sensor_location_value, p_value, len);
-            }
-        }
-        break;
-
-    }
-
-    return ret;
+    return server_attr_read_confirm(conn_id, service_id, HRS_BODY_SENSOR_LOCATION_VALUE_INDEX,
+                                    &hrs_body_sensor_location, sizeof(uint8_t), cause);
 }
 
-/**
- * @brief       Send heart rate measurement value notification data.
- *              Application shall call @ref hrs_set_parameter to set heart rate measurement value first,
- *              and the call this api to send the notication value.
- *
- * @param[in]   conn_id  Connection id.
- * @param[in]   service_id  Service id.
- *
- * @return service id @ref T_SERVER_ID.
- *
- * <b>Example usage</b>
- * \code{.c}
-    void test(void)
-    {
-        bool op_result;
-
-        T_HEART_RATE_MEASUREMENT_VALUE_FLAG flag;
-        flag.heart_rate_value_format_bit = 1;
-        flag.sensor_contact_status_bits = 3;
-        if (p_parse_value->param_count >= 1)
-        {
-            flag.sensor_contact_status_bits = p_parse_value->dw_param[1];
-        }
-
-        flag.energy_expended_status_bit = 1;
-        flag.rr_interval_bit = 1;
-        flag.rfu = 0;
-
-        hrs_set_parameter(HRS_HEART_RATE_MEASUREMENT_PARAM_FLAG, 1, &flag);
-
-        op_result = hrs_heart_rate_measurement_value_notify(p_parse_value->dw_param[0], hrs_id);
-    }
- * \endcode
- */
-bool hrs_heart_rate_measurement_value_notify(uint8_t conn_id, T_SERVER_ID service_id)
+bool hrs_heart_rate_measurement_value_notify(uint8_t conn_id, T_SERVER_ID service_id,
+                                             T_HEART_RATE_MEASUREMENT_VALUE heart_rate_measurement_value)
 {
-    uint8_t heart_rate_measurement_value[HRS_HEART_RATE_MEASUREMENT_VALUE_MAX_LEN];
-    uint8_t cur_offset = 0;
+    uint16_t value_len = sizeof(uint8_t);  /* The length of heart_rate_measurement_value.flag */
+    uint16_t mtu_size = 23;
+    bool ret = false;
 
-    memcpy(&heart_rate_measurement_value[cur_offset], &hrs_heart_rate_measurement_value.flag, 1);
-    cur_offset += 1;
+    le_get_conn_param(GAP_PARAM_CONN_MTU_SIZE, &mtu_size, conn_id);
 
-    if (hrs_heart_rate_measurement_value.flag.heart_rate_value_format_bit ==
-        Heart_Rate_Value_Format_UINT8)
+    if (heart_rate_measurement_value.flag.heart_rate_value_format_bit ==
+        HEART_RATE_VALUE_FORMAT_UINT8)
     {
-        memcpy(&heart_rate_measurement_value[cur_offset],
-               &hrs_heart_rate_measurement_value.heart_rate_measurement_value, 1);
-        cur_offset += 1;
+        value_len += sizeof(uint8_t);
     }
     else
     {
-        memcpy(&heart_rate_measurement_value[cur_offset],
-               &hrs_heart_rate_measurement_value.heart_rate_measurement_value, 2);
-        cur_offset += 2;
+        value_len += sizeof(uint16_t);
     }
 
-    if (hrs_heart_rate_measurement_value.flag.energy_expended_status_bit)
+    if (heart_rate_measurement_value.flag.energy_expended_status_bit)
     {
-        memcpy(&heart_rate_measurement_value[cur_offset], &hrs_heart_rate_measurement_value.energy_expended,
-               2);
-        cur_offset += 2;
+        value_len += sizeof(uint16_t);
     }
 
-    if (hrs_heart_rate_measurement_value.flag.rr_interval_bit)
+    if (heart_rate_measurement_value.flag.rr_interval_bit)
     {
-        memcpy(&heart_rate_measurement_value[cur_offset], &hrs_heart_rate_measurement_value.rr_interval, 2);
-        cur_offset += 2;
+        value_len += heart_rate_measurement_value.rr_interval_len;
     }
 
-    PROFILE_PRINT_INFO0("hrs_heart_rate_measurement_value_notify");
-    return server_send_data(conn_id, service_id, HRS_HEART_RATE_MEASUREMENT_VALUE_INDEX,
-                            heart_rate_measurement_value, cur_offset, GATT_PDU_TYPE_NOTIFICATION);
+
+    if (value_len > mtu_size - 3)
+    {
+        PROFILE_PRINT_ERROR1("hrs_heart_rate_measurement_value_notify: value_len %d is too long! value_len",
+                             value_len);
+        return false;
+    }
+
+    uint8_t *p_heart_rate_measurement_value = os_mem_zalloc(RAM_TYPE_DATA_ON, value_len);
+
+    if (p_heart_rate_measurement_value)
+    {
+        uint16_t cur_offset = 0;
+        memcpy(p_heart_rate_measurement_value, &heart_rate_measurement_value.flag, 1);
+
+        cur_offset += 1;
+
+        if (heart_rate_measurement_value.flag.heart_rate_value_format_bit ==
+            HEART_RATE_VALUE_FORMAT_UINT8)
+        {
+            memcpy(&p_heart_rate_measurement_value[cur_offset],
+                   &heart_rate_measurement_value.heart_rate_measurement_value, 1);
+            cur_offset += 1;
+        }
+        else
+        {
+            memcpy(&p_heart_rate_measurement_value[cur_offset],
+                   &heart_rate_measurement_value.heart_rate_measurement_value, 2);
+            cur_offset += 2;
+        }
+
+        if (heart_rate_measurement_value.flag.energy_expended_status_bit)
+        {
+            memcpy(&p_heart_rate_measurement_value[cur_offset],
+                   &heart_rate_measurement_value.energy_expended, 2);
+            cur_offset += 2;
+        }
+
+        if (heart_rate_measurement_value.flag.rr_interval_bit)
+        {
+            memcpy(&p_heart_rate_measurement_value[cur_offset],
+                   heart_rate_measurement_value.p_rr_interval,
+                   heart_rate_measurement_value.rr_interval_len);
+        }
+
+        PROFILE_PRINT_INFO0("hrs_heart_rate_measurement_value_notify");
+        ret = server_send_data(conn_id, service_id, HRS_HEART_RATE_MEASUREMENT_VALUE_INDEX,
+                               p_heart_rate_measurement_value, value_len, GATT_PDU_TYPE_NOTIFICATION);
+
+        os_mem_free(p_heart_rate_measurement_value);
+    }
+    else
+    {
+        PROFILE_PRINT_ERROR0("hrs_heart_rate_measurement_value_notify: alloc buf fail");
+    }
+
+    return ret;
 }
 
 /**
@@ -463,10 +353,12 @@ T_APP_RESULT hrs_attr_read_cb(uint8_t conn_id, T_SERVER_ID service_id, uint16_t 
             T_HRS_CALLBACK_DATA callback_data;
             callback_data.msg_type = SERVICE_CALLBACK_TYPE_READ_CHAR_VALUE;
             callback_data.msg_data.read_value_index = HRS_READ_BODY_SENSOR_LOCATION_VALUE;
-            pfn_hrs_app_cb(service_id, (void *)&callback_data);
+            cause = pfn_hrs_app_cb(service_id, (void *)&callback_data);
 
-            *p_length = sizeof(hrs_body_sensor_location_value);
-            memcpy(pp_value, &hrs_body_sensor_location_value, *p_length);
+            if (cause == APP_RESULT_SUCCESS)
+            {
+                cause = APP_RESULT_PENDING;
+            }
         }
         break;
 
@@ -602,24 +494,6 @@ const T_FUN_GATT_SERVICE_CBS hrs_cbs =
     hrs_cccd_update_cb  // CCCD update callback function pointer
 };
 
-/**
- * @brief       Add heart rate service to the BLE stack database.
- *
- *
-  * @param[in]   p_func  Callback when service attribute was read, write or cccd update.
-  * @return Service id generated by the BLE stack: @ref T_SERVER_ID.
-  * @retval 0xFF Operation failure.
-  * @retval others Service id assigned by stack.
- *
- * <b>Example usage</b>
- * \code{.c}
-    void profile_init()
-    {
-        server_init(1);
-        hrs_id = hrs_add_service(app_handle_profile_message);
-    }
- * \endcode
- */
 T_SERVER_ID hrs_add_service(void *p_func)
 {
     T_SERVER_ID service_id;

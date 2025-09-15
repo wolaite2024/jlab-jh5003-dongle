@@ -29,9 +29,6 @@
 #include "app_bt_policy_api.h"
 #include "audio_volume.h"
 #include "app_mmi.h"
-#if F_APP_ANC_SUPPORT
-#include "app_anc.h"
-#endif
 #include "app_relay.h"
 #include "app_bond.h"
 #include "app_line_in.h"
@@ -69,7 +66,6 @@
 #if F_APP_DURIAN_SUPPORT
 #include "app_durian.h"
 #endif
-#include "app_sensor.h"
 #if F_APP_SLIDE_SWITCH_MIC_MUTE_TOGGLE
 #include "app_slide_switch.h"
 #endif
@@ -99,7 +95,7 @@ static uint8_t timer_idx_hfp_auto_answer_call = 0;
 static uint8_t timer_idx_hfp_ring = 0;
 static uint8_t timer_idx_mic_mute_alarm = 0;
 static uint8_t timer_idx_hfp_no_service = 0;
-static uint8_t timer_idx_hfp_add_sco = 0;
+// static uint8_t timer_idx_hfp_add_sco = 0;
 static uint8_t timer_idx_iphone_voice_dail = 0;
 static uint8_t timer_idx_hfp_set_vol_is_changed = 0;
 static uint8_t timer_handle_hfp_delay_role_switch = NULL;
@@ -414,8 +410,10 @@ void app_hfp_update_call_status(void)
                     TRACE_BDADDR(app_db.br_link[active_hf_idx].bd_addr), inactive_hf_status,
                     inactive_hf_idx);
 
+#if F_APP_ROLESWITCH_WHEN_SCO_CHANGE
     app_start_timer(&timer_handle_hfp_delay_role_switch, "hfp_delay_role_switch",
                     hfp_timer_id, APP_HFP_TIMER_DELAY_ROLE_SWITCH, inactive_hf_idx, false, 3000);
+#endif
 
 #if F_APP_GAMING_LE_AUDIO_24G_STREAM_FIRST
     app_dongle_handle_hfp_call();
@@ -733,7 +731,10 @@ static void app_hfp_spk_vol_set(uint8_t *bd_addr, uint8_t volume)
 
     if (p_link != NULL)
     {
-        app_hfp_vol_change_ongoing = true;
+        if (p_link->sco_handle != 0)
+        {
+            app_hfp_vol_change_ongoing = true;
+        }
 
         if (app_db.remote_session_state == REMOTE_SESSION_STATE_DISCONNECTED)
         {
@@ -809,8 +810,13 @@ static void app_hfp_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t bu
                 APP_PRINT_ERROR0("app_hfp_bt_cback: no acl link found");
                 return;
             }
+            else
+            {
+                bool accept = (app_bt_policy_get_profs_by_bond_flag(ALL_PROFILE_MASK) & HFP_PROFILE_MASK) ? true :
+                              false;
 
-            bt_hfp_connect_cfm(p_link->bd_addr, accept_conn);
+                bt_hfp_connect_cfm(p_link->bd_addr, accept);
+            }
         }
         break;
 
@@ -952,9 +958,7 @@ static void app_hfp_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t bu
     case BT_EVENT_HFP_CALL_STATUS:
         {
             T_APP_BR_LINK *p_link;
-#if (C_APP_END_OUTGOING_CALL_PLAY_CALL_END_TONE == 0)
             uint8_t temp_idx = active_hf_idx;
-#endif
             p_link = app_link_find_br_link(param->hfp_call_status.bd_addr);
             if (p_link != NULL)
             {
@@ -1129,21 +1133,21 @@ static void app_hfp_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t bu
                 app_audio_set_bud_stream_state(BUD_STREAM_STATE_IDLE);
             }
 
-            if (param->hfp_call_status.curr_status == BT_HFP_CALL_ACTIVE)
-            {
-#if F_APP_DURIAN_SUPPORT
-//rsv for avp
-#else
-                if (LIGHT_SENSOR_ENABLED &&
-                    ((app_db.local_loc == BUD_LOC_IN_EAR) || (app_db.remote_loc == BUD_LOC_IN_EAR)))
-                {
-                    app_stop_timer(&timer_idx_hfp_add_sco);
-                    app_start_timer(&timer_idx_hfp_add_sco, "hfp_add_sco",
-                                    hfp_timer_id, APP_HFP_TIMER_ADD_SCO, active_hf_idx, false,
-                                    400);
-                }
-#endif
-            }
+//             if (param->hfp_call_status.curr_status == BT_HFP_CALL_ACTIVE)
+//             {
+// #if F_APP_DURIAN_SUPPORT
+// //rsv for avp
+// #else
+//                 if (LIGHT_SENSOR_ENABLED &&
+//                     ((app_db.local_loc == BUD_LOC_IN_EAR) || (app_db.remote_loc == BUD_LOC_IN_EAR)))
+//                 {
+//                     app_stop_timer(&timer_idx_hfp_add_sco);
+//                     app_start_timer(&timer_idx_hfp_add_sco, "hfp_add_sco",
+//                                     hfp_timer_id, APP_HFP_TIMER_ADD_SCO, active_hf_idx, false,
+//                                     400);
+//                 }
+// #endif
+//             }
         }
         break;
 
@@ -1189,7 +1193,7 @@ static void app_hfp_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t bu
                 if (br_link != NULL)
                 {
                     /* Sanity check if BR/EDR TTS session is ongoing */
-                    if (br_link->cmd_set_enable == true &&
+                    if (br_link->cmd.enable == true &&
                         br_link->tts_info.tts_handle != NULL)
                     {
                         break;
@@ -1197,7 +1201,7 @@ static void app_hfp_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t bu
 
                     /* Sanity check if BLE TTS session is ongoing */
                     if (le_link != NULL &&
-                        le_link->cmd_set_enable == true &&
+                        le_link->cmd.enable == true &&
                         le_link->tts_info.tts_handle != NULL)
                     {
                         break;
@@ -1244,6 +1248,11 @@ static void app_hfp_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t bu
                                 {
                                     data[0] = br_link->id;
                                     app_report_event(CMD_PATH_IAP, EVENT_CALLER_ID, br_link->id, data, len);
+                                }
+                                else if (br_link->connected_profile & GATT_PROFILE_MASK)
+                                {
+                                    data[0] = br_link->id;
+                                    app_report_event(CMD_PATH_GATT_OVER_BREDR, EVENT_CALLER_ID, br_link->id, data, len);
                                 }
                                 else if (le_link != NULL)
                                 {
@@ -1372,15 +1381,6 @@ static void app_hfp_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t bu
         }
         break;
 
-    case BT_EVENT_REMOTE_CONN_CMPL:
-        {
-            if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY)
-            {
-                app_hfp_voice_nr_enable();
-            }
-        }
-        break;
-
     case BT_EVENT_HFP_DISCONN_CMPL:
         {
             T_APP_BR_LINK *p_link;
@@ -1455,6 +1455,22 @@ static void app_hfp_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t bu
 #if F_APP_ERWS_SUPPORT
     case BT_EVENT_SCO_SNIFFING_CONN_CMPL:
         {
+
+        }
+        break;
+    case BT_EVENT_SCO_SNIFFING_STARTED:
+        {
+            app_hfp_adjust_sco_window(param->sco_conn_cmpl.bd_addr, APP_SCO_ADJUST_SNIFFING_STARTED_EVT);
+        }
+        break;
+
+    case BT_EVENT_REMOTE_CONN_CMPL:
+        {
+            if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY)
+            {
+                app_hfp_voice_nr_enable();
+                app_hfp_adjust_sco_window(param->sco_conn_cmpl.bd_addr, APP_SCO_ADJUST_B2B_CONN_CMPL_EVT);
+            }
         }
         break;
 
@@ -1484,7 +1500,7 @@ static void app_hfp_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t bu
 #if F_APP_GAMING_DONGLE_SUPPORT && (TARGET_LE_AUDIO_GAMING == 0)
                     if (app_db.dongle_is_enable_mic)
                     {
-                        app_dongle_start_recording(app_db.br_link[app_idx].bd_addr);
+                        app_dongle_start_recording();
                     }
 #endif
                 }
@@ -1503,7 +1519,7 @@ static void app_hfp_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t bu
                     if (app_db.dongle_is_enable_mic)
                     {
                         app_transfer_queue_reset(CMD_PATH_SPP);
-                        app_dongle_stop_recording(app_db.br_link[app_idx].bd_addr);
+                        app_dongle_stop_recording();
                     }
 #endif
                     app_hfp_transfer_sec_auto_answer_call_timer();
@@ -1640,8 +1656,17 @@ void app_hfp_set_call_status(T_APP_CALL_STATUS call_status)
         app_roleswap_ctrl_check(APP_ROLESWAP_CTRL_EVENT_CALL_STATUS_CHAGNED);
     }
 
-#if F_APP_GAMING_DONGLE_SUPPORT
+#if TARGET_LEGACY_AUDIO_GAMING
     app_dongle_call_status_handler(call_status, active_idx);
+#endif
+
+#if F_APP_MUTLILINK_SOURCE_PRIORITY_UI
+    if (app_db.resume_a2dp_track_later)
+    {
+        app_db.resume_a2dp_track_later = false;
+        uint8_t active_idx = app_multilink_customer_get_active_music_link_index();
+        app_multilink_customer_music_event_handle(active_idx, JUDGE_EVENT_A2DP_START);
+    }
 #endif
 
     if (app_cfg_const.fixed_inband_tone_gain && get_pair_idx == true)
@@ -1900,19 +1925,19 @@ void app_hfp_timeout_cb(uint8_t timer_evt, uint16_t param)
         }
         break;
 
-    case APP_HFP_TIMER_ADD_SCO:
-        {
-            T_APP_BR_LINK *p_link;
-            p_link = &(app_db.br_link[param]);
+    // case APP_HFP_TIMER_ADD_SCO:
+    //     {
+    //         T_APP_BR_LINK *p_link;
+    //         p_link = &(app_db.br_link[param]);
 
-            app_stop_timer(&timer_idx_hfp_add_sco);
-            if (!app_hfp_sco_is_connected())
-            {
-                //rebulid sco
-                app_bt_sniffing_hfp_connect(p_link->bd_addr);
-            }
-        }
-        break;
+    //         app_stop_timer(&timer_idx_hfp_add_sco);
+    //         if (!app_hfp_sco_is_connected())
+    //         {
+    //             //rebulid sco
+    //             app_bt_sniffing_hfp_connect(p_link->bd_addr);
+    //         }
+    //     }
+    //     break;
 
     case APP_HFP_TIMER_CANCEL_VOICE_DAIL:
         {
@@ -1929,12 +1954,14 @@ void app_hfp_timeout_cb(uint8_t timer_evt, uint16_t param)
         }
         break;
 
+#if F_APP_ROLESWITCH_WHEN_SCO_CHANGE
     case APP_HFP_TIMER_DELAY_ROLE_SWITCH:
         {
             app_stop_timer(&timer_handle_hfp_delay_role_switch);
             app_bt_policy_roleswitch_when_sco(app_db.br_link[param].bd_addr);
         }
         break;
+#endif
 
     case APP_HFP_TIMER_SET_VOL_IS_CHANGED:
         {
@@ -2035,8 +2062,7 @@ void app_hfp_init(void)
 
     if (app_cfg_const.supported_profile_mask & (HFP_PROFILE_MASK | HSP_PROFILE_MASK))
     {
-        bt_hfp_init(app_cfg_const.hfp_link_number, RFC_HFP_CHANN_NUM,
-                    RFC_HSP_CHANN_NUM, app_cfg_const.hfp_brsf_capability,
+        bt_hfp_init(RFC_HFP_CHANN_NUM, RFC_HSP_CHANN_NUM, app_cfg_const.hfp_brsf_capability,
                     BT_HFP_HF_CODEC_TYPE_CVSD | BT_HFP_HF_CODEC_TYPE_MSBC);
         audio_mgr_cback_register(app_hfp_audio_cback);
         bt_mgr_cback_register(app_hfp_bt_cback);
@@ -2164,6 +2190,17 @@ void app_hfp_adjust_sco_window(uint8_t *bd_addr, T_APP_HFP_SCO_ADJUST_EVT evt)
                  memcmp(active_hf_addr, bd_addr, 6))
         {
             //sco conn ind from inactive hf link
+            need_set = 1;
+        }
+        else if (app_link_get_b2s_link_num() > 1)
+        {
+            need_set = 1;
+        }
+        else if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY &&
+                 app_db.remote_session_state == REMOTE_SESSION_STATE_CONNECTED &&
+                 app_db.br_link[active_hf_idx].bt_sniffing_state != APP_BT_SNIFFING_STATE_SNIFFING)
+        {
+            // b2b connected -- sco sniffing setup
             need_set = 1;
         }
         else

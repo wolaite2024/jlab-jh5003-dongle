@@ -29,6 +29,7 @@ typedef enum
     RECORD_SAMPLE_RATE_16K,
     RECORD_SAMPLE_RATE_32K,
     RECORD_SAMPLE_RATE_48K,
+    RECORD_SAMPLE_RATE_MAX,
 } T_RECORD_SAMPLE_RATE;
 
 /**
@@ -45,19 +46,23 @@ uint16_t app_dongle_get_voice_data_len(void);
     */
 uint16_t app_dongle_assemble_rtp_voice(uint8_t *buf, uint16_t buf_size, uint16_t voice_data_len);
 
-void app_dongle_force_stop_recording(void);
-
 /**
     * @brief        This function can stop the record.
     * @return       void
     */
-void app_dongle_stop_recording(uint8_t bd_addr[6]);
+void app_dongle_stop_recording(void);
 
 /**
     * @brief        This function can start the record.
     * @return       void
     */
-void app_dongle_start_recording(uint8_t bd_addr[6]);
+void app_dongle_start_recording(void);
+
+/**
+    * @brief        This function can get current dongle record sample rate.
+    * @return       dongle record sample rate
+    */
+T_RECORD_SAMPLE_RATE app_dongle_get_record_sample_rate(void);
 
 void app_dongle_record_init(void);
 

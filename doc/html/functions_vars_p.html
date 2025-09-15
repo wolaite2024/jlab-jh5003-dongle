@@ -45,15 +45,11 @@ $(function() {
 
 <h3><a id="index_p"></a>- p -</h3><ul>
 <li>p
-: <a class="el" href="struct_dh_key.html#af9182475e94fdfb831fb2a5a6f779429">DhKey</a>
-, <a class="el" href="struct_dh_params.html#af1ca0f8d490064e38921d267f2402b39">DhParams</a>
-, <a class="el" href="struct_dsa_key.html#af9182475e94fdfb831fb2a5a6f779429">DsaKey</a>
-, <a class="el" href="structfm__crypto__ckg__context.html#a66001084b4f6d69684099fd20b71845a">fm_crypto_ckg_context</a>
+: <a class="el" href="structfm__crypto__ckg__context.html#aac9967d3cf18e266855c83b17dff948a">fm_crypto_ckg_context</a>
 , <a class="el" href="structppe__pox__t.html#a6d6b3b619cc0cd2e3083d20df6a29250">ppe_pox_t</a>
-, <a class="el" href="struct_rsa_key.html#af9182475e94fdfb831fb2a5a6f779429">RsaKey</a>
 , <a class="el" href="struct_t___a_t_t_r___u_u_i_d.html#ae0e2f31e797a11d7d14fe22dff891d6f">T_ATTR_UUID</a>
 , <a class="el" href="struct_t___g_a_p___a_c_l___s_t_a_t_u_s___i_n_f_o.html#a42663fee0a0e96be4240dcad4ff2ff93">T_GAP_ACL_STATUS_INFO</a>
-, <a class="el" href="group___g_a_p___b_o_n_d___manager.html#ga994038064e3766ec01a7768c6024e17f">T_LE_ACL_STATUS_INFO</a>
+, <a class="el" href="struct_t___l_e___a_c_l___s_t_a_t_u_s___i_n_f_o.html#a994038064e3766ec01a7768c6024e17f">T_LE_ACL_STATUS_INFO</a>
 </li>
 <li>p0reg08
 : <a class="el" href="union_m_o_d_e_m___r_e_g___s___t_y_p_e.html#a4afd927eb0891db119329d7cbdb35292">MODEM_REG_S_TYPE</a>
@@ -105,6 +101,9 @@ $(function() {
 </li>
 <li>p_aics_vcs_tbl
 : <a class="el" href="struct_t___b_l_e___a_u_d_i_o___v_c___m_i_c___p_a_r_a_m_s.html#a642a38abd0d53758f0115ef61f34b810">T_BLE_AUDIO_VC_MIC_PARAMS</a>
+</li>
+<li>p_allow
+: <a class="el" href="struct_t___b_t___d_i_r_e_c_t___g_a_t_t___s_e_r_v_e_r___s_e_r_v_i_c_e___g_e_t___a_l_l_o_w___i_n_f_o.html#af723c2126c642bb22bea9ae6bdf6e1cc">T_BT_DIRECT_GATT_SERVER_SERVICE_GET_ALLOW_INFO</a>
 </li>
 <li>p_app_setting
 : <a class="el" href="structt__bt__event__param__avrcp__app__setting__changed.html#a68f24fef6025f198c631bb96e5307fe8">t_bt_event_param_avrcp_app_setting_changed</a>
@@ -237,6 +236,9 @@ $(function() {
 <li>p_bt_bond_priority_set
 : <a class="el" href="struct_t___l_e_g_a_c_y___b_o_n_d___h_a_l.html#ad6621c4cf12ba901723787f028fda3f3">T_LEGACY_BOND_HAL</a>
 </li>
+<li>p_bt_direct_gatt_server_service_get_allow_info
+: <a class="el" href="union_t___b_t___d_i_r_e_c_t___c_b___d_a_t_a.html#add6bb3fcd17659d9731edc53c330a461">T_BT_DIRECT_CB_DATA</a>
+</li>
 <li>p_bt_direct_iso
 : <a class="el" href="union_t___b_t___d_i_r_e_c_t___c_b___d_a_t_a.html#a5656a7bb72eff6f14dcaa2c305e0efdf">T_BT_DIRECT_CB_DATA</a>
 </li>
@@ -327,7 +329,7 @@ $(function() {
 : <a class="el" href="union_t___c_i_g___m_g_r___c_b___d_a_t_a.html#a67ec1a9e07335e2b6f65d8e30d31aec8">T_CIG_MGR_CB_DATA</a>
 </li>
 <li>p_client_supp_feats
-: <a class="el" href="group___g_a_p___b_o_n_d___manager.html#ga4a05fbceaa058ae025b0235e496c2697">T_SET_REMOTE_CLIENT_SUPPORTED_FEATURES_INFO</a>
+: <a class="el" href="struct_t___s_e_t___r_e_m_o_t_e___c_l_i_e_n_t___s_u_p_p_o_r_t_e_d___f_e_a_t_u_r_e_s___i_n_f_o.html#a4a05fbceaa058ae025b0235e496c2697">T_SET_REMOTE_CLIENT_SUPPORTED_FEATURES_INFO</a>
 </li>
 <li>p_cmd
 : <a class="el" href="structt__bt__event__param__avrcp__vendor__cmd__ind.html#a9ab96addebaee090bcf3f81bb981ce86">t_bt_event_param_avrcp_vendor_cmd_ind</a>
@@ -335,8 +337,14 @@ $(function() {
 , <a class="el" href="struct_t___u_s_e_r___c_m_d___p_a_r_s_e_d___v_a_l_u_e.html#a32c6011f864fa83e801f7f7c7ad111dd">T_USER_CMD_PARSED_VALUE</a>
 , <a class="el" href="struct_t___u_s_e_r___c_m_d___t_a_b_l_e___e_n_t_r_y.html#a32c6011f864fa83e801f7f7c7ad111dd">T_USER_CMD_TABLE_ENTRY</a>
 </li>
+<li>p_codec_cap
+: <a class="el" href="struct_t___b_a_p___p_a_c___r_e_c_o_r_d.html#a17123dae6f3eea144c76ab0698ba37c4">T_BAP_PAC_RECORD</a>
+</li>
 <li>p_codec_capability_combination
 : <a class="el" href="struct_t___g_a_p___r_e_a_d___l_o_c_a_l___s_u_p_p_o_r_t_e_d___c_o_d_e_c___c_a_p_a_b_i_l_i_t_i_e_s___r_s_p.html#a843da0b5343e3ba7ac685cf6681475cf">T_GAP_READ_LOCAL_SUPPORTED_CODEC_CAPABILITIES_RSP</a>
+</li>
+<li>p_codec_cfg
+: <a class="el" href="struct_t___a_u_d_i_o___g_r_o_u_p___m_s_g___b_a_p___s_e_t_u_p___d_a_t_a___p_a_t_h.html#a33b5092c3996733a274688e7be7453b5">T_AUDIO_GROUP_MSG_BAP_SETUP_DATA_PATH</a>
 </li>
 <li>p_codec_spec_cfg
 : <a class="el" href="struct_t___a_s_e___c_p___c_o_n_f_i_g___c_o_d_e_c___d_a_t_a.html#abdadce32eba1c8048e6852442f0c71a9">T_ASE_CP_CONFIG_CODEC_DATA</a>
@@ -385,7 +393,7 @@ $(function() {
 , <a class="el" href="struct_t___c_o_d_e_c___s_c_h_e_d___m_s_g.html#ab5b6056a4691bb8526e3a1ca657edeb4">T_CODEC_SCHED_MSG</a>
 , <a class="el" href="struct_t___d_s_p___s_c_h_e_d___m_s_g.html#ab5b6056a4691bb8526e3a1ca657edeb4">T_DSP_SCHED_MSG</a>
 , <a class="el" href="struct_t___g_a_p___b_r___f_i_x___c_h_a_n_n___d_a_t_a___i_n_d.html#a8304c4af5da6e830b86d7199dc9a22e6">T_GAP_BR_FIX_CHANN_DATA_IND</a>
-, <a class="el" href="group___g_a_p___b_o_n_d___manager.html#ga8304c4af5da6e830b86d7199dc9a22e6">T_GATT_SERVER_STORE_IND</a>
+, <a class="el" href="struct_t___g_a_t_t___s_e_r_v_e_r___s_t_o_r_e___i_n_d.html#a8304c4af5da6e830b86d7199dc9a22e6">T_GATT_SERVER_STORE_IND</a>
 , <a class="el" href="struct_t___g_a_t_t___s_t_o_r_a_g_e___s_v_c___c_c_c_d___g_e_t___i_n_d.html#a8304c4af5da6e830b86d7199dc9a22e6">T_GATT_STORAGE_SVC_CCCD_GET_IND</a>
 , <a class="el" href="struct_t___g_a_t_t___s_t_o_r_a_g_e___s_v_c___c_c_c_d___s_e_t___i_n_d.html#a8304c4af5da6e830b86d7199dc9a22e6">T_GATT_STORAGE_SVC_CCCD_SET_IND</a>
 , <a class="el" href="struct_t___g_a_t_t___s_t_o_r_a_g_e___s_v_c___t_b_l___g_e_t___i_n_d.html#a8304c4af5da6e830b86d7199dc9a22e6">T_GATT_STORAGE_SVC_TBL_GET_IND</a>
@@ -420,23 +428,13 @@ $(function() {
 , <a class="el" href="structtuya__ble__weather__req__data__t.html#a8304c4af5da6e830b86d7199dc9a22e6">tuya_ble_weather_req_data_t</a>
 , <a class="el" href="structtuya__ble__wifi__ssid__data__t.html#a8304c4af5da6e830b86d7199dc9a22e6">tuya_ble_wifi_ssid_data_t</a>
 </li>
-<li>p_display_name
-: <a class="el" href="structt__bt__avrcp__folder__item.html#ab8eb3f1d6a816c91b7f4d26f59b0629f">t_bt_avrcp_folder_item</a>
-, <a class="el" href="structt__bt__avrcp__media__element__item.html#ab8eb3f1d6a816c91b7f4d26f59b0629f">t_bt_avrcp_media_element_item</a>
-, <a class="el" href="structt__bt__avrcp__media__player__item.html#ab8eb3f1d6a816c91b7f4d26f59b0629f">t_bt_avrcp_media_player_item</a>
-</li>
 <li>p_eir
 : <a class="el" href="structt__bt__event__param__inquiry__result.html#a263d1626580653ce45dc29d802c3e047">t_bt_event_param_inquiry_result</a>
 , <a class="el" href="struct_t___g_a_p___i_n_q_u_i_r_y___r_e_s_u_l_t___i_n_f_o.html#a263d1626580653ce45dc29d802c3e047">T_GAP_INQUIRY_RESULT_INFO</a>
 </li>
 <li>p_embedded_cmd
 : <a class="el" href="struct_t___a_p_p___b_r___l_i_n_k.html#a7bbad60dba6a138316e9c4a107538750">T_APP_BR_LINK</a>
-, <a class="el" href="structt__app__br__link.html#a7bbad60dba6a138316e9c4a107538750">t_app_br_link</a>
 , <a class="el" href="struct_t___a_p_p___l_e___l_i_n_k.html#a7bbad60dba6a138316e9c4a107538750">T_APP_LE_LINK</a>
-, <a class="el" href="structt__app__le__link.html#a7bbad60dba6a138316e9c4a107538750">t_app_le_link</a>
-</li>
-<li>p_entropy
-: <a class="el" href="structmbedtls__ctr__drbg__context.html#a1c58f8b4d6b88a7014c9f4c9539a2368">mbedtls_ctr_drbg_context</a>
 </li>
 <li>p_entry
 : <a class="el" href="struct_t___b_t___l_e___b_o_n_d___a_d_d.html#ab9e8262eb54ebbdbb38534b88ebfc9c3">T_BT_LE_BOND_ADD</a>
@@ -513,10 +511,10 @@ $(function() {
 : <a class="el" href="union_t___g_a_t_t___s_e_r_v_e_r___s_e_r_v_i_c_e___c_h_a_n_g_e___c_b___d_a_t_a.html#a29f65d2ee4d78f6945434a456fa3a2be">T_GATT_SERVER_SERVICE_CHANGE_CB_DATA</a>
 </li>
 <li>p_gatt_server_store_ind
-: <a class="el" href="group___g_a_p___b_o_n_d___manager.html#ga45fd93f3ba9a0acf5109e5f96ae3dcee">T_APP_BOND_MGR_CB_DATA</a>
+: <a class="el" href="union_t___a_p_p___b_o_n_d___m_g_r___c_b___d_a_t_a.html#a45fd93f3ba9a0acf5109e5f96ae3dcee">T_APP_BOND_MGR_CB_DATA</a>
 </li>
 <li>p_get_remote_client_supported_features_ind
-: <a class="el" href="group___g_a_p___b_o_n_d___manager.html#gae6e080cd334cc1ed3d0a5bd17aeb37c1">T_APP_BOND_MGR_CB_DATA</a>
+: <a class="el" href="union_t___a_p_p___b_o_n_d___m_g_r___c_b___d_a_t_a.html#ae6e080cd334cc1ed3d0a5bd17aeb37c1">T_APP_BOND_MGR_CB_DATA</a>
 </li>
 <li>p_get_report_data
 : <a class="el" href="structt__usb__hid__db.html#a27c68e3f022f39a359da1b582b6f11f7">t_usb_hid_db</a>
@@ -550,7 +548,7 @@ $(function() {
 : <a class="el" href="struct_t___o_s___q_u_e_u_e.html#a8bb50d4e7e805ee518698480890e69ea">T_OS_QUEUE</a>
 </li>
 <li>p_le_acl_status_info
-: <a class="el" href="group___g_a_p___b_o_n_d___manager.html#gad88a20864262e4433d39a55d50b250d8">T_APP_BOND_MGR_CB_DATA</a>
+: <a class="el" href="union_t___a_p_p___b_o_n_d___m_g_r___c_b___d_a_t_a.html#ad88a20864262e4433d39a55d50b250d8">T_APP_BOND_MGR_CB_DATA</a>
 </li>
 <li>p_le_adv_read_tx_power_rsp
 : <a class="el" href="union_t___l_e___c_b___d_a_t_a.html#a818a9a292826e74487044c589ee9173b">T_LE_CB_DATA</a>
@@ -592,10 +590,10 @@ $(function() {
 : <a class="el" href="union_t___l_e___a_o_x___c_b___d_a_t_a.html#adb7686815a0c776d54dd2df5c562d846">T_LE_AOX_CB_DATA</a>
 </li>
 <li>p_le_authen_key_req_ind
-: <a class="el" href="group___g_a_p___b_o_n_d___manager.html#ga8f8a4c1f61611330b39ed85aa23fded3">T_APP_BOND_MGR_CB_DATA</a>
+: <a class="el" href="union_t___a_p_p___b_o_n_d___m_g_r___c_b___d_a_t_a.html#a8f8a4c1f61611330b39ed85aa23fded3">T_APP_BOND_MGR_CB_DATA</a>
 </li>
 <li>p_le_authen_result_ind
-: <a class="el" href="group___g_a_p___b_o_n_d___manager.html#ga1f9ae01fd10af8f540eaddfbe2736ea9">T_APP_BOND_MGR_CB_DATA</a>
+: <a class="el" href="union_t___a_p_p___b_o_n_d___m_g_r___c_b___d_a_t_a.html#a1f9ae01fd10af8f540eaddfbe2736ea9">T_APP_BOND_MGR_CB_DATA</a>
 </li>
 <li>p_le_biginfo_adv_report_info
 : <a class="el" href="union_t___b_l_e___a_u_d_i_o___s_y_n_c___c_b___d_a_t_a.html#a81f10c02043c853318562781e00294c9">T_BLE_AUDIO_SYNC_CB_DATA</a>
@@ -782,9 +780,6 @@ $(function() {
 <li>p_le_update_passed_chann_map_rsp
 : <a class="el" href="union_t___l_e___c_b___d_a_t_a.html#af0a4f7ed4993b5340bf3a0cf7bce90a6">T_LE_CB_DATA</a>
 </li>
-<li>p_len
-: <a class="el" href="struct_dh_params.html#afa254c838929207abbb6382c9b903c78">DhParams</a>
-</li>
 <li>p_link
 : <a class="el" href="struct_t___b_t___p_a_r_a_m.html#a80583cda8d5b788bf8affd20f9742fb0">T_BT_PARAM</a>
 </li>
@@ -844,6 +839,7 @@ $(function() {
 , <a class="el" href="structt__iso__chnl__info__db.html#a5a49d1297b56d64067d2e1ada197190c">t_iso_chnl_info_db</a>
 , <a class="el" href="structt__iso__data__ind.html#aa4d2493439b1a787bf93265a5d6787b1">t_iso_data_ind</a>
 , <a class="el" href="structt__le__disc__cb__entry.html#a2243f2cbfb80f1ac1863dfdd1d5f9da8">t_le_disc_cb_entry</a>
+, <a class="el" href="structt__lea__has__preset__queue__elem.html#aba803c4e40b8485ef7b474f51a21cc8e">t_lea_has_preset_queue_elem</a>
 , <a class="el" href="structt__link__record__item.html#a2eafb49db6fbaede50313bb4f3ba4026">t_link_record_item</a>
 , <a class="el" href="structt__media__listen__save__header.html#a94044dda50aa720351d2449946f17420">t_media_listen_save_header</a>
 , <a class="el" href="structt__os__queue__elem.html#afcd9e5507f07f8f8eb853f56ba9ab2bb">t_os_queue_elem</a>
@@ -851,6 +847,9 @@ $(function() {
 </li>
 <li>p_next_sub
 : <a class="el" href="structt__cli__cmd.html#a0930e89477c7ff98c526543c6cbca24d">t_cli_cmd</a>
+</li>
+<li>p_operands
+: <a class="el" href="struct_t___d_u_l_t___u_p_s_t_r_e_a_m___m_s_g___d_a_t_a.html#a566beffe875936321b70fdd420e3b780">T_DULT_UPSTREAM_MSG_DATA</a>
 </li>
 <li>p_option
 : <a class="el" href="struct_t___u_s_e_r___c_m_d___t_a_b_l_e___e_n_t_r_y.html#a640eff64b7d6cdf4e739aec6ae005f48">T_USER_CMD_TABLE_ENTRY</a>
@@ -901,6 +900,9 @@ $(function() {
 <li>p_result_table
 : <a class="el" href="struct_t___g_c_s___d_i_s_c_o_v_e_r_y___r_e_s_u_l_t.html#aef48809ee3b4034f3a8dd45516a8df31">T_GCS_DISCOVERY_RESULT</a>
 </li>
+<li>p_rr_interval
+: <a class="el" href="struct_t___h_e_a_r_t___r_a_t_e___m_e_a_s_u_r_e_m_e_n_t___v_a_l_u_e.html#a61be06ba43ba25d22fda80c19f8dce71">T_HEART_RATE_MEASUREMENT_VALUE</a>
+</li>
 <li>p_rsi
 : <a class="el" href="struct_t___d_i_s_c___r_e_s_u_l_t.html#a4e4ce9a2db64fab417f8dccb68f49151">T_DISC_RESULT</a>
 </li>
@@ -917,17 +919,17 @@ $(function() {
 : <a class="el" href="structt__usb__hid__db.html#a186f8132aced4f1b808121833fd38017">t_usb_hid_db</a>
 </li>
 <li>p_set_cccd_data_pending_info
-: <a class="el" href="group___g_a_p___b_o_n_d___manager.html#ga1f29735e8259e95ae2b76189f2224eda">T_APP_BOND_MGR_CB_DATA</a>
+: <a class="el" href="union_t___a_p_p___b_o_n_d___m_g_r___c_b___d_a_t_a.html#a1f29735e8259e95ae2b76189f2224eda">T_APP_BOND_MGR_CB_DATA</a>
 </li>
 <li>p_set_remote_client_supported_features_info
-: <a class="el" href="group___g_a_p___b_o_n_d___manager.html#ga78436936f1fafdfc19dd72f6eae65dd6">T_APP_BOND_MGR_CB_DATA</a>
+: <a class="el" href="union_t___a_p_p___b_o_n_d___m_g_r___c_b___d_a_t_a.html#a78436936f1fafdfc19dd72f6eae65dd6">T_APP_BOND_MGR_CB_DATA</a>
 </li>
 <li>p_setup_data_path
 : <a class="el" href="union_t___b_l_e___a_u_d_i_o___s_y_n_c___c_b___d_a_t_a.html#a78aaff77091026ff6b6caf08b8f54d89">T_BLE_AUDIO_SYNC_CB_DATA</a>
 , <a class="el" href="union_t___b_r_o_a_d_c_a_s_t___s_o_u_r_c_e___s_m___c_b___d_a_t_a.html#a7b23c7c9d03318135d083053e54ff772">T_BROADCAST_SOURCE_SM_CB_DATA</a>
 </li>
 <li>p_sign_counter_result_info
-: <a class="el" href="group___g_a_p___b_o_n_d___manager.html#gaf434a7ea5512403aea8d472d79acb941">T_APP_BOND_MGR_CB_DATA</a>
+: <a class="el" href="union_t___a_p_p___b_o_n_d___m_g_r___c_b___d_a_t_a.html#af434a7ea5512403aea8d472d79acb941">T_APP_BOND_MGR_CB_DATA</a>
 </li>
 <li>p_srv_disc_data
 : <a class="el" href="union_t___d_i_s_c_o_v_e_r_y___r_e_s_u_l_t___d_a_t_a.html#aa46dae64a317743e0720c8cdae1dd73d">T_DISCOVERY_RESULT_DATA</a>
@@ -972,11 +974,15 @@ $(function() {
 , <a class="el" href="struct_t___c_c_p___s_e_r_v_e_r___i_n_c_o_m_i_n_g___c_a_l_l.html#aeb74bd06accefc119f2e64d6c9324208">T_CCP_SERVER_INCOMING_CALL</a>
 , <a class="el" href="struct_t___c_c_p___s_e_r_v_e_r___w_r_i_t_e___c_a_l_l___c_p___p_a_r_a_m___o_r_i_g_i_n_a_t_e___o_p_c_o_d_e___p_a_r_a_m.html#aeb74bd06accefc119f2e64d6c9324208">T_CCP_SERVER_WRITE_CALL_CP_PARAM_ORIGINATE_OPCODE_PARAM</a>
 </li>
+<li>p_use_flag
+: <a class="el" href="struct_t___b_t___d_i_r_e_c_t___g_a_t_t___s_e_r_v_e_r___s_e_r_v_i_c_e___g_e_t___a_l_l_o_w___i_n_f_o.html#ace4a0c34314ca1cfea2f9affc55270c6">T_BT_DIRECT_GATT_SERVER_SERVICE_GET_ALLOW_INFO</a>
+</li>
 <li>p_value
-: <a class="el" href="group___a_m_s___c_l_i_e_n_t.html#ga7e38674b09ada3bb654e2c2146044d30">T_AMS_NOTIFY_DATA</a>
-, <a class="el" href="group___a_m_s___c_l_i_e_n_t.html#ga7e38674b09ada3bb654e2c2146044d30">T_AMS_READ_DATA</a>
+: <a class="el" href="struct_t___a_m_s___n_o_t_i_f_y___d_a_t_a.html#a7e38674b09ada3bb654e2c2146044d30">T_AMS_NOTIFY_DATA</a>
+, <a class="el" href="struct_t___a_m_s___r_e_a_d___d_a_t_a.html#a7e38674b09ada3bb654e2c2146044d30">T_AMS_READ_DATA</a>
 , <a class="el" href="struct_t___a_n_c_s___n_o_t_i_f_y___d_a_t_a.html#a7e38674b09ada3bb654e2c2146044d30">T_ANCS_NOTIFY_DATA</a>
 , <a class="el" href="structt__bt__event__param__avrcp__app__setting__values__list__rsp.html#a7e38674b09ada3bb654e2c2146044d30">t_bt_event_param_avrcp_app_setting_values_list_rsp</a>
+, <a class="el" href="struct_t___c_h_a_t_g_p_t___r_x___d_a_t_a.html#a7e38674b09ada3bb654e2c2146044d30">T_CHATGPT_RX_DATA</a>
 , <a class="el" href="struct_t___c_l_i_e_n_t___s_u_p_p_o_r_t_e_d___f_e_a_t_u_r_e_s.html#a7e38674b09ada3bb654e2c2146044d30">T_CLIENT_SUPPORTED_FEATURES</a>
 , <a class="el" href="struct_t___d_e_v_i_c_e___n_a_m_e.html#a7e38674b09ada3bb654e2c2146044d30">T_DEVICE_NAME</a>
 , <a class="el" href="struct_t___f_w_u_s___w_r_i_t_e___m_s_g.html#a7e38674b09ada3bb654e2c2146044d30">T_FWUS_WRITE_MSG</a>
@@ -1037,9 +1043,6 @@ $(function() {
 : <a class="el" href="struct_t___b_a_s_s___b_r_s___d_a_t_a.html#a6cceca973892db6b3125d15f0d24a112">T_BASS_BRS_DATA</a>
 , <a class="el" href="structt__brs__info.html#a6cceca973892db6b3125d15f0d24a112">t_brs_info</a>
 </li>
-<li>pAAD
-: <a class="el" href="struct_c_k___g_c_m___p_a_r_a_m_s.html#a0816b397709ad49300a6649032d36ae8">CK_GCM_PARAMS</a>
-</li>
 <li>pac_handle
 : <a class="el" href="struct_t___b_a_p___p_a_c___r_e_c_o_r_d.html#a21390086cbc6a28973160a80830351b6">T_BAP_PAC_RECORD</a>
 , <a class="el" href="struct_t___b_a_p___p_a_c_s___n_o_t_i_f_y.html#a21390086cbc6a28973160a80830351b6">T_BAP_PACS_NOTIFY</a>
@@ -1047,8 +1050,14 @@ $(function() {
 <li>pacakge_features
 : <a class="el" href="structt__app__dsp__param__r__only.html#a67ed620980708cdd42de420fcb854788">t_app_dsp_param_r_only</a>
 </li>
+<li>pack_mode
+: <a class="el" href="union_j_p_u___d_p_b___c_o_n_f_i_g___type_def.html#aba76cbd2b38ec510401226a5dfde6d62">JPU_DPB_CONFIG_TypeDef</a>
+</li>
 <li>package_size
 : <a class="el" href="struct_t___x_m___c_m_d___t_t_s___r_e_q___p_a_r_a_m.html#ae998dcb6d9b5c2e69b6ee6bc43894973">T_XM_CMD_TTS_REQ_PARAM</a>
+</li>
+<li>packedFormat
+: <a class="el" href="struct_j_p_u___d_e_c___p_a_r_a_m___i_n_t.html#a7046879f53ed030c44a9061958ad8720">JPU_DEC_PARAM_INT</a>
 </li>
 <li>packet_count
 : <a class="el" href="structinv__imv__report__data.html#aa227240e5b2ecd8312faca3b90271ff5">inv_imv_report_data</a>
@@ -1468,12 +1477,6 @@ $(function() {
 : <a class="el" href="union___a_o_n___f_a_s_t__0x12_c___t_y_p_e.html#ae9f66a705f80a83cf3f1c8115760860e">_AON_FAST_0x12C_TYPE</a>
 , <a class="el" href="union___a_o_n___f_a_s_t___w_k___s_t_a_t_u_s___t_y_p_e.html#ae9f66a705f80a83cf3f1c8115760860e">_AON_FAST_WK_STATUS_TYPE</a>
 , <a class="el" href="union___b_t_a_o_n___f_a_s_t___w_k___s_t_a_t_u_s___t_y_p_e.html#ae9f66a705f80a83cf3f1c8115760860e">_BTAON_FAST_WK_STATUS_TYPE</a>
-</li>
-<li>PAD_E2
-: <a class="el" href="group__x3e___p_i_n_m_u_x___exported___constants.html#gacb8cb54373b2748a93f05c9420800e48">_AON_FAST_REG_PAD_TYPE</a>
-</li>
-<li>PAD_E3
-: <a class="el" href="group__x3e___p_i_n_m_u_x___exported___constants.html#gaa33f9b5b51fc984b2cf20f9e40a50bc8">_AON_FAST_REG_PAD_TYPE</a>
 </li>
 <li>PAD_G1_E2
 : <a class="el" href="union___a_o_n___f_a_s_t__0x260___t_y_p_e.html#a6d1cd38952e70a088bb373f3575bec4c">_AON_FAST_0x260_TYPE</a>
@@ -2393,12 +2396,6 @@ $(function() {
 </li>
 <li>PAD_MICBIAS_WKUP_INT_EN
 : <a class="el" href="union___a_o_n___f_a_s_t___r_e_g12_x___p_a_d___m_i_c_b_i_a_s___t_y_p_e.html#aa94ac65622efaa3fb7048604187c4508">_AON_FAST_REG12X_PAD_MICBIAS_TYPE</a>
-</li>
-<li>PAD_OUT_EN
-: <a class="el" href="group__x3e___p_i_n_m_u_x___exported___constants.html#gac7a3abaedb021170afc8e00728c70f8b">_AON_FAST_REG_PAD_TYPE</a>
-</li>
-<li>PAD_OUT_VALUE
-: <a class="el" href="group__x3e___p_i_n_m_u_x___exported___constants.html#ga278bdbed8fbd7a8456fd5db21db05bb0">_AON_FAST_REG_PAD_TYPE</a>
 </li>
 <li>PAD_P10_E2_0
 : <a class="el" href="union___a_o_n___f_a_s_t___r_e_g0_x___p_a_d___p10__0___t_y_p_e.html#a47bc414ee5954d0e144b3479c49cd5bd">_AON_FAST_REG0X_PAD_P10_0_TYPE</a>
@@ -5070,18 +5067,6 @@ $(function() {
 <li>PAD_P9_STS_5
 : <a class="el" href="union___a_o_n___f_a_s_t___r_e_g4_x___p_a_d___s_t_s___t_y_p_e.html#af9a06b4d8962ebf4c7f85bb4cf6a0687">_AON_FAST_REG4X_PAD_STS_TYPE</a>
 </li>
-<li>PAD_PINMUX_M_EN
-: <a class="el" href="group__x3e___p_i_n_m_u_x___exported___constants.html#ga5eeb270d0f3239b9232706d227de58c6">_AON_FAST_REG_PAD_TYPE</a>
-</li>
-<li>PAD_PU_EN
-: <a class="el" href="group__x3e___p_i_n_m_u_x___exported___constants.html#ga1279b60692a05114f5c4e26d1591ddb0">_AON_FAST_REG_PAD_TYPE</a>
-</li>
-<li>PAD_PUPD_DIR
-: <a class="el" href="group__x3e___p_i_n_m_u_x___exported___constants.html#ga1fce415a2a6fb0d9f3b4f31093ee6d5d">_AON_FAST_REG_PAD_TYPE</a>
-</li>
-<li>PAD_PUPDC_WE_STR
-: <a class="el" href="group__x3e___p_i_n_m_u_x___exported___constants.html#gae773fccea242ddf6547290e99ac41344">_AON_FAST_REG_PAD_TYPE</a>
-</li>
 <li>PAD_ROUT_N_ANA_MODE
 : <a class="el" href="union___a_o_n___f_a_s_t__0x120___t_y_p_e.html#a590e13b551e4343da3f65f7e7469ee25">_AON_FAST_0x120_TYPE</a>
 , <a class="el" href="union___a_o_n___f_a_s_t__0x254___t_y_p_e.html#a590e13b551e4343da3f65f7e7469ee25">_AON_FAST_0x254_TYPE</a>
@@ -5182,12 +5167,6 @@ $(function() {
 </li>
 <li>PAD_rsvd
 : <a class="el" href="union___b_t_a_o_n___f_a_s_t___b_t___p_a_d___s_p_i___f_l_a_s_h___t_y_p_e.html#a643555f38a54e40ccef76d5d68e16071">_BTAON_FAST_BT_PAD_SPI_FLASH_TYPE</a>
-</li>
-<li>PAD_SHDN_PW_ON
-: <a class="el" href="group__x3e___p_i_n_m_u_x___exported___constants.html#ga6b5d7296f7530451e46e1baff9f5014e">_AON_FAST_REG_PAD_TYPE</a>
-</li>
-<li>PAD_SMT
-: <a class="el" href="group__x3e___p_i_n_m_u_x___exported___constants.html#ga63769955e6625e9d066c8cce4cbd75ff">_AON_FAST_REG_PAD_TYPE</a>
 </li>
 <li>PAD_SPI_FLASH_E2N
 : <a class="el" href="union___a_o_n___f_a_s_t__0x13_a___t_y_p_e.html#aa2f9a6f3e06b837a7aa6b7cee48e98b3">_AON_FAST_0x13A_TYPE</a>
@@ -5726,18 +5705,6 @@ $(function() {
 <li>PAD_UART_SMT
 : <a class="el" href="union___a_o_n___f_a_s_t__0x160___t_y_p_e.html#a97bface9eda28b888cf0a9e3a541f797">_AON_FAST_0x160_TYPE</a>
 </li>
-<li>PAD_WK_STATUS
-: <a class="el" href="group__x3e___p_i_n_m_u_x___exported___constants.html#ga84966c3f2b4e28a74a3113352db16174">_AON_FAST_REG_PAD_TYPE</a>
-</li>
-<li>PAD_WKEN
-: <a class="el" href="group__x3e___p_i_n_m_u_x___exported___constants.html#gac863ca1c28c265c741d033587ef6a05a">_AON_FAST_REG_PAD_TYPE</a>
-</li>
-<li>PAD_WKPOL
-: <a class="el" href="group__x3e___p_i_n_m_u_x___exported___constants.html#gaebc10d6f0bc23f5e5314fce6cf3b5738">_AON_FAST_REG_PAD_TYPE</a>
-</li>
-<li>PAD_WKUP_INT_EN
-: <a class="el" href="group__x3e___p_i_n_m_u_x___exported___constants.html#ga3b39f11126a10f406132039fcb63dbbb">_AON_FAST_REG_PAD_TYPE</a>
-</li>
 <li>padding
 : <a class="el" href="struct____attribute____.html#a283993a0cdfb5bdda5fb181a92124b68">__attribute__</a>
 , <a class="el" href="struct_c_f_u___i_n_f_o.html#ab6fb7d5a3ecf4d82432f5b89881cfe21">CFU_INFO</a>
@@ -5757,7 +5724,7 @@ $(function() {
 : <a class="el" href="union_d_b_i_c___p_a_g_e___r_e_a_d___type_def.html#a5fcf1eee302c2d8c2618562c189627cb">DBIC_PAGE_READ_TypeDef</a>
 </li>
 <li>page_rd_ch
-: <a class="el" href="union_d_b_i_c___p_a_g_e___r_e_a_d___type_def.html#a2249bf95d01714698d10643b857d3864">DBIC_PAGE_READ_TypeDef</a>
+: <a class="el" href="union_d_b_i_c___p_a_g_e___r_e_a_d___type_def.html#a864c3384f4e6649e7ad5dd19031056a8">DBIC_PAGE_READ_TypeDef</a>
 </li>
 <li>page_rd_cmd
 : <a class="el" href="union_d_b_i_c___p_a_g_e___r_e_a_d___type_def.html#ae8ecff1f2e399c6af974cbc0a3cac9f1">DBIC_PAGE_READ_TypeDef</a>
@@ -5767,6 +5734,10 @@ $(function() {
 </li>
 <li>page_size
 : <a class="el" href="union_d_b_i_c___d_e_v_i_c_e___i_n_f_o___type_def.html#ac28c01eb330f4cf63e94426fc3ffcb41">DBIC_DEVICE_INFO_TypeDef</a>
+</li>
+<li>pagePtr
+: <a class="el" href="struct_j_p_u___d_e_c___c_f_g.html#a766038bde728ac88ad063c8f37419e7c">JPU_DEC_CFG</a>
+, <a class="el" href="struct_j_p_u___d_e_c___i_n_f_o.html#a766038bde728ac88ad063c8f37419e7c">JPU_DEC_INFO</a>
 </li>
 <li>paging_tx_power_set_rsp
 : <a class="el" href="union_t___b_t___e_v_e_n_t___p_a_r_a_m.html#a7b66e15845bee41dd68ea2fb0348213a">T_BT_EVENT_PARAM</a>
@@ -5786,6 +5757,39 @@ $(function() {
 </li>
 <li>pairing_id_LO
 : <a class="el" href="struct____attribute____.html#a40843027876f06d45b67515e317647ba">__attribute__</a>
+</li>
+<li>pan_conn_cmpl
+: <a class="el" href="uniont__bt__pan__event__param.html#a75076ff2c91ae2bf6af570a021b62ae6">t_bt_pan_event_param</a>
+</li>
+<li>pan_conn_fail
+: <a class="el" href="uniont__bt__pan__event__param.html#a7f3d3e9374ff43c68e1e639253dfecd2">t_bt_pan_event_param</a>
+</li>
+<li>pan_conn_ind
+: <a class="el" href="uniont__bt__pan__event__param.html#a4ef4241d22bf4b0fee67b87d8a7d1a7f">t_bt_pan_event_param</a>
+</li>
+<li>pan_disconn_cmpl
+: <a class="el" href="uniont__bt__pan__event__param.html#a67bf3cd2126733432e50d4f6611789b3">t_bt_pan_event_param</a>
+</li>
+<li>pan_ethernet_packet_ind
+: <a class="el" href="uniont__bt__pan__event__param.html#aea6eb6aadf7dd6e79884e3c8c867eed2">t_bt_pan_event_param</a>
+</li>
+<li>pan_filter_multi_addr_set_ind
+: <a class="el" href="uniont__bt__pan__event__param.html#aef08cc9501bf590e7aef0e5c277e48ac">t_bt_pan_event_param</a>
+</li>
+<li>pan_filter_multi_addr_set_rsp
+: <a class="el" href="uniont__bt__pan__event__param.html#aa293e47ee44d2cac5acf26167cc368f7">t_bt_pan_event_param</a>
+</li>
+<li>pan_filter_net_type_set_ind
+: <a class="el" href="uniont__bt__pan__event__param.html#a436a5311a9bfccddada9de91820dbb0c">t_bt_pan_event_param</a>
+</li>
+<li>pan_filter_net_type_set_rsp
+: <a class="el" href="uniont__bt__pan__event__param.html#aad4e86850faba71c7482a347324f0717">t_bt_pan_event_param</a>
+</li>
+<li>pan_setup_conn_ind
+: <a class="el" href="uniont__bt__pan__event__param.html#a1513c03958efe58d777e38e8bf6d3880">t_bt_pan_event_param</a>
+</li>
+<li>pan_setup_conn_rsp
+: <a class="el" href="uniont__bt__pan__event__param.html#a0de930116e00f7be5cd4381b2d850195">t_bt_pan_event_param</a>
 </li>
 <li>param
 : <a class="el" href="struct__usb__if__param.html#a13623f1d68513495c21f8b061b1a5aec">_usb_if_param</a>
@@ -5809,6 +5813,8 @@ $(function() {
 , <a class="el" href="struct_t___g_a_p___v_e_n_d_o_r___c_m_d___r_s_p.html#a4b2e7b58b456e91e66aa775a8262ed52">T_GAP_VENDOR_CMD_RSP</a>
 , <a class="el" href="struct_t___g_a_p___v_e_n_d_o_r___e_v_t___i_n_f_o.html#a4b2e7b58b456e91e66aa775a8262ed52">T_GAP_VENDOR_EVT_INFO</a>
 , <a class="el" href="struct_t___g_a_p___v_e_n_d_o_r___l_e___e_v_t___i_n_f_o.html#a4b2e7b58b456e91e66aa775a8262ed52">T_GAP_VENDOR_LE_EVT_INFO</a>
+, <a class="el" href="struct_t___g_a_p___v_n_d___s_e_t___t_r_a_f_f_i_c___q_o_s___c_m_p_l.html#af89051ee71771b27282619e20213c721">T_GAP_VND_SET_TRAFFIC_QOS_CMPL</a>
+, <a class="el" href="struct_t___g_a_p___v_n_d___s_e_t___t_r_a_f_f_i_c___q_o_s___r_s_p.html#af89051ee71771b27282619e20213c721">T_GAP_VND_SET_TRAFFIC_QOS_RSP</a>
 , <a class="el" href="struct_t___i_o___m_s_g.html#aba18f3d521fde3af39c58b809a9c7ef0">T_IO_MSG</a>
 , <a class="el" href="struct_t___m_c_p___c_l_i_e_n_t___w_r_i_t_e___m_e_d_i_a___c_p___p_a_r_a_m.html#a902c4adff88f8e79fdbd7a5a9605134a">T_MCP_CLIENT_WRITE_MEDIA_CP_PARAM</a>
 , <a class="el" href="struct_t___m_c_p___s_e_r_v_e_r___r_e_a_d___c_f_m.html#a57d1ac1b16b7e9ca9f2b2f17e9679562">T_MCP_SERVER_READ_CFM</a>
@@ -5837,11 +5843,14 @@ $(function() {
 </li>
 <li>params
 : <a class="el" href="structt__unicast__dev__user__cfg.html#a4dbc38db0327215383eee596ba0c8ef0">t_unicast_dev_user_cfg</a>
-, <a class="el" href="structtuya__ble__bulk__data__request__t.html#a99f3f41ae3f1acfb89c46e22e724ce50">tuya_ble_bulk_data_request_t</a>
-, <a class="el" href="structtuya__ble__bulk__data__response__t.html#a6e5cbcb06b1f37756f68353b6f55bd98">tuya_ble_bulk_data_response_t</a>
+, <a class="el" href="structtuya__ble__bulk__data__request__t.html#abc114af450571edf6b46638c3619a84d">tuya_ble_bulk_data_request_t</a>
+, <a class="el" href="structtuya__ble__bulk__data__response__t.html#a45aa5e301c63ca5f61deb4423c4de681">tuya_ble_bulk_data_response_t</a>
 </li>
 <li>params_count
 : <a class="el" href="structt__unicast__dev__user__cfg.html#abcf4de51cb908eb266a8089d4a214198">t_unicast_dev_user_cfg</a>
+</li>
+<li>paraSet
+: <a class="el" href="struct_j_p_u___e_n_c___c_f_g.html#a817e5ede64f76022c173df3bdbedc91e">JPU_ENC_CFG</a>
 </li>
 <li>parity
 : <a class="el" href="struct_t_r_n_g___type_def.html#a18ed9877ba8219f8673131c84f050b75">TRNG_TypeDef</a>
@@ -5850,6 +5859,18 @@ $(function() {
 <li>parse_cback
 : <a class="el" href="structt__app__cmd__parse__cback__item.html#a42e37a3ea23c9e46e138caf2b768d40f">t_app_cmd_parse_cback_item</a>
 , <a class="el" href="structt__app__relay__cback__item.html#a177d578ddce4f58b5752e13e6a83b690">t_app_relay_cback_item</a>
+</li>
+<li>partialBufNum
+: <a class="el" href="struct_j_p_u___d_e_c___p_a_r_a_m___i_n_t.html#a5b38bd5f57f12a48a62ea23a346fd660">JPU_DEC_PARAM_INT</a>
+, <a class="el" href="struct_j_p_u___e_n_c___i_n_f_o.html#a5b38bd5f57f12a48a62ea23a346fd660">JPU_ENC_INFO</a>
+, <a class="el" href="struct_j_p_u___e_n_c___p_a_r_a_m___i_n_t.html#a5b38bd5f57f12a48a62ea23a346fd660">JPU_ENC_PARAM_INT</a>
+</li>
+<li>partialHeight
+: <a class="el" href="struct_j_p_u___d_e_c___p_a_r_a_m___i_n_t.html#a89f6eea75d8d10a50a08de1a14d82aba">JPU_DEC_PARAM_INT</a>
+, <a class="el" href="struct_j_p_u___e_n_c___p_a_r_a_m___i_n_t.html#a89f6eea75d8d10a50a08de1a14d82aba">JPU_ENC_PARAM_INT</a>
+</li>
+<li>partiallineNum
+: <a class="el" href="struct_j_p_u___e_n_c___i_n_f_o.html#a2b757afaedac317127b4f3862335c1ef">JPU_ENC_INFO</a>
 </li>
 <li>pAsset
 : <a class="el" href="struct_f_m_n_a_sample_asset.html#a54f5cf4ef906e5fce8b7cd6208d2b363">FMNASampleAsset</a>
@@ -5863,14 +5884,8 @@ $(function() {
 <li>passthrough_stopped
 : <a class="el" href="uniont__audio__event__param.html#a68184d725f1432714dc973a51c88c403">t_audio_event_param</a>
 </li>
-<li>passwd_cb
-: <a class="el" href="struct_encrypted_info.html#aba9f9e28a3b3439730ae6e5fbd3d99b6">EncryptedInfo</a>
-</li>
-<li>passwd_userdata
-: <a class="el" href="struct_encrypted_info.html#a7d4eaa61a0dfc84e2929de9be8e50cb3">EncryptedInfo</a>
-</li>
 <li>patch_header_ext
-: <a class="el" href="union_t___i_m_g___h_e_a_d_e_r___f_o_r_m_a_t___e_x_t.html#aa2fa633ea0b2fd2a593a9cdb4642aed8">T_IMG_HEADER_FORMAT_EXT</a>
+: <a class="el" href="union_t___i_m_g___h_e_a_d_e_r___f_o_r_m_a_t___e_x_t.html#ad4ba14b9b906d10b61343b4740f642ef">T_IMG_HEADER_FORMAT_EXT</a>
 </li>
 <li>path
 : <a class="el" href="structt__audio__path__op.html#a95368bef39a1d6e1dce07a242b712919">t_audio_path_op</a>
@@ -5897,23 +5912,15 @@ $(function() {
 <li>path_loss_module
 : <a class="el" href="struct_p_h_y___c_f_g.html#aacc89d209664af464b4c90856891078a">PHY_CFG</a>
 </li>
-<li>pathLength
-: <a class="el" href="struct_decoded_cert.html#a1ea3144c20940630d0793a74ece7afd9">DecodedCert</a>
-, <a class="el" href="struct_signer.html#a1ea3144c20940630d0793a74ece7afd9">Signer</a>
-</li>
-<li>pathLengthSet
-: <a class="el" href="struct_decoded_cert.html#ac6a67c3d4b73f35793df8764f5f13148">DecodedCert</a>
-, <a class="el" href="struct_signer.html#ac6a67c3d4b73f35793df8764f5f13148">Signer</a>
-</li>
 <li>payLength
 : <a class="el" href="struct_a_p_p___s_y_s_t_e_m___c_a_l_l___r_e_p_o_r_t___s_t_a_t_i_s_t_i_c_s.html#a59b6886c82924fbebf67cade9f4d579f">APP_SYSTEM_CALL_REPORT_STATISTICS</a>
 </li>
 <li>payload
-: <a class="el" href="struct____attribute____.html#a53ae73daa7c40631fc8b6cd7a92c4897">__attribute__</a>
+: <a class="el" href="struct____attribute____.html#af104e88ffdf7248701d99c98a911a591">__attribute__</a>
 , <a class="el" href="struct___s_h8601_a___c_m_d___d_e_s_c.html#ad165bd5c111c12ee7ed5c25ad483082b">_SH8601A_CMD_DESC</a>
 , <a class="el" href="struct___s_t77916___c_m_d___d_e_s_c.html#a5f4491ae5931cd71b3150780b406a6e5">_ST77916_CMD_DESC</a>
+, <a class="el" href="struct___s_t7801___c_m_d___d_e_s_c.html#a8615e14da6d1fc10313b33ce59b2060e">_ST7801_CMD_DESC</a>
 , <a class="el" href="struct_t___a_p_p___c_t_r_l___d_a_t_a.html#a9a0576c5bb1a89e7d764581e311b4b1a">T_APP_CTRL_DATA</a>
-, <a class="el" href="structt__bt__a2dp__stream__data__ind.html#aa5cbdad2c57e9b3f949e1a4d96382b66">t_bt_a2dp_stream_data_ind</a>
 , <a class="el" href="structt__bt__event__param__a2dp__stream__data__ind.html#aa5cbdad2c57e9b3f949e1a4d96382b66">t_bt_event_param_a2dp_stream_data_ind</a>
 , <a class="el" href="struct_t___g_a_m_i_n_g___h_i_d___s_y_n_c___h_d_r.html#a9a0576c5bb1a89e7d764581e311b4b1a">T_GAMING_HID_SYNC_HDR</a>
 </li>
@@ -5924,12 +5931,30 @@ $(function() {
 <li>payloadLength
 : <a class="el" href="struct_t___a_p_p___d_e_v___l_i_s_t___i_n_f_o.html#a9a1f6fda23e5c309301be98c4bba26ff">T_APP_DEV_LIST_INFO</a>
 </li>
+<li>pb0
+: <a class="el" href="union_j_p_u___i_n_t_r___m_a_s_k___type_def.html#aa50e97ff38d5d001d038e4c0d6841250">JPU_INTR_MASK_TypeDef</a>
+</li>
+<li>pb1
+: <a class="el" href="union_j_p_u___i_n_t_r___m_a_s_k___type_def.html#a5c6876c1b547dc8f396407afea793bd3">JPU_INTR_MASK_TypeDef</a>
+</li>
+<li>pb2
+: <a class="el" href="union_j_p_u___i_n_t_r___m_a_s_k___type_def.html#a54c373bbf4054000ef3b025168a41464">JPU_INTR_MASK_TypeDef</a>
+</li>
+<li>pb3
+: <a class="el" href="union_j_p_u___i_n_t_r___m_a_s_k___type_def.html#a6fa4fc29401d0bbd04dbf5fcb9f41323">JPU_INTR_MASK_TypeDef</a>
+</li>
+<li>pb_line
+: <a class="el" href="union_j_p_u___o_p___i_n_f_o___type_def.html#afdd37893317fe336f0dd96fdbbe276d3">JPU_OP_INFO_TypeDef</a>
+</li>
+<li>pb_num
+: <a class="el" href="union_j_p_u___o_p___i_n_f_o___type_def.html#afbcc5788f302c990fe0c5ee6622392d2">JPU_OP_INFO_TypeDef</a>
+</li>
 <li>pb_size
 : <a class="el" href="structt__bt__event__param__pbap__get__phone__book__cmpl.html#a96895c383471546d9354424d65f150c9">t_bt_event_param_pbap_get_phone_book_cmpl</a>
 , <a class="el" href="structt__bt__event__param__pbap__get__phone__book__size__cmpl.html#a96895c383471546d9354424d65f150c9">t_bt_event_param_pbap_get_phone_book_size_cmpl</a>
 </li>
 <li>pbap
-: <a class="el" href="structt__bt__event__param__remote__roleswap__status.html#afce0503ca15beaa989bf1bea16ff12cb">t_bt_event_param_remote_roleswap_status</a>
+: <a class="el" href="structt__bt__event__param__remote__roleswap__status.html#a5ed37c9ae141ffa162ff1fceb604deb8">t_bt_event_param_remote_roleswap_status</a>
 </li>
 <li>pbap_caller_id_name
 : <a class="el" href="union_t___b_t___e_v_e_n_t___p_a_r_a_m.html#a1dbce902880e5a4e41bec9684cb6ddf2">T_BT_EVENT_PARAM</a>
@@ -5982,6 +6007,9 @@ $(function() {
 </li>
 <li>pcba_shipping_mode_pinmux
 : <a class="el" href="struct_t___a_p_p___c_f_g___c_o_n_s_t.html#a09a0aa049cdedf00e201ab041ba125ff">T_APP_CFG_CONST</a>
+</li>
+<li>pCInfoTab
+: <a class="el" href="struct_j_p_u___e_n_c___c_f_g.html#a31797b4b2665d31c117b515cb2ee687b">JPU_ENC_CFG</a>
 </li>
 <li>PCKHDL_CFG
 : <a class="el" href="struct_d_s_i___type_def.html#a4228a256e1e7a1e4e7fdf20de780d641">DSI_TypeDef</a>
@@ -6053,7 +6081,7 @@ $(function() {
 : <a class="el" href="struct_s_y_s___b_l_k_c_t_r_l___type_def.html#a3e03981f2b7f0c3bb6008132ce85f2ad">SYS_BLKCTRL_TypeDef</a>
 </li>
 <li>pdck_state_3_0
-: <a class="el" href="struct_s_y_s___b_l_k_c_t_r_l___type_def.html#a8b74e22db19ca701786c1fbd98261672">SYS_BLKCTRL_TypeDef</a>
+: <a class="el" href="struct_s_y_s___b_l_k_c_t_r_l___type_def.html#a364c968f25349fba48af60dceef8e241">SYS_BLKCTRL_TypeDef</a>
 </li>
 <li>PDCK_WAIT_CYC_1_0
 : <a class="el" href="struct_s_y_s___b_l_k_c_t_r_l___type_def.html#ac3f613807136d60e5d373b20746db204">SYS_BLKCTRL_TypeDef</a>
@@ -6182,6 +6210,10 @@ $(function() {
 <li>periodic_inquiry_rsp
 : <a class="el" href="union_t___b_t___e_v_e_n_t___p_a_r_a_m.html#a8c88468d05ae912a08e003dbf0ab0d5d">T_BT_EVENT_PARAM</a>
 </li>
+<li>periodic_sync_param
+: <a class="el" href="structt__bt__event__param__traffic__qos__cmpl.html#a7ea944d0bf34664ba27cae8f674b0d91">t_bt_event_param_traffic_qos_cmpl</a>
+, <a class="el" href="structt__bt__traffic__qos__param.html#ab205ff996e477b1ba26309c3c66abcab">t_bt_traffic_qos_param</a>
+</li>
 <li>peripheral_rsv
 : <a class="el" href="group___a_p_p___c_f_g.html#ga4ab49b634cd4f620ccdb59327c4c9eb0">T_APP_CFG_CONST</a>
 </li>
@@ -6199,14 +6231,6 @@ $(function() {
 </li>
 <li>permissions
 : <a class="el" href="struct_t___a_t_t_r_i_b___a_p_p_l.html#a6aa481e1ec38fa2edee13b5f22ce9cc6">T_ATTRIB_APPL</a>
-</li>
-<li>permittedNames
-: <a class="el" href="struct_decoded_cert.html#a2bcdf6e65cdb314c872a9fdb0d9214d5">DecodedCert</a>
-, <a class="el" href="struct_signer.html#a2bcdf6e65cdb314c872a9fdb0d9214d5">Signer</a>
-</li>
-<li>personal
-: <a class="el" href="struct____blake2b__param.html#a32ca86872d1d2334544e88278a34e85b">__blake2b_param</a>
-, <a class="el" href="struct____blake2s__param.html#a427d106126e587f9d33735d1e3483620">__blake2s_param</a>
 </li>
 <li>PESOC_CLK_CTRL
 : <a class="el" href="struct_s_y_s___b_l_k_c_t_r_l___type_def.html#a2863bfbf34a646b7d61df8ff1f26640f">SYS_BLKCTRL_TypeDef</a>
@@ -6269,6 +6293,12 @@ $(function() {
 <li>phone_type
 : <a class="el" href="struct_t___x_i_a_o_w_e_i___l_i_n_k.html#a1abf0da13efc7d3b047aab7e8cbc19c8">T_XIAOWEI_LINK</a>
 , <a class="el" href="struct_t___x_i_a_o_w_e_i___l_i_n_k___r_e_m_o_t_e___i_n_f_o.html#a1abf0da13efc7d3b047aab7e8cbc19c8">T_XIAOWEI_LINK_REMOTE_INFO</a>
+</li>
+<li>pHuffBits
+: <a class="el" href="struct_j_p_u___e_n_c___c_f_g.html#a9e33af26c1d1e554282a9dd25159fddd">JPU_ENC_CFG</a>
+</li>
+<li>pHuffVal
+: <a class="el" href="struct_j_p_u___e_n_c___c_f_g.html#ad66d2f425d0e070e38026ab6048d3c3b">JPU_ENC_CFG</a>
 </li>
 <li>phy
 : <a class="el" href="struct_t___a_s_e___c_p___q_o_s___c_f_g___a_r_r_a_y___p_a_r_a_m.html#a5f0a425c8eb6451cb6e7bf29deaacfe5">T_ASE_CP_QOS_CFG_ARRAY_PARAM</a>
@@ -6421,6 +6451,9 @@ $(function() {
 <li>pi_wrdata
 : <a class="el" href="union_m_o_d_e_m___p_i___v_e_n_d_o_r___r_e_g.html#a7de52bc02d3799dd7cea034481252b2c">MODEM_PI_VENDOR_REG</a>
 </li>
+<li>PIC_CTRL
+: <a class="el" href="struct_j_p_u___type_def.html#a85e5d7b5c48ad7b668aa5b65de4f0493">JPU_TypeDef</a>
+</li>
 <li>pic_decompress_height
 : <a class="el" href="struct_i_d_u___init_type_def.html#ac70acc88f770ee6cf34d246dc54204ec">IDU_InitTypeDef</a>
 </li>
@@ -6430,12 +6463,12 @@ $(function() {
 <li>pic_decompress_total_pixel
 : <a class="el" href="union_p_i_c___d_e_c_o_m_p_r_e_s_s___t_o_t_a_l___p_i_x_e_l___type_def.html#a9d5d5c931ad6bf3ba3453c183009951f">PIC_DECOMPRESS_TOTAL_PIXEL_TypeDef</a>
 </li>
-<li>Pic_Height
-: <a class="el" href="struct_p_p_e___input_layer___init___typedef.html#af1d8d32c6f46c65ce01fb6b90e0b9ff2">PPE_InputLayer_Init_Typedef</a>
+<li>PIC_ERRMB
+: <a class="el" href="struct_j_p_u___type_def.html#ae88d4542b342dbfa31d10a5a4d519463">JPU_TypeDef</a>
 </li>
 <li>pic_height
-: <a class="el" href="union_p_p_e___r_e_g___l_y_rx___p_i_c___s_i_z_e___type_def.html#ab2a876ba39cd3d245fb784395a328fb7">PPE_REG_LYRx_PIC_SIZE_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_y_rx___p_i_c___s_i_z_e___type_def.html#a607bb86ce7b62e4fa1204798c3c472e7">PPEV2_REG_LYRx_PIC_SIZE_TypeDef</a>
+: <a class="el" href="union_j_p_u___p_i_c___s_i_z_e___type_def.html#a607bb86ce7b62e4fa1204798c3c472e7">JPU_PIC_SIZE_TypeDef</a>
+, <a class="el" href="union_p_p_e___r_e_g___l_y_rx___p_i_c___s_i_z_e___type_def.html#ab2a876ba39cd3d245fb784395a328fb7">PPE_REG_LYRx_PIC_SIZE_TypeDef</a>
 </li>
 <li>pic_length1_size
 : <a class="el" href="struct_i_d_u___init_type_def.html#ae46ca6309cd97bd77a387fbff55cce2b">IDU_InitTypeDef</a>
@@ -6447,7 +6480,7 @@ $(function() {
 </li>
 <li>pic_pixel_size
 : <a class="el" href="union_i_d_u___c_t_l1___type_def.html#aad0cb86215cc12f1bb044dd04081bfb1">IDU_CTL1_TypeDef</a>
-, <a class="el" href="struct_i_d_u___init_type_def.html#ab2ac9704541ffb986c6277da0582979f">IDU_InitTypeDef</a>
+, <a class="el" href="struct_i_d_u___init_type_def.html#a41ed45e058e578812e9c1498b041ae6d">IDU_InitTypeDef</a>
 </li>
 <li>pic_raw_width
 : <a class="el" href="struct_i_d_u___init_type_def.html#a42beffad5de9cac9ec9e18c4e4ded0d8">IDU_InitTypeDef</a>
@@ -6458,16 +6491,38 @@ $(function() {
 <li>pic_raw_width
 : <a class="el" href="union_p_i_c___r_a_w___w_i_d_t_h___type_def.html#a42beffad5de9cac9ec9e18c4e4ded0d8">PIC_RAW_WIDTH_TypeDef</a>
 </li>
+<li>PIC_SETMB
+: <a class="el" href="struct_j_p_u___type_def.html#a57c10079daa70ced75a3066434be5c13">JPU_TypeDef</a>
+</li>
+<li>PIC_SIZE
+: <a class="el" href="struct_j_p_u___type_def.html#a5a79c6734815a401ed38648eefbd5896">JPU_TypeDef</a>
+</li>
 <li>pic_src
 : <a class="el" href="union_p_p_e___r_e_g___l_y_rx___p_i_c___c_f_g___type_def.html#abb17899886fd6864cc06dde600b5c782">PPE_REG_LYRx_PIC_CFG_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_y_rx___p_i_c___c_f_g___type_def.html#a554cfb5f89b1f4ef84929848fbc0ac0e">PPEV2_REG_LYRx_PIC_CFG_TypeDef</a>
 </li>
-<li>Pic_Width
-: <a class="el" href="struct_p_p_e___input_layer___init___typedef.html#a7c0b3e30885f4acaa678b27223248a77">PPE_InputLayer_Init_Typedef</a>
+<li>PIC_START
+: <a class="el" href="struct_j_p_u___type_def.html#af566af591d47bd39d0a7b4c8af562767">JPU_TypeDef</a>
+</li>
+<li>PIC_STATUS
+: <a class="el" href="struct_j_p_u___type_def.html#a483d849d5229cdd77428e25353ab5077">JPU_TypeDef</a>
 </li>
 <li>pic_width
-: <a class="el" href="union_p_p_e___r_e_g___l_y_rx___p_i_c___s_i_z_e___type_def.html#a60aa2ada5050d51197ee76e1ed7b1a00">PPE_REG_LYRx_PIC_SIZE_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_y_rx___p_i_c___s_i_z_e___type_def.html#a37e2679c4521b7e31cd65f5fcffbff0a">PPEV2_REG_LYRx_PIC_SIZE_TypeDef</a>
+: <a class="el" href="union_j_p_u___p_i_c___s_i_z_e___type_def.html#a37e2679c4521b7e31cd65f5fcffbff0a">JPU_PIC_SIZE_TypeDef</a>
+, <a class="el" href="union_p_p_e___r_e_g___l_y_rx___p_i_c___s_i_z_e___type_def.html#a60aa2ada5050d51197ee76e1ed7b1a00">PPE_REG_LYRx_PIC_SIZE_TypeDef</a>
+</li>
+<li>picHeight
+: <a class="el" href="struct_j_p_u___d_e_c___i_n_f_o.html#ab5267df50007357973bb4ded3adb6bf2">JPU_DEC_INFO</a>
+, <a class="el" href="struct_j_p_u___e_n_c___c_f_g.html#ab5267df50007357973bb4ded3adb6bf2">JPU_ENC_CFG</a>
+, <a class="el" href="struct_j_p_u___e_n_c___p_a_r_a_m.html#abc77673ab15d1f85309626e27061db57">JPU_ENC_PARAM</a>
+, <a class="el" href="struct_j_p_u___e_n_c___p_a_r_a_m___i_n_t.html#abc77673ab15d1f85309626e27061db57">JPU_ENC_PARAM_INT</a>
+, <a class="el" href="struct_j_p_u___o_u_t_p_u_t___i_n_f_o.html#ab5267df50007357973bb4ded3adb6bf2">JPU_OUTPUT_INFO</a>
+</li>
+<li>picWidth
+: <a class="el" href="struct_j_p_u___d_e_c___i_n_f_o.html#a185d6561b25c99dc459633c78f472827">JPU_DEC_INFO</a>
+, <a class="el" href="struct_j_p_u___e_n_c___c_f_g.html#a185d6561b25c99dc459633c78f472827">JPU_ENC_CFG</a>
+, <a class="el" href="struct_j_p_u___e_n_c___p_a_r_a_m.html#ab13b9106f285947f00b2801086096701">JPU_ENC_PARAM</a>
+, <a class="el" href="struct_j_p_u___e_n_c___p_a_r_a_m___i_n_t.html#ab13b9106f285947f00b2801086096701">JPU_ENC_PARAM_INT</a>
+, <a class="el" href="struct_j_p_u___o_u_t_p_u_t___i_n_f_o.html#a185d6561b25c99dc459633c78f472827">JPU_OUTPUT_INFO</a>
 </li>
 <li>pid
 : <a class="el" href="struct_t___a_p_p___s_r_c___l_e___t_a_r_g_e_t___d_e_v.html#a9089e9c40db82122a499b9620e2cb54e">T_APP_SRC_LE_TARGET_DEV</a>
@@ -6486,10 +6541,6 @@ $(function() {
 , <a class="el" href="structtuya__ble__factory__id__data__t.html#af8a48f8f3133142cf9de675c16dbb3a9">tuya_ble_factory_id_data_t</a>
 , <a class="el" href="structtuya__ble__parameters__settings__t.html#af8a48f8f3133142cf9de675c16dbb3a9">tuya_ble_parameters_settings_t</a>
 , <a class="el" href="structtuya__ble__sys__settings__t.html#af8a48f8f3133142cf9de675c16dbb3a9">tuya_ble_sys_settings_t</a>
-</li>
-<li>pin
-: <a class="el" href="union_s_e_g_c_o_m__com__pin__cfg.html#a16a2f2e0f367ddd2bd8f92b2322a68df">SEGCOM_com_pin_cfg</a>
-, <a class="el" href="union_s_e_g_c_o_m__seg__pin__cfg.html#a61501a098fb777565532cc12090a223a">SEGCOM_seg_pin_cfg</a>
 </li>
 <li>pin_code
 : <a class="el" href="group___a_p_p___c_f_g.html#gaf0673522d359b9976255296fd50b4230">T_APP_CFG_CONST</a>
@@ -6554,9 +6605,6 @@ $(function() {
 <li>pitch_det_near_end
 : <a class="el" href="struct_t___v_o_i_c_e___p_r_o_c___e_n_b.html#a300d6d61e1d60124c01ef2d16e334839">T_VOICE_PROC_ENB</a>
 </li>
-<li>pIv
-: <a class="el" href="struct_c_k___g_c_m___p_a_r_a_m_s.html#a484f89086d16b6136e768608356cf411">CK_GCM_PARAMS</a>
-</li>
 <li>pix_src
 : <a class="el" href="union_p_p_e___l_a_y_e_r_x___p_i_c___c_f_g___type_def.html#a857b295a11e13ecd81bff4346799b487">PPE_LAYERX_PIC_CFG_TypeDef</a>
 </li>
@@ -6564,14 +6612,8 @@ $(function() {
 : <a class="el" href="struct_i_d_u__file__header.html#aee3ad3d4068924e972c7d79212e09ef9">IDU_file_header</a>
 , <a class="el" href="struct_t___r_t_k___g_e_n_e_r_a_l___g_u_i___c_o_n_f_i_g.html#ab53fe083bbc9101864f5e139f1af9ed9">T_RTK_GENERAL_GUI_CONFIG</a>
 </li>
-<li>Pixel_Color_Format
-: <a class="el" href="struct_p_p_e___input_layer___init___typedef.html#a9b4236519d48de1d17fa765ad793d060">PPE_InputLayer_Init_Typedef</a>
-</li>
 <li>pixel_format
 : <a class="el" href="struct_t___r_t_k___g_e_n_e_r_a_l___g_u_i___c_o_n_f_i_g.html#aa071672f8d15f29a73c1763ff257b952">T_RTK_GENERAL_GUI_CONFIG</a>
-</li>
-<li>Pixel_Source
-: <a class="el" href="struct_p_p_e___input_layer___init___typedef.html#af210904aacbc1f9faf0aad713de22b85">PPE_InputLayer_Init_Typedef</a>
 </li>
 <li>pkg_desc
 : <a class="el" href="structfrm__trsmitr__proc__s.html#ac2ffed8e916c855e6fe290c1977022a2">frm_trsmitr_proc_s</a>
@@ -6614,7 +6656,7 @@ $(function() {
 </li>
 <li>pkt_status_flag
 : <a class="el" href="struct_t___b_t___d_i_r_e_c_t___i_s_o___d_a_t_a___i_n_d.html#a6a47f621976ccdecbae928d94c097727">T_BT_DIRECT_ISO_DATA_IND</a>
-, <a class="el" href="structt__iso__data__ind.html#a4d6c668df9b177388386d0d7da6514cf">t_iso_data_ind</a>
+, <a class="el" href="structt__iso__data__ind.html#a6a47f621976ccdecbae928d94c097727">t_iso_data_ind</a>
 </li>
 <li>pkt_type
 : <a class="el" href="struct____attribute____.html#a578efc4535af910abc3a5a7553459a08">__attribute__</a>
@@ -6632,11 +6674,11 @@ $(function() {
 <li>pl
 : <a class="el" href="struct____attribute____.html#ab0e245c9d7913a87200d509d943a69c9">__attribute__</a>
 </li>
-<li>plain
-: <a class="el" href="struct_signature_ctx.html#a0a1b0c125057493eeabce0d3bd70f89c">SignatureCtx</a>
-</li>
 <li>plan_disconnect_profs
 : <a class="el" href="structt__app__br__link.html#addb47b7898a3a3e1ef1440a4e2ed0ba6">t_app_br_link</a>
+</li>
+<li>plan_lea
+: <a class="el" href="struct____attribute____.html#a74cb371b73918ef10d664929e9603283">__attribute__</a>
 </li>
 <li>plan_profs
 : <a class="el" href="struct____attribute____.html#ab81499a23f15b8a2f696ef4282e772cd">__attribute__</a>
@@ -6646,6 +6688,7 @@ $(function() {
 </li>
 <li>platform_id
 : <a class="el" href="struct___f_w___u_p_d_a_t_e___v_e_r___r_e_s_p_o_n_s_e.html#a2301ba1a775ad9048d4f754444df95ad">_FW_UPDATE_VER_RESPONSE</a>
+, <a class="el" href="structt__fw__update__standard__offer.html#a2301ba1a775ad9048d4f754444df95ad">t_fw_update_standard_offer</a>
 </li>
 <li>platformID
 : <a class="el" href="struct_c_f_u___i_n_f_o.html#addfeab3ceb86d2289c9d8058081181e2">CFU_INFO</a>
@@ -6685,6 +6728,9 @@ $(function() {
 : <a class="el" href="structt__app__br__link.html#ab986178746cb6afae2462d0cb8dd59a5">t_app_br_link</a>
 , <a class="el" href="struct_t___a_p_p___d_b.html#ab986178746cb6afae2462d0cb8dd59a5">T_APP_DB</a>
 </li>
+<li>playback_pos
+: <a class="el" href="structt__bt__event__param__avrcp__playback__pos__changed.html#a9cc33f3f8c269ef08d3546aa1031713e">t_bt_event_param_avrcp_playback_pos_changed</a>
+</li>
 <li>playback_speed
 : <a class="el" href="struct_t___m_c_p___c_l_i_e_n_t___n_o_t_i_f_y.html#a02674e9a4c84fec233095c58542a2231">T_MCP_CLIENT_NOTIFY</a>
 , <a class="el" href="struct_t___m_c_p___c_l_i_e_n_t___r_e_a_d___r_e_s_u_l_t.html#a02674e9a4c84fec233095c58542a2231">T_MCP_CLIENT_READ_RESULT</a>
@@ -6704,7 +6750,7 @@ $(function() {
 : <a class="el" href="struct_t___a_p_p___d_s_p___c_f_g___v_o_l_u_m_e.html#a679a7bf2242a7ba656b262b66f30cad0">T_APP_DSP_CFG_VOLUME</a>
 </li>
 <li>player_atrr_id
-: <a class="el" href="group___a_m_s___c_l_i_e_n_t.html#gaed350050c34a491a9e01b783abac479f">T_AMS_ENTITY_ATTR_ID</a>
+: <a class="el" href="union_t___a_m_s___e_n_t_i_t_y___a_t_t_r___i_d.html#aed350050c34a491a9e01b783abac479f">T_AMS_ENTITY_ATTR_ID</a>
 </li>
 <li>player_id
 : <a class="el" href="structt__bt__avrcp__media__player__item.html#a62970d5e82668190bee027887f474f3c">t_bt_avrcp_media_player_item</a>
@@ -7828,8 +7874,6 @@ $(function() {
 , <a class="el" href="union_p_p_e___l_a_y_e_r_x___h_s___c_f_g___type_def.html#a3b3736ceaf221d6d0f6f062a15234d91">PPE_LAYERX_HS_CFG_TypeDef</a>
 , <a class="el" href="union_p_p_e___r_e_g___l_y_r0___h_s___c_f_g___type_def.html#a3e8e5d640feb93c6d9e19c7d1634f5b9">PPE_REG_LYR0_HS_CFG_TypeDef</a>
 , <a class="el" href="union_p_p_e___r_e_g___l_y_rx___h_s___c_f_g___type_def.html#a3e8e5d640feb93c6d9e19c7d1634f5b9">PPE_REG_LYRx_HS_CFG_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_y_r0___h_s___c_f_g___type_def.html#a3b3736ceaf221d6d0f6f062a15234d91">PPEV2_REG_LYR0_HS_CFG_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_y_rx___h_s___c_f_g___type_def.html#a3b3736ceaf221d6d0f6f062a15234d91">PPEV2_REG_LYRx_HS_CFG_TypeDef</a>
 </li>
 <li>polarity
 : <a class="el" href="struct_p_p_e___input_layer___init_type_def.html#ab53e22145fadde976270c661c92e2d2a">PPE_InputLayer_InitTypeDef</a>
@@ -7844,7 +7888,7 @@ $(function() {
 : <a class="el" href="struct_r_a_n___g_e_n___type_def.html#aca562ea62e2d3bc9a0291fb4f35a2398">RAN_GEN_TypeDef</a>
 </li>
 <li>pon
-: <a class="el" href="union_s_e_g_c_o_m___l_c_d___f_c_r___type_def.html#accb040303465d13beb2ae4f673892dfc">SEGCOM_LCD_FCR_TypeDef</a>
+: <a class="el" href="group___x2_g___s_e_g_c_o_m.html#gaf7fed7630f2db5bca630ebe7ee2f36f6">SEGCOM_LCD_FCR_TypeDef</a>
 </li>
 <li>PON_PERI_DLYSEL_CTRL
 : <a class="el" href="struct_s_y_s___b_l_k_c_t_r_l___type_def.html#aece14a9d6254b8df16c6122e129c835f">SYS_BLKCTRL_TypeDef</a>
@@ -8067,7 +8111,7 @@ $(function() {
 , <a class="el" href="union___b_t_a_o_n___r_e_g__0x0___t_y_p_e.html#a4d112ec9c9beda72beff20ef8a452db0">_BTAON_REG_0x0_TYPE</a>
 </li>
 <li>power_field
-: <a class="el" href="struct_t_r_n_g___type_def.html#a170e4d593769af88f349ec247ceec429">TRNG_TypeDef</a>
+: <a class="el" href="struct_t_r_n_g___type_def.html#ae67977c6f4405943a8647c29587eb9f8">TRNG_TypeDef</a>
 </li>
 <li>power_off
 : <a class="el" href="uniont__sys__event__param.html#ac961b0922c6bf34a5e1b9546eff49213">t_sys_event_param</a>
@@ -8088,6 +8132,9 @@ $(function() {
 <li>power_off_cause_in_box
 : <a class="el" href="struct_t___a_p_p___d_b.html#a4129003541064f189ebe9363bb70abe8">T_APP_DB</a>
 </li>
+<li>power_off_rtc_wakeup_timeout
+: <a class="el" href="struct_t___e_x_t_e_n_d___a_p_p___c_f_g___c_o_n_s_t.html#abe1cf98d3ec993f9fa2e49b582b393f5">T_EXTEND_APP_CFG_CONST</a>
+</li>
 <li>power_on
 : <a class="el" href="uniont__sys__event__param.html#a7fce014d2027f2a44003987dc85a44c1">t_sys_event_param</a>
 </li>
@@ -8098,6 +8145,12 @@ $(function() {
 <li>power_on_cause_cmd
 : <a class="el" href="struct_t___a_p_p___c_f_g___n_v.html#aeb82e1091d73c972c0cecd0f1c6a8979">T_APP_CFG_NV</a>
 </li>
+<li>power_on_delay_opening_anc
+: <a class="el" href="struct_t___a_p_p___d_b.html#a583f604f7f8eb4180f1b46c1f6dd03d9">T_APP_DB</a>
+</li>
+<li>power_on_delay_opening_apt
+: <a class="el" href="struct_t___a_p_p___d_b.html#af493626b5c1381875abacde8fea205b2">T_APP_DB</a>
+</li>
 <li>power_on_from_factory_reset
 : <a class="el" href="struct_t___d_u_r_i_a_n___d_b.html#a1fe7e62e190972138080882ba8694118">T_DURIAN_DB</a>
 </li>
@@ -8107,8 +8160,8 @@ $(function() {
 <li>pp_num
 : <a class="el" href="structt__gsensor__sl.html#ac0d9f083af6e0f48e07cd36ffbd8a0a6">t_gsensor_sl</a>
 </li>
-<li>pParameter
-: <a class="el" href="struct_c_k___m_e_c_h_a_n_i_s_m.html#a672cc8332ea258e4538c1c41cefaaa65">CK_MECHANISM</a>
+<li>pParaSet
+: <a class="el" href="struct_j_p_u___e_n_c___c_f_g.html#ac9e4c639b68d88260bbce7b885d9981d">JPU_ENC_CFG</a>
 </li>
 <li>pPendingBuffer
 : <a class="el" href="struct_f_m_n_a_sample_controller.html#afa6abafbc63cf90ac15d4c365e276ecc">FMNASampleController</a>
@@ -8124,8 +8177,8 @@ $(function() {
 <li>ppSzRequiredEKUs
 : <a class="el" href="struct_v_e_r_i_f_y___h_a_s_h___r_e_q_u_e_s_t.html#a28f2d623cc5caba0ef42e3069c353e0f">VERIFY_HASH_REQUEST</a>
 </li>
-<li>pPublicData
-: <a class="el" href="struct_c_k___e_c_d_h1___d_e_r_i_v_e___p_a_r_a_m_s.html#a5b5ab88b8cf93cfa701f56237f237292">CK_ECDH1_DERIVE_PARAMS</a>
+<li>pQMatTab
+: <a class="el" href="struct_j_p_u___e_n_c___c_f_g.html#a25210a7c17fbd0aef0f133d45a98db12">JPU_ENC_CFG</a>
 </li>
 <li>pre_3pin_status_unplug
 : <a class="el" href="struct_t___a_p_p___c_f_g___n_v.html#aff49ea6d75dbdf209e364d30d19fd3b4">T_APP_CFG_NV</a>
@@ -8140,16 +8193,19 @@ $(function() {
 <li>pre_charge_timeout
 : <a class="el" href="struct__charger__utils__config.html#af4fc05746579500b1f92b2bbd727f301">_charger_utils_config</a>
 </li>
+<li>pre_charge_voltage
+: <a class="el" href="struct__charger__utils__config.html#a965458964060f6709507638fb2b1771b">_charger_utils_config</a>
+</li>
 <li>pre_combine_key_bits
-: <a class="el" href="structt__key__data.html#a2b0e1026f4e84d94a7c3db42919f8adf">t_key_data</a>
-, <a class="el" href="struct_t___k_e_y___d_a_t_a.html#a2b0e1026f4e84d94a7c3db42919f8adf">T_KEY_DATA</a>
+: <a class="el" href="struct_t___k_e_y___d_a_t_a.html#a2b0e1026f4e84d94a7c3db42919f8adf">T_KEY_DATA</a>
+, <a class="el" href="structt__key__data.html#a2b0e1026f4e84d94a7c3db42919f8adf">t_key_data</a>
 </li>
 <li>pre_idx
 : <a class="el" href="struct_t___h_a_s___c_p___n_o_t_i_f_y___i_n_d___d_a_t_a.html#a8c948185f969e5c05542428bf4f432c1">T_HAS_CP_NOTIFY_IND_DATA</a>
 </li>
 <li>pre_key
-: <a class="el" href="structt__key__data.html#a87d26ecef58f247e3858848e868bac76">t_key_data</a>
-, <a class="el" href="struct_t___k_e_y___d_a_t_a.html#a87d26ecef58f247e3858848e868bac76">T_KEY_DATA</a>
+: <a class="el" href="struct_t___k_e_y___d_a_t_a.html#a87d26ecef58f247e3858848e868bac76">T_KEY_DATA</a>
+, <a class="el" href="structt__key__data.html#a87d26ecef58f247e3858848e868bac76">t_key_data</a>
 </li>
 <li>pre_recovery_connected
 : <a class="el" href="struct_t___a_p_p___d_b.html#a08310ba6f373ca34d4976fa790387f03">T_APP_DB</a>
@@ -8165,16 +8221,13 @@ $(function() {
 : <a class="el" href="structt__sensor__ld__data.html#a708ec11d8739eccca9e50302842dc17c">t_sensor_ld_data</a>
 </li>
 <li>pre_sync_ref_point
-: <a class="el" href="group___b_t___s_y_s_c_a_l_l___exported___functions.html#ga7b8b7c7bb4d7aaabb796ee462228573b">T_BT_LE_ISO_SYNC_REF_AP_INFO</a>
+: <a class="el" href="struct_t___b_t___l_e___i_s_o___s_y_n_c___r_e_f___a_p___i_n_f_o.html#a7b8b7c7bb4d7aaabb796ee462228573b">T_BT_LE_ISO_SYNC_REF_AP_INFO</a>
 </li>
 <li>preamble
 : <a class="el" href="struct____attribute____.html#a4844ca1a23fb572a990caafa06d6f293">__attribute__</a>
 </li>
 <li>preDefined
 : <a class="el" href="struct_m_p4___a_u_d_i_o___d_e_s_c_r_i_p_t.html#ad1b40013fbd7645bdcc80f2e84df4ff1">MP4_AUDIO_DESCRIPT</a>
-</li>
-<li>prediction_resistance
-: <a class="el" href="structmbedtls__ctr__drbg__context.html#abfb2ea21110a86b07c2d5a1da67cee12">mbedtls_ctr_drbg_context</a>
 </li>
 <li>pref_audio_contexts
 : <a class="el" href="struct_t___b_a_p___p_a_c___r_e_c_o_r_d.html#a6ddfd681dcbdd620fd8c809b3b37acda">T_BAP_PAC_RECORD</a>
@@ -8242,9 +8295,6 @@ $(function() {
 : <a class="el" href="struct_t___a_s_c_s___p_r_e_f_e_r___q_o_s___d_a_t_a.html#ada1d8a068b288c6cea90e76d086a14d8">T_ASCS_PREFER_QOS_DATA</a>
 , <a class="el" href="struct_t___a_s_e___c_o_d_e_c___c_f_g___s_t_a_t_e___d_a_t_a.html#ae1aed8c6a5c4869ebe7c0a346d31cd6c">T_ASE_CODEC_CFG_STATE_DATA</a>
 </li>
-<li>pReserved
-: <a class="el" href="struct_c_k___c___i_n_i_t_i_a_l_i_z_e___a_r_g_s.html#a9a29104d1d45c0dbe5e3af2005c6d9bc">CK_C_INITIALIZE_ARGS</a>
-</li>
 <li>preset
 : <a class="el" href="struct_t___h_a_s___c_p___n_o_t_i_f_y___i_n_d___d_a_t_a.html#ab8a0c21e6d3694d84ac3f4b0c7d4f168">T_HAS_CP_NOTIFY_IND_DATA</a>
 </li>
@@ -8256,9 +8306,6 @@ $(function() {
 </li>
 <li>preset_sync_support
 : <a class="el" href="struct_t___h_a_s___h_a___f_e_a_t_u_r_e_s.html#ab41ba707aeb2c64be6b5a0ed8f6817c4">T_HAS_HA_FEATURES</a>
-</li>
-<li>prev
-: <a class="el" href="struct_w_o_l_f___e_v_e_n_t.html#aa7560e9d3520a47ae85030b75a589585">WOLF_EVENT</a>
 </li>
 <li>prev_scale
 : <a class="el" href="structt__audio__event__param__line__in__volume__balance__changed.html#af3298a71c6af055dd0f3b2dc10728dab">t_audio_event_param_line_in_volume_balance_changed</a>
@@ -8399,7 +8446,7 @@ $(function() {
 , <a class="el" href="struct_t___h_a_s___p_r_e_s_e_t___f_o_r_m_a_t.html#a9186ef511fa792a0dec18079d57071ef">T_HAS_PRESET_FORMAT</a>
 </li>
 <li>PROTCTL
-: <a class="el" href="union_l_c_d_c___d_m_a___c_f_g___h_i_g_hx___type_def.html#a4e081f4925d86f05eca0362542076000">LCDC_DMA_CFG_HIGHx_TypeDef</a>
+: <a class="el" href="union_l_c_d_c___d_m_a___c_f_g___h_i_g_hx___type_def.html#a73d200b9f404dabe2aa9d71baf6b9635">LCDC_DMA_CFG_HIGHx_TypeDef</a>
 </li>
 <li>protection_absent
 : <a class="el" href="struct_a_d_t_s___f_i_x_e_d___f_h_e_a_d_e_r.html#a2d7cffe8352ee71e0c9b38ccb14187e1">ADTS_FIXED_FHEADER</a>
@@ -8498,9 +8545,6 @@ $(function() {
 <li>psensor_vendor
 : <a class="el" href="struct_t___a_p_p___c_f_g___c_o_n_s_t.html#a51d10bbc9356e5c0facdce7289e5c742">T_APP_CFG_CONST</a>
 </li>
-<li>pSharedData
-: <a class="el" href="struct_c_k___e_c_d_h1___d_e_r_i_v_e___p_a_r_a_m_s.html#acab261b5f4c0104ea7011d671b371ab1">CK_ECDH1_DERIVE_PARAMS</a>
-</li>
 <li>pSignedBinary
 : <a class="el" href="struct_v_e_r_i_f_y___i_m_a_g_e___r_e_q_u_e_s_t.html#af216d4aaaef514ae45d8851718535e79">VERIFY_IMAGE_REQUEST</a>
 </li>
@@ -8558,21 +8602,13 @@ $(function() {
 , <a class="el" href="struct_t___l_e___b_i_g_i_n_f_o___a_d_v___r_e_p_o_r_t___i_n_f_o.html#a7026f50ffa813dbe17ab46ecc3d62d9c">T_LE_BIGINFO_ADV_REPORT_INFO</a>
 </li>
 <li>ptr
-: <a class="el" href="struct_signature_ctx.html#add9af9569af79ec26dd741fb226b38ba">SignatureCtx</a>
-, <a class="el" href="struct_w_o_l_f___e_v_e_n_t.html#add9af9569af79ec26dd741fb226b38ba">WOLF_EVENT</a>
+: <a class="el" href="struct_j___b_u_f_f__t.html#aaa8222c604b0b520bc2205ddcc42d855">J_BUFF_t</a>
 </li>
 <li>pub_key
 : <a class="el" href="structtile__song__tps__module__t.html#a6c578a99763a4c00a648e7fda33c4f7d">tile_song_tps_module_t</a>
 </li>
 <li>pubkey2
 : <a class="el" href="struct____attribute_____1_1fmna__separated__payload__s.html#a54d044bf6bdd0c93a51bc8beadcfc49e">__attribute__::fmna_separated_payload_s</a>
-</li>
-<li>pubKeySize
-: <a class="el" href="struct_decoded_cert.html#a01ec58c0bb29da5ba15f661b13f0c8e4">DecodedCert</a>
-, <a class="el" href="struct_signer.html#a01ec58c0bb29da5ba15f661b13f0c8e4">Signer</a>
-</li>
-<li>pubKeyStored
-: <a class="el" href="struct_decoded_cert.html#a92a1102f83bf16f1eb41edbbad1b3aff">DecodedCert</a>
 </li>
 <li>public_addr
 : <a class="el" href="struct____attribute____.html#af58247b0b4d92e1ebffda64d6c5f4537">__attribute__</a>
@@ -8584,12 +8620,8 @@ $(function() {
 : <a class="el" href="structfmna__primary__key__t.html#acc821720c60d63c95161f3ba903f77ae">fmna_primary_key_t</a>
 , <a class="el" href="structfmna__secondary__key__t.html#acc821720c60d63c95161f3ba903f77ae">fmna_secondary_key_t</a>
 </li>
-<li>publicKey
-: <a class="el" href="struct_decoded_cert.html#ad5efc7a1c64f17c1d3ff4bf9c0f320af">DecodedCert</a>
-, <a class="el" href="struct_signer.html#ad5efc7a1c64f17c1d3ff4bf9c0f320af">Signer</a>
-</li>
-<li>pValue
-: <a class="el" href="struct_c_k___a_t_t_r_i_b_u_t_e.html#a0584f1322464eff525d957753fd09734">CK_ATTRIBUTE</a>
+<li>pulse
+: <a class="el" href="struct_i_r_detect_pulse___type_def.html#a70a86f6b932a593c2e3d58e6dab6ca72">IRDetectPulse_TypeDef</a>
 </li>
 <li>PWDPAD1_AUXLDO1
 : <a class="el" href="union___b_t_a_o_n___f_a_s_t___b_t___p_w_d_p_a_d___t_y_p_e.html#a6e78bddcaf666d590227f7eb4378ca97">_BTAON_FAST_BT_PWDPAD_TYPE</a>

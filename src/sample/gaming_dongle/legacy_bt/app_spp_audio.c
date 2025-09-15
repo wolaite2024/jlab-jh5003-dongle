@@ -201,7 +201,7 @@ bool app_send_out_by_spp(uint8_t *data, uint16_t len)
 
 void app_spp_audio_init(void)
 {
-    bt_rfc_profile_register(RFC_SPP_AUDIO_CHANN_NUM, app_spp_audio_cback);
+    bt_rfc_service_register(RFC_SPP_AUDIO_CHANN_NUM, app_spp_audio_cback);
     memset(g_spp_dev.bd_addr, 0, 6);
     g_spp_dev.connected = false;
 }

@@ -14,25 +14,29 @@ extern "C" {
 
 
 /**
- * \defgroup    TRACE       Trace
+ * @defgroup    87x3E_TRACE       Trace API
  *
- * \brief       Defines debug trace macros for each module.
- *
+ * @brief       Defines debug trace macros for each module.
+ * @{
  */
-
-
+/*============================================================================*
+ *                              Macros
+ *============================================================================*/
+/** @defgroup 87x3E_TRACE_EXPORTED_MACROS Trace API Exported Constants
+    * @{
+    */
+/**
+ * \cond INTERNAL
+*/
 /* Log Section Definition */
 #define TRACE_DATA __attribute__((section(".TRACE"))) __attribute__((aligned(4))) __attribute__((used))
-
 /**
- * trace.h
- *
+ * \endcond
+*/
+/**
  * \name    TRACE_LEVEL
  * \brief   Log Level Definition.
- * \anchor  TRACE_LEVEL
- */
-/**
- * \ingroup TRACE
+ * \anchor  TRACE_LEVEL_RTL87x3E
  */
 /**@{*/
 #define LEVEL_OFF       (-1)
@@ -44,6 +48,9 @@ extern "C" {
 #define LEVEL_CRITICAL  (5)  /*LEVEL_CRITICAL log will be output as LEVEL_INFO, and it is NOT filtered by trace mask*/
 /**@}*/
 
+/**
+ * \cond INTERNAL
+*/
 /*
  * DBG_LEVEL is used to control the log printed by DBG_BUFFER(), DBG_INDEX() and DBG_TEXT().
  * LEVEL_OFF   : Print None
@@ -55,7 +62,9 @@ extern "C" {
 #define DBG_LEVEL               LEVEL_TRACE
 
 #define LOWERSTACK_LOGBUFFER_SIGNATURE 249
-
+/**
+ * \endcond
+*/
 /* Log type definition */
 typedef enum
 {
@@ -96,8 +105,14 @@ typedef enum
     /* type 220~251 reserved for Bee1 platform debug buffer */
 } T_LOG_TYPE;
 
-/*LOG_TYPE will be updated in the log api patch*/
+/**
+ * \cond INTERNAL
+*/
+/*LOG_TYPE will be updated in the log API patch*/
 #define LOG_TYPE TYPE_BB2
+/**
+ * \endcond
+*/
 
 /* Log subtype definition */
 typedef enum
@@ -125,14 +140,9 @@ typedef enum
 } T_LOG_SUBTYPE;
 
 /**
- * trace.h
- *
  * \name    MODULE_ID
  * \brief   Module ID definition.
- * \anchor  MODULE_ID
- */
-/**
- * \ingroup TRACE
+ * \anchor  MODULE_ID_RTL87x3E
  */
 /**@{*/
 typedef enum
@@ -194,7 +204,9 @@ typedef enum
 } T_MODULE_ID;
 /**@}*/
 
-
+/**
+ * \cond INTERNAL
+*/
 #define ARG_T(t) t
 #define ARG_N(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16,a17,a18,a19,a20,N,...)  N
 #define ARG_N_HELPER(...) ARG_T(ARG_N(__VA_ARGS__))
@@ -210,16 +222,13 @@ typedef enum
 #define GET_MODULE(info)                 (uint8_t)((info) >> 8)
 #define GET_LEVEL(info)                  (uint8_t)((info) >> 0)
 #define GET_MODULE_LOWSTACK(str_index)   (uint8_t)((str_index) >> 16)
-
 /**
- * trace.h
- *
+ * \endcond
+*/
+/**
  * \name    MODULE_BITMAP
  * \brief   Module bitmap definition.
- * \anchor  MODULE_BITMAP
- */
-/**
- * \ingroup TRACE
+ * \anchor  MODULE_BITMAP_RTL87x3E
  */
 /**@{*/
 #define MODULE_BIT_PATCH            ((uint64_t)1 << MODULE_PATCH     )
@@ -271,16 +280,28 @@ typedef enum
 #define MODULE_BIT_LOWERSTACK       ((uint64_t)1 << MODULE_LOWERSTACK)
 #define MODULE_BIT_UPPERSTACK       ((uint64_t)1 << MODULE_UPPERSTACK)
 /**@}*/
+
+/**
+ * \cond INTERNAL
+*/
 #define LOG_BINARY_MASK             BIT0
 #define LOG_ASCII_MASK              BIT1
 
 #define LOG_OUTPUT_UART_MASK        BIT0
 #define LOG_OUTPUT_FLASH_MASK       BIT1
 #define LOG_OUTPUT_VENDOR_MASK      BIT2
-
+/**
+ * \endcond
+*/
+/** End of 87x3E_TRACE_EXPORTED_MACROS
+    * @}
+    */
+/**
+ * \cond INTERNAL
+*/
 void fill_log_data(uint8_t *l_msg, uint32_t info);
 /* Internal function that is used by internal macro DBG_DIRECT. */
-void log_direct(uint32_t info, const char *fmt, ...);
+extern void (*log_direct)(uint32_t info, const char *fmt, ...);
 
 /* Internal function that is used by internal macro DBG_BUFFER. */
 void log_buffer(uint32_t info, uint32_t str_index, uint8_t param_num, ...);
@@ -417,35 +438,30 @@ const char *trace_double(uint32_t info, double param);
     } while (0)
 
 /**
- * trace.h
- *
- * \brief    write log data directly by uart
- * @warning  This api is supported in RTL87x3E and RTL87x3G.
+ * \endcond
+*/
+
+/** @defgroup 87x3E_TRACE_EXPORTED_FUNCTIONS Trace API Exported Functions
+    * @brief
+    * @{
+    */
+
+/**
+ * \brief    Write log data directly by uart
+ * @warning  This API is supported in RTL87x3E and RTL87x3G.
  *           It is NOT supported in RTL87x3D.
  * \param[in]   data  pointer to the data buffer
  * \param[in]   len   the data length to transfer trough log uart
- * \return      None.
- *
- * \ingroup  TRACE
  */
 void LogUartTxData(uint8_t *data, uint32_t len);
 
 /**
- * trace.h
- *
  * \brief    Initialize module trace mask.
- *
  * \param[in]   mask    Module trace mask array. Set NULL to load default mask array.
- *
- * \return      None.
- *
- * \ingroup  TRACE
  */
 void log_module_trace_init(uint64_t mask[LEVEL_NUM]);
 
 /**
- * trace.h
- *
  * \brief    Enable/Disable the module ID's trace.
  *
  * \param[in]   module_id   The specific module ID defined in \ref MODULE_ID.
@@ -459,14 +475,10 @@ void log_module_trace_init(uint64_t mask[LEVEL_NUM]);
  * \return           The status of setting module ID's trace.
  * \retval true      Module ID's trace was set successfully.
  * \retval false     Module ID's trace was failed to set.
- *
- * \ingroup  TRACE
  */
 bool log_module_trace_set(T_MODULE_ID module_id, uint8_t trace_level, bool set);
 
 /**
- * trace.h
- *
  * \brief    Enable/Disable module bitmap's trace.
  *
  * \param[in]   module_bitmap   The module bitmap defined in \ref MODULE_BITMAP.
@@ -480,55 +492,36 @@ bool log_module_trace_set(T_MODULE_ID module_id, uint8_t trace_level, bool set);
  * \return           The status of setting module bitmap's trace.
  * \retval true      Module bitmap's trace was set successfully.
  * \retval false     Module bitmap's trace was failed to set.
- *
- * \ingroup  TRACE
  */
 bool log_module_bitmap_trace_set(uint64_t module_bitmap, uint8_t trace_level, bool set);
 
 /**
- * trace.h
- *
  * \brief    Get system timestamp.
- *
- * \param       None.
- *
  * \return      System timestamp value in milliseconds.
- *
- * \ingroup  TRACE
  */
 extern uint32_t sys_timestamp_get(void);
+
 /**
- * trace.h
- *
+ * \brief    Get system timestamp us.
+ * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Added API"
+ * \return   System timestamp value in microseconds.
+ */
+extern uint32_t sys_timestamp_get_us(void);
+/**
  * \brief    Get log timestamp.
- *
- * \param       None.
- *
- * \return      log timestamp value in milliseconds.
- *
- * \ingroup  TRACE
+ * \return      Log timestamp value in milliseconds.
  */
 uint32_t log_timestamp_get(void);
 /**
- * trace.h
- *
  * \brief    Register log destination callback function.
- *
  * \param[in]   dest    Indicates where the callback is registered in.
  * \arg \c LOG_OUTPUT_FLASH_MASK    Register callback for log to flash.
  * \arg \c LOG_OUTPUT_VENDOR_MASK   Register callback for vendor specific use.
- *
  * \param[in]   func    The callback function to register.
- *
- * \return      None.
- *
- * \ingroup  TRACE
  */
 void register_log_dest_cb(uint8_t dest, void *func);
 
 /**
- * trace.h
- *
  * \brief    Enable log to specific destination.
  * @warning  This api is supported in RTL87x3D.
  *           It is NOT supported in RTL87x3E and RTL87x3G.
@@ -536,67 +529,61 @@ void register_log_dest_cb(uint8_t dest, void *func);
  * \arg \c LOG_OUTPUT_UART_MASK     Destination is UART.
  * \arg \c LOG_OUTPUT_FLASH_MASK    Destination is flash.
  * \arg \c LOG_OUTPUT_VENDOR_MASK   Destination is vendor reserved way.
- *
- * \return      None.
- *
- * \ingroup  TRACE
  */
 void log_enable(uint8_t dest);
 
 /**
- * trace.h
- *
  * \brief    Disable log to specific destination.
- * @warning  This api is supported in RTL87x3D.
+ * @warning  This API is supported in RTL87x3D.
  *           It is NOT supported in RTL87x3E and RTL87x3G.
  * \param[in]   dest    Destination mask.
  * \arg \c LOG_OUTPUT_UART_MASK     Destination is UART.
  * \arg \c LOG_OUTPUT_FLASH_MASK    Destination is flash.
  * \arg \c LOG_OUTPUT_VENDOR_MASK   Destination is vendor reserved way.
- *
- * \return      None.
- *
- * \ingroup  TRACE
  */
 void log_disable(uint8_t dest);
-
+/** End of 87x3E_TRACE_EXPORTED_FUNCTIONS
+    * @}
+    */
+/**
+ * \cond INTERNAL
+*/
 const char *log_trace_bdaddr(uint32_t info, char *bd_addr);
 /**
- * trace.h
- *
- * \name    AUXILIARY_PRINT_BDADDR
- * \brief   Auxiliary Interface that is used to print BD address.
- * \anchor  AUXILIARY_PRINT_BDADDR
- */
+ * \endcond
+*/
+/** @defgroup 87x3E_TRACE_EXPORTED_MACROS Trace API Exported Macros
+    * @{
+    */
 /**
- * \ingroup TRACE
+ * \name    TRACE_BDADDR
+ * \brief   Auxiliary Interface that is used to print BD address.
+ * \anchor  TRACE_BDADDR_RTL87x3E
  */
+/**@{*/
 #define TRACE_BDADDR(bd_addr)   \
     log_trace_bdaddr(COMBINE_TRACE_INFO(LOG_TYPE, SUBTYPE_BDADDR, 0, 0), (char *)(bd_addr))
-
+/**@}*/
 /**
- * trace.h
- *
- * \name    AUXILIARY_PRINT_STRING
+ * \name    TRACE_STRING
  * \brief   Auxiliary Interface that is used to print string.
- * \anchor  AUXILIARY_PRINT_STRING
+ * \anchor  TRACE_STRING_RTL87x3E
  */
-/**
- * \ingroup TRACE
- */
+/**@{*/
 #define TRACE_STRING(data)    \
     trace_string(COMBINE_TRACE_INFO(LOG_TYPE, SUBTYPE_STRING, 0, 0), (char *)(data))
-
+/**@}*/
+/**
+ * \cond INTERNAL
+*/
 const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
 /**
- * trace.h
- *
- * \name    AUXILIARY_PRINT_BINARY
- * \brief   Auxiliary Interface that is used to print binary string.
- * \anchor  AUXILIARY_PRINT_BINARY
- */
+ * \endcond
+*/
 /**
- * \ingroup TRACE
+ * \name    TRACE_BINARY
+ * \brief   Auxiliary Interface that is used to print binary string.
+ * \anchor  TRACE_BINARY_RTL87x3E
  */
 /**@{*/
 #define TRACE_BINARY(length, data)  \
@@ -604,43 +591,51 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
 /**@}*/
 
 /**
- * trace.h
- *
- * \name    AUXILIARY_PRINT_FLOAT
+ * \name    TRACE_FLOAT
  * \brief   Auxiliary Interface that is used to print float.
  * \xrefitem Added_API_2_11_1_0 "Added Since 2.11.1.0" "Added API"
- * \anchor  AUXILIARY_PRINT_FLOAT
- */
-/**
- * \ingroup TRACE
+ * \anchor  TRACE_FLOAT_RTL87x3E
  */
 /**@{*/
 #define TRACE_FLOAT(param)   trace_float(param)
 /**@}*/
 
 /**
- * trace.h
- *
- * \name    AUXILIARY_PRINT_DOUBLE
+ * \name    TRACE_DOUBLE
  * \xrefitem Added_API_2_13_0_0 "Added Since 2.13.0.0" "Added API"
  * \brief   Auxiliary Interface that is used to print double.
- * \anchor  AUXILIARY_PRINT_DOUBLE
- */
-/**
- * \ingroup TRACE
+ * \anchor  TRACE_DOUBLE_RTL87x3E
  */
 /**@{*/
 #define TRACE_DOUBLE(param)  \
     trace_double(COMBINE_TRACE_INFO(LOG_TYPE, SUBTYPE_DOUBLE, 0, 0), param)
 /**@}*/
-/* Bluetooth HCI Snoop Trace Interfaces */
+
+/**
+ * \name    BT_SNOOP_DOWN_TRACE
+ * \brief   Bluetooth HCI Snoop Down Trace Interfaces.
+ * \anchor  BT_SNOOP_DOWN_TRACE_RTL87x3E
+ */
+/**@{*/
 #define BT_SNOOP_DOWN_TRACE(length, snoop)  \
     DBG_SNOOP(LOG_TYPE, SUBTYPE_DOWN_SNOOP, MODULE_SNOOP, LEVEL_ERROR, length, snoop);
+/**@}*/
+/**
+ * \name    BT_SNOOP_UP_TRACE
+ * \brief   Bluetooth HCI Snoop Up Trace Interfaces.
+ * \anchor  BT_SNOOP_UP_TRACE_RTL87x3E
+ */
+/**@{*/
 #define BT_SNOOP_UP_TRACE(length, snoop)  \
     DBG_SNOOP(LOG_TYPE, SUBTYPE_UP_SNOOP, MODULE_SNOOP, LEVEL_ERROR, length, snoop);
+/**@}*/
 
-
-/* Bluetooth Message Trace Interfaces */
+/**
+ * \name    BT_MESSAGE_DOWN_PRINT
+ * \brief   Bluetooth Message Trace Interfaces.
+ * \anchor  BT_MESSAGE_DOWN_PRINT_RTL87x3E
+ */
+/**@{*/
 #define BT_MESSAGE_DOWN_PRINT_ERROR(length, message)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_DOWN_MESSAGE, MODULE_UPPERSTACK, LEVEL_ERROR, "", 2, length, message)
 #define BT_MESSAGE_DOWN_PRINT_WARN(length, message)   \
@@ -657,9 +652,15 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_UP_MESSAGE, MODULE_UPPERSTACK, LEVEL_INFO, "", 2, length, message)
 #define BT_MESSAGE_UP_PRINT_TRACE(length, message)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_UP_MESSAGE, MODULE_UPPERSTACK, LEVEL_TRACE, "", 2, length, message)
-
+/**@}*/
 
 /* Patch Trace Interfaces */
+/**
+ * \name    PATCH_PRINT
+ * \brief   Patch Trace Interfaces.
+ * \anchor  PATCH_PRINT_RTL87x3E
+ */
+/**@{*/
 #define PATCH_PRINT_ERROR0(fmt)   \
     DBG_INDEX(LOG_TYPE, SUBTYPE_INDEX, MODULE_PATCH, LEVEL_ERROR, fmt, 0)
 #define PATCH_PRINT_ERROR1(fmt, arg0)   \
@@ -734,9 +735,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_INDEX(LOG_TYPE, SUBTYPE_INDEX, MODULE_PATCH, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
 #define PATCH_PRINT_CRITICAL(fmt, ...)   \
     DBG_INDEX_EXT(LOG_TYPE, SUBTYPE_INDEX, MODULE_PATCH, LEVEL_CRITICAL, fmt, ##__VA_ARGS__)
+/**@}*/
 
-
-/* Bluetooth Lower Stack Trace Interfaces */
+/**
+ * \name    LOWERSTACK_PRINT
+ * \brief   Bluetooth Lower Stack Trace Interfaces.
+ * \anchor  LOWERSTACK_PRINT_RTL87x3E
+ */
+/**@{*/
 #define LOWERSTACK_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_LOWERSTACK, LEVEL_ERROR, "!!!"fmt, 0)
 #define LOWERSTACK_PRINT_ERROR1(fmt, arg0)   \
@@ -811,9 +817,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_LOWERSTACK, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define LOWERSTACK_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_LOWERSTACK, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-
-/* OS Trace Interfaces */
+/**
+ * \name    OS_PRINT
+ * \brief   OS Trace Interfaces.
+ * \anchor  OS_PRINT_RTL87x3E
+ */
+/**@{*/
 #define OS_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_OS, LEVEL_ERROR, "!!!"fmt, 0)
 #define OS_PRINT_ERROR1(fmt, arg0)   \
@@ -886,9 +897,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_OS, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define OS_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_OS, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-
-/* OSIF Trace Interfaces */
+/**
+ * \name    OSIF_PRINT
+ * \brief   OSIF Trace Interfaces.
+ * \anchor  OSIF_PRINT_RTL87x3E
+ */
+/**@{*/
 #define OSIF_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_OSIF, LEVEL_ERROR, "!!!"fmt, 0)
 #define OSIF_PRINT_ERROR1(fmt, arg0)   \
@@ -961,9 +977,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_OSIF, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define OSIF_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_OSIF, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-
-/* Bluetooth HCI Trace Interfaces */
+/**
+ * \name    HCI_PRINT
+ * \brief   Bluetooth HCI Trace Interfaces.
+ * \anchor  HCI_PRINT_RTL87x3E
+ */
+/**@{*/
 #define HCI_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_HCI, LEVEL_ERROR, "!!!"fmt, 0)
 #define HCI_PRINT_ERROR1(fmt, arg0)   \
@@ -1036,9 +1057,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_HCI, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define HCI_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_HCI, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-
-/* Bluetooth L2CAP Trace Interfaces */
+/**
+ * \name    L2CAP_PRINT
+ * \brief   Bluetooth L2CAP Trace Interfaces.
+ * \anchor  L2CAP_PRINT_RTL87x3E
+ */
+/**@{*/
 #define L2CAP_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_L2CAP, LEVEL_ERROR, "!!!"fmt, 0)
 #define L2CAP_PRINT_ERROR1(fmt, arg0)   \
@@ -1111,9 +1137,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_L2CAP, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define L2CAP_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_L2CAP, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-
-/* Bluetooth SDP Trace Interfaces */
+/**
+ * \name    SDP_PRINT
+ * \brief   Bluetooth SDP Trace Interfaces.
+ * \anchor  SDP_PRINT_RTL87x3E
+ */
+/**@{*/
 #define SDP_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_SDP, LEVEL_ERROR, "!!!"fmt, 0)
 #define SDP_PRINT_ERROR1(fmt, arg0)   \
@@ -1186,9 +1217,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_SDP, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define SDP_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_SDP, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-
-/* Bluetooth SMP Trace Interfaces */
+/**
+ * \name    SMP_PRINT
+ * \brief   Bluetooth SMP Trace Interfaces.
+ * \anchor  SMP_PRINT_RTL87x3E
+ */
+/**@{*/
 #define SMP_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_SMP, LEVEL_ERROR, "!!!"fmt, 0)
 #define SMP_PRINT_ERROR1(fmt, arg0)   \
@@ -1261,9 +1297,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_SMP, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define SMP_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_SMP, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-
-/* Bluetooth GATT Trace Interfaces */
+/**
+ * \name    GATT_PRINT
+ * \brief   Bluetooth GATT Trace Interfaces.
+ * \anchor  GATT_PRINT_RTL87x3E
+ */
+/**@{*/
 #define GATT_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_GATT, LEVEL_ERROR, "!!!"fmt, 0)
 #define GATT_PRINT_ERROR1(fmt, arg0)   \
@@ -1336,9 +1377,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_GATT, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define GATT_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_GATT, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-
-/* Bluetooth BTIF Trace Interfaces */
+/**
+ * \name    BTIF_PRINT
+ * \brief   Bluetooth BTIF Trace Interfaces.
+ * \anchor  BTIF_PRINT_RTL87x3E
+ */
+/**@{*/
 #define BTIF_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_BTIF, LEVEL_ERROR, "!!!"fmt, 0)
 #define BTIF_PRINT_ERROR1(fmt, arg0)   \
@@ -1411,9 +1457,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_BTIF, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define BTIF_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_BTIF, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-
-/* Bluetooth BTE Trace Interfaces */
+/**
+ * \name    BTE_PRINT
+ * \brief   Bluetooth BTE Trace Interfaces.
+ * \anchor  BTE_PRINT_RTL87x3E
+ */
+/**@{*/
 #define BTE_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_BTE, LEVEL_ERROR, "!!!"fmt, 0)
 #define BTE_PRINT_ERROR1(fmt, arg0)   \
@@ -1486,9 +1537,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_BTE, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define BTE_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_BTE, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-
-/* Bluetooth GAP Trace Interfaces */
+/**
+ * \name    GAP_PRINT
+ * \brief   Bluetooth GAP Trace Interfaces.
+ * \anchor  GAP_PRINT_RTL87x3E
+ */
+/**@{*/
 #define GAP_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_GAP, LEVEL_ERROR, "!!!"fmt, 0)
 #define GAP_PRINT_ERROR1(fmt, arg0)   \
@@ -1561,9 +1617,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_GAP, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define GAP_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_GAP, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-
-/* Bluetooth RFCOMM Trace Interfaces */
+/**
+ * \name    RFCOMM_PRINT
+ * \brief   Bluetooth RFCOMM Trace Interfaces.
+ * \anchor  RFCOMM_PRINT_RTL87x3E
+ */
+/**@{*/
 #define RFCOMM_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_RFCOMM, LEVEL_ERROR, "!!!"fmt, 0)
 #define RFCOMM_PRINT_ERROR1(fmt, arg0)   \
@@ -1636,9 +1697,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_RFCOMM, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define RFCOMM_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_RFCOMM, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-
-/* Bluetooth Protocol Trace Interfaces */
+/**
+ * \name    PROTOCOL_PRINT
+ * \brief   Bluetooth Protocol Trace Interfaces.
+ * \anchor  PROTOCOL_PRINT_RTL87x3E
+ */
+/**@{*/
 #define PROTOCOL_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_PROTOCOL, LEVEL_ERROR, "!!!"fmt, 0)
 #define PROTOCOL_PRINT_ERROR1(fmt, arg0)   \
@@ -1711,9 +1777,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_PROTOCOL, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define PROTOCOL_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_PROTOCOL, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-
-/* Bluetooth Profile Trace Interfaces */
+/**
+ * \name    PROFILE_PRINT
+ * \brief   Bluetooth Profile Trace Interfaces.
+ * \anchor  PROFILE_PRINT_RTL87x3E
+ */
+/**@{*/
 #define PROFILE_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_PROFILE, LEVEL_ERROR, "!!!"fmt, 0)
 #define PROFILE_PRINT_ERROR1(fmt, arg0)   \
@@ -1786,17 +1857,12 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_PROFILE, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define PROFILE_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_PROFILE, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
-
+/**@}*/
 
 /**
- * trace.h
- *
  * \name    SHM_PRINT_TRACE
  * \brief   SHM Trace Interfaces.
- * \anchor  SHM_PRINT_TRACE
- */
-/**
- * \ingroup TRACE
+ * \anchor  SHM_PRINT_TRACE_RTL87x3E
  */
 /**@{*/
 #define SHM_PRINT_ERROR0(fmt)   \
@@ -1874,14 +1940,9 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
 /**@}*/
 
 /**
- * trace.h
- *
- * \name    LOADER_PRINT_TRACE
+ * \name    LOADER_PRINT
  * \brief   BINLOADER Trace Interfaces.
- * \anchor  BINLOADER_PRINT_TRACE
- */
-/**
- * \ingroup TRACE
+ * \anchor  BINLOADER_PRINT_RTL87x3E
  */
 /**@{*/
 #define LOADER_PRINT_ERROR0(fmt)   \
@@ -1959,14 +2020,9 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
 /**@}*/
 
 /**
- * trace.h
- *
- * \name    TEST_PRINT_TRACE
+ * \name    TEST_PRINT
  * \brief   Test Trace Interfaces.
- * \anchor  TEST_PRINT_TRACE
- */
-/**
- * \ingroup TRACE
+ * \anchor  TEST_PRINT_RTL87x3E
  */
 /**@{*/
 #define TEST_PRINT_ERROR0(fmt)   \
@@ -2044,14 +2100,9 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
 /**@}*/
 
 /**
- * trace.h
- *
- * \name    APP_PRINT_TRACE
+ * \name    APP_PRINT
  * \brief   Bluetooth APP Trace Interfaces.
- * \anchor  APP_PRINT_TRACE
- */
-/**
- * \ingroup TRACE
+ * \anchor  APP_PRINT_RTL87x3E
  */
 /**@{*/
 #define APP_PRINT_ERROR0(fmt)   \
@@ -2133,14 +2184,9 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
 
 
 /**
- * trace.h
- *
- * \name    CONSOLE_PRINT_TRACE
+ * \name    CONSOLE_PRINT
  * \brief   Console Trace Interfaces.
- * \anchor  CONSOLE_PRINT_TRACE
- */
-/**
- * \ingroup TRACE
+ * \anchor  CONSOLE_PRINT_RTL87x3E
  */
 /**@{*/
 #define CONSOLE_PRINT_ERROR0(fmt)   \
@@ -2218,14 +2264,9 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
 /**@}*/
 
 /**
- * trace.h
- *
- * \name    ENGAGE_PRINT_TRACE
+ * \name    ENGAGE_PRINT
  * \brief   Engage Trace Interfaces.
- * \anchor  ENGAGE_PRINT_TRACE
- */
-/**
- * \ingroup TRACE
+ * \anchor  ENGAGE_PRINT_RTL87x3E
  */
 /**@{*/
 #define ENGAGE_PRINT_ERROR0(fmt)   \
@@ -2303,6 +2344,12 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
 /**@}*/
 
 /* AES Trace Interfaces */
+/**
+ * \name    AES_PRINT
+ * \brief   AES Trace Interfaces.
+ * \anchor  AES_PRINT_RTL87x3E
+ */
+/**@{*/
 #define AES_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_AES, LEVEL_ERROR, "!!!"fmt, 0)
 #define AES_PRINT_ERROR1(fmt, arg0)   \
@@ -2333,9 +2380,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_AES, LEVEL_INFO, "!**"fmt, 3, arg0, arg1, arg2)
 #define AES_PRINT_INFO4(fmt, arg0, arg1, arg2, arg3)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_AES, LEVEL_INFO, "!**"fmt, 4, arg0, arg1, arg2, arg3)
+/**@}*/
 
-
-/* Power Manager Trace Interfaces */
+/**
+ * \name    PM_PRINT
+ * \brief   Power Manager Trace Interfaces.
+ * \anchor  PM_PRINT_RTL87x3E
+ */
+/**@{*/
 #define PM_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_PM, LEVEL_ERROR, "!!!"fmt, 0)
 #define PM_PRINT_ERROR1(fmt, arg0)   \
@@ -2376,8 +2428,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_PM, LEVEL_INFO, "!**"fmt, 13, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12)
 #define PM_PRINT_INFO16(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_PM, LEVEL_INFO, "!**"fmt, 16, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15)
+/**@}*/
 
-/* PHY Trace Interfaces */
+/**
+ * \name    PHY_PRINT
+ * \brief   PHY Trace Interfaces.
+ * \anchor  PHY_PRINT_RTL87x3E
+ */
+/**@{*/
 #define PHY_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_PHY, LEVEL_ERROR, "!!!"fmt, 0)
 #define PHY_PRINT_ERROR1(fmt, arg0)   \
@@ -2454,8 +2512,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_PHY, LEVEL_TRACE, fmt, 17, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16)
 #define PHY_PRINT_TRACE18(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_PHY, LEVEL_TRACE, fmt, 18, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17)
+/**@}*/
 
-/* DVFS Trace Interfaces */
+/**
+ * \name    DVFS_PRINT
+ * \brief   DVFS Trace Interfaces.
+ * \anchor  DVFS_PRINT_RTL87x3E
+ */
+/**@{*/
 #define DVFS_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_DVFS, LEVEL_ERROR, "!!!"fmt, 0)
 #define DVFS_PRINT_ERROR1(fmt, arg0)   \
@@ -2528,8 +2592,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_DVFS, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define DVFS_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_DVFS, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-/* CTC Trace Interfaces */
+/**
+ * \name    CTC_PRINT
+ * \brief   CTC Trace Interfaces.
+ * \anchor  CTC_PRINT_RTL87x3E
+ */
+/**@{*/
 #define CTC_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_CTC, LEVEL_ERROR, "!!!"fmt, 0)
 #define CTC_PRINT_ERROR1(fmt, arg0)   \
@@ -2602,8 +2672,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_CTC, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define CTC_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_CTC, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-/* IO Trace Interfaces */
+/**
+ * \name    IO_PRINT
+ * \brief   IO Trace Interfaces.
+ * \anchor  IO_PRINT_RTL87x3E
+ */
+/**@{*/
 #define IO_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_IO, LEVEL_ERROR, "!!!"fmt, 0)
 #define IO_PRINT_ERROR1(fmt, arg0)   \
@@ -2676,8 +2752,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_IO, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define IO_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_IO, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-/* Boot Trace Interfaces */
+/**
+ * \name    BOOT_PRINT
+ * \brief   Boot Trace Interfaces.
+ * \anchor  BOOT_PRINT_RTL87x3E
+ */
+/**@{*/
 #define BOOT_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_BOOT, LEVEL_ERROR, "!!!"fmt, 0)
 #define BOOT_PRINT_ERROR1(fmt, arg0)   \
@@ -2708,9 +2790,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_BOOT, LEVEL_INFO, "!**"fmt, 3, arg0, arg1, arg2)
 #define BOOT_PRINT_INFO4(fmt, arg0, arg1, arg2, arg3)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_BOOT, LEVEL_INFO, "!**"fmt, 4, arg0, arg1, arg2, arg3)
+/**@}*/
 
-
-/* Bluetooth OTA/DFU Trace Interfaces */
+/**
+ * \name    DFU_PRINT
+ * \brief   Bluetooth OTA/DFU Trace Interfaces.
+ * \anchor  DFU_PRINT_RTL87x3E
+ */
+/**@{*/
 #define DFU_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_DFU, LEVEL_ERROR, "!!!"fmt, 0)
 #define DFU_PRINT_ERROR1(fmt, arg0)   \
@@ -2783,9 +2870,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_DFU, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define DFU_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_DFU, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-
-/* Bluetooth FLASH/CACHE Trace Interfaces */
+/**
+ * \name    FLASH_PRINT
+ * \brief   Bluetooth FLASH/CACHE Trace Interfaces.
+ * \anchor  FLASH_PRINT_RTL87x3E
+ */
+/**@{*/
 #define FLASH_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_FLASH, LEVEL_ERROR, "!!!"fmt, 0)
 #define FLASH_PRINT_ERROR1(fmt, arg0)   \
@@ -2858,9 +2950,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_FLASH, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define FLASH_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_FLASH, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-
-/* USB Trace Interfaces */
+/**
+ * \name    USB_PRINT
+ * \brief   USB Trace Interfaces.
+ * \anchor  USB_PRINT_RTL87x3E
+ */
+/**@{*/
 #define USB_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_USB, LEVEL_ERROR, "!!!"fmt, 0)
 #define USB_PRINT_ERROR1(fmt, arg0)   \
@@ -2933,9 +3030,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_USB, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define USB_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_USB, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-
-/* Charger Trace Interfaces */
+/**
+ * \name    CHARGER_PRINT
+ * \brief   ChargerTrace Interfaces.
+ * \anchor  CHARGER_PRINT_RTL87x3E
+ */
+/**@{*/
 #define CHARGER_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_CHARGER, LEVEL_ERROR, "!!!"fmt, 0)
 #define CHARGER_PRINT_ERROR1(fmt, arg0)   \
@@ -3008,8 +3110,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_CHARGER, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define CHARGER_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_CHARGER, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-/* SYS Trace Interfaces */
+/**
+ * \name    SYS_PRINT
+ * \brief   SYS Trace Interfaces.
+ * \anchor  SYS_PRINT_RTL87x3E
+ */
+/**@{*/
 #define SYS_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_SYS, LEVEL_ERROR, "!!!"fmt, 0)
 #define SYS_PRINT_ERROR1(fmt, arg0)   \
@@ -3082,8 +3190,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_SYS, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define SYS_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_SYS, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-/* DM Trace Interfaces */
+/**
+ * \name    DM_PRINT
+ * \brief   DM Trace Interfaces.
+ * \anchor  DM_PRINT_RTL87x3E
+ */
+/**@{*/
 #define DM_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_DM, LEVEL_ERROR, "!!!"fmt, 0)
 #define DM_PRINT_ERROR1(fmt, arg0)   \
@@ -3156,8 +3270,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_DM, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define DM_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_DM, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-/* BTM Trace Interfaces */
+/**
+ * \name    BTM_PRINT
+ * \brief   BTM Trace Interfaces.
+ * \anchor  BTM_PRINT_RTL87x3E
+ */
+/**@{*/
 #define BTM_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_BTM, LEVEL_ERROR, "!!!"fmt, 0)
 #define BTM_PRINT_ERROR1(fmt, arg0)   \
@@ -3230,8 +3350,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_BTM, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define BTM_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_BTM, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-/* AUDIO Trace Interfaces */
+/**
+ * \name    AUDIO_PRINT
+ * \brief   AUDIO Trace Interfaces.
+ * \anchor  AUDIO_PRINT_RTL87x3E
+ */
+/**@{*/
 #define AUDIO_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_AUDIO, LEVEL_ERROR, "!!!"fmt, 0)
 #define AUDIO_PRINT_ERROR1(fmt, arg0)   \
@@ -3304,8 +3430,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_AUDIO, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define AUDIO_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_AUDIO, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-/* REMOTE Trace Interfaces */
+/**
+ * \name    REMOTE_PRINT
+ * \brief   REMOTE Trace Interfaces.
+ * \anchor  REMOTE_PRINT_RTL87x3E
+ */
+/**@{*/
 #define REMOTE_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_REMOTE, LEVEL_ERROR, "!!!"fmt, 0)
 #define REMOTE_PRINT_ERROR1(fmt, arg0)   \
@@ -3378,8 +3510,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_REMOTE, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define REMOTE_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_REMOTE, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-/* ADC Trace Interfaces */
+/**
+ * \name    ADC_PRINT
+ * \brief   ADC Trace Interfaces.
+ * \anchor  ADC_PRINT_RTL87x3E
+ */
+/**@{*/
 #define ADC_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_ADC, LEVEL_ERROR, "!!!"fmt, 0)
 #define ADC_PRINT_ERROR1(fmt, arg0)   \
@@ -3452,8 +3590,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_ADC, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define ADC_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_ADC, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-/* GDMA Trace Interfaces */
+/**
+ * \name    GDMA_PRINT
+ * \brief   GDMA Trace Interfaces.
+ * \anchor  GDMA_PRINT_RTL87x3E
+ */
+/**@{*/
 #define GDMA_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_GDMA, LEVEL_ERROR, "!!!"fmt, 0)
 #define GDMA_PRINT_ERROR1(fmt, arg0)   \
@@ -3526,8 +3670,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_GDMA, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define GDMA_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_GDMA, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-/* RTC Trace Interfaces */
+/**
+ * \name    RTC_PRINT
+ * \brief   RTC Trace Interfaces.
+ * \anchor  RTC_PRINT_RTL87x3E
+ */
+/**@{*/
 #define RTC_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_RTC, LEVEL_ERROR, "!!!"fmt, 0)
 #define RTC_PRINT_ERROR1(fmt, arg0)   \
@@ -3600,8 +3750,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_RTC, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define RTC_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_RTC, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-/* SPI Trace Interfaces */
+/**
+ * \name    SPI_PRINT
+ * \brief   SPI Trace Interfaces.
+ * \anchor  SPI_PRINT_RTL87x3E
+ */
+/**@{*/
 #define SPI_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_SPI, LEVEL_ERROR, "!!!"fmt, 0)
 #define SPI_PRINT_ERROR1(fmt, arg0)   \
@@ -3674,8 +3830,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_SPI, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define SPI_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_SPI, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-/* TIMER Trace Interfaces */
+/**
+ * \name    TIMER_PRINT
+ * \brief   TIMER Trace Interfaces.
+ * \anchor  TIMER_PRINT_RTL87x3E
+ */
+/**@{*/
 #define TIMER_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_TIMER, LEVEL_ERROR, "!!!"fmt, 0)
 #define TIMER_PRINT_ERROR1(fmt, arg0)   \
@@ -3748,8 +3910,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_TIMER, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define TIMER_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_TIMER, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-/* UART Trace Interfaces */
+/**
+ * \name    UART_PRINT
+ * \brief   UART Trace Interfaces.
+ * \anchor  UART_PRINT_RTL87x3E
+ */
+/**@{*/
 #define UART_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_UART, LEVEL_ERROR, "!!!"fmt, 0)
 #define UART_PRINT_ERROR1(fmt, arg0)   \
@@ -3822,8 +3990,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_UART, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define UART_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_UART, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-/* CODEC Trace Interfaces */
+/**
+ * \name    CODEC_PRINT
+ * \brief   CODEC Trace Interfaces.
+ * \anchor  CODEC_PRINT_RTL87x3E
+ */
+/**@{*/
 #define CODEC_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_CODEC, LEVEL_ERROR, "!!!"fmt, 0)
 #define CODEC_PRINT_ERROR1(fmt, arg0)   \
@@ -3896,8 +4070,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_CODEC, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define CODEC_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_CODEC, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-/* DIPC Trace Interfaces */
+/**
+ * \name    DIPC_PRINT
+ * \brief   DIPC Trace Interfaces.
+ * \anchor  DIPC_PRINT_RTL87x3E
+ */
+/**@{*/
 #define DIPC_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_DIPC, LEVEL_ERROR, "!!!"fmt, 0)
 #define DIPC_PRINT_ERROR1(fmt, arg0)   \
@@ -3970,8 +4150,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_DIPC, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define DIPC_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_DIPC, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-/* MMI Trace Interfaces */
+/**
+ * \name    MMI_PRINT
+ * \brief   MMI Trace Interfaces.
+ * \anchor  MMI_PRINT_RTL87x3E
+ */
+/**@{*/
 #define MMI_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_MMI, LEVEL_ERROR, "!!!"fmt, 0)
 #define MMI_PRINT_ERROR1(fmt, arg0)   \
@@ -4044,8 +4230,14 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_MMI, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define MMI_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_MMI, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+/**@}*/
 
-/* SDIO Trace Interfaces */
+/**
+ * \name    SDIO_PRINT
+ * \brief   SDIO Trace Interfaces.
+ * \anchor  SDIO_PRINT_RTL87x3E
+ */
+/**@{*/
 #define SDIO_PRINT_ERROR0(fmt)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_SDIO, LEVEL_ERROR, "!!!"fmt, 0)
 #define SDIO_PRINT_ERROR1(fmt, arg0)   \
@@ -4118,13 +4310,25 @@ const char *log_trace_binary(uint32_t info, uint16_t length, char *p_data);
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_SDIO, LEVEL_TRACE, fmt, 7, arg0, arg1, arg2, arg3, arg4, arg5, arg6)
 #define SDIO_PRINT_TRACE8(fmt, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)   \
     DBG_BUFFER(LOG_TYPE, SUBTYPE_FORMAT, MODULE_SDIO, LEVEL_TRACE, fmt, 8, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
-
+/**@}*/
+/** End of 87x3E_TRACE_EXPORTED_MACROS
+    * @}
+    */
+/**
+ * \cond INTERNAL
+*/
 /*Fixed time stamp after out DLPS*/
 extern void (*timestamp_enter_dlps_cb)(void);
 extern void (*timestamp_exit_dlps_cb)(void);
-
+/**
+ * \endcond
+*/
+/** End of 87x3E_TRACE
+    * @}
+    */
 #ifdef __cplusplus
 }
 #endif
+
 
 #endif /* _TRACE_H_ */

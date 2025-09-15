@@ -168,7 +168,7 @@ static const T_UAC1_FMT_TYPE_I_DESC(spk, UAC1_SPK_SAM_RATE_NUM) format_type_i_de
     {
         [0] = {[0] = 0x00, [1] = 0x77, [2] = 0x01},
     },
-#elif RTL8763ESE_PRODUCT_STEREO
+#elif TARGET_RTL8763ESE
     .tSamFreq           =
     {
         [0] = {[0] = 0x80, [1] = 0xBB, [2] = 0x00},
@@ -357,7 +357,7 @@ static T_UAC1_AC_HDR_DESC(0, UAC1_STREAM_INTF_NUM) ac_hdr_desc =
 #endif
 };
 
-static const void  *uac1_descs_ctrl[] =
+static void *const uac1_descs_ctrl[] =
 {
     (void *) &ac_interface_desc,
     (void *) &ac_hdr_desc,
@@ -375,7 +375,7 @@ static const void  *uac1_descs_ctrl[] =
 };
 
 #if UAC_SPK_SUPPORT
-static const void  *uac1_descs_spk_hs[] =
+static void *const uac1_descs_spk_hs[] =
 {
     (void *) &interface_alt0_desc1,
     (void *) &interface_alt1_desc1,
@@ -386,7 +386,7 @@ static const void  *uac1_descs_spk_hs[] =
     NULL
 };
 
-static const void  *uac1_descs_spk_fs[] =
+static void *const uac1_descs_spk_fs[] =
 {
     (void *) &interface_alt0_desc1,
     (void *) &interface_alt1_desc1,
@@ -399,7 +399,7 @@ static const void  *uac1_descs_spk_fs[] =
 #endif
 
 #if UAC_MIC_SUPPORT
-static const void  *uac1_descs_mic_hs[] =
+static void *const uac1_descs_mic_hs[] =
 {
     (void *) &interface_alt0_desc2,
     (void *) &interface_alt1_desc2,
@@ -410,7 +410,7 @@ static const void  *uac1_descs_mic_hs[] =
     NULL
 };
 
-static const void  *uac1_descs_mic_fs[] =
+static void *const uac1_descs_mic_fs[] =
 {
     (void *) &interface_alt0_desc2,
     (void *) &interface_alt1_desc2,
@@ -770,7 +770,8 @@ static void usb_audio_adp_state_change_cb(T_ADP_PLUG_EVENT event, void *user_dat
 void usb_audio_init(T_USB_AUDIO_PIPES *pipe)
 {
     usb_audio1_pipe = pipe;
-    inst = usb_audio_driver_inst_alloc(USB_AUDIO_VERSION_1, 4, 4);
+    inst = usb_audio_driver_inst_alloc(USB_AUDIO_VERSION_1, USB_AUDIO_DS_INTERVAL,
+                                       USB_AUDIO_US_INTERVAL);
     usb_audio_driver_desc_register(inst, (T_USB_AUDIO_DRIVER_DESC_HDR **)uac1_descs_ctrl,
                                    (T_USB_AUDIO_DRIVER_DESC_HDR **)uac1_descs_ctrl);
 #if UAC_SPK_SUPPORT

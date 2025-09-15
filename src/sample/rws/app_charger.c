@@ -38,6 +38,9 @@
 #if CONFIG_REALTEK_GFPS_FEATURE_SUPPORT
 #include "app_gfps.h"
 #include "app_gfps_battery.h"
+#if CONFIG_REALTEK_GFPS_FINDER_SUPPORT
+#include "app_gfps_finder.h"
+#endif
 #endif
 
 #if F_APP_DURIAN_SUPPORT
@@ -869,6 +872,14 @@ static void app_charger_bat_evt_handle(uint8_t event, bool from_remote, uint8_t 
         {
             app_gfps_battery_info_report(GFPS_BATTERY_REPORT_STATE_OF_CHARGER);
         }
+
+#if CONFIG_REALTEK_GFPS_FINDER_SUPPORT
+        if (extend_app_cfg_const.gfps_finder_support)
+        {
+            app_gfps_finder_update_battery(app_db.local_batt_level);
+        }
+#endif
+
 #endif
     }
     else if (event == APP_CHARGER_EVENT_BATT_STATE_CHANGE)
@@ -900,7 +911,7 @@ static void app_charger_bat_evt_handle(uint8_t event, bool from_remote, uint8_t 
     {
         if (app_db.local_loc != BUD_LOC_IN_CASE)
         {
-#if F_APP_ADP_CMD_SUPPORT
+#if F_APP_ADP_5V_CMD_SUPPORT || F_APP_ONE_WIRE_UART_SUPPORT
             app_adp_cmd_case_bat_check(&para, &app_db.case_battery);
 #endif
             app_cfg_nv.case_battery = app_db.case_battery;

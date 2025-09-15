@@ -398,7 +398,9 @@ void app_tts_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, ui
             seq  = cmd_ptr[3];
             len  = (uint16_t)(cmd_ptr[4] | (cmd_ptr[5] << 8)); /* little endian */
 
-            if ((cmd_path == CMD_PATH_SPP) || (cmd_path == CMD_PATH_IAP))
+            if ((cmd_path == CMD_PATH_SPP) ||
+                (cmd_path == CMD_PATH_IAP) ||
+                (cmd_path == CMD_PATH_GATT_OVER_BREDR))
             {
                 tts_info = &app_db.br_link[app_idx].tts_info;
             }

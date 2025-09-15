@@ -140,6 +140,7 @@ typedef struct
 extern T_DURIAN_DB durian_db;
 
 void app_durian_init(void);
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

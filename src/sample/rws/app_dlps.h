@@ -186,7 +186,11 @@ uint32_t app_dlps_get_dlps_bitmap(void);
     */
 void app_dlps_power_mode_set(void);
 
-#if F_APP_PERIODIC_WAKEUP_RECHARGE
+#if (F_APP_PERIODIC_WAKEUP == 1)
+#define RTC_PRESCALER_VALUE             4095
+/* 1 counter : (prescaler_value + 1)/32000  sec */
+/* second: counter / (RTC_CLOCK_SOURCE_FREQ / (RTC_PRESCALER_VALUE + 1)) */
+#define RTC_COUNTER_TO_SECOND(counter)  (counter / (32000.0 / (RTC_PRESCALER_VALUE + 1)))
 /**
     * @brief  clear rtc interrupt bit when system wakeup
     * @param  void

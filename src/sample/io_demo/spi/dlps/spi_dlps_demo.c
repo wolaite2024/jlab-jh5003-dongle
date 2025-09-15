@@ -15,12 +15,10 @@
 #include "string.h"
 #include "rtl876x_rcc.h"
 #include "rtl876x_spi.h"
-#include "rtl876x_nvic.h"
 #include "rtl876x_pinmux.h"
 #include "trace.h"
 #include "io_dlps.h"
 #include "pm.h"
-#include "os_sched.h"
 #include "os_task.h"
 #include "os_msg.h"
 

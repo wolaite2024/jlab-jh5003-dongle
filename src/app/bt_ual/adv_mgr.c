@@ -14,8 +14,6 @@
 
 #include "gap_msg.h"
 #include "dev_mgr.h"
-#include "ual_api_types.h"
-#include "ble_privacy.h"
 #include "gap_ext_adv.h"
 #include "ble_legacy_adv.h"
 #include "ble_extend_adv.h"

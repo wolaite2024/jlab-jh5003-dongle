@@ -51,10 +51,10 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga39c31f75a20dcb86bd78f6d3b30c78a9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_c_p___client___exported___functions.html#ga39c31f75a20dcb86bd78f6d3b30c78a9">mics_get_all_inc_aics</a> (uint16_t conn_handle, <a class="el" href="struct_t___a_t_t_r___i_n_s_t_a_n_c_e.html">T_ATTR_INSTANCE</a> *p_aics_instance)</td></tr>
-<tr class="memdesc:ga39c31f75a20dcb86bd78f6d3b30c78a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all of include AICS services.  <a href="#ga39c31f75a20dcb86bd78f6d3b30c78a9">More...</a><br /></td></tr>
+<tr class="memdesc:ga39c31f75a20dcb86bd78f6d3b30c78a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all included AICS services.  <a href="#ga39c31f75a20dcb86bd78f6d3b30c78a9">More...</a><br /></td></tr>
 <tr class="separator:ga39c31f75a20dcb86bd78f6d3b30c78a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7f08feb7fe63b1f4ae6154968436d94c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_c_p___client___exported___functions.html#ga7f08feb7fe63b1f4ae6154968436d94c">mics_write_mute_value</a> (uint16_t conn_handle, <a class="el" href="group___m_i_c_p___def___exported___types.html#gae8d4e00272deaac8c45cd21c478d10b9">T_MICS_MUTE</a> mic_mute)</td></tr>
-<tr class="memdesc:ga7f08feb7fe63b1f4ae6154968436d94c"><td class="mdescLeft">&#160;</td><td class="mdescRight">MICS client write mute value.  <a href="#ga7f08feb7fe63b1f4ae6154968436d94c">More...</a><br /></td></tr>
+<tr class="memdesc:ga7f08feb7fe63b1f4ae6154968436d94c"><td class="mdescLeft">&#160;</td><td class="mdescRight">MICS client writes mute value.  <a href="#ga7f08feb7fe63b1f4ae6154968436d94c">More...</a><br /></td></tr>
 <tr class="separator:ga7f08feb7fe63b1f4ae6154968436d94c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga44480f3fe32da2b4787bf8da6a42fd50"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_i_c_p___client___exported___functions.html#ga44480f3fe32da2b4787bf8da6a42fd50">mics_get_mute_value</a> (uint16_t conn_handle, <a class="el" href="group___m_i_c_p___def___exported___types.html#gae8d4e00272deaac8c45cd21c478d10b9">T_MICS_MUTE</a> *p_value)</td></tr>
 <tr class="memdesc:ga44480f3fe32da2b4787bf8da6a42fd50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get MICS mute value.  <a href="#ga44480f3fe32da2b4787bf8da6a42fd50">More...</a><br /></td></tr>
@@ -88,21 +88,21 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get all of include AICS services. </p>
+<p>Get all included AICS services. </p>
 <p><a class="el" href="mics__client_8h_source.html">mics_client.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000044">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000041">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_aics_instance</td><td>Pointer to AICS services attribute instance: <a class="el" href="struct_t___a_t_t_r___i_n_s_t_a_n_c_e.html">T_ATTR_INSTANCE</a>.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_aics_instance</td><td>Pointer to AICS service attribute instance: <a class="el" href="struct_t___a_t_t_r___i_n_s_t_a_n_c_e.html">T_ATTR_INSTANCE</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of get all of include AICS services. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of getting all included AICS services. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Get all of include AICS services success. </td></tr>
-    <tr><td class="paramname">false</td><td>Get all of include AICS services failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Getting all included AICS services is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Getting all included AICS services failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -135,7 +135,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>MICS client write mute value. </p>
+<p>MICS client writes mute value. </p>
 <p><a class="el" href="mics__client_8h_source.html">mics_client.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -144,11 +144,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of MICS client write mute value. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of MICS client writing mute value. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>MICS client write mute value success. </td></tr>
-    <tr><td class="paramname">false</td><td>MICS client write mute value failed. </td></tr>
+    <tr><td class="paramname">true</td><td>MICS client writing mute value is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>MICS client writing mute value failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -190,11 +190,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of get MICS mute value. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of getting MICS mute value. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Get MICS mute value success. </td></tr>
-    <tr><td class="paramname">false</td><td>Get MICS mute value failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Getting MICS mute value is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Getting MICS mute value failed. </td></tr>
   </table>
   </dd>
 </dl>

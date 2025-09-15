@@ -3,7 +3,7 @@
 *     Copyright(c) 2024, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * @file    feature_check.h
-  * @brief   This file provides api to check different ic feature.
+  * @brief   This file provides API to check different IC feature.
   * @author  colin
   * @date    2024-03-08
   * @version v1.0
@@ -29,7 +29,7 @@
 extern "C" {
 #endif
 
-/** @addtogroup HAL_87x3e_FEATURE_CHECK Feature Check Api
+/** @addtogroup HAL_87x3e_FEATURE_CHECK Feature Check API
   * @{
   */
 

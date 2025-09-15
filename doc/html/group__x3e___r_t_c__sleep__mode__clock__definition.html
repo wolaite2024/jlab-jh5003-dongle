@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>BT AUDIO SDK: RTC sleep mode clock Definition</title>
+<title>BT AUDIO SDK: RTC Sleep Mode Clock Definition</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -44,17 +44,20 @@ $(function() {
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">RTC sleep mode clock Definition<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___r_t_c.html">RTC</a> &raquo; <a class="el" href="group__x3e___r_t_c___exported___constants.html">RTC Exported Constants</a></div></div>  </div>
+<div class="title">RTC Sleep Mode Clock Definition<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___r_t_c.html">RTC</a> &raquo; <a class="el" href="group__x3e___r_t_c___exported___constants.html">RTC Exported Constants</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga5d756673090d0c83167105f00f33cbc6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___r_t_c__sleep__mode__clock__definition.html#ga5d756673090d0c83167105f00f33cbc6">RTC_EXTERNAL_CLK</a>&#160;&#160;&#160;EXTERNAL_CLK</td></tr>
+<tr class="memdesc:ga5d756673090d0c83167105f00f33cbc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">RTC sleep mode clock is BTAON (xtal or ring osc).  <a href="#ga5d756673090d0c83167105f00f33cbc6">More...</a><br /></td></tr>
 <tr class="separator:ga5d756673090d0c83167105f00f33cbc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1c27d1566592a34feb4353718f9646dd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___r_t_c__sleep__mode__clock__definition.html#ga1c27d1566592a34feb4353718f9646dd">RTC_INTERNAL_CLK</a>&#160;&#160;&#160;INTERNAL_CLK</td></tr>
+<tr class="memdesc:ga1c27d1566592a34feb4353718f9646dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">RTC sleep mode clock is 32k sdm(internal 32K after calibration).  <a href="#ga1c27d1566592a34feb4353718f9646dd">More...</a><br /></td></tr>
 <tr class="separator:ga1c27d1566592a34feb4353718f9646dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga230a10eb89bc43b17c8089ec2cb95a11"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___r_t_c__sleep__mode__clock__definition.html#ga230a10eb89bc43b17c8089ec2cb95a11">IS_RTC_SLEEP_CLK</a>(CLK)</td></tr>
+<tr class="memdesc:ga230a10eb89bc43b17c8089ec2cb95a11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the input parameter is valid.  <a href="#ga230a10eb89bc43b17c8089ec2cb95a11">More...</a><br /></td></tr>
 <tr class="separator:ga230a10eb89bc43b17c8089ec2cb95a11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -71,6 +74,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>RTC sleep mode clock is BTAON (xtal or ring osc). </p>
+
 </div>
 </div>
 <a id="ga1c27d1566592a34feb4353718f9646dd"></a>
@@ -84,6 +89,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>RTC sleep mode clock is 32k sdm(internal 32K after calibration). </p>
 
 </div>
 </div>
@@ -102,7 +109,9 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">( ((CLK) == EXTERNAL_CLK) || \</div><div class="line">                                ((CLK) == RTC_INT_CMP3))</div></div><!-- fragment -->
+<b>Value:</b><div class="fragment"><div class="line">( ((CLK) == EXTERNAL_CLK) || \</div><div class="line">                                ((CLK) == INTERNAL_CLK))</div></div><!-- fragment -->
+<p>Check if the input parameter is valid. </p>
+
 </div>
 </div>
 </div><!-- contents -->

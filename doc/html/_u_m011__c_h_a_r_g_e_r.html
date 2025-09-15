@@ -178,36 +178,36 @@ Therefore, the voltage value measured at the VBAT terminal is different from the
  <center><div id="figure_3_2"><b>Figure 3-2 High Current Charging Configuration</b></div></center><h3><a class="anchor" id="Internal_Charger_APIs_from_ROM"></a>
 3.3  Internal Charger APIs from ROM</h3>
 <p>Internal Charger source code is implemented in ROM. APIs' declarations are in charger_api.h.</p><ol type="1">
-<li><a class="el" href="group__x3e___c_h_a_r_g_e_r___a_p_i___e_x_p_o_r_t___functions.html#ga93eee8954c778fe791583c54e813ec59" title="register the user-defined callback function, which will be called by charger module when charge state...">charger_api_reg_state_of_charge_callback()</a> <br />
+<li><a class="el" href="group__x3e___c_h_a_r_g_e_r___a_p_i___exported___functions.html#ga93eee8954c778fe791583c54e813ec59" title="Register the user-defined callback function, which will be called by charger module when charge state...">charger_api_reg_state_of_charge_callback()</a> <br />
 Register the user-defined callback function, which will be called by charger module when the state of charge(SOC, which is a term for charge, <a href="https://en.wikipedia.org/wiki/State_of_charge">https://en.wikipedia.org/wiki/State_of_charge</a>) changes. State of charge represents the quantity of electricity. User could append the APP code according to your demand.</li>
-<li><a class="el" href="group__x3e___c_h_a_r_g_e_r___a_p_i___e_x_p_o_r_t___functions.html#gac6fc2b2da215f9973d9929c89f5084c4" title="unregister the user-defined STATE_OF_CHARGE_CALLBACK callback function ">charger_api_unreg_state_of_charge_callback()</a> <br />
+<li><a class="el" href="group__x3e___c_h_a_r_g_e_r___a_p_i___exported___functions.html#gac6fc2b2da215f9973d9929c89f5084c4" title="Unregister the user-defined STATE_OF_CHARGE_CALLBACK callback function. ">charger_api_unreg_state_of_charge_callback()</a> <br />
 Unregister the user-defined STATE_OF_CHARGE_CALLBACK callback function.</li>
-<li><a class="el" href="group__x3e___c_h_a_r_g_e_r___a_p_i___e_x_p_o_r_t___functions.html#ga0f480ac5c23f661ef7f874893059a557" title="register the user-defined callback function, which will be called by charger moudle when charger modu...">charger_api_reg_charger_state_callback()</a> <br />
+<li><a class="el" href="group__x3e___c_h_a_r_g_e_r___a_p_i___exported___functions.html#ga0f480ac5c23f661ef7f874893059a557" title="Register the user-defined callback function, which will be called by charger moudle when charger modu...">charger_api_reg_charger_state_callback()</a> <br />
 Register the user-defined callback function, which will be called by charger moudule when the charger module state (it is different from SOC mentioned above) changes.</li>
-<li><a class="el" href="group__x3e___c_h_a_r_g_e_r___a_p_i___e_x_p_o_r_t___functions.html#ga621ac7bb980686926639f66bd208e3dc" title="unregister the user-defined CHARGER_STATE_CALLBACK callback function ">charger_api_unreg_charger_state_callback()</a> <br />
+<li><a class="el" href="group__x3e___c_h_a_r_g_e_r___a_p_i___exported___functions.html#ga621ac7bb980686926639f66bd208e3dc" title="Unregister the user-defined CHARGER_STATE_CALLBACK callback function. ">charger_api_unreg_charger_state_callback()</a> <br />
 Unregister the user-defined CHARGER_STATE_CALLBACK callback function.</li>
-<li><a class="el" href="group__x3e___c_h_a_r_g_e_r___a_p_i___e_x_p_o_r_t___functions.html#ga8d0ca41a345e386b94bd927305535e4a" title="enable charger module manually ">charger_api_enable_charger()</a> <br />
+<li><a class="el" href="group__x3e___c_h_a_r_g_e_r___a_p_i___exported___functions.html#ga8d0ca41a345e386b94bd927305535e4a" title="Enable charger module manually. ">charger_api_enable_charger()</a> <br />
 Enable charger module manually. IC's rom code calls it when USB adapter pluged. <br />
 <b>Note:</b> it will cause soft reset of charger module and force discharger module to be disabled if discharger module is running.</li>
-<li><a class="el" href="group__x3e___c_h_a_r_g_e_r___a_p_i___e_x_p_o_r_t___functions.html#ga95e12841d6ef214c49628d5502fa26e6" title="disable charger module manually ">charger_api_disable_charger()</a> <br />
+<li><a class="el" href="group__x3e___c_h_a_r_g_e_r___a_p_i___exported___functions.html#ga95e12841d6ef214c49628d5502fa26e6" title="Disable charger module manually. ">charger_api_disable_charger()</a> <br />
 Disable charger module manually. IC's rom code calls it when USB adapter unpluged.</li>
-<li><a class="el" href="group__x3e___c_h_a_r_g_e_r___a_p_i___e_x_p_o_r_t___functions.html#gae8bb476f713ff946655c9538e9893f6b" title="enable discharger module manually ">charger_api_enable_discharger()</a> <br />
+<li><a class="el" href="group__x3e___c_h_a_r_g_e_r___a_p_i___exported___functions.html#gae8bb476f713ff946655c9538e9893f6b" title="Enable discharger module manually. ">charger_api_enable_discharger()</a> <br />
 Enable discharger module manually. IC's rom code calls it when USB adapter unpluged. <br />
 <b>Note:</b> it will cause soft reset of discharger module and force charger module to be disabled if charger module is running.</li>
-<li><a class="el" href="group__x3e___c_h_a_r_g_e_r___a_p_i___e_x_p_o_r_t___functions.html#gaae0a42890cecb7b89aa6aefa281b2004" title="disable discharger module manually ">charger_api_disable_discharger()</a> <br />
+<li><a class="el" href="group__x3e___c_h_a_r_g_e_r___a_p_i___exported___functions.html#gaae0a42890cecb7b89aa6aefa281b2004" title="Disable discharger module manually. ">charger_api_disable_discharger()</a> <br />
 Disable discharger module manually. IC's rom code calls it when USB adapter pluged.</li>
-<li><a class="el" href="group___c_h_a_r_g_e_r___a_p_i___e_x_p_o_r_t___functions.html#ga3af01a0f68af6f509d87b445c552d26c" title="set maximum current of adapter ">charger_api_set_adapter_current()</a> <br />
+<li><a class="el" href="group__x3d___c_h_a_r_g_e_r___a_p_i___exported___functions.html#gac70fee3eee3e665b0379bba7e7f8400f" title="Set maximum current of adapter. ">charger_api_set_adapter_current()</a> <br />
 Set maximum current of adapter. <br />
 <b>Note:</b> it will trigger soft reset of charger module.</li>
-<li><a class="el" href="group___c_h_a_r_g_e_r___a_p_i___e_x_p_o_r_t___functions.html#gacf3e2af702a8b89b165e7a593a8bd46e" title="set full charge current (1C) ">charger_api_set_full_current()</a> <br />
+<li><a class="el" href="group__x3d___c_h_a_r_g_e_r___a_p_i___exported___functions.html#ga6ea6ff24a68be80bee5d85783d2c4e0c" title="Set full charge current (1C). ">charger_api_set_full_current()</a> <br />
 Set full charge current, the alias is general current (CC). <br />
 <b>Note:</b> it will trigger soft reset of charger module.</li>
-<li><a class="el" href="group___c_h_a_r_g_e_r___a_p_i___e_x_p_o_r_t___functions.html#ga04062770dc72c3ee3eee25aaa970f807" title="return state of charge ">charger_api_get_state_of_charge()</a> <br />
+<li><a class="el" href="group__x3d___c_h_a_r_g_e_r___a_p_i___exported___functions.html#ga04062770dc72c3ee3eee25aaa970f807" title="Return state of charge. ">charger_api_get_state_of_charge()</a> <br />
 Get state of charge(SOC). If charger is in CHARGER_MODULE or DISCHARGER_MODULE, the fucntion would return a uint8_t value (0~100). The return value means battery's quentity of electricity (0%~100%). <br />
 <b>Note:</b> it would return 255 when charger is in NO_ACTIVE_MODULE.</li>
-<li><a class="el" href="group___c_h_a_r_g_e_r___a_p_i___e_x_p_o_r_t___functions.html#ga6a75e3ff7f64ba7cf9d50d265a1a2765" title="return charger module state ">charger_api_get_charger_state()</a> <br />
+<li><a class="el" href="group__x3d___c_h_a_r_g_e_r___a_p_i___exported___functions.html#ga6a75e3ff7f64ba7cf9d50d265a1a2765" title="Return charger module state. ">charger_api_get_charger_state()</a> <br />
 Get the charger module state. The function would return the ChargerState_t type data.</li>
-<li><a class="el" href="group___c_h_a_r_g_e_r___a_p_i___e_x_p_o_r_t___functions.html#ga59cea66e99e3a9d0e9368fad08219a59" title="return error code of charger module ">charger_api_get_error_code()</a> <br />
+<li><a class="el" href="group__x3d___c_h_a_r_g_e_r___a_p_i___exported___functions.html#ga59cea66e99e3a9d0e9368fad08219a59" title="Return error code of charger module. ">charger_api_get_error_code()</a> <br />
 Get the error code of charger module. There are 11 error cases described as ChargerErrorCode_t.</li>
 </ol>
 <h3><a class="anchor" id="Internal_Charger_APIs_from_charger_utils"></a>

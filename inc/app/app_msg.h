@@ -129,6 +129,7 @@ typedef enum
     IO_MSG_TYPE_US_PKT_DECODE,
     IO_MSG_TYPE_DS_PCM_ENCODE,
     IO_MSG_TYPE_CONTROLLER,
+    IO_MSG_TYPE_BUFFERED_HID_REPORT,
 } T_IO_MSG_TYPE;
 
 /**  @brief IO subtype definitions for @ref T_IO_CONSOLE type */
@@ -196,7 +197,7 @@ typedef enum
 
 typedef enum
 {
-    IO_MSG_LEA_ISO_DATA_DOWNSTREAM = 0x01,
+    IO_MSG_LEA_ISO_SYNC_DOWNSTREAM = 0x01,
 } T_IO_MSG_LEA;
 
 /**  @brief IO subtype definitions for @ref IO_MSG_TYPE_CAP_TOUCH type */
@@ -251,6 +252,10 @@ typedef enum
 {
     IO_MSG_FINDMY_KEYROLL,
     IO_MSG_FINDMY_EVENT,
+    IO_MSG_FINDMY_DISCONNECT,
+    IO_MSG_FINDMY_RECONNECT_TIMEOUT,
+    IO_MSG_FINDMY_UT_START,
+    IO_MSG_FINDMY_MT,
 } T_IO_MSG_TYPE_FINDMY;
 
 /**  @brief IO message definition for communications between tasks*/

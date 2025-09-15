@@ -57,10 +57,10 @@ Functions</h2></td></tr>
 <tr class="memdesc:gaf88650ebe00a8fe6df92a522b51d8559"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set coordinator configure discover mode.  <a href="#gaf88650ebe00a8fe6df92a522b51d8559">More...</a><br /></td></tr>
 <tr class="separator:gaf88650ebe00a8fe6df92a522b51d8559"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac71b2f02c86f8a80173a9d0d37b4b9dc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_s_i_p___client___exported___functions.html#gac71b2f02c86f8a80173a9d0d37b4b9dc">set_coordinator_add_group</a> (<a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a> *p_group_handle, <a class="el" href="group___b_a_p___exported___types.html#ga2a3101690ba76c3e68a98de767cb37fc">P_FUN_AUDIO_GROUP_CB</a> p_fun_cb, <a class="el" href="group___b_a_p___exported___types.html#gaa3606c8a25f03aa4a4cc0c21f82850bd">T_BLE_AUDIO_DEV_HANDLE</a> *p_dev_handle, <a class="el" href="struct_t___c_s_i_s___s_e_t___m_e_m___i_n_f_o.html">T_CSIS_SET_MEM_INFO</a> *p_mem_info)</td></tr>
-<tr class="memdesc:gac71b2f02c86f8a80173a9d0d37b4b9dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set coordinator add ble audio group. When ble audio group is successfully added, the LE_AUDIO_MSG_CAP_SET_MEM_ADD will be send to Application.  <a href="#gac71b2f02c86f8a80173a9d0d37b4b9dc">More...</a><br /></td></tr>
+<tr class="memdesc:gac71b2f02c86f8a80173a9d0d37b4b9dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set coordinator add LE audio group.  <a href="#gac71b2f02c86f8a80173a9d0d37b4b9dc">More...</a><br /></td></tr>
 <tr class="separator:gac71b2f02c86f8a80173a9d0d37b4b9dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga90fb2da8d344b525be2a6a96ec7b230a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_s_i_p___client___exported___functions.html#ga90fb2da8d344b525be2a6a96ec7b230a">set_coordinator_add_dev</a> (<a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a> group_handle, <a class="el" href="group___b_a_p___exported___types.html#gaa3606c8a25f03aa4a4cc0c21f82850bd">T_BLE_AUDIO_DEV_HANDLE</a> *p_dev_handle, <a class="el" href="struct_t___c_s_i_s___s_e_t___m_e_m___i_n_f_o.html">T_CSIS_SET_MEM_INFO</a> *p_mem_info)</td></tr>
-<tr class="memdesc:ga90fb2da8d344b525be2a6a96ec7b230a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set coordinator add device. When the device is successfully added, the LE_AUDIO_MSG_CAP_SET_MEM_ADD will be send to Application.  <a href="#ga90fb2da8d344b525be2a6a96ec7b230a">More...</a><br /></td></tr>
+<tr class="memdesc:ga90fb2da8d344b525be2a6a96ec7b230a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set coordinator add device.  <a href="#ga90fb2da8d344b525be2a6a96ec7b230a">More...</a><br /></td></tr>
 <tr class="separator:ga90fb2da8d344b525be2a6a96ec7b230a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaae3f6fe15b4abfdae9c61db78a498615"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_s_i_p___client___exported___functions.html#gaae3f6fe15b4abfdae9c61db78a498615">set_coordinator_write_lock</a> (<a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a> group_handle)</td></tr>
 <tr class="memdesc:gaae3f6fe15b4abfdae9c61db78a498615"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSIS client write coordinator set members lock.  <a href="#gaae3f6fe15b4abfdae9c61db78a498615">More...</a><br /></td></tr>
@@ -135,11 +135,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of CSIS client check advertising RSI. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of CSIS client check on advertising RSI. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>CSIS client check advertising RSI success. </td></tr>
-    <tr><td class="paramname">false</td><td>CSIS client check advertising RSI failed. </td></tr>
+    <tr><td class="paramname">true</td><td>CSIS client check on advertising RSI is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>CSIS client check on advertising RSI failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -182,7 +182,7 @@ Functions</h2></td></tr>
 <p><a class="el" href="csis__client_8h_source.html">csis_client.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">group_handle</td><td>BLE audio group handle: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">group_handle</td><td>LE audio group handle: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">discover</td><td>The status for discover set member. <ul>
 <li>true set_coordinator is discovering set member. </li>
 <li>false set_coordinator is not discovering set member. </li>
@@ -195,7 +195,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The result of set coordinator configure discover mode. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Set coordinator configure discover mode success. </td></tr>
+    <tr><td class="paramname">true</td><td>Set coordinator configure discover mode is successful. </td></tr>
     <tr><td class="paramname">false</td><td>Set coordinator configure discover mode failed. </td></tr>
   </table>
   </dd>
@@ -241,23 +241,24 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set coordinator add ble audio group. When ble audio group is successfully added, the LE_AUDIO_MSG_CAP_SET_MEM_ADD will be send to Application. </p>
+<p>Set coordinator add LE audio group. </p>
 <p><a class="el" href="csis__client_8h_source.html">csis_client.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000032">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<p>When LE audio group is successfully added, the LE_AUDIO_MSG_CAP_SET_MEM_ADD will be sent to Application.</p>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000029">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_group_handle</td><td>Pointer to ble audio group: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_fun_cb</td><td>BLE audio group callback function: <a class="el" href="group___b_a_p___exported___types.html#ga2a3101690ba76c3e68a98de767cb37fc">P_FUN_AUDIO_GROUP_CB</a>. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_dev_handle</td><td>Pointer to ble audio device handle: <a class="el" href="group___b_a_p___exported___types.html#gaa3606c8a25f03aa4a4cc0c21f82850bd">T_BLE_AUDIO_DEV_HANDLE</a>. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_group_handle</td><td>Pointer to LE audio group: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_fun_cb</td><td>LE audio group callback function: <a class="el" href="group___b_a_p___exported___types.html#ga2a3101690ba76c3e68a98de767cb37fc">P_FUN_AUDIO_GROUP_CB</a>. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_dev_handle</td><td>Pointer to LE audio device handle: <a class="el" href="group___b_a_p___exported___types.html#gaa3606c8a25f03aa4a4cc0c21f82850bd">T_BLE_AUDIO_DEV_HANDLE</a>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_mem_info</td><td>Pointer to set member information: <a class="el" href="struct_t___c_s_i_s___s_e_t___m_e_m___i_n_f_o.html">T_CSIS_SET_MEM_INFO</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of set coordinator add ble audio group. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of set coordinator add LE audio group. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Set coordinator add ble audio group success. </td></tr>
-    <tr><td class="paramname">false</td><td>Set coordinator add ble audio group failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Set coordinator add LE audio group is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Set coordinator add LE audio group failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -296,13 +297,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set coordinator add device. When the device is successfully added, the LE_AUDIO_MSG_CAP_SET_MEM_ADD will be send to Application. </p>
+<p>Set coordinator add device. </p>
 <p><a class="el" href="csis__client_8h_source.html">csis_client.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000033">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<p>When the device is successfully added, the LE_AUDIO_MSG_CAP_SET_MEM_ADD will be sent to Application.</p>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000030">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_group_handle</td><td>Pointer to ble audio group: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_dev_handle</td><td>Pointer to ble audio device handle: <a class="el" href="group___b_a_p___exported___types.html#gaa3606c8a25f03aa4a4cc0c21f82850bd">T_BLE_AUDIO_DEV_HANDLE</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">group_handle</td><td>LE audio group: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_dev_handle</td><td>Pointer to LE audio device handle: <a class="el" href="group___b_a_p___exported___types.html#gaa3606c8a25f03aa4a4cc0c21f82850bd">T_BLE_AUDIO_DEV_HANDLE</a>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_mem_info</td><td>Pointer to set member information: <a class="el" href="struct_t___c_s_i_s___s_e_t___m_e_m___i_n_f_o.html">T_CSIS_SET_MEM_INFO</a>.</td></tr>
   </table>
   </dd>
@@ -310,7 +312,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The result of set coordinator add device. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Set coordinator add device success. </td></tr>
+    <tr><td class="paramname">true</td><td>Set coordinator add device is successful. </td></tr>
     <tr><td class="paramname">false</td><td>Set coordinator add device failed. </td></tr>
   </table>
   </dd>
@@ -338,14 +340,14 @@ Functions</h2></td></tr>
 <p><a class="el" href="csis__client_8h_source.html">csis_client.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">group_handle</td><td>BLE audio group handle: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">group_handle</td><td>LE audio group handle: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The result of CSIS client write coordinator set members lock. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>CSIS client write coordinator set members lock success. </td></tr>
+    <tr><td class="paramname">true</td><td>CSIS client write coordinator set members lock is successful. </td></tr>
     <tr><td class="paramname">false</td><td>CSIS client write coordinator set members lock failed. </td></tr>
   </table>
   </dd>
@@ -373,14 +375,14 @@ Functions</h2></td></tr>
 <p><a class="el" href="csis__client_8h_source.html">csis_client.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">group_handle</td><td>BLE audio group handle: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">group_handle</td><td>LE audio group handle: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The result of CSIS client write coordinator set members unlock. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>CSIS client write coordinator set members unlock success. </td></tr>
+    <tr><td class="paramname">true</td><td>CSIS client write coordinator set members unlock is successful. </td></tr>
     <tr><td class="paramname">false</td><td>CSIS client write coordinator set members unlock failed. </td></tr>
   </table>
   </dd>
@@ -416,10 +418,10 @@ Functions</h2></td></tr>
 
 <p>Set coordinator get lock state. </p>
 <p><a class="el" href="csis__client_8h_source.html">csis_client.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000034">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000031">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">group_handle</td><td>BLE audio group handle: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">group_handle</td><td>LE audio group handle: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_lock</td><td>Pointer to set coordinator lock state: <a class="el" href="group___c_s_i_p___client___exported___types.html#ga6a10e5601d07cd7cc61dc2989452983f">T_SET_COORDINATOR_LOCK</a>.</td></tr>
   </table>
   </dd>
@@ -427,7 +429,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The result of set coordinator get lock state. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Set coordinator get lock state success. </td></tr>
+    <tr><td class="paramname">true</td><td>Set coordinator get lock state is successful. </td></tr>
     <tr><td class="paramname">false</td><td>Set coordinator get lock state failed. </td></tr>
   </table>
   </dd>
@@ -455,11 +457,11 @@ Functions</h2></td></tr>
 <p><a class="el" href="csis__client_8h_source.html">csis_client.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_rsik</td><td>Pointer to rsi.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rsi</td><td>Pointer to rsi.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>BLE audio group handle: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>LE audio group handle: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">NULL</td><td>Not find set coordinator by rsi. </td></tr>
@@ -513,12 +515,12 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Pointer to address. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">addr_type</td><td>Address type: <a class="el" href="group___g_a_p___common___exported___types.html#ga41dd9d848e985c7c492f8f43e1da9249">T_GAP_REMOTE_ADDR_TYPE</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">serv_uuid</td><td>Service uuid. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_dev_handle</td><td>Pointer to ble audio device handle: <a class="el" href="group___b_a_p___exported___types.html#gaa3606c8a25f03aa4a4cc0c21f82850bd">T_BLE_AUDIO_DEV_HANDLE</a>.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">srv_uuid</td><td>Service uuid. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_dev_handle</td><td>Pointer to LE audio device handle: <a class="el" href="group___b_a_p___exported___types.html#gaa3606c8a25f03aa4a4cc0c21f82850bd">T_BLE_AUDIO_DEV_HANDLE</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>BLE audio group handle: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>LE audio group handle: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">NULL</td><td>Not find set coordinator by sirk. </td></tr>
@@ -558,7 +560,7 @@ Functions</h2></td></tr>
 <p><a class="el" href="csis__client_8h_source.html">csis_client.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">group_handle</td><td>BLE audio group handle: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">group_handle</td><td>LE audio group handle: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_info</td><td>Pointer to CSIS group information: <a class="el" href="struct_t___c_s_i_s___g_r_o_u_p___i_n_f_o.html">T_CSIS_GROUP_INFO</a>.</td></tr>
   </table>
   </dd>
@@ -566,7 +568,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The result of set coordinator get CSIS group information. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Set coordinator get CSIS group information success. </td></tr>
+    <tr><td class="paramname">true</td><td>Set coordinator get CSIS group information is successful. </td></tr>
     <tr><td class="paramname">false</td><td>Set coordinator get CSIS group information failed. </td></tr>
   </table>
   </dd>
@@ -608,11 +610,11 @@ Functions</h2></td></tr>
 
 <p>Set coordinator get set member information. </p>
 <p><a class="el" href="csis__client_8h_source.html">csis_client.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000035">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000032">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">group_handle</td><td>BLE audio group handle: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">dev_handle</td><td>BLE audio device handle: <a class="el" href="group___b_a_p___exported___types.html#gaa3606c8a25f03aa4a4cc0c21f82850bd">T_BLE_AUDIO_DEV_HANDLE</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">group_handle</td><td>LE audio group handle: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dev_handle</td><td>LE audio device handle: <a class="el" href="group___b_a_p___exported___types.html#gaa3606c8a25f03aa4a4cc0c21f82850bd">T_BLE_AUDIO_DEV_HANDLE</a>. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_info</td><td>Pointer to set member information: <a class="el" href="struct_t___c_s_i_s___s_e_t___m_e_m___i_n_f_o.html">T_CSIS_SET_MEM_INFO</a>.</td></tr>
   </table>
   </dd>
@@ -620,7 +622,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The result of set coordinator get set member information. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Set coordinator get set member information success. </td></tr>
+    <tr><td class="paramname">true</td><td>Set coordinator get set member information is successful. </td></tr>
     <tr><td class="paramname">false</td><td>Set coordinator get set member information failed. </td></tr>
   </table>
   </dd>

@@ -14,7 +14,6 @@
 /*============================================================================*
  *                              Header Files
  *============================================================================*/
-#include "string.h"
 #include "trace.h"
 #include "dma_channel.h"
 #include "vector_table.h"
@@ -23,7 +22,6 @@
 #include "rtl876x_nvic.h"
 #include "rtl876x_pinmux.h"
 #include "rtl876x_rcc.h"
-#include "rtl876x_uart.h"
 
 /** @defgroup  ADC_GDMA_DEMO ADC GDMA Demo
     * @brief  Adc data read by gdma implmentaion demo code
@@ -61,8 +59,8 @@ static void adc_handler(void);
   */
 static void board_adc_init(void)
 {
-    Pad_Config(ADC_0, PAD_SW_MODE, PAD_IS_PWRON, PAD_PULL_NONE, PAD_OUT_DISABLE, PAD_OUT_LOW);
-    Pad_Config(ADC_1, PAD_SW_MODE, PAD_IS_PWRON, PAD_PULL_NONE, PAD_OUT_DISABLE, PAD_OUT_LOW);
+    Pad_Config(ADC_0, PAD_SW_MODE, PAD_SHUTDOWN, PAD_PULL_NONE, PAD_OUT_DISABLE, PAD_OUT_LOW);
+    Pad_Config(ADC_1, PAD_SW_MODE, PAD_SHUTDOWN, PAD_PULL_NONE, PAD_OUT_DISABLE, PAD_OUT_LOW);
     Pinmux_Config(ADC_0, IDLE_MODE);
     Pinmux_Config(ADC_1, IDLE_MODE);
 }

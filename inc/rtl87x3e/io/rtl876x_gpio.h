@@ -1,12 +1,12 @@
 /**
 *********************************************************************************************************
-*               Copyright(c) 2015, Realtek Semiconductor Corporation. All rights reserved.
+*               Copyright(c) 2024, Realtek Semiconductor Corporation. All rights reserved.
 *********************************************************************************************************
 * @file      rtl876x_gpio.h
 * @brief
 * @details
 * @author    elliot chen
-* @date      2015-05-20
+* @date      2024-07-18
 * @version   v1.0
 * *********************************************************************************************************
 */
@@ -21,7 +21,7 @@ extern "C" {
 #include "rtl876x.h"
 
 /** @cond private
-  * @defgroup 87x3e_GPIO Debounce register
+  * @defgroup 87x3e_GPIO Debounce Register
   * @{
   */
 
@@ -178,7 +178,7 @@ extern "C" {
 #define PIN68_GPIO_INDEX       GPIO44
 
 /** @
-  * @brief Macros to lookup GPIO handler based on gpio number
+  * @brief Macros to lookup GPIO handler based on GPIO number
   */
 #define XGPIO_HANDLER(num)     GPIO ## num ## _Handler
 #define GPIO_HANDLER(num)      XGPIO_HANDLER(num)
@@ -266,7 +266,7 @@ extern "C" {
 
 
 /** @addtogroup 87x3e_GPIO GPIO
-  * @brief GPIO driver module
+  * @brief GPIO driver module.
   * @{
   */
 
@@ -279,177 +279,154 @@ extern "C" {
   * @{
   */
 
-/**
-  * @brief GPIO mode enumeration
+/** @defgroup 87x3e_GPIO_Declaration GPIO Declaration
+  * @{
+  */
+#define GPIO                            ((GPIO_TypeDef             *) GPIO0_REG_BASE) //!< The GPIO0 base address.
+#define GPIOA                           ((GPIO_TypeDef             *) GPIO0_REG_BASE) //!< The GPIO0 base address.
+#define GPIOB                           ((GPIO_TypeDef             *) GPIO1_REG_BASE) //!< The GPIO1 base address.
+/** End of group 87x3e_GPIO_Declaration
+  * @}
   */
 
-typedef enum
-{
-    GPIO_Mode_IN   = 0x00, /*!< GPIO Input Mode             */
-    GPIO_Mode_OUT  = 0x01, /*!< GPIO Output Mode                */
-} GPIOMode_TypeDef;
-
-#define IS_GPIO_MODE(MODE) (((MODE) == GPIO_Mode_IN)|| ((MODE) == GPIO_Mode_OUT))
-
 /**
- * @brief Setting interrupt's trigger type
- *
- * Setting interrupt's trigger type
+ * \defgroup    87x3e_GPIO_Mode GPIO Mode
+ * \{
  */
 typedef enum
 {
-    GPIO_INT_Trigger_LEVEL = 0x0, /**< This interrupt is level trigger  */
-    GPIO_INT_Trigger_EDGE  = 0x1, /**< This interrupt is edge trigger  */
-    GPIO_INT_BOTH_EDGE = 0x2,     /**< This interrupt is both edge trigger  */
+    GPIO_Mode_IN   = 0x00, /*!< GPIO input mode.             */
+    GPIO_Mode_OUT  = 0x01, /*!< GPIO output mode.                */
+} GPIOMode_TypeDef;
+
+#define IS_GPIO_MODE(MODE) (((MODE) == GPIO_Mode_IN)|| ((MODE) == GPIO_Mode_OUT)) //!< Check if the input parameter is valid.
+
+/** End of 87x3e_GPIO_Mode
+  * \}
+  */
+
+/**
+ * \defgroup    87x3e_GPIO_Interrupt_Trigger GPIO Interrupt Trigger
+ * \{
+ */
+typedef enum
+{
+    GPIO_INT_Trigger_LEVEL = 0x0, /**< This interrupt is level trigger.  */
+    GPIO_INT_Trigger_EDGE  = 0x1, /**< This interrupt is edge trigger.  */
+    GPIO_INT_BOTH_EDGE = 0x2,     /**< This interrupt is both edge trigger.  */
 } GPIOIT_LevelType;
 
 #define IS_GPIOIT_LEVEL_TYPE(TYPE) (((TYPE) == GPIO_INT_Trigger_LEVEL)\
                                     || ((TYPE) == GPIO_INT_Trigger_EDGE)\
-                                    || ((TYPE) == GPIO_INT_BOTH_EDGE))
+                                    || ((TYPE) == GPIO_INT_BOTH_EDGE)) //!< Check if the input parameter is valid.
+/** End of 87x3e_GPIO_Interrupt_Trigger
+  * \}
+  */
+
 
 /**
- * @brief Setting interrupt active mode
- *
- * Setting interrupt active mode
+ * \defgroup    87x3e_GPIO_Interrupt_Polarity GPIO Interrupt Polarity
+ * \{
  */
 typedef enum
 {
-    GPIO_INT_POLARITY_ACTIVE_LOW  = 0x0, /**< Setting interrupt to low active  */
-    GPIO_INT_POLARITY_ACTIVE_HIGH = 0x1, /**< Setting interrupt to high active */
+    GPIO_INT_POLARITY_ACTIVE_LOW  = 0x0, /**< Set interrupt polarity to low active.  */
+    GPIO_INT_POLARITY_ACTIVE_HIGH = 0x1, /**< Set interrupt polarity to high active. */
 } GPIOIT_PolarityType;
 
 #define IS_GPIOIT_POLARITY_TYPE(TYPE) (((TYPE) == GPIO_INT_POLARITY_ACTIVE_LOW)\
-                                       || ((TYPE) == GPIO_INT_POLARITY_ACTIVE_HIGH))
+                                       || ((TYPE) == GPIO_INT_POLARITY_ACTIVE_HIGH)) //!< Check if the input parameter is valid.
+/** End of 87x3e_GPIO_Interrupt_Polarity
+  * \}
+  */
 
 /**
- * @brief Enable/Disable interrupt debounce mode
- *
- * Enable/Disable interrupt debounce mode
+ * \defgroup    87x3e_GPIO_Interrupt_Debounce GPIO Interrupt Debounce
+ * \{
  */
 typedef enum
 {
-    GPIO_INT_DEBOUNCE_DISABLE = 0x0, /**< Disable interrupt debounce  */
-    GPIO_INT_DEBOUNCE_ENABLE  = 0x1, /**< Enable interrupt debounce   */
+    GPIO_INT_DEBOUNCE_DISABLE = 0x0, /**< Disable interrupt debounce.  */
+    GPIO_INT_DEBOUNCE_ENABLE  = 0x1, /**< Enable interrupt debounce.   */
 } GPIOIT_DebounceType;
 
 #define IS_GPIOIT_DEBOUNCE_TYPE(TYPE) (((TYPE) == GPIO_INT_DEBOUNCE_DISABLE)\
-                                       || ((TYPE) == GPIO_INT_DEBOUNCE_ENABLE))
+                                       || ((TYPE) == GPIO_INT_DEBOUNCE_ENABLE)) //!< Check if the input parameter is valid.
+/** End of 87x3e_GPIO_Interrupt_Debounce
+  * \}
+  */
 
 /**
-* @brief hardware/software mode select
-*
-* Select hardware mode or software mode
-*/
+ * \defgroup    87x3e_GPIO_Control_Mode GPIO Control Mode
+ * \{
+ */
 typedef enum
 {
-    GPIO_SOFTWARE_MODE = 0x0, /**< Gpio Software mode(default) */
-    GPIO_HARDWARE_MODE  = 0x1, /**< Gpio Hardware control mode  */
+    GPIO_SOFTWARE_MODE = 0x0, /**< GPIO software control mode(default). */
+    GPIO_HARDWARE_MODE  = 0x1, /**< GPIO hardware control mode. */
 } GPIOControlMode_Typedef;
 
 #define IS_GPIOIT_MODDE(TYPE) (((TYPE) == GPIO_SOFTWARE_MODE)\
-                               || ((TYPE) == GPIO_HARDWARE_MODE))
-
-
-/**
-  * @brief  Bit_SET and Bit_RESET enumeration
+                               || ((TYPE) == GPIO_HARDWARE_MODE)) //!< Check if the input parameter is valid.
+/** End of 87x3e_GPIO_Control_Mode
+  * \}
   */
 
+/**
+ * \defgroup    87x3e_GPIO_Bit_Action GPIO Bit Action
+ * \{
+ */
 typedef enum
 {
-    Bit_RESET = 0,
-    Bit_SET
+    Bit_RESET = 0, //!< Reset the GPIO bit.
+    Bit_SET //!< Set the GPIO bit.
 } BitAction;
 
-#define IS_GPIO_BIT_ACTION(ACTION) (((ACTION) == Bit_RESET) || ((ACTION) == Bit_SET))
-
-/** End of group 87x3e_GPIO_Exported_Constants
-  * @}
-  */
-
-/*============================================================================*
- *                         Types
- *============================================================================*/
-
-
-/** @defgroup 87x3e_GPIO_Exported_Types GPIO Exported Types
-* @{
-*/
-
-/**
-  * @brief  GPIO Init structure definition
-  */
-
-typedef struct
-{
-    uint32_t                  GPIO_PinBit;        /*!< Specifies the GPIO pins to be configured.
-                                                             This parameter can be any value of @ref GPIO_pins_define */
-    GPIOMode_TypeDef          GPIO_Mode;       /*!< Specifies the operating mode for the selected pins.
-                                                             This parameter can be a value of @ref GPIOMode_TypeDef */
-    FunctionalState           GPIO_ITCmd;      /**< Enable or disable GPIO interrupt.
-                                                             This parameter can be a value of DISABLE or ENABLE */
-
-    GPIOIT_LevelType          GPIO_ITTrigger;  /**< Interrupt mode is level or edge trigger.
-                                                             This parameter can be a value of DISABLE or ENABLE */
-
-    GPIOIT_PolarityType       GPIO_ITPolarity; /**< Interrupt mode is high or low active trigger */
-
-    GPIOIT_DebounceType       GPIO_ITDebounce; /**< Enable or disable de-bounce for interrupt */
-
-    GPIOControlMode_Typedef   GPIO_ControlMode; /**< Specifies the gpio mode */
-
-    uint32_t GPIO_DebounceTime;                  /**< per.(ms) Specifies the gpio debounce time setting */
-} GPIO_InitTypeDef;
-
-/**
-  * @}
-  */
-
-/* Exported constants --------------------------------------------------------*/
-
-/** @defgroup 87x3e_GPIO_Exported_Constants GPIO Exported Constants
-  * @{
+#define IS_GPIO_BIT_ACTION(ACTION) (((ACTION) == Bit_RESET) || ((ACTION) == Bit_SET)) //!< Check if the input parameter is valid.
+/** End of 87x3e_GPIO_Bit_Action
+  * \}
   */
 
 /** @defgroup 87x3e_GPIO_pins_define GPIO Pins Define
   * @{
   */
-#define GPIO_Pin_0                 ((uint32_t)0x00000001)  /*!< Pin 0 selected    */
-#define GPIO_Pin_1                 ((uint32_t)0x00000002)  /*!< Pin 1 selected    */
-#define GPIO_Pin_2                 ((uint32_t)0x00000004)  /*!< Pin 2 selected    */
-#define GPIO_Pin_3                 ((uint32_t)0x00000008)  /*!< Pin 3 selected    */
-#define GPIO_Pin_4                 ((uint32_t)0x00000010)  /*!< Pin 4 selected    */
-#define GPIO_Pin_5                 ((uint32_t)0x00000020)  /*!< Pin 5 selected    */
-#define GPIO_Pin_6                 ((uint32_t)0x00000040)  /*!< Pin 6 selected    */
-#define GPIO_Pin_7                 ((uint32_t)0x00000080)  /*!< Pin 7 selected    */
-#define GPIO_Pin_8                 ((uint32_t)0x00000100)  /*!< Pin 8 selected    */
-#define GPIO_Pin_9                 ((uint32_t)0x00000200)  /*!< Pin 9 selected    */
-#define GPIO_Pin_10                ((uint32_t)0x00000400)  /*!< Pin 10 selected   */
-#define GPIO_Pin_11                ((uint32_t)0x00000800)  /*!< Pin 11 selected   */
-#define GPIO_Pin_12                ((uint32_t)0x00001000)  /*!< Pin 12 selected   */
-#define GPIO_Pin_13                ((uint32_t)0x00002000)  /*!< Pin 13 selected   */
-#define GPIO_Pin_14                ((uint32_t)0x00004000)  /*!< Pin 14 selected   */
-#define GPIO_Pin_15                ((uint32_t)0x00008000)  /*!< Pin 15 selected   */
-#define GPIO_Pin_16                ((uint32_t)0x00010000)  /*!< Pin 16 selected    */
-#define GPIO_Pin_17                ((uint32_t)0x00020000)  /*!< Pin 17 selected    */
-#define GPIO_Pin_18                ((uint32_t)0x00040000)  /*!< Pin 18 selected    */
-#define GPIO_Pin_19                ((uint32_t)0x00080000)  /*!< Pin 19 selected    */
-#define GPIO_Pin_20                ((uint32_t)0x00100000)  /*!< Pin 20 selected    */
-#define GPIO_Pin_21                ((uint32_t)0x00200000)  /*!< Pin 21 selected    */
-#define GPIO_Pin_22                ((uint32_t)0x00400000)  /*!< Pin 22 selected    */
-#define GPIO_Pin_23                ((uint32_t)0x00800000)  /*!< Pin 23 selected    */
-#define GPIO_Pin_24                ((uint32_t)0x01000000)  /*!< Pin 24 selected    */
-#define GPIO_Pin_25                ((uint32_t)0x02000000)  /*!< Pin 25 selected    */
-#define GPIO_Pin_26                ((uint32_t)0x04000000)  /*!< Pin 26 selected   */
-#define GPIO_Pin_27                ((uint32_t)0x08000000)  /*!< Pin 27 selected   */
-#define GPIO_Pin_28                ((uint32_t)0x10000000)  /*!< Pin 28 selected   */
-#define GPIO_Pin_29                ((uint32_t)0x20000000)  /*!< Pin 29 selected   */
-#define GPIO_Pin_30                ((uint32_t)0x40000000)  /*!< Pin 30 selected   */
-#define GPIO_Pin_31                ((uint32_t)0x80000000)  /*!< Pin 31 selected   */
-#define GPIO_Pin_All               ((uint32_t)0xFFFFFFFF)  /*!< All pins selected */
+#define GPIO_Pin_0                 ((uint32_t)0x00000001)  /*!< Pin 0 selected.    */
+#define GPIO_Pin_1                 ((uint32_t)0x00000002)  /*!< Pin 1 selected.    */
+#define GPIO_Pin_2                 ((uint32_t)0x00000004)  /*!< Pin 2 selected.    */
+#define GPIO_Pin_3                 ((uint32_t)0x00000008)  /*!< Pin 3 selected.    */
+#define GPIO_Pin_4                 ((uint32_t)0x00000010)  /*!< Pin 4 selected.    */
+#define GPIO_Pin_5                 ((uint32_t)0x00000020)  /*!< Pin 5 selected.    */
+#define GPIO_Pin_6                 ((uint32_t)0x00000040)  /*!< Pin 6 selected.    */
+#define GPIO_Pin_7                 ((uint32_t)0x00000080)  /*!< Pin 7 selected.    */
+#define GPIO_Pin_8                 ((uint32_t)0x00000100)  /*!< Pin 8 selected.    */
+#define GPIO_Pin_9                 ((uint32_t)0x00000200)  /*!< Pin 9 selected.    */
+#define GPIO_Pin_10                ((uint32_t)0x00000400)  /*!< Pin 10 selected.   */
+#define GPIO_Pin_11                ((uint32_t)0x00000800)  /*!< Pin 11 selected.   */
+#define GPIO_Pin_12                ((uint32_t)0x00001000)  /*!< Pin 12 selected.   */
+#define GPIO_Pin_13                ((uint32_t)0x00002000)  /*!< Pin 13 selected.   */
+#define GPIO_Pin_14                ((uint32_t)0x00004000)  /*!< Pin 14 selected.   */
+#define GPIO_Pin_15                ((uint32_t)0x00008000)  /*!< Pin 15 selected.   */
+#define GPIO_Pin_16                ((uint32_t)0x00010000)  /*!< Pin 16 selected.    */
+#define GPIO_Pin_17                ((uint32_t)0x00020000)  /*!< Pin 17 selected.    */
+#define GPIO_Pin_18                ((uint32_t)0x00040000)  /*!< Pin 18 selected.    */
+#define GPIO_Pin_19                ((uint32_t)0x00080000)  /*!< Pin 19 selected.    */
+#define GPIO_Pin_20                ((uint32_t)0x00100000)  /*!< Pin 20 selected.    */
+#define GPIO_Pin_21                ((uint32_t)0x00200000)  /*!< Pin 21 selected.    */
+#define GPIO_Pin_22                ((uint32_t)0x00400000)  /*!< Pin 22 selected.    */
+#define GPIO_Pin_23                ((uint32_t)0x00800000)  /*!< Pin 23 selected.    */
+#define GPIO_Pin_24                ((uint32_t)0x01000000)  /*!< Pin 24 selected.    */
+#define GPIO_Pin_25                ((uint32_t)0x02000000)  /*!< Pin 25 selected.    */
+#define GPIO_Pin_26                ((uint32_t)0x04000000)  /*!< Pin 26 selected.   */
+#define GPIO_Pin_27                ((uint32_t)0x08000000)  /*!< Pin 27 selected.   */
+#define GPIO_Pin_28                ((uint32_t)0x10000000)  /*!< Pin 28 selected.   */
+#define GPIO_Pin_29                ((uint32_t)0x20000000)  /*!< Pin 29 selected.   */
+#define GPIO_Pin_30                ((uint32_t)0x40000000)  /*!< Pin 30 selected.   */
+#define GPIO_Pin_31                ((uint32_t)0x80000000)  /*!< Pin 31 selected.   */
+#define GPIO_Pin_All               ((uint32_t)0xFFFFFFFF)  /*!< All pins selected. */
 
-#define IS_GPIO_PIN(PIN) ((PIN) != (uint32_t)0x00)
+#define IS_GPIO_PIN(PIN) ((PIN) != (uint32_t)0x00) //!< Check if the input parameter is valid.
 
-#define IS_PIN_NUM(NUM) ((NUM) <= (uint8_t)TOTAL_PIN_NUM)
+#define IS_PIN_NUM(NUM) ((NUM) <= (uint8_t)TOTAL_PIN_NUM) //!< Check if the input parameter is valid.
 
 #define IS_GET_GPIO_PIN(PIN) (((PIN) == GPIO_Pin_0) || \
                               ((PIN) == GPIO_Pin_1) || \
@@ -482,7 +459,7 @@ typedef struct
                               ((PIN) == GPIO_Pin_28) || \
                               ((PIN) == GPIO_Pin_29) || \
                               ((PIN) == GPIO_Pin_30) || \
-                              ((PIN) == GPIO_Pin_31))
+                              ((PIN) == GPIO_Pin_31)) //!< Check if the input parameter is valid.
 /** End of group 87x3e_GPIO_pins_define
   * @}
   */
@@ -491,6 +468,46 @@ typedef struct
   * @}
   */
 
+/*============================================================================*
+ *                         Types
+ *============================================================================*/
+
+
+/** @defgroup 87x3e_GPIO_Exported_Types GPIO Exported Types
+  * @{
+  */
+
+/**
+  * @brief  GPIO Init structure definition
+  */
+
+typedef struct
+{
+    uint32_t                  GPIO_PinBit;        /*!< Specifies the GPIO pins to be configured.
+                                                             This parameter can be a value of \ref x3e_GPIO_pins_define. */
+    GPIOMode_TypeDef          GPIO_Mode;       /*!< Specifies the operating mode for the selected pins.
+                                                             This parameter can be a value of \ref x3e_GPIO_Mode. */
+    FunctionalState           GPIO_ITCmd;      /**< Enable or disable GPIO interrupt.
+                                                             This parameter can be a value of DISABLE or ENABLE. */
+
+    GPIOIT_LevelType          GPIO_ITTrigger;  /**< Specifies the GPIO interrupt trigger type.
+                                                             This parameter can be a value of \ref x3e_GPIO_Interrupt_Trigger. */
+
+    GPIOIT_PolarityType       GPIO_ITPolarity; /**< Specifies the GPIO interrupt polarity.
+                                                             This parameter can be a value of \ref x3e_GPIO_Interrupt_Polarity. */
+
+    GPIOIT_DebounceType       GPIO_ITDebounce; /**< Enable or disable debounce for interrupt.
+                                                     This parameter can be a value of \ref x3e_GPIO_Interrupt_Debounce */
+
+    GPIOControlMode_Typedef   GPIO_ControlMode; /**< Specifies the GPIO control mode.
+                                                             This parameter can be a value of \ref x3e_GPIO_Control_Mode. */
+
+    uint32_t GPIO_DebounceTime;                  /**< Specifies the GPIO debounce time, per(ms).  */
+} GPIO_InitTypeDef;
+
+/** End of group 87x3e_GPIO_Exported_Types
+  * @}
+  */
 /*============================================================================*
  *                         Functions
  *============================================================================*/
@@ -501,89 +518,262 @@ typedef struct
   */
 
 /**
-  * @brief  Deinitializes the GPIO peripheral registers to their default reset values.
-  * @param GPIOx choose GPIOA or GPIOB
-  * @retval None
-  */
+ *
+ * \brief   Deinitializes the GPIO peripheral registers to their default reset values (turn off clock).
+ *
+ * \param[in] GPIOx: Where x can be A or B to select the GPIO peripheral \ref x3e_GPIO_Declaration.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * void driver_gpio_init(void)
+ * {
+ *     GPIOx_DeInit(GPIOA);
+ * }
+ * \endcode
+ */
 void GPIOx_DeInit(GPIO_TypeDef *GPIOx);
 
-/**
-  * @brief  Initializes the GPIO peripheral according to the specified
-  *         parameters in the GPIO_InitStruct.
-  * @param  GPIOx choose GPIOA or GPIOB
-  * @param  GPIO_InitStruct: pointer to a GPIO_InitTypeDef structure that
-  *         contains the configuration information for the specified GPIO peripheral.
-  * @retval None
-  */
-extern void (*GPIOx_Init)(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_InitStruct);
 
 /**
-  * @brief    Fills each GPIO_InitStruct member with its default value.
-  * @param  GPIO_InitStruct : pointer to a GPIO_InitTypeDef structure which will
-  *    be initialized.
-  * @retval None
-  */
+ *
+ * \brief  Initializes the GPIO peripheral according to the specified
+ *         parameters in the GPIO_InitStruct.
+ *
+ * \param[in] GPIOx: Where x can be A or B to select the GPIO peripheral \ref x3e_GPIO_Declaration.
+ * \param[in] GPIO_InitStruct: Pointer to a \ref GPIO_InitTypeDef structure that
+ *            contains the configuration information for the specified GPIO peripheral.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * #define GPIO_Test_Pin     GPIO_GetPin(P3_0)
+ * void driver_gpio_init(void)
+ * {
+ *     RCC_PeriphClockCmd(APBPeriph_GPIOA, APBPeriph_GPIOA_CLOCK, ENABLE);
+ *
+ *     GPIO_InitTypeDef GPIO_InitStruct;
+ *     GPIO_StructInit(&GPIO_InitStruct);
+ *     GPIO_InitStruct.GPIO_PinBit     = GPIO_Test_Pin;
+ *     GPIO_InitStruct.GPIO_Mode       = GPIO_Mode_IN;
+ *     GPIO_InitStruct.GPIO_ITCmd      = DISABLE;
+ *     GPIOx_Init(GPIOA, &GPIO_InitStruct);
+ * }
+ * \endcode
+ */
+extern void (*GPIOx_Init)(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_InitStruct);
+
+
+/**
+ *
+ * \brief    Fills each GPIO_InitStruct member with its default value.
+ *
+ * \note   The default settings for the GPIO_InitStruct member are shown in the following table:
+ *         | GPIO_InitStruct Member | Default Value                     |
+ *         |:----------------------:|:---------------------------------:|
+ *         | GPIO_PinBit            | \ref GPIO_Pin_All                 |
+ *         | GPIO_Mode              | \ref GPIO_Mode_IN                 |
+ *         | GPIO_ITCmd             | DISABLE                           |
+ *         | GPIO_ITTrigger         | \ref GPIO_INT_Trigger_LEVEL       |
+ *         | GPIO_ITPolarity        | \ref GPIO_INT_POLARITY_ACTIVE_LOW |
+ *         | GPIO_ITDebounce        | \ref GPIO_INT_DEBOUNCE_DISABLE    |
+ *         | GPIO_ControlMode       | \ref GPIO_SOFTWARE_MODE           |
+ *         | GPIO_DebounceTime      | 20                                |
+ *
+ * \param[in]  GPIO_InitStruct: Pointer to a \ref GPIO_InitTypeDef structure which will
+ *             be initialized.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * #define GPIO_Test_Pin     GPIO_GetPin(P3_0)
+ * void driver_gpio_init(void)
+ * {
+ *     RCC_PeriphClockCmd(APBPeriph_GPIOA, APBPeriph_GPIOA_CLOCK, ENABLE);
+ *
+ *     GPIO_InitTypeDef GPIO_InitStruct;
+ *     GPIO_StructInit(&GPIO_InitStruct);
+ *     GPIO_InitStruct.GPIO_PinBit     = GPIO_Test_Pin;
+ *     GPIO_InitStruct.GPIO_Mode       = GPIO_Mode_IN;
+ *     GPIO_InitStruct.GPIO_ITCmd      = ENABLE;
+ *     GPIO_InitStruct.GPIO_ITTrigger  = GPIO_INT_Trigger_EDGE;
+ *     GPIO_InitStruct.GPIO_ITPolarity = GPIO_INT_POLARITY_ACTIVE_LOW;
+ *     GPIO_InitStruct.GPIO_ITDebounce = GPIO_INT_DEBOUNCE_ENABLE;
+ *     GPIO_InitStruct.GPIO_DebounceTime = 30;
+ *     GPIOx_Init(GPIOA, &GPIO_InitStruct);
+ * }
+ * \endcode
+ */
 void GPIO_StructInit(GPIO_InitTypeDef *GPIO_InitStruct);
 
 
-
 /**
-  * @brief enable the specified GPIO interrupt.
-  * @param  GPIOx choose GPIOA or GPIOB
-  * @param  GPIO_PinBit: where x can be 0 or 31.
-  * @param  NewState: enable or disable interrupt
-  * @retval None
-  */
+ *
+ * \brief   Enable the specified GPIO pin interrupt.
+ *
+ * \param[in] GPIOx: Where x can be A or B to select the GPIO peripheral \ref x3e_GPIO_Declaration.
+ * \param[in] GPIO_PinBit: Specifies the GPIO pins to be configured, please refer to \ref x3e_GPIO_pins_define.
+ *            This parameter can be one of the following values:
+ *            - GPIO_Pin_x, where x can be 0 ~ 31.
+ * \param[in] NewState: Enable or disable the specified GPIO pin interrupt.
+ *            This parameter can be one of the following values:
+ *            - ENABLE: Enable the specified GPIO pin interrupt.
+ *            - DISABLE: Disable the specified GPIO pin interrupt.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * #define GPIO_Test_Pin     GPIO_GetPin(P0_0)
+ * void driver_gpio_init(void)
+ * {
+ *     RamVectorTableUpdate(GPIO_A0_VECTORn, gpio_handler);
+ *
+ *     NVIC_InitTypeDef NVIC_InitStruct;
+ *     NVIC_InitStruct.NVIC_IRQChannel = GPIO_IRQ;
+ *     NVIC_InitStruct.NVIC_IRQChannelPriority = 3;
+ *     NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
+ *     NVIC_Init(&NVIC_InitStruct);
+ *
+ *     GPIOx_MaskINTConfig(GPIOA, GPIO_Test_Pin, DISABLE);
+ *     GPIOx_INTConfig(GPIOA, GPIO_Test_Pin, ENABLE);
+ * }
+ * \endcode
+ */
 void GPIOx_INTConfig(GPIO_TypeDef *GPIOx, uint32_t GPIO_PinBit, FunctionalState NewState);
 
 
 /**
-  * @brief clear the specified GPIO interrupt.
-  * @param  GPIOx choose GPIOA or GPIOB
-  * @param  GPIO_PinBit: where x can be 0 or 31.
-  * @retval None
-  */
+ *
+ * \brief   Clear the specified GPIO pin interrupt pending bit.
+ *
+ * \param[in] GPIOx: Where x can be A or B to select the GPIO peripheral \ref x3e_GPIO_Declaration.
+ * \param[in] GPIO_PinBit: Specifies the GPIO pins to be configured, please refer to \ref x3e_GPIO_pins_define.
+ *            This parameter can be one of the following values:
+ *            - GPIO_Pin_x, where x can be 0 ~ 31.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * #define GPIO_Test_Pin     GPIO_GetPin(P0_0)
+ * //GPIO interrupt handler function.
+ * void gpio_handler(void)
+ * {
+ *     //add user code here
+ *     APP_PRINT_INFO0("gpio_handler\n");
+ *     GPIOx_ClearINTPendingBit(GPIOA, GPIO_Test_Pin);
+ * }
+ * \endcode
+ */
 void GPIOx_ClearINTPendingBit(GPIO_TypeDef *GPIOx, uint32_t GPIO_PinBit);
 
 
-
 /**
-  * @brief mask the specified GPIO interrupt.
-  * @param  GPIOx choose GPIOA or GPIOB
-  * @param  GPIO_PinBit: where x can be 0 or 31.
-  * @param  NewState: disable or enable interrupt.
-  * @retval None
-  */
+ *
+ * \brief   Config whether mask the specified GPIO pin interrupt.
+ *
+ * \param[in] GPIOx: Where x can be A or B to select the GPIO peripheral \ref x3e_GPIO_Declaration.
+ * \param[in] GPIO_PinBit: Specifies the GPIO pins to be configured, please refer to \ref x3e_GPIO_pins_define.
+ *            This parameter can be one of the following values:
+ *            - GPIO_Pin_x, where x can be 0 ~ 31.
+ * \param[in] NewState: Enable or disable mask the specified GPIO pin interrupt.
+ *            This parameter can be one of the following values:
+ *            - ENABLE: Enable mask the specified GPIO pin interrupt.
+ *            - DISABLE: Disable mask the specified GPIO pin interrupt.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * #define GPIO_Test_Pin     GPIO_GetPin(P3_0)
+ * //GPIO interrupt handler function.
+ * void gpio_handler(void)
+ * {
+ *    GPIOx_MaskINTConfig(GPIOA, GPIO_Test_Pin, ENABLE);
+ *
+ *    //add user code here.
+ *    GPIOx_ClearINTPendingBit(GPIOA, GPIO_Test_Pin);
+ *    GPIOx_MaskINTConfig(GPIOA, GPIO_Test_Pin, DISABLE);
+ * }
+ * \endcode
+ */
 void GPIOx_MaskINTConfig(GPIO_TypeDef *GPIOx, uint32_t GPIO_PinBit, FunctionalState NewState);
 
-/**
-  * @brief  Gets a GPIO bit number such as GPIO[x], which corresponds to Pin_num.
-  * @param  Pin_num: This parameter is  [ADC_0 , TOTAL_PIN_NUM), please refer to rtl876x.h "Pin_Number" part.
-  * @retval GPIO pin for GPIO initialization.
-  */
-uint32_t GPIO_GetPin(uint8_t Pin_num);
 
 /**
-  * @brief  Gets the number which Pin_num been define.
-  * @param  Pin_num: This parameter is  [ADC_0 , TOTAL_PIN_NUM), please refer to rtl876x.h "Pin_Number" part.
-  * @retval GPIO pin number.
-  */
+ *
+ * \brief   Get the GPIO_Pin through the given Pin_num.
+ *
+ * \param[in] Pin_Num: Pin number to be configured.
+ *            This parameter can be one of the following values:
+ *            -  P0_0 ~ P10_0, please refer to \ref x3e_Pin_Number.
+ *
+ * \return  GPIO_Pin_x, where x can be 0 ~ 31. \ref x3e_GPIO_pins_define.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * void driver_gpio_init(void)
+ * {
+ *     uint32_t gpio_pin = GPIO_GetPin(P4_0);
+ *     //result: gpio_pin = GPIO_Pin_28
+ * }
+ * \endcode
+ */
+uint32_t GPIO_GetPin(uint8_t Pin_num);
+
+
+/**
+ *
+ * \brief   Get GPIOx(x is 0~31) value through the given Pin_num.
+ *
+ * \param[in] Pin_Num: Pin number to be configured.
+ *            This parameter can be one of the following values:
+ *            -  P0_0 ~ P10_0, please refer to \ref x3e_Pin_Number.
+ *
+ * \return  GPIOx(x is 0~31) value.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * void gpio_demo(void)
+ * {
+ *     uint8_t gpio_num = GPIO_GetNum(P4_0);
+ *     //result: gpio_num = 28
+ * }
+ * \endcode
+ */
 uint8_t GPIO_GetNum(uint8_t Pin_num);
 
 #if 0  //remove the code for save size
 /**
-  * @brief Enable the debance clk of GPIOx.
-  * @param GPIOx choose GPIOA or GPIOB
-  * @retval  none.
+  * @brief Enable the debounce clk of GPIOx.
+  * @param GPIOx choose GPIOA or GPIOB.
   */
 void GPIOx_DBClkCmd(GPIO_TypeDef *GPIOx, FunctionalState NewState);
 #endif
+
+
 /**
-  * @brief    Reads the specified input port pin.
-  * @param  GPIO_Pin:  specifies the port bit to read.
-  *   This parameter can be GPIO_Pin_x where x can be (0..31).
-  * @retval The input port pin value.
-  */
+ *
+ * \brief   Read the specified input port pin.
+ *
+ * \param[in] GPIOx: Where x can be A or B to select the GPIO peripheral \ref x3e_GPIO_Declaration.
+ * \param[in] GPIO_PinBit: Specifies the GPIO pins to be configured, please refer to \ref x3e_GPIO_pins_define.
+ *            This parameter can be one of the following values:
+ *            - GPIO_Pin_x, where x can be 0 ~ 31.
+ *
+ * \return  The input port pin value.
+ * \retval SET: The input port pin value is 1.
+ * \retval RESET: The input port pin value is 0.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * void gpio_demo(void)
+ * {
+ *     uint8_t input_bit = GPIOx_ReadInputDataBit(GPIOA, GPIO_GetPin(P4_0));
+ * }
+ * \endcode
+ */
 __forceinline uint8_t GPIOx_ReadInputDataBit(GPIO_TypeDef *GPIOx, uint32_t GPIO_PinBit)
 {
     uint8_t bitstatus = RESET;
@@ -599,25 +789,54 @@ __forceinline uint8_t GPIOx_ReadInputDataBit(GPIO_TypeDef *GPIOx, uint32_t GPIO_
     return bitstatus;
 }
 
-
-
 /**
-  * @brief  Reads value of all  GPIO input data port.
-  *   param  GPIOx choose GPIOA or GPIOB
-  * @retval GPIO input data port value.
-  */
-__STATIC_INLINE uint32_t GPIOx_ReadInputData(GPIO_TypeDef *GPIOx)
+ *
+ * \brief  Read value of all GPIO input data port.
+ *
+ * \param[in] GPIOx: Where x can be A or B to select the GPIO peripheral \ref x3e_GPIO_Declaration.
+ *
+ * \return GPIO input data port value.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * //read GPIO input
+ * void gpio_test(void)
+ * {
+ *     uint32_t gpio_data = 0;
+ *     gpio_data = GPIOx_ReadInputData(GPIOA);
+ *     APP_PRINT_INFO1(" GPIOx_ReadInputData =0x%x\n", gpio_data);
+ * }
+ * \endcode
+ */
+__STATIC_ALWAYS_INLINE uint32_t GPIOx_ReadInputData(GPIO_TypeDef *GPIOx)
 {
     return GPIOx->DATAIN;
 }
 
+
 /**
-  * @brief  Reads the specified output port pin.
-  *   param  GPIOx choose GPIOA or GPIOB
-  * @param  GPIO_PinBit:  specifies the port bit to read.
-  *   This parameter can be GPIO_Pin_x where x can be (0..31).
-  * @retval The output port pin value.
-  */
+ *
+ * \brief   Read the specified output port pin.
+ *
+ * \param[in] GPIOx: Where x can be A or B to select the GPIO peripheral \ref x3e_GPIO_Declaration.
+ * \param[in] GPIO_PinBit: Specifies the GPIO pins to be configured, please refer to \ref x3e_GPIO_pins_define.
+ *            This parameter can be one of the following values:
+ *            - GPIO_Pin_x, where x can be 0 ~ 31.
+ *
+ * \return The output port pin value.
+ * \retval SET: The output port pin value is 1.
+ * \retval RESET: The output port pin value is 0.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * void gpio_demo(void)
+ * {
+ *     uint8_t output_bit = GPIOx_ReadOutputDataBit(GPIOA, GPIO_GetPin(P4_0));
+ * }
+ * \endcode
+ */
 __forceinline uint8_t GPIOx_ReadOutputDataBit(GPIO_TypeDef *GPIOx, uint32_t GPIO_PinBit)
 {
     uint8_t bitstatus = RESET;
@@ -633,36 +852,79 @@ __forceinline uint8_t GPIOx_ReadOutputDataBit(GPIO_TypeDef *GPIOx, uint32_t GPIO
     return bitstatus;
 }
 
+
 /**
-  * @brief  Reads value of all  GPIO output data port.
-  *   param  GPIOx choose GPIOA or GPIOB
-  * @retval GPIO output data port value.
-  */
-__STATIC_INLINE uint32_t GPIOx_ReadOutputData(GPIO_TypeDef *GPIOx)
+ *
+ * \brief   Read value of all GPIO output data port.
+ *
+ * \param[in] GPIOx: Where x can be A or B to select the GPIO peripheral \ref x3e_GPIO_Declaration.
+ *
+ * \return  GPIO output data port value.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * //read GPIO output data
+ * void gpio_test(void)
+ * {
+ *     uint32_t output_data = 0;
+ *     output_data = GPIOx_ReadOutputData(GPIOA);
+ *     APP_PRINT_INFO1(" GPIOx_ReadOutputData =0x%x\n", output_data);
+ * }
+ * \endcode
+ */
+__STATIC_ALWAYS_INLINE uint32_t GPIOx_ReadOutputData(GPIO_TypeDef *GPIOx)
 {
     return ((uint32_t)GPIOx->DATAOUT);
 }
 
+
 /**
-  * @brief  Sets the selected data port bits.
-  * @param  GPIO_PinBit: specifies the port bits to be written.
-  *   This parameter can be GPIO_Pin_x where x can be (0..31) or GPIO_Pin_All.
-  * @retval None
-  */
-__STATIC_INLINE void GPIOx_SetBits(GPIO_TypeDef *GPIOx, uint32_t GPIO_PinBit)
+ *
+ * \brief   Set the selected data port bit.
+ *
+ * \param[in] GPIOx: Where x can be A or B to select the GPIO peripheral \ref x3e_GPIO_Declaration.
+ * \param[in] GPIO_PinBit: Specifies the GPIO pins to be configured, please refer to \ref x3e_GPIO_pins_define.
+ *            This parameter can be one of the following values:
+ *            - GPIO_Pin_x, where x can be 0 ~ 31.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * void gpio_demo(void)
+ * {
+ *     GPIOx_SetBits(GPIOA, GPIO_GetPin(P4_0));
+ * }
+ * \endcode
+ */
+__STATIC_ALWAYS_INLINE void GPIOx_SetBits(GPIO_TypeDef *GPIOx, uint32_t GPIO_PinBit)
 {
     /* Check the parameters */
     assert_param(IS_GPIO_PIN(GPIO_PinBit));
 
     GPIOx->DATAOUT |= GPIO_PinBit;
 }
+
+
 /**
-  * @brief  Resets the selected data port bits.
-  * @param  GPIO_PinBit: specifies the port bits to be written.
-  *   This parameter can be GPIO_Pin_0 to GPIO_Pin_31 or GPIO_Pin_All.
-  * @retval None
-  */
-__STATIC_INLINE void GPIOx_ResetBits(GPIO_TypeDef *GPIOx, uint32_t GPIO_PinBit)
+ *
+ * \brief   Clear the selected data port bit.
+ *
+ * \param[in] GPIOx: Where x can be A or B to select the GPIO peripheral \ref x3e_GPIO_Declaration.
+ * \param[in] GPIO_PinBit: Specifies the GPIO pins to be configured, please refer to \ref x3e_GPIO_pins_define.
+ *            This parameter can be one of the following values:
+ *            - GPIO_Pin_x, where x can be 0 ~ 31.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * void gpio_demo(void)
+ * {
+ *     GPIOx_ResetBits(GPIOA, GPIO_GetPin(P4_0));
+ * }
+ * \endcode
+ */
+__STATIC_ALWAYS_INLINE void GPIOx_ResetBits(GPIO_TypeDef *GPIOx, uint32_t GPIO_PinBit)
 {
     /* Check the parameters */
     assert_param(IS_GPIO_PIN(GPIO_PinBit));
@@ -670,16 +932,29 @@ __STATIC_INLINE void GPIOx_ResetBits(GPIO_TypeDef *GPIOx, uint32_t GPIO_PinBit)
     GPIOx->DATAOUT &= ~(GPIO_PinBit);
 }
 
+
 /**
-  * @brief  Sets or clears the selected data port bit.
-  * @param  GPIO_PinBit: specifies the port bit to be written.
-  *   This parameter can be one of GPIO_Pin_x where x can be (0..31).
-  * @param  BitVal: specifies the value to be written to the selected bit.
-  *   This parameter can be one of the BitAction enum values:
-  *     @arg Bit_RESET: to clear the port pin
-  *     @arg Bit_SET: to set the port pin
-  * @retval None
-  */
+ *
+ * \brief  Set or clear the selected data port bit.
+ *
+ * \param[in] GPIOx: Where x can be A or B to select the GPIO peripheral \ref x3e_GPIO_Declaration.
+ * \param[in] GPIO_PinBit: Specifies the GPIO pins to be configured, please refer to \ref x3e_GPIO_pins_define.
+ *            This parameter can be one of the following values:
+ *            - GPIO_Pin_x, where x can be 0 ~ 31.
+ * \param[in] BitVal: Specifies the value to be written to the selected bit \ref x3e_GPIO_Bit_Action.
+ *            This parameter can be one of the BitAction enum values:
+ *            - Bit_RESET: To clear the port pin.
+ *            - Bit_SET: To set the port pin.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * void gpio_demo(void)
+ * {
+ *     GPIOx_WriteBit(GPIOA, GPIO_GetPin(P4_0), Bit_SET);
+ * }
+ * \endcode
+ */
 __forceinline void GPIOx_WriteBit(GPIO_TypeDef *GPIOx, uint32_t GPIO_PinBit, BitAction BitVal)
 {
     /* Check the parameters */
@@ -696,27 +971,60 @@ __forceinline void GPIOx_WriteBit(GPIO_TypeDef *GPIOx, uint32_t GPIO_PinBit, Bit
     }
 }
 
+
 /**
-  * @brief  Sets or clears the selected data port .
-  * param  GPIOx choose GPIOA or GPIOB
-  * @param  PortVal: specifies the value to be written to the selected bit.
-  * @retval None
-  */
-__STATIC_INLINE void GPIOx_Write(GPIO_TypeDef *GPIOx, uint32_t PortVal)
+ *
+ * \brief  Set or clear the selected data port.
+ *
+ * \param[in] GPIOx: Where x can be A or B to select the GPIO peripheral \ref x3e_GPIO_Declaration.
+ * \param[in] PortVal: Specifies the value to be written to the selected port. This parameter must range from 0x0 to 0xFFFFFFFF.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * void gpio_demo(void)
+ * {
+ *     GPIOx_Write(GPIOA, 0xFFFFFFFF);
+ * }
+ * \endcode
+ */
+__STATIC_ALWAYS_INLINE void GPIOx_Write(GPIO_TypeDef *GPIOx, uint32_t PortVal)
 {
     GPIOx->DATAOUT = PortVal;
 }
 
 
-
 /**
-  * @brief  return  GPIO interrupt status.
-  * @param  GPIOx choose GPIOA or GPIOB
-  * @param  GPIO_PinBit: specifies the port bit to be written.
-  *   This parameter can be one of GPIO_Pin_x where x can be (0..31).
-  * @retval ITStatus The new state of GPIO_IT (SET or RESET).
-  */
-__STATIC_INLINE ITStatus GPIOx_GetINTStatus(GPIO_TypeDef *GPIOx, uint32_t GPIO_PinBit)
+ *
+ * \brief  Check whether the GPIO interrupt of the specified pin has occurred or not.
+ *
+ * \param[in] GPIOx: Where x can be A or B to select the GPIO peripheral \ref x3e_GPIO_Declaration.
+ * \param[in] GPIO_PinBit: Specifies the GPIO pins to be configured, please refer to \ref x3e_GPIO_pins_define.
+ *            This parameter can be one of the following values:
+ *            - GPIO_Pin_x, where x can be 0 ~ 31.
+ *
+ * \return The new state of GPIO interrupt.
+ * \retval SET: The interrupt of the specified GPIO pin has occurred.
+ * \retval RESET: The interrupt of the specified GPIO pin has not occurred.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * #define GPIO_Test_Pin     GPIO_GetPin(P0_0)
+ * //GPIO interrupt handler function.
+ * void gpio_handler(void)
+ * {
+ *    if (GPIOx_GetINTStatus(GPIOA, GPIO_Test_Pin) == SET)
+ *    {
+ *        GPIOx_MaskINTConfig(GPIOA, GPIO_Test_Pin, ENABLE);
+ *
+ *        GPIOx_ClearINTPendingBit(GPIOA, GPIO_Test_Pin);
+ *        GPIOx_MaskINTConfig(GPIOA, GPIO_Test_Pin, DISABLE);
+ *    }
+ * }
+ * \endcode
+ */
+__STATIC_ALWAYS_INLINE ITStatus GPIOx_GetINTStatus(GPIO_TypeDef *GPIOx, uint32_t GPIO_PinBit)
 {
     /* Check the parameters */
     assert_param(IS_GET_GPIO_PIN(GPIO_PinBit));
@@ -731,12 +1039,25 @@ __STATIC_INLINE ITStatus GPIOx_GetINTStatus(GPIO_TypeDef *GPIOx, uint32_t GPIO_P
     }
 }
 
+
 /**
-  * @brief  Set debounce time.
-  * @param  DebounceTime: specifies interrupt debounce time
-  *   This parameter can be 1ms ~ 64ms
-  * @retval none
-  */
+ *
+ * \brief  Set the GPIO debounce time.
+ *
+ * \param[in] GPIOx: Where x can be A or B to select the GPIO peripheral \ref x3e_GPIO_Declaration.
+ * \param[in] DebounceTime: Specifies the GPIO interrupt debounce time.
+ *            This parameter can be one of the following values:
+ *            - 1ms ~ 64ms.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * void gpio_demo(void)
+ * {
+ *     GPIOx_Debounce_Time(GPIOA, 1);
+ * }
+ * \endcode
+ */
 __forceinline void GPIOx_Debounce_Time(GPIO_TypeDef *GPIOx, uint32_t DebounceTime)
 {
     uint8_t count = 0;
@@ -788,13 +1109,29 @@ __forceinline void GPIOx_Debounce_Time(GPIO_TypeDef *GPIOx, uint32_t DebounceTim
     }
 }
 
+
 /**
-  * @brief  Set gpio output mode.
-  * @param  GPIOx choose GPIOA or GPIOB
-  * @param  GPIO_PinBit: specifies the port bits to be written.
-  *   This parameter can be GPIO_Pin_x where x can be (0..31) or GPIO_Pin_All.
-  * @retval None
-  */
+ *
+ * \brief  Specifies the direction for the selected pins.
+ *
+ * \param[in] GPIOx: Where x can be A or B to select the GPIO peripheral \ref x3e_GPIO_Declaration.
+ * \param[in] GPIO_PinBit: Specifies the GPIO pins to be configured, please refer to \ref x3e_GPIO_pins_define.
+ *            This parameter can be one of the following values:
+ *            - GPIO_Pin_x, where x can be 0 ~ 31.
+ * \param[in] GPIO_Mode: Set the GPIO direction. \ref x3e_GPIO_Mode
+ *            This parameter can be one of the following values:
+ *            - GPIO_Mode_IN: The direction is input.
+ *            - GPIO_Mode_OUT: The direction is output.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * void gpio_demo(void)
+ * {
+ *     GPIOx_ModeSet(GPIOA, GPIO_GetPin(P3_0), GPIO_Mode_IN);
+ * }
+ * \endcode
+ */
 __forceinline void GPIOx_ModeSet(GPIO_TypeDef *GPIOx, uint32_t GPIO_PinBit,
                                  GPIOMode_TypeDef GPIO_Mode)
 {
@@ -811,14 +1148,30 @@ __forceinline void GPIOx_ModeSet(GPIO_TypeDef *GPIOx, uint32_t GPIO_PinBit,
     }
 
 }
-/**
-  * @brief  Change GPIO interrupt Polarity.
-  * @param  GPIOx choose GPIOA or GPIOB
-  * @param  GPIO_PinBit: specifies the port bits to be written.
-  *   This parameter can be GPIO_Pin_x where x can be (0..31)
-  * @retval None
-  */
 
+
+/**
+ *
+ * \brief  Set the polarity that triggers the GPIO interrupt.
+ *
+ * \param[in] GPIOx: Where x can be A or B to select the GPIO peripheral \ref x3e_GPIO_Declaration.
+ * \param[in] GPIO_PinBit: Specifies the GPIO pins to be configured, please refer to \ref x3e_GPIO_pins_define.
+ *            This parameter can be one of the following values:
+ *            - GPIO_Pin_x, where x can be 0 ~ 31.
+ * \param[in] int_type: Interrupt mode is high or low active trigger \ref x3e_GPIO_Interrupt_Polarity.
+ *            This parameter can be one of the following values:
+ *            - GPIO_INT_POLARITY_ACTIVE_LOW: Low level triggers GPIO interrupt.
+ *            - GPIO_INT_POLARITY_ACTIVE_HIGH: High level triggers GPIO interrupt.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * void gpio_demo(void)
+ * {
+ *     GPIOx_IntPolaritySet(GPIOA, GPIO_GetPin(P3_0), GPIO_INT_POLARITY_ACTIVE_LOW);
+ * }
+ * \endcode
+ */
 void GPIOx_IntPolaritySet(GPIO_TypeDef *GPIOx, uint32_t GPIO_PinBit, GPIOIT_PolarityType int_type);
 /** @} */ /* End of group 87x3e_GPIO_Exported_Functions */
 /** @} */ /* End of group 87x3e_GPIO */
@@ -832,5 +1185,5 @@ void GPIOx_IntPolaritySet(GPIO_TypeDef *GPIOx, uint32_t GPIO_PinBit, GPIOIT_Pola
 
 
 
-/******************* (C) COPYRIGHT 2015 Realtek Semiconductor Corporation *****END OF FILE****/
+/******************* (C) COPYRIGHT 2024 Realtek Semiconductor Corporation *****END OF FILE****/
 

@@ -42,9 +42,10 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">GAP Msg Exported Types<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___b_l_u_e_t_o_o_t_h.html">Bluetooth</a> &raquo; <a class="el" href="group___g_a_p.html">GAP</a> &raquo; <a class="el" href="group___g_a_p___l_e.html">GAP LE Module</a> &raquo; <a class="el" href="group___g_a_p___m_s_g___m_o_d_u_l_e.html">GAP Message</a></div></div>  </div>
+<div class="title">GAP Msg Exported Types<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___b_l_u_e_t_o_o_t_h.html">Bluetooth</a> &raquo; <a class="el" href="group___g_a_p.html">GAP</a> &#124; <a class="el" href="group___b_t___host.html">Bluetooth Host</a> &raquo; <a class="el" href="group___g_a_p___l_e.html">GAP LE Module</a> &raquo; <a class="el" href="group___g_a_p___m_s_g___m_o_d_u_l_e.html">GAP Message</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -92,8 +93,50 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_t___l_e___g_a_p___m_s_g.html">T_LE_GAP_MSG</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">As the param of <a class="el" href="struct_t___i_o___m_s_g.html" title="IO message definition for communications between tasks. ">T_IO_MSG</a>. type is IO_MSG_TYPE_BT_STATUS.  <a href="struct_t___l_e___g_a_p___m_s_g.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gae236f1ba42a45ef51d2178ffa9acc44e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___gap___msg___exported___types.html#gae236f1ba42a45ef51d2178ffa9acc44e">T_GAP_CONN_STATE</a> { <br />
+&#160;&#160;<a class="el" href="group___gap___msg___exported___types.html#ggae236f1ba42a45ef51d2178ffa9acc44ea1f99834fae71c71c7ad9e178f6cee6d9">GAP_CONN_STATE_DISCONNECTED</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___gap___msg___exported___types.html#ggae236f1ba42a45ef51d2178ffa9acc44ea0c9f4740bbcfdd7a32fb036663ef9b06">GAP_CONN_STATE_CONNECTING</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___gap___msg___exported___types.html#ggae236f1ba42a45ef51d2178ffa9acc44eaf55da45e50c905e90a11f4b73bc00f78">GAP_CONN_STATE_CONNECTED</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___gap___msg___exported___types.html#ggae236f1ba42a45ef51d2178ffa9acc44ea8d4bbf58375d4401fcc49676d9de5407">GAP_CONN_STATE_DISCONNECTING</a>
+<br />
+ }</td></tr>
+<tr class="memdesc:gae236f1ba42a45ef51d2178ffa9acc44e"><td class="mdescLeft">&#160;</td><td class="mdescRight">GAP connection states.  <a href="group___gap___msg___exported___types.html#gae236f1ba42a45ef51d2178ffa9acc44e">More...</a><br /></td></tr>
+<tr class="separator:gae236f1ba42a45ef51d2178ffa9acc44e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="gae236f1ba42a45ef51d2178ffa9acc44e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae236f1ba42a45ef51d2178ffa9acc44e">&#9670;&nbsp;</a></span>T_GAP_CONN_STATE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___gap___msg___exported___types.html#gae236f1ba42a45ef51d2178ffa9acc44e">T_GAP_CONN_STATE</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>GAP connection states. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggae236f1ba42a45ef51d2178ffa9acc44ea1f99834fae71c71c7ad9e178f6cee6d9"></a>GAP_CONN_STATE_DISCONNECTED&#160;</td><td class="fielddoc"><p>Disconnected. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae236f1ba42a45ef51d2178ffa9acc44ea0c9f4740bbcfdd7a32fb036663ef9b06"></a>GAP_CONN_STATE_CONNECTING&#160;</td><td class="fielddoc"><p>Connecting. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae236f1ba42a45ef51d2178ffa9acc44eaf55da45e50c905e90a11f4b73bc00f78"></a>GAP_CONN_STATE_CONNECTED&#160;</td><td class="fielddoc"><p>Connected. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggae236f1ba42a45ef51d2178ffa9acc44ea8d4bbf58375d4401fcc49676d9de5407"></a>GAP_CONN_STATE_DISCONNECTING&#160;</td><td class="fielddoc"><p>Disconnecting. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 </div><!-- contents -->
 
 <HR SIZE=5>

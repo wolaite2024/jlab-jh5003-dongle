@@ -53,24 +53,24 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
-<tr class="memitem:group___c_s_c_s___exported___functions"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_s_c_s___exported___functions.html">CSC Exported Functions</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group___c_s_c_s___exported___constants"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_s_c_s___exported___constants.html">CSC Exported Macros</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group___c_s_c_s___exported___types"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_s_c_s___exported___types.html">CSC Exported Types</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group___c_s_c_s___c_o_n_f_i_g"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_s_c_s___c_o_n_f_i_g.html">Cycling Speed and Cadence Service Config</a></td></tr>
+<tr class="memitem:group___c_s_c_s___c_o_n_f_i_g"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_s_c_s___c_o_n_f_i_g.html">CSCS Config</a></td></tr>
 <tr class="memdesc:group___c_s_c_s___c_o_n_f_i_g"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cycling Speed and Cadence service configuration file. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group___c_s_c_s___exported___functions"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_s_c_s___exported___functions.html">CSCS Exported Functions</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group___c_s_c_s___exported___constants"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_s_c_s___exported___constants.html">CSCS Exported Macros</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group___c_s_c_s___exported___types"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c_s_c_s___exported___types.html">CSCS Exported Types</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Cycling Speed and Cadence Service. </p>
-<p>The Cycling Speed and Cadence (CSC) Service exposes speed-related data and/or cadence-related data while using the Cycling Speed and Cadence sensor (Server). CSC Measurement, CSC Measurement Client Characteristic Configuration descriptor and CSC Feature characteristic are mandatory exposed in the Cycling Speed and Cadence Service. if the Multiple Sensor Locations feature is supported, CSC Feature will be mandatory, otherwise optional. if at least one SC Control Point procedure is supported, SC Control Point and SC Control Point Client Characteristic Configuration Descriptor will be mandatory, otherwise excluded.</p>
+<p>The Cycling Speed and Cadence (CSC) Service exposes speed-related data and/or cadence-related data while using the Cycling Speed and Cadence sensor (Server). CSC Measurement, CSC Measurement Client Characteristic Configuration descriptor and CSC Feature characteristic are mandatory exposed in the Cycling Speed and Cadence Service. If the Multiple Sensor Locations feature is supported, CSC Feature will be mandatory, otherwise optional. If at least one SC Control Point procedure is supported, SC Control Point and SC Control Point Client Characteristic Configuration Descriptor will be mandatory, otherwise excluded.</p>
 <p>The CSC Measurement characteristic is used to send speed-related data and/or cadence-related data. The CSC Feature characteristic shall be used to describe the supported features of the Server. The Sensor Location characteristic of the device may be used to describe the physical location of the Server when correctly fitted.</p>
 <p>If the SC Control Point is supported, profiles utilizing this service are required to ensure that the Client configures the SC Control Point characteristic for indications (i.e. via the Client Characteristic Configuration descriptor) at the first connection.</p>
-<p>Application shall register Cycling Speed and Cadence service when initialization through <a class="el" href="group___c_s_c_s___exported___functions.html#ga48e31942546883261a75606eb2619ff9">cscs_add_service</a> function.</p>
-<p>Application can set the Cycling Speed and Cadence parameters through <a class="el" href="group___c_s_c_s___exported___functions.html#ga738ebf0b8d71afdf0d276111cb51a195">cscs_set_parameter</a> function.</p>
-<p>Application can send the measurement value through <a class="el" href="group___c_s_c_s___exported___functions.html#ga7ef13301ec5729ba927ce0e72f77d5d4">cscs_meas_value_notify</a> function. </p>
+<p>Applications shall register Cycling Speed and Cadence service during initialization through <a class="el" href="group___c_s_c_s___exported___functions.html#ga48e31942546883261a75606eb2619ff9">cscs_add_service</a> function.</p>
+<p>Applications can set the Cycling Speed and Cadence parameters through <a class="el" href="group___c_s_c_s___exported___functions.html#ga738ebf0b8d71afdf0d276111cb51a195">cscs_set_parameter</a> function.</p>
+<p>Applications can send the measurement value through <a class="el" href="group___c_s_c_s___exported___functions.html#ga7ef13301ec5729ba927ce0e72f77d5d4">cscs_meas_value_notify</a> function. </p>
 </div><!-- contents -->
 
 <HR SIZE=5>

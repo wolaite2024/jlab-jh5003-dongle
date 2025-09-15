@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>BT AUDIO SDK: I2C GDMA transfer requests</title>
+<title>BT AUDIO SDK: I2C GDMA Transfer Requests</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -44,17 +44,20 @@ $(function() {
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">I2C GDMA transfer requests<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___i2_c.html">I2C</a> &raquo; <a class="el" href="group__x3e___i2_c___exported___constants.html">I2C Exported Constants</a></div></div>  </div>
+<div class="title">I2C GDMA Transfer Requests<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___i2_c.html">I2C</a> &raquo; <a class="el" href="group__x3e___i2_c___exported___constants.html">I2C Exported Constants</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga3e9a87ad238f21dfbc0c4e6d28790586"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c___g_d_m_a__transfer__requests.html#ga3e9a87ad238f21dfbc0c4e6d28790586">I2C_GDMAReq_Tx</a>&#160;&#160;&#160;((uint16_t)0x0002)</td></tr>
+<tr class="memdesc:ga3e9a87ad238f21dfbc0c4e6d28790586"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX buffer GDMA transfer request.  <a href="#ga3e9a87ad238f21dfbc0c4e6d28790586">More...</a><br /></td></tr>
 <tr class="separator:ga3e9a87ad238f21dfbc0c4e6d28790586"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6fcc7bff9717321ecbe2df5639d41f08"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c___g_d_m_a__transfer__requests.html#ga6fcc7bff9717321ecbe2df5639d41f08">I2C_GDMAReq_Rx</a>&#160;&#160;&#160;((uint16_t)0x0001)</td></tr>
+<tr class="memdesc:ga6fcc7bff9717321ecbe2df5639d41f08"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX buffer GDMA transfer request.  <a href="#ga6fcc7bff9717321ecbe2df5639d41f08">More...</a><br /></td></tr>
 <tr class="separator:ga6fcc7bff9717321ecbe2df5639d41f08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga780f5b47fbbe86e8e5e534636f842f12"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c___g_d_m_a__transfer__requests.html#ga780f5b47fbbe86e8e5e534636f842f12">IS_I2C_GDMAREQ</a>(GDMAREQ)&#160;&#160;&#160;((((GDMAREQ) &amp; (uint16_t)0xFFFC) == 0x00) &amp;&amp; ((GDMAREQ) != 0x00))</td></tr>
+<tr class="memdesc:ga780f5b47fbbe86e8e5e534636f842f12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the input parameter is valid.  <a href="#ga780f5b47fbbe86e8e5e534636f842f12">More...</a><br /></td></tr>
 <tr class="separator:ga780f5b47fbbe86e8e5e534636f842f12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -71,6 +74,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>TX buffer GDMA transfer request. </p>
+
 </div>
 </div>
 <a id="ga6fcc7bff9717321ecbe2df5639d41f08"></a>
@@ -84,6 +89,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>RX buffer GDMA transfer request. </p>
 
 </div>
 </div>
@@ -102,6 +109,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Check if the input parameter is valid. </p>
 
 </div>
 </div>

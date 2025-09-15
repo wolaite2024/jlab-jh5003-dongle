@@ -24,13 +24,12 @@
 #include <app_peripheral_gap.h>
 #include "app_peripheral_adv.h"
 #include <gap_conn_le.h>
-#if F_APP_BLE_ANCS_CLIENT_SUPPORT
-#include <ancs_client.h>
-#include <ancs.h>
-#endif
-#if F_APP_BLE_AMS_CLIENT_SUPPORT
-#include <ams_client.h>
-#include <ams.h>
+#include "bt_bond_le.h"
+#include "bt_bond_common.h"
+#include "gap_bond_manager.h"
+#include "bt_bond_api.h"
+#if F_APP_BT_GATT_CLIENT_SUPPORT
+#include "bt_gatt_client.h"
 #endif
 
 /** @defgroup PERIPH_APP Peripheral Application
@@ -47,7 +46,41 @@ void app_peripheral_gap_handle_msg(T_IO_MSG  *p_gap_msg);
 /*============================================================================*
  *                              Functions
  *============================================================================*/
+void app_peripheral_bond_cb(uint8_t cb_type, void *p_cb_data)
+{
+    T_BT_LE_BOND_CB_DATA cb_data;
+    memcpy(&cb_data, p_cb_data, sizeof(T_BT_LE_BOND_CB_DATA));
 
+    switch (cb_type)
+    {
+    case BT_BOND_MSG_LE_BOND_ADD:
+        {
+            APP_PRINT_INFO3("BT_BOND_MSG_LE_BOND_ADD: modify_flags 0x%x, remote_bd_type %d, remote_bd %s",
+                            cb_data.p_le_bond_add->modify_flags,
+                            cb_data.p_le_bond_add->p_entry->remote_bd_type,
+                            TRACE_BDADDR(cb_data.p_le_bond_add->p_entry->remote_bd));
+        }
+        break;
+
+    case BT_BOND_MSG_LE_BOND_REMOVE:
+        {
+            APP_PRINT_INFO2("BT_BOND_MSG_LE_BOND_REMOVE: remote_bd_type %d, remote_bd %s",
+                            cb_data.p_le_bond_remove->p_entry->remote_bd_type,
+                            TRACE_BDADDR(cb_data.p_le_bond_remove->p_entry->remote_bd));
+        }
+        break;
+
+    case BT_BOND_MSG_LE_BOND_CLEAR:
+        {
+            APP_PRINT_INFO0("BT_BOND_MSG_LE_BOND_CLEAR");
+        }
+        break;
+
+    default:
+        break;
+    }
+    return;
+}
 /**
  * @brief app_peripheral_gap_ble_mgr_init
  * initialize ble manager lib which will enable ble extend advertising module.
@@ -58,6 +91,7 @@ void app_peripheral_gap_ble_mgr_init(void)
     param.ble_ext_adv.enable = true;
     param.ble_ext_adv.adv_num = 1;
     ble_mgr_init(&param);
+    bt_bond_register_app_cb(app_peripheral_bond_cb);
 }
 
 /**
@@ -87,7 +121,7 @@ void app_peripheral_gap_init(void)
     uint8_t  auth_oob = false;
     uint8_t  auth_use_fix_passkey = false;
     uint32_t auth_fix_passkey = 0;
-#if F_APP_BLE_ANCS_CLIENT_SUPPORT | F_APP_BLE_AMS_CLIENT_SUPPORT
+#if F_APP_BT_ANCS_CLIENT_SUPPORT
     uint8_t  auth_sec_req_enable = true;
 #else
     uint8_t  auth_sec_req_enable = false;
@@ -134,21 +168,6 @@ void app_peripheral_gap_handle_io_msg(T_IO_MSG io_msg)
             app_peripheral_gap_handle_msg(&io_msg);
         }
         break;
-#if F_APP_BLE_ANCS_CLIENT_SUPPORT
-    case IO_MSG_TYPE_ANCS:
-        {
-            ancs_handle_msg(&io_msg);
-        }
-        break;
-#endif
-
-#if F_APP_BLE_AMS_CLIENT_SUPPORT
-    case IO_MSG_TYPE_LE_AMS:
-        {
-            ams_handle_msg(&io_msg);
-        }
-        break;
-#endif
 
     default:
         break;
@@ -262,12 +281,8 @@ void app_peripheral_gap_handle_authen_state_evt(uint8_t conn_id, uint8_t new_sta
         {
             if (cause == GAP_SUCCESS)
             {
-#if F_APP_BLE_ANCS_CLIENT_SUPPORT
-                ancs_start_discovery(conn_id);
-#endif
-
-#if F_APP_BLE_AMS_CLIENT_SUPPORT
-                ams_start_discovery(conn_id);
+#if F_APP_BT_GATT_CLIENT_SUPPORT
+                gatt_client_start_discovery_all(le_get_conn_handle(conn_id), NULL);
 #endif
                 APP_PRINT_INFO0("app_peripheral_gap_handle_authen_state_evt: GAP_AUTHEN_STATE_COMPLETE pair success");
 
@@ -502,6 +517,12 @@ T_APP_RESULT app_peripheral_gap_callback(uint8_t cb_type, void *p_cb_data)
     APP_PRINT_INFO1("app_peripheral_gap_callback: cb_type 0x%x", cb_type);
     switch (cb_type)
     {
+    case GAP_MSG_APP_BOND_MANAGER_INFO:
+        {
+            result = bt_bond_mgr_handle_gap_msg(p_data->p_le_cb_data);
+        }
+        break;
+
     case GAP_MSG_LE_DATA_LEN_CHANGE_INFO:
         APP_PRINT_INFO3("app_peripheral_gap_callback: GAP_MSG_LE_DATA_LEN_CHANGE_INFO conn_id %d, tx octets 0x%x, max_tx_time 0x%x",
                         p_data->p_le_data_len_change_info->conn_id,

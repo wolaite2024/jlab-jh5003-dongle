@@ -44,47 +44,32 @@ $(function() {
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">T_GATT_CLIENT_CONN_DEL Struct Reference<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___b_t___m_a_n_a_g_e_r.html">BT Manager</a> &raquo; <a class="el" href="group___b_t___g_a_t_t___c_l_t.html">BT GATT Client</a> &raquo; <a class="el" href="group___b_t___g_a_t_t___c_l_i_e_n_t___exported___types.html">BT GATT Client Types</a></div></div>  </div>
+<div class="title">T_GATT_CLIENT_CONN_DEL Struct Reference<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___b_t___m_a_n_a_g_e_r.html">BT Manager</a> &raquo; <a class="el" href="group___b_t___g_a_t_t___c_l_t.html">BT GATT Client</a> &raquo; <a class="el" href="group___b_t___g_a_t_t___c_l_i_e_n_t___exported___types.html">Bluetooth GATT Client Exported Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Client handle disconnect result The event data for GATT_CLIENT_EVENT_CONN_DEL.  
+<p>Client handle disconnect result.  
  <a href="struct_t___g_a_t_t___c_l_i_e_n_t___c_o_n_n___d_e_l.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="bt__gatt__client_8h_source.html">bt_gatt_client.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aeb65c8711b864df01fca95cfe904d924"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_t___g_a_t_t___c_l_i_e_n_t___c_o_n_n___d_e_l.html#aeb65c8711b864df01fca95cfe904d924">cid</a></td></tr>
-<tr class="separator:aeb65c8711b864df01fca95cfe904d924"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a47d84d1651f6953b1bf952ea63055509"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___g_a_p___c_h_a_n_n_e_l___exported___types.html#ga4caa0f71f507f03702f7fc40e379192f">T_GAP_CHANN_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_t___g_a_t_t___c_l_i_e_n_t___c_o_n_n___d_e_l.html#a47d84d1651f6953b1bf952ea63055509">chann_type</a></td></tr>
-<tr class="separator:a47d84d1651f6953b1bf952ea63055509"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac46e640b37018b4f613957fe36d65857"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_t___g_a_t_t___c_l_i_e_n_t___c_o_n_n___d_e_l.html#ac46e640b37018b4f613957fe36d65857">transport_le</a></td></tr>
+<tr class="separator:ac46e640b37018b4f613957fe36d65857"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Client handle disconnect result The event data for GATT_CLIENT_EVENT_CONN_DEL. </p>
+<div class="textblock"><p>Client handle disconnect result. </p>
+<p>The event data for <a class="el" href="group___b_t___g_a_t_t___c_l_i_e_n_t___exported___types.html#gga0723245b284dc4fbb97e9e7efa72be15ae1158f21097a45ecf773f7774c16859f">GATT_CLIENT_EVENT_CONN_DEL</a>. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="aeb65c8711b864df01fca95cfe904d924"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb65c8711b864df01fca95cfe904d924">&#9670;&nbsp;</a></span>cid</h2>
+<a id="ac46e640b37018b4f613957fe36d65857"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac46e640b37018b4f613957fe36d65857">&#9670;&nbsp;</a></span>transport_le</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t cid</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a47d84d1651f6953b1bf952ea63055509"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a47d84d1651f6953b1bf952ea63055509">&#9670;&nbsp;</a></span>chann_type</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group___g_a_p___c_h_a_n_n_e_l___exported___types.html#ga4caa0f71f507f03702f7fc40e379192f">T_GAP_CHANN_TYPE</a> chann_type</td>
+          <td class="memname">bool transport_le</td>
         </tr>
       </table>
 </div><div class="memdoc">

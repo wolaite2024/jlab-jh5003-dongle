@@ -15,3 +15,8 @@ target_link_libraries(sysmLib
 					 
 target_precompile_headers(sysmLib PUBLIC  ${kconfig_header_dir_path}/config.h)
 target_include_directories(sysmLib PUBLIC ${kconfig_header_dir_path})
+
+add_custom_command(TARGET sysmLib POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:sysmLib>  ${lib_output_path_temp_dirt}
+    COMMENT "Copying sysmLib to  ${lib_output_path}/../temp"
+)

@@ -30,7 +30,7 @@ extern "C" {
 */
 
 
-/** @addtogroup AMS_CLIENT_Exported_Macros AMS Client Exported Macros
+/** @addtogroup AMS_GATT_CLIENT_Exported_Macros AMS GATT Client Exported Macros
   * @brief
   * @{
   */
@@ -39,13 +39,13 @@ extern "C" {
 #define AMS_MAX_LINKS  4
 
 
-/** End of AMS_CLIENT_Exported_Macros
+/** End of AMS_GATT_CLIENT_Exported_Macros
 * @}
 */
 
 
 
-/** @defgroup AMS_CLIENT_Exported_Types AMS Client Exported Types
+/** @defgroup AMS_GATT_CLIENT_Exported_Types AMS GATT Client Exported Types
   * @brief
   * @{
   */
@@ -228,7 +228,7 @@ typedef struct
 
 typedef void (*AMS_CLIENT_CB)(uint16_t conn_handle, T_AMS_CB_DATA *cb_data);
 
-/** @defgroup AMS_CLIENT_Exported_Functions AMS Client Exported Functions
+/** @defgroup AMS_GATT_CLIENT_Exported_Functions AMS GATT Client Exported Functions
   * @brief
   * @{
   */
@@ -391,7 +391,7 @@ bool ams_read_entity_attr(uint16_t conn_handle, T_AMS_ENTITY_ATTR entity_attr);
 uint16_t ams_search_handle(uint16_t conn_handle, T_AMS_HANDLE_TYPE handle_type);
 
 
-/** @} End of AMS_CLIENT_Exported_Functions */
+/** @} End of AMS_GATT_CLIENT_Exported_Functions */
 
 /** @} End of AMS_CLIENT */
 

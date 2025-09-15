@@ -80,6 +80,26 @@ static void src_bt_avrcp_cback(T_BT_EVENT event_type, void *event_buf, uint16_t 
         }
         break;
 
+    case BT_EVENT_AVRCP_GET_CAPABILITIES_RSP:
+        {
+            p_link = app_find_br_link(param->avrcp_browsing_conn_ind.bd_addr);
+            if (p_link != NULL)
+            {
+                uint8_t  capability_count;
+                uint8_t *capabilities;
+
+                capability_count = param->avrcp_get_capabilities_rsp.capability_count;
+                capabilities = param->avrcp_get_capabilities_rsp.capabilities;
+                while (capability_count != 0)
+                {
+                    bt_avrcp_register_notification_req(p_link->bd_addr, *capabilities);
+                    capability_count -= 1;
+                    capabilities += 1;
+                }
+            }
+        }
+        break;
+
     case BT_EVENT_AVRCP_VOLUME_CHANGED:
         {
             p_link = app_find_br_link(param->avrcp_volume_changed.bd_addr);
@@ -323,7 +343,7 @@ void app_src_avrcp_init(void)
 
     if (app_cfg_const.supported_profile_mask & AVRCP_PROFILE_MASK)
     {
-        bt_avrcp_init(app_cfg_const.avrcp_link_number);
+        bt_avrcp_init(BT_AVRCP_FEATURE_CATEGORY_1, BT_AVRCP_FEATURE_CATEGORY_2);
         bt_mgr_cback_register(src_bt_avrcp_cback);
         player_id = bt_avrcp_register_player(player_cb);
         bt_avrcp_set_attr(player_id, BT_AVRCP_ELEM_ATTR_TITLE, CHARSET_UTF8,

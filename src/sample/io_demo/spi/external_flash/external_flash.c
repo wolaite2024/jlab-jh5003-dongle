@@ -1089,6 +1089,8 @@ static void spi_tx_dma_handler(void)
     GDMA_ClearINTPendingBit(SPI_TX_DMA_CHANNEL_NUM, GDMA_INT_Transfer);
 
     ext_flash_spi_data.write_count = 0;
+
+    /* It is recommended to post the os msg to the task thread for data processing. */
     flash_test_send_msg(FLASH_TEST_GDMA_MODE, FLASH_TEST_WRITE_FINISH);
 
     /* Must wait for SPI free before change CS pin */
@@ -1109,6 +1111,8 @@ static void spi_rx_dma_handler(void)
 {
     GDMA_ClearINTPendingBit(SPI_RX_DMA_CHANNEL_NUM, GDMA_INT_Transfer);
     ext_flash_spi_data.read_count = 0;
+
+    /* It is recommended to post the os msg to the task thread for data processing. */
     flash_test_send_msg(FLASH_TEST_GDMA_MODE, FLASH_TEST_READ_FINISH);
     /* Switch to full duplex mode */
     SPI_ChangeDirection(FLASH_SPI, SPI_Direction_FullDuplex);
@@ -1146,6 +1150,8 @@ static void Flash_SPI_Handler(void)
         if (ext_flash_spi_data.read_index == ext_flash_spi_data.read_count)
         {
             ext_flash_spi_data.read_count = 0;
+
+            /* It is recommended to post the os msg to the task thread for data processing. */
             flash_test_send_msg(FLASH_TEST_INTERRUPT_MODE, FLASH_TEST_READ_FINISH);
             /* Switch to full duplex mode */
             SPI_ChangeDirection(FLASH_SPI, SPI_Direction_FullDuplex);
@@ -1162,6 +1168,8 @@ static void Flash_SPI_Handler(void)
         if (ext_flash_spi_data.write_index >= ext_flash_spi_data.write_count)
         {
             ext_flash_spi_data.write_count = 0;
+
+            /* It is recommended to post the os msg to the task thread for data processing. */
             flash_test_send_msg(FLASH_TEST_INTERRUPT_MODE, FLASH_TEST_WRITE_FINISH);
             /* Must wait for SPI free before change CS pin */
             while (SPI_GetFlagState(FLASH_SPI, SPI_FLAG_BUSY) == SET);

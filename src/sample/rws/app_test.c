@@ -131,6 +131,10 @@ void app_test_report_event(uint8_t *bd_addr, uint16_t event_id, uint8_t *data, u
         {
             app_report_event(CMD_PATH_IAP, event_id, br_link->id, data, len);
         }
+        else if (br_link->connected_profile & GATT_PROFILE_MASK)
+        {
+            app_report_event(CMD_PATH_GATT_OVER_BREDR, event_id, br_link->id, data, len);
+        }
         else if (le_link != NULL)
         {
             app_report_event(CMD_PATH_LE, event_id, le_link->id, data, len);
@@ -738,7 +742,7 @@ static void app_test_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t b
 
             if (p_link != NULL)
             {
-                if (p_link->resume_fg)
+                if (p_link->cmd.resume)
                 {
                     app_report_event(CMD_PATH_UART, EVENT_RESUME_DATA_TRANSFER, 0, &p_link->id, 1);
                 }
@@ -1211,6 +1215,11 @@ static void app_test_audio_probe_dsp_cback(T_AUDIO_PROBE_EVENT event, void *buf)
         else if (app_db.br_link[app_idx].connected_profile & IAP_PROFILE_MASK)
         {
             app_report_event(CMD_PATH_IAP, EVENT_AUDIO_DSP_CTRL_INFO, app_idx, (uint8_t *)event_buff, 4);
+        }
+        else if (app_db.br_link[app_idx].connected_profile & GATT_PROFILE_MASK)
+        {
+            app_report_event(CMD_PATH_GATT_OVER_BREDR, EVENT_AUDIO_DSP_CTRL_INFO, app_idx,
+                             (uint8_t *)event_buff, 4);
         }
     }
 }

@@ -82,18 +82,18 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Register service. </p>
-<p><a class="el" href="mcp__mgr_8h_source.html" title="Head file for Media Control Server. ">mcp_mgr.h</a></p>
+<p><a class="el" href="mcp__mgr_8h_source.html" title="Header file for Media Control Server. ">mcp_mgr.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_param</td><td>Point to service registration parameter: <a class="el" href="struct_t___m_c_p___s_e_r_v_e_r___r_e_g___s_r_v___p_a_r_a_m.html">T_MCP_SERVER_REG_SRV_PARAM</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_param</td><td>Point to service registration parameter: <a class="el" href="struct_t___m_c_p___s_e_r_v_e_r___r_e_g___s_r_v___p_a_r_a_m.html">T_MCP_SERVER_REG_SRV_PARAM</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Service ID of service registration operation </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Service ID of service registration operation. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">0xFF</td><td>Service registration operation is failed </td></tr>
-    <tr><td class="paramname">Others</td><td>Service ID of specific service. Service registration operation is successful</td></tr>
+    <tr><td class="paramname">0xFF</td><td>Service registration operation failed. </td></tr>
+    <tr><td class="paramname">Others</td><td>Service ID of specific service. Service registration operation is successful.</td></tr>
   </table>
   </dd>
 </dl>
@@ -127,19 +127,19 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Set parameter. </p>
-<p><a class="el" href="mcp__mgr_8h_source.html" title="Head file for Media Control Server. ">mcp_mgr.h</a></p>
+<p><a class="el" href="mcp__mgr_8h_source.html" title="Header file for Media Control Server. ">mcp_mgr.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service ID </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_param</td><td>Point to parameter: <a class="el" href="struct_t___m_c_p___s_e_r_v_e_r___s_e_t___p_a_r_a_m.html">T_MCP_SERVER_SET_PARAM</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service ID. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_param</td><td>Point to parameter: <a class="el" href="struct_t___m_c_p___s_e_r_v_e_r___s_e_t___p_a_r_a_m.html">T_MCP_SERVER_SET_PARAM</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of set parameter operation </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of set parameter operation. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Set parameter operation is successful </td></tr>
-    <tr><td class="paramname">false</td><td>Set parameter operation is failed</td></tr>
+    <tr><td class="paramname">true</td><td>Set parameter operation is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Set parameter operation failed.</td></tr>
   </table>
   </dd>
 </dl>
@@ -173,19 +173,19 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send data. </p>
-<p><a class="el" href="mcp__mgr_8h_source.html" title="Head file for Media Control Server. ">mcp_mgr.h</a></p>
+<p><a class="el" href="mcp__mgr_8h_source.html" title="Header file for Media Control Server. ">mcp_mgr.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service ID </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_param</td><td>Point to parameter: <a class="el" href="struct_t___m_c_p___s_e_r_v_e_r___s_e_n_d___d_a_t_a___p_a_r_a_m.html">T_MCP_SERVER_SEND_DATA_PARAM</a></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service ID. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_param</td><td>Point to parameter: <a class="el" href="struct_t___m_c_p___s_e_r_v_e_r___s_e_n_d___d_a_t_a___p_a_r_a_m.html">T_MCP_SERVER_SEND_DATA_PARAM</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of sending request </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of sending request. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Sending request is successful </td></tr>
-    <tr><td class="paramname">false</td><td>Sending request is failed</td></tr>
+    <tr><td class="paramname">true</td><td>Sending request is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Sending request failed.</td></tr>
   </table>
   </dd>
 </dl>
@@ -213,19 +213,19 @@ Functions</h2></td></tr>
 <li>char_uuid of <a class="el" href="struct_t___m_c_p___s_e_r_v_e_r___r_e_a_d___i_n_d.html">T_MCP_SERVER_READ_IND</a> is <a class="el" href="group___m_c_s___u_u_i_d___c_h_a_r.html#gaf3db8a384b102ed16fcf133c05110dcd">MCS_UUID_CHAR_MEDIA_PLAYER_NAME</a> , <a class="el" href="group___m_c_s___u_u_i_d___c_h_a_r.html#ga87af9b29ffacf6ce2b6104366025802e">MCS_UUID_CHAR_TRACK_TITLE</a> , <a class="el" href="group___m_c_s___u_u_i_d___c_h_a_r.html#ga3c6c0d91fadfa53edc4eb8216aa36e1a">MCS_UUID_CHAR_TRACK_DURATION</a> , <a class="el" href="group___m_c_s___u_u_i_d___c_h_a_r.html#ga77ced5ca9f636a57004aa9f4ab2b0b02">MCS_UUID_CHAR_TRACK_POSITION</a> , or <a class="el" href="group___m_c_s___u_u_i_d___c_h_a_r.html#gaded0911279ea2e76a08d729864b00a59">MCS_UUID_CHAR_CONTENT_CONTROL_ID</a> </li>
 <li>return value of callback registered by <a class="el" href="group___l_e_a___l_i_b___exported___functions.html#gae459ea2b839f0a662f20d69aaac0013f">ble_audio_cback_register</a> with msg <a class="el" href="group___l_e_a___l_i_b___exported___types.html#ggabe1a2e587cdc57dc5de8e141de5d1b0ba6c75b0ff7308ef22f08e6c537d9deb37">LE_AUDIO_MSG_MCP_SERVER_READ_IND</a> is <a class="el" href="group___b_l_e___a_u_d_i_o___c_b___r_e_s_u_l_t.html#ga8efc495a8f3e1b6d5fe23103a6f7006b">BLE_AUDIO_CB_RESULT_PENDING</a></li>
 </ul>
-<p><a class="el" href="mcp__mgr_8h_source.html" title="Head file for Media Control Server. ">mcp_mgr.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000043">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<p><a class="el" href="mcp__mgr_8h_source.html" title="Header file for Media Control Server. ">mcp_mgr.h</a></p>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000040">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_read_cfm</td><td>Point to parameter: <a class="el" href="struct_t___m_c_p___s_e_r_v_e_r___r_e_a_d___c_f_m.html">T_MCP_SERVER_READ_CFM</a></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of operation </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of operation. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Operation is successful </td></tr>
-    <tr><td class="paramname">false</td><td>Operation is failed</td></tr>
+    <tr><td class="paramname">true</td><td>Operation is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Operation failed.</td></tr>
   </table>
   </dd>
 </dl>

@@ -69,7 +69,7 @@ typedef void (*T_AUDIO_REMOTE_RELAY_CBACK)(uint16_t event, void *param,
                                            T_REMOTE_RELAY_STATUS status, void *owner);
 
 bool audio_remote_init(void);
-bool audio_remote_deinit(void);
+void audio_remote_deinit(void);
 void audio_remote_reset(T_AUDIO_REMOTE_HANDLE handle);
 T_AUDIO_REMOTE_HANDLE audio_remote_media_buffer_register(T_AUDIO_STREAM_TYPE type,
                                                          void *buffer_ent,

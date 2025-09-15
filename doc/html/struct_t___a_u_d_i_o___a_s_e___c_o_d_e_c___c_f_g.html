@@ -48,7 +48,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Audio ASE Codec Configuration.  
+<p>Audio ASE codec configuration.  
  <a href="struct_t___a_u_d_i_o___a_s_e___c_o_d_e_c___c_f_g.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="bap__unicast__client_8h_source.html">bap_unicast_client.h</a>&gt;</code></p>
@@ -63,9 +63,13 @@ Data Fields</h2></td></tr>
 <tr class="separator:a2b70c3c8b1aa8de2cdab72bd6980c1f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a282cc9a7967ee74d6922968fed2a7d03"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_t___c_o_d_e_c___c_f_g.html">T_CODEC_CFG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_t___a_u_d_i_o___a_s_e___c_o_d_e_c___c_f_g.html#a282cc9a7967ee74d6922968fed2a7d03">codec_cfg</a></td></tr>
 <tr class="separator:a282cc9a7967ee74d6922968fed2a7d03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7838511a900b8f187a640527f3bae8bb"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_t___a_u_d_i_o___a_s_e___c_o_d_e_c___c_f_g.html#a7838511a900b8f187a640527f3bae8bb">vendor_codec_cfg_len</a></td></tr>
+<tr class="separator:a7838511a900b8f187a640527f3bae8bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9090091becd5ae888b392dd55597655c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_t___a_u_d_i_o___a_s_e___c_o_d_e_c___c_f_g.html#a9090091becd5ae888b392dd55597655c">vendor_codec_cfg</a> [<a class="el" href="group___b_a_p___unicast___client___exported___macros.html#ga387cc545a023dd795396ea63d199b4c6">AUDIO_STREAM_VENDOR_CODEC_MAX_LEN</a>]</td></tr>
+<tr class="separator:a9090091becd5ae888b392dd55597655c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Audio ASE Codec Configuration. </p>
+<div class="textblock"><p>Audio ASE codec configuration. </p>
 <p><a class="el" href="bap__unicast__client_8h_source.html">bap_unicast_client.h</a> </p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a id="ad3afa0b9984be410387abe0f26bd8eb0"></a>
@@ -121,6 +125,36 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7838511a900b8f187a640527f3bae8bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7838511a900b8f187a640527f3bae8bb">&#9670;&nbsp;</a></span>vendor_codec_cfg_len</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t vendor_codec_cfg_len</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Only used when Codec_ID does not use LC3_CODEC_ID. The parameter is only valid when the bit CODEC_CAP_VENDOR_INFO_EXIST is set in codec_cfg. </p>
+
+</div>
+</div>
+<a id="a9090091becd5ae888b392dd55597655c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9090091becd5ae888b392dd55597655c">&#9670;&nbsp;</a></span>vendor_codec_cfg</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t vendor_codec_cfg[<a class="el" href="group___b_a_p___unicast___client___exported___macros.html#ga387cc545a023dd795396ea63d199b4c6">AUDIO_STREAM_VENDOR_CODEC_MAX_LEN</a>]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Only used when Codec_ID does not use LC3_CODEC_ID. The parameter is only valid when the bit CODEC_CAP_VENDOR_INFO_EXIST is set in codec_cfg. </p>
 
 </div>
 </div>

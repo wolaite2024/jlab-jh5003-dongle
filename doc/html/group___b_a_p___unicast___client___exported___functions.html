@@ -54,7 +54,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga2fc7d467b85fc454f0a12ddf8c1f9d66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate audio streaming session.  <a href="#ga2fc7d467b85fc454f0a12ddf8c1f9d66">More...</a><br /></td></tr>
 <tr class="separator:ga2fc7d467b85fc454f0a12ddf8c1f9d66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa1b4d1f321d24c2a3c46cad0619c888a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_a_p___unicast___client___exported___functions.html#gaa1b4d1f321d24c2a3c46cad0619c888a">audio_stream_session_get_group</a> (<a class="el" href="group___b_a_p___unicast___client___exported___types.html#ga82c897e361e6ad1a514a16d3c2ca50c2">T_AUDIO_STREAM_SESSION_HANDLE</a> handle)</td></tr>
-<tr class="memdesc:gaa1b4d1f321d24c2a3c46cad0619c888a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get ble audio group handle by audio streaming session.  <a href="#gaa1b4d1f321d24c2a3c46cad0619c888a">More...</a><br /></td></tr>
+<tr class="memdesc:gaa1b4d1f321d24c2a3c46cad0619c888a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get LE audio group handle by audio streaming session.  <a href="#gaa1b4d1f321d24c2a3c46cad0619c888a">More...</a><br /></td></tr>
 <tr class="separator:gaa1b4d1f321d24c2a3c46cad0619c888a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6ab28fc4866ad5836bd95ca405a6f8b5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_a_p___unicast___client___exported___functions.html#ga6ab28fc4866ad5836bd95ca405a6f8b5">bap_unicast_get_audio_cfg_mask</a> (<a class="el" href="group___b_a_p___unicast___client___exported___types.html#ga82c897e361e6ad1a514a16d3c2ca50c2">T_AUDIO_STREAM_SESSION_HANDLE</a> handle, uint32_t prefer_cfg, uint8_t dev_num, <a class="el" href="group___b_a_p___exported___types.html#gaa3606c8a25f03aa4a4cc0c21f82850bd">T_BLE_AUDIO_DEV_HANDLE</a> *p_dev_tbl)</td></tr>
 <tr class="memdesc:ga6ab28fc4866ad5836bd95ca405a6f8b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">BAP unicast audio get audio configuration mask.  <a href="#ga6ab28fc4866ad5836bd95ca405a6f8b5">More...</a><br /></td></tr>
@@ -69,13 +69,13 @@ Functions</h2></td></tr>
 <tr class="memdesc:gaabad5400e809445ecef6c4d97b6c062a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set BAP unicast audio configuration.  <a href="#gaabad5400e809445ecef6c4d97b6c062a">More...</a><br /></td></tr>
 <tr class="separator:gaabad5400e809445ecef6c4d97b6c062a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf9c011fc7519dd29ad5f67c3280d02d7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_a_p___unicast___client___exported___functions.html#gaf9c011fc7519dd29ad5f67c3280d02d7">bap_unicast_audio_cfg_ase_codec</a> (<a class="el" href="group___b_a_p___unicast___client___exported___types.html#ga82c897e361e6ad1a514a16d3c2ca50c2">T_AUDIO_STREAM_SESSION_HANDLE</a> handle, <a class="el" href="group___b_a_p___exported___types.html#gaa3606c8a25f03aa4a4cc0c21f82850bd">T_BLE_AUDIO_DEV_HANDLE</a> dev_handle, uint8_t cfg_idx, <a class="el" href="struct_t___a_u_d_i_o___a_s_e___c_o_d_e_c___c_f_g.html">T_AUDIO_ASE_CODEC_CFG</a> *p_cfg)</td></tr>
-<tr class="memdesc:gaf9c011fc7519dd29ad5f67c3280d02d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">BAP unicast audio configure ASE codec. This API is used before bap_unicast_audio_start, and after bap_unicast_audio_cfg.  <a href="#gaf9c011fc7519dd29ad5f67c3280d02d7">More...</a><br /></td></tr>
+<tr class="memdesc:gaf9c011fc7519dd29ad5f67c3280d02d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">BAP unicast audio configure ASE codec.  <a href="#gaf9c011fc7519dd29ad5f67c3280d02d7">More...</a><br /></td></tr>
 <tr class="separator:gaf9c011fc7519dd29ad5f67c3280d02d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1b3e28dd849c1f472458c9a35b055334"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_a_p___unicast___client___exported___functions.html#ga1b3e28dd849c1f472458c9a35b055334">bap_unicast_audio_cfg_session_qos</a> (<a class="el" href="group___b_a_p___unicast___client___exported___types.html#ga82c897e361e6ad1a514a16d3c2ca50c2">T_AUDIO_STREAM_SESSION_HANDLE</a> handle, <a class="el" href="struct_t___a_u_d_i_o___s_e_s_s_i_o_n___q_o_s___c_f_g.html">T_AUDIO_SESSION_QOS_CFG</a> *p_cfg)</td></tr>
-<tr class="memdesc:ga1b3e28dd849c1f472458c9a35b055334"><td class="mdescLeft">&#160;</td><td class="mdescRight">BAP unicast audio configure session QoS. This API is used when receive AUDIO_GROUP_MSG_BAP_START_QOS_CFG.  <a href="#ga1b3e28dd849c1f472458c9a35b055334">More...</a><br /></td></tr>
+<tr class="memdesc:ga1b3e28dd849c1f472458c9a35b055334"><td class="mdescLeft">&#160;</td><td class="mdescRight">BAP unicast audio configure session QoS.  <a href="#ga1b3e28dd849c1f472458c9a35b055334">More...</a><br /></td></tr>
 <tr class="separator:ga1b3e28dd849c1f472458c9a35b055334"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga910ac85d59bd3ce85ae4f2dd5d859be2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_a_p___unicast___client___exported___functions.html#ga910ac85d59bd3ce85ae4f2dd5d859be2">bap_unicast_audio_cfg_ase_qos</a> (<a class="el" href="group___b_a_p___unicast___client___exported___types.html#ga82c897e361e6ad1a514a16d3c2ca50c2">T_AUDIO_STREAM_SESSION_HANDLE</a> handle, <a class="el" href="group___b_a_p___exported___types.html#gaa3606c8a25f03aa4a4cc0c21f82850bd">T_BLE_AUDIO_DEV_HANDLE</a> dev_handle, uint8_t ase_id, <a class="el" href="struct_t___a_u_d_i_o___a_s_e___q_o_s___c_f_g.html">T_AUDIO_ASE_QOS_CFG</a> *p_cfg)</td></tr>
-<tr class="memdesc:ga910ac85d59bd3ce85ae4f2dd5d859be2"><td class="mdescLeft">&#160;</td><td class="mdescRight">BAP unicast audio configure ASE QoS. This API is used when receive AUDIO_GROUP_MSG_BAP_START_QOS_CFG.  <a href="#ga910ac85d59bd3ce85ae4f2dd5d859be2">More...</a><br /></td></tr>
+<tr class="memdesc:ga910ac85d59bd3ce85ae4f2dd5d859be2"><td class="mdescLeft">&#160;</td><td class="mdescRight">BAP unicast audio configure ASE QoS.  <a href="#ga910ac85d59bd3ce85ae4f2dd5d859be2">More...</a><br /></td></tr>
 <tr class="separator:ga910ac85d59bd3ce85ae4f2dd5d859be2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2c81aa712bcbe5ca32e08fe03e07bcc4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_a_p___unicast___client___exported___functions.html#ga2c81aa712bcbe5ca32e08fe03e07bcc4">bap_unicast_audio_get_session_qos</a> (<a class="el" href="group___b_a_p___unicast___client___exported___types.html#ga82c897e361e6ad1a514a16d3c2ca50c2">T_AUDIO_STREAM_SESSION_HANDLE</a> handle, <a class="el" href="struct_t___a_u_d_i_o___s_e_s_s_i_o_n___q_o_s___c_f_g.html">T_AUDIO_SESSION_QOS_CFG</a> *p_cfg)</td></tr>
 <tr class="memdesc:ga2c81aa712bcbe5ca32e08fe03e07bcc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">BAP unicast audio get session QoS.  <a href="#ga2c81aa712bcbe5ca32e08fe03e07bcc4">More...</a><br /></td></tr>
@@ -84,7 +84,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga609cb6b3b5622dff0e841b10c52b5e01"><td class="mdescLeft">&#160;</td><td class="mdescRight">BAP unicast audio get ASE QoS.  <a href="#ga609cb6b3b5622dff0e841b10c52b5e01">More...</a><br /></td></tr>
 <tr class="separator:ga609cb6b3b5622dff0e841b10c52b5e01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga43f33d17562b9db5d020f5f63af6e68f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_a_p___unicast___client___exported___functions.html#ga43f33d17562b9db5d020f5f63af6e68f">bap_unicast_audio_cfg_ase_metadata</a> (<a class="el" href="group___b_a_p___unicast___client___exported___types.html#ga82c897e361e6ad1a514a16d3c2ca50c2">T_AUDIO_STREAM_SESSION_HANDLE</a> handle, <a class="el" href="group___b_a_p___exported___types.html#gaa3606c8a25f03aa4a4cc0c21f82850bd">T_BLE_AUDIO_DEV_HANDLE</a> dev_handle, uint8_t ase_id, uint8_t metadata_len, uint8_t *p_metadata)</td></tr>
-<tr class="memdesc:ga43f33d17562b9db5d020f5f63af6e68f"><td class="mdescLeft">&#160;</td><td class="mdescRight">BAP unicast audio configure ASE metadata. This API is used when receive AUDIO_GROUP_MSG_BAP_START_METADATA_CFG.  <a href="#ga43f33d17562b9db5d020f5f63af6e68f">More...</a><br /></td></tr>
+<tr class="memdesc:ga43f33d17562b9db5d020f5f63af6e68f"><td class="mdescLeft">&#160;</td><td class="mdescRight">BAP unicast audio configure ASE metadata.  <a href="#ga43f33d17562b9db5d020f5f63af6e68f">More...</a><br /></td></tr>
 <tr class="separator:ga43f33d17562b9db5d020f5f63af6e68f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8d2304dadbf778c614a3763ad2a5d5ba"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_a_p___unicast___client___exported___functions.html#ga8d2304dadbf778c614a3763ad2a5d5ba">bap_unicast_audio_remove_cfg</a> (<a class="el" href="group___b_a_p___unicast___client___exported___types.html#ga82c897e361e6ad1a514a16d3c2ca50c2">T_AUDIO_STREAM_SESSION_HANDLE</a> handle)</td></tr>
 <tr class="memdesc:ga8d2304dadbf778c614a3763ad2a5d5ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove BAP unicast audio configuration.  <a href="#ga8d2304dadbf778c614a3763ad2a5d5ba">More...</a><br /></td></tr>
@@ -130,7 +130,7 @@ Functions</h2></td></tr>
 <p><a class="el" href="bap__unicast__client_8h_source.html">bap_unicast_client.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">group_handle</td><td>BLE audio group handle: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">group_handle</td><td>LE audio group handle: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>.</td></tr>
   </table>
   </dd>
 </dl>
@@ -154,7 +154,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get ble audio group handle by audio streaming session. </p>
+<p>Get LE audio group handle by audio streaming session. </p>
 <p><a class="el" href="bap__unicast__client_8h_source.html">bap_unicast_client.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -162,7 +162,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The ble audio group handle: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The LE audio group handle: <a class="el" href="group___b_a_p___exported___types.html#ga783d1bd4422843cffd2323d61b1f08de">T_BLE_AUDIO_GROUP_HANDLE</a>. </dd></dl>
 
 </div>
 </div>
@@ -261,11 +261,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of BAP unicast audio get cis information. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of BAP unicast audio getting cis information. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>BAP unicast audio get cis information success. </td></tr>
-    <tr><td class="paramname">false</td><td>BAP unicast audio get cis information failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Getting cis information is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Getting cis information failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -307,11 +307,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of BAP unicast audio get unicast session information. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of BAP unicast audio getting unicast session information. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>BAP unicast audio get unicast session information success. </td></tr>
-    <tr><td class="paramname">false</td><td>BAP unicast audio get unicast session information failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Getting unicast session information is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Getting unicast session information failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -370,7 +370,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The result of set BAP unicast audio configuration. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Set BAP unicast audio configuration success. </td></tr>
+    <tr><td class="paramname">true</td><td>Set BAP unicast audio configuration is successful. </td></tr>
     <tr><td class="paramname">false</td><td>Set BAP unicast audio configuration failed. </td></tr>
   </table>
   </dd>
@@ -416,8 +416,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>BAP unicast audio configure ASE codec. This API is used before bap_unicast_audio_start, and after bap_unicast_audio_cfg. </p>
+<p>BAP unicast audio configure ASE codec. </p>
 <p><a class="el" href="bap__unicast__client_8h_source.html">bap_unicast_client.h</a></p>
+<p>his API is used before <a class="el" href="group___b_a_p___unicast___client___exported___functions.html#gab23f75948c0fd118d46e01b7f775f11c">bap_unicast_audio_start</a>, and after <a class="el" href="group___b_a_p___unicast___client___exported___functions.html#gaabad5400e809445ecef6c4d97b6c062a">bap_unicast_audio_cfg</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Audio streaming session handle: <a class="el" href="group___b_a_p___unicast___client___exported___types.html#ga82c897e361e6ad1a514a16d3c2ca50c2">T_AUDIO_STREAM_SESSION_HANDLE</a>. </td></tr>
@@ -427,11 +428,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of BAP unicast audio configure ASE codec. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of BAP unicast audio configuring ASE codec. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>BAP unicast audio configure ASE codec success. </td></tr>
-    <tr><td class="paramname">false</td><td>BAP unicast audio configure ASE codec failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Configuring ASE codec is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Configuring ASE codec failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -464,8 +465,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>BAP unicast audio configure session QoS. This API is used when receive AUDIO_GROUP_MSG_BAP_START_QOS_CFG. </p>
+<p>BAP unicast audio configure session QoS. </p>
 <p><a class="el" href="bap__unicast__client_8h_source.html">bap_unicast_client.h</a></p>
+<p>This API is used when receive <a class="el" href="group___b_a_p___exported___types.html#gga0cfec51dd6bc738c09cd55a8dd64c9cbabe621f6dd38f8d7c73deb3cada1d95e8">AUDIO_GROUP_MSG_BAP_START_QOS_CFG</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Audio streaming session handle: <a class="el" href="group___b_a_p___unicast___client___exported___types.html#ga82c897e361e6ad1a514a16d3c2ca50c2">T_AUDIO_STREAM_SESSION_HANDLE</a>. </td></tr>
@@ -473,11 +475,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of BAP unicast audio configure session QoS. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of BAP unicast audio configuring session QoS. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>BAP unicast audio configure session QoS success. </td></tr>
-    <tr><td class="paramname">false</td><td>BAP unicast audio configure session QoS failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Configuring session QoS is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Configuring session QoS failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -522,8 +524,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>BAP unicast audio configure ASE QoS. This API is used when receive AUDIO_GROUP_MSG_BAP_START_QOS_CFG. </p>
+<p>BAP unicast audio configure ASE QoS. </p>
 <p><a class="el" href="bap__unicast__client_8h_source.html">bap_unicast_client.h</a></p>
+<p>This API is used when receive <a class="el" href="group___b_a_p___exported___types.html#gga0cfec51dd6bc738c09cd55a8dd64c9cbabe621f6dd38f8d7c73deb3cada1d95e8">AUDIO_GROUP_MSG_BAP_START_QOS_CFG</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Audio streaming session handle: <a class="el" href="group___b_a_p___unicast___client___exported___types.html#ga82c897e361e6ad1a514a16d3c2ca50c2">T_AUDIO_STREAM_SESSION_HANDLE</a>. </td></tr>
@@ -536,7 +539,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The result of BAP unicast audio configure ASE QoS. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>BAP unicast audio configure ASE QoS success. </td></tr>
+    <tr><td class="paramname">true</td><td>BAP unicast audio configure ASE QoS is successful. </td></tr>
     <tr><td class="paramname">false</td><td>BAP unicast audio configure ASE QoS failed. </td></tr>
   </table>
   </dd>
@@ -579,11 +582,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of BAP unicast audio get session QoS. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of BAP unicast audio getting session QoS. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>BAP unicast audio get session QoS success. </td></tr>
-    <tr><td class="paramname">false</td><td>BAP unicast audio get session QoS failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Getting session QoS is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Getting session QoS failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -639,11 +642,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of BAP unicast audio get ASE QoS. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of BAP unicast audio getting ASE QoS. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>BAP unicast audio get ASE QoS success. </td></tr>
-    <tr><td class="paramname">false</td><td>BAP unicast audio get ASE QoS failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Getting ASE QoS is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Getting ASE QoS failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -694,8 +697,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>BAP unicast audio configure ASE metadata. This API is used when receive AUDIO_GROUP_MSG_BAP_START_METADATA_CFG. </p>
+<p>BAP unicast audio configure ASE metadata. </p>
 <p><a class="el" href="bap__unicast__client_8h_source.html">bap_unicast_client.h</a></p>
+<p>This API is used when receiving <a class="el" href="group___b_a_p___exported___types.html#gga0cfec51dd6bc738c09cd55a8dd64c9cbae3bd2f3839fdf5520099662558b32449">AUDIO_GROUP_MSG_BAP_START_METADATA_CFG</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Audio streaming session handle: <a class="el" href="group___b_a_p___unicast___client___exported___types.html#ga82c897e361e6ad1a514a16d3c2ca50c2">T_AUDIO_STREAM_SESSION_HANDLE</a>. </td></tr>
@@ -706,11 +710,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of BAP unicast audio configure ASE metadata. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of BAP unicast audio configuring ASE metadata. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>BAP unicast audio configure ASE metadata success. </td></tr>
-    <tr><td class="paramname">false</td><td>BAP unicast audio configure ASE metadata failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Configuring ASE metadata is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Configuring ASE metadata failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -741,11 +745,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of remove BAP unicast audio configuration. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of removing BAP unicast audio configuration. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Remove BAP unicast audio configuration success. </td></tr>
-    <tr><td class="paramname">false</td><td>Remove BAP unicast audio configuration failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Removing BAP unicast audio configuration is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Removing BAP unicast audio configuration failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -776,11 +780,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of remove BAP unicast audio session. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of removing BAP unicast audio session. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Remove BAP unicast audio session success. </td></tr>
-    <tr><td class="paramname">false</td><td>Remove BAP unicast audio session failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Removing BAP unicast audio session is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Removing BAP unicast audio session failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -811,11 +815,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of BAP unicast audio start streaming. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of BAP unicast audio starting streaming. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>BAP unicast audio start streaming success. </td></tr>
-    <tr><td class="paramname">false</td><td>BAP unicast audio start streaming failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Starting streaming is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Starting streaming failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -857,11 +861,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of BAP unicast audio stop streaming. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of BAP unicast audio stopping streaming. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>BAP unicast audio stop streaming success. </td></tr>
-    <tr><td class="paramname">false</td><td>BAP unicast audio stop streaming failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Stopping streaming is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Stopping streaming failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -895,7 +899,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The result of BAP unicast audio action release. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>BAP unicast audio action release success. </td></tr>
+    <tr><td class="paramname">true</td><td>BAP unicast audio action release is successful. </td></tr>
     <tr><td class="paramname">false</td><td>BAP unicast audio action release failed. </td></tr>
   </table>
   </dd>
@@ -927,11 +931,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of BAP unicast audio update metadata. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of BAP unicast audio updating metadata. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>BAP unicast audio update metadata success. </td></tr>
-    <tr><td class="paramname">false</td><td>BAP unicast audio update metadata failed. </td></tr>
+    <tr><td class="paramname">true</td><td>BAP unicast audio updating metadata is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>BAP unicast audio updating metadata failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -978,21 +982,21 @@ Functions</h2></td></tr>
 
 <p>ASCS client get ASE data. </p>
 <p><a class="el" href="bap__unicast__client_8h_source.html">bap_unicast_client.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000024">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000021">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">instance_id</td><td>ASE characteristic instance id. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">char_instance_id</td><td>ASE characteristic instance id. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_ase_data</td><td>Pointer to ASE data: <a class="el" href="struct_t___a_s_e___c_h_a_r___d_a_t_a.html">T_ASE_CHAR_DATA</a>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">direction</td><td>Direction: <a class="el" href="group___l_e_a___l_i_b___exported___types.html#gaddc9391bc23189606598d54ad592446f">T_AUDIO_DIRECTION</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of ASCS client get ASE data. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of ASCS client getting ASE data. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>ASCS client get ASE data success. </td></tr>
-    <tr><td class="paramname">false</td><td>ASCS client get ASE data failed. </td></tr>
+    <tr><td class="paramname">true</td><td>ASCS client getting ASE data is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>ASCS client getting ASE data failed. </td></tr>
   </table>
   </dd>
 </dl>

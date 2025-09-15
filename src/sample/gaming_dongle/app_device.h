@@ -175,18 +175,6 @@ void app_device_bt_policy_startup(bool at_once_trigger);
  */
 bool app_device_is_power_on(void);
 
-/**
- * @brief Set cpu to osc40 and turn off xtal40
- *
- */
-void app_device_set_cpu_to_osc(void);
-
-/**
- * @brief Set cpu to xtal40 and turn off osc40
- *
- */
-void app_device_set_cpu_to_xtal(void);
-
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

@@ -16,7 +16,7 @@ extern "C" {
 /**
  * \defgroup    GAP_BREDR              GAP BR/EDR
  *
- * \brief   Set BR/EDR parameters and provide BR/EDR link related funtions.
+ * \brief   Set BR/EDR parameters and provide BR/EDR link related functions.
  * \details GAP BR/EDR Module manages BR/EDR only related parameters,
  *          also provides some APIs that can be used for BR/EDR role such as
  *          inquiry, sdp discovery, SCO connection, etc.\n
@@ -24,8 +24,6 @@ extern "C" {
  */
 
 /**
- * gap_br.h
- *
  * \name  GAP_LINK_POLICY
  * \brief GAP Bluetooth BR/EDR link policy.
  * \anchor  GAP_LINK_POLICY
@@ -39,8 +37,6 @@ extern "C" {
 #define GAP_LINK_POLICY_SNIFF_MODE              0x0004    /**< Enable only sniff mode */
 
 /**
- * gap_br.h
- *
  * \name  GAP_ACL_PACKET_TYPE
  * \brief GAP Bluetooth BR/EDR ACL packet type bitmap.
  * \anchor  GAP_ACL_PACKET_TYPE
@@ -63,8 +59,6 @@ extern "C" {
 #define GAP_PKT_TYPE_DH5                        0x8000  /**< Packet type DH5 may be used */
 
 /**
- * gap_br.h
- *
  * \name  GAP_SCO_PACKET_TYPE
  * \brief GAP Bluetooth BR/EDR SCO packet type.
  * \anchor  GAP_SCO_PACKET_TYPE
@@ -85,8 +79,6 @@ extern "C" {
 #define GAP_PKT_TYPE_NO_3EV5                    0x0200  /**< Packet type 3EV5 shall not be used */
 
 /**
- * gap_br.h
- *
  * \name  GAP_AIR_MODE
  * \brief Transmit air coding format on SCO/eSCO link.
  * \anchor  GAP_AIR_MODE
@@ -106,8 +98,6 @@ extern "C" {
 #define GAP_QOS_GUARANTEED              0x02
 
 /**
- * gap_br.h
- *
  * \brief GAP Bluetooth mode.
  *
  * \ingroup     GAP_BREDR
@@ -119,8 +109,6 @@ typedef enum
 } T_GAP_BT_MODE;
 
 /**
- * gap_br.h
- *
  * \brief GAP Bluetooth BR/EDR radio mode.
  *
  * \ingroup     GAP_BREDR
@@ -134,8 +122,6 @@ typedef enum
 } T_GAP_RADIO_MODE;
 
 /**
- * gap_br.h
- *
  * \brief GAP Bluetooth BR/EDR page scan type.
  *
  * \ingroup     GAP_BREDR
@@ -147,8 +133,6 @@ typedef enum
 } T_GAP_PAGE_SCAN_TYPE;
 
 /**
- * gap_br.h
- *
  * \brief GAP Bluetooth BR/EDR inquiry scan type.
  *
  * \ingroup     GAP_BREDR
@@ -160,22 +144,18 @@ typedef enum
 } T_GAP_INQUIRY_SCAN_TYPE;
 
 /**
- * gap_br.h
- *
  * \brief GAP Bluetooth BR/EDR inquiry mode.
  *
  * \ingroup     GAP_BREDR
  */
 typedef enum
 {
-    GAP_INQUIRY_MODE_STANDARD_RESULT = 0, /**< Inquiry reusult standard format. */
+    GAP_INQUIRY_MODE_STANDARD_RESULT = 0, /**< Inquiry result standard format. */
     GAP_INQUIRY_MODE_RESULT_WITH_RSSI,    /**< Inquiry result format with RSSI. */
     GAP_INQUIRY_MODE_EXTENDED_RESULT,     /**< Inquiry result with RSSI format or Extended inquiry result format. */
 } T_GAP_INQUIRY_MODE;
 
 /**
- * gap_br.h
- *
  * \brief GAP Bluetooth BR/EDR page scan repetition mode.
  *
  * \ingroup     GAP_BREDR
@@ -188,8 +168,6 @@ typedef enum
 } T_GAP_PAGE_SCAN_REPETITION_MODE;
 
 /**
- * gap_br.h
- *
  * \brief   GAP BR/EDR parameter types.
  *
  * \ingroup  GAP_BREDR
@@ -201,7 +179,7 @@ typedef enum
     GAP_BR_PARAM_COD,                        /**< Class of device. <b>Write only. Parameter type is uint32_t. Default value is 0x000900.</b> */
     GAP_BR_PARAM_SUPV_TOUT,                  /**< BR/EDR link supervision timeout value. <b>Write only. Parameter type is uint16_t. Default value is 0x7D00.</b> */
     GAP_BR_PARAM_LINK_POLICY,                /**< Default link policy to set after link established. <b>Write only. Parameter type is uint8_t. Allowed values are combinations of \ref GAP_LINK_POLICY. Default value is \ref GAP_LINK_POLICY_ROLE_SWITCH | \ref GAP_LINK_POLICY_SNIFF_MODE.</b>*/
-    GAP_BR_PARAM_RADIO_MODE,                 /**< BR/EDR radio mode. <b>Write only. Parameter type is uint8_t. Valid paramters are \ref T_GAP_RADIO_MODE. Default value is \ref GAP_RADIO_MODE_NONE_DISCOVERABLE.</b> */
+    GAP_BR_PARAM_RADIO_MODE,                 /**< BR/EDR radio mode. <b>Write only. Parameter type is uint8_t. Valid parameters are \ref T_GAP_RADIO_MODE. Default value is \ref GAP_RADIO_MODE_NONE_DISCOVERABLE.</b> */
     GAP_BR_PARAM_LIMIT_DISCOV,               /**< Limited discoverable mode. <b>Write only. Parameter type is bool. Default value is false.</b> */
     GAP_BR_PARAM_LIMIT_DISCOV_TOUT,          /**< Limited discoverable mode timeout value in seconds. Only valid when limited discoverable mode is enabled. <b>Write only. Parameter type is uint8_t. Default value is 60.</b> */
     GAP_BR_PARAM_PAGE_SCAN_TYPE,             /**< BR/EDR page scan type. <b>Write only. Parameter type is uint8_t. Valid values are \ref T_GAP_PAGE_SCAN_TYPE. Default value is \ref GAP_PAGE_SCAN_TYPE_STANDARD.</b>*/
@@ -218,8 +196,6 @@ typedef enum
 } T_GAP_BR_PARAM_TYPE;
 
 /**
- * gap_br.h
- *
  * \brief    BR/EDR link role.
  *
  * \ingroup  GAP_BREDR
@@ -231,8 +207,6 @@ typedef enum
 } T_GAP_BR_LINK_ROLE;
 
 /**
- * gap_br.h
- *
  * \brief    Response of starting inquiry. It will be received in the callback
  *           function registered by \ref gap_br_init with message type
  *           as \ref GAP_BR_INQUIRY_RSP.
@@ -245,9 +219,7 @@ typedef struct
 } T_GAP_INQUIRY_RSP;
 
 /**
- * gap_br.h
- *
- * \brief    Information of device found duing inquiry. It will be received in the
+ * \brief    Information of device found during inquiry. It will be received in the
  *           callback function registered by \ref gap_br_init
  *           with message type as \ref GAP_BR_INQUIRY_RESULT.
  *
@@ -264,8 +236,6 @@ typedef struct
 } T_GAP_INQUIRY_RESULT_INFO;
 
 /**
- * gap_br.h
- *
  * \brief    Information of inquiry procedure complete status. It will be received in the
  *           callback function registered by \ref gap_br_init with message
  *           type as \ref GAP_BR_INQUIRY_CMPL.
@@ -278,8 +248,6 @@ typedef struct
 } T_GAP_INQUIRY_CMPL_INFO;
 
 /**
- * gap_br.h
- *
  * \brief    Response of canceling inquiry. It will be received in the callback
  *           function registered by \ref gap_br_init with message type as
  *           \ref GAP_BR_INQUIRY_CANCEL_RSP.
@@ -292,8 +260,6 @@ typedef struct
 } T_GAP_INQUIRY_CANCEL_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Response of starting periodic inquiry. It will be received in the callback
  *           function registered by \ref gap_br_init with message type
  *           as \ref GAP_BR_PERIODIC_INQUIRY_RSP.
@@ -306,8 +272,6 @@ typedef struct
 } T_GAP_PERIODIC_INQUIRY_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Response of canceling periodic inquiry. It will be received in the callback
  *           function registered by \ref gap_br_init with message type as
  *           \ref GAP_BR_PERIODIC_INQUIRY_CANCEL_RSP.
@@ -320,8 +284,6 @@ typedef struct
 } T_GAP_PERIODIC_INQUIRY_CANCEL_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Response of starting SDP discovery. It will be received in the callback
  *           function registered by \ref gap_br_init with message type as
  *           \ref GAP_BR_SDP_DISCOV_RSP.
@@ -335,8 +297,6 @@ typedef struct
 } T_GAP_SDP_DISCOV_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    SDP UUID type.
  *
  * \ingroup  GAP_BREDR
@@ -349,8 +309,6 @@ typedef enum
 } T_GAP_UUID_TYPE;
 
 /**
- * gap_br.h
- *
  * \brief    SDP UUID data.
  *
  * \ingroup  GAP_BREDR
@@ -363,8 +321,6 @@ typedef union
 } T_GAP_UUID_DATA;
 
 /**
- * gap_br.h
- *
  * \brief    Information of attributes found during SDP discovery. It will be
  *           received in the callback function registered by \ref gap_br_init
  *           with message type as \ref GAP_BR_SDP_ATTR_INFO.
@@ -386,8 +342,6 @@ typedef struct
 } T_GAP_SDP_ATTR_INFO;
 
 /**
- * gap_br.h
- *
  * \brief    Information of DID attributes found during SDP discovery. It will be
  *           received in the callback function registered by \ref gap_br_init
  *           with message type as \ref GAP_BR_DID_ATTR_INFO.
@@ -398,15 +352,13 @@ typedef struct
 {
     uint16_t        specific_id; /**< Specific ID of remote device */
     uint16_t        vendor_id;   /**< Vendor ID of remote device */
-    uint16_t        vendor_src;  /**< Verndor source of remote device */
+    uint16_t        vendor_src;  /**< Vendor source of remote device */
     uint16_t        product_id;  /**< Product ID of remote device */
     uint16_t        version;     /**< Version of remote device */
     uint8_t         bd_addr[6];  /**< Bluetooth address of remote device */
 } T_GAP_DID_ATTR_INFO;
 
 /**
- * gap_br.h
- *
  * \brief    Information of SDP discovery complete. It will be received in the
  *           callback function registered by \ref gap_br_init with message
  *           type as \ref GAP_BR_SDP_DISCOV_CMPL.
@@ -420,8 +372,6 @@ typedef struct
 } T_GAP_SDP_DISCOV_CMPL_INFO;
 
 /**
- * gap_br.h
- *
  * \brief    Response of stopping SDP discovery. It will be received in the callback
  *           function registered by \ref gap_br_init with message type as
  *           \ref GAP_BR_SDP_STOP_DISCOV_RSP.
@@ -431,12 +381,10 @@ typedef struct
 typedef struct
 {
     uint8_t         bd_addr[6];  /**< Bluetooth address of remote device */
-    uint16_t        cause;       /**< Result of stop SDP discovey */
+    uint16_t        cause;       /**< Result of stop SDP discovery */
 } T_GAP_STOP_SDP_DISCOV_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Indication of SCO/eSCO connection request from remote side. It will be
  *           received in the callback function registered by \ref gap_br_init
  *           with message type as \ref GAP_BR_SCO_CONN_IND.
@@ -450,8 +398,6 @@ typedef struct
 } T_GAP_SCO_CONN_IND;
 
 /**
- * gap_br.h
- *
  * \brief    Response of SCO/eSCO connection request from upper layer. It will be
  *           received in the callback function registered by \ref gap_br_init
  *           with message type as \ref GAP_BR_SCO_CONN_RSP.
@@ -465,8 +411,6 @@ typedef struct
 } T_GAP_SCO_CONN_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Result of SCO/eSCO connection establish procedure. It will be received
  *           in the callback function registered by \ref gap_br_init
  *           with message type as \ref GAP_BR_SCO_CONN_CMPL.
@@ -485,8 +429,6 @@ typedef struct
 } T_GAP_SCO_CONN_CMPL_INFO;
 
 /**
- * gap_br.h
- *
  * \brief    SCO packet status.
  *
  * \ingroup  GAP_BREDR
@@ -500,8 +442,6 @@ typedef enum
 } T_GAP_SCO_PKT_STATUS;
 
 /**
- * gap_br.h
- *
  * \brief    BR/EDR reject connection request reason.
  *
  * \ingroup  GAP_BREDR
@@ -514,8 +454,6 @@ typedef enum
 } T_GAP_ACL_REJECT_CONN_REASON;
 
 /**
- * gap_br.h
- *
  * \brief    Indication of SCO/eSCO data from remote side. It will be received
  *           in the callback function registered by \ref gap_br_init
  *           with message type as \ref GAP_BR_SCO_DATA_IND.
@@ -533,8 +471,6 @@ typedef struct
 } T_GAP_SCO_DATA_IND;
 
 /**
- * gap_br.h
- *
  * \brief    Indication of SCO/eSCO disconnect request from remote side. It will
  *           be received in the callback function registered by \ref gap_br_init
  *           with message type as \ref GAP_BR_SCO_DISCONN_IND.
@@ -548,8 +484,6 @@ typedef struct
 } T_GAP_SCO_DISCONN_IND;
 
 /**
- * gap_br.h
- *
  * \brief    Response of SCO/eSCO disconnect request from upper layer. It will
  *           be received in the callback function registered by \ref gap_br_init
  *           with message type as \ref GAP_BR_SCO_DISCONN_RSP.
@@ -564,8 +498,6 @@ typedef struct
 } T_GAP_SCO_DISCONN_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Response of SCO/eSCO link parameters change request from upper layer. It will be
  *           received in the callback function registered by \ref gap_br_init
  *           with message type as \ref GAP_BR_SCO_PARAM_CHANGE_RSP.
@@ -579,8 +511,6 @@ typedef struct
 } T_GAP_SCO_PARAM_CHANGE_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Result of SCO/eSCO link parameters change procedure. It will be
  *           received in the callback function registered by \ref gap_br_init
  *           with message type as \ref GAP_BR_SCO_PARAM_CHANGE_INFO.
@@ -598,8 +528,6 @@ typedef struct
 } T_GAP_SCO_PARAM_CHANGE_INFO;
 
 /**
- * gap_br.h
- *
  * \brief    Information of result of getting name of remote device. It will be received
  *           in the callback function registered by \ref gap_br_init with message
  *           type as \ref GAP_BR_REMOTE_NAME_INFO.
@@ -614,8 +542,6 @@ typedef struct
 } T_GAP_REMOTE_NAME_INFO;
 
 /**
- * gap_br.h
- *
  * \brief    Response of configuring ACL link policy. It will be received in the callback
  *           function registered by \ref gap_br_init with message type as \ref GAP_BR_LINK_POLICY_RSP.
  *
@@ -629,8 +555,6 @@ typedef struct
 } T_GAP_ACL_CFG_LINK_POLICY_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Response of configuring ACL link supervision timeout. It will be received in the callback
  *           function registered by \ref gap_br_init with message type as \ref GAP_BR_LINK_SUPV_TOUT_RSP.
  *
@@ -643,8 +567,6 @@ typedef struct
 } T_GAP_ACL_CFG_LINK_SUPV_TOUT_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Response of configuring ACL link role. It will be received in the callback
  *           function registered by \ref gap_br_init with message type as \ref GAP_BR_ROLE_SWITCH_RSP.
  *
@@ -657,8 +579,6 @@ typedef struct
 } T_GAP_ACL_CFG_LINK_ROLE_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Response of configuring ACL link packet type. It will be received in the callback
  *           function registered by \ref gap_br_init with message type as \ref GAP_BR_PKT_TYPE_CHANGE_RSP.
  *
@@ -671,8 +591,6 @@ typedef struct
 } T_GAP_ACL_CFG_PKT_TYPE_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Response of configuring ACL link flush timeout value. It will be received in the callback
  *           function registered by \ref gap_br_init with message type as \ref GAP_BR_LINK_FLUSH_TOUT_RSP.
  *
@@ -685,8 +603,6 @@ typedef struct
 } T_GAP_ACL_CFG_FLUSH_TOUT_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Response of configuring ACL to enter sniff mode. It will be received in the callback
  *           function registered by \ref gap_br_init with message type as \ref GAP_BR_ENTER_SNIFF_MODE_RSP.
  *
@@ -699,8 +615,6 @@ typedef struct
 } T_GAP_ACL_ENTER_SNIFF_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Response of configuring ACL to exit sniff mode. It will be received in the callback
  *           function registered by \ref gap_br_init with message type as \ref GAP_BR_EXIT_SNIFF_MODE_RSP.
  *
@@ -713,8 +627,6 @@ typedef struct
 } T_GAP_ACL_EXIT_SNIFF_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    GAP ACL status used in ACL status information message.
  *
  * \ingroup  GAP_BREDR
@@ -741,8 +653,6 @@ typedef enum
 } T_GAP_ACL_STATUS;
 
 /**
- * gap_br.h
- *
  * \brief    Parameters used in ACL status information message when status is
  *           \ref GAP_ACL_AUTHEN_START or \ref GAP_ACL_AUTHEN_SUCCESS or \ref
  *           GAP_ACL_AUTHEN_FAIL or \ref GAP_ACL_CONN_ENCRYPTED or \ref GAP_ACL_CONN_NOT_ENCRYPTED.
@@ -758,8 +668,6 @@ typedef struct
 } T_GAP_ACL_STATUS_PARAM_AUTHEN;
 
 /**
- * gap_br.h
- *
  * \brief    Parameters used in ACL status information message when status is
  *           \ref GAP_ACL_CONN_BR_SC_CMPL.
  *
@@ -771,8 +679,6 @@ typedef struct
 } T_GAP_ACL_STATUS_PARAM_BR_SC_CMPL;
 
 /**
- * gap_br.h
- *
  * \brief    Parameters used in ACL status information message when status is
  *           \ref GAP_ACL_ADDR_RESOLVED.
  *
@@ -785,8 +691,6 @@ typedef struct
 } T_GAP_ACL_STATUS_PARAM_RESOLVE;
 
 /**
- * gap_br.h
- *
  * \brief    Parameters used in ACL status information message when status is
  *           \ref GAP_ACL_CONN_SNIFF.
  *
@@ -798,8 +702,6 @@ typedef struct
 } T_GAP_ACL_STATUS_PARAM_SNIFF;
 
 /**
- * gap_br.h
- *
  * \brief    Parameters used in ACL status information message when status is
  *           \ref GAP_ACL_CONN_SNIFF_SUBRATE.
  *
@@ -814,8 +716,6 @@ typedef struct
 } T_GAP_ACL_STATUS_PARAM_SNIFF_SUBRATE;
 
 /**
- * gap_br.h
- *
  * \brief    Parameters used in ACL status information message when status is
  *           \ref GAP_ACL_CONN_DISCONN.
  *
@@ -827,8 +727,6 @@ typedef struct
 } T_GAP_ACL_CONNECTION_DISCONNECT;
 
 /**
- * gap_br.h
- *
  * \brief    Parameters used in ACL status information message when status is
  *           \ref GAP_ACL_CONN_FAIL.
  *
@@ -840,8 +738,6 @@ typedef struct
 } T_GAP_ACL_CONNECTION_FAIL;
 
 /**
- * gap_br.h
- *
  * \brief    Parameters used in ACL status information message when status is
  *           \ref GAP_ACL_CONN_SUCCESS.
  *
@@ -853,8 +749,6 @@ typedef struct
 } T_GAP_ACL_CONNECTION_SUCCESS;
 
 /**
- * gap_br.h
- *
  * \brief    Parameters used in ACL status information message when status is
  *           \ref GAP_ACL_CONN_READY.
  *
@@ -866,8 +760,6 @@ typedef struct
 } T_GAP_ACL_CONNECTION_READY;
 
 /**
- * gap_br.h
- *
  * \brief    Parameters used in ACL status information message.
  *
  * \ingroup  GAP_BREDR
@@ -879,15 +771,13 @@ typedef union
     T_GAP_ACL_CONNECTION_FAIL            conn_fail;    /**< Parameter for link fail to establish. */
     T_GAP_ACL_CONNECTION_DISCONNECT      conn_disconn; /**< Parameter for link disconnected. */
     T_GAP_ACL_STATUS_PARAM_AUTHEN        authen;       /**< Parameter for authentication status. */
-    T_GAP_ACL_STATUS_PARAM_RESOLVE       resolve;      /**< Address resolvable paramter. */
+    T_GAP_ACL_STATUS_PARAM_RESOLVE       resolve;      /**< Address resolvable parameter. */
     T_GAP_ACL_STATUS_PARAM_SNIFF         sniff;        /**< Parameter for ACL link sniff mode. */
     T_GAP_ACL_STATUS_PARAM_SNIFF_SUBRATE sniff_subrate;/**< Parameter for ACL link sniff subrate. */
     T_GAP_ACL_STATUS_PARAM_BR_SC_CMPL    br_sc_cmpl;   /**< Parameter for BR SC complete. */
 } T_GAP_ACL_STATUS_PARAM;
 
 /**
- * gap_br.h
- *
  * \brief    ACL status information. It will be received in the callback function
  *           registered by \ref gap_br_init with message type as \ref GAP_BR_ACL_STATUS_INFO.
  *
@@ -902,8 +792,6 @@ typedef struct
 } T_GAP_ACL_STATUS_INFO;
 
 /**
- * gap_br.h
- *
  * \brief    Response of setup QOS for an ACL link. It will be received in the
  *           callback function registered by \ref gap_br_init with message
  *           type as \ref GAP_BR_SETUP_QOS_RSP.
@@ -917,8 +805,6 @@ typedef struct
 } T_GAP_SETUP_QOS_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Result of setup QOS for an ACL link. It will be received in the
  *           callback function registered by \ref gap_br_init with message
  *           type as \ref GAP_BR_SETUP_QOS_CMPL.
@@ -933,8 +819,6 @@ typedef struct
 } T_GAP_SETUP_QOS_CMPL;
 
 /**
- * gap_br.h
- *
  * \brief    Response of ACL disconnect request from upper layer. It will
  *           be received in the callback function registered by \ref gap_br_init
  *           with message type as \ref GAP_BR_ACL_DISCONN_RSP.
@@ -949,8 +833,6 @@ typedef struct
 } T_GAP_ACL_DISCONN_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Response of reading RSSI. It will be received in the callback function registered
  *           by \ref gap_br_init with message type as \ref GAP_BR_READ_RSSI_RSP.
  *
@@ -965,8 +847,6 @@ typedef struct
 } T_GAP_READ_RSSI_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Indication of ACL connection request from remote device. It will
  *           be received in the callback function registered by \ref gap_br_init
  *           with message type as \ref GAP_BR_ACL_CONN_IND.
@@ -980,8 +860,6 @@ typedef struct
 } T_GAP_ACL_CONN_IND;
 
 /**
- * gap_br.h
- *
  * \brief    Vendor event infomation. It will be received in the callback function
  *           registered by \ref gap_br_init with message type as \ref GAP_BR_VENDOR_EVT.
  *
@@ -994,8 +872,6 @@ typedef struct
 } T_GAP_VENDOR_EVT_INFO;
 
 /**
- * gap_br.h
- *
  * \brief   Response of set page with page scan simultaneous. It will
  *           be received in the callback function registered by \ref gap_br_init
  *           with message type as \ref GAP_BR_SET_PAGE_WITH_SCAN_RSP.
@@ -1008,8 +884,6 @@ typedef struct
 } T_GAP_SET_PAGE_WITH_SCAN_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Response of setting radio mode. It will be received in the callback
  *           function registered by \ref gap_br_init with message type
  *           as \ref GAP_BR_SET_RADIO_MODE_RSP.
@@ -1022,8 +896,6 @@ typedef struct
 } T_GAP_RADIO_MODE_SET_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Response of configuring local device. It will be received in the
  *           callback function registered by \ref gap_br_init with message
  *           type as \ref GAP_BR_SET_DEV_NAME_RSP or \ref GAP_BR_SET_ACCEPT_ROLE_RSP or \ref GAP_BR_SET_DID_EIR_RSP
@@ -1037,8 +909,6 @@ typedef struct
 } T_GAP_DEV_CFG_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Response of add SDP record to Bluetooth stack. It will be received in the
  *           callback function registered by \ref gap_br_init with message
  *           type as \ref GAP_BR_ADD_SDP_RECORD_RSP.
@@ -1052,8 +922,6 @@ typedef struct
 } T_GAP_ADD_SDP_RECORD_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Response of delete SDP record to Bluetooth stack. It will be received in the
  *           callback function registered by \ref gap_br_init with message
  *           type as \ref GAP_BR_DEL_SDP_RECORD_RSP.
@@ -1067,8 +935,6 @@ typedef struct
 } T_GAP_DEL_SDP_RECORD_RSP;
 
 /**
- * gap_br.h
- *
  * \brief   Response of set link tx power. It will be received in the callback function registered
  *          by \ref gap_br_init with message type as \ref GAP_BR_SET_TX_POWER_RSP.
  *
@@ -1083,8 +949,6 @@ typedef struct
 } T_GAP_SET_TX_POWER_RSP;
 
 /**
- * gap_br.h
- *
  * \brief   Response of set RSSI golden range. It will be received in the callback function registered
  *          by \ref gap_br_init with message type as \ref GAP_BR_SET_RSSI_GOLDEN_RANGE_RSP.
  *
@@ -1099,8 +963,6 @@ typedef struct
 } T_GAP_SET_RSSI_GOLDEN_RANGE_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Link key type.
  *
  * \ingroup  GAP_BREDR
@@ -1119,8 +981,6 @@ typedef enum
 } T_GAP_BR_LINK_KEY_TYPE;
 
 /**
- * gap_br.h
- *
  * \brief    Response of BR/EDR authentication request. It will be received in the
  *           callback function registered by \ref gap_br_init with message
  *           type as \ref GAP_BR_AUTHEN_RSP.
@@ -1134,8 +994,6 @@ typedef struct
 } T_GAP_AUTHEN_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Response of user passkey request reply. It will be received in the
  *           callback function registered by \ref gap_br_init with message
  *           type as \ref GAP_BR_PASSKEY_REQ_REPLY_RSP.
@@ -1148,8 +1006,6 @@ typedef struct
 } T_GAP_USER_PASSKEY_REQ_REPLY_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Response of keypress notification request. It will be received in the
  *           callback function registered by \ref gap_br_init with message
  *           type as \ref GAP_BR_KEYPRESS_NOTIF_RSP.
@@ -1164,8 +1020,6 @@ typedef struct
 } T_GAP_KEYPRESS_NOTIF_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Information of remote keypress notification. It will be received in
  *           the callback function registered by \ref gap_br_init with message
  *           type as \ref GAP_BR_KEYPRESS_NOTIF_INFO.
@@ -1180,8 +1034,6 @@ typedef struct
 } T_GAP_KEYPRESS_NOTIF_INFO;
 
 /**
- * gap_br.h
- *
  * \brief    Indication to request BR/EDR OOB data of remote device. It will be
  *           received in the callback function registered by \ref gap_br_init
  *           with message type as \ref GAP_BR_OOB_INPUT.
@@ -1194,8 +1046,6 @@ typedef struct
 } T_GAP_REMOTE_OOB_REQ_IND;
 
 /**
- * gap_br.h
- *
  * \brief    Indication to request user confirmation when pairing. It will be received
  *           in the callback function registered by \ref gap_br_init with
  *           message type as \ref GAP_BR_USER_CONFIRM_REQ.
@@ -1211,8 +1061,6 @@ typedef struct
 } T_GAP_USER_CFM_REQ_IND;
 
 /**
- * gap_br.h
- *
  * \brief    Indication to request user to input passkey. It will be received in
  *           the callback function registered by \ref gap_br_init with message
  *           type as \ref GAP_BR_PASSKEY_INPUT.
@@ -1227,8 +1075,6 @@ typedef struct
 } T_GAP_USER_PASSKEY_REQ_IND;
 
 /**
- * gap_br.h
- *
  * \brief    Information of user passkey notification. It will be received in the
  *           callback function registered by \ref gap_br_init with message
  *           type as \ref GAP_BR_PASSKEY_DISPLAY.
@@ -1243,8 +1089,6 @@ typedef struct
 } T_GAP_USER_PASSKEY_NOTIF_INFO;
 
 /**
- * gap_br.h
- *
  * \brief    Response of reading local BR/EDR OOB data. It will be received in the
  *           callback function registered by \ref gap_br_init with message
  *           type as \ref GAP_BR_LOCAL_OOB_RSP.
@@ -1259,8 +1103,6 @@ typedef struct
 } T_GAP_LOCAL_OOB_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Response of reading local BR/EDR OOB extended data. It will be received in the
  *           callback function registered by \ref gap_br_init with message type as
  *           \ref GAP_BR_LOCAL_OOB_EXTENDED_RSP.
@@ -1277,8 +1119,6 @@ typedef struct
 } T_GAP_LOCAL_OOB_EXTENDED_DATA_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Information of new link key. It will be received in the callback
  *           function registered by \ref gap_br_init with message type as
  *           \ref GAP_BR_LINK_KEY_INFO.
@@ -1293,8 +1133,6 @@ typedef struct
 } T_GAP_LINK_KEY_INFO;
 
 /**
- * gap_br.h
- *
  * \brief    Indication of Link key request. It will be received in the callback
  *           function registered by \ref gap_br_init with message type as
  *           \ref GAP_BR_LINK_KEY_REQ_IND.
@@ -1307,8 +1145,6 @@ typedef struct
 } T_GAP_LINK_KEY_REQ_IND;
 
 /**
- * gap_br.h
- *
  * \brief    Indication of pin code request. It will be received in the callback
  *           function registered by \ref gap_br_init with message type as
  *           \ref GAP_BR_PIN_CODE_REQ_IND.
@@ -1321,8 +1157,6 @@ typedef struct
 } T_GAP_PIN_CODE_REQ_IND;
 
 /**
- * gap_br.h
- *
  * \brief    Response of set idle zone. It will be received in the callback function registered
  *           by \ref gap_br_init with message type as \ref GAP_BR_SET_IDLE_ZONE_RSP.
  *
@@ -1338,8 +1172,6 @@ typedef struct
 } T_GAP_SET_IDLE_ZONE_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Response of set traffic QoS command. It will be received in the callback function
  *           registered by \ref gap_br_register_cb with message type as \ref GAP_BR_VND_TRAFFIC_QOS_RSP.
  *
@@ -1348,7 +1180,21 @@ typedef struct
 typedef struct
 {
     uint16_t    cause;
+    uint8_t    *param;
 } T_GAP_VND_SET_TRAFFIC_QOS_RSP;
+
+/**
+ * \brief    Result of set traffic QoS command. It will be received in the callback function
+ *           registered by \ref gap_br_register_cb with message type as \ref GAP_BR_VND_TRAFFIC_QOS_CMPL.
+ *
+ * \ingroup  GAP_BREDR
+ */
+typedef struct
+{
+    uint8_t  subevt;
+    uint16_t cause;
+    uint8_t *param;
+} T_GAP_VND_SET_TRAFFIC_QOS_CMPL;
 
 #define GAP_BR_MSG_GROUP_DEV_CFG        0x0000
 #define GAP_BR_MSG_GROUP_INQUIRY        0x0100
@@ -1359,8 +1205,6 @@ typedef struct
 #define GAP_BR_MSG_GROUP_VND            0xFF00
 
 /**
- * gap_br.h
- *
  * \brief   Message types APP may get through callback function registered by \ref gap_br_init.
  *
  * \ingroup  GAP_BREDR
@@ -1436,14 +1280,13 @@ typedef enum
     GAP_BR_VENDOR_EVT                  = (GAP_BR_MSG_GROUP_VND | 0x00), /**< Information of vendor event. Message data is \ref T_GAP_VENDOR_EVT_INFO */
     GAP_BR_SET_PAGE_WITH_SCAN_RSP      = (GAP_BR_MSG_GROUP_VND | 0x01), /**< Response of set page with scan response simultaneous. Message data is \ref T_GAP_SET_PAGE_WITH_SCAN_RSP. */
     GAP_BR_SET_TX_POWER_RSP            = (GAP_BR_MSG_GROUP_VND | 0x02), /**< Response of set link tx power. Message data is \ref T_GAP_SET_TX_POWER_RSP. */
-    GAP_BR_SET_RSSI_GOLDEN_RANGE_RSP   = (GAP_BR_MSG_GROUP_VND | 0x03), /**< Response of set rssi golden range. Message data is \ref T_GAP_SET_RSSI_GOLDEN_RANGE_RSP. */
+    GAP_BR_SET_RSSI_GOLDEN_RANGE_RSP   = (GAP_BR_MSG_GROUP_VND | 0x03), /**< Response of set RSSI golden range. Message data is \ref T_GAP_SET_RSSI_GOLDEN_RANGE_RSP. */
     GAP_BR_SET_IDLE_ZONE_RSP           = (GAP_BR_MSG_GROUP_VND | 0x04), /**< Response of set idle zone. Message data is \ref T_GAP_SET_IDLE_ZONE_RSP. */
-    GAP_BR_VND_TRAFFIC_QOS_RSP         = (GAP_BR_MSG_GROUP_VND | 0x05), /**< Response of set htpoll. Message data is \ref T_GAP_VND_SET_TRAFFIC_QOS_RSP. */
+    GAP_BR_VND_TRAFFIC_QOS_RSP         = (GAP_BR_MSG_GROUP_VND | 0x05), /**< Response of set traffic QoS. Message data is \ref T_GAP_VND_SET_TRAFFIC_QOS_RSP. */
+    GAP_BR_VND_TRAFFIC_QOS_CMPL        = (GAP_BR_MSG_GROUP_VND | 0x06), /**< Result of set traffic QoS. Message data is \ref T_GAP_VND_SET_TRAFFIC_QOS_CMPL. */
 } T_GAP_BR_MSG;
 
 /**
- * gap_br.h
- *
  * \brief   Prototype of callback function to handle GAP BR/EDR messages.
  * \details GAP BR/EDR message types are defined in \ref T_GAP_BR_MSG. Message data
  *          is located at \c p_buf and the content of data is dependent on message type.\n
@@ -1454,8 +1297,6 @@ typedef void (*P_GAP_BR_CBACK)(void         *p_buf,
                                T_GAP_BR_MSG  msg);
 
 /**
- * gap_br.h
- *
  * \brief   Init GAP BR/EDR role, prototype of callback function to handle GAP BR/EDR messages.
  * \details GAP BR/EDR message types are defined in \ref T_GAP_BR_MSG. Message data
  *          is located at \c p_buf and the content of data is dependent on message type.\n
@@ -1479,8 +1320,6 @@ typedef void (*P_GAP_BR_CBACK)(void         *p_buf,
 void gap_br_init(P_GAP_BR_CBACK cback);
 
 /**
- * gap_br.h
- *
  * \brief   Set a GAP BR/EDR parameter. GAP BR/EDR parameter type(\ref T_GAP_BR_PARAM_TYPE)
  *          should be used to declare which parameter will be set. Length is also used
  *          to declare the size of parameter to be set and it should match the parameter type.
@@ -1492,7 +1331,7 @@ void gap_br_init(P_GAP_BR_CBACK cback);
  * \param[in]  p_value  Address of data to set.
  *
  * \return    The status of setting GAP BR/EDR parameter.
- * \retval    GAP_CAUSE_SUCCESS          The parameter was set succesfully.
+ * \retval    GAP_CAUSE_SUCCESS          The parameter was set successfully.
  * \retval    GAP_CAUSE_INVALID_PARAM    The parameter was failed to set because of wrong type or len.
  *
  * <b>Example usage</b>
@@ -1557,8 +1396,6 @@ T_GAP_CAUSE gap_br_set_param(T_GAP_BR_PARAM_TYPE  type,
                              void                *p_value);
 
 /**
- * gap_br.h
- *
  * \brief   Get a GAP BR/EDR parameter. GAP BR/EDR parameter type(\ref T_GAP_BR_PARAM_TYPE)
  *          should be used to declare which parameter will be get.
  *
@@ -1593,11 +1430,9 @@ T_GAP_CAUSE gap_br_get_param(T_GAP_BR_PARAM_TYPE type,
                              void               *p_value);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to start BR/EDR inquiry. If the request was successfully
  *           sent, multiple messages will be received in GAP BR/EDR callback function
- *           registed by \ref gap_br_init. The first one is \ref GAP_BR_INQUIRY_RSP
+ *           registered by \ref gap_br_init. The first one is \ref GAP_BR_INQUIRY_RSP
  *           which indicates whether inquiry was started successfully. If inquiry
  *           was started successfully, one or more \ref GAP_BR_INQUIRY_RESULT may be received,
  *           each message represents a remote device infomation.
@@ -1674,11 +1509,9 @@ T_GAP_CAUSE gap_br_start_inquiry(bool    limited_inquiry,
                                  uint8_t timeout);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to stop BR/EDR inquiry. If the request was send successfully,
  *           \ref GAP_BR_INQUIRY_CANCEL_RSP message will be received in GAP BR/EDR callback
- *           function registed by \ref gap_br_init to indicate whether inquiry
+ *           function registered by \ref gap_br_init to indicate whether inquiry
  *           was successfully stopped. If inquiry was successfully stopped, no
  *           \ref GAP_BR_INQUIRY_CMPL message will be received.
  *
@@ -1744,11 +1577,9 @@ T_GAP_CAUSE gap_br_start_inquiry(bool    limited_inquiry,
 T_GAP_CAUSE gap_br_stop_inquiry(void);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to start BR/EDR periodic inquiry. If the request was successfully
  *           sent, multiple messages will be received in GAP BR/EDR callback function
- *           registed by \ref gap_br_init. The first one is \ref GAP_BR_PERIODIC_INQUIRY_RSP
+ *           registered by \ref gap_br_init. The first one is \ref GAP_BR_PERIODIC_INQUIRY_RSP
  *           which indicates whether inquiry was started successfully. If inquiry
  *           was started successfully, one or more \ref GAP_BR_INQUIRY_RESULT may be received,
  *           each message represents a remote device infomation.
@@ -1832,11 +1663,9 @@ T_GAP_CAUSE gap_br_start_periodic_inquiry(bool     limited_inquiry,
                                           uint8_t  inquiry_length);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to stop BR/EDR periodic inquiry. If the request was send successfully,
  *           \ref GAP_BR_PERIODIC_INQUIRY_CANCEL_RSP message will be received in GAP BR/EDR callback
- *           function registed by \ref gap_br_init to indicate whether inquiry
+ *           function registered by \ref gap_br_init to indicate whether inquiry
  *           was successfully stopped. If inquiry was successfully stopped, no
  *           \ref GAP_BR_INQUIRY_CMPL message will be received.
  *
@@ -1902,11 +1731,9 @@ T_GAP_CAUSE gap_br_start_periodic_inquiry(bool     limited_inquiry,
 T_GAP_CAUSE gap_br_stop_periodic_inquiry(void);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to start SDP discovery. If the request was successfully
  *           sent, multiple messages will be received in GAP BR/EDR callback function
- *           registed by \ref gap_br_init. The first one is \ref GAP_BR_SDP_DISCOV_RSP
+ *           registered by \ref gap_br_init. The first one is \ref GAP_BR_SDP_DISCOV_RSP
  *           which indicates whether SDP discovery was started successfully. If SDP discovery
  *           was started successfully, one or more \ref GAP_BR_SDP_ATTR_INFO may be received.
  *           After SDP discovery procedure is done, \ref GAP_BR_SDP_DISCOV_CMPL will be received.
@@ -1989,11 +1816,9 @@ T_GAP_CAUSE gap_br_start_sdp_discov(uint8_t         *bd_addr,
                                     T_GAP_UUID_DATA  uuid_data);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to stop SDP discovery. If the request was successfully
  *           sent, \ref GAP_BR_SDP_STOP_DISCOV_RSP message will be received in GAP BR/EDR
- *           callback function registed by \ref gap_br_init to indicate
+ *           callback function registered by \ref gap_br_init to indicate
  *           whether SDP discovery was successfully stopped. <b>If SDP discovery was
  *           successfully stopped, no \ref GAP_BR_SDP_DISCOV_CMPL message will be received.</b>
  *
@@ -2062,11 +1887,9 @@ T_GAP_CAUSE gap_br_start_sdp_discov(uint8_t         *bd_addr,
 T_GAP_CAUSE gap_br_stop_sdp_discov(uint8_t *bd_addr);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to start DID discovery. If the request was successfully
  *           sent, multiple messages will be received in GAP BR/EDR callback function
- *           registed by \ref gap_br_init. The first one is \ref GAP_BR_SDP_DISCOV_RSP
+ *           registered by \ref gap_br_init. The first one is \ref GAP_BR_SDP_DISCOV_RSP
  *           which indicates whether DID discovery was started successfully. If DID
  *           discovery was started successfully, one \ref GAP_BR_DID_ATTR_INFO may be received.
  *           After DID discovery procedure is done, \ref GAP_BR_SDP_DISCOV_CMPL will be received.
@@ -2140,13 +1963,11 @@ T_GAP_CAUSE gap_br_stop_sdp_discov(uint8_t *bd_addr);
 T_GAP_CAUSE gap_br_start_did_discov(uint8_t *bd_addr);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to set BR/EDR name of local device. This function is used to change
  *           local name after BT stack was started. \ref gap_br_set_param
  *           can be used to set local name before BT stack was started. If
  *           the request was successfully sent, \ref GAP_BR_SET_DEV_NAME_RSP will be received
- *           in GAP BR/EDR callback function registed by \ref gap_br_init
+ *           in GAP BR/EDR callback function registered by \ref gap_br_init
  *           to indicate the result.
  *
  * \param[in]  p_name     Address of name to set.
@@ -2202,12 +2023,10 @@ T_GAP_CAUSE gap_br_set_dev_name(uint8_t *p_name,
                                 uint8_t  len);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to set class of device of local device. This function is used to change
  *           class of device after BT stack was started. \ref gap_br_set_param can be used to
  *           set local class of device before BT stack was started. If the request was successfully
- *           sent, \ref GAP_BR_SET_DEV_COD_RSP will be received in GAP BR/EDR callback function registed
+ *           sent, \ref GAP_BR_SET_DEV_COD_RSP will be received in GAP BR/EDR callback function registered
  *           by \ref gap_br_init to indicate the result.
  *
  * \param[in]  cod     Class of device to set.
@@ -2259,13 +2078,11 @@ T_GAP_CAUSE gap_br_set_dev_name(uint8_t *p_name,
 T_GAP_CAUSE gap_br_set_dev_cod(uint32_t cod);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to set local radio mode. This function is used to change
  *           local radio mode after BT stack was started. \ref gap_br_set_param
  *           can be used to set local radio mode before BT stack was started. If
  *           the request was successfully sent, \ref GAP_BR_SET_RADIO_MODE_RSP will be received
- *           in GAP BR/EDR callback function registed by \ref gap_br_init
+ *           in GAP BR/EDR callback function registered by \ref gap_br_init
  *           to indicate the result.
  *
  * \param[in]  radio_mode               Radio mode to set. Valid values are defined in \ref T_GAP_RADIO_MODE.
@@ -2323,11 +2140,9 @@ T_GAP_CAUSE gap_br_set_radio_mode(uint8_t radio_mode,
                                   uint8_t limited_discov_time);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to get remote device's name. If the request was successfully
  *           sent, \ref GAP_BR_REMOTE_NAME_INFO will be received in GAP BR/EDR callback
- *           function registed by \ref gap_br_init to indicate the result
+ *           function registered by \ref gap_br_init to indicate the result
  *           of the procedure. If success, remote name will also be contained in
  *           the message data. <b>Get remote name procedure can only be started
  *           after receiving \ref GAP_BR_PROTO_REG_CMPL message in GAP BR/EDR callback.</b>
@@ -2387,11 +2202,9 @@ T_GAP_CAUSE gap_br_set_radio_mode(uint8_t radio_mode,
 T_GAP_CAUSE gap_br_get_remote_name(uint8_t *bd_addr);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to configure ACL link with remote device into sniff
  *           mode. If the request was successfully sent, \ref GAP_BR_ENTER_SNIFF_MODE_RSP
- *           will be received in GAP BR/EDR callback function registed by \ref
+ *           will be received in GAP BR/EDR callback function registered by \ref
  *           gap_br_init to indicate the result of the procedure. If the
  *           link enters sniff mode successfully, \ref GAP_BR_ACL_STATUS_INFO message will
  *           also be received with ACL status as \ref GAP_ACL_CONN_SNIFF, the
@@ -2474,11 +2287,9 @@ T_GAP_CAUSE gap_br_enter_sniff_mode(uint8_t  *bd_addr,
                                     uint16_t  sniff_timeout);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to configure ACL link with remote device to exit sniff
  *           mode. If the request was successfully sent, \ref GAP_BR_EXIT_SNIFF_MODE_RSP
- *           will be received in GAP BR/EDR callback function registed by \ref
+ *           will be received in GAP BR/EDR callback function registered by \ref
  *           gap_br_init to indicate the result of the procedure. If the
  *           link exits sniff mode successfully, \ref GAP_BR_ACL_STATUS_INFO message will
  *           also be received with ACL status as \ref GAP_ACL_CONN_ACTIVE.
@@ -2549,11 +2360,9 @@ T_GAP_CAUSE gap_br_enter_sniff_mode(uint8_t  *bd_addr,
 T_GAP_CAUSE gap_br_exit_sniff_mode(uint8_t *bd_addr);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to configure default link policy which Bluetooth stack will
  *           automatically set after ACL link is established. \ref GAP_BR_SET_DEFAULT_LINK_POLICY_RSP
- *           will be received in GAP BR/EDR callback function registed by \ref
+ *           will be received in GAP BR/EDR callback function registered by \ref
  *           gap_br_init to indicate the result. <b>To change the default
  *           link policy before Bluetooth stack is started, \ref gap_br_set_param can be
  *           used.</b> \ref gap_br_cfg_acl_link_policy can be used to change link
@@ -2608,11 +2417,9 @@ T_GAP_CAUSE gap_br_exit_sniff_mode(uint8_t *bd_addr);
 T_GAP_CAUSE gap_br_cfg_default_link_policy(uint16_t link_policy);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to configure page scan parameters after Bluetooth stack is started.
  *           \ref GAP_BR_SET_PAGE_SCAN_PARAM_RSP will be received in GAP BR/EDR callback function
- *           registed by \ref gap_br_init to indicate the result. <b>To change these
+ *           registered by \ref gap_br_init to indicate the result. <b>To change these
  *           parameters before Bluetooth stack is started, \ref gap_br_set_param
  *           can be used.</b>
  *
@@ -2669,11 +2476,9 @@ T_GAP_CAUSE gap_br_cfg_page_scan_param(uint8_t  type,
                                        uint16_t window);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to configure inquiry scan parameters after Bluetooth stack is started.
  *           \ref GAP_BR_SET_INQUIRY_SCAN_PARAM_RSP will be received in GAP BR/EDR callback function
- *           registed by \ref gap_br_init to indicate the result. <b>To change these
+ *           registered by \ref gap_br_init to indicate the result. <b>To change these
  *           parameters before Bluetooth stack is started, \ref gap_br_set_param
  *           can be used.</b>
  *
@@ -2730,11 +2535,9 @@ T_GAP_CAUSE gap_br_cfg_inquiry_scan_param(uint8_t  type,
                                           uint16_t window);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to configure link policy for an ACL link. If the
  *           request was successfully sent, \ref GAP_BR_LINK_POLICY_RSP will be received
- *           in GAP BR/EDR callback function registed by \ref gap_br_init
+ *           in GAP BR/EDR callback function registered by \ref gap_br_init
  *           to indicate the result of the procedure. BT stack will automatically
  *           set link policy after ACL link is connected. <b>To change the default
  *           link policy that BT stack will set, \ref gap_br_set_param can be
@@ -2804,11 +2607,9 @@ T_GAP_CAUSE gap_br_cfg_acl_link_policy(uint8_t  *bd_addr,
                                        uint16_t  link_policy);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to configure link supervision timeout value for an
  *           ACL link. If the request was successfully sent, \ref GAP_BR_LINK_SUPV_TOUT_RSP
- *           will be received in GAP BR/EDR callback function registed by \ref
+ *           will be received in GAP BR/EDR callback function registered by \ref
  *           gap_br_init to indicate the result of the procedure. BT stack
  *           will automatically set link supervision timeout value after ACL link
  *           is connected if local device is master. <b>To change the default
@@ -2881,11 +2682,9 @@ T_GAP_CAUSE gap_br_cfg_acl_link_supv_tout(uint8_t  *bd_addr,
                                           uint16_t  tout);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to switch link role for an ACL link. If the request
  *           was successfully sent, \ref GAP_BR_ROLE_SWITCH_RSP will be received in GAP
- *           BR/EDR callback function registed by \ref gap_br_init to
+ *           BR/EDR callback function registered by \ref gap_br_init to
  *           indicate the result of the procedure. If switch role procedure was
  *           successful, \ref GAP_BR_ACL_STATUS_INFO message will also be received with
  *           ACL status as \ref GAP_ACL_ROLE_MASTER or \ref GAP_ACL_ROLE_SLAVE
@@ -2972,11 +2771,9 @@ T_GAP_CAUSE gap_br_cfg_acl_link_role(uint8_t            *bd_addr,
                                      T_GAP_BR_LINK_ROLE  device_role);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to change packet type for an ACL link. If the request
  *           was successfully sent, \ref GAP_BR_PKT_TYPE_CHANGE_RSP will be received in
- *           GAP BR/EDR callback function registed by \ref gap_br_init to
+ *           GAP BR/EDR callback function registered by \ref gap_br_init to
  *           indicate the result of the procedure. BT stack will automatically
  *           set link packet type after ACL link is connected. <b>In order to
  *           avoid collision, APP should change packet type after receiving \ref
@@ -3049,11 +2846,9 @@ T_GAP_CAUSE gap_br_cfg_acl_pkt_type(uint8_t  *bd_addr,
                                     uint16_t  pkt_type);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to configure link flush timeout value for an ACL link.
  *           If the request was successfully sent, \ref GAP_BR_LINK_FLUSH_TOUT_RSP
- *           will be received in GAP BR/EDR callback function registed by \ref
+ *           will be received in GAP BR/EDR callback function registered by \ref
  *           gap_br_init to indicate the result of the procedure.
  *           <b>APP should set link flush timeout value after receiving \ref GAP_BR_ACL_STATUS_INFO
  *           message with ACL status as \ref GAP_ACL_CONN_READY.</b>
@@ -3119,12 +2914,10 @@ T_GAP_CAUSE gap_br_cfg_acl_link_flush_tout(uint8_t  *bd_addr,
                                            uint16_t  flush_tout);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to configure preferred link role to use when accepting
  *           connection request from remote device. If the request was successfully
  *           sent, \ref GAP_BR_SET_ACCEPT_ROLE_RSP will be received in GAP BR/EDR callback
- *           function registed by \ref gap_br_init.
+ *           function registered by \ref gap_br_init.
  *
  * \param[in]  role              Preferred role to use when accepting connection request.
  * \arg \c     0             Become the Master for this connection.
@@ -3173,11 +2966,9 @@ T_GAP_CAUSE gap_br_cfg_acl_link_flush_tout(uint8_t  *bd_addr,
 T_GAP_CAUSE gap_br_cfg_accept_role(uint8_t role);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to configure simple pairing debug mode. If the request was successfully
  *           sent, \ref GAP_BR_SET_SSP_DEBUG_MODE_RSP will be received in GAP BR/EDR callback
- *           function registed by \ref gap_br_init.
+ *           function registered by \ref gap_br_init.
  *
  * \param[in]  enable              Enable/disable simple pairing debug mode.
  *
@@ -3224,11 +3015,9 @@ T_GAP_CAUSE gap_br_cfg_accept_role(uint8_t role);
 T_GAP_CAUSE gap_br_cfg_ssp_debug_mode(bool enable);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to configure timeout value that will be used to disconnect acl link
  *           after last l2cap channel is disconnected. \ref GAP_BR_SET_ACL_DISCONN_TOUT_RSP will be
- *           received in GAP BR/EDR callback function registed by \ref gap_br_init.
+ *           received in GAP BR/EDR callback function registered by \ref gap_br_init.
  *
  * \param[in]  tout         Timeout value in seconds to disconnect acl link in normal connected state. Default value is 4s.
  * \param[in]  pair_tout    Timeout value in seconds to disconnect acl link in pairing state. Default value is 30s.
@@ -3277,11 +3066,9 @@ T_GAP_CAUSE gap_br_cfg_acl_disconn_tout(uint8_t tout,
                                         uint8_t pair_tout);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to disconnect an ACL link. If the request was
  *           successfully sent, \ref GAP_BR_ACL_DISCONN_RSP will be received in GAP
- *           BR/EDR callback function registed by \ref gap_br_init to
+ *           BR/EDR callback function registered by \ref gap_br_init to
  *           indicate the result of the procedure. If the ACL link was successfully
  *           disconnected, \ref GAP_BR_ACL_STATUS_INFO message will also be received with
  *           ACL status as \ref GAP_ACL_CONN_DISCONN. <b>To disconnect an ACL
@@ -3352,11 +3139,9 @@ T_GAP_CAUSE gap_br_cfg_acl_disconn_tout(uint8_t tout,
 T_GAP_CAUSE gap_br_send_acl_disconn_req(uint8_t *bd_addr);
 
 /**
- * gap_br.h
- *
  * \brief    Send a confirm to accept acl connection request from remote device.
  *           Should be used when receiving \ref GAP_BR_ACL_CONN_IND message in GAP BR/EDR
- *           callback function registed by \ref gap_br_init. The message can only be
+ *           callback function registered by \ref gap_br_init. The message can only be
  *           received when \ref GAP_BR_PARAM_AUTO_ACCEPT_ACL is set to false.
  *
  * \param[in]  bd_addr             Bluetooth address of remote device.
@@ -3404,11 +3189,9 @@ T_GAP_CAUSE gap_br_accept_acl_conn(uint8_t            *bd_addr,
                                    T_GAP_BR_LINK_ROLE  role);
 
 /**
- * gap_br.h
- *
  * \brief    Send a confirm to reject acl connection request from remote device.
  *           Should be used when receiving \ref GAP_BR_ACL_CONN_IND message in GAP BR/EDR
- *           callback function registed by \ref gap_br_init. The message can only be
+ *           callback function registered by \ref gap_br_init. The message can only be
  *           received when \ref GAP_BR_PARAM_AUTO_ACCEPT_ACL is set to false.
  *
  * \param[in]  bd_addr             Bluetooth address of remote device.
@@ -3456,11 +3239,9 @@ T_GAP_CAUSE gap_br_reject_acl_conn(uint8_t                     *bd_addr,
                                    T_GAP_ACL_REJECT_CONN_REASON reason);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to specify Quality of Service parameters for an ACL
  *           link. If the request was successfully sent, \ref GAP_BR_SETUP_QOS_RSP will
- *           be received in GAP BR/EDR callback function registed by \ref
+ *           be received in GAP BR/EDR callback function registered by \ref
  *           gap_br_init to indicate the result of the procedure. <b> To
  *           set the QOS of an ACL link, the link must be connected, which can
  *           be sure by receive \ref GAP_BR_ACL_STATUS_INFO message with ACL status as
@@ -3541,11 +3322,9 @@ T_GAP_CAUSE gap_br_send_setup_qos_req(uint16_t handle,
                                       uint32_t delay_variation);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to set page with scan simultaneous. If the
  *           request was successfully sent, \ref GAP_BR_SET_PAGE_WITH_SCAN_RSP will be
- *           received in GAP BR/EDR callback function registed by \ref
+ *           received in GAP BR/EDR callback function registered by \ref
  *           gap_br_init to indicate the result of the procedure.
  *
  * \param[in]  enable           Whether enable page with scan simultaneous or not.
@@ -3595,11 +3374,9 @@ T_GAP_CAUSE gap_br_send_setup_qos_req(uint16_t handle,
 T_GAP_CAUSE gap_br_set_page_with_scan(bool enable);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to create a SCO/eSCO connection. If the request was
  *           successfully sent, \ref GAP_BR_SCO_CONN_RSP will be received in GAP BR/EDR
- *           callback function registed by \ref gap_br_init to indicate
+ *           callback function registered by \ref gap_br_init to indicate
  *           whether the procedure was started successfully. If the procedure was
  *           started, \ref GAP_BR_SCO_CONN_CMPL will be received later to tell the
  *           connection establish result. <b>The procedure can only be started
@@ -3682,12 +3459,10 @@ T_GAP_CAUSE gap_br_send_sco_conn_req(uint8_t  *bd_addr,
                                      uint16_t  packet_type);
 
 /**
- * gap_br.h
- *
  * \brief    Send a confirmation for SCO/eSCO connect indication. If the confirm
  *           was successfully sent and confirm cause is \ref GAP_CFM_CAUSE_ACCEPT,
  *           \ref GAP_BR_SCO_CONN_CMPL will be received in GAP BR/EDR callback function
- *           registed by \ref gap_br_init to tell the connection establish
+ *           registered by \ref gap_br_init to tell the connection establish
  *           result. <b>The function can only be used when receive \ref
  *           GAP_BR_SCO_CONN_IND message in GAP BR/EDR callback.</b>
  *
@@ -3766,11 +3541,9 @@ T_GAP_CAUSE gap_br_send_sco_conn_cfm(uint8_t         *bd_addr,
                                      T_GAP_CFM_CAUSE  cause);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to disconnect a SCO/eSCO connection. If the request was
  *           successfully sent, \ref GAP_BR_SCO_DISCONN_RSP will be received in GAP BR/EDR
- *           callback function registed by \ref gap_br_init to indicate
+ *           callback function registered by \ref gap_br_init to indicate
  *           the disconnect result.
  *
  * \param[in]  bd_addr               Bluetooth address of remote device.
@@ -3829,8 +3602,6 @@ T_GAP_CAUSE gap_br_send_sco_conn_cfm(uint8_t         *bd_addr,
 T_GAP_CAUSE gap_br_send_sco_disconn_req(uint8_t *bd_addr);
 
 /**
- * gap_br.h
- *
  * \brief    Send a confirmation for SCO/eSCO disconnect indication. <b>The
  *           function can only be used when receive \ref GAP_BR_SCO_DISCONN_IND message
  *           in GAP BR/EDR callback.</b>
@@ -3878,11 +3649,9 @@ T_GAP_CAUSE gap_br_send_sco_disconn_req(uint8_t *bd_addr);
 T_GAP_CAUSE gap_br_send_sco_disconn_cfm(uint8_t *bd_addr);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to change parameters of a SCO/eSCO connection. If the request was
  *           successfully sent, \ref GAP_BR_SCO_PARAM_CHANGE_RSP will be received in GAP BR/EDR
- *           callback function registed by \ref gap_br_init to indicate
+ *           callback function registered by \ref gap_br_init to indicate
  *           whether the procedure was started successfully. If the procedure was
  *           started, \ref GAP_BR_SCO_PARAM_CHANGE_INFO will be received later to tell the result, if
  *           success, the final parameters will also be notified.
@@ -3983,8 +3752,6 @@ T_GAP_CAUSE gap_br_send_sco_param_change_req(uint8_t  *bd_addr,
                                              uint16_t  packet_type);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to configure local retransmission window for SCO link. <b>APP should
  *           configure SCO retransmission window after receiving \ref GAP_BR_SCO_CONN_CMPL message.</b>
  *
@@ -4039,8 +3806,6 @@ T_GAP_CAUSE gap_br_set_sco_retrans_window(uint16_t handle,
                                           uint8_t  retrans_window);
 
 /**
- * gap_br.h
- *
  * \brief    Get buffer from BT stack to put in SCO data which will be sent to remote device.
  *
  * \param[in]  len              Length of SCO data to put into the buffer.
@@ -4098,8 +3863,6 @@ T_GAP_CAUSE gap_br_set_sco_retrans_window(uint16_t handle,
 void *gap_br_get_sco_buffer(uint8_t len);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to send SCO data to remote device.
  *
  * \param[in]  bd_addr             Bluetooth address of remote device.
@@ -4162,11 +3925,9 @@ T_GAP_CAUSE gap_br_send_sco_data(uint8_t *bd_addr,
                                  uint8_t  length);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to configure DID information in EIR data. If the request
  *           was successfully sent, \ref GAP_BR_SET_DID_EIR_RSP will be received in the
- *           GAP BR/EDR callback function registed by \ref gap_br_init
+ *           GAP BR/EDR callback function registered by \ref gap_br_init
  *           to indicate the result.
  *
  * \param[in]  vendor_id           Vendor ID.
@@ -4224,12 +3985,10 @@ T_GAP_CAUSE gap_br_set_did_eir(uint16_t vendor_id,
                                uint16_t product_version);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to configure extra information other than local name,
  *           service UUID and DID in EIR data. If the request was successfully sent,
  *           \ref GAP_BR_SET_EXT_EIR_RSP will be received in the GAP BR/EDR callback
- *           function registed by \ref gap_br_init to indicate the result.
+ *           function registered by \ref gap_br_init to indicate the result.
  *
  * \param[in]  p_data        Address of extra EIR data.<b>The buffer should not be freed until another extra EIR data is used.</b>
  * \param[in]  length        The length of extra EIR data.
@@ -4291,11 +4050,9 @@ T_GAP_CAUSE gap_br_set_ext_eir(uint8_t *p_data,
                                uint8_t  length);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to get rssi value. If the request was successfully sent,
  *           \ref GAP_BR_READ_RSSI_RSP will be received in the GAP BR/EDR callback
- *           function registed by \ref gap_br_init.
+ *           function registered by \ref gap_br_init.
  *
  * \param[in]  bd_addr        Bluetooth address of remote device.
  *
@@ -4356,8 +4113,6 @@ T_GAP_CAUSE gap_br_set_ext_eir(uint8_t *p_data,
 T_GAP_CAUSE gap_br_read_rssi(uint8_t *bd_addr);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to register a SDP record to BT stack. If the request was
  *           successfully sent, \ref GAP_BR_ADD_SDP_RECORD_RSP will be received in GAP BR/EDR
  *           callback function registered by \ref gap_br_init to indicate the result.
@@ -4518,11 +4273,9 @@ T_GAP_CAUSE gap_br_read_rssi(uint8_t *bd_addr);
 bool gap_br_reg_sdp_record(void *p_buf);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to delete a SDP record to BT stack. If the request was
  *           successfully sent, \ref GAP_BR_DEL_SDP_RECORD_RSP will be received in GAP BR/EDR
- *           callback function registed by \ref gap_br_init to indicate the result.
+ *           callback function registered by \ref gap_br_init to indicate the result.
  *
  * \param[in]  p_buf         Address of SDP record buffer.
  *
@@ -4680,9 +4433,7 @@ bool gap_br_reg_sdp_record(void *p_buf);
 bool gap_br_del_sdp_record(void *p_buf);
 
 /**
- * gap_br.h
- *
- * \brief   Get the maximun number sdp record can be registered.
+ * \brief   Get the maximum number sdp record can be registered.
  *
  * \param[in]   The maximum number of sdp record can be registered.
  *
@@ -4707,8 +4458,6 @@ bool gap_br_del_sdp_record(void *p_buf);
 uint8_t gap_br_get_max_sdp_record_num(void);
 
 /**
- * gap_br.h
- *
  * \brief    Find an attribute of the given value in a SDP record data.
  *
  * \param[in]  p_start        Start address of the SDP record data.
@@ -4779,8 +4528,6 @@ uint8_t *gap_br_find_sdp_attr(uint8_t  *p_start,
                               uint32_t  attr_value);
 
 /**
- * gap_br.h
- *
  * \brief    Get an attribute value in a SDP element.
  *
  * \param[in]  p_start        Start address of the SDP element.
@@ -4835,8 +4582,6 @@ uint32_t gap_br_get_sdp_value(uint8_t *p_start,
                               uint8_t *p_end);
 
 /**
- * gap_br.h
- *
  * \brief    Get an UUID data value in a SDP element.
  *
  * \param[in]  p_start        Start address of the SDP element.
@@ -4907,8 +4652,6 @@ bool gap_br_get_sdp_uuid_value(uint8_t         *p_start,
                                T_GAP_UUID_DATA *p_data);
 
 /**
- * gap_br.h
- *
  * \brief    Get the address of SDP data element in a SDP element.
  *
  * \param[in]  p_start        Start address of the SDP element.
@@ -4979,11 +4722,9 @@ uint8_t *gap_br_access_sdp_elem(uint8_t  *p_start,
                                 uint16_t  index);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to start BR/EDR pairing with remote device. When
  *           pairing is done, \ref GAP_BR_AUTHEN_RSP message will be get in GAP
- *           legacy callback function registed by \ref gap_br_init with
+ *           legacy callback function registered by \ref gap_br_init with
  *           a parameter points to \ref T_GAP_AUTHEN_RSP to indicate the result of pairing.
  *           <b>Pairing procedure can only be started after receiving \ref GAP_BR_PROTO_REG_CMPL
  *           message in GAP BR/EDR callback.</b>
@@ -5040,11 +4781,9 @@ uint8_t *gap_br_access_sdp_elem(uint8_t  *p_start,
 T_GAP_CAUSE gap_br_pairing_req(uint8_t *bd_addr);
 
 /**
- * gap_br.h
- *
  * \brief    Input a passkey or reject to input passkey when pairing with passkey entry. This is used when
  *           receive \ref GAP_BR_PASSKEY_INPUT message in GAP BR/EDR callback function
- *           registed by \ref gap_br_init.
+ *           registered by \ref gap_br_init.
  *
  * \param[in]  bd_addr    Bluetooth address of remote device.
  * \param[in]  passkey    Input passkey value.
@@ -5090,11 +4829,9 @@ T_GAP_CAUSE gap_br_input_passkey(uint8_t         *bd_addr,
                                  T_GAP_CFM_CAUSE  cause);
 
 /**
- * gap_br.h
- *
  * \brief    Input BR/EDR remote OOB data when pairing with out of bond. This is used when
  *           receive \ref GAP_BR_OOB_INPUT message in GAP BR/EDR callback function
- *           registed by \ref gap_br_init.Before using this function, remote OOB
+ *           registered by \ref gap_br_init.Before using this function, remote OOB
  *           data should be obtained from remote device.
  *
  * \param[in]  bd_addr    Bluetooth address of remote device.
@@ -5148,11 +4885,9 @@ T_GAP_CAUSE gap_br_input_remote_oob(uint8_t         *bd_addr,
                                     T_GAP_CFM_CAUSE  cause);
 
 /**
- * gap_br.h
- *
  * \brief    Send user confirmation request result when pairing with numeric
  *           comparision. This is used when receive \ref GAP_BR_USER_CONFIRM_REQ message
- *           in GAP BR/EDR callback function registed by \ref gap_br_init.
+ *           in GAP BR/EDR callback function registered by \ref gap_br_init.
  *
  * \param[in]  bd_addr    Bluetooth address of remote device.
  * \param[in]  result     User confirmation result. Type is \ref T_GAP_CFM_CAUSE and
@@ -5200,11 +4935,9 @@ T_GAP_CAUSE gap_br_user_cfm_req_cfm(uint8_t         *bd_addr,
                                     T_GAP_CFM_CAUSE  result);
 
 /**
- * gap_br.h
- *
  * \brief   Read local oob data before pairing with out of bond. This is used before initiating a
  *          pairing process, or when remote device asks for oob data. \ref GAP_BR_LOCAL_OOB_RSP message will
- *          be get in GAP BR/EDR callback function registed by \ref gap_br_init with a parameter
+ *          be get in GAP BR/EDR callback function registered by \ref gap_br_init with a parameter
  *          points to \ref T_GAP_LOCAL_OOB_RSP.
  *
  * \return    The status of reading local oob data.
@@ -5255,8 +4988,6 @@ T_GAP_CAUSE gap_br_user_cfm_req_cfm(uint8_t         *bd_addr,
 T_GAP_CAUSE gap_br_local_oob_read(void);
 
 /**
- * gap_br.h
- *
  * \brief    Send link key request confirmation when pairing. This is used when receive
  *           \ref GAP_BR_LINK_KEY_REQ_IND message in GAP BR/EDR callback function registered
  *           by \ref gap_br_init.
@@ -5317,11 +5048,9 @@ T_GAP_CAUSE gap_br_link_key_cfm(uint8_t                *bd_addr,
                                 uint8_t                *p_key);
 
 /**
- * gap_br.h
- *
  * \brief    Send pin code request confirmation when pairing without a common link key.
  *           This is used when receive \ref GAP_BR_PIN_CODE_REQ_IND message in GAP BR/EDR
- *           callback function registed by \ref gap_br_init.
+ *           callback function registered by \ref gap_br_init.
  *
  * \param[in]  bd_addr    Bluetooth address of remote device.
  * \param[in]  pin_code   pin code.
@@ -5371,8 +5100,6 @@ T_GAP_CAUSE gap_br_pin_code_req_cfm(uint8_t *bd_addr,
                                     bool     accept);
 
 /**
- * gap_br.h
- *
  * \brief   Fix channel message types. APP may get through callback function registered by \ref gap_br_reg_fix_chann_cb.
  *
  * \ingroup  GAP_BREDR
@@ -5398,8 +5125,6 @@ typedef struct
 } T_GAP_BR_FIX_CHANN_REG_RSP;
 
 /**
- * gap_br.h
- *
  * \brief    Fix channel data indication. It will be received in the callback function registered
  *           by \ref gap_br_reg_fix_chann_cb with message type as \ref T_GAP_BR_FIX_CHANN_DATA_IND.
  *
@@ -5414,8 +5139,6 @@ typedef struct
 } T_GAP_BR_FIX_CHANN_DATA_IND;
 
 /**
- * gap_br.h
- *
  * \brief   Prototype of callback function to handle fix channel messages.
  * \details Fix channel message types are defined in \ref T_GAP_BR_FIX_CHANN_MSG. Message data
  *          is located at \c p_buf and the content of data is dependent on message type.\n
@@ -5425,8 +5148,6 @@ typedef struct
 typedef void (*P_GAP_BR_FIX_CHANN_CBACK)(T_GAP_BR_FIX_CHANN_MSG msg, void *p_buf);
 
 /**
- * gap_br.h
- *
  * \brief    Register a callback function to handle GAP BR/EDR fix channel callback messages
  *           defined as \ref T_GAP_BR_FIX_CHANN_MSG.
  *
@@ -5466,11 +5187,9 @@ typedef void (*P_GAP_BR_FIX_CHANN_CBACK)(T_GAP_BR_FIX_CHANN_MSG msg, void *p_buf
 void gap_br_reg_fix_chann_cb(P_GAP_BR_FIX_CHANN_CBACK cback);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to register fix channel. If the request was successfully
  *           sent, \ref GAP_BR_FIX_CHANN_REG_RSP will be received in GAP BR/EDR fix
- *           channel callback function registed by \ref gap_br_reg_fix_chann_cb
+ *           channel callback function registered by \ref gap_br_reg_fix_chann_cb
  *           to indicate the result of the procedure.
  *
  * \param[in]  cid           Fix channel identifier.
@@ -5518,8 +5237,6 @@ void gap_br_reg_fix_chann_cb(P_GAP_BR_FIX_CHANN_CBACK cback);
 T_GAP_CAUSE gap_br_reg_fix_chann(uint16_t cid);
 
 /**
- * gap_br.h
- *
  * \brief    Send data to remote device over a fix channel.
  *
  * \param[in]  bd_addr        Bluetooth address of remote device.
@@ -5576,8 +5293,6 @@ T_GAP_CAUSE gap_br_send_fix_chann_data(uint8_t  *bd_addr,
                                        bool      flushable);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to switch active sco link.
  *
  * \param[in]  handle           The SCO link handle.
@@ -5636,12 +5351,10 @@ T_GAP_CAUSE gap_br_vendor_set_active_sco(uint16_t handle,
                                          uint8_t  policy);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to set Bluetooth link encryption. If the request was
  *           successfully sent, \ref GAP_BR_ACL_STATUS_INFO message with ACL status
  *           as \ref GAP_ACL_CONN_ENCRYPTED or \ref GAP_ACL_CONN_NOT_ENCRYPTED will
- *           be received in GAP BR/EDR callback function registed by \ref gap_br_init
+ *           be received in GAP BR/EDR callback function registered by \ref gap_br_init
  *           to indicate the result of the procedure. BT stack will automatically enable
  *           encryption after ACL link is authenticated.
  *
@@ -5702,12 +5415,10 @@ T_GAP_CAUSE gap_br_vendor_set_active_sco(uint16_t handle,
 T_GAP_CAUSE gap_br_set_conn_encryption(uint16_t handle,
                                        bool     enable);
 /**
- * gap_br.h
- *
  * \brief    Send a request to configure link monitor for an ACL link. If the link monitor
  *           was enabled successfully, \ref GAP_BR_VENDOR_EVT message with first parameter
  *           as \ref HCI_VND_MONITOR_REPORT_EVENT will be received periodically in GAP BR/EDR
- *           callback function registed by \ref gap_br_init. <b>APP should set
+ *           callback function registered by \ref gap_br_init. <b>APP should set
  *           link monitor after receiving \ref GAP_BR_ACL_STATUS_INFO message with ACL
  *           status as \ref GAP_ACL_CONN_READY.</b>
  *
@@ -5822,8 +5533,6 @@ T_GAP_CAUSE gap_br_vendor_set_monitor(uint16_t handle,
                                       uint16_t period);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to configure local controller data rate for all BR/EDR link.
  *
  * \param[in]  rate        Data rate.
@@ -5871,11 +5580,9 @@ T_GAP_CAUSE gap_br_vendor_set_monitor(uint16_t handle,
 T_GAP_CAUSE gap_br_vendor_data_rate_set(uint8_t rate);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to configure transmit power level for an ACL link. If the request
  *           is successfully sent, \ref GAP_BR_SET_TX_POWER_RSP message will be received in
- *           GAP BR/EDR callback function registed by \ref gap_br_init. <b>APP should
+ *           GAP BR/EDR callback function registered by \ref gap_br_init. <b>APP should
  *           configure transmit power level after receiving \ref GAP_BR_ACL_STATUS_INFO message
  *           with ACL status as \ref GAP_ACL_CONN_READY.</b>
  *
@@ -5942,11 +5649,9 @@ T_GAP_CAUSE gap_br_vendor_tx_power_set(uint16_t handle,
                                        int8_t   offset_level);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to configure RSSI golden range for an ACL link. If the request
  *           is successfully sent, \ref GAP_BR_SET_RSSI_GOLDEN_RANGE_RSP message will be
- *           received in GAP BR/EDR callback function registed by \ref gap_br_init.
+ *           received in GAP BR/EDR callback function registered by \ref gap_br_init.
  *           <b>APP should configure transmit power level after receiving
  *           \ref GAP_BR_ACL_STATUS_INFO message with ACL status as \ref GAP_ACL_CONN_READY.</b>
  *
@@ -6015,8 +5720,6 @@ T_GAP_CAUSE gap_br_vendor_rssi_golden_range_set(uint16_t handle,
                                                 int16_t  min_rssi);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to ignore or apply tpoll which set by remote for an ACL link.
  *           <b>APP should ignore or apply tpoll which set by remote after receiving
  *           \ref GAP_BR_ACL_STATUS_INFO message with ACL status as \ref GAP_ACL_CONN_READY.</b>
@@ -6079,8 +5782,6 @@ T_GAP_CAUSE gap_br_vendor_remote_tpoll_set(uint16_t handle,
                                            bool     enable);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to configure periodic traffic quality for an ACL link. <b>APP should
  *           configure traffic quality after receiving \ref GAP_BR_ACL_STATUS_INFO
  *           message with ACL status as \ref GAP_ACL_CONN_READY.</b>
@@ -6151,8 +5852,6 @@ T_GAP_CAUSE gap_br_vendor_htpoll_set(uint8_t  type,
                                      uint16_t traffic_mask);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to set periodic traffic link for periodic traffic quality configuration.
  *
  * \param[in]  handle          The periodic traffic handle.
@@ -6202,8 +5901,6 @@ T_GAP_CAUSE gap_br_vendor_htpoll_set(uint8_t  type,
 T_GAP_CAUSE gap_br_periodic_traffic_set(uint16_t handle);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to configure idle zone for an ACL link. <b>APP should configure
  *           periodic traffic quality firstly before calling this function.</b>
  *
@@ -6265,11 +5962,9 @@ T_GAP_CAUSE gap_br_set_idle_zone(uint16_t handle,
                                  uint8_t  idle_skip);
 
 /**
- * gap_br.h
- *
  * \brief   Read local oob extended data before pairing with out of bond. This is used before initiating a
  *          pairing process, or when remote device asks for oob data. \ref GAP_BR_LOCAL_OOB_EXTENDED_RSP message will
- *          be get in GAP BR/EDR callback function registed by \ref gap_br_init with a parameter
+ *          be get in GAP BR/EDR callback function registered by \ref gap_br_init with a parameter
  *          points to \ref T_GAP_LOCAL_OOB_EXTENDED_DATA_RSP.
  *
  * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
@@ -6322,10 +6017,8 @@ T_GAP_CAUSE gap_br_set_idle_zone(uint16_t handle,
 T_GAP_CAUSE gap_br_local_oob_extended_data_read(void);
 
 /**
- * gap_br.h
- *
  * \brief    Reply BR/EDR remote OOB extended data when pairing with out of bond. This is used when
- *           receive \ref GAP_BR_OOB_INPUT message in GAP BR/EDR callback function registed
+ *           receive \ref GAP_BR_OOB_INPUT message in GAP BR/EDR callback function registered
  *           by \ref gap_br_init.Before using this function, remote OOB extended
  *           data should be obtained from remote device.
  *
@@ -6386,8 +6079,6 @@ T_GAP_CAUSE gap_br_remote_oob_extended_data_req_reply(uint8_t *bd_addr,
                                                       uint8_t *p_data_r_256);
 
 /**
- * gap_br.h
- *
  * \brief    Send a request to set preferred data rate for an ACL link.<b>APP should set
  *           preferred data rate after receiving \ref GAP_BR_ACL_STATUS_INFO message
  *           with ACL status as \ref GAP_ACL_CONN_READY.</b>

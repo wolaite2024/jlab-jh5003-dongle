@@ -52,7 +52,7 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga94b3e048fa3ba3c8f485afe4e25f4f27"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga94b3e048fa3ba3c8f485afe4e25f4f27">GPIO_GetPin</a>&#160;&#160;&#160;<a class="el" href="group___g_p_i_o___exported___functions.html#ga6cd601fcd07096e2a863011ed47c7407">GPIO_GetPinBit</a></td></tr>
-<tr class="memdesc:ga94b3e048fa3ba3c8f485afe4e25f4f27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the GPIO bit which corresponds to Pin_num. such as P0_3-&gt;GPIO3-&gt;<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT(3)</a>.  <a href="#ga94b3e048fa3ba3c8f485afe4e25f4f27">More...</a><br /></td></tr>
+<tr class="memdesc:ga94b3e048fa3ba3c8f485afe4e25f4f27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the GPIO_Pin through the given Pin_num.  <a href="#ga94b3e048fa3ba3c8f485afe4e25f4f27">More...</a><br /></td></tr>
 <tr class="separator:ga94b3e048fa3ba3c8f485afe4e25f4f27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6ebe8e8c8e01bf6c33cc5b0934574230"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga6ebe8e8c8e01bf6c33cc5b0934574230">GPIOx_IntPolaritySet</a>(GPIOx,  gpio_pin,  polarity_type)&#160;&#160;&#160;<a class="el" href="group___g_p_i_o___exported___functions.html#ga82986d972a60433212c1c73e60b4b3bf">GPIOx_ChangePolarity</a>(GPIOx, gpio_pin, polarity_type)</td></tr>
 <tr class="separator:ga6ebe8e8c8e01bf6c33cc5b0934574230"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -60,7 +60,7 @@ Macros</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:gac2a0516b445065f6656da011b95e5cac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#gac2a0516b445065f6656da011b95e5cac">GPIO_DeInit</a> (void)</td></tr>
-<tr class="memdesc:gac2a0516b445065f6656da011b95e5cac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the GPIO peripheral registers to their default reset values.  <a href="#gac2a0516b445065f6656da011b95e5cac">More...</a><br /></td></tr>
+<tr class="memdesc:gac2a0516b445065f6656da011b95e5cac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the GPIO peripheral registers to their default reset values of GPIOA.  <a href="#gac2a0516b445065f6656da011b95e5cac">More...</a><br /></td></tr>
 <tr class="separator:gac2a0516b445065f6656da011b95e5cac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1c7948b79aa8c8bec29dd026218b2687"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga1c7948b79aa8c8bec29dd026218b2687">GPIOx_DeInit</a> (<a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *GPIOx)</td></tr>
 <tr class="memdesc:ga1c7948b79aa8c8bec29dd026218b2687"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the GPIO peripheral registers to their default reset values.  <a href="#ga1c7948b79aa8c8bec29dd026218b2687">More...</a><br /></td></tr>
@@ -75,98 +75,99 @@ Functions</h2></td></tr>
 <tr class="memdesc:gab28de41278e7f8c63d0851e2733b10df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills each GPIO_InitStruct member with its default value.  <a href="#gab28de41278e7f8c63d0851e2733b10df">More...</a><br /></td></tr>
 <tr class="separator:gab28de41278e7f8c63d0851e2733b10df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab41b3320e089376d6b95198e34fe4577"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#gab41b3320e089376d6b95198e34fe4577">GPIO_INTConfig</a> (uint32_t GPIO_PinBit, <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gac9a7e9a35d2513ec15c3b537aaa4fba1">FunctionalState</a> NewState)</td></tr>
-<tr class="memdesc:gab41b3320e089376d6b95198e34fe4577"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable the specified GPIO interrupt.  <a href="#gab41b3320e089376d6b95198e34fe4577">More...</a><br /></td></tr>
+<tr class="memdesc:gab41b3320e089376d6b95198e34fe4577"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the specified GPIO pin interrupt.  <a href="#gab41b3320e089376d6b95198e34fe4577">More...</a><br /></td></tr>
 <tr class="separator:gab41b3320e089376d6b95198e34fe4577"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5c40c5475778912736e4dbf5fbd5c7b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga5c40c5475778912736e4dbf5fbd5c7b3">GPIOx_INTConfig</a> (<a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *GPIOx, uint32_t GPIO_PinBit, <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gac9a7e9a35d2513ec15c3b537aaa4fba1">FunctionalState</a> NewState)</td></tr>
-<tr class="memdesc:ga5c40c5475778912736e4dbf5fbd5c7b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable the specified GPIO interrupt.  <a href="#ga5c40c5475778912736e4dbf5fbd5c7b3">More...</a><br /></td></tr>
+<tr class="memdesc:ga5c40c5475778912736e4dbf5fbd5c7b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the specified GPIO pin interrupt.  <a href="#ga5c40c5475778912736e4dbf5fbd5c7b3">More...</a><br /></td></tr>
 <tr class="separator:ga5c40c5475778912736e4dbf5fbd5c7b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadb788e614049e35905c7ff834a61392c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#gadb788e614049e35905c7ff834a61392c">GPIO_ClearINTPendingBit</a> (uint32_t GPIO_PinBit)</td></tr>
-<tr class="memdesc:gadb788e614049e35905c7ff834a61392c"><td class="mdescLeft">&#160;</td><td class="mdescRight">clear the specified GPIO interrupt.  <a href="#gadb788e614049e35905c7ff834a61392c">More...</a><br /></td></tr>
+<tr class="memdesc:gadb788e614049e35905c7ff834a61392c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the specified GPIO pin interrupt pending bit.  <a href="#gadb788e614049e35905c7ff834a61392c">More...</a><br /></td></tr>
 <tr class="separator:gadb788e614049e35905c7ff834a61392c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6cfce4a61b6395f9409f92dd9559c80c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga6cfce4a61b6395f9409f92dd9559c80c">GPIOx_ClearINTPendingBit</a> (<a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *GPIOx, uint32_t GPIO_PinBit)</td></tr>
-<tr class="memdesc:ga6cfce4a61b6395f9409f92dd9559c80c"><td class="mdescLeft">&#160;</td><td class="mdescRight">clear the specified GPIO interrupt.  <a href="#ga6cfce4a61b6395f9409f92dd9559c80c">More...</a><br /></td></tr>
+<tr class="memdesc:ga6cfce4a61b6395f9409f92dd9559c80c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the specified GPIO pin interrupt pending bit.  <a href="#ga6cfce4a61b6395f9409f92dd9559c80c">More...</a><br /></td></tr>
 <tr class="separator:ga6cfce4a61b6395f9409f92dd9559c80c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad44c6dc2555e3fb9a4682ed684c0ac37"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#gad44c6dc2555e3fb9a4682ed684c0ac37">GPIO_MaskINTConfig</a> (uint32_t GPIO_PinBit, <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gac9a7e9a35d2513ec15c3b537aaa4fba1">FunctionalState</a> NewState)</td></tr>
-<tr class="memdesc:gad44c6dc2555e3fb9a4682ed684c0ac37"><td class="mdescLeft">&#160;</td><td class="mdescRight">mask the specified GPIO interrupt.  <a href="#gad44c6dc2555e3fb9a4682ed684c0ac37">More...</a><br /></td></tr>
+<tr class="memdesc:gad44c6dc2555e3fb9a4682ed684c0ac37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Config whether mask the specified GPIO pin interrupt.  <a href="#gad44c6dc2555e3fb9a4682ed684c0ac37">More...</a><br /></td></tr>
 <tr class="separator:gad44c6dc2555e3fb9a4682ed684c0ac37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga248546acc6c2ffc1de66519ca602b5df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga248546acc6c2ffc1de66519ca602b5df">GPIOx_MaskINTConfig</a> (<a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *GPIOx, uint32_t GPIO_PinBit, <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gac9a7e9a35d2513ec15c3b537aaa4fba1">FunctionalState</a> NewState)</td></tr>
-<tr class="memdesc:ga248546acc6c2ffc1de66519ca602b5df"><td class="mdescLeft">&#160;</td><td class="mdescRight">mask the specified GPIO interrupt.  <a href="#ga248546acc6c2ffc1de66519ca602b5df">More...</a><br /></td></tr>
+<tr class="memdesc:ga248546acc6c2ffc1de66519ca602b5df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Config whether mask the specified GPIO pin interrupt.  <a href="#ga248546acc6c2ffc1de66519ca602b5df">More...</a><br /></td></tr>
 <tr class="separator:ga248546acc6c2ffc1de66519ca602b5df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6cd601fcd07096e2a863011ed47c7407"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga6cd601fcd07096e2a863011ed47c7407">GPIO_GetPinBit</a> (uint8_t Pin_num)</td></tr>
 <tr class="separator:ga6cd601fcd07096e2a863011ed47c7407"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga90a0a64a2916815db52d278ee1e286b1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga90a0a64a2916815db52d278ee1e286b1">GPIO_GetNum</a> (uint8_t Pin_num)</td></tr>
-<tr class="memdesc:ga90a0a64a2916815db52d278ee1e286b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the GPIO num which corresponds to Pin_num. such as P0_3 -&gt; GPIO3.  <a href="#ga90a0a64a2916815db52d278ee1e286b1">More...</a><br /></td></tr>
+<tr class="memdesc:ga90a0a64a2916815db52d278ee1e286b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get GPIOx(x is 0~31) value through the given Pin_num.  <a href="#ga90a0a64a2916815db52d278ee1e286b1">More...</a><br /></td></tr>
 <tr class="separator:ga90a0a64a2916815db52d278ee1e286b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad615fb274161935faec75bc800bf7f64"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#gad615fb274161935faec75bc800bf7f64">GPIOx_DBClkCmd</a> (<a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *GPIOx, <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gac9a7e9a35d2513ec15c3b537aaa4fba1">FunctionalState</a> NewState)</td></tr>
-<tr class="memdesc:gad615fb274161935faec75bc800bf7f64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the debance clk of GPIOx.  <a href="#gad615fb274161935faec75bc800bf7f64">More...</a><br /></td></tr>
+<tr class="memdesc:gad615fb274161935faec75bc800bf7f64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable the debance clk of GPIOx.  <a href="#gad615fb274161935faec75bc800bf7f64">More...</a><br /></td></tr>
 <tr class="separator:gad615fb274161935faec75bc800bf7f64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab9cf61106e332571c3e7c5ecbdb1e78b"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#gab9cf61106e332571c3e7c5ecbdb1e78b">GPIOx_ReadInputDataBit</a> (<a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *GPIOx, uint32_t GPIO_PinBit)</td></tr>
-<tr class="memdesc:gab9cf61106e332571c3e7c5ecbdb1e78b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the specified input port pin.  <a href="#gab9cf61106e332571c3e7c5ecbdb1e78b">More...</a><br /></td></tr>
+<tr class="memdesc:gab9cf61106e332571c3e7c5ecbdb1e78b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the specified input port pin.  <a href="#gab9cf61106e332571c3e7c5ecbdb1e78b">More...</a><br /></td></tr>
 <tr class="separator:gab9cf61106e332571c3e7c5ecbdb1e78b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga17dd4f5a5f8b278e86dd0b7dc3b47433"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga17dd4f5a5f8b278e86dd0b7dc3b47433">GPIO_ReadInputDataBit</a> (uint32_t GPIO_PinBit)</td></tr>
-<tr class="memdesc:ga17dd4f5a5f8b278e86dd0b7dc3b47433"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the specified input port pin.  <a href="#ga17dd4f5a5f8b278e86dd0b7dc3b47433">More...</a><br /></td></tr>
-<tr class="separator:ga17dd4f5a5f8b278e86dd0b7dc3b47433"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4acd74d0bf182b52ea0189737bce1bb3"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga4acd74d0bf182b52ea0189737bce1bb3">GPIOx_ReadInputData</a> (<a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *GPIOx)</td></tr>
-<tr class="memdesc:ga4acd74d0bf182b52ea0189737bce1bb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads value of all GPIO input data port.  <a href="#ga4acd74d0bf182b52ea0189737bce1bb3">More...</a><br /></td></tr>
-<tr class="separator:ga4acd74d0bf182b52ea0189737bce1bb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf1d719c6ae18e1d58f82e99d50153f3a"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#gaf1d719c6ae18e1d58f82e99d50153f3a">GPIO_ReadInputData</a> ()</td></tr>
-<tr class="memdesc:gaf1d719c6ae18e1d58f82e99d50153f3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads value of all GPIO input data port.  <a href="#gaf1d719c6ae18e1d58f82e99d50153f3a">More...</a><br /></td></tr>
-<tr class="separator:gaf1d719c6ae18e1d58f82e99d50153f3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab44874699f8a57e35029d39bd4130780"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#gab44874699f8a57e35029d39bd4130780">GPIO_ReadInputDataBit</a> (uint32_t GPIO_PinBit)</td></tr>
+<tr class="memdesc:gab44874699f8a57e35029d39bd4130780"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the specified input port pin.  <a href="#gab44874699f8a57e35029d39bd4130780">More...</a><br /></td></tr>
+<tr class="separator:gab44874699f8a57e35029d39bd4130780"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga384885c3ed63f6368bacbd70db16beae"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga384885c3ed63f6368bacbd70db16beae">GPIOx_ReadInputData</a> (<a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *GPIOx)</td></tr>
+<tr class="memdesc:ga384885c3ed63f6368bacbd70db16beae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read value of all GPIO input data port.  <a href="#ga384885c3ed63f6368bacbd70db16beae">More...</a><br /></td></tr>
+<tr class="separator:ga384885c3ed63f6368bacbd70db16beae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0a3c3bb57496f2281763278b7187f9ad"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga0a3c3bb57496f2281763278b7187f9ad">GPIO_ReadInputData</a> ()</td></tr>
+<tr class="memdesc:ga0a3c3bb57496f2281763278b7187f9ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read value of all GPIO input data port.  <a href="#ga0a3c3bb57496f2281763278b7187f9ad">More...</a><br /></td></tr>
+<tr class="separator:ga0a3c3bb57496f2281763278b7187f9ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga198caf48a964a701c1c355cb84cbb469"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga198caf48a964a701c1c355cb84cbb469">GPIOx_ReadOutputDataBit</a> (<a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *GPIOx, uint32_t GPIO_PinBit)</td></tr>
-<tr class="memdesc:ga198caf48a964a701c1c355cb84cbb469"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the specified output port pin.  <a href="#ga198caf48a964a701c1c355cb84cbb469">More...</a><br /></td></tr>
+<tr class="memdesc:ga198caf48a964a701c1c355cb84cbb469"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the specified output port pin.  <a href="#ga198caf48a964a701c1c355cb84cbb469">More...</a><br /></td></tr>
 <tr class="separator:ga198caf48a964a701c1c355cb84cbb469"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2debc2b9f466ff2d442dc12fa1f1d21f"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga2debc2b9f466ff2d442dc12fa1f1d21f">GPIO_ReadOutputDataBit</a> (uint32_t GPIO_PinBit)</td></tr>
-<tr class="memdesc:ga2debc2b9f466ff2d442dc12fa1f1d21f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the specified output port pin.  <a href="#ga2debc2b9f466ff2d442dc12fa1f1d21f">More...</a><br /></td></tr>
-<tr class="separator:ga2debc2b9f466ff2d442dc12fa1f1d21f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gade84e3ad068964ebca648fb3fc4e4b1e"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#gade84e3ad068964ebca648fb3fc4e4b1e">GPIOx_ReadOutputData</a> (<a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *GPIOx)</td></tr>
-<tr class="memdesc:gade84e3ad068964ebca648fb3fc4e4b1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads value of all GPIO output data port.  <a href="#gade84e3ad068964ebca648fb3fc4e4b1e">More...</a><br /></td></tr>
-<tr class="separator:gade84e3ad068964ebca648fb3fc4e4b1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf6f5c0ffbab138c641ea09fd2590180c"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#gaf6f5c0ffbab138c641ea09fd2590180c">GPIO_ReadOutputData</a> ()</td></tr>
-<tr class="memdesc:gaf6f5c0ffbab138c641ea09fd2590180c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads value of all GPIO output data port.  <a href="#gaf6f5c0ffbab138c641ea09fd2590180c">More...</a><br /></td></tr>
-<tr class="separator:gaf6f5c0ffbab138c641ea09fd2590180c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafe05c5de886e569f7c53e5213bbea858"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#gafe05c5de886e569f7c53e5213bbea858">GPIOx_SetBits</a> (<a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *GPIOx, uint32_t GPIO_PinBit)</td></tr>
-<tr class="memdesc:gafe05c5de886e569f7c53e5213bbea858"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the selected data port bits.  <a href="#gafe05c5de886e569f7c53e5213bbea858">More...</a><br /></td></tr>
-<tr class="separator:gafe05c5de886e569f7c53e5213bbea858"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3b471c3f52caa1560394b24741beaceb"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga3b471c3f52caa1560394b24741beaceb">GPIO_SetBits</a> (uint32_t GPIO_PinBit)</td></tr>
-<tr class="memdesc:ga3b471c3f52caa1560394b24741beaceb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the selected data port bits.  <a href="#ga3b471c3f52caa1560394b24741beaceb">More...</a><br /></td></tr>
-<tr class="separator:ga3b471c3f52caa1560394b24741beaceb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9fbd1fafff669bac362f4458f6287603"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga9fbd1fafff669bac362f4458f6287603">GPIOx_ResetBits</a> (<a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *GPIOx, uint32_t GPIO_PinBit)</td></tr>
-<tr class="memdesc:ga9fbd1fafff669bac362f4458f6287603"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the selected data port bits.  <a href="#ga9fbd1fafff669bac362f4458f6287603">More...</a><br /></td></tr>
-<tr class="separator:ga9fbd1fafff669bac362f4458f6287603"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac4fbe9cec698fd48351c40f5a775ea6b"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#gac4fbe9cec698fd48351c40f5a775ea6b">GPIO_ResetBits</a> (uint32_t GPIO_PinBit)</td></tr>
-<tr class="memdesc:gac4fbe9cec698fd48351c40f5a775ea6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the selected data port bits.  <a href="#gac4fbe9cec698fd48351c40f5a775ea6b">More...</a><br /></td></tr>
-<tr class="separator:gac4fbe9cec698fd48351c40f5a775ea6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeea508e216aa65f633064989613c678b"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#gaeea508e216aa65f633064989613c678b">GPIO_ReadOutputDataBit</a> (uint32_t GPIO_PinBit)</td></tr>
+<tr class="memdesc:gaeea508e216aa65f633064989613c678b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the specified output port pin.  <a href="#gaeea508e216aa65f633064989613c678b">More...</a><br /></td></tr>
+<tr class="separator:gaeea508e216aa65f633064989613c678b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga98504e5ced26c5ecc030de660d46c7f4"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga98504e5ced26c5ecc030de660d46c7f4">GPIOx_ReadOutputData</a> (<a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *GPIOx)</td></tr>
+<tr class="memdesc:ga98504e5ced26c5ecc030de660d46c7f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read value of all GPIO output data port.  <a href="#ga98504e5ced26c5ecc030de660d46c7f4">More...</a><br /></td></tr>
+<tr class="separator:ga98504e5ced26c5ecc030de660d46c7f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac504c180a0f1f4897127a2223d7a02f9"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#gac504c180a0f1f4897127a2223d7a02f9">GPIO_ReadOutputData</a> ()</td></tr>
+<tr class="memdesc:gac504c180a0f1f4897127a2223d7a02f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read value of all GPIO output data port.  <a href="#gac504c180a0f1f4897127a2223d7a02f9">More...</a><br /></td></tr>
+<tr class="separator:gac504c180a0f1f4897127a2223d7a02f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6f288005df4d86439c0b4bbc540062cc"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga6f288005df4d86439c0b4bbc540062cc">GPIOx_SetBits</a> (<a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *GPIOx, uint32_t GPIO_PinBit)</td></tr>
+<tr class="memdesc:ga6f288005df4d86439c0b4bbc540062cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the selected data port bit.  <a href="#ga6f288005df4d86439c0b4bbc540062cc">More...</a><br /></td></tr>
+<tr class="separator:ga6f288005df4d86439c0b4bbc540062cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4a6c354231864194d5e78be299916e14"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga4a6c354231864194d5e78be299916e14">GPIO_SetBits</a> (uint32_t GPIO_PinBit)</td></tr>
+<tr class="memdesc:ga4a6c354231864194d5e78be299916e14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the selected data port bit.  <a href="#ga4a6c354231864194d5e78be299916e14">More...</a><br /></td></tr>
+<tr class="separator:ga4a6c354231864194d5e78be299916e14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaed8b067356e8c9c0fc1b11bf71861431"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#gaed8b067356e8c9c0fc1b11bf71861431">GPIOx_ResetBits</a> (<a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *GPIOx, uint32_t GPIO_PinBit)</td></tr>
+<tr class="memdesc:gaed8b067356e8c9c0fc1b11bf71861431"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the selected data port bit.  <a href="#gaed8b067356e8c9c0fc1b11bf71861431">More...</a><br /></td></tr>
+<tr class="separator:gaed8b067356e8c9c0fc1b11bf71861431"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab1e9936df180c020111cc8096a299bee"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#gab1e9936df180c020111cc8096a299bee">GPIO_ResetBits</a> (uint32_t GPIO_PinBit)</td></tr>
+<tr class="memdesc:gab1e9936df180c020111cc8096a299bee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the selected data port bit.  <a href="#gab1e9936df180c020111cc8096a299bee">More...</a><br /></td></tr>
+<tr class="separator:gab1e9936df180c020111cc8096a299bee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5272646be2a74db07337e152213d9f78"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga5272646be2a74db07337e152213d9f78">GPIOx_WriteBit</a> (<a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *GPIOx, uint32_t GPIO_PinBit, <a class="el" href="group___g_p_i_o___exported___constants.html#ga176130b21c0e719121470a6042d4cf19">BitAction</a> BitVal)</td></tr>
-<tr class="memdesc:ga5272646be2a74db07337e152213d9f78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets or clears the selected data port bit.  <a href="#ga5272646be2a74db07337e152213d9f78">More...</a><br /></td></tr>
+<tr class="memdesc:ga5272646be2a74db07337e152213d9f78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set or clear the selected data port bit.  <a href="#ga5272646be2a74db07337e152213d9f78">More...</a><br /></td></tr>
 <tr class="separator:ga5272646be2a74db07337e152213d9f78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga29f1a99c0c912432b82328f983614d5c"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga29f1a99c0c912432b82328f983614d5c">GPIO_WriteBit</a> (uint32_t GPIO_PinBit, <a class="el" href="group___g_p_i_o___exported___constants.html#ga176130b21c0e719121470a6042d4cf19">BitAction</a> BitVal)</td></tr>
-<tr class="memdesc:ga29f1a99c0c912432b82328f983614d5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets or clears the selected data port bit.  <a href="#ga29f1a99c0c912432b82328f983614d5c">More...</a><br /></td></tr>
-<tr class="separator:ga29f1a99c0c912432b82328f983614d5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5c1405b350b6344163c342264dd3e073"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga5c1405b350b6344163c342264dd3e073">GPIOx_Write</a> (<a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *GPIOx, uint32_t PortVal)</td></tr>
-<tr class="memdesc:ga5c1405b350b6344163c342264dd3e073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets or clears the selected data port .  <a href="#ga5c1405b350b6344163c342264dd3e073">More...</a><br /></td></tr>
-<tr class="separator:ga5c1405b350b6344163c342264dd3e073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1059d5b1bf1e357dcd2d8d388e0f5474"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga1059d5b1bf1e357dcd2d8d388e0f5474">GPIO_Write</a> (<a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *GPIOx, uint32_t PortVal)</td></tr>
-<tr class="memdesc:ga1059d5b1bf1e357dcd2d8d388e0f5474"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets or clears the selected data port .  <a href="#ga1059d5b1bf1e357dcd2d8d388e0f5474">More...</a><br /></td></tr>
-<tr class="separator:ga1059d5b1bf1e357dcd2d8d388e0f5474"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga112b6074474aae627fbd46765652963b"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gaacbd7ed539db0aacd973a0f6eca34074">ITStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga112b6074474aae627fbd46765652963b">GPIOx_GetINTStatus</a> (<a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *GPIOx, uint32_t GPIO_PinBit)</td></tr>
-<tr class="memdesc:ga112b6074474aae627fbd46765652963b"><td class="mdescLeft">&#160;</td><td class="mdescRight">return GPIO interrupt status.  <a href="#ga112b6074474aae627fbd46765652963b">More...</a><br /></td></tr>
-<tr class="separator:ga112b6074474aae627fbd46765652963b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6938a7cf4d0cc953141abc0318ae9f1b"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gaacbd7ed539db0aacd973a0f6eca34074">ITStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga6938a7cf4d0cc953141abc0318ae9f1b">GPIO_GetINTStatus</a> (uint32_t GPIO_PinBit)</td></tr>
-<tr class="memdesc:ga6938a7cf4d0cc953141abc0318ae9f1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">return GPIO interrupt status.  <a href="#ga6938a7cf4d0cc953141abc0318ae9f1b">More...</a><br /></td></tr>
-<tr class="separator:ga6938a7cf4d0cc953141abc0318ae9f1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga30212986e570f3bc0e7069bba326b459"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga30212986e570f3bc0e7069bba326b459">GPIO_WriteBit</a> (uint32_t GPIO_PinBit, <a class="el" href="group___g_p_i_o___exported___constants.html#ga176130b21c0e719121470a6042d4cf19">BitAction</a> BitVal)</td></tr>
+<tr class="memdesc:ga30212986e570f3bc0e7069bba326b459"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set or clear the selected data port bit.  <a href="#ga30212986e570f3bc0e7069bba326b459">More...</a><br /></td></tr>
+<tr class="separator:ga30212986e570f3bc0e7069bba326b459"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaffcf1b131ade96ccb55d78660326ecac"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#gaffcf1b131ade96ccb55d78660326ecac">GPIOx_Write</a> (<a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *GPIOx, uint32_t PortVal)</td></tr>
+<tr class="memdesc:gaffcf1b131ade96ccb55d78660326ecac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the value to the selected data port.  <a href="#gaffcf1b131ade96ccb55d78660326ecac">More...</a><br /></td></tr>
+<tr class="separator:gaffcf1b131ade96ccb55d78660326ecac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5473dff3a9600ce7db24f1976496c1f5"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga5473dff3a9600ce7db24f1976496c1f5">GPIO_Write</a> (<a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *GPIOx, uint32_t PortVal)</td></tr>
+<tr class="memdesc:ga5473dff3a9600ce7db24f1976496c1f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the value to the selected data port.  <a href="#ga5473dff3a9600ce7db24f1976496c1f5">More...</a><br /></td></tr>
+<tr class="separator:ga5473dff3a9600ce7db24f1976496c1f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0f9c9224131e4f3e507f424418b5903a"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gaacbd7ed539db0aacd973a0f6eca34074">ITStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga0f9c9224131e4f3e507f424418b5903a">GPIOx_GetINTStatus</a> (<a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *GPIOx, uint32_t GPIO_PinBit)</td></tr>
+<tr class="memdesc:ga0f9c9224131e4f3e507f424418b5903a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether the GPIO interrupt of the specified pin has occurred or not.  <a href="#ga0f9c9224131e4f3e507f424418b5903a">More...</a><br /></td></tr>
+<tr class="separator:ga0f9c9224131e4f3e507f424418b5903a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae27cca9e3a288923d1f7923aa26d4e67"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gaacbd7ed539db0aacd973a0f6eca34074">ITStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#gae27cca9e3a288923d1f7923aa26d4e67">GPIO_GetINTStatus</a> (uint32_t GPIO_PinBit)</td></tr>
+<tr class="memdesc:gae27cca9e3a288923d1f7923aa26d4e67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether the GPIO interrupt of the specified pin has occurred or not.  <a href="#gae27cca9e3a288923d1f7923aa26d4e67">More...</a><br /></td></tr>
+<tr class="separator:gae27cca9e3a288923d1f7923aa26d4e67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafa49182a098abdeb6cec81d4743e7c93"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#gafa49182a098abdeb6cec81d4743e7c93">GPIOx_Debounce_Time</a> (<a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *GPIOx, uint32_t DebounceTime)</td></tr>
-<tr class="memdesc:gafa49182a098abdeb6cec81d4743e7c93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set debounce time.  <a href="#gafa49182a098abdeb6cec81d4743e7c93">More...</a><br /></td></tr>
+<tr class="memdesc:gafa49182a098abdeb6cec81d4743e7c93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the GPIO debounce time.  <a href="#gafa49182a098abdeb6cec81d4743e7c93">More...</a><br /></td></tr>
 <tr class="separator:gafa49182a098abdeb6cec81d4743e7c93"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1e20ced0ea308787cf977a9e667e71c2"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga1e20ced0ea308787cf977a9e667e71c2">GPIO_Debounce_Time</a> (uint32_t DebounceTime)</td></tr>
-<tr class="memdesc:ga1e20ced0ea308787cf977a9e667e71c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set debounce time.  <a href="#ga1e20ced0ea308787cf977a9e667e71c2">More...</a><br /></td></tr>
-<tr class="separator:ga1e20ced0ea308787cf977a9e667e71c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga00d091e86335c93d331340deba620361"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga00d091e86335c93d331340deba620361">GPIO_Debounce_Time</a> (uint32_t DebounceTime)</td></tr>
+<tr class="memdesc:ga00d091e86335c93d331340deba620361"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the GPIO debounce time.  <a href="#ga00d091e86335c93d331340deba620361">More...</a><br /></td></tr>
+<tr class="separator:ga00d091e86335c93d331340deba620361"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadfd68929e3c76a53a8c83123c208168a"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#gadfd68929e3c76a53a8c83123c208168a">GPIOx_ModeSet</a> (<a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *GPIOx, uint32_t GPIO_PinBit, <a class="el" href="group___g_p_i_o___exported___constants.html#ga1347339e1c84a196fabbb31205eec5d4">GPIOMode_TypeDef</a> GPIO_Mode)</td></tr>
-<tr class="memdesc:gadfd68929e3c76a53a8c83123c208168a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set gpio output mode.  <a href="#gadfd68929e3c76a53a8c83123c208168a">More...</a><br /></td></tr>
+<tr class="memdesc:gadfd68929e3c76a53a8c83123c208168a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies the direction for the selected pins.  <a href="#gadfd68929e3c76a53a8c83123c208168a">More...</a><br /></td></tr>
 <tr class="separator:gadfd68929e3c76a53a8c83123c208168a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga08ed053aa1d78a8a72c00d9857316d0b"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga08ed053aa1d78a8a72c00d9857316d0b">GPIO_ModeSet</a> (uint32_t GPIO_PinBit, <a class="el" href="group___g_p_i_o___exported___constants.html#ga1347339e1c84a196fabbb31205eec5d4">GPIOMode_TypeDef</a> GPIO_Mode)</td></tr>
-<tr class="memdesc:ga08ed053aa1d78a8a72c00d9857316d0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the selected data port bits.  <a href="#ga08ed053aa1d78a8a72c00d9857316d0b">More...</a><br /></td></tr>
-<tr class="separator:ga08ed053aa1d78a8a72c00d9857316d0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadf9b9ca1f37e50792ee39be946497fed"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#gadf9b9ca1f37e50792ee39be946497fed">GPIO_ModeSet</a> (uint32_t GPIO_PinBit, <a class="el" href="group___g_p_i_o___exported___constants.html#ga1347339e1c84a196fabbb31205eec5d4">GPIOMode_TypeDef</a> GPIO_Mode)</td></tr>
+<tr class="memdesc:gadf9b9ca1f37e50792ee39be946497fed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies the direction for the selected pins.  <a href="#gadf9b9ca1f37e50792ee39be946497fed">More...</a><br /></td></tr>
+<tr class="separator:gadf9b9ca1f37e50792ee39be946497fed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga82986d972a60433212c1c73e60b4b3bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_p_i_o___exported___functions.html#ga82986d972a60433212c1c73e60b4b3bf">GPIOx_ChangePolarity</a> (<a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *GPIOx, uint32_t GPIO_PinBit, <a class="el" href="group___g_p_i_o___exported___constants.html#gaf8d2e448f4998b9459eb1394bfbe1a6c">GPIOIT_PolarityType</a> int_type)</td></tr>
+<tr class="memdesc:ga82986d972a60433212c1c73e60b4b3bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the polarity that triggers the gpio interrupt.  <a href="#ga82986d972a60433212c1c73e60b4b3bf">More...</a><br /></td></tr>
 <tr class="separator:ga82986d972a60433212c1c73e60b4b3bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -183,20 +184,19 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the GPIO bit which corresponds to Pin_num. such as P0_3-&gt;GPIO3-&gt;<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT(3)</a>. </p>
+<p>Get the GPIO_Pin through the given Pin_num. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">Pin_num</td><td>This parameter is from ADC_0 to P7_1, please refer to rtl876x.h "Pin_Number" part. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">Pin_Num</td><td>Pin number to be configured. This parameter can be one of the following values: <ul>
+<li>P0_0 ~ P7_7, please refer to rtl876x.h 'Pin_Number' part.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">GPIO</td><td>pin for GPIO initialization. </td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>GPIO_Pin_x, where x can be 0 ~ 31.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_gpio_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint32_t gpio_pin = <a class="code" href="group___g_p_i_o___exported___functions.html#ga94b3e048fa3ba3c8f485afe4e25f4f27">GPIO_GetPin</a>(<a class="code" href="group__x3d___r_t_l876_x___pin___number.html#ga7d02796f1733eadcc315008ac83e939a">P4_0</a>);</div><div class="line">    <span class="comment">//result: gpio_pin = GPIO_Pin_28</span></div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga6ebe8e8c8e01bf6c33cc5b0934574230"></a>
@@ -250,20 +250,10 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Deinitializes the GPIO peripheral registers to their default reset values. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<p>Deinitializes the GPIO peripheral registers to their default reset values of GPIOA. </p>
+<p>rtl876x_gpio.h</p>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_gpio_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#gac2a0516b445065f6656da011b95e5cac">GPIO_DeInit</a>();</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga1c7948b79aa8c8bec29dd026218b2687"></a>
@@ -283,19 +273,15 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Deinitializes the GPIO peripheral registers to their default reset values. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GPIOx</td><td>choose GPIOA or GPIOB </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIOx</td><td>where x can be A to C to select the GPIO peripheral.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_gpio_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#ga1c7948b79aa8c8bec29dd026218b2687">GPIOx_DeInit</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>);</div><div class="line">}</div></div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">None.</td><td></td></tr>
   </table>
@@ -327,19 +313,15 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Initializes the GPIO peripheral according to the specified parameters in the GPIO_InitStruct. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GPIO_InitStruct</td><td>pointer to a <a class="el" href="struct_g_p_i_o___init_type_def.html" title="GPIO Init structure definition. ">GPIO_InitTypeDef</a> structure that contains the configuration information for the specified GPIO peripheral. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_InitStruct</td><td>Pointer to a <a class="el" href="struct_g_p_i_o___init_type_def.html" title="GPIO Init structure definition. ">GPIO_InitTypeDef</a> structure that contains the configuration information for the specified GPIO peripheral.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#define GPIO_Test_Pin     GPIO_GetPin(P3_0)</span></div><div class="line"><span class="keywordtype">void</span> driver_gpio_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_c_c___exported___functions.html#ga883379580c235037d0c1ed70340fb680">RCC_PeriphClockCmd</a>(<a class="code" href="group___a_p_b___peripheral___define.html#gad93373bb791b5967572ba9387bd734a3">APBPeriph_GPIOA</a>, <a class="code" href="group___r_c_c___peripheral___clock.html#ga75a998a2ee90a2ad1c13aab4ff379af4">APBPeriph_GPIOA_CLOCK</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line"></div><div class="line">    <a class="code" href="struct_g_p_i_o___init_type_def.html">GPIO_InitTypeDef</a> GPIO_InitStruct;</div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#gab28de41278e7f8c63d0851e2733b10df">GPIO_StructInit</a>(&amp;GPIO_InitStruct);</div><div class="line">    GPIO_InitStruct.<a class="code" href="struct_g_p_i_o___init_type_def.html#a64682ad32b65786d54c548270144ad6d">GPIO_PinBit</a>     = GPIO_Test_Pin;</div><div class="line">    GPIO_InitStruct.<a class="code" href="struct_g_p_i_o___init_type_def.html#a0c7e8901d8b511bbb8c3b153f705dbba">GPIO_Mode</a>       = <a class="code" href="group__x3e___g_p_i_o___mode.html#gga1347339e1c84a196fabbb31205eec5d4a484aa18a6156ce916049b334ba1839de">GPIO_Mode_IN</a>;</div><div class="line">    GPIO_InitStruct.<a class="code" href="struct_g_p_i_o___init_type_def.html#a7eff19209df322738434b9770f5ea5f6">GPIO_ITCmd</a>      = <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1ad3a9df141be0ccf10389b640f492b26d">DISABLE</a>;</div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#ga9af553c40d0c4b6d14abf1a6b9de5166">GPIO_Init</a>(&amp;GPIO_InitStruct);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga2751af3c6082f1355fda6c803df0320d"></a>
@@ -369,19 +351,16 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Initializes the GPIO peripheral according to the specified parameters in the GPIO_InitStruct. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GPIOx</td><td>choose GPIOA or GPIOB </td></tr>
-    <tr><td class="paramname">GPIO_InitStruct</td><td>pointer to a <a class="el" href="struct_g_p_i_o___init_type_def.html" title="GPIO Init structure definition. ">GPIO_InitTypeDef</a> structure that contains the configuration information for the specified GPIO peripheral. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIOx</td><td>where x can be A to C to select the GPIO peripheral. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_InitStruct</td><td>Pointer to a <a class="el" href="struct_g_p_i_o___init_type_def.html" title="GPIO Init structure definition. ">GPIO_InitTypeDef</a> structure that contains the configuration information for the specified GPIO peripheral.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td>Initializes the GPIO peripheral according to the specified parameters in the GPIO_InitStruct.</td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#define GPIO_Test_Pin     GPIO_GetPin(P3_0)</span></div><div class="line"><span class="keywordtype">void</span> driver_gpio_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_c_c___exported___functions.html#ga883379580c235037d0c1ed70340fb680">RCC_PeriphClockCmd</a>(<a class="code" href="group___a_p_b___peripheral___define.html#gad93373bb791b5967572ba9387bd734a3">APBPeriph_GPIOA</a>, <a class="code" href="group___r_c_c___peripheral___clock.html#ga75a998a2ee90a2ad1c13aab4ff379af4">APBPeriph_GPIOA_CLOCK</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line"></div><div class="line">    <a class="code" href="struct_g_p_i_o___init_type_def.html">GPIO_InitTypeDef</a> GPIO_InitStruct;</div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#gab28de41278e7f8c63d0851e2733b10df">GPIO_StructInit</a>(&amp;GPIO_InitStruct);</div><div class="line">    GPIO_InitStruct.<a class="code" href="struct_g_p_i_o___init_type_def.html#a64682ad32b65786d54c548270144ad6d">GPIO_PinBit</a>     = GPIO_Test_Pin;</div><div class="line">    GPIO_InitStruct.<a class="code" href="struct_g_p_i_o___init_type_def.html#a0c7e8901d8b511bbb8c3b153f705dbba">GPIO_Mode</a>       = <a class="code" href="group__x3e___g_p_i_o___mode.html#gga1347339e1c84a196fabbb31205eec5d4a484aa18a6156ce916049b334ba1839de">GPIO_Mode_IN</a>;</div><div class="line">    GPIO_InitStruct.<a class="code" href="struct_g_p_i_o___init_type_def.html#a7eff19209df322738434b9770f5ea5f6">GPIO_ITCmd</a>      = <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1ad3a9df141be0ccf10389b640f492b26d">DISABLE</a>;</div><div class="line">    <a class="code" href="group__x3e___g_p_i_o___exported___functions.html#gad39daab96b01832cdb0b1ab0197f0672">GPIOx_Init</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, &amp;GPIO_InitStruct);</div><div class="line">}</div></div><!-- fragment --><p>Initializes the GPIO peripheral according to the specified parameters in the GPIO_InitStruct.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">GPIOx</td><td>choose GPIOA or GPIOB </td></tr>
@@ -415,7 +394,15 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Fills each GPIO_InitStruct member with its default value. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_InitStruct</td><td>Pointer to a <a class="el" href="struct_g_p_i_o___init_type_def.html" title="GPIO Init structure definition. ">GPIO_InitTypeDef</a> structure which will be initialized.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#define GPIO_Test_Pin     GPIO_GetPin(P3_0)</span></div><div class="line"><span class="keywordtype">void</span> driver_gpio_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_c_c___exported___functions.html#ga883379580c235037d0c1ed70340fb680">RCC_PeriphClockCmd</a>(<a class="code" href="group___a_p_b___peripheral___define.html#gad93373bb791b5967572ba9387bd734a3">APBPeriph_GPIOA</a>, <a class="code" href="group___r_c_c___peripheral___clock.html#ga75a998a2ee90a2ad1c13aab4ff379af4">APBPeriph_GPIOA_CLOCK</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line"></div><div class="line">    <a class="code" href="struct_g_p_i_o___init_type_def.html">GPIO_InitTypeDef</a> GPIO_InitStruct;</div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#gab28de41278e7f8c63d0851e2733b10df">GPIO_StructInit</a>(&amp;GPIO_InitStruct);</div><div class="line">    GPIO_InitStruct.<a class="code" href="struct_g_p_i_o___init_type_def.html#a64682ad32b65786d54c548270144ad6d">GPIO_PinBit</a>     = GPIO_Test_Pin;</div><div class="line">    GPIO_InitStruct.<a class="code" href="struct_g_p_i_o___init_type_def.html#a0c7e8901d8b511bbb8c3b153f705dbba">GPIO_Mode</a>       = <a class="code" href="group__x3e___g_p_i_o___mode.html#gga1347339e1c84a196fabbb31205eec5d4a484aa18a6156ce916049b334ba1839de">GPIO_Mode_IN</a>;</div><div class="line">    GPIO_InitStruct.<a class="code" href="struct_g_p_i_o___init_type_def.html#a7eff19209df322738434b9770f5ea5f6">GPIO_ITCmd</a>      = <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>;</div><div class="line">    GPIO_InitStruct.<a class="code" href="struct_g_p_i_o___init_type_def.html#a2b9cc2da101fa3cf502bb5fd8fd62ce4">GPIO_ITTrigger</a>  = <a class="code" href="group__x3e___g_p_i_o___interrupt___trigger.html#ggaf4cdf10025fd82d01b4b24a9d3f724e7a54707a5e9cce518a24300869232c1f0f">GPIO_INT_Trigger_EDGE</a>;</div><div class="line">    GPIO_InitStruct.<a class="code" href="struct_g_p_i_o___init_type_def.html#a85872cd81286266788ca60b02527e5b3">GPIO_ITPolarity</a> = <a class="code" href="group__x3e___g_p_i_o___interrupt___polarity.html#ggaf8d2e448f4998b9459eb1394bfbe1a6cae6c03d5c91a21e4584acd2ad263a2b05">GPIO_INT_POLARITY_ACTIVE_LOW</a>;</div><div class="line">    GPIO_InitStruct.<a class="code" href="struct_g_p_i_o___init_type_def.html#a9016f5f1c3c497621cc04e5ee9e52b4b">GPIO_ITDebounce</a> = <a class="code" href="group__x3e___g_p_i_o___interrupt___debounce.html#ggaba00a671bf049de017ca0e872e2cd5aba18a8d6a17401d43dd98c5d4618136147">GPIO_INT_DEBOUNCE_ENABLE</a>;</div><div class="line">    GPIO_InitStruct.<a class="code" href="struct_g_p_i_o___init_type_def.html#a2891f2b5bef44c46d1c66c225cf46791">GPIO_DebounceTime</a> = 30;</div><div class="line">    <a class="code" href="group__x3e___g_p_i_o___exported___functions.html#gad39daab96b01832cdb0b1ab0197f0672">GPIOx_Init</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, &amp;GPIO_InitStruct);</div><div class="line">}</div></div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">GPIO_InitStruct</td><td>: pointer to a <a class="el" href="struct_g_p_i_o___init_type_def.html" title="GPIO Init structure definition. ">GPIO_InitTypeDef</a> structure which will be initialized. </td></tr>
   </table>
@@ -456,21 +443,24 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>enable the specified GPIO interrupt. </p>
+<p>Enable the specified GPIO pin interrupt. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GPIO_PinBit</td><td>where x can be 0 or 31. </td></tr>
-    <tr><td class="paramname">NewState</td><td>enable or disable interrupt </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_PinBit</td><td>Specifies the GPIO pins to be configured, please refer to 'GPIO_pins_define' part. This parameter can be one of the following values: <ul>
+<li>GPIO_Pin_x, where x can be 0 ~ 31. </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">NewState</td><td>Enable or disable the specified GPIO pin interrupt. This parameter can be one of the following values: <ul>
+<li>ENABLE: Enable the specified GPIO pin interrupt. </li>
+<li>DISABLE: Disable the specified GPIO pin interrupt.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#define GPIO_Test_Pin     GPIO_GetPin(P0_0)</span></div><div class="line"><span class="keywordtype">void</span> driver_gpio_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___h_a_l___vector_table___exported___functions.html#ga1ddcc6c785e2655f5de7b7edf1f4302d">RamVectorTableUpdate</a>(<a class="code" href="group__x3e___vector___table___exported__types.html#gga4702e995194cb49ac8e5b176904beb40af5f8248ce89793e12238a3acef9422c6">GPIO_A0_VECTORn</a>, gpio_handler);</div><div class="line"></div><div class="line">    <a class="code" href="struct_n_v_i_c___init_type_def.html">NVIC_InitTypeDef</a> NVIC_InitStruct;</div><div class="line">    NVIC_InitStruct.<a class="code" href="struct_n_v_i_c___init_type_def.html#a921af0ab04e071d7d276c003e0048123">NVIC_IRQChannel</a> = GPIO_IRQ;</div><div class="line">    NVIC_InitStruct.<a class="code" href="struct_n_v_i_c___init_type_def.html#acd582bc2edce30e9d7ab5e0ede400f36">NVIC_IRQChannelPriority</a> = 3;</div><div class="line">    NVIC_InitStruct.<a class="code" href="struct_n_v_i_c___init_type_def.html#a3c5567ef024a0489884083c88f17b4d5">NVIC_IRQChannelCmd</a> = <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>;</div><div class="line">    <a class="code" href="group__x3e___n_v_i_c___exported___functions.html#ga4e06b4f5c9109d6bc8990adf77e5f8d3">NVIC_Init</a>(&amp;NVIC_InitStruct);</div><div class="line"></div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#ga248546acc6c2ffc1de66519ca602b5df">GPIOx_MaskINTConfig</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, GPIO_Test_Pin, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1ad3a9df141be0ccf10389b640f492b26d">DISABLE</a>);</div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#gab41b3320e089376d6b95198e34fe4577">GPIO_INTConfig</a>(GPIO_Test_Pin, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga5c40c5475778912736e4dbf5fbd5c7b3"></a>
@@ -505,21 +495,25 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>enable the specified GPIO interrupt. </p>
+<p>Enable the specified GPIO pin interrupt. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GPIOx</td><td>choose GPIOA or GPIOB </td></tr>
-    <tr><td class="paramname">GPIO_PinBit</td><td>where x can be 0 or 31. </td></tr>
-    <tr><td class="paramname">NewState</td><td>enable or disable interrupt </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIOx</td><td>where x can be A to C to select the GPIO peripheral. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_PinBit</td><td>Specifies the GPIO pins to be configured, please refer to 'GPIO_pins_define' part. This parameter can be one of the following values: <ul>
+<li>GPIO_Pin_x, where x can be 0 ~ 31. </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">NewState</td><td>Enable or disable the specified GPIO pin interrupt. This parameter can be one of the following values: <ul>
+<li>ENABLE: Enable the specified GPIO pin interrupt. </li>
+<li>DISABLE: Disable the specified GPIO pin interrupt.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#define GPIO_Test_Pin     GPIO_GetPin(P0_0)</span></div><div class="line"><span class="keywordtype">void</span> driver_gpio_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___h_a_l___vector_table___exported___functions.html#ga1ddcc6c785e2655f5de7b7edf1f4302d">RamVectorTableUpdate</a>(<a class="code" href="group__x3e___vector___table___exported__types.html#gga4702e995194cb49ac8e5b176904beb40af5f8248ce89793e12238a3acef9422c6">GPIO_A0_VECTORn</a>, gpio_handler);</div><div class="line"></div><div class="line">    <a class="code" href="struct_n_v_i_c___init_type_def.html">NVIC_InitTypeDef</a> NVIC_InitStruct;</div><div class="line">    NVIC_InitStruct.<a class="code" href="struct_n_v_i_c___init_type_def.html#a921af0ab04e071d7d276c003e0048123">NVIC_IRQChannel</a> = GPIO_IRQ;</div><div class="line">    NVIC_InitStruct.<a class="code" href="struct_n_v_i_c___init_type_def.html#acd582bc2edce30e9d7ab5e0ede400f36">NVIC_IRQChannelPriority</a> = 3;</div><div class="line">    NVIC_InitStruct.<a class="code" href="struct_n_v_i_c___init_type_def.html#a3c5567ef024a0489884083c88f17b4d5">NVIC_IRQChannelCmd</a> = <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>;</div><div class="line">    <a class="code" href="group__x3e___n_v_i_c___exported___functions.html#ga4e06b4f5c9109d6bc8990adf77e5f8d3">NVIC_Init</a>(&amp;NVIC_InitStruct);</div><div class="line"></div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#ga248546acc6c2ffc1de66519ca602b5df">GPIOx_MaskINTConfig</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, GPIO_Test_Pin, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1ad3a9df141be0ccf10389b640f492b26d">DISABLE</a>);</div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#ga5c40c5475778912736e4dbf5fbd5c7b3">GPIOx_INTConfig</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, GPIO_Test_Pin, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line">}</div></div><!-- fragment --><p>Enable the specified GPIO pin interrupt.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">GPIO_Pin_x</td><td>where x can be 0 or 31. </td></tr>
@@ -551,20 +545,19 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>clear the specified GPIO interrupt. </p>
+<p>Clear the specified GPIO pin interrupt pending bit. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GPIO_PinBit</td><td>where x can be 0 or 31. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_PinBit</td><td>Specifies the GPIO pins to be configured, please refer to 'GPIO_pins_define' part. This parameter can be one of the following values: <ul>
+<li>GPIO_Pin_x, where x can be 0 ~ 31.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#define GPIO_Test_Pin     GPIO_GetPin(P0_0)</span></div><div class="line"><span class="comment">//GPIO interrupt handler function.</span></div><div class="line"><span class="keywordtype">void</span> gpio_handler(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">   <a class="code" href="group___g_p_i_o___exported___functions.html#ga248546acc6c2ffc1de66519ca602b5df">GPIOx_MaskINTConfig</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, GPIO_Test_Pin, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line"></div><div class="line">   <span class="comment">// add user code here</span></div><div class="line">   <a class="code" href="group__x3d___t_r_a_c_e.html#ga5d77ab23ef056676a6860b9959404140">APP_PRINT_INFO0</a>(<span class="stringliteral">&quot;gpio_handler\n&quot;</span>);</div><div class="line">   <a class="code" href="group___g_p_i_o___exported___functions.html#gadb788e614049e35905c7ff834a61392c">GPIO_ClearINTPendingBit</a>(GPIO_Test_Pin);</div><div class="line">   <a class="code" href="group___g_p_i_o___exported___functions.html#ga248546acc6c2ffc1de66519ca602b5df">GPIOx_MaskINTConfig</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, GPIO_Test_Pin, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1ad3a9df141be0ccf10389b640f492b26d">DISABLE</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga6cfce4a61b6395f9409f92dd9559c80c"></a>
@@ -593,20 +586,20 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>clear the specified GPIO interrupt. </p>
+<p>Clear the specified GPIO pin interrupt pending bit. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GPIOx</td><td>choose GPIOA or GPIOB </td></tr>
-    <tr><td class="paramname">GPIO_PinBit</td><td>where x can be 0 or 31. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIOx</td><td>where x can be A to C to select the GPIO peripheral. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_PinBit</td><td>Specifies the GPIO pins to be configured, please refer to 'GPIO_pins_define' part. This parameter can be one of the following values: <ul>
+<li>GPIO_Pin_x, where x can be 0 ~ 31.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#define GPIO_Test_Pin     GPIO_GetPin(P0_0)</span></div><div class="line"><span class="comment">//GPIO interrupt handler function.</span></div><div class="line"><span class="keywordtype">void</span> gpio_handler(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#ga248546acc6c2ffc1de66519ca602b5df">GPIOx_MaskINTConfig</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, GPIO_Test_Pin, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line"></div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#ga6cfce4a61b6395f9409f92dd9559c80c">GPIOx_ClearINTPendingBit</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, GPIO_Test_Pin);</div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#ga248546acc6c2ffc1de66519ca602b5df">GPIOx_MaskINTConfig</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, GPIO_Test_Pin, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1ad3a9df141be0ccf10389b640f492b26d">DISABLE</a>);</div><div class="line">}</div></div><!-- fragment --><p>Clear the specified GPIO pin interrupt pending bit.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">GPIOx</td><td>choose GPIOA or GPIOB </td></tr>
@@ -649,21 +642,24 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>mask the specified GPIO interrupt. </p>
+<p>Config whether mask the specified GPIO pin interrupt. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GPIO_PinBit</td><td>where x can be 0 or 31. </td></tr>
-    <tr><td class="paramname">NewState</td><td>disable or enable interrupt. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_PinBit</td><td>Specifies the GPIO pins to be configured, please refer to 'GPIO_pins_define' part. This parameter can be one of the following values: <ul>
+<li>GPIO_Pin_x, where x can be 0 ~ 31. </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">NewState</td><td>Enable or disable mask the specified GPIO pin interrupt. This parameter can be one of the following values: <ul>
+<li>ENABLE: Enable mask the specified GPIO pin interrupt. </li>
+<li>DISABLE: Disable mask the specified GPIO pin interrupt.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#define GPIO_Test_Pin     GPIO_GetPin(P3_0)</span></div><div class="line"><span class="keywordtype">void</span> gpio_handler(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">   <a class="code" href="group___g_p_i_o___exported___functions.html#ga248546acc6c2ffc1de66519ca602b5df">GPIOx_MaskINTConfig</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, GPIO_Test_Pin, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line"></div><div class="line">   <span class="comment">// add user code here</span></div><div class="line">   <a class="code" href="group___g_p_i_o___exported___functions.html#gad44c6dc2555e3fb9a4682ed684c0ac37">GPIO_MaskINTConfig</a>(GPIO_Test_Pin, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1ad3a9df141be0ccf10389b640f492b26d">DISABLE</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga248546acc6c2ffc1de66519ca602b5df"></a>
@@ -698,21 +694,25 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>mask the specified GPIO interrupt. </p>
+<p>Config whether mask the specified GPIO pin interrupt. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GPIOx</td><td>choose GPIOA or GPIOB </td></tr>
-    <tr><td class="paramname">GPIO_PinBit</td><td>where x can be 0 or 31. </td></tr>
-    <tr><td class="paramname">NewState</td><td>disable or enable interrupt. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIOx</td><td>where x can be A to C to select the GPIO peripheral. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_PinBit</td><td>Specifies the GPIO pins to be configured, please refer to 'GPIO_pins_define' part. This parameter can be one of the following values: <ul>
+<li>GPIO_Pin_x, where x can be 0 ~ 31. </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">NewState</td><td>Enable or disable mask the specified GPIO pin interrupt. This parameter can be one of the following values: <ul>
+<li>ENABLE: Enable mask the specified GPIO pin interrupt. </li>
+<li>DISABLE: Disable mask the specified GPIO pin interrupt.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#define GPIO_Test_Pin     GPIO_GetPin(P3_0)</span></div><div class="line"><span class="keywordtype">void</span> gpio_handler(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">   <a class="code" href="group___g_p_i_o___exported___functions.html#ga248546acc6c2ffc1de66519ca602b5df">GPIOx_MaskINTConfig</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, GPIO_Test_Pin, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line"></div><div class="line">   <a class="code" href="group___g_p_i_o___exported___functions.html#ga248546acc6c2ffc1de66519ca602b5df">GPIOx_MaskINTConfig</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, GPIO_Test_Pin, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1ad3a9df141be0ccf10389b640f492b26d">DISABLE</a>);</div><div class="line">}</div></div><!-- fragment --><p>Config whether mask the specified GPIO pin interrupt.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">GPIOx</td><td>choose GPIOA or GPIOB </td></tr>
@@ -763,20 +763,19 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the GPIO num which corresponds to Pin_num. such as P0_3 -&gt; GPIO3. </p>
+<p>Get GPIOx(x is 0~31) value through the given Pin_num. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">Pin_num</td><td>This parameter is from ADC_0 to P4_1, please refer to rtl876x.h "Pin_Number" part. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">Pin_Num</td><td>Pin number to be configured. This parameter can be one of the following values: <ul>
+<li>P0_0 ~ P7_7, please refer to rtl876x.h 'Pin_Number' part.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">GPIO</td><td>pin number.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Gets the GPIO num which corresponds to Pin_num. such as P0_3 -&gt; GPIO3.</p>
+<dl class="section return"><dt>Returns</dt><dd>GPIOx(x is 0~31) value.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> gpio_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t gpio_num = <a class="code" href="group___g_p_i_o___exported___functions.html#ga90a0a64a2916815db52d278ee1e286b1">GPIO_GetNum</a>(<a class="code" href="group__x3d___r_t_l876_x___pin___number.html#ga7d02796f1733eadcc315008ac83e939a">P4_0</a>);</div><div class="line">    <span class="comment">//result: gpio_num = 28</span></div><div class="line">}</div></div><!-- fragment --><p>Get GPIOx(x is 0~31) value through the given Pin_num.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">Pin_num</td><td>This parameter is from ADC_0 to P9_5, please refer to rtl876x.h </td></tr>
@@ -818,20 +817,21 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Enable the debance clk of GPIOx. </p>
+<p>Enable or disable the debance clk of GPIOx. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GPIOx</td><td>choose GPIOA or GPIOB </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIOx</td><td>where x can be A to C to select the GPIO peripheral. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">NewState</td><td>Enable or disable the debance clk of GPIOx. This parameter can be one of the following values: <ul>
+<li>ENABLE: Enable the debance clk of GPIOx. </li>
+<li>DISABLE: Disable the debance clk of GPIOx.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">none.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> gpio_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#gad615fb274161935faec75bc800bf7f64">GPIOx_DBClkCmd</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="gab9cf61106e332571c3e7c5ecbdb1e78b"></a>
@@ -860,30 +860,37 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Reads the specified input port pin. </p>
+<p>Read the specified input port pin. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GPIO_PinBit</td><td>specifies the port bit to read. This parameter can be GPIO_Pin_x where x can be (0..31). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIOx</td><td>where x can be A to C to select the GPIO peripheral. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_PinBit</td><td>Specifies the GPIO pins to be configured, please refer to 'GPIO_pins_define' part. This parameter can be one of the following values: <ul>
+<li>GPIO_Pin_x, where x can be 0 ~ 31.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The input port pin value. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">The</td><td>input port pin value. </td></tr>
+    <tr><td class="paramname">SET</td><td>The input port pin value is 1. </td></tr>
+    <tr><td class="paramname">RESET</td><td>The input port pin value is 0.</td></tr>
   </table>
   </dd>
 </dl>
-
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> gpio_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t input_bit = <a class="code" href="group___g_p_i_o___exported___functions.html#gab9cf61106e332571c3e7c5ecbdb1e78b">GPIOx_ReadInputDataBit</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, <a class="code" href="group___g_p_i_o___exported___functions.html#ga94b3e048fa3ba3c8f485afe4e25f4f27">GPIO_GetPin</a>(<a class="code" href="group__x3d___r_t_l876_x___pin___number.html#ga7d02796f1733eadcc315008ac83e939a">P4_0</a>));</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="ga17dd4f5a5f8b278e86dd0b7dc3b47433"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga17dd4f5a5f8b278e86dd0b7dc3b47433">&#9670;&nbsp;</a></span>GPIO_ReadInputDataBit()</h2>
+<a id="gab44874699f8a57e35029d39bd4130780"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab44874699f8a57e35029d39bd4130780">&#9670;&nbsp;</a></span>GPIO_ReadInputDataBit()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE uint8_t GPIO_ReadInputDataBit </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE uint8_t GPIO_ReadInputDataBit </td>
           <td>(</td>
           <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>GPIO_PinBit</em></td><td>)</td>
@@ -892,30 +899,36 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Reads the specified input port pin. </p>
+<p>Read the specified input port pin. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GPIO_PinBit</td><td>specifies the port bit to read. This parameter can be GPIO_Pin_x where x can be (0..31). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_PinBit</td><td>Specifies the GPIO pins to be configured, please refer to 'GPIO_pins_define' part. This parameter can be one of the following values: <ul>
+<li>GPIO_Pin_x, where x can be 0 ~ 31.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The input port pin value. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">The</td><td>input port pin value. </td></tr>
+    <tr><td class="paramname">SET</td><td>The input port pin value is 1. </td></tr>
+    <tr><td class="paramname">RESET</td><td>The input port pin value is 0.</td></tr>
   </table>
   </dd>
 </dl>
-
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> gpio_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t input_bit = <a class="code" href="group___g_p_i_o___exported___functions.html#gab44874699f8a57e35029d39bd4130780">GPIO_ReadInputDataBit</a>(<a class="code" href="group___g_p_i_o___exported___functions.html#ga94b3e048fa3ba3c8f485afe4e25f4f27">GPIO_GetPin</a>(<a class="code" href="group__x3d___r_t_l876_x___pin___number.html#ga7d02796f1733eadcc315008ac83e939a">P4_0</a>));</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="ga4acd74d0bf182b52ea0189737bce1bb3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga4acd74d0bf182b52ea0189737bce1bb3">&#9670;&nbsp;</a></span>GPIOx_ReadInputData()</h2>
+<a id="ga384885c3ed63f6368bacbd70db16beae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga384885c3ed63f6368bacbd70db16beae">&#9670;&nbsp;</a></span>GPIOx_ReadInputData()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE uint32_t GPIOx_ReadInputData </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE uint32_t GPIOx_ReadInputData </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *&#160;</td>
           <td class="paramname"><em>GPIOx</em></td><td>)</td>
@@ -924,30 +937,26 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Reads value of all GPIO input data port. </p>
+<p>Read value of all GPIO input data port. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">None</td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIOx</td><td>where x can be A to C to select the GPIO peripheral.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">GPIO</td><td>input data port value. </td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>GPIO input data port value.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="comment">//read gpio input</span></div><div class="line"><span class="keywordtype">void</span> gpio_test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint32_t gpio_data = 0;</div><div class="line">    gpio_data = <a class="code" href="group___g_p_i_o___exported___functions.html#ga384885c3ed63f6368bacbd70db16beae">GPIOx_ReadInputData</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>);</div><div class="line">    <a class="code" href="group__x3d___t_r_a_c_e.html#ga81687b044a4d8600c4be891734f4839a">APP_PRINT_INFO1</a>(<span class="stringliteral">&quot; GPIOx_ReadInputData =0x%x\n&quot;</span>, gpio_data);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="gaf1d719c6ae18e1d58f82e99d50153f3a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf1d719c6ae18e1d58f82e99d50153f3a">&#9670;&nbsp;</a></span>GPIO_ReadInputData()</h2>
+<a id="ga0a3c3bb57496f2281763278b7187f9ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0a3c3bb57496f2281763278b7187f9ad">&#9670;&nbsp;</a></span>GPIO_ReadInputData()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE uint32_t GPIO_ReadInputData </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE uint32_t GPIO_ReadInputData </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -955,20 +964,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Reads value of all GPIO input data port. </p>
+<p>Read value of all GPIO input data port. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">None</td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIOx</td><td>where x can be A to C to select the GPIO peripheral.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">GPIO</td><td>input data port value. </td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>GPIO input data port value.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="comment">//read gpio input</span></div><div class="line"><span class="keywordtype">void</span> gpio_test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint32_t gpio_data = 0;</div><div class="line">    gpio_data = <a class="code" href="group___g_p_i_o___exported___functions.html#ga0a3c3bb57496f2281763278b7187f9ad">GPIO_ReadInputData</a>();</div><div class="line">    <a class="code" href="group__x3d___t_r_a_c_e.html#ga81687b044a4d8600c4be891734f4839a">APP_PRINT_INFO1</a>(<span class="stringliteral">&quot; GPIO_ReadInputData =0x%x\n&quot;</span>, gpio_data);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga198caf48a964a701c1c355cb84cbb469"></a>
@@ -997,30 +1002,37 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Reads the specified output port pin. </p>
+<p>Read the specified output port pin. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GPIO_PinBit</td><td>specifies the port bit to read. This parameter can be GPIO_Pin_x where x can be (0..31). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIOx</td><td>where x can be A to C to select the GPIO peripheral. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_PinBit</td><td>Specifies the GPIO pins to be configured, please refer to 'GPIO_pins_define' part. This parameter can be one of the following values: <ul>
+<li>GPIO_Pin_x, where x can be 0 ~ 31.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The output port pin value. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">The</td><td>output port pin value. </td></tr>
+    <tr><td class="paramname">SET</td><td>The output port pin value is 1. </td></tr>
+    <tr><td class="paramname">RESET</td><td>The output port pin value is 0.</td></tr>
   </table>
   </dd>
 </dl>
-
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> gpio_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t output_bit = <a class="code" href="group___g_p_i_o___exported___functions.html#ga198caf48a964a701c1c355cb84cbb469">GPIOx_ReadOutputDataBit</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, <a class="code" href="group___g_p_i_o___exported___functions.html#ga94b3e048fa3ba3c8f485afe4e25f4f27">GPIO_GetPin</a>(<a class="code" href="group__x3d___r_t_l876_x___pin___number.html#ga7d02796f1733eadcc315008ac83e939a">P4_0</a>));</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="ga2debc2b9f466ff2d442dc12fa1f1d21f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga2debc2b9f466ff2d442dc12fa1f1d21f">&#9670;&nbsp;</a></span>GPIO_ReadOutputDataBit()</h2>
+<a id="gaeea508e216aa65f633064989613c678b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaeea508e216aa65f633064989613c678b">&#9670;&nbsp;</a></span>GPIO_ReadOutputDataBit()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE uint8_t GPIO_ReadOutputDataBit </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE uint8_t GPIO_ReadOutputDataBit </td>
           <td>(</td>
           <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>GPIO_PinBit</em></td><td>)</td>
@@ -1029,30 +1041,36 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Reads the specified output port pin. </p>
+<p>Read the specified output port pin. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GPIO_PinBit</td><td>specifies the port bit to read. This parameter can be GPIO_Pin_x where x can be (0..31). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_PinBit</td><td>Specifies the GPIO pins to be configured, please refer to 'GPIO_pins_define' part. This parameter can be one of the following values: <ul>
+<li>GPIO_Pin_x, where x can be 0 ~ 31.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The output port pin value. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">The</td><td>output port pin value. </td></tr>
+    <tr><td class="paramname">SET</td><td>The output port pin value is 1. </td></tr>
+    <tr><td class="paramname">RESET</td><td>The output port pin value is 0.</td></tr>
   </table>
   </dd>
 </dl>
-
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> gpio_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t output_bit = <a class="code" href="group___g_p_i_o___exported___functions.html#gaeea508e216aa65f633064989613c678b">GPIO_ReadOutputDataBit</a>(<a class="code" href="group___g_p_i_o___exported___functions.html#ga94b3e048fa3ba3c8f485afe4e25f4f27">GPIO_GetPin</a>(<a class="code" href="group__x3d___r_t_l876_x___pin___number.html#ga7d02796f1733eadcc315008ac83e939a">P4_0</a>));</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="gade84e3ad068964ebca648fb3fc4e4b1e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gade84e3ad068964ebca648fb3fc4e4b1e">&#9670;&nbsp;</a></span>GPIOx_ReadOutputData()</h2>
+<a id="ga98504e5ced26c5ecc030de660d46c7f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga98504e5ced26c5ecc030de660d46c7f4">&#9670;&nbsp;</a></span>GPIOx_ReadOutputData()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE uint32_t GPIOx_ReadOutputData </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE uint32_t GPIOx_ReadOutputData </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *&#160;</td>
           <td class="paramname"><em>GPIOx</em></td><td>)</td>
@@ -1061,30 +1079,26 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Reads value of all GPIO output data port. </p>
+<p>Read value of all GPIO output data port. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">None</td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIOx</td><td>where x can be A to C to select the GPIO peripheral.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">GPIO</td><td>output data port value. </td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>GPIO output data port value.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="comment">//read gpio output data</span></div><div class="line"><span class="keywordtype">void</span> gpio_test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint32_t output_data = 0;</div><div class="line">    output_data = <a class="code" href="group___g_p_i_o___exported___functions.html#ga98504e5ced26c5ecc030de660d46c7f4">GPIOx_ReadOutputData</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>);</div><div class="line">    <a class="code" href="group__x3d___t_r_a_c_e.html#ga81687b044a4d8600c4be891734f4839a">APP_PRINT_INFO1</a>(<span class="stringliteral">&quot; GPIOx_ReadOutputData =0x%x\n&quot;</span>, output_data);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="gaf6f5c0ffbab138c641ea09fd2590180c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf6f5c0ffbab138c641ea09fd2590180c">&#9670;&nbsp;</a></span>GPIO_ReadOutputData()</h2>
+<a id="gac504c180a0f1f4897127a2223d7a02f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac504c180a0f1f4897127a2223d7a02f9">&#9670;&nbsp;</a></span>GPIO_ReadOutputData()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE uint32_t GPIO_ReadOutputData </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE uint32_t GPIO_ReadOutputData </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -1092,30 +1106,26 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Reads value of all GPIO output data port. </p>
+<p>Read value of all GPIO output data port. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">None</td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIOx</td><td>where x can be A to C to select the GPIO peripheral.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">GPIO</td><td>output data port value. </td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>GPIO output data port value.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="comment">//read gpio output data</span></div><div class="line"><span class="keywordtype">void</span> gpio_test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint32_t output_data = 0;</div><div class="line">    output_data = <a class="code" href="group___g_p_i_o___exported___functions.html#gac504c180a0f1f4897127a2223d7a02f9">GPIO_ReadOutputData</a>();</div><div class="line">    <a class="code" href="group__x3d___t_r_a_c_e.html#ga81687b044a4d8600c4be891734f4839a">APP_PRINT_INFO1</a>(<span class="stringliteral">&quot; GPIOxReadOutputData =0x%x\n&quot;</span>, output_data);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="gafe05c5de886e569f7c53e5213bbea858"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gafe05c5de886e569f7c53e5213bbea858">&#9670;&nbsp;</a></span>GPIOx_SetBits()</h2>
+<a id="ga6f288005df4d86439c0b4bbc540062cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6f288005df4d86439c0b4bbc540062cc">&#9670;&nbsp;</a></span>GPIOx_SetBits()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE void GPIOx_SetBits </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE void GPIOx_SetBits </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *&#160;</td>
           <td class="paramname"><em>GPIOx</em>, </td>
@@ -1134,30 +1144,30 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Sets the selected data port bits. </p>
+<p>Set the selected data port bit. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GPIO_PinBit</td><td>specifies the port bits to be written. This parameter can be GPIO_Pin_x where x can be (0..31) or GPIO_Pin_All. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIOx</td><td>where x can be A to C to select the GPIO peripheral. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_PinBit</td><td>Specifies the GPIO pins to be configured, please refer to 'GPIO_pins_define' part. This parameter can be one of the following values: <ul>
+<li>GPIO_Pin_x, where x can be 0 ~ 31.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> gpio_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#ga6f288005df4d86439c0b4bbc540062cc">GPIOx_SetBits</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, <a class="code" href="group___g_p_i_o___exported___functions.html#ga94b3e048fa3ba3c8f485afe4e25f4f27">GPIO_GetPin</a>(<a class="code" href="group__x3d___r_t_l876_x___pin___number.html#ga7d02796f1733eadcc315008ac83e939a">P4_0</a>));</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="ga3b471c3f52caa1560394b24741beaceb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga3b471c3f52caa1560394b24741beaceb">&#9670;&nbsp;</a></span>GPIO_SetBits()</h2>
+<a id="ga4a6c354231864194d5e78be299916e14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4a6c354231864194d5e78be299916e14">&#9670;&nbsp;</a></span>GPIO_SetBits()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE void GPIO_SetBits </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE void GPIO_SetBits </td>
           <td>(</td>
           <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>GPIO_PinBit</em></td><td>)</td>
@@ -1166,30 +1176,29 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Sets the selected data port bits. </p>
+<p>Set the selected data port bit. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GPIO_PinBit</td><td>specifies the port bits to be written. This parameter can be GPIO_Pin_x where x can be (0..31) or GPIO_Pin_All. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_PinBit</td><td>Specifies the GPIO pins to be configured, please refer to 'GPIO_pins_define' part. This parameter can be one of the following values: <ul>
+<li>GPIO_Pin_x, where x can be 0 ~ 31.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> gpio_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#ga4a6c354231864194d5e78be299916e14">GPIO_SetBits</a>(<a class="code" href="group___g_p_i_o___exported___functions.html#ga94b3e048fa3ba3c8f485afe4e25f4f27">GPIO_GetPin</a>(<a class="code" href="group__x3d___r_t_l876_x___pin___number.html#ga7d02796f1733eadcc315008ac83e939a">P4_0</a>));</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="ga9fbd1fafff669bac362f4458f6287603"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga9fbd1fafff669bac362f4458f6287603">&#9670;&nbsp;</a></span>GPIOx_ResetBits()</h2>
+<a id="gaed8b067356e8c9c0fc1b11bf71861431"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaed8b067356e8c9c0fc1b11bf71861431">&#9670;&nbsp;</a></span>GPIOx_ResetBits()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE void GPIOx_ResetBits </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE void GPIOx_ResetBits </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *&#160;</td>
           <td class="paramname"><em>GPIOx</em>, </td>
@@ -1208,30 +1217,30 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Resets the selected data port bits. </p>
+<p>Clear the selected data port bit. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GPIO_PinBit</td><td>specifies the port bits to be written. This parameter can be GPIO_Pin_0 to GPIO_Pin_31 or GPIO_Pin_All. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIOx</td><td>where x can be A to C to select the GPIO peripheral. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_PinBit</td><td>Specifies the GPIO pins to be configured, please refer to 'GPIO_pins_define' part. This parameter can be one of the following values: <ul>
+<li>GPIO_Pin_x, where x can be 0 ~ 31.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> gpio_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#gaed8b067356e8c9c0fc1b11bf71861431">GPIOx_ResetBits</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, <a class="code" href="group___g_p_i_o___exported___functions.html#ga94b3e048fa3ba3c8f485afe4e25f4f27">GPIO_GetPin</a>(<a class="code" href="group__x3d___r_t_l876_x___pin___number.html#ga7d02796f1733eadcc315008ac83e939a">P4_0</a>));</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="gac4fbe9cec698fd48351c40f5a775ea6b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac4fbe9cec698fd48351c40f5a775ea6b">&#9670;&nbsp;</a></span>GPIO_ResetBits()</h2>
+<a id="gab1e9936df180c020111cc8096a299bee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab1e9936df180c020111cc8096a299bee">&#9670;&nbsp;</a></span>GPIO_ResetBits()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE void GPIO_ResetBits </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE void GPIO_ResetBits </td>
           <td>(</td>
           <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>GPIO_PinBit</em></td><td>)</td>
@@ -1240,20 +1249,19 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Resets the selected data port bits. </p>
+<p>Clear the selected data port bit. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GPIO_PinBit</td><td>specifies the port bits to be written. This parameter can be GPIO_Pin_0 to GPIO_Pin_31 or GPIO_Pin_All. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_PinBit</td><td>Specifies the GPIO pins to be configured, please refer to 'GPIO_pins_define' part. This parameter can be one of the following values: <ul>
+<li>GPIO_Pin_x, where x can be 0 ~ 31.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> gpio_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#gab1e9936df180c020111cc8096a299bee">GPIO_ResetBits</a>(<a class="code" href="group___g_p_i_o___exported___functions.html#ga94b3e048fa3ba3c8f485afe4e25f4f27">GPIO_GetPin</a>(<a class="code" href="group__x3d___r_t_l876_x___pin___number.html#ga7d02796f1733eadcc315008ac83e939a">P4_0</a>));</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga5272646be2a74db07337e152213d9f78"></a>
@@ -1288,35 +1296,35 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Sets or clears the selected data port bit. </p>
+<p>Set or clear the selected data port bit. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GPIO_PinBit</td><td>specifies the port bit to be written. This parameter can be one of GPIO_Pin_x where x can be (0..31). </td></tr>
-    <tr><td class="paramname">BitVal</td><td>specifies the value to be written to the selected bit. This parameter can be one of the BitAction enum values: <ul>
-<li>Bit_RESET: to clear the port pin </li>
-<li>Bit_SET: to set the port pin </li>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIOx</td><td>where x can be A to C to select the GPIO peripheral. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_PinBit</td><td>Specifies the GPIO pins to be configured, please refer to 'GPIO_pins_define' part. This parameter can be one of the following values: <ul>
+<li>GPIO_Pin_x, where x can be 0 ~ 31. </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">BitVal</td><td>specifies the value to be written to the selected bit. This parameter can be one of the BitAction enum values: <ul>
+<li>Bit_RESET: To clear the port pin. </li>
+<li>Bit_SET: To set the port pin.</li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> gpio_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#ga5272646be2a74db07337e152213d9f78">GPIOx_WriteBit</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, <a class="code" href="group___g_p_i_o___exported___functions.html#ga94b3e048fa3ba3c8f485afe4e25f4f27">GPIO_GetPin</a>(<a class="code" href="group__x3d___r_t_l876_x___pin___number.html#ga7d02796f1733eadcc315008ac83e939a">P4_0</a>), <a class="code" href="group__x3e___g_p_i_o___bit___action.html#gga176130b21c0e719121470a6042d4cf19a3c477841a6ceec13fe47ef322432b992">Bit_SET</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="ga29f1a99c0c912432b82328f983614d5c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga29f1a99c0c912432b82328f983614d5c">&#9670;&nbsp;</a></span>GPIO_WriteBit()</h2>
+<a id="ga30212986e570f3bc0e7069bba326b459"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga30212986e570f3bc0e7069bba326b459">&#9670;&nbsp;</a></span>GPIO_WriteBit()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE void GPIO_WriteBit </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE void GPIO_WriteBit </td>
           <td>(</td>
           <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>GPIO_PinBit</em>, </td>
@@ -1335,35 +1343,34 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Sets or clears the selected data port bit. </p>
+<p>Set or clear the selected data port bit. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GPIO_PinBit</td><td>specifies the port bit to be written. This parameter can be one of GPIO_Pin_x where x can be (0..31). </td></tr>
-    <tr><td class="paramname">BitVal</td><td>specifies the value to be written to the selected bit. This parameter can be one of the BitAction enum values: <ul>
-<li>Bit_RESET: to clear the port pin </li>
-<li>Bit_SET: to set the port pin </li>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_PinBit</td><td>Specifies the GPIO pins to be configured, please refer to 'GPIO_pins_define' part. This parameter can be one of the following values: <ul>
+<li>GPIO_Pin_x, where x can be 0 ~ 31. </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">BitVal</td><td>specifies the value to be written to the selected bit. This parameter can be one of the BitAction enum values: <ul>
+<li>Bit_RESET: To clear the port pin. </li>
+<li>Bit_SET: To set the port pin.</li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> gpio_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#ga30212986e570f3bc0e7069bba326b459">GPIO_WriteBit</a>(<a class="code" href="group___g_p_i_o___exported___functions.html#ga94b3e048fa3ba3c8f485afe4e25f4f27">GPIO_GetPin</a>(<a class="code" href="group__x3d___r_t_l876_x___pin___number.html#ga7d02796f1733eadcc315008ac83e939a">P4_0</a>), <a class="code" href="group__x3e___g_p_i_o___bit___action.html#gga176130b21c0e719121470a6042d4cf19a3c477841a6ceec13fe47ef322432b992">Bit_SET</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="ga5c1405b350b6344163c342264dd3e073"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga5c1405b350b6344163c342264dd3e073">&#9670;&nbsp;</a></span>GPIOx_Write()</h2>
+<a id="gaffcf1b131ade96ccb55d78660326ecac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaffcf1b131ade96ccb55d78660326ecac">&#9670;&nbsp;</a></span>GPIOx_Write()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE void GPIOx_Write </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE void GPIOx_Write </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *&#160;</td>
           <td class="paramname"><em>GPIOx</em>, </td>
@@ -1382,30 +1389,27 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Sets or clears the selected data port . </p>
+<p>Write the value to the selected data port. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">PortVal</td><td>specifies the value to be written to the selected bit. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIOx</td><td>where x can be A to C to select the GPIO peripheral. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">PortVal</td><td>specifies the value to be written to the selected port.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> gpio_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#gaffcf1b131ade96ccb55d78660326ecac">GPIOx_Write</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, 0xFFFFFFFF);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="ga1059d5b1bf1e357dcd2d8d388e0f5474"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1059d5b1bf1e357dcd2d8d388e0f5474">&#9670;&nbsp;</a></span>GPIO_Write()</h2>
+<a id="ga5473dff3a9600ce7db24f1976496c1f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5473dff3a9600ce7db24f1976496c1f5">&#9670;&nbsp;</a></span>GPIO_Write()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE void GPIO_Write </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE void GPIO_Write </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *&#160;</td>
           <td class="paramname"><em>GPIOx</em>, </td>
@@ -1424,30 +1428,27 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Sets or clears the selected data port . </p>
+<p>Write the value to the selected data port. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">PortVal</td><td>specifies the value to be written to the selected bit. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIOx</td><td>where x can be A to C to select the GPIO peripheral. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">PortVal</td><td>specifies the value to be written to the selected port.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> gpio_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#ga5473dff3a9600ce7db24f1976496c1f5">GPIO_Write</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, 0xFFFFFFFF);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="ga112b6074474aae627fbd46765652963b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga112b6074474aae627fbd46765652963b">&#9670;&nbsp;</a></span>GPIOx_GetINTStatus()</h2>
+<a id="ga0f9c9224131e4f3e507f424418b5903a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0f9c9224131e4f3e507f424418b5903a">&#9670;&nbsp;</a></span>GPIOx_GetINTStatus()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gaacbd7ed539db0aacd973a0f6eca34074">ITStatus</a> GPIOx_GetINTStatus </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gaacbd7ed539db0aacd973a0f6eca34074">ITStatus</a> GPIOx_GetINTStatus </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_g_p_i_o___type_def.html">GPIO_TypeDef</a> *&#160;</td>
           <td class="paramname"><em>GPIOx</em>, </td>
@@ -1466,30 +1467,37 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>return GPIO interrupt status. </p>
+<p>Check whether the GPIO interrupt of the specified pin has occurred or not. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GPIO_PinBit</td><td>specifies the port bit to be written. This parameter can be one of GPIO_Pin_x where x can be (0..31). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIOx</td><td>where x can be A to C to select the GPIO peripheral. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_PinBit</td><td>Specifies the GPIO pins to be configured, please refer to 'GPIO_pins_define' part. This parameter can be one of the following values: <ul>
+<li>GPIO_Pin_x, where x can be 0 ~ 31.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The new state of GPIO interrupt. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">ITStatus</td><td>The new state of GPIO_IT (SET or RESET). </td></tr>
+    <tr><td class="paramname">SET</td><td>The interrupt of the specified gpio pin has occurred. </td></tr>
+    <tr><td class="paramname">RESET</td><td>The interrupt of the specified gpio pin has not occurred.</td></tr>
   </table>
   </dd>
 </dl>
-
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#define GPIO_Test_Pin     GPIO_GetPin(P0_0)</span></div><div class="line"><span class="comment">//GPIO interrupt handler function.</span></div><div class="line"><span class="keywordtype">void</span> gpio_handler(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">   <span class="keywordflow">if</span> (<a class="code" href="group___g_p_i_o___exported___functions.html#ga0f9c9224131e4f3e507f424418b5903a">GPIOx_GetINTStatus</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, GPIO_Test_Pin) == <a class="code" href="group__x3e___r_t_l876x___exported__types.html#gga89136caac2e14c55151f527ac02daaffab44c8101cc294c074709ec1b14211792">SET</a>)</div><div class="line">   {</div><div class="line">       <a class="code" href="group___g_p_i_o___exported___functions.html#ga248546acc6c2ffc1de66519ca602b5df">GPIOx_MaskINTConfig</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, GPIO_Test_Pin, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line"></div><div class="line">       <span class="comment">// add user code here</span></div><div class="line">       <a class="code" href="group__x3d___t_r_a_c_e.html#ga5d77ab23ef056676a6860b9959404140">APP_PRINT_INFO0</a>(<span class="stringliteral">&quot;gpio_handler\n&quot;</span>);</div><div class="line">       <a class="code" href="group___g_p_i_o___exported___functions.html#ga6cfce4a61b6395f9409f92dd9559c80c">GPIOx_ClearINTPendingBit</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, GPIO_Test_Pin);</div><div class="line">       <a class="code" href="group___g_p_i_o___exported___functions.html#ga248546acc6c2ffc1de66519ca602b5df">GPIOx_MaskINTConfig</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, GPIO_Test_Pin, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1ad3a9df141be0ccf10389b640f492b26d">DISABLE</a>);</div><div class="line">   }</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="ga6938a7cf4d0cc953141abc0318ae9f1b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga6938a7cf4d0cc953141abc0318ae9f1b">&#9670;&nbsp;</a></span>GPIO_GetINTStatus()</h2>
+<a id="gae27cca9e3a288923d1f7923aa26d4e67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae27cca9e3a288923d1f7923aa26d4e67">&#9670;&nbsp;</a></span>GPIO_GetINTStatus()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gaacbd7ed539db0aacd973a0f6eca34074">ITStatus</a> GPIO_GetINTStatus </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gaacbd7ed539db0aacd973a0f6eca34074">ITStatus</a> GPIO_GetINTStatus </td>
           <td>(</td>
           <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>GPIO_PinBit</em></td><td>)</td>
@@ -1498,20 +1506,26 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>return GPIO interrupt status. </p>
+<p>Check whether the GPIO interrupt of the specified pin has occurred or not. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GPIO_PinBit</td><td>specifies the port bit to be written. This parameter can be one of GPIO_Pin_x where x can be (0..31). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_PinBit</td><td>Specifies the GPIO pins to be configured, please refer to 'GPIO_pins_define' part. This parameter can be one of the following values: <ul>
+<li>GPIO_Pin_x, where x can be 0 ~ 31.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The new state of GPIO interrupt. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">ITStatus</td><td>The new state of GPIO_IT (SET or RESET). </td></tr>
+    <tr><td class="paramname">SET</td><td>The interrupt of the specified gpio pin has occurred. </td></tr>
+    <tr><td class="paramname">RESET</td><td>The interrupt of the specified gpio pin has not occurred.</td></tr>
   </table>
   </dd>
 </dl>
-
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#define GPIO_Test_Pin     GPIO_GetPin(P0_0)</span></div><div class="line"><span class="comment">//GPIO interrupt handler function.</span></div><div class="line"><span class="keywordtype">void</span> gpio_handler(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">   <span class="keywordflow">if</span> (<a class="code" href="group___g_p_i_o___exported___functions.html#gae27cca9e3a288923d1f7923aa26d4e67">GPIO_GetINTStatus</a>(GPIO_Test_Pin) == <a class="code" href="group__x3e___r_t_l876x___exported__types.html#gga89136caac2e14c55151f527ac02daaffab44c8101cc294c074709ec1b14211792">SET</a>)</div><div class="line">   {</div><div class="line">       <a class="code" href="group___g_p_i_o___exported___functions.html#ga248546acc6c2ffc1de66519ca602b5df">GPIOx_MaskINTConfig</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, GPIO_Test_Pin, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line"></div><div class="line">       <span class="comment">// add user code here</span></div><div class="line">       <a class="code" href="group__x3d___t_r_a_c_e.html#ga5d77ab23ef056676a6860b9959404140">APP_PRINT_INFO0</a>(<span class="stringliteral">&quot;gpio_handler\n&quot;</span>);</div><div class="line">       <a class="code" href="group___g_p_i_o___exported___functions.html#ga6cfce4a61b6395f9409f92dd9559c80c">GPIOx_ClearINTPendingBit</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, GPIO_Test_Pin);</div><div class="line">       <a class="code" href="group___g_p_i_o___exported___functions.html#ga248546acc6c2ffc1de66519ca602b5df">GPIOx_MaskINTConfig</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, GPIO_Test_Pin, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1ad3a9df141be0ccf10389b640f492b26d">DISABLE</a>);</div><div class="line">   }</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="gafa49182a098abdeb6cec81d4743e7c93"></a>
@@ -1540,30 +1554,30 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set debounce time. </p>
+<p>Set the GPIO debounce time. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">DebounceTime</td><td>specifies interrupt debounce time This parameter can be 1ms ~ 64ms </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIOx</td><td>where x can be A to C to select the GPIO peripheral. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">DebounceTime</td><td>Specifies the GPIO interrupt debounce time. This parameter can be one of the following values: <ul>
+<li>1ms ~ 64ms.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">none</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> gpio_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#gafa49182a098abdeb6cec81d4743e7c93">GPIOx_Debounce_Time</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, 1);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="ga1e20ced0ea308787cf977a9e667e71c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1e20ced0ea308787cf977a9e667e71c2">&#9670;&nbsp;</a></span>GPIO_Debounce_Time()</h2>
+<a id="ga00d091e86335c93d331340deba620361"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga00d091e86335c93d331340deba620361">&#9670;&nbsp;</a></span>GPIO_Debounce_Time()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE void GPIO_Debounce_Time </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE void GPIO_Debounce_Time </td>
           <td>(</td>
           <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>DebounceTime</em></td><td>)</td>
@@ -1572,20 +1586,19 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set debounce time. </p>
+<p>Set the GPIO debounce time. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">DebounceTime</td><td>specifies interrupt debounce time This parameter can be 1ms ~ 64ms </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">DebounceTime</td><td>Specifies the GPIO interrupt debounce time. This parameter can be one of the following values: <ul>
+<li>1ms ~ 64ms.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">none</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> gpio_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#ga00d091e86335c93d331340deba620361">GPIO_Debounce_Time</a>(1);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="gadfd68929e3c76a53a8c83123c208168a"></a>
@@ -1620,30 +1633,35 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set gpio output mode. </p>
+<p>Specifies the direction for the selected pins. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GPIO_PinBit</td><td>specifies the port bits to be written. This parameter can be GPIO_Pin_x where x can be (0..31) or GPIO_Pin_All. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIOx</td><td>where x can be A to C to select the GPIO peripheral. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_PinBit</td><td>Specifies the GPIO pins to be configured, please refer to 'GPIO_pins_define' part. This parameter can be one of the following values: <ul>
+<li>GPIO_Pin_x, where x can be 0 ~ 31. </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_Mode</td><td>Set the GPIO direction. This parameter can be one of the following values: <ul>
+<li>GPIO_Mode_IN: The direction is input. </li>
+<li>GPIO_Mode_OUT: The direction is output.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> gpio_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#gadfd68929e3c76a53a8c83123c208168a">GPIOx_ModeSet</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, <a class="code" href="group___g_p_i_o___exported___functions.html#ga94b3e048fa3ba3c8f485afe4e25f4f27">GPIO_GetPin</a>(<a class="code" href="group__x3d___r_t_l876_x___pin___number.html#ga335073a6b45e1affb80cb03be0aebd28">P3_0</a>), <a class="code" href="group__x3e___g_p_i_o___mode.html#gga1347339e1c84a196fabbb31205eec5d4a484aa18a6156ce916049b334ba1839de">GPIO_Mode_IN</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="ga08ed053aa1d78a8a72c00d9857316d0b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga08ed053aa1d78a8a72c00d9857316d0b">&#9670;&nbsp;</a></span>GPIO_ModeSet()</h2>
+<a id="gadf9b9ca1f37e50792ee39be946497fed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadf9b9ca1f37e50792ee39be946497fed">&#9670;&nbsp;</a></span>GPIO_ModeSet()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE void GPIO_ModeSet </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE void GPIO_ModeSet </td>
           <td>(</td>
           <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>GPIO_PinBit</em>, </td>
@@ -1662,20 +1680,24 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Sets the selected data port bits. </p>
+<p>Specifies the direction for the selected pins. </p>
+<p>rtl876x_gpio.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">GPIO_PinBit</td><td>specifies the port bits to be written. This parameter can be GPIO_Pin_x where x can be (0..31) or GPIO_Pin_All. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_PinBit</td><td>Specifies the GPIO pins to be configured, please refer to 'GPIO_pins_define' part. This parameter can be one of the following values: <ul>
+<li>GPIO_Pin_x, where x can be 0 ~ 31. </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_Mode</td><td>Set the GPIO direction. This parameter can be one of the following values: <ul>
+<li>GPIO_Mode_IN: The direction is input. </li>
+<li>GPIO_Mode_OUT: The direction is output.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> gpio_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#gadf9b9ca1f37e50792ee39be946497fed">GPIO_ModeSet</a>(<a class="code" href="group___g_p_i_o___exported___functions.html#ga94b3e048fa3ba3c8f485afe4e25f4f27">GPIO_GetPin</a>(<a class="code" href="group__x3d___r_t_l876_x___pin___number.html#ga335073a6b45e1affb80cb03be0aebd28">P3_0</a>), <a class="code" href="group__x3e___g_p_i_o___mode.html#gga1347339e1c84a196fabbb31205eec5d4a484aa18a6156ce916049b334ba1839de">GPIO_Mode_IN</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga82986d972a60433212c1c73e60b4b3bf"></a>
@@ -1710,6 +1732,25 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Set the polarity that triggers the gpio interrupt. </p>
+<p>rtl876x_gpio.h</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIOx</td><td>where x can be A to C to select the GPIO peripheral. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">GPIO_PinBit</td><td>Specifies the GPIO pins to be configured, please refer to 'GPIO_pins_define' part. This parameter can be one of the following values: <ul>
+<li>GPIO_Pin_x, where x can be 0 ~ 31. </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">int_type</td><td>Interrupt mode is high or low active trigger. This parameter can be one of the following values: <ul>
+<li>GPIO_INT_POLARITY_ACTIVE_LOW: Low level triggers gpio interrupt. </li>
+<li>GPIO_INT_POLARITY_ACTIVE_HIGH: High level triggers gpio interrupt.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> gpio_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_p_i_o___exported___functions.html#ga82986d972a60433212c1c73e60b4b3bf">GPIOx_ChangePolarity</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#gac485358099728ddae050db37924dd6b7">GPIOA</a>, <a class="code" href="group___g_p_i_o___exported___functions.html#ga94b3e048fa3ba3c8f485afe4e25f4f27">GPIO_GetPin</a>(<a class="code" href="group__x3d___r_t_l876_x___pin___number.html#ga335073a6b45e1affb80cb03be0aebd28">P3_0</a>), <a class="code" href="group__x3e___g_p_i_o___interrupt___polarity.html#ggaf8d2e448f4998b9459eb1394bfbe1a6cae6c03d5c91a21e4584acd2ad263a2b05">GPIO_INT_POLARITY_ACTIVE_LOW</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

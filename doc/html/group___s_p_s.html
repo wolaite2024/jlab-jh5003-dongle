@@ -53,24 +53,24 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
+<tr class="memitem:group___s_p_s___c_o_n_f_i_g"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_s___c_o_n_f_i_g.html">SPS Config</a></td></tr>
+<tr class="memdesc:group___s_p_s___c_o_n_f_i_g"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scan parameters service config. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___s_p_s___exported___functions"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_s___exported___functions.html">SPS Exported Functions</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___s_p_s___exported___macros"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_s___exported___macros.html">SPS Exported Macros</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___s_p_s___exported___types"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_s___exported___types.html">SPS Exported Types</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group___s_p_s___c_o_n_f_i_g"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_p_s___c_o_n_f_i_g.html">Scan Parameters Service Config</a></td></tr>
-<tr class="memdesc:group___s_p_s___c_o_n_f_i_g"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scan parameters service config. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Scan parameters service. </p>
-<p>The Scan Parameters Service enables a GATT Server device to expose a characteristic for the GATT Client to write its scan interval and scan window on the GATT Server device, and enables a GATT Server to request a refresh of the GATT Client scan interval and scan window.Scan Parameter Service makes up the services of HID Device, together with HID Service. Its role is to implement the interaction of data information when needing to change Scan parameters.</p>
+<p>The Scan Parameters Service enables a GATT Server device to expose a characteristic for the GATT Client to write its scan interval and scan window on the GATT Server device, and enables a GATT Server to request a refresh of the GATT Client scan interval and scan window. The Scan Parameter Service makes up the services of HID Device, together with HID Service. Its role is to implement the interaction of data information when needing to change Scan parameters.</p>
 <p>Scan Parameter Service contains two Characteristics: one is scan interval and scan window, and it is used to store Scan Parameters of the Client; the other is Scan Refresh, and it is used to notify the Client to update the value of Scan parameter according to recent data by notification.</p>
 <p>The specific configuration can be achieved by modifying <a class="el" href="sps__config_8h_source.html">sps_config.h</a>.</p>
-<p>Application shall register scan parameter service when initialization through <a class="el" href="group___s_p_s___exported___functions.html#gab0bc9a2c14900f9e88b831a4d176787a">sps_add_service</a> function.</p>
-<p>Application can set the scan refresh value through <a class="el" href="group___s_p_s___exported___functions.html#ga36e47839cbcb9ebe0b26db746772dc94">sps_set_parameter</a> function.</p>
-<p>Application can notify refresh value to client through <a class="el" href="group___s_p_s___exported___functions.html#ga5ef2d236eb632441b5ea4d0682b151c4">sps_scan_interval_window_value_notify</a> function. </p>
+<p>Applications shall register scan parameter service during initialization through <a class="el" href="group___s_p_s___exported___functions.html#gab0bc9a2c14900f9e88b831a4d176787a">sps_add_service</a> function.</p>
+<p>Applications can set the scan refresh value through <a class="el" href="group___s_p_s___exported___functions.html#ga36e47839cbcb9ebe0b26db746772dc94">sps_set_parameter</a> function.</p>
+<p>Applications can notify refreshed value to the client through the <a class="el" href="group___s_p_s___exported___functions.html#ga5ef2d236eb632441b5ea4d0682b151c4">sps_scan_interval_window_value_notify</a> function. </p>
 </div><!-- contents -->
 
 <HR SIZE=5>

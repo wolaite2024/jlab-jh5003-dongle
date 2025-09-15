@@ -422,6 +422,13 @@ uint8_t *gattc_tbl_read_data(T_GATTC_FTL_DEV *p_ftl_dev, uint8_t block_start_idx
                     used_block_idx++;
                     continue;
                 }
+
+                if ((read_idx + GATTC_FTL_MAX_BLOCK_LEN) > read_len)
+                {
+                    error_idx = 3;
+                    goto failed;
+                }
+
 #if (FTL_POOL_ENABLE == 1)
                 if (ftl_load_from_module(BT_EXT_FTL_PARTITION_NAME, p_temp_buf + read_idx,
                                          GATTC_FTL_CB_LEN + GATTC_FTL_MAX_BLOCK_LEN * block_idx,
@@ -438,12 +445,7 @@ uint8_t *gattc_tbl_read_data(T_GATTC_FTL_DEV *p_ftl_dev, uint8_t block_start_idx
                 else
                 {
                     read_idx += GATTC_FTL_MAX_BLOCK_LEN;
-                    if (read_idx > read_len)
-                    {
-                        error_idx = 3;
-                        goto failed;
-                    }
-                    else if (read_idx == read_len)
+                    if (read_idx == read_len)
                     {
                         goto success;
                     }
@@ -1290,6 +1292,42 @@ void gattc_tbl_storage_bond_cb(uint8_t cb_type, void *p_cb_data)
     return;
 }
 #endif
+
+bool gattc_tbl_storage_del(uint16_t conn_handle)
+{
+    uint8_t   remote_bd[6];
+    uint8_t   remote_bd_type;
+    uint8_t   identity_addr[6];
+    uint8_t   identity_addr_type;
+    uint8_t   err_idx = 0;
+
+    APP_PRINT_INFO1("gattc_tbl_storage_del: conn_handle 0x%x", conn_handle);
+    if (gap_chann_get_addr(conn_handle, remote_bd, &remote_bd_type))
+    {
+        if (gattc_tbl_get_identity_addr(remote_bd, remote_bd_type,
+                                        identity_addr, &identity_addr_type))
+        {
+            if (gattc_tbl_storage_remove(identity_addr, identity_addr_type))
+            {
+                return true;
+            }
+            else
+            {
+                err_idx = 1;
+            }
+        }
+        else
+        {
+            err_idx = 2;
+        }
+    }
+    else
+    {
+        err_idx = 3;
+    }
+    APP_PRINT_ERROR1("gattc_tbl_storage_del: failed, err_idx 0x%x", err_idx);
+    return false;
+}
 
 void gattc_tbl_storage_init(void)
 {

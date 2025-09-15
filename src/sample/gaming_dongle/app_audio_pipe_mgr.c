@@ -136,7 +136,7 @@ static const T_AUDIO_FORMAT_INFO codec_info[] =
         .attr.sbc.chann_mode = AUDIO_SBC_CHANNEL_MODE_JOINT_STEREO,
         .attr.sbc.block_length = 16,
         .attr.sbc.subband_num = 8,
-        .attr.sbc.bitpool = 37,
+        .attr.sbc.bitpool = GAMING_SBC_BITPOOL,
         .attr.sbc.allocation_method = 0,
     },
 
@@ -146,6 +146,16 @@ static const T_AUDIO_FORMAT_INFO codec_info[] =
         .attr.lc3.sample_rate = 16000,
         .attr.lc3.chann_location = AUDIO_CHANNEL_LOCATION_MONO,
         .attr.lc3.frame_length = 30,
+        .attr.lc3.frame_duration = AUDIO_LC3_FRAME_DURATION_7_5_MS,
+        .attr.lc3.presentation_delay = 0,
+    },
+
+    [LC3_32K_16BIT_MONO_7_5MS] = {
+        .type = AUDIO_FORMAT_TYPE_LC3,
+        .frame_num = 1,
+        .attr.lc3.sample_rate = 32000,
+        .attr.lc3.chann_location = AUDIO_CHANNEL_LOCATION_MONO,
+        .attr.lc3.frame_length = 60,
         .attr.lc3.frame_duration = AUDIO_LC3_FRAME_DURATION_7_5_MS,
         .attr.lc3.presentation_delay = 0,
     },
@@ -190,12 +200,32 @@ static const T_AUDIO_FORMAT_INFO codec_info[] =
         .attr.lc3.presentation_delay = 0,
     },
 
+    [LC3_32K_16BIT_STEREO_7_5MS] = {
+        .type = AUDIO_FORMAT_TYPE_LC3,
+        .frame_num = 1,
+        .attr.lc3.sample_rate = 32000,
+        .attr.lc3.chann_location = (AUDIO_CHANNEL_LOCATION_FL | AUDIO_CHANNEL_LOCATION_FR),
+        .attr.lc3.frame_length = 60,
+        .attr.lc3.frame_duration = AUDIO_LC3_FRAME_DURATION_7_5_MS,
+        .attr.lc3.presentation_delay = 0,
+    },
+
     [LC3_16K_16BIT_STEREO_10MS] = {
         .type = AUDIO_FORMAT_TYPE_LC3,
         .frame_num = 1,
         .attr.lc3.sample_rate = 16000,
         .attr.lc3.chann_location = (AUDIO_CHANNEL_LOCATION_FL | AUDIO_CHANNEL_LOCATION_FR),
         .attr.lc3.frame_length = 40,
+        .attr.lc3.frame_duration = AUDIO_LC3_FRAME_DURATION_10_MS,
+        .attr.lc3.presentation_delay = 0,
+    },
+
+    [LC3_32K_16BIT_STEREO_10MS] = {
+        .type = AUDIO_FORMAT_TYPE_LC3,
+        .frame_num = 1,
+        .attr.lc3.sample_rate = 32000,
+        .attr.lc3.chann_location = (AUDIO_CHANNEL_LOCATION_FL | AUDIO_CHANNEL_LOCATION_FR),
+        .attr.lc3.frame_length = 80,
         .attr.lc3.frame_duration = AUDIO_LC3_FRAME_DURATION_10_MS,
         .attr.lc3.presentation_delay = 0,
     },
@@ -273,8 +303,26 @@ static void pipe_state_machine(T_APP_PIPE_EVENT event, T_AUDIO_PIPE_INFO *pipe,
 
         if (pre_state != PIPE_STATE_RELEASED)
         {
-            if (param->src_codec != pipe->param.src_codec ||
-                param->snk_codec != pipe->param.snk_codec)
+            bool change_codec = false;
+
+            if (pipe->new_codec == false)
+            {
+                if (param->src_codec != pipe->param.src_codec ||
+                    param->snk_codec != pipe->param.snk_codec)
+                {
+                    change_codec = true;
+                }
+            }
+            else
+            {
+                if (param->src_codec != pipe->next_param.src_codec ||
+                    param->snk_codec != pipe->next_param.snk_codec)
+                {
+                    change_codec = true;
+                }
+            }
+
+            if (change_codec)
             {
                 APP_PRINT_TRACE0("pipe_state_machine: set new codec");
 

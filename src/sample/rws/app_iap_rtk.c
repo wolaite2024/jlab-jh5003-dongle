@@ -118,7 +118,7 @@ static void app_iap_rtk_ready_to_read_process(COMMON_STREAM stream)
 
     if (app_cfg_const.enable_rtk_vendor_cmd)
     {
-        if (app_db.br_link[app_idx].p_embedded_cmd == NULL)
+        if (app_db.br_link[app_idx].cmd.buf == NULL)
         {
             uint16_t cmd_len;
 
@@ -148,9 +148,9 @@ static void app_iap_rtk_ready_to_read_process(COMMON_STREAM stream)
 
             if (data_len)
             {
-                app_db.br_link[app_idx].p_embedded_cmd = malloc(data_len);
-                memcpy(app_db.br_link[app_idx].p_embedded_cmd, p_data, data_len);
-                app_db.br_link[app_idx].embedded_cmd_len = data_len;
+                app_db.br_link[app_idx].cmd.buf = malloc(data_len);
+                memcpy(app_db.br_link[app_idx].cmd.buf, p_data, data_len);
+                app_db.br_link[app_idx].cmd.len = data_len;
             }
         }
         else
@@ -158,21 +158,21 @@ static void app_iap_rtk_ready_to_read_process(COMMON_STREAM stream)
             uint8_t *p_temp;
             uint16_t cmd_len;
 
-            p_temp = app_db.br_link[app_idx].p_embedded_cmd;
-            total_len = app_db.br_link[app_idx].embedded_cmd_len + data_len;
-            app_db.br_link[app_idx].p_embedded_cmd = malloc(total_len);
-            memcpy(app_db.br_link[app_idx].p_embedded_cmd, p_temp,
-                   app_db.br_link[app_idx].embedded_cmd_len);
+            p_temp = app_db.br_link[app_idx].cmd.buf;
+            total_len = app_db.br_link[app_idx].cmd.len + data_len;
+            app_db.br_link[app_idx].cmd.buf = malloc(total_len);
+            memcpy(app_db.br_link[app_idx].cmd.buf, p_temp,
+                   app_db.br_link[app_idx].cmd.len);
             free(p_temp);
-            memcpy(app_db.br_link[app_idx].p_embedded_cmd +
-                   app_db.br_link[app_idx].embedded_cmd_len,
+            memcpy(app_db.br_link[app_idx].cmd.buf +
+                   app_db.br_link[app_idx].cmd.len,
                    p_data, data_len);
-            app_db.br_link[app_idx].embedded_cmd_len = total_len;
+            app_db.br_link[app_idx].cmd.len = total_len;
 
-            p_data = app_db.br_link[app_idx].p_embedded_cmd;
+            p_data = app_db.br_link[app_idx].cmd.buf;
             data_len = total_len;
-            p_temp = app_db.br_link[app_idx].p_embedded_cmd;
-            app_db.br_link[app_idx].p_embedded_cmd = NULL;
+            p_temp = app_db.br_link[app_idx].cmd.buf;
+            app_db.br_link[app_idx].cmd.buf = NULL;
 
             //ios will auto combine two cmd into one pkt
             while (data_len)
@@ -200,10 +200,10 @@ static void app_iap_rtk_ready_to_read_process(COMMON_STREAM stream)
 
             if (data_len)
             {
-                app_db.br_link[app_idx].p_embedded_cmd = malloc(data_len);
-                memcpy(app_db.br_link[app_idx].p_embedded_cmd, p_data, data_len);
+                app_db.br_link[app_idx].cmd.buf = malloc(data_len);
+                memcpy(app_db.br_link[app_idx].cmd.buf, p_data, data_len);
             }
-            app_db.br_link[app_idx].embedded_cmd_len = data_len;
+            app_db.br_link[app_idx].cmd.len = data_len;
             free(p_temp);
         }
     }

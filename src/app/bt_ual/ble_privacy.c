@@ -270,9 +270,14 @@ static T_APP_RESULT ble_privacy_callback(uint8_t msg_type, T_LE_PRIVACY_CB_DATA 
     {
     case GAP_MSG_LE_PRIVACY_RESOLUTION_STATUS_INFO:
         {
-            APP_PRINT_INFO2("GAP_MSG_LE_PRIVACY_RESOLUTION_STATUS_INFO status %d, rl_act_state 0x%x",
-                            msg_data.le_privacy_resolution_status_info.status, ble_privacy_cb.rl_act_state);
-            if (msg_data.le_privacy_resolution_status_info.status == LE_PRIVACY_RESOLUTION_DISABLED)
+            APP_PRINT_INFO3("GAP_MSG_LE_PRIVACY_RESOLUTION_STATUS_INFO status %d, rl_act_state 0x%x, status 0x%x",
+                            msg_data.le_privacy_resolution_status_info.status, ble_privacy_cb.rl_act_state,
+                            msg_data.le_privacy_resolution_status_info.cause);
+            if (msg_data.le_privacy_resolution_status_info.cause != GAP_CAUSE_SUCCESS)
+            {
+                ble_privacy_cb.rl_state = BLE_RL_DISABLE;
+            }
+            else if (msg_data.le_privacy_resolution_status_info.status == LE_PRIVACY_RESOLUTION_DISABLED)
             {
                 ble_privacy_cb.rl_state = BLE_RL_DISABLE;
                 if (ble_privacy_cb.rl_act_state & BLE_RL_ACT_MODIFY_RL)

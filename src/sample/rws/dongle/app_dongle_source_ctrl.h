@@ -24,12 +24,10 @@ typedef enum
 {
     EVENT_SOURCE_SWITCH_TO_BT       = 0x01,
     EVENT_SOURCE_SWITCH_TO_DONGLE   = 0x02,
-    EVENT_DONGLE_A2DP_CON_IND       = 0x03,
-    EVENT_BT_A2DP_CON_IND           = 0x04,
-    EVENT_PLAY_STATUS_CHANGE        = 0x05,
-    EVENT_BT_ACL_AUTH_SUCCESS       = 0x06,
-    EVENT_AUTO_SWITCH_TO_BT         = 0x07,
-    EVENT_LEA_STATUS_CHANGE         = 0x08,
+    EVENT_PLAY_STATUS_CHANGE        = 0x03,
+    EVENT_BT_ACL_AUTH_SUCCESS       = 0x04,
+    EVENT_AUTO_SWITCH_TO_BT         = 0x05,
+    EVENT_LEA_STATUS_CHANGE         = 0x06,
 } T_SOURCE_CTRL_EVENT;
 
 void app_dongle_source_ctrl_init(void);

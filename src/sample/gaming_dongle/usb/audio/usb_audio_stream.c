@@ -18,6 +18,10 @@
 #include "app_ipc.h"
 #include "app_usb.h"
 
+#if F_APP_CFU_FEATURE_SUPPORT
+#include "app_common_cfu.h"
+#endif
+
 #if F_APP_USB_GIP_SUPPORT
 #include "usb_gip.h"
 #include "app_gip.h"
@@ -290,6 +294,13 @@ static int usb_audio_stream_pipe_xmit_out(T_USB_AUDIO_PIPES *pipe, void *buf, ui
                         stream->event_cnt);
     }
     stream->event_cnt++;
+#endif
+
+#if F_APP_CFU_FEATURE_SUPPORT
+    if (app_cfu_is_in_process())
+    {
+        return false;
+    }
 #endif
 
 #if F_APP_PCM_SPLIT_0_5MS

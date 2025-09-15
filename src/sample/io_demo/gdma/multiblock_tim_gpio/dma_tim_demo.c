@@ -22,7 +22,6 @@
 #include "rtl876x_nvic.h"
 #include "rtl876x_pinmux.h"
 #include "rtl876x_rcc.h"
-#include "rtl876x_tim.h"
 #include "hw_tim.h"
 
 /** @defgroup  GDMA_TIM_DEMO  GDMA TIM Demo
@@ -119,9 +118,6 @@ static void driver_dma_multiblock_init(void)
     GPIO_InitStruct.GPIO_PinBit  = GPIO_PIN_OUT;
     GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
     GPIO_InitStruct.GPIO_ITCmd = DISABLE;
-    GPIO_InitStruct.GPIO_ITTrigger = GPIO_INT_Trigger_EDGE;
-    GPIO_InitStruct.GPIO_ITPolarity = GPIO_INT_POLARITY_ACTIVE_HIGH;
-    GPIO_InitStruct.GPIO_ITDebounce = GPIO_INT_DEBOUNCE_DISABLE;
     GPIO_InitStruct.GPIO_ControlMode = GPIO_HARDWARE_MODE;
     GPIOx_Init(GPIOA, &GPIO_InitStruct);
 

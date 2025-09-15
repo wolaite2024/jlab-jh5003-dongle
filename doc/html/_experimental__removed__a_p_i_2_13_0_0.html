@@ -161,7 +161,7 @@ $(function() {
 <tr class="markdownTableBody" class="markdownTableRowEven">
 <td class="markdownTableBodyLeft">bool vocs_write_channel_location(uint16_t conn_handle, uint8_t srv_instance_id, uint64_t chnl_loc)  </td><td class="markdownTableBodyLeft"><a class="el" href="vocs__client_8h_source.html">vocs_client.h</a>  </td><td class="markdownTableBodyLeft">Not used in app   </td></tr>
 <tr class="markdownTableBody" class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft">bool <a class="el" href="group___v_o_c_s___client___exported___functions.html#gaf6bbb27be535238b7c64de6b0662275c" title="Write the Audio Output Description characteristic. If the audio output description characteristic cha...">vocs_write_output_des(uint16_t conn_handle, uint8_t srv_instance_id, uint8_t *p_output_des, uint16_t len)</a>  </td><td class="markdownTableBodyLeft"><a class="el" href="vocs__client_8h_source.html">vocs_client.h</a>  </td><td class="markdownTableBodyLeft">Not used in app   </td></tr>
+<td class="markdownTableBodyLeft">bool <a class="el" href="group___v_o_c_s___client___exported___functions.html#gaf6bbb27be535238b7c64de6b0662275c" title="Write the Audio Output Description characteristic. ">vocs_write_output_des(uint16_t conn_handle, uint8_t srv_instance_id, uint8_t *p_output_des, uint16_t len)</a>  </td><td class="markdownTableBodyLeft"><a class="el" href="vocs__client_8h_source.html">vocs_client.h</a>  </td><td class="markdownTableBodyLeft">Not used in app   </td></tr>
 <tr class="markdownTableBody" class="markdownTableRowEven">
 <td class="markdownTableBodyLeft">bool mcs_set_playback_speed(uint16_t conn_handle, uint8_t srv_instance_id, bool is_cmd, bool general, int8_t playback_speed)  </td><td class="markdownTableBodyLeft">mcs_client.h  </td><td class="markdownTableBodyLeft">Not used in app   </td></tr>
 <tr class="markdownTableBody" class="markdownTableRowOdd">
@@ -213,11 +213,11 @@ $(function() {
 <tr class="markdownTableBody" class="markdownTableRowEven">
 <td class="markdownTableBodyLeft">void mcs_audio_update_playback_speed(uint8_t service_id, int8_t speed)  </td><td class="markdownTableBodyLeft">mcs_comm.h  </td><td class="markdownTableBodyLeft">Not used in app   </td></tr>
 <tr class="markdownTableBody" class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft">bool ccp_write_sig_rpt_interval(uint16_t conn_handle,  uint8_t srv_instance_id, uint8_t interval, bool is_cmd, bool general)  </td><td class="markdownTableBodyLeft"><a class="el" href="ccp__client_8h_source.html" title="Head file for Call Control Client. ">ccp_client.h</a>  </td><td class="markdownTableBodyLeft">Not used in app   </td></tr>
+<td class="markdownTableBodyLeft">bool ccp_write_sig_rpt_interval(uint16_t conn_handle,  uint8_t srv_instance_id, uint8_t interval, bool is_cmd, bool general)  </td><td class="markdownTableBodyLeft"><a class="el" href="ccp__client_8h_source.html" title="Header file for Call Control Client. ">ccp_client.h</a>  </td><td class="markdownTableBodyLeft">Not used in app   </td></tr>
 <tr class="markdownTableBody" class="markdownTableRowEven">
-<td class="markdownTableBodyLeft">void ccp_update_call_list_and_state(uint8_t service_id)  </td><td class="markdownTableBodyLeft"><a class="el" href="ccp__mgr_8h_source.html" title="Head file for Call Control Server. ">ccp_mgr.h</a>  </td><td class="markdownTableBodyLeft">Not used in app   </td></tr>
+<td class="markdownTableBodyLeft">void ccp_update_call_list_and_state(uint8_t service_id)  </td><td class="markdownTableBodyLeft"><a class="el" href="ccp__mgr_8h_source.html" title="Header file for Call Control Server. ">ccp_mgr.h</a>  </td><td class="markdownTableBodyLeft">Not used in app   </td></tr>
 <tr class="markdownTableBody" class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft">void ccp_handle_op_result(T_CCP_OP_RES res)  </td><td class="markdownTableBodyLeft"><a class="el" href="ccp__mgr_8h_source.html" title="Head file for Call Control Server. ">ccp_mgr.h</a>  </td><td class="markdownTableBodyLeft">Not used in app   </td></tr>
+<td class="markdownTableBodyLeft">void ccp_handle_op_result(T_CCP_OP_RES res)  </td><td class="markdownTableBodyLeft"><a class="el" href="ccp__mgr_8h_source.html" title="Header file for Call Control Server. ">ccp_mgr.h</a>  </td><td class="markdownTableBodyLeft">Not used in app   </td></tr>
 <tr class="markdownTableBody" class="markdownTableRowEven">
 <td class="markdownTableBodyLeft">uint8_t mtc_get_legacy_num(void)  </td><td class="markdownTableBodyLeft"><a class="el" href="multitopology__ctrl_8h_source.html">multitopology_ctrl.h</a>  </td><td class="markdownTableBodyLeft">Not used in app   </td></tr>
 <tr class="markdownTableBody" class="markdownTableRowOdd">
@@ -237,9 +237,9 @@ $(function() {
 <tr class="markdownTableBody" class="markdownTableRowEven">
 <td class="markdownTableBodyLeft">void dual_audio_effect_restart_ack(void)  </td><td class="markdownTableBodyLeft"><a class="el" href="app__dual__audio__effect_8h_source.html">app_dual_audio_effect.h</a>  </td><td class="markdownTableBodyLeft">Not used in app   </td></tr>
 <tr class="markdownTableBody" class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft">uint8_t ccp_get_ccid(uint8_t service_id)  </td><td class="markdownTableBodyLeft"><a class="el" href="ccp__mgr_8h_source.html" title="Head file for Call Control Server. ">ccp_mgr.h</a>  </td><td class="markdownTableBodyLeft">CCID is maintained by app   </td></tr>
+<td class="markdownTableBodyLeft">uint8_t ccp_get_ccid(uint8_t service_id)  </td><td class="markdownTableBodyLeft"><a class="el" href="ccp__mgr_8h_source.html" title="Header file for Call Control Server. ">ccp_mgr.h</a>  </td><td class="markdownTableBodyLeft">CCID is maintained by app   </td></tr>
 <tr class="markdownTableBody" class="markdownTableRowEven">
-<td class="markdownTableBodyLeft">uint8_t mcs_audio_get_ccid(uint8_t service_id)  </td><td class="markdownTableBodyLeft"><a class="el" href="mcp__mgr_8h_source.html" title="Head file for Media Control Server. ">mcp_mgr.h</a>  </td><td class="markdownTableBodyLeft">CCID is maintained by app   </td></tr>
+<td class="markdownTableBodyLeft">uint8_t mcs_audio_get_ccid(uint8_t service_id)  </td><td class="markdownTableBodyLeft"><a class="el" href="mcp__mgr_8h_source.html" title="Header file for Media Control Server. ">mcp_mgr.h</a>  </td><td class="markdownTableBodyLeft">CCID is maintained by app   </td></tr>
 <tr class="markdownTableBody" class="markdownTableRowOdd">
 <td class="markdownTableBodyLeft">uint8_t count_bits_1(uint32_t value)  </td><td class="markdownTableBodyLeft"><a class="el" href="codec__def_8h_source.html">codec_def.h</a>  </td><td class="markdownTableBodyLeft">Replaced by __builtin_popcount   </td></tr>
 <tr class="markdownTableBody" class="markdownTableRowEven">
@@ -247,7 +247,7 @@ $(function() {
 <tr class="markdownTableBody" class="markdownTableRowOdd">
 <td class="markdownTableBodyLeft">T_GAP_CAUSE gap_br_vendor_cont_tx_stop(void)  </td><td class="markdownTableBodyLeft"><a class="el" href="gap__br_8h_source.html">gap_br.h</a>  </td><td class="markdownTableBodyLeft">function test api, not used in app   </td></tr>
 <tr class="markdownTableBody" class="markdownTableRowEven">
-<td class="markdownTableBodyLeft">void dsp_fw_load_sys_code(void)  </td><td class="markdownTableBodyLeft">bin_loader_driver.h  </td><td class="markdownTableBodyLeft">Not used in appp   </td></tr>
+<td class="markdownTableBodyLeft">void dsp_fw_load_sys_code(void)  </td><td class="markdownTableBodyLeft"><a class="el" href="bin__loader__driver_8h_source.html">bin_loader_driver.h</a>  </td><td class="markdownTableBodyLeft">Not used in appp   </td></tr>
 <tr class="markdownTableBody" class="markdownTableRowOdd">
 <td class="markdownTableBodyLeft">static T_AUDIO_ROUTE_MIC_CLASS audio_route_mic_class_get(uint8_t mic_sel)  </td><td class="markdownTableBodyLeft"><a class="el" href="audio__route_8h_source.html">audio_route.h</a>  </td><td class="markdownTableBodyLeft">Not used in appp   </td></tr>
 <tr class="markdownTableBody" class="markdownTableRowEven">

@@ -22,8 +22,6 @@ extern "C" {
  */
 
 /**
- * audio_pipe.h
- *
  * \brief Define the Audio Pipe session handle.
  *
  * \ingroup AUDIO_PIPE
@@ -31,8 +29,6 @@ extern "C" {
 typedef void *T_AUDIO_PIPE_HANDLE;
 
 /**
- * audio_pipe.h
- *
  * \brief Define the Audio Pipe callback event.
  *
  * \ingroup AUDIO_PIPE
@@ -51,8 +47,6 @@ typedef enum t_audio_pipe_event
 } T_AUDIO_PIPE_EVENT;
 
 /**
- * audio_pipe.h
- *
  * \brief Define the Audio Pipe callback prototype.
  *
  * \param[in]   handle  Audio Pipe handle \ref T_AUDIO_PIPE_HANDLE.
@@ -68,78 +62,68 @@ typedef bool (*P_AUDIO_PIPE_CBACK)(T_AUDIO_PIPE_HANDLE handle,
                                    uint32_t            param);
 
 /**
- * audio_pipe.h
- *
- * \brief Create an Audio Pipe node.
+ * \brief Create an Audio Pipe session.
  *
  * \param[in]   mode        Audio Pipe stream mode \ref T_AUDIO_STREAM_MODE.
  * \param[in]   src_info    Audio Pipe source endpoint format info \ref T_AUDIO_FORMAT_INFO.
  * \param[in]   snk_info    Audio Pipe sink endpoint format info \ref T_AUDIO_FORMAT_INFO.
- * \param[in]   gain        The gain value(dB) of the Audio Pipe.
+ * \param[in]   gain        The gain value (dB) of the Audio Pipe.
  * \param[in]   cback       Audio Pipe callback \ref P_AUDIO_PIPE_CBACK.
  *
- * \return  The instance handle of Audio Pipe node. If returned handle is NULL, the Audio Pipe
- *          node instance was failed to create.
+ * \return  The session handle of Audio Pipe. If returned handle is NULL, the Audio Pipe session
+ *          was failed to create.
  *
  * \ingroup AUDIO_PIPE
  */
 T_AUDIO_PIPE_HANDLE audio_pipe_create(T_AUDIO_STREAM_MODE mode,
                                       T_AUDIO_FORMAT_INFO src_info,
                                       T_AUDIO_FORMAT_INFO snk_info,
-                                      uint16_t            gain,
+                                      int16_t             gain,
                                       P_AUDIO_PIPE_CBACK  cback);
 
 /**
- * audio_pipe.h
+ * \brief Release the Audio Pipe session.
  *
- * \brief Release the Audio Pipe node.
+ * \param[in]   handle  Audio Pipe session handle \ref T_AUDIO_PIPE_HANDLE.
  *
- * \param[in]   handle  Audio Pipe node instance \ref T_AUDIO_PIPE_HANDLE.
- *
- * \return          The result of releasing the Audio Pipe.
- * \retval true     Audio Pipe was released successfully.
- * \retval false    Audio Pipe was failed to release.
+ * \return          The result of releasing the Audio Pipe session.
+ * \retval true     Audio Pipe session was released successfully.
+ * \retval false    Audio Pipe session was failed to release.
  *
  * \ingroup AUDIO_PIPE
  */
 bool audio_pipe_release(T_AUDIO_PIPE_HANDLE handle);
 
 /**
- * audio_pipe.h
+ * \brief Start the Audio Pipe session.
  *
- * \brief Start the Audio Pipe node.
+ * \param[in]   handle  Audio Pipe session handle \ref T_AUDIO_PIPE_HANDLE.
  *
- * \param[in]   handle  Audio Pipe node instance \ref T_AUDIO_PIPE_HANDLE.
- *
- * \return          The result of starting the Audio Pipe.
- * \retval true     Audio Pipe was started successfully.
- * \retval false    Audio Pipe was failed to start.
+ * \return          The result of starting the Audio Pipe session.
+ * \retval true     Audio Pipe session was started successfully.
+ * \retval false    Audio Pipe session was failed to start.
  *
  * \ingroup AUDIO_PIPE
  */
 bool audio_pipe_start(T_AUDIO_PIPE_HANDLE handle);
 
 /**
- * audio_pipe.h
+ * \brief Stop the Audio Pipe session.
  *
- * \brief Stop the Audio Pipe node.
+ * \param[in]   handle  Audio Pipe session handle \ref T_AUDIO_PIPE_HANDLE.
  *
- * \param[in]   handle  Audio Pipe node instance \ref T_AUDIO_PIPE_HANDLE.
- *
- * \return          The result of stopping the Audio Pipe.
- * \retval true     Audio Pipe was stopped successfully.
- * \retval false    Audio Pipe was failed to stop.
+ * \return          The result of stopping the Audio Pipe session.
+ * \retval true     Audio Pipe session was stopped successfully.
+ * \retval false    Audio Pipe session was failed to stop.
  *
  * \ingroup AUDIO_PIPE
  */
 bool audio_pipe_stop(T_AUDIO_PIPE_HANDLE handle);
 
 /**
- * audio_pipe.h
- *
  * \brief Get the current gain value of the specific Audio Pipe session.
  *
- * \param[in]   handle      Audio Pipe node instance \ref T_AUDIO_PIPE_HANDLE.
+ * \param[in]   handle      Audio Pipe session handle \ref T_AUDIO_PIPE_HANDLE.
  * \param[out]  gain_left   The left channel gain value of the Audio Pipe session.
  * \param[out]  gain_right  The right channel gain value of the Audio Pipe session.
  *
@@ -147,18 +131,16 @@ bool audio_pipe_stop(T_AUDIO_PIPE_HANDLE handle);
  * \retval true     Gain value was got successfully.
  * \retval false    Gain value was failed to get.
  *
- * \note            Gain value is in step unit(dB * 2^7).
+ * \note            Gain value is in step unit (dB * 2^7).
  *
  * \ingroup AUDIO_PIPE
  */
-bool audio_pipe_gain_get(T_AUDIO_PIPE_HANDLE handle, uint16_t *gain_left, uint16_t *gain_right);
+bool audio_pipe_gain_get(T_AUDIO_PIPE_HANDLE handle, int16_t *gain_left, int16_t *gain_right);
 
 /**
- * audio_pipe.h
- *
  * \brief Set the current gain value of the specific Audio Pipe session.
  *
- * \param[in]   handle      Audio Pipe node instance \ref T_AUDIO_PIPE_HANDLE.
+ * \param[in]   handle      Audio Pipe session handle \ref T_AUDIO_PIPE_HANDLE.
  * \param[in]   gain_left   The left channel gain value of the Audio Pipe session.
  * \param[in]   gain_right  The right channel gain value of the Audio Pipe session.
  *
@@ -166,14 +148,14 @@ bool audio_pipe_gain_get(T_AUDIO_PIPE_HANDLE handle, uint16_t *gain_left, uint16
  * \retval true     Gain value was set successfully.
  * \retval false    Gain value was failed to set.
  *
- * \note            Gain value is in step unit(dB * 2^7).
+ * \note            Gain value is in step unit (dB * 2^7).
  *
  * \ingroup AUDIO_PIPE
  */
-bool audio_pipe_gain_set(T_AUDIO_PIPE_HANDLE handle, uint16_t gain_left, uint16_t gain_right);
+bool audio_pipe_gain_set(T_AUDIO_PIPE_HANDLE handle, int16_t gain_left, int16_t gain_right);
 
 /**
- * audio_pipe.h
+ * \brief Set the current Asynchronous Sample Rate Converter (ASRC) ratio of the specific Audio Pipe session.
  *
  * \brief Set the current asrc ratio of the specific Audio Pipe session.
  *
@@ -190,11 +172,9 @@ bool audio_pipe_asrc_set(T_AUDIO_PIPE_HANDLE handle,
                          int32_t             ratio);
 
 /**
- * audio_pipe.h
- *
  * \brief Fill data into the Audio Pipe source endpoint.
  *
- * \param[in]   handle       Audio Pipe instance \ref T_AUDIO_PIPE_HANDLE.
+ * \param[in]   handle       Audio Pipe session handle \ref T_AUDIO_PIPE_HANDLE.
  * \param[in]   timestamp    The timestamp of the buffer passed into Audio Pipe.
  * \param[in]   seq_num      The sequence number of the buffer passed into Audio Pipe.
  * \param[in]   status       The frame status of the buffer passed into Audio Pipe.
@@ -235,15 +215,13 @@ bool audio_pipe_direct_drain(uint32_t snk_transport_address,
 
 
 /**
- * audio_pipe.h
- *
  * \brief Drain data from the Audio Pipe sink endpoint.
  *
- * \param[in]   handle      Audio Pipe instance \ref T_AUDIO_PIPE_HANDLE.
- * \param[out]  timestamp   The timestamp of the buffer passed out from Audio subsystem.
- * \param[out]  seq_num     The sequence number of the buffer passed out from Audio subsystem.
- * \param[out]  status      The frame status of the buffer passed out from Audio subsystem.
- * \param[out]  frame_num   The frame number of the buffer passed out from Audio subsystem.
+ * \param[in]   handle      Audio Pipe session handle \ref T_AUDIO_PIPE_HANDLE.
+ * \param[out]  timestamp   The timestamp of the buffer passed out from Audio Subsystem.
+ * \param[out]  seq_num     The sequence number of the buffer passed out from Audio Subsystem.
+ * \param[out]  status      The frame status of the buffer passed out from Audio Subsystem.
+ * \param[out]  frame_num   The frame number of the buffer passed out from Audio Subsystem.
  * \param[out]  buf         The buffer that holds the drained data.
  * \param[out]  len         The actual size in bytes drained from the Audio Pipe.
  *
@@ -262,23 +240,19 @@ bool audio_pipe_drain(T_AUDIO_PIPE_HANDLE    handle,
                       uint16_t              *len);
 
 /**
- * audio_pipe.h
- *
  * \brief Flush data pending in the Audio Pipe sink endpoint.
  *
- * \param[in]   handle  Audio Pipe instance \ref T_AUDIO_PIPE_HANDLE.
+ * \param[in]   handle  Audio Pipe session handle \ref T_AUDIO_PIPE_HANDLE.
  *
  * \ingroup AUDIO_PIPE
  */
 bool audio_pipe_flush(T_AUDIO_PIPE_HANDLE handle);
 
 /**
- * audio_pipe.h
- *
  * \brief Add the auxiliary codec pipe session to the Pre-Mixer point of the prime codec pipe session.
  *
- * \param[in]   prime_handle      The prime Audio Pipe instance \ref T_AUDIO_PIPE_HANDLE.
- * \param[out]  auxiliary_handle  The auxiliary Audio Pipe instance \ref T_AUDIO_PIPE_HANDLE.
+ * \param[in]   prime_handle      The prime Audio Pipe session handle \ref T_AUDIO_PIPE_HANDLE.
+ * \param[out]  auxiliary_handle  The auxiliary Audio Pipe session handle \ref T_AUDIO_PIPE_HANDLE.
  *
  * \return          The result of the mixing operation.
  * \retval true     The two pipes were mixed successfully.
@@ -289,12 +263,10 @@ bool audio_pipe_flush(T_AUDIO_PIPE_HANDLE handle);
 bool audio_pipe_pre_mix(T_AUDIO_PIPE_HANDLE prime_handle, T_AUDIO_PIPE_HANDLE auxiliary_handle);
 
 /**
- * audio_pipe.h
- *
  * \brief Add the auxiliary codec pipe session to the Post-Mixer point of the prime codec pipe session.
  *
- * \param[in]   prime_handle      The prime Audio Pipe instance \ref T_AUDIO_PIPE_HANDLE.
- * \param[out]  auxiliary_handle  The auxiliary Audio Pipe instance \ref T_AUDIO_PIPE_HANDLE.
+ * \param[in]   prime_handle      The prime Audio Pipe session handle \ref T_AUDIO_PIPE_HANDLE.
+ * \param[out]  auxiliary_handle  The auxiliary Audio Pipe session handle \ref T_AUDIO_PIPE_HANDLE.
  *
  * \return          The result of the mixing operation.
  * \retval true     The two pipes were mixed successfully.
@@ -305,12 +277,11 @@ bool audio_pipe_pre_mix(T_AUDIO_PIPE_HANDLE prime_handle, T_AUDIO_PIPE_HANDLE au
 bool audio_pipe_post_mix(T_AUDIO_PIPE_HANDLE prime_handle, T_AUDIO_PIPE_HANDLE auxiliary_handle);
 
 /**
- * audio_pipe.h
+ * \brief Remove the auxiliary codec pipe session from the Pre-Mixer point or the Post-Mixer point
+ *        of the prime codec pipe session.
  *
- * \brief Remove the auxiliary codec pipe session from the Pre-Mixer point or the Post-Mixer point of the prime codec pipe session.
- *
- * \param[in]   prime_handle      The prime Audio Pipe instance \ref T_AUDIO_PIPE_HANDLE.
- * \param[out]  auxiliary_handle  The auxiliary Audio Pipe instance \ref T_AUDIO_PIPE_HANDLE.
+ * \param[in]   prime_handle      The prime Audio Pipe session handle \ref T_AUDIO_PIPE_HANDLE.
+ * \param[out]  auxiliary_handle  The auxiliary Audio Pipe session handle \ref T_AUDIO_PIPE_HANDLE.
  *
  * \return          The result of the demixing operation.
  * \retval true     The two pipes were demixed successfully.

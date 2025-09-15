@@ -8,7 +8,19 @@ extern "C" {
 #include "stdint.h"
 #include "stdbool.h"
 
-typedef void (*IRQ_Fun)(void);       /**< ISR Handler Prototype */
+/** @defgroup 87x3e_VECTOR_TABLE  Vector Table
+  * @brief The enum of interrupt vector.
+  * @{
+  */
+
+/*============================================================================*
+ *                              Types
+*============================================================================*/
+/** @defgroup 87x3e_Vector_Table_Exported_types Vector Table Exported Types
+  * @{
+  */
+
+typedef void (*IRQ_Fun)(void);       /**< ISR Handler Prototype. */
 typedef enum
 {
     InitialSP_VECTORn = 0,
@@ -177,6 +189,9 @@ typedef enum
     GPIOB31_VECTORn,
 } VECTORn_Type;
 
+/** @} */ /* End of group 87x3e_Vector_Table_Exported_types */
+/** @} */ /* End of group 87x3e_VECTOR_TABLE */
+
 #define DebugMon_Handler        HardFault_Handler
 #define WDT_Handler             HardFault_Handler
 #define RXI300_Handler          HardFault_Handler
@@ -204,14 +219,13 @@ extern void *RamVectorTable[];
  *         false: Fail
  */
 extern bool RamVectorTableUpdate(VECTORn_Type v_num, IRQ_Fun isr_handler);
-bool RamVectorTableUpdate_rom(VECTORn_Type v_num, IRQ_Fun isr_handler);
 
 void peripheral_interrupt_configuration(void);
 
 void HardFault_Handler(void);
 
 /************************************************************************** used for vector table */
-#if defined (__CC_ARM)
+#if defined (__CC_ARM) || (defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
 __weak void Reset_Handler(void);
 __weak void NMI_Handler(void);
 //__weak void HardFault_Handler(void);

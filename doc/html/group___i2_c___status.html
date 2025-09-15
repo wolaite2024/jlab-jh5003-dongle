@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>BT AUDIO SDK: I2C status</title>
+<title>BT AUDIO SDK: I2C Status</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -44,7 +44,7 @@ $(function() {
   <div class="summary">
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">I2C status<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3d.html">rtl87x3d</a> &raquo; <a class="el" href="group__x3d___i2_c.html">I2C</a> &raquo; <a class="el" href="group___i2_c___exported___constants.html">I2C Exported Constants</a></div></div>  </div>
+<div class="title">I2C Status<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3d.html">rtl87x3d</a> &raquo; <a class="el" href="group__x3d___i2_c.html">I2C</a> &raquo; <a class="el" href="group___i2_c___exported___constants.html">I2C Exported Constants</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -108,14 +108,22 @@ Enumerations</h2></td></tr>
 <tr><td class="fieldname"><a id="gga83856d8d3bffc5ca50b8a296ae73cc45a30e50b78e70473de16137af690ee42ed"></a>I2C_ABRT_10ADDR1_NOACK&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga83856d8d3bffc5ca50b8a296ae73cc45aa0e8eab3080381e21d6608342ec05086"></a>I2C_ABRT_7B_ADDR_NOACK&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga83856d8d3bffc5ca50b8a296ae73cc45a1056d6a4b037e383132309c2898a2fc8"></a>I2C_TIMEOUT&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="gga83856d8d3bffc5ca50b8a296ae73cc45aeb3572e237cca649b4ef5172dcfb16b5"></a>I2C_Success&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="gga83856d8d3bffc5ca50b8a296ae73cc45a84287d77a9872cc85f6d60fefded1aa9"></a>I2C_ARB_LOST&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="gga83856d8d3bffc5ca50b8a296ae73cc45a5ab28e2d2c97f420a164c4832ea3274d"></a>I2C_ABRT_MASTER_DIS&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="gga83856d8d3bffc5ca50b8a296ae73cc45ac9920764a8ece527029b16714c289dbe"></a>I2C_ABRT_TXDATA_NOACK&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="gga83856d8d3bffc5ca50b8a296ae73cc45aef873b502ae7b4a43de7c5883a83aba6"></a>I2C_ABRT_10ADDR2_NOACK&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="gga83856d8d3bffc5ca50b8a296ae73cc45a30e50b78e70473de16137af690ee42ed"></a>I2C_ABRT_10ADDR1_NOACK&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="gga83856d8d3bffc5ca50b8a296ae73cc45aa0e8eab3080381e21d6608342ec05086"></a>I2C_ABRT_7B_ADDR_NOACK&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="gga83856d8d3bffc5ca50b8a296ae73cc45a1056d6a4b037e383132309c2898a2fc8"></a>I2C_TIMEOUT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga83856d8d3bffc5ca50b8a296ae73cc45aeb3572e237cca649b4ef5172dcfb16b5"></a>I2C_Success&#160;</td><td class="fielddoc"><p>I2C success. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga83856d8d3bffc5ca50b8a296ae73cc45a84287d77a9872cc85f6d60fefded1aa9"></a>I2C_ARB_LOST&#160;</td><td class="fielddoc"><p>Master or slave transmitter losed arbitration. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga83856d8d3bffc5ca50b8a296ae73cc45a5ab28e2d2c97f420a164c4832ea3274d"></a>I2C_ABRT_MASTER_DIS&#160;</td><td class="fielddoc"><p>User tried to initiate a master operation with the master mode disabled. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga83856d8d3bffc5ca50b8a296ae73cc45ac9920764a8ece527029b16714c289dbe"></a>I2C_ABRT_TXDATA_NOACK&#160;</td><td class="fielddoc"><p>Master sent data byte(s) following the address, but it did not receive an acknowledge from the remote slave. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga83856d8d3bffc5ca50b8a296ae73cc45aef873b502ae7b4a43de7c5883a83aba6"></a>I2C_ABRT_10ADDR2_NOACK&#160;</td><td class="fielddoc"><p>Master is in 10-bit address mode and the second address byte of the 10-bit address was not acknowledged by any slave. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga83856d8d3bffc5ca50b8a296ae73cc45a30e50b78e70473de16137af690ee42ed"></a>I2C_ABRT_10ADDR1_NOACK&#160;</td><td class="fielddoc"><p>Master is in 10-bit address mode and the first 10-bit address byte was not acknowledged by any slave. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga83856d8d3bffc5ca50b8a296ae73cc45aa0e8eab3080381e21d6608342ec05086"></a>I2C_ABRT_7B_ADDR_NOACK&#160;</td><td class="fielddoc"><p>Master is in 7-bit address mode and the address sent was not acknowledged by any slave. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga83856d8d3bffc5ca50b8a296ae73cc45a1056d6a4b037e383132309c2898a2fc8"></a>I2C_TIMEOUT&#160;</td><td class="fielddoc"><p>I2C timeout. </p>
+</td></tr>
 </table>
 
 </div>

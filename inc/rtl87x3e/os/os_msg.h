@@ -13,7 +13,7 @@ extern "C" {
 #endif
 
 /**
- * \defgroup    OS_87x3e_Message Message Queue
+ * \addtogroup    OS_87x3e_Message Message Queue
  *
  * \brief   Exchange messages between tasks in a FIFO-like operation.
  * \details The Message Queue function group allows to control, send, receive, or wait for message.
@@ -24,6 +24,7 @@ extern "C" {
  *
  * \image html OS-message-queue-overview.jpg "Message Queue Overview" width=617px height=321px
  *
+ * @{
  */
 
 
@@ -44,6 +45,14 @@ extern bool (*os_msg_recv_intern)(void *p_handle, void *p_msg, uint32_t wait_ms,
 
 extern bool (*os_msg_peek_intern)(void *p_handle, void *p_msg, uint32_t wait_ms,
                                   const char *p_func, uint32_t file_line);
+
+/*============================================================================*
+ *                         Functions
+ *============================================================================*/
+
+/** @defgroup OS_87x3e_Message_Exported_functions Message Queue Exported Functions
+ * @{
+ */
 
 /**
  * os_msg.h
@@ -99,7 +108,7 @@ extern bool (*os_msg_peek_intern)(void *p_handle, void *p_msg, uint32_t wait_ms,
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Message
+ *
  */
 #define os_msg_queue_create(pp_handle, p_name, msg_num, msg_size)    \
     os_msg_queue_create_intern(pp_handle, p_name, msg_num, msg_size, __func__, __LINE__)
@@ -148,7 +157,7 @@ extern bool (*os_msg_peek_intern)(void *p_handle, void *p_msg, uint32_t wait_ms,
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Message
+ *
  */
 #define os_msg_queue_delete(p_handle) \
     os_msg_queue_delete_intern(p_handle, __func__, __LINE__)
@@ -199,7 +208,7 @@ extern bool (*os_msg_peek_intern)(void *p_handle, void *p_msg, uint32_t wait_ms,
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Message
+ *
  */
 #define os_msg_queue_peek(p_handle, p_msg_num)  \
     os_msg_queue_peek_intern(p_handle, p_msg_num, __func__, __LINE__)
@@ -260,7 +269,7 @@ extern bool (*os_msg_peek_intern)(void *p_handle, void *p_msg, uint32_t wait_ms,
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Message
+ *
  */
 #define os_msg_send(p_handle, p_msg, wait_ms) \
     os_msg_send_intern(p_handle, p_msg, wait_ms, __func__, __LINE__)
@@ -340,7 +349,7 @@ extern bool (*os_msg_peek_intern)(void *p_handle, void *p_msg, uint32_t wait_ms,
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Message
+ *
  */
 #define os_msg_recv(p_handle, p_msg, wait_ms) \
     os_msg_recv_intern(p_handle, p_msg, wait_ms, __func__, __LINE__)
@@ -421,7 +430,7 @@ extern bool (*os_msg_peek_intern)(void *p_handle, void *p_msg, uint32_t wait_ms,
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Message
+ *
  */
 #define os_msg_peek(p_handle, p_msg, wait_ms) \
     os_msg_peek_intern(p_handle, p_msg, wait_ms, __func__, __LINE__)
@@ -440,6 +449,9 @@ bool os_msg_recv_intern_rom(void *p_handle, void *p_msg, uint32_t wait_ms,
                             const char *p_func, uint32_t file_line);
 bool os_msg_peek_intern_rom(void *p_handle, void *p_msg, uint32_t wait_ms,
                             const char *p_func, uint32_t file_line);
+
+/** @} */ /* End of group OS_87x3e_Message_Exported_Functions */
+/** @} */ /* End of group OS_87x3e_Message */
 
 #ifdef __cplusplus
 }

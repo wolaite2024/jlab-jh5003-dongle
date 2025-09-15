@@ -158,7 +158,6 @@ typedef struct t_media_buffer_entity
     uint32_t    ds_bt_clk_last;
     uint32_t    exception;
     uint16_t    max_latency_plc_count;
-    uint16_t    buffer_id;
     uint16_t    ds_frame_counter_last;
     uint16_t    ds_local_seq_last;
     uint16_t    buffer_sync_trigger_cnt;
@@ -291,6 +290,7 @@ uint16_t media_buffer_cacu_frames_duration(uint16_t frame_num, T_AUDIO_FORMAT_IN
 uint16_t media_buffer_cacu_frame_len(T_MEDIA_BUFFER_ENTITY *buffer_ent,
                                      T_AUDIO_FORMAT_INFO   *format_info,
                                      void                  *param);
+uint16_t media_buffer_cacu_frames_length(T_AUDIO_FORMAT_INFO *format_info);
 bool media_buffer_backup_downstream(T_MEDIA_BUFFER_ENTITY *buffer_ent);
 bool media_buffer_level_get(T_MEDIA_BUFFER_PROXY proxy, uint16_t *level);
 uint16_t media_buffer_get_ds_watermark(T_MEDIA_BUFFER_ENTITY *buffer_ent);

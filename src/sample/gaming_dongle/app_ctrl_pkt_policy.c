@@ -12,6 +12,9 @@
 #include "gaming_bt.h"
 #include "app_link_util.h"
 #include "app_audio_pipe_mgr.h"
+#if F_APP_GAMING_LE_FIX_CHANNEL_SUPPORT
+#include "gap_fix_chann_conn.h"
+#endif
 #if F_APP_GAMING_LEA_A2DP_SWITCH_SUPPORT
 #include "app_cfg.h"
 #include "app_adapter_service.h"
@@ -33,6 +36,71 @@ enum
 {
     APP_TIMER_EXIT_SNIFF_SEND_FIX_CHAN_DATA,
 };
+
+#if F_APP_GAMING_LE_FIX_CHANNEL_SUPPORT
+bool app_cmd_send_by_le_fix_channel(T_APP_DONGLE_CMD cmd, uint8_t *data, uint16_t len,
+                                    T_EARBUD_SIDE side)
+{
+    T_APP_LE_LINK *p_left_link = NULL;
+    T_APP_LE_LINK *p_right_link = NULL;
+    uint16_t pack_len = len + sizeof(T_GAMING_SYNC_HDR) + 1;
+    uint8_t *p_pack = calloc(1, pack_len);
+    bool ret = false;
+
+    if (p_pack == NULL)
+    {
+        APP_PRINT_ERROR0("app_cmd_send_by_le_fix_channel(): calloc fail");
+        return ret;
+    }
+
+    T_GAMING_SYNC_HDR *p_hdr = (T_GAMING_SYNC_HDR *)p_pack;
+
+    p_hdr->sync = DONGLE_FORMAT_START_BIT;
+    p_hdr->type = DONGLE_TYPE_CMD;
+    p_hdr->pl = len + 1;
+    p_hdr->cmd = cmd;
+    memcpy(p_pack + sizeof(T_GAMING_SYNC_HDR), data, len);
+    p_pack[pack_len - 1] = DONGLE_FORMAT_STOP_BIT;
+
+    if (side == EARBUD_SIDE_LEFT)
+    {
+        p_left_link = app_link_find_le_link_by_bud_side(DEVICE_BUD_SIDE_LEFT);
+    }
+    else if (side == EARBUD_SIDE_RIGHT)
+    {
+        p_right_link = app_link_find_le_link_by_bud_side(DEVICE_BUD_SIDE_RIGHT);
+    }
+    else
+    {
+        p_left_link = app_link_find_le_link_by_bud_side(DEVICE_BUD_SIDE_LEFT);
+        p_right_link = app_link_find_le_link_by_bud_side(DEVICE_BUD_SIDE_RIGHT);
+    }
+
+    if (p_left_link != NULL)
+    {
+        if (le_fixed_chann_data_send(p_left_link->conn_id, LE_FIX_CHANNEL_ID, p_pack,
+                                     pack_len) == GAP_CAUSE_SUCCESS)
+        {
+            ret = true;
+        }
+    }
+
+    if (p_right_link != NULL)
+    {
+        if (le_fixed_chann_data_send(p_right_link->conn_id, LE_FIX_CHANNEL_ID, p_pack,
+                                     pack_len) == GAP_CAUSE_SUCCESS)
+        {
+            ret = true;
+        }
+    }
+
+    free(p_pack);
+
+    APP_PRINT_TRACE2("app_cmd_send_by_le_fix_channel: cmd %d ret %d", cmd, ret);
+
+    return ret;
+}
+#endif
 
 void app_gaming_ctrl_data_rcv(uint8_t *data, uint16_t len)
 {

@@ -9,7 +9,6 @@
 #include "bt_bond_le_sync.h"
 #include "app_relay.h"
 #include "app_cfg.h"
-#include "gap_conn_le.h"
 
 #define BLE_BOND_MTU    (APP_RELAY_MTU)
 #define BT_BOND_INFO_HANDLED 0x40
@@ -132,8 +131,8 @@ void ble_bond_sync_handle_ble_mic_failure_disconn(T_APP_LE_LINK *p_link)
                          p_entry->bond_info.bond_state,
                          TRACE_BDADDR(local_bd),
                          TRACE_BDADDR(p_link->bd_addr));
-        if ((p_entry->bond_info.bond_state & BT_BOND_INFO_REPAIR_FLAG) == 1 &&
-            (p_entry->bond_info.bond_state & BT_BOND_INFO_NEED_UPDATE_FLAG) == 1)
+        if ((p_entry->bond_info.bond_state & BT_BOND_INFO_REPAIR_FLAG) != 0 &&
+            (p_entry->bond_info.bond_state & BT_BOND_INFO_NEED_UPDATE_FLAG) != 0)
         {
             bt_le_clear_bond_state(p_entry);
             bt_le_set_bond_state(p_entry, BT_BOND_INFO_NEED_UPDATE_FLAG);

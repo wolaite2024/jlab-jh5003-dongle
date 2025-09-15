@@ -59,20 +59,7 @@ extern void (*platform_delay_ms)(uint32_t t);
  */
 extern void (*platform_delay_us)(uint32_t t);
 
-int32_t saturate_by_boundary(int32_t value, int32_t upperbound, int32_t lowerbound);
 
-bool get_disable_hci_bt_test(void);
-bool get_airplane_mode(void);
-void set_airplane_mode(bool airplane_mode);
-
-#define get_disable_hci_mac_rf_access()       false
-#define get_disable_hci_wifi_coexist_func()   false
-#define get_disable_hci_set_uart_baudrate()   false
-#define get_disable_hci_rf_dbg_func()         false
-#define get_disable_hci_read_chip_info()      false
-#define get_disable_hci_bt_extension()        false
-#define get_disable_hci_bt_dbg_func()         false
-#define get_disable_hci_rf_test()             false
 
 /** @} */ /* End of group 87x3e_PLATFORM_UTILS_Exported_Functions */
 

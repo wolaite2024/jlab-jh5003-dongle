@@ -4,7 +4,7 @@
 *****************************************************************************************
   * @file    gap_appearance.h
   * @brief   This file contains all the GAP appearance categories and sub-categories.
-  * @details This file is used both bredr and le.
+  * @details This file is used both BR/EDR and LE.
   * @author  Carrie
   * @date    2023-05-08
   * @version v1.0
@@ -22,14 +22,14 @@ extern "C"
 {
 #endif
 
-/** @addtogroup BT_GAP_Appearance BT GAP Appearances
+/** @addtogroup BT_GAP_Appearance Bluetooth GAP Appearance
   * @brief Defines GAP Appearances related definitions.
   * @{
   */
 /*============================================================================*
  *                         Macros
  *============================================================================*/
-/** @addtogroup GAP_Appearance_Exported_Macros
+/** @addtogroup GAP_Appearance_Exported_Macros GAP Appearance Exported Macros
   * @{
   */
 

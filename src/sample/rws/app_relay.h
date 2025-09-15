@@ -69,7 +69,9 @@ typedef enum
     APP_MODULE_TYPE_REALCAST          = 0x21,
     APP_MODULE_TYPE_UCA               = 0x23,
     APP_MODULE_TYPE_LEA_VOL_POLICY    = 0x24,
-    APP_MODULE_TYPE_LEA_ASCS          = 0x25,
+    APP_MODULE_TYPE_BCA               = 0x25,
+    APP_MODULE_TYPE_HAS               = 0x26,
+    APP_MODULE_TYPE_LEA_ASCS          = 0x27,
 
     APP_MODULE_TYPE_XIAOAI_DEVICE     = 0x80,
     APP_MODULE_TYPE_XIAOAI_TRANSPORT  = 0x81,

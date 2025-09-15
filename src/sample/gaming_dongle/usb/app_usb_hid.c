@@ -9,6 +9,7 @@
 #include "os_sync.h"
 #include "rtl876x.h"
 #include "stdlib.h"
+#include "app_timer.h"
 #include "app_usb_hid.h"
 #include "app_io_msg.h"
 #include "app_src_asp.h"
@@ -20,9 +21,11 @@
 #include "app_cfg.h"
 #include "usb_hid.h"
 #include "errno.h"
+#include "teams_call_control.h"
 #if F_APP_HID_RTK_SUPPORT
 #include "app_hid_rtk_ctrl.h"
 #endif
+#include "app_usb_hid_report.h"
 
 
 #ifdef F_APP_CFU_RTL8773DO_DONGLE
@@ -46,13 +49,13 @@ static T_USB_HID_DB usb_hid_db  = {.p_sema = NULL, .p_get_report_data = NULL, .g
 bool app_usb_hid_send_consumer_ctrl_key_down(enum CONSUMER_CTRL_KEY_CODE key)
 {
     uint8_t send_buf[3] = {0x02, key, 0};
-    return app_usb_hid_interrupt_in(send_buf, 3);
+    return usb_hid_report_buffered_send(send_buf, 3);
 }
 
 bool app_usb_hid_send_consumer_ctrl_all_key_release()
 {
     uint8_t send_buf[3] = {0x02, 0, 0};
-    return app_usb_hid_interrupt_in(send_buf, 3);
+    return usb_hid_report_buffered_send(send_buf, 3);
 }
 
 //////////////telephony ctrl///////////////
@@ -61,7 +64,26 @@ bool app_usb_hid_send_telephony_ctrl_code(uint16_t *code)
     uint8_t send_buf[3] = {REPORT_ID_TELEPHONY_INPUT, 0x0, 0x0};
     send_buf[1] = (*code) & 0xFF;
     send_buf[2] = (*code >> 8) & 0xFF;
-    return app_usb_hid_interrupt_in(send_buf, 3);
+    return usb_hid_report_buffered_send(send_buf, 3);
+}
+
+bool app_usb_hid_send_telephony_mute_ctrl(bool mute)
+{
+    T_TELEPHONY_HID_INPUT ctrl_code = {0};
+    bool ret1 = false;
+    bool ret2 = false;
+
+    APP_PRINT_TRACE1("app_usb_hid_send_telephony_mute_ctrl: %d", mute);
+
+    ctrl_code.hook_switch = 1;
+    ctrl_code.mute = !mute;
+
+    ret1 = app_usb_hid_send_telephony_ctrl_code((uint16_t *)&ctrl_code);
+
+    ctrl_code.mute = mute;
+    ret2 = app_usb_hid_send_telephony_ctrl_code((uint16_t *)&ctrl_code);
+
+    return ret1 && ret2;
 }
 
 __weak void app_cfu_handle_set_report(uint8_t *data, uint8_t length) {};
@@ -328,7 +350,7 @@ void app_usb_hid_send_report(SEND_TYPE type, uint8_t id, uint8_t *data, uint8_t 
         break;
     }
 
-    app_usb_hid_interrupt_in(app_usb_hid_interrupt_in_buff, sendcount);
+    usb_hid_report_buffered_send(app_usb_hid_interrupt_in_buff, sendcount);
 }
 
 #if (F_APP_SS_REVISE_HID == 1)
@@ -476,14 +498,19 @@ void app_usb_hid_handle_msg(T_IO_MSG *msg)
 #if (F_APP_HID_RTK_SUPPORT == 1)
             app_hid_rtk_ctrl_handle_send_msg();
 #endif
-            break;
         }
+        break;
     case USB_HID_MSG_TYPE_HID_IN_COMPLETE:
         {
             extern void app_dongle_hid_send_cmpl(void);
             app_dongle_hid_send_cmpl();
-            break;
         }
+        break;
+    case USB_HID_MSG_TYPE_HID_BUFFERED_REPORT:
+        {
+            usb_hid_report_handle();
+        }
+        break;
     default:
         break;
     }
@@ -557,6 +584,9 @@ void app_usb_hid_register_cbs(APP_USB_HID_CB_F *functions)
 
 void app_usb_hid_init(void)
 {
+    usb_hid_report_register_cb(app_usb_hid_interrupt_in, 512, IO_MSG_TYPE_USB_HID,
+                               USB_HID_MSG_TYPE_HID_BUFFERED_REPORT);
+
 #if (F_APP_SS_REVISE_HID == 1)
     usb_hid_init();
     if (hid_intr_in_handle == NULL)

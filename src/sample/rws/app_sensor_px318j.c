@@ -8,10 +8,11 @@ extern "C" {
 #include "profile_server.h"
 #include "gap_msg.h"
 #endif
-
+#include "pm.h"
 #include "ftl.h"
 #include "trace.h"
 #include "hal_gpio.h"
+#include "io_dlps.h"
 #include "string.h"
 #include "app_dlps.h"
 #include "app_sensor.h"
@@ -29,6 +30,7 @@ static T_PX318J_CAL_PARA px318j_flash;
 static void app_sensor_px318j_reset_default_thresh(void);
 static uint32_t app_sensor_px318j_load_px318j_cal(void *p_data);
 static uint32_t app_sensor_px318j_save_px318j_cal(void *p_data);
+void app_sensor_px318j_enter_dlps(void);
 
 void app_sensor_px318j_enable()
 {
@@ -46,6 +48,8 @@ void app_sensor_px318j_init(void)
 {
     uint8_t ret;
     I2C_Status status;
+
+    io_dlps_register_enter_cb(app_sensor_px318j_enter_dlps);
 
     /* ret = 0 if success else fail */
     ret = app_sensor_px318j_load_px318j_cal((void *)&px318j_flash);
@@ -204,10 +208,11 @@ void app_sensor_px318j_enter_dlps(void)
     if (mode == POWER_POWERDOWN_MODE)
     {
         app_sensor_px318j_disable();
+        hal_gpio_irq_disable(app_cfg_const.sensor_detect_pinmux);
     }
     else
     {
-        app_dlps_set_pad_wake_up(app_cfg_const.sensor_detect_pinmux, PAD_WAKEUP_POL_LOW);
+        hal_gpio_irq_change_polarity(app_cfg_const.sensor_detect_pinmux, GPIO_IRQ_ACTIVE_LOW);
     }
 }
 

@@ -13,6 +13,7 @@
 #include "app_a2dp.h"
 #include "app_dlps.h"
 #include "hal_gpio.h"
+#include "io_dlps.h"
 #include "app_sensor.h"
 #include "app_sensor_i2c.h"
 #include "app_msg.h"
@@ -1149,10 +1150,39 @@ static T_MEM_INIT_STATUS app_sensor_mems_inv42607_init_device(void)
     return status;
 }
 
+static void app_sensor_mems_enter_dlps(void)
+{
+    POWERMode lps_mode = power_mode_get();
+
+    if (lps_mode == POWER_DLPS_MODE)
+    {
+        /* The original app annotates the "app_sensor_mems_dlps_enter".
+           To maintain logical consistency, turn off the wake-up function.
+        */
+        // app_sensor_mems_dlps_enter();
+        hal_gpio_irq_disable(app_cfg_const.mems_int_pinmux);
+    }
+    else if (lps_mode == POWER_POWERDOWN_MODE)
+    {
+        hal_gpio_irq_disable(app_cfg_const.mems_int_pinmux);
+    }
+}
+
+static void app_sensor_mems_exit_dlps(void)
+{
+    /*
+        NOTE: Modify together with app_sensor_mems_enter_dlps
+    */
+    // app_sensor_mems_dlps_exit();
+    hal_gpio_irq_enable(app_cfg_const.mems_int_pinmux);
+}
+
 static void app_sensor_mems_inv42607_cfg_int(void)
 {
     app_sensor_int_gpio_init(app_cfg_const.mems_int_pinmux,
                              (P_GPIO_CBACK)app_sensor_mems_int_gpio_intr_handler);
+    io_dlps_register_enter_cb(app_sensor_mems_enter_dlps);
+    io_dlps_register_exit_cb(app_sensor_mems_exit_dlps);
 }
 
 static void app_sensor_mems_inv42607_cfg(void)

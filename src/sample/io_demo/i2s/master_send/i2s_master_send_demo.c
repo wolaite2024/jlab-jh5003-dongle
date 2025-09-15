@@ -13,7 +13,6 @@
 
 #include "rtl876x_i2s.h"
 #include "rtl876x_pinmux.h"
-#include "rtl876x_rcc.h"
 
 #define I2S_LRCK_PIN                    P0_0
 #define I2S_BCLK_PIN                    P0_1
@@ -53,12 +52,12 @@ static void driver_i2s_init(void)
     I2S_StructInit(&I2S_InitStruct);
     I2S_InitStruct.I2S_ClockSource      = I2S_CLK_XTAL;
     /* BCLK = 40MHz * (I2S_BClockNi / I2S_BClockMi), LRCK = BCLK / (I2S_BClockDiv + 1) */
-    I2S_InitStruct.I2S_BClockMi         = 0x271;    /* LRCK = 48KHz */
+    I2S_InitStruct.I2S_BClockMi         = 0x271;
     I2S_InitStruct.I2S_BClockNi         = 0x30;     /* BCLK = 3.072MHz */
-    I2S_InitStruct.I2S_BClockDiv        = 0x3F;
+    I2S_InitStruct.I2S_BClockDiv        = 0x3F;     /* LRCK = 48KHz */
     I2S_InitStruct.I2S_DeviceMode       = I2S_DeviceMode_Master;
     I2S_InitStruct.I2S_TxChannelType    = I2S_Channel_Stereo;
-    I2S_InitStruct.I2S_TxDataWidth      = I2S_Width_16Bits;
+    I2S_InitStruct.I2S_TxDataWidth      = I2S_Data_Width_16Bits;
     I2S_InitStruct.I2S_TxDataFormat     = I2S_Mode;
     I2S_InitStruct.I2S_DMACmd           = I2S_DMA_DISABLE;
     I2S_Init(I2S_NUM, &I2S_InitStruct);

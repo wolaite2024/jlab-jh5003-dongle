@@ -5815,10 +5815,11 @@ FRESULT f_rename(
     DIR djo = {0}, djn;
     BYTE buf[FF_FS_EXFAT ? SZDIRE * 2 : SZDIRE], *dir;
     LBA_t sect;
+    int vol;
     DEF_NAMBUF
 
-
-    get_ldnumber(&path_new);                        /* Snip the drive number of new name off */
+    vol = get_ldnumber(&path_new);                        /* Snip the drive number of new name off */
+    if (vol < 0) { return FR_INVALID_DRIVE; }
     res = mount_volume(&path_old, &fs, FA_WRITE);   /* Get logical drive of the old object */
     if (res == FR_OK)
     {

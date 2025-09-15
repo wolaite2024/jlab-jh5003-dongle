@@ -354,7 +354,7 @@ bool app_bond_sync_b2s_link_record(void)
     bond_num = app_bond_b2s_num_get();
     len = sizeof(T_APP_REMOTE_MSG_PAYLOAD_LINK_RECORD_XMIT) + bond_num * sizeof(T_APP_LINK_RECORD);
 
-    p_record = malloc(len);
+    p_record = calloc(1, len);
 
     if (p_record != NULL)
     {
@@ -481,7 +481,18 @@ void app_bond_handle_remote_link_record_xmit(void *buf)
             {
                 if (memcmp(&merge_link_record[j], &sec_link_record[i], sizeof(T_APP_LINK_RECORD)))
                 {
-                    app_bond_push_sec_diff_link_record(&sec_link_record[i]);
+                    uint8_t zero_link_key[16] = {0};
+
+                    if (!memcmp(merge_link_record[j].link_key, zero_link_key, 16))
+                    {
+                        merge_link_record[j].key_type = sec_link_record[i].key_type;
+                        memcpy(merge_link_record[j].link_key, sec_link_record[i].link_key, 16);
+                        merge_link_record[j].bond_flag |= sec_link_record[i].bond_flag;
+                    }
+                    else
+                    {
+                        app_bond_push_sec_diff_link_record(&sec_link_record[i]);
+                    }
                 }
 
                 break;
@@ -543,9 +554,15 @@ void app_bond_handle_remote_link_record_msg(uint16_t msg, void *buf)
     case APP_REMOTE_MSG_LINK_RECORD_ADD:
         {
             T_APP_REMOTE_MSG_PAYLOAD_LINK_KEY_ADDED *p_info;
+            uint8_t zero_link_key[16] = {0};
 
             p_info = (T_APP_REMOTE_MSG_PAYLOAD_LINK_KEY_ADDED *)buf;
             app_bond_key_set(p_info->bd_addr, p_info->link_key, p_info->key_type);
+
+            if (!memcmp(p_info->link_key, zero_link_key, 16))
+            {
+                bt_bond_flag_add(p_info->bd_addr, BOND_FLAG_UCA);
+            }
 
             uint8_t mapping_idx;
             app_bt_policy_update_pair_idx_mapping();
@@ -625,8 +642,16 @@ void app_bond_handle_remote_profile_connected_msg(void *buf)
         bt_bond_flag_add(p_msg->bd_addr, BOND_FLAG_IAP);
         break;
 
+    case GATT_PROFILE_MASK:
+        bt_bond_flag_add(p_msg->bd_addr, BOND_FLAG_GATT);
+        break;
+
     case DID_PROFILE_MASK:
         bt_bond_flag_add(p_msg->bd_addr, BOND_FLAG_DONGLE); //keeping dongle link record
+        break;
+
+    case UCA_PROFILE_MASK:
+        bt_bond_flag_add(p_msg->bd_addr, BOND_FLAG_UCA);
         break;
 
     default:
@@ -703,10 +728,11 @@ void app_bond_le_set_bond_flag(void *p_link_info, uint16_t bond_flag)
         T_GAP_REMOTE_ADDR_TYPE bd_type;
         uint8_t local_bd[GAP_BD_ADDR_LEN];
         uint8_t local_bd_type = LE_BOND_LOCAL_ADDRESS_ANY;
+        uint8_t remote_bd[GAP_BD_ADDR_LEN];
 
         le_get_conn_local_addr(p_link->conn_handle, local_bd, &local_bd_type);
-        le_get_conn_addr(p_link->conn_id, p_link->bd_addr, (uint8_t *)&bd_type);
-        p_entry = bt_le_find_key_entry(p_link->bd_addr, (T_GAP_REMOTE_ADDR_TYPE)bd_type, local_bd,
+        le_get_conn_addr(p_link->conn_id, remote_bd, (uint8_t *)&bd_type);
+        p_entry = bt_le_find_key_entry(remote_bd, (T_GAP_REMOTE_ADDR_TYPE)bd_type, local_bd,
                                        local_bd_type);
         if (p_entry != NULL)
         {

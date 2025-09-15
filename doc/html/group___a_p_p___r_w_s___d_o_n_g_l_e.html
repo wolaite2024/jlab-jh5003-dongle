@@ -62,7 +62,9 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<a class="el" href="group___a_p_p___r_w_s___d_o_n_g_l_e.html#gga7552058be96a463e8a90e04874f00601af3d9873a08bee770fdafd05674b7b500">RECORD_SAMPLE_RATE_32K</a>, 
 <br />
-&#160;&#160;<a class="el" href="group___a_p_p___r_w_s___d_o_n_g_l_e.html#gga7552058be96a463e8a90e04874f00601a7d5587f8bbf232f35f659aba79fb0ae7">RECORD_SAMPLE_RATE_48K</a>
+&#160;&#160;<a class="el" href="group___a_p_p___r_w_s___d_o_n_g_l_e.html#gga7552058be96a463e8a90e04874f00601a7d5587f8bbf232f35f659aba79fb0ae7">RECORD_SAMPLE_RATE_48K</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___a_p_p___r_w_s___d_o_n_g_l_e.html#gga7552058be96a463e8a90e04874f00601ae4a76d51784471b7c78022a46e061df6">RECORD_SAMPLE_RATE_MAX</a>
 <br />
  }</td></tr>
 <tr class="separator:ga7552058be96a463e8a90e04874f00601"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -75,14 +77,15 @@ Functions</h2></td></tr>
 <tr class="memitem:ga507c64430d2c0ed93ca013bf5d42cc1e"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___r_w_s___d_o_n_g_l_e.html#ga507c64430d2c0ed93ca013bf5d42cc1e">app_dongle_assemble_rtp_voice</a> (uint8_t *buf, uint16_t buf_size, uint16_t voice_data_len)</td></tr>
 <tr class="memdesc:ga507c64430d2c0ed93ca013bf5d42cc1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">assemble rtp voice pkt [in] allocate buf size [in] voice data len  <a href="#ga507c64430d2c0ed93ca013bf5d42cc1e">More...</a><br /></td></tr>
 <tr class="separator:ga507c64430d2c0ed93ca013bf5d42cc1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4977a2c4e7df5898dd5954ab201d7048"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___r_w_s___d_o_n_g_l_e.html#ga4977a2c4e7df5898dd5954ab201d7048">app_dongle_force_stop_recording</a> (void)</td></tr>
-<tr class="separator:ga4977a2c4e7df5898dd5954ab201d7048"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad94d9472981542e18d899e19aa1ca12b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___r_w_s___d_o_n_g_l_e.html#gad94d9472981542e18d899e19aa1ca12b">app_dongle_stop_recording</a> (uint8_t bd_addr[6])</td></tr>
-<tr class="memdesc:gad94d9472981542e18d899e19aa1ca12b"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function can stop the record.  <a href="#gad94d9472981542e18d899e19aa1ca12b">More...</a><br /></td></tr>
-<tr class="separator:gad94d9472981542e18d899e19aa1ca12b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9b3ad9545553b64f849414db41cacf48"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___r_w_s___d_o_n_g_l_e.html#ga9b3ad9545553b64f849414db41cacf48">app_dongle_start_recording</a> (uint8_t bd_addr[6])</td></tr>
-<tr class="memdesc:ga9b3ad9545553b64f849414db41cacf48"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function can start the record.  <a href="#ga9b3ad9545553b64f849414db41cacf48">More...</a><br /></td></tr>
-<tr class="separator:ga9b3ad9545553b64f849414db41cacf48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2538871801d427912b0493e2f9c072b1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___r_w_s___d_o_n_g_l_e.html#ga2538871801d427912b0493e2f9c072b1">app_dongle_stop_recording</a> (void)</td></tr>
+<tr class="memdesc:ga2538871801d427912b0493e2f9c072b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function can stop the record.  <a href="#ga2538871801d427912b0493e2f9c072b1">More...</a><br /></td></tr>
+<tr class="separator:ga2538871801d427912b0493e2f9c072b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5d12880e2f8846ac10d17474b51c665b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___r_w_s___d_o_n_g_l_e.html#ga5d12880e2f8846ac10d17474b51c665b">app_dongle_start_recording</a> (void)</td></tr>
+<tr class="memdesc:ga5d12880e2f8846ac10d17474b51c665b"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function can start the record.  <a href="#ga5d12880e2f8846ac10d17474b51c665b">More...</a><br /></td></tr>
+<tr class="separator:ga5d12880e2f8846ac10d17474b51c665b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga69cf76e7e644b3157f5c484cba3261d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___a_p_p___r_w_s___d_o_n_g_l_e.html#ga7552058be96a463e8a90e04874f00601">T_RECORD_SAMPLE_RATE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___r_w_s___d_o_n_g_l_e.html#ga69cf76e7e644b3157f5c484cba3261d4">app_dongle_get_record_sample_rate</a> (void)</td></tr>
+<tr class="memdesc:ga69cf76e7e644b3157f5c484cba3261d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function can get current dongle record sample rate.  <a href="#ga69cf76e7e644b3157f5c484cba3261d4">More...</a><br /></td></tr>
+<tr class="separator:ga69cf76e7e644b3157f5c484cba3261d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabe874754d2702412c3b04a4b78ea206c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___r_w_s___d_o_n_g_l_e.html#gabe874754d2702412c3b04a4b78ea206c">app_dongle_record_init</a> (void)</td></tr>
 <tr class="separator:gabe874754d2702412c3b04a4b78ea206c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5682a2f2e3f65eb0ff005a4921a422d4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___r_w_s___d_o_n_g_l_e.html#ga5682a2f2e3f65eb0ff005a4921a422d4">app_dongle_volume_in_mute</a> (void)</td></tr>
@@ -126,6 +129,7 @@ Functions</h2></td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga7552058be96a463e8a90e04874f00601ab99dd2b0b1d8d43d8dbfe798b2ecdd0c"></a>RECORD_SAMPLE_RATE_16K&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga7552058be96a463e8a90e04874f00601af3d9873a08bee770fdafd05674b7b500"></a>RECORD_SAMPLE_RATE_32K&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga7552058be96a463e8a90e04874f00601a7d5587f8bbf232f35f659aba79fb0ae7"></a>RECORD_SAMPLE_RATE_48K&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga7552058be96a463e8a90e04874f00601ae4a76d51784471b7c78022a46e061df6"></a>RECORD_SAMPLE_RATE_MAX&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>
@@ -189,26 +193,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ga4977a2c4e7df5898dd5954ab201d7048"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga4977a2c4e7df5898dd5954ab201d7048">&#9670;&nbsp;</a></span>app_dongle_force_stop_recording()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void app_dongle_force_stop_recording </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="gad94d9472981542e18d899e19aa1ca12b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gad94d9472981542e18d899e19aa1ca12b">&#9670;&nbsp;</a></span>app_dongle_stop_recording()</h2>
+<a id="ga2538871801d427912b0493e2f9c072b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2538871801d427912b0493e2f9c072b1">&#9670;&nbsp;</a></span>app_dongle_stop_recording()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -216,8 +202,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void app_dongle_stop_recording </td>
           <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>bd_addr</em>[6]</td><td>)</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -228,8 +214,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ga9b3ad9545553b64f849414db41cacf48"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga9b3ad9545553b64f849414db41cacf48">&#9670;&nbsp;</a></span>app_dongle_start_recording()</h2>
+<a id="ga5d12880e2f8846ac10d17474b51c665b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5d12880e2f8846ac10d17474b51c665b">&#9670;&nbsp;</a></span>app_dongle_start_recording()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -237,8 +223,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void app_dongle_start_recording </td>
           <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>bd_addr</em>[6]</td><td>)</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -246,6 +232,27 @@ Functions</h2></td></tr>
 
 <p>This function can start the record. </p>
 <dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
+
+</div>
+</div>
+<a id="ga69cf76e7e644b3157f5c484cba3261d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga69cf76e7e644b3157f5c484cba3261d4">&#9670;&nbsp;</a></span>app_dongle_get_record_sample_rate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___a_p_p___r_w_s___d_o_n_g_l_e.html#ga7552058be96a463e8a90e04874f00601">T_RECORD_SAMPLE_RATE</a> app_dongle_get_record_sample_rate </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function can get current dongle record sample rate. </p>
+<dl class="section return"><dt>Returns</dt><dd>dongle record sample rate </dd></dl>
 
 </div>
 </div>

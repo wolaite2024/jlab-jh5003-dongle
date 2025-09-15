@@ -445,8 +445,8 @@ void audio_latency_low_lat_dynamic_decrease(T_AUDIO_LATENCY_HANDLE handle, uint1
         buffer_ent->p_cfg->latency = buffer_ent->p_cfg->latency_back_up;
     }
 
-    AUDIO_PRINT_TRACE3("audio_latency_low_lat_dynamic_decrease: %u %u %u", buffer_ent->p_cfg->latency,
-                       buffer_ent->p_cfg->plc_count, plc_count);
+    AUDIO_PRINT_INFO3("audio_latency_low_lat_dynamic_decrease: %u %u %u", buffer_ent->p_cfg->latency,
+                      buffer_ent->p_cfg->plc_count, plc_count);
 
     if (buffer_ent->p_cfg->plc_count != 0)
     {
@@ -519,9 +519,9 @@ void audio_latency_low_lat_dynamic_increase(T_AUDIO_LATENCY_HANDLE handle, uint1
     buffer_ent->p_cfg->latency += media_buffer_cacu_frames_duration(plc_count,
                                                                     &buffer_ent->p_cfg->format_info);
 
-    AUDIO_PRINT_TRACE4("audio_latency_low_lat_dynamic_increase: lat %u d_plc %u plc_count %u auto_dec %u",
-                       buffer_ent->p_cfg->latency,
-                       plc_count, buffer_ent->p_cfg->plc_count, auto_dec);
+    AUDIO_PRINT_INFO4("audio_latency_low_lat_dynamic_increase: lat %u d_plc %u plc_count %u auto_dec %u",
+                      buffer_ent->p_cfg->latency,
+                      plc_count, buffer_ent->p_cfg->plc_count, auto_dec);
 
     buffer_lat_db->cback(AUDIO_LATENCY_EVT_LAT_INCREASED, NULL, buffer_ent);
 }

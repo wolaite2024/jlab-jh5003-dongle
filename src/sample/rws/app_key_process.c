@@ -1631,6 +1631,12 @@ void app_key_execute_action(uint8_t action)
                 return;
             }
         }
+
+        if (app_db.power_on_delay_opening_anc ||
+            app_db.power_on_delay_opening_apt)
+        {
+            return;
+        }
     }
 #endif
 
@@ -1716,7 +1722,7 @@ void app_key_execute_action(uint8_t action)
                  (action == MMI_AUDIO_APT_VOL_UP) || (action == MMI_AUDIO_APT_VOL_DOWN) ||
                  (action == MMI_ANC_ON_OFF) || (action == MMI_ANC_APT_ON_OFF) ||
                  (action == MMI_LISTENING_MODE_CYCLE) || (action == MMI_DEFAULT_LISTENING_MODE_CYCLE) ||
-                 (action == MMI_ANC_CYCLE) || (action == MMI_LLAPT_CYCLE) ||
+                 (action == MMI_ANC_CYCLE) || (action == MMI_LLAPT_CYCLE) || (action == MMI_SWITCH_APT_TYPE) ||
 #if F_APP_24G_BT_AUDIO_SOURCE_CTRL_SUPPORT
                  (action == MMI_24G_BT_AUDIO_SOURCE_SWITCH) ||
 #endif
@@ -1727,7 +1733,7 @@ void app_key_execute_action(uint8_t action)
 #endif
                  (action == MMI_AIRPLANE_MODE) ||
 #if F_APP_LEA_SUPPORT
-                 (action == MMI_BIG_START) || (action == MMI_BIG_STOP) ||
+                 ((action == MMI_BIG_START) || (action == MMI_BIG_STOP)) ||
                  ((mtc_get_btmode() == MULTI_PRO_BT_CIS &&
                    ((action == MMI_AV_PLAY_PAUSE) || (action == MMI_DEV_MIC_UNMUTE) ||
                     (action == MMI_DEV_MIC_MUTE) || (action == MMI_DEV_MIC_MUTE_UNMUTE))) ||
@@ -1901,6 +1907,8 @@ static void app_key_handle_key_tone_play(T_APP_AUDIO_TONE_TYPE tone_type)
 void app_key_single_click(uint8_t key)
 {
     uint8_t long_press = 0;
+    T_APP_CALL_STATUS call_status = APP_CALL_IDLE;
+    uint8_t key_index = app_key_search_index(key);
 
     if (app_db.device_state == APP_DEVICE_STATE_ON) //APP in non-off state
     {
@@ -1940,12 +1948,11 @@ void app_key_single_click(uint8_t key)
         if (app_durian_key_press(key, 0, long_press))
         {
 #if F_APP_SINGLE_MUTLILINK_SCENERIO_1
-            key_data.key_action = app_cfg_const.key_table[long_press][app_teams_multilink_get_voice_status()]
-                                  [app_key_search_index(key)];
+            call_status = app_teams_multilink_get_voice_status();
 #else
-            key_data.key_action = app_cfg_const.key_table[long_press][app_hfp_get_call_status()]
-                                  [app_key_search_index(key)];
+            call_status = app_hfp_get_call_status();
 #endif
+            key_data.key_action = app_cfg_const.key_table[long_press][call_status][key_index];
             app_key_execute_action(key_data.key_action);
 
         }
@@ -1953,8 +1960,8 @@ void app_key_single_click(uint8_t key)
 #if F_APP_LEA_SUPPORT
         if (mtc_get_btmode())
         {
-            key_data.key_action = app_cfg_const.key_table[long_press][app_lea_ccp_get_call_status()]
-                                  [app_key_search_index(key)];
+            call_status = app_lea_ccp_get_call_status();
+            key_data.key_action = app_cfg_const.key_table[long_press][call_status][key_index];
 
             app_key_execute_action(key_data.key_action);
         }
@@ -1962,12 +1969,11 @@ void app_key_single_click(uint8_t key)
 #endif
         {
 #if F_APP_SINGLE_MUTLILINK_SCENERIO_1
-            key_data.key_action = app_cfg_const.key_table[long_press][app_teams_multilink_get_voice_status()]
-                                  [app_key_search_index(key)];
+            call_status = app_teams_multilink_get_voice_status();
 #else
-            key_data.key_action = app_cfg_const.key_table[long_press][app_hfp_get_call_status()]
-                                  [app_key_search_index(key)];
+            call_status = app_hfp_get_call_status();
 #endif
+            key_data.key_action = app_cfg_const.key_table[long_press][call_status][key_index];
 
 #if F_APP_RWS_KEY_SUPPORT
             if ((key == KEY0_MASK) && (app_db.remote_session_state == REMOTE_SESSION_STATE_CONNECTED))
@@ -2014,6 +2020,7 @@ static void app_key_hybrid_click(uint8_t key)
     uint8_t i;
     uint8_t hybrid_type = HYBRID_KEY_SHORT_PRESS;
     bool is_only_allow_factory_reset = false;
+    T_APP_CALL_STATUS call_status = APP_CALL_IDLE;
 
     APP_PRINT_INFO3("app_key_hybrid_click: device_state = %d, enable_factory_reset_when_in_the_box = %d  in box = %d",
                     app_db.device_state, app_cfg_const.enable_factory_reset_when_in_the_box == 1,
@@ -2072,12 +2079,16 @@ static void app_key_hybrid_click(uint8_t key)
                  (app_cfg_const.hybrid_key_mapping[i][1] == hybrid_type)))
             {
 #if F_APP_SINGLE_MUTLILINK_SCENERIO_1
-                uint8_t action = app_cfg_const.hybrid_key_table[app_teams_multilink_get_voice_status()][i];
+                call_status = app_teams_multilink_get_voice_status();
+                uint8_t action = app_cfg_const.hybrid_key_table[call_status][i];
 #else
 #if F_APP_LEA_SUPPORT
-                uint8_t action = app_cfg_const.hybrid_key_table[app_bt_policy_get_call_status()][i];
+                call_status = app_bt_policy_get_call_status();
+                uint8_t action = app_cfg_const.hybrid_key_table[call_status][i];
+
 #else
-                uint8_t action = app_cfg_const.hybrid_key_table[app_hfp_get_call_status()][i];
+                call_status = app_hfp_get_call_status();
+                uint8_t action = app_cfg_const.hybrid_key_table[call_status][i];
 #endif
 #endif
                 if (hybrid_type == HYBRID_KEY_CLICK_AND_PRESS)
@@ -2381,6 +2392,8 @@ static void app_key_timeout_cb(uint8_t timer_evt, uint16_t param)
             key_data.key_enter_pairing = 1;
             app_stop_timer(&timer_idx_key_enter_pairing);
 
+            app_led_change_mode(LED_MODE_PAIRING, true, false);
+
 #if F_APP_LEA_SUPPORT && F_APP_GAMING_DONGLE_SUPPORT == 0
             uint8_t is_legacy = 0;
 
@@ -2388,6 +2401,15 @@ static void app_key_timeout_cb(uint8_t timer_evt, uint16_t param)
             if (is_legacy)
             {
                 app_audio_tone_type_play(TONE_PAIRING, false, false);
+
+#if CONFIG_REALTEK_GFPS_FEATURE_SUPPORT
+                if (extend_app_cfg_const.gfps_support)
+                {
+                    //power_on->pairing mode
+                    APP_PRINT_INFO0("app_gfps_force_enter_pairing_mode: APP_TIMER_KEY_ENTER_PAIRING");
+                    app_gfps_force_enter_pairing_mode(GFPS_KEY_FORCE_ENTER_PAIR_MODE);
+                }
+#endif
             }
 #else
             app_audio_tone_type_play(TONE_PAIRING, false, false);
@@ -3699,6 +3721,7 @@ void app_key_execute_hall_switch_action(uint8_t hall_switch_action)
     uint8_t i;
     uint8_t app_idx = app_a2dp_get_active_idx();
     bool mmi_play_pause_flag = false;
+    T_APP_CALL_STATUS call_status = APP_CALL_IDLE;
 
     // MMI is designed as play-pause toggle. Only initiate play or pause if status matched.
     if (hall_switch_action == HYBRID_KEY_HALL_SWITCH_LOW)
@@ -3724,9 +3747,11 @@ void app_key_execute_hall_switch_action(uint8_t hall_switch_action)
             (app_cfg_const.hybrid_key_mapping[i][1] == hall_switch_action))
         {
 #if F_APP_LEA_SUPPORT
-            key_data.key_action = app_cfg_const.hybrid_key_table[app_bt_policy_get_call_status()][i];
+            call_status = app_bt_policy_get_call_status();
+            key_data.key_action = app_cfg_const.hybrid_key_table[call_status][i];
 #else
-            key_data.key_action = app_cfg_const.hybrid_key_table[app_hfp_get_call_status()][i];
+            call_status = app_hfp_get_call_status();
+            key_data.key_action = app_cfg_const.hybrid_key_table[call_status][i];
 #endif
             if ((key_data.key_action != MMI_AV_PLAY_PAUSE) || (mmi_play_pause_flag))
             {

@@ -17,10 +17,8 @@
  *============================================================================*/
 #include "trace.h"
 #include "os_task.h"
-#include "os_queue.h"
 #include "os_msg.h"
 #include "os_mem.h"
-#include "os_queue.h"
 #include "external_flash.h"
 #include "external_flash_test.h"
 
@@ -76,7 +74,10 @@ void flash_test_send_msg(EXT_FLASH_TEST_CASE test_case, EXT_FLASH_TEST_EVENT eve
     flash_test_msg.test_case = test_case;
     flash_test_msg.event = event;
 
-    os_msg_send(flash_evt_queue_handle, &flash_test_msg, 0);
+    if (os_msg_send(flash_evt_queue_handle, &flash_test_msg, 0) == false)
+    {
+        IO_PRINT_ERROR0("flash_test_send_msg: failed");
+    }
 }
 
 static void ext_flash_spi_test_polling_mode(void)

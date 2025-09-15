@@ -86,6 +86,14 @@ bool app_lea_ccp_accept_hold_or_wait_call(T_APP_LE_LINK *p_link);
     * @retval \ref T_LEA_CALL_ENTRY
     */
 T_LEA_CALL_ENTRY *app_lea_ccp_find_call_entry_by_idx(uint8_t conn_id, uint8_t call_index);
+
+
+/**
+    * @brief  Read all lea links CCP call state
+    * @param  void
+    * @return void
+    */
+void app_lea_ccp_read_all_links_state(void);
 /** @} */ /* End of group APP_LEA_CCP_Exported_Functions */
 /** End of APP_LEA_CCP
 * @}

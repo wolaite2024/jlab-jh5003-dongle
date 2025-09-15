@@ -13,7 +13,7 @@ extern "C" {
 #endif
 
 /**
- * \defgroup    OS_87x3e_Task    Task Management
+ * \addtogroup    OS_87x3e_Task    Task Management
  *
  * \brief   Define, create, and control task functions.
  * \details The Task Management function group allows to create, delete, and control tasks
@@ -24,34 +24,42 @@ extern "C" {
  * \arg <b>READY:</b> Tasks which are ready to run are in the <b>READY</b> state. Once the
  *                    <b>RUNNING</b> task has terminated or is <b>WAITING</b>, the next
  *                    <b>READY</b> task with the highest priority becomes the <b>RUNNING</b> task.
- * \arg <b>WAITING:</b> Tasks that are waiting for an event to occur are in the WAITING state.
+ * \arg <b>WAITING:</b> Tasks that are waiting for an event to occur are in the <b>WAITING</b> state.
  * \arg <b>INACTIVE</b>: Tasks that are not created or terminated are in the <b>INACTIVE</b> state.
  *                       These Tasks typically consume no system resources.
  *
  * \image html OS-task-state-transition.jpg "Task State Transition" width=526px height=526px
  *
+ * @{
  */
 
+/*============================================================================*
+ *                         Functions
+ *============================================================================*/
+
+/** @defgroup OS_87x3e_Task_Exported_functions Task Management Exported Functions
+ * @{
+ */
 
 /**
  * os_task.h
  *
  * \brief Create a new task and add it to the list of tasks that are ready to run.
  *
- * \param[out]  pp_handle  Used to pass back a handle by which the created task
+ * \param  pp_handle  Used to pass back a handle by which the created task
  *                         can be referenced.
  *
- * \param[in]   p_name     A descriptive name for the task.
+ * \param   p_name     A descriptive name for the task.
  *
- * \param[in]   p_routine  Pointer to task routine function that must be implemented
+ * \param   p_routine  Pointer to task routine function that must be implemented
  *                         to never return.
  *
- * \param[in]   p_param    Pointer parameter passed to the task routine function.
+ * \param   p_param    Pointer parameter passed to the task routine function.
  *
- * \param[in]   stack_size The size of the task stack that is specified as the number
+ * \param   stack_size The size of the task stack that is specified as the number
  *                         of bytes.
  *
- * \param[in]   priority   The priority at which the task should run. Higher priority
+ * \param   priority   The priority at which the task should run. Higher priority
  *                         task has higher priority value.
  *
  * \return           The status of the task creation.
@@ -93,7 +101,7 @@ extern "C" {
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Task
+ *
  */
 extern bool (*os_task_create)(void **pp_handle, const char *p_name, void (*p_routine)(void *),
                               void *p_param, uint16_t stack_size, uint16_t priority);
@@ -104,7 +112,7 @@ extern bool (*os_task_create)(void **pp_handle, const char *p_name, void (*p_rou
  * \brief Remove a task from RTOS's task management. The task being deleted will be removed
  * from RUNNING, READY or WAITING state.
  *
- * \param[in] p_handle  The handle of the task to be deleted.
+ * \param p_handle  The handle of the task to be deleted.
  *
  * \return           The status of the task deletion.
  * \retval true      Task was deleted successfully.
@@ -145,7 +153,7 @@ extern bool (*os_task_create)(void **pp_handle, const char *p_name, void (*p_rou
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Task
+ *
  */
 extern bool (*os_task_delete)(void *p_handle);
 
@@ -155,7 +163,7 @@ extern bool (*os_task_delete)(void *p_handle);
  * \brief Suspend the task. The suspended task will not be scheduled and never get
  * any microcontroller processing time.
  *
- * \param[in] p_handle  The handle of the task to be suspended.
+ * \param p_handle  The handle of the task to be suspended.
  *
  * \return           The status of the task suspension.
  * \retval true      Task was suspended successfully.
@@ -196,7 +204,7 @@ extern bool (*os_task_delete)(void *p_handle);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Task
+ *
  */
 extern bool (*os_task_suspend)(void *p_handle);
 
@@ -205,7 +213,7 @@ extern bool (*os_task_suspend)(void *p_handle);
  *
  * \brief Resume the suspended task.
  *
- * \param[in] p_handle  The handle of the task to be resumed.
+ * \param p_handle  The handle of the task to be resumed.
  *
  * \return           The status of the task resume.
  * \retval true      Task was resumed successfully.
@@ -248,7 +256,7 @@ extern bool (*os_task_suspend)(void *p_handle);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Task
+ *
  */
 extern bool (*os_task_resume)(void *p_handle);
 
@@ -258,7 +266,7 @@ extern bool (*os_task_resume)(void *p_handle);
  * \brief Force a context swith and pass control to the next task that is in
  * READY state.
  *
- * \param None
+ * \param None.
  *
  * \return           The status of the task resume.
  * \retval true      Task was yielded successfully.
@@ -297,7 +305,7 @@ extern bool (*os_task_resume)(void *p_handle);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Task
+ *
  */
 extern bool (*os_task_yield)(void);
 
@@ -306,7 +314,7 @@ extern bool (*os_task_yield)(void);
  *
  * \brief Get the handle of the current running task.
  *
- * \param[out] pp_handle  Used to pass back a handle by which the current task
+ * \param pp_handle  Used to pass back a handle by which the current task
  *                        can be referenced.
  *
  * \return           The status of getting the current task handle.
@@ -326,7 +334,7 @@ extern bool (*os_task_yield)(void);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Task
+ *
  */
 extern bool (*os_task_handle_get)(void **pp_handle);
 
@@ -335,10 +343,10 @@ extern bool (*os_task_handle_get)(void **pp_handle);
  *
  * \brief Get the priority of the specified task.
  *
- * \param[in] p_handle    The handle of the task to be queried. Passing a NULL handle
+ * \param p_handle    The handle of the task to be queried. Passing a NULL handle
  *                        means querying the priority of the current task.
  *
- * \param[out] p_priority Used to pass back the priority of the task.
+ * \param p_priority Used to pass back the priority of the task.
  *
  * \return           The status of getting the task priority.
  * \retval true      Task priority was got successfully.
@@ -369,7 +377,7 @@ extern bool (*os_task_handle_get)(void **pp_handle);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Task
+ *
  */
 extern bool (*os_task_priority_get)(void *p_handle, uint16_t *p_priority);
 
@@ -378,11 +386,11 @@ extern bool (*os_task_priority_get)(void *p_handle, uint16_t *p_priority);
  *
  * \brief Set the priority of the specified task.
  *
- * \param[in] p_handle  The handle of the task for which the priority is being set.
+ * \param p_handle  The handle of the task for which the priority is being set.
  *                      Passing a NULL handle means setting the priority of the
  *                      current task.
  *
- * \param[in] priority  The priority to which the task will be set.
+ * \param priority  The priority to which the task will be set.
  *
  * \return           The status of setting the task priority.
  * \retval true      Task priority was set successfully.
@@ -416,7 +424,7 @@ extern bool (*os_task_priority_get)(void *p_handle, uint16_t *p_priority);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Task
+ *
  */
 extern bool (*os_task_priority_set)(void *p_handle, uint16_t priority);
 
@@ -430,9 +438,9 @@ extern bool (*os_task_priority_set)(void *p_handle, uint16_t priority);
  * in the WAITING state to wait for the singal, then the task will be removed
  * from WAITING state and the signal cleared.
  *
- * \param[in] p_handle  The handle of the task to which the signal is sent.
+ * \param p_handle  The handle of the task to which the signal is sent.
  *
- * \param[in] signal    The signal to be sent.
+ * \param signal    The signal to be sent.
  *
  * \return          The status of sending the signal.
  * \retval true     Task signal was sent successfully.
@@ -464,7 +472,7 @@ extern bool (*os_task_priority_set)(void *p_handle, uint16_t priority);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Task
+ *
  */
 extern bool (*os_task_signal_send)(void *p_handle, uint32_t signal);
 
@@ -473,9 +481,9 @@ extern bool (*os_task_signal_send)(void *p_handle, uint32_t signal);
  *
  * \brief Wait for a notification signal.
  *
- * \param[out] p_signal Used to pass back the received signal.
+ * \param p_signal Used to pass back the received signal.
  *
- * \param[in] wait_ms   The timeout in milliseconds to wait for the signal.
+ * \param wait_ms   The timeout in milliseconds to wait for the signal.
  * \arg \c 0            No blocking and return immediately.
  * \arg \c 0xFFFFFFFF   Block infinitely until the signal received.
  * \arg \c others       The timeout value in milliseconds.
@@ -497,7 +505,7 @@ extern bool (*os_task_signal_send)(void *p_handle, uint32_t signal);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Task
+ *
  */
 extern bool (*os_task_signal_recv)(uint32_t *p_signal, uint32_t wait_ms);
 
@@ -506,7 +514,7 @@ extern bool (*os_task_signal_recv)(uint32_t *p_signal, uint32_t wait_ms);
  *
  * \brief Clear the signal of the specified task.
  *
- * \param[in] p_handle  The handle of the task to which the signal is clear.
+ * \param p_handle  The handle of the task to which the signal is clear.
  *
  * \return          The status of clearing the signal.
  * \retval true     Task signal was cleared successfully.
@@ -541,7 +549,7 @@ extern bool (*os_task_signal_recv)(uint32_t *p_signal, uint32_t wait_ms);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Task
+ *
  */
 extern bool (*os_task_signal_clear)(void *p_handle);
 extern bool (*os_task_notify_take)(long xClearCountOnExit, uint32_t xTicksToWait,
@@ -562,6 +570,9 @@ bool os_task_signal_recv_rom(uint32_t *p_signal, uint32_t wait_ms);
 bool os_task_signal_clear_rom(void *p_handle);
 bool os_task_notify_take_rom(long xClearCountOnExit, uint32_t xTicksToWait, uint32_t *p_notify);
 bool os_task_notify_give_rom(void *p_handle);
+
+/** @} */ /* End of group OS_87x3e_Task_Exported_Functions */
+/** @} */ /* End of group OS_87x3e_Task */
 
 #ifdef __cplusplus
 }

@@ -1,10 +1,12 @@
 #if F_APP_GAMING_DONGLE_SUPPORT || TARGET_LEGACY_GAMING_DONGLE || TARGET_LE_AUDIO_GAMING_DONGLE
 #include <stddef.h>
+#include <stdlib.h>
 #include <string.h>
+#include "os_queue.h"
 #include "trace.h"
 #include "audio_track.h"
 #include "app_usb_vol_control.h"
-#include "hw_tim.h"
+#include "app_timer.h"
 #include "app_cfg.h"
 #if F_APP_GAMING_DONGLE_SUPPORT
 #include "remote.h"
@@ -18,11 +20,9 @@
 #define CTRL_LEVEL                      30
 #define GAIN_CHANGE_STEP(range)         (range / CTRL_LEVEL)
 
-#define HID_MONITOR_TIMER_US            (50 * 1000) //50ms
-
-
-static T_HW_TIMER_HANDLE hid_hw_timer_handle = NULL;
+#if F_APP_USB_HID_SUPPORT && F_APP_USB_AUDIO_SUPPORT && (USB_AUDIO_VERSION == USB_AUDIO_VERSION_1)
 static P_HOST_TYPE_SYNC_CB host_type_sync_cb;
+#endif
 T_USB_HOST_DETECT_HID_INFO hid_info_fun;
 
 T_USB_SPK_INFO usb_spk_vol;
@@ -107,7 +107,6 @@ bool app_usb_volume_db_set(void *handle, int16_t gain, T_APP_CTRL_DIR dir)
         else
         {
             app_cfg_nv.ps_vol_gain = LOCAL_DSP_GAIN_MAX - gain;
-            app_cfg_store_all();
         }
     }
 
@@ -145,7 +144,6 @@ bool app_usb_volume_db_set(void *handle, int16_t gain, T_APP_CTRL_DIR dir)
         {
             app_cfg_nv.switch_vol_gain = LOCAL_DSP_GAIN_MAX - gain;
         }
-        app_cfg_store_all();
     }
 #endif
 
@@ -204,53 +202,25 @@ bool app_usb_audio_volume_control_handle(T_APP_VOL_CTRL type, void *handle)
 }
 #endif
 
-static void app_usb_hid_timer_callback(T_HW_TIMER_HANDLE handle)
-{
-    hw_timer_stop(hid_hw_timer_handle);
-    hid_info_fun.volume_release();
-}
-
 void app_usb_audio_volume_hid_ctrl(T_APP_VOL_CTRL type)
 {
-    APP_PRINT_INFO1("app_usb_audio_volume_hid_ctrl host_type %d", usb_spk_vol.host_type);
+    APP_PRINT_INFO2("app_usb_audio_volume_hid_ctrl type %d host %d", type, usb_spk_vol.host_type);
 
     hid_info_fun.pipe_open();
 
-    if (usb_spk_vol.host_type == OS_TYPE_SWITCH)
+    if (type == SPK_VOL_UP)
     {
-        if (type == SPK_VOL_UP)
-        {
-            hid_info_fun.volume_up();
-        }
-        else
-        {
-            hid_info_fun.volume_down();
-        }
-
-        if (hw_timer_start(hid_hw_timer_handle) == false)
-        {
-            APP_PRINT_ERROR0("app_usb_audio_volume_hid_ctrl hw timer create fail!");
-        }
-    }
-    else if (usb_spk_vol.host_type == OS_TYPE_PS)
-    {
-        APP_PRINT_INFO0("app_usb_audio_volume_hid_ctrl host is PS, no need send!");
+        hid_info_fun.volume_up();
     }
     else
     {
-        if (type == SPK_VOL_UP)
-        {
-            hid_info_fun.volume_up();
-        }
-        else
-        {
-            hid_info_fun.volume_down();
-        }
-
-        hid_info_fun.volume_release();
+        hid_info_fun.volume_down();
     }
+
+    hid_info_fun.volume_release();
 }
 
+#if F_APP_USB_HID_SUPPORT && F_APP_USB_AUDIO_SUPPORT && (USB_AUDIO_VERSION == USB_AUDIO_VERSION_1)
 void app_usb_vol_host_type_sync_register(P_HOST_TYPE_SYNC_CB cb)
 {
     host_type_sync_cb = cb;
@@ -270,22 +240,17 @@ static int app_usb_vol_cotrl_host_type_cback(T_OS_TYPE type)
     }
     return 0;
 }
+#endif
 
 void app_vol_control_hid_info_register(T_USB_HOST_DETECT_HID_INFO info)
 {
     memcpy(&hid_info_fun, &info, sizeof(T_USB_HOST_DETECT_HID_INFO));
 }
 
-
 void app_usb_vol_control_init(void)
 {
-#if F_APP_USB_HID_SUPPORT & F_APP_USB_AUDIO_SUPPORT
-    usb_host_detect_init(app_usb_vol_cotrl_host_type_cback);
-    if (hid_hw_timer_handle == NULL)
-    {
-        hid_hw_timer_handle = hw_timer_create("hid_hw_timer_handle", HID_MONITOR_TIMER_US, false,
-                                              app_usb_hid_timer_callback);
-    }
+#if F_APP_USB_HID_SUPPORT && F_APP_USB_AUDIO_SUPPORT && (USB_AUDIO_VERSION == USB_AUDIO_VERSION_1)
+    usb_host_detect_cback_register(app_usb_vol_cotrl_host_type_cback);
 #endif
 }
 

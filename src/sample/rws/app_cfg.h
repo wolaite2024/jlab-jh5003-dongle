@@ -49,14 +49,11 @@ extern "C" { /* __cplusplus */
 
 //FTL start
 #define APP_RW_DATA_ADDR                    3072
-#define APP_RW_DATA_SIZE                    360
+#define APP_RW_DATA_SIZE                    364
 
 #define FACTORY_RESET_OFFSET                140
 
-#define APP_RW_RESERVE0                     (APP_RW_DATA_ADDR + APP_RW_DATA_SIZE)
-#define APP_RW_RESERVE0_SIZE                4
-
-#define APP_RW_PX318J_ADDR                  (APP_RW_RESERVE0 + APP_RW_RESERVE0_SIZE)
+#define APP_RW_PX318J_ADDR                  (APP_RW_DATA_ADDR + APP_RW_DATA_SIZE)
 #define APP_RW_PX318J_SIZE                  12
 
 #define APP_RW_JSA_ADDR                     (APP_RW_PX318J_ADDR + APP_RW_PX318J_SIZE)
@@ -219,7 +216,16 @@ typedef struct
     uint8_t bud_role;
     uint8_t xtal_k_times;
     uint8_t dongle_addr[6];
-    uint8_t bud_sn_rsv[9];
+    uint8_t bud_sn_rsv[8];
+    union
+    {
+        uint8_t offset_delay_to_open_anc_when_power_on;
+        struct
+        {
+            uint8_t time_delay_to_open_anc_when_power_on : 5;
+            uint8_t delay_to_open_anc_when_power_on_reserve : 3;
+        };
+    };
 
     //offset: 0x70
     uint8_t bud_local_addr[6];
@@ -442,7 +448,9 @@ typedef struct
     uint8_t lea_sirk[16];
     uint8_t single_cfg_rsv2;
     uint8_t lea_broadcast_id[3];
-    uint8_t lea_rsv[3];
+    uint8_t lea_mic_gain_mode;
+    int8_t  lea_mic_gain_vol;
+    uint8_t lea_mic_change_cnt;
     uint8_t lea_srcaddr[6];
     uint8_t lea_srctype;
     uint8_t lea_srcsid;
@@ -640,7 +648,11 @@ typedef struct
     uint8_t tone_apt_vol_2;
     uint8_t tone_apt_volume_up;
     uint8_t tone_apt_volume_down;
+#if F_APP_FINDMY_FEATURE_SUPPORT
+    uint8_t tone_find_my;
+#else
     uint8_t tone_audio_eq_0;
+#endif
     uint8_t tone_audio_eq_1;
     uint8_t tone_audio_eq_2;
     uint8_t tone_audio_eq_3;
@@ -740,7 +752,7 @@ typedef struct
     uint8_t slide_switch_0_pinmux;
     uint8_t slide_switch_1_pinmux;
     uint8_t one_wire_uart_data_pinmux;
-    uint8_t one_wire_uart_gpio_pinmux;
+    uint8_t recved;
     uint8_t pcba_shipping_mode_pinmux;
     uint8_t qdec_y_pha_pinmux;
     uint8_t qdec_y_phb_pinmux;
@@ -768,7 +780,7 @@ typedef struct
     uint8_t psensor_vendor : 4;
     uint8_t one_wire_uart_support : 1;
 
-    uint8_t one_wire_uart_gpio_support : 1;
+    uint8_t resved : 1;
     uint8_t wheel_support : 1;
     uint8_t report_uart_event_only_once : 1;
     uint8_t mems_support : 1;
@@ -809,7 +821,7 @@ typedef struct
     uint8_t rws_sniff_negotiation : 1;
     uint8_t rws_disallow_sync_apt_volume : 1;
     uint8_t rssi_roleswap_judge_timeout: 5;
-    uint8_t enable_link_monitor_roleswap : 1;
+    uint8_t disable_link_monitor_roleswap : 1;
     uint8_t roleswap_rssi_threshold : 4;
     uint8_t rws_disable_codec_mute_when_linkback : 1;
     uint8_t rws_apt_eq_adjust_separate: 1;
@@ -983,7 +995,7 @@ typedef struct
     uint8_t enable_disconneted_enter_pairing : 1;
     uint8_t enable_output_power_supply : 1;
     uint8_t enable_av_fwd_bwd_only_when_playing : 1;
-    uint8_t enable_specific_service_uuid : 1;
+    uint8_t app_option10_rsv : 1;
     uint8_t box_detect_method : 2; //0:disable, 1:5v charger, 2:gpio
     uint8_t sdio_group_select : 2; //0:Disable, 1:SDIO_PinGroup_0, 2:SDIO_PinGroup_1
 
@@ -1022,7 +1034,7 @@ typedef struct
     uint8_t smart_charger_box_bit_length : 1;
 
     //app_option15
-    uint8_t enable_low_bat_role_swap : 1;
+    uint8_t disable_low_bat_role_swap : 1;
     uint8_t rws_disallow_sync_power_off : 1;
     uint8_t enable_disallow_sync_power_off_under_voltage_0_percent : 1;
     uint8_t listening_mode_cycle : 2;
@@ -1229,7 +1241,9 @@ typedef struct
     uint8_t amp_post_on_guard_time;
     uint8_t amp_pre_on_guard_time;
     uint8_t amp_off_guard_time;
-    uint8_t timer_rsv1[4];
+    uint8_t time_delay_to_open_anc_when_power_on : 5;
+    uint8_t timer_rsv1 : 3;
+    uint8_t timer_rsv2[3];
 
     //app_option26 (offset 0x33A)
     uint8_t enable_power_on_adv_with_timeout : 1;
@@ -1248,27 +1262,26 @@ typedef struct
     uint8_t legacy_enable: 1;
     uint8_t bstsrc[6];
     uint8_t bis_policy: 4;
-    uint8_t convo_upstream_sample_rate: 4;
+    uint8_t lea_rsv_bit1: 4;
     uint8_t cis_profile;
     uint8_t bis_mode: 2;
     uint8_t active_prio_connected_device: 4;
-    uint8_t lea_rsv_bit1: 1;
+    uint8_t lea_rsv_bit2: 1;
     uint8_t power_off_bis_to: 1;
     uint8_t active_prio_connected_device_after_bis: 4;
-    uint8_t lea_rsv_bit2: 3;
+    uint8_t lea_rsv_bit3: 3;
     uint8_t focus_bis_ch: 1;
     uint8_t lea_rsv0[4];
     uint16_t cis_pd: 10;
-    uint16_t lea_rsv_bit3: 2;
+    uint16_t lea_rsv_bit4: 2;
     uint16_t upstresm_mode: 2;
     uint16_t upstresm_algo: 1;
-    uint16_t lea_rsv_bit4: 1;
-    uint16_t lea_rsv_bit5: 10;
-    uint16_t convo_downstream_sample_rate: 6;
+    uint16_t lea_rsv_bit5: 1;
+    uint16_t src_sample_rate;
     uint16_t scan_to;
     uint16_t bis_resync_to;
-    uint8_t lea_rsv1[2];
-    uint8_t media_downstream_sample_rate;
+    uint16_t sink_sample_rate;
+    uint8_t lea_rsv1;
     uint8_t callend_resume_media: 1;
     uint8_t lea_rsv_bit6 : 7;
     uint8_t lea_rsv2[5];
@@ -1312,7 +1325,7 @@ typedef struct
     uint8_t fast_pair_id : 5;
     uint8_t linkback_to_dongle_first : 1;
     uint8_t enable_ha : 1;
-    uint8_t app_option29_bit_rsv : 1;
+    uint8_t open_dbg_log_for_system_busy : 1;
 
     //offset 0x379
     uint8_t spp_voice_smaple_rate : 2;
@@ -1352,11 +1365,11 @@ typedef struct
     uint16_t high_temperature_protect_value;
     uint16_t low_temperature_protect_value;
     uint8_t  discharge_ntc_protection_thermistor_option: 1;
-    uint8_t  enable_rtk_multilink: 1;
+    uint8_t  enable_common_multilink: 1;
     uint8_t  app_rsv1: 6;
 
     //(offset 0x393)
-    uint8_t supported_rtk_link_number;
+    uint8_t supported_common_link_number;
     uint8_t rsv01[8];
 
     //LEA KEY: 16 byte (offset 0x39C)
@@ -1407,7 +1420,9 @@ typedef struct
     uint8_t tone_ha_prog_8;
     uint8_t tone_ha_prog_9;
 
-    uint8_t tone_rsv[20];
+    uint8_t tone_gfps_dult_find;
+
+    uint8_t tone_rsv[19];
 } T_APP_CFG_CONST;
 
 /** @brief  Read only configurations for app  configurations, max size:512 bytes*/
@@ -1479,7 +1494,8 @@ typedef struct
     uint8_t gfps_le_device_support : 1;
     uint8_t gfps_le_disconn_force_enter_pairing_mode: 1;
     uint8_t gfps_le_device_mode: 2;
-    uint8_t gfps_rsv : 4;
+    uint8_t disable_finder_adv_when_power_off : 1;
+    uint8_t gfps_rsv : 3;
 
     uint16_t gfps_discov_adv_interval;
     uint16_t gfps_not_discov_adv_interval;
@@ -1524,6 +1540,24 @@ typedef struct
     uint8_t tile_rsv : 4;
 
     uint16_t tuya_adv_timeout;
+
+    uint8_t gfps_company_name[64];
+    uint8_t gfps_device_name[64];
+    uint8_t gfps_device_type;
+    uint8_t gfps_version[10];
+    //gfps finder adv interval in power on state, unit 0.625ms, range (32,3200), default value 800, time = 800*0.625 = 500ms;
+    uint32_t gfps_power_on_finder_adv_interval;
+    //gfps finder adv interval in power off state, unit 0.625ms, range (32,3200), default value 1600, time = 1600*0.625 = 1000ms;
+    uint32_t gfps_power_off_finder_adv_interval;
+    //timeout value to start timer for finder adv in power off state, unit 1s, Range(60,3600), default value 600s
+    uint16_t gfps_power_off_start_finder_adv_timer_timeout_value;
+    //finder adv duration in power off state, unit 1s, range(10s,600s), default value 10s
+    uint16_t gfps_power_off_finder_adv_duration;
+
+    // unit 1s, Range(0,3600),   0: Disable
+    uint16_t power_off_rtc_wakeup_timeout;
+    // Range(0, 100)
+    uint16_t gfps_finder_adv_skip_count_when_wakeup;
 } T_EXTEND_APP_CFG_CONST;
 
 /** End of APP_CFG_Exported_Types

@@ -29,7 +29,7 @@
 //#include "bqb.h"
 #include "test_mode.h"
 #include "single_tone.h"
-#include "engage.h"
+//#include "engage.h"
 #include "app_cfg.h"
 #include "app_main.h"
 #include "app_gap.h"
@@ -129,6 +129,10 @@
 #include "audio_pad.h"
 #endif
 
+#if F_APP_HANDLE_DS_PIPE_IN_ISR
+#include "audio_pipe.h"
+#endif
+
 #define MAX_NUMBER_OF_GAP_MESSAGE       0x20    //!< indicate BT stack message queue size
 #define MAX_NUMBER_OF_IO_MESSAGE        0x80    //!< indicate io queue size, extra 0x20 for data uart
 #define MAX_NUMBER_OF_DSP_MSG           0x20    //!< number of dsp message reserved for DSP message handling.
@@ -220,7 +224,7 @@ static void board_init(void)
     //Config  UART3 pinmux. For DSP debug
     if (app_cfg_const.dsp_log_output_select == DSP_OUTPUT_LOG_BY_UART)
     {
-        Pinmux_Config(app_cfg_const.dsp_log_pin, UART1_TX);
+        Pinmux_Config(app_cfg_const.dsp_log_pin, UART2_TX);
         Pad_Config(app_cfg_const.dsp_log_pin,
                    PAD_PINMUX_MODE, PAD_IS_PWRON, PAD_PULL_NONE, PAD_OUT_ENABLE, PAD_OUT_HIGH);
     }
@@ -333,7 +337,7 @@ static void framework_init(void)
     remote_peer_addr_set(app_cfg_nv.bud_peer_addr);
 
     /* Bluetooth Manager */
-    bt_mgr_init(MAX_BR_LINK_NUM);
+    bt_mgr_init();
 
     /* Audio Manager */
     audio_mgr_init(PLAYBACK_POOL_SIZE, VOICE_POOL_SIZE, RECORD_POOL_SIZE, NOTIFICATION_POOL_SIZE);
@@ -541,6 +545,7 @@ int main(void)
 #endif
         board_init();
         bt_adap_init(adapter_msg_cback);
+        bt_adap_set_scan_mdoe(GAP_SCAN_MODE_PASSIVE);
 #if (F_APP_SC_KEY_DERIVE_SUPPORT == 1)
         app_ble_key_derive_init();
 #endif
@@ -625,6 +630,7 @@ int main(void)
         bt_ual_set_param(GAP_BR_PARAM_NAME, GAP_DEVICE_NAME_LEN, app_cfg_nv.device_name_legacy);
 
         bt_adap_init(adapter_msg_cback);
+        bt_adap_set_scan_mdoe(GAP_SCAN_MODE_PASSIVE);
         le_service_gap_params_reset();
 #if TX_POWER_CTRL
         bt_pairing_tx_power_set(-2);

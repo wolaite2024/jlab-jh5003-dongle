@@ -229,7 +229,7 @@ static void data_uart_handler(void)
     if (UART_GetFlagState(UART, UART_FLAG_RX_IDLE) == SET)
     {
         //clear Flag
-        UART_INTConfig(UART, UART_INT_IDLE, DISABLE);
+        UART_ClearINT(UART0, UART_FLAG_RX_IDLE);
 
         if (GDMA_GetChannelStatus(UART_RX_DMA_CHANNEL_NUM))
             /*suspend at first to let DMA pop the fifo data*/
@@ -251,8 +251,6 @@ static void data_uart_handler(void)
         GDMA_SetDestinationAddress(UART_RX_DMA_CHANNEL, (uint32_t)uart_receive_buf);
         GDMA_SuspendCmd(UART_RX_DMA_CHANNEL, DISABLE);
         GDMA_Cmd(UART_RX_DMA_CHANNEL_NUM, ENABLE);
-
-        UART_INTConfig(UART0, UART_INT_IDLE, ENABLE);
     }
 
     switch (int_status)

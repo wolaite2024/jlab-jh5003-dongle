@@ -60,11 +60,7 @@ typedef enum
 #define READY_BIT_INIT       (0x01 << 0)
 #define READY_BIT_PLUGGED    (0x01 << 1)
 #define READY_BIT_POWER_ON   (0x01 << 2)
-#if (F_APP_GAMING_DONGLE_SUPPORT == 1)
-#define READY_BIT_ALL        (READY_BIT_INIT|READY_BIT_PLUGGED)
-#else
 #define READY_BIT_ALL        (READY_BIT_INIT|READY_BIT_PLUGGED|READY_BIT_POWER_ON)
-#endif
 
 
 typedef struct _store_param

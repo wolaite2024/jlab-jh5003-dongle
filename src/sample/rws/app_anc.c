@@ -31,7 +31,6 @@
 #include "app_airplane.h"
 #endif
 #include "app_bt_policy_api.h"
-#include "app_audio_policy.h"
 #if F_APP_LISTENING_MODE_SUPPORT
 #include "app_listening_mode.h"
 #endif
@@ -46,10 +45,8 @@
 #include "audio_probe.h"
 #include "audio_route.h"
 #include "app_audio_route.h"
-#include "app_multilink.h"
 #include "eq_utils.h"
 #include "app_eq.h"
-#include "app_roleswap.h"
 #include "app_roleswap_control.h"
 #include "system_status_api.h"
 #include "feature_check.h"
@@ -196,7 +193,7 @@ bool app_anc_set_first_anc_sceanrio(T_ANC_APT_STATE *state)
 
 static void app_anc_activated_scenario_init(void)
 {
-    T_ANC_MP_EXT_DATA anc_mp_ext_data;
+    T_ANC_MP_EXT_DATA anc_mp_ext_data = {0};
     anc_tool_read_mp_ext_data(&(anc_mp_ext_data.d32));
 
     uint8_t dummy[ANC_MP_GRP_INFO_BITS];
@@ -837,7 +834,7 @@ static void app_anc_report(uint16_t anc_report_event, uint8_t *event_data, uint1
         {
             uint8_t report_data[16];
             uint8_t i;
-            uint8_t scenario_mode[ANC_MP_GRP_INFO_BITS];
+            uint8_t scenario_mode[ANC_MP_GRP_INFO_BITS] = {0};
             uint8_t select_list_index = 0;
 
             report_data[0] = 0; // query_type
@@ -1840,9 +1837,17 @@ void app_anc_cmd_handle(uint16_t anc_cmd, uint8_t *param_ptr, uint16_t param_len
             uint8_t audio_category, logical_mic;
             T_AUDIO_ROUTE_PHYSICAL_MIC physical_mic;
 
+            if (app_listening_cmd_postpone_reason_get() != ANC_APT_CMD_POSTPONE_WAIT_ANC_OFF)
+            {
+                app_listening_cmd_postpone_stash(anc_cmd, param_ptr, param_len, path, app_idx,
+                                                 ANC_APT_CMD_POSTPONE_WAIT_ANC_OFF);
+                anc_disable();
+                break;
+            }
+
             only_report_status = true;
 
-            anc_disable();
+            audio_route_category_path_unregister(AUDIO_CATEGORY_ANC);
 
             switch ((T_ANC_RESP_MEAS_MIC_SEL)param_ptr[0])
             {
@@ -2793,6 +2798,11 @@ static void app_anc_audio_cback(T_AUDIO_EVENT event_type, void *event_buf, uint1
             handle = false;
             anc_tool = true;
 
+            if (app_listening_cmd_postpone_reason_get() == ANC_APT_CMD_POSTPONE_WAIT_ANC_OFF)
+            {
+                app_listening_cmd_postpone_pop();
+            }
+
             goto SKIP;
         }
 
@@ -3124,6 +3134,11 @@ bool app_anc_open_condition_check(void)
     }
 
     if (app_anc_get_selected_scenario_cnt() == 0)
+    {
+        return false;
+    }
+
+    if (app_db.power_on_delay_opening_anc)
     {
         return false;
     }

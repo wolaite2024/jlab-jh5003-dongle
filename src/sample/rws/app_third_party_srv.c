@@ -14,6 +14,10 @@
 #if CONFIG_REALTEK_GFPS_FEATURE_SUPPORT
 #include "app_gfps.h"
 #include "app_gfps_msg.h"
+#if CONFIG_REALTEK_GFPS_FINDER_SUPPORT
+#include "app_dult.h"
+#include "app_dult_device.h"
+#endif
 #endif
 
 #if XM_XIAOAI_FEATURE_SUPPORT
@@ -52,6 +56,13 @@ void app_third_party_srv_init(void)
     {
         app_gfps_init();
     }
+#if CONFIG_REALTEK_GFPS_FINDER_SUPPORT
+    if (extend_app_cfg_const.gfps_finder_support)
+    {
+        app_dult_device_init();
+        app_dult_svc_init();
+    }
+#endif
 #endif
 
 #if XM_XIAOAI_FEATURE_SUPPORT

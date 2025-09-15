@@ -46,8 +46,16 @@ typedef enum
     Sun  = 6
 } T_DAY_OF_WEEK;
 
-typedef void (* pRTCCalendarCB)(T_UTC_TIME *global_time);
+typedef enum
+{
+    ALARM_0,
+    ALARM_1,
+    ALARM_2,
+    ALARM_MAX_INDEX,
+} T_ALARM_INDEX;
 
+typedef void (* P_RTC_CALENDAR_CB)(T_UTC_TIME *global_time);
+typedef void (* P_RTC_ALARM_CB)(T_ALARM_INDEX alarm_index, T_UTC_TIME *utc_time);
 
 /*============================================================================*
  *                         Functions
@@ -55,21 +63,21 @@ typedef void (* pRTCCalendarCB)(T_UTC_TIME *global_time);
 
 /**
  * \brief   Get current day of week.
- * \return  The day of week
+ * \return  The day of week.
  */
 T_DAY_OF_WEEK rtc_calendar_get_current_day_of_week(void);
 
 /**
  * \brief   Convert timestamp(s) to date, start at 00:00:00 January 1, 2000.
- * \param[in] timestamp: Timestamp(s) to be converted
- * \return  The UTC date converted
+ * \param[in] timestamp: Timestamp(s) to be converted.
+ * \return  The UTC date converted.
  */
 T_UTC_TIME rtc_calendar_timestamp_to_date(uint32_t timestamp);
 
 /**
  * \brief   Convert date to timestamp(s).
  * \param[in] utc_time: Time to be converted, start at 00:00:00 January 1, 2000.
- * \return  The timestamp converted, 0 means utc_time is wrong
+ * \return  The timestamp converted, 0 means utc_time is wrong.
  */
 uint32_t rtc_calendar_date_to_timestamp(T_UTC_TIME *utc_time);
 
@@ -81,36 +89,33 @@ uint32_t rtc_calendar_get_timestamp(void);
 
 /**
  * \brief   Get calendar utc time.
- * \param[in] utc_time: Calendar utc time pointer
- * \return  None.
+ * \param[in] utc_time: Calendar utc time pointer.
  */
 void rtc_calendar_get_utc_time(T_UTC_TIME *utc_time);
 
 /**
  * \brief   Unregister rtc calendar callback.
- * \return  None.
  */
 void rtc_calendar_unregister_callback(void);
 
 /**
  * \brief   Register rtc calendar callback.
  * \param[in] cb: Calendar callback
- * \return  None.
  */
-void rtc_calendar_register_callback(pRTCCalendarCB cb);
+void rtc_calendar_register_callback(P_RTC_CALENDAR_CB cb);
 
 /**
  * \brief   Set calendar utc time.
- * \param[in] utc_time: Calendar utc time which started at 00:00:00 January 1, 2000
- * \return  True means setting calendar clock success, false means utc_time wrong
+ * \param[in] utc_time: Calendar utc time which started at 00:00:00 January 1, 2000.
+ * \return  True means setting calendar clock success, false means utc_time wrong.
  */
 bool rtc_calendar_set_utc_time(T_UTC_TIME *utc_time);
 
 /**
  * \brief   Init rtc calendar.
- * \param[in] defut_utc_time: Calendar default time which started at 00:00:00 January 1, 2000
- * \param[in] update_freq_s: Calendar update interval, the value can be 1 ~ 240s
- * \return  True means init rtc calendar success, false means defut_utc_time wrong
+ * \param[in] default_utc_time: Calendar default time which started at 00:00:00 January 1, 2000.
+ * \param[in] update_interval_sec: Calendar update interval, the value can be 1 ~ 240s.
+ * \return  True means init rtc calendar success, false means default_utc_time wrong.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -125,21 +130,110 @@ bool rtc_calendar_set_utc_time(T_UTC_TIME *utc_time);
  *
  * void rtc_calendar_module_int(void)
  * {
- *     T_UTC_TIME defut_utc_time;
+ *     T_UTC_TIME default_utc_time;
  *
- *     defut_utc_time.time.year = 2024;
- *     defut_utc_time.time.month = 3;
- *     defut_utc_time.time.day = 15;
- *     defut_utc_time.time.hours = 16;
- *     defut_utc_time.time.minute = 15;
- *     defut_utc_time.time.seconds = 30;
+ *     default_utc_time.time.year = 2024;
+ *     default_utc_time.time.month = 3;
+ *     default_utc_time.time.day = 15;
+ *     default_utc_time.time.hours = 16;
+ *     default_utc_time.time.minute = 15;
+ *     default_utc_time.time.seconds = 30;
  *
  *     rtc_calendar_register_callback(calendar_callback);
- *     rtc_calendar_int(&defut_utc_time, 10);
+ *     rtc_calendar_int(&default_utc_time, 10);
  * }
  * \endcode
  */
-bool rtc_calendar_int(T_UTC_TIME *defut_utc_time, uint32_t update_interval_sec);
+bool rtc_calendar_int(T_UTC_TIME *default_utc_time, uint32_t update_interval_sec);
+
+/**
+ * \brief   Set calendar update interval.
+ * \param[in] update_interval_sec: Calendar update interval, the value can be 1 ~ 240s.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * void rtc_calendar_module_int(void)
+ * {
+ *     rtc_calendar_set_update_interval(5);
+ * }
+ * \endcode
+ */
+void rtc_calendar_set_update_interval(uint32_t update_interval_sec);
+
+/**
+ * \brief   Add an alarm by UTC data, the alarm will respond when the specified UTC time is reached.
+ * \param[in] alarm_index: Alarm index \ref T_ALARM_INDEX.
+ * \param[in] utc_time: UTC time of the alarm response.
+ * \param[in] cb: Callback called when the alarm expires.
+ * \return  True means add alarm success, false means add alarm failed.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * void rtc_calendar_module_int(void)
+ * {
+ *     T_UTC_TIME default_utc_time;
+ *
+ *     default_utc_time.time.year = 2024;
+ *     default_utc_time.time.month = 3;
+ *     default_utc_time.time.day = 15;
+ *     default_utc_time.time.hours = 16;
+ *     default_utc_time.time.minute = 15;
+ *     default_utc_time.time.seconds = 30;
+ *
+ *     rtc_calendar_register_callback(calendar_callback);
+ *     rtc_calendar_int(&default_utc_time, 10);
+ *
+ *     default_utc_time.year = 2024;
+ *     default_utc_time.month = 3;
+ *     default_utc_time.day = 15;
+ *     default_utc_time.hour = 16;
+ *     default_utc_time.minutes = 15;
+ *     default_utc_time.seconds = 40;
+ *
+ *     rtc_calendar_add_alarm_by_utc(ALARM_0, &default_utc_time, alarm_callback);
+ * }
+ * \endcode
+ */
+bool rtc_calendar_add_alarm_by_utc(T_ALARM_INDEX alarm_index, T_UTC_TIME *utc_time,
+                                   P_RTC_ALARM_CB cb);
+
+/**
+ * \brief   Add an alarm by second, the alarm will respond after the specified number of seconds.
+ * \param[in] alarm_index: Alarm index \ref T_ALARM_INDEX.
+ * \param[in] second: Number of seconds for the alarm response.
+ * \param[in] cb: Callback called when the alarm expires.
+ * \param[in] is_repeat: Whether the alarm is set to repeat its response.
+ * \return  True means add alarm success, false means add alarm failed.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * void rtc_calendar_module_int(void)
+ * {
+ *     rtc_calendar_add_alarm_by_second(ALARM_1, 5, alarm_callback, false);
+ *     rtc_calendar_add_alarm_by_second(ALARM_2, 15, alarm_callback, true);
+ * }
+ * \endcode
+ */
+bool rtc_calendar_add_alarm_by_second(T_ALARM_INDEX alarm_index, uint32_t second,
+                                      P_RTC_ALARM_CB cb, bool is_repeat);
+
+/**
+ * \brief   Delete an alarm.
+ * \param[in] alarm_index: Alarm index \ref T_ALARM_INDEX.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * void rtc_calendar_module_int(void)
+ * {
+ *     rtc_calendar_delete_alarm(ALARM_1);
+ * }
+ * \endcode
+ */
+void rtc_calendar_delete_alarm(T_ALARM_INDEX alarm_index);
 
 #ifdef __cplusplus
 }

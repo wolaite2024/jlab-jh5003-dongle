@@ -51,20 +51,31 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga3722b5e6b8f7730c795696fcfc5a54a5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___u_a_r_t___interrupts___definition.html#ga3722b5e6b8f7730c795696fcfc5a54a5">UART_INT_RD_AVA</a>&#160;&#160;&#160;((uint16_t)(1 &lt;&lt; 0))</td></tr>
+<tr class="memdesc:ga3722b5e6b8f7730c795696fcfc5a54a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive data avaliable interrupt, includes RX FIFO trigger level or RX timeout.  <a href="#ga3722b5e6b8f7730c795696fcfc5a54a5">More...</a><br /></td></tr>
 <tr class="separator:ga3722b5e6b8f7730c795696fcfc5a54a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga37ac1ac9f536c1988fe840fbe1f53c06"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___u_a_r_t___interrupts___definition.html#ga37ac1ac9f536c1988fe840fbe1f53c06">UART_INT_FIFO_EMPTY</a>&#160;&#160;&#160;((uint16_t)(1 &lt;&lt; 1))</td></tr>
+<tr class="memdesc:ga37ac1ac9f536c1988fe840fbe1f53c06"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX FIFO empty interrupt.  <a href="#ga37ac1ac9f536c1988fe840fbe1f53c06">More...</a><br /></td></tr>
 <tr class="separator:ga37ac1ac9f536c1988fe840fbe1f53c06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1eec1d4e4c0dee5f7ec2652785349ec0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___u_a_r_t___interrupts___definition.html#ga1eec1d4e4c0dee5f7ec2652785349ec0">UART_INT_LINE_STS</a>&#160;&#160;&#160;((uint16_t)(1 &lt;&lt; 2))</td></tr>
+<tr class="memdesc:ga1eec1d4e4c0dee5f7ec2652785349ec0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receiver line status interrupt.  <a href="#ga1eec1d4e4c0dee5f7ec2652785349ec0">More...</a><br /></td></tr>
 <tr class="separator:ga1eec1d4e4c0dee5f7ec2652785349ec0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga85d713f67322c483706bfe51e9d4dc6c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___u_a_r_t___interrupts___definition.html#ga85d713f67322c483706bfe51e9d4dc6c">UART_INT_MODEM_STS</a>&#160;&#160;&#160;((uint16_t)(1 &lt;&lt; 3))</td></tr>
+<tr class="memdesc:ga85d713f67322c483706bfe51e9d4dc6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modem status interrupt.  <a href="#ga85d713f67322c483706bfe51e9d4dc6c">More...</a><br /></td></tr>
 <tr class="separator:ga85d713f67322c483706bfe51e9d4dc6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2ee298820c144f9940e10a7a92383b8e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___u_a_r_t___interrupts___definition.html#ga2ee298820c144f9940e10a7a92383b8e">UART_INT_TX_DONE</a>&#160;&#160;&#160;((uint16_t)(1 &lt;&lt; 4))</td></tr>
+<tr class="memdesc:ga2ee298820c144f9940e10a7a92383b8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX done(TX FIFO empty and TX waveform sent done) interrupt.  <a href="#ga2ee298820c144f9940e10a7a92383b8e">More...</a><br /></td></tr>
 <tr class="separator:ga2ee298820c144f9940e10a7a92383b8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafbcd4b4ae59de01622ad4642a0b6eecf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___u_a_r_t___interrupts___definition.html#gafbcd4b4ae59de01622ad4642a0b6eecf">UART_INT_TX_THD</a>&#160;&#160;&#160;((uint16_t)(1 &lt;&lt; 5))</td></tr>
+<tr class="memdesc:gafbcd4b4ae59de01622ad4642a0b6eecf"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX FIFO threshold interrupt. TX FIFO level is less than or equal to TX FIFO threshold.  <a href="#gafbcd4b4ae59de01622ad4642a0b6eecf">More...</a><br /></td></tr>
+<tr class="separator:gafbcd4b4ae59de01622ad4642a0b6eecf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab95dc75d54f24e5b99daf54f7d30348e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___u_a_r_t___interrupts___definition.html#gab95dc75d54f24e5b99daf54f7d30348e">UART_INT_IDLE</a>&#160;&#160;&#160;((uint16_t)(1 &lt;&lt; 7))</td></tr>
+<tr class="memdesc:gab95dc75d54f24e5b99daf54f7d30348e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bus idle interrupt.  <a href="#gab95dc75d54f24e5b99daf54f7d30348e">More...</a><br /></td></tr>
 <tr class="separator:gab95dc75d54f24e5b99daf54f7d30348e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga450a46a633df5525d644af6ed4a52da6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___u_a_r_t___interrupts___definition.html#ga450a46a633df5525d644af6ed4a52da6">IS_UART_IT</a>(IT)&#160;&#160;&#160;((((IT) &amp; 0xFFFFFFF0) == 0x00) &amp;&amp; ((IT) != 0x00))</td></tr>
+<tr class="memdesc:ga450a46a633df5525d644af6ed4a52da6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the input parameter is valid.  <a href="#ga450a46a633df5525d644af6ed4a52da6">More...</a><br /></td></tr>
 <tr class="separator:ga450a46a633df5525d644af6ed4a52da6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf9cb68e7d6e6cb25cfc6e0e1be7d9545"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___u_a_r_t___interrupts___definition.html#gaf9cb68e7d6e6cb25cfc6e0e1be7d9545">IS_UART_GET_IT</a>(IT)</td></tr>
+<tr class="memdesc:gaf9cb68e7d6e6cb25cfc6e0e1be7d9545"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the input parameter is valid.  <a href="#gaf9cb68e7d6e6cb25cfc6e0e1be7d9545">More...</a><br /></td></tr>
 <tr class="separator:gaf9cb68e7d6e6cb25cfc6e0e1be7d9545"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -81,6 +92,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Receive data avaliable interrupt, includes RX FIFO trigger level or RX timeout. </p>
+
 </div>
 </div>
 <a id="ga37ac1ac9f536c1988fe840fbe1f53c06"></a>
@@ -94,6 +107,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>TX FIFO empty interrupt. </p>
 
 </div>
 </div>
@@ -109,6 +124,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Receiver line status interrupt. </p>
+
 </div>
 </div>
 <a id="ga85d713f67322c483706bfe51e9d4dc6c"></a>
@@ -122,6 +139,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Modem status interrupt. </p>
 
 </div>
 </div>
@@ -137,6 +156,24 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>TX done(TX FIFO empty and TX waveform sent done) interrupt. </p>
+
+</div>
+</div>
+<a id="gafbcd4b4ae59de01622ad4642a0b6eecf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafbcd4b4ae59de01622ad4642a0b6eecf">&#9670;&nbsp;</a></span>UART_INT_TX_THD</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define UART_INT_TX_THD&#160;&#160;&#160;((uint16_t)(1 &lt;&lt; 5))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>TX FIFO threshold interrupt. TX FIFO level is less than or equal to TX FIFO threshold. </p>
+
 </div>
 </div>
 <a id="gab95dc75d54f24e5b99daf54f7d30348e"></a>
@@ -150,6 +187,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Bus idle interrupt. </p>
 
 </div>
 </div>
@@ -169,6 +208,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Check if the input parameter is valid. </p>
+
 </div>
 </div>
 <a id="gaf9cb68e7d6e6cb25cfc6e0e1be7d9545"></a>
@@ -186,13 +227,16 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">((IT) &amp; (<a class="code" href="group__x3e___u_a_r_t___interrupts___definition.html#ga3722b5e6b8f7730c795696fcfc5a54a5">UART_INT_RD_AVA</a> | <a class="code" href="group__x3e___u_a_r_t___interrupts___definition.html#ga37ac1ac9f536c1988fe840fbe1f53c06">UART_INT_FIFO_EMPTY</a> | <a class="code" href="group__x3e___u_a_r_t___interrupts___definition.html#ga1eec1d4e4c0dee5f7ec2652785349ec0">UART_INT_LINE_STS</a> |\</div><div class="line">                                    <a class="code" href="group__x3e___u_a_r_t___interrupts___definition.html#ga85d713f67322c483706bfe51e9d4dc6c">UART_INT_MODEM_STS</a> | <a class="code" href="group__x3e___u_a_r_t___interrupts___definition.html#ga2ee298820c144f9940e10a7a92383b8e">UART_INT_TX_DONE</a> | <a class="code" href="group__x3e___u_a_r_t___interrupts___definition.html#gab95dc75d54f24e5b99daf54f7d30348e">UART_INT_IDLE</a>))</div><div class="ttc" id="group__x3e___u_a_r_t___interrupts___definition_html_gab95dc75d54f24e5b99daf54f7d30348e"><div class="ttname"><a href="group__x3e___u_a_r_t___interrupts___definition.html#gab95dc75d54f24e5b99daf54f7d30348e">UART_INT_IDLE</a></div><div class="ttdeci">#define UART_INT_IDLE</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:104</div></div>
-<div class="ttc" id="group__x3e___u_a_r_t___interrupts___definition_html_ga3722b5e6b8f7730c795696fcfc5a54a5"><div class="ttname"><a href="group__x3e___u_a_r_t___interrupts___definition.html#ga3722b5e6b8f7730c795696fcfc5a54a5">UART_INT_RD_AVA</a></div><div class="ttdeci">#define UART_INT_RD_AVA</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:99</div></div>
-<div class="ttc" id="group__x3e___u_a_r_t___interrupts___definition_html_ga1eec1d4e4c0dee5f7ec2652785349ec0"><div class="ttname"><a href="group__x3e___u_a_r_t___interrupts___definition.html#ga1eec1d4e4c0dee5f7ec2652785349ec0">UART_INT_LINE_STS</a></div><div class="ttdeci">#define UART_INT_LINE_STS</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:101</div></div>
-<div class="ttc" id="group__x3e___u_a_r_t___interrupts___definition_html_ga2ee298820c144f9940e10a7a92383b8e"><div class="ttname"><a href="group__x3e___u_a_r_t___interrupts___definition.html#ga2ee298820c144f9940e10a7a92383b8e">UART_INT_TX_DONE</a></div><div class="ttdeci">#define UART_INT_TX_DONE</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:103</div></div>
-<div class="ttc" id="group__x3e___u_a_r_t___interrupts___definition_html_ga37ac1ac9f536c1988fe840fbe1f53c06"><div class="ttname"><a href="group__x3e___u_a_r_t___interrupts___definition.html#ga37ac1ac9f536c1988fe840fbe1f53c06">UART_INT_FIFO_EMPTY</a></div><div class="ttdeci">#define UART_INT_FIFO_EMPTY</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:100</div></div>
-<div class="ttc" id="group__x3e___u_a_r_t___interrupts___definition_html_ga85d713f67322c483706bfe51e9d4dc6c"><div class="ttname"><a href="group__x3e___u_a_r_t___interrupts___definition.html#ga85d713f67322c483706bfe51e9d4dc6c">UART_INT_MODEM_STS</a></div><div class="ttdeci">#define UART_INT_MODEM_STS</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:102</div></div>
+<b>Value:</b><div class="fragment"><div class="line">((IT) &amp; (<a class="code" href="group__x3e___u_a_r_t___interrupts___definition.html#ga3722b5e6b8f7730c795696fcfc5a54a5">UART_INT_RD_AVA</a> | <a class="code" href="group__x3e___u_a_r_t___interrupts___definition.html#ga37ac1ac9f536c1988fe840fbe1f53c06">UART_INT_FIFO_EMPTY</a> | <a class="code" href="group__x3e___u_a_r_t___interrupts___definition.html#ga1eec1d4e4c0dee5f7ec2652785349ec0">UART_INT_LINE_STS</a> |\</div><div class="line">                                    <a class="code" href="group__x3e___u_a_r_t___interrupts___definition.html#ga85d713f67322c483706bfe51e9d4dc6c">UART_INT_MODEM_STS</a> | <a class="code" href="group__x3e___u_a_r_t___interrupts___definition.html#ga2ee298820c144f9940e10a7a92383b8e">UART_INT_TX_DONE</a> | <a class="code" href="group__x3e___u_a_r_t___interrupts___definition.html#gafbcd4b4ae59de01622ad4642a0b6eecf">UART_INT_TX_THD</a> |\</div><div class="line">                                    <a class="code" href="group__x3e___u_a_r_t___interrupts___definition.html#gab95dc75d54f24e5b99daf54f7d30348e">UART_INT_IDLE</a>))</div><div class="ttc" id="group__x3e___u_a_r_t___interrupts___definition_html_gab95dc75d54f24e5b99daf54f7d30348e"><div class="ttname"><a href="group__x3e___u_a_r_t___interrupts___definition.html#gab95dc75d54f24e5b99daf54f7d30348e">UART_INT_IDLE</a></div><div class="ttdeci">#define UART_INT_IDLE</div><div class="ttdoc">Bus idle interrupt. </div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:117</div></div>
+<div class="ttc" id="group__x3e___u_a_r_t___interrupts___definition_html_ga3722b5e6b8f7730c795696fcfc5a54a5"><div class="ttname"><a href="group__x3e___u_a_r_t___interrupts___definition.html#ga3722b5e6b8f7730c795696fcfc5a54a5">UART_INT_RD_AVA</a></div><div class="ttdeci">#define UART_INT_RD_AVA</div><div class="ttdoc">Receive data avaliable interrupt, includes RX FIFO trigger level or RX timeout. </div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:111</div></div>
+<div class="ttc" id="group__x3e___u_a_r_t___interrupts___definition_html_gafbcd4b4ae59de01622ad4642a0b6eecf"><div class="ttname"><a href="group__x3e___u_a_r_t___interrupts___definition.html#gafbcd4b4ae59de01622ad4642a0b6eecf">UART_INT_TX_THD</a></div><div class="ttdeci">#define UART_INT_TX_THD</div><div class="ttdoc">TX FIFO threshold interrupt. TX FIFO level is less than or equal to TX FIFO threshold. </div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:116</div></div>
+<div class="ttc" id="group__x3e___u_a_r_t___interrupts___definition_html_ga1eec1d4e4c0dee5f7ec2652785349ec0"><div class="ttname"><a href="group__x3e___u_a_r_t___interrupts___definition.html#ga1eec1d4e4c0dee5f7ec2652785349ec0">UART_INT_LINE_STS</a></div><div class="ttdeci">#define UART_INT_LINE_STS</div><div class="ttdoc">Receiver line status interrupt. </div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:113</div></div>
+<div class="ttc" id="group__x3e___u_a_r_t___interrupts___definition_html_ga2ee298820c144f9940e10a7a92383b8e"><div class="ttname"><a href="group__x3e___u_a_r_t___interrupts___definition.html#ga2ee298820c144f9940e10a7a92383b8e">UART_INT_TX_DONE</a></div><div class="ttdeci">#define UART_INT_TX_DONE</div><div class="ttdoc">TX done(TX FIFO empty and TX waveform sent done) interrupt. </div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:115</div></div>
+<div class="ttc" id="group__x3e___u_a_r_t___interrupts___definition_html_ga37ac1ac9f536c1988fe840fbe1f53c06"><div class="ttname"><a href="group__x3e___u_a_r_t___interrupts___definition.html#ga37ac1ac9f536c1988fe840fbe1f53c06">UART_INT_FIFO_EMPTY</a></div><div class="ttdeci">#define UART_INT_FIFO_EMPTY</div><div class="ttdoc">TX FIFO empty interrupt. </div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:112</div></div>
+<div class="ttc" id="group__x3e___u_a_r_t___interrupts___definition_html_ga85d713f67322c483706bfe51e9d4dc6c"><div class="ttname"><a href="group__x3e___u_a_r_t___interrupts___definition.html#ga85d713f67322c483706bfe51e9d4dc6c">UART_INT_MODEM_STS</a></div><div class="ttdeci">#define UART_INT_MODEM_STS</div><div class="ttdoc">Modem status interrupt. </div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:114</div></div>
 </div><!-- fragment -->
+<p>Check if the input parameter is valid. </p>
+
 </div>
 </div>
 </div><!-- contents -->

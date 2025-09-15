@@ -32,7 +32,6 @@
 #define PAL_ATTEMPT_COUNT            3
 
 #define BLE_PA_SYNC_TIME_OUT          1000
-#define BLE_PA_SYNC_SKIP              10
 
 #define BROADCAST_ID_LEN               (3)
 

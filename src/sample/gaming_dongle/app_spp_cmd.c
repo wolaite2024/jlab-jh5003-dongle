@@ -43,6 +43,7 @@
 #include "app_upstream_decode.h"
 #include "app_downstream_encode.h"
 #include "gap_br.h"
+#include "teams_call_control.h"
 
 /*============================================================================*
  *                         Macros
@@ -118,7 +119,6 @@ void app_cmd_send_by_spp(uint8_t cmd, uint8_t *data, uint16_t len)
         return;
     }
     APP_PRINT_INFO2("app_cmd_send_by_spp data %b len %d", TRACE_BINARY(len, data), len);
-	APP_PRINT_INFO1("----> cmd 0x%x",cmd);
     spp_cmd_t *p_spp = (spp_cmd_t *)p_data;
     p_spp->sync = 'R';
     p_spp->type = 0x01;
@@ -269,6 +269,16 @@ void app_spp_cmd_received(uint8_t *addr, uint8_t *data, uint16_t len)
         }
         break;
 #endif
+
+    case DONGLE_CMD_MIC_MUTE_CTRL:
+        {
+            bool mic_mute = data[1];
+
+            APP_PRINT_TRACE1("DONGLE_CMD_MIC_MUTE_CTRL: %d", mic_mute);
+
+            app_usb_hid_send_telephony_mute_ctrl(mic_mute);
+        }
+        break;
 
     default:
         break;

@@ -20,9 +20,7 @@ extern "C" {
  */
 
 /**
- * bt_map.h
- *
- * \brief  Define BT MAP Folder.
+ * \brief  Define BT MAP folder.
  *
  * \ingroup BT_MAP
  */
@@ -39,8 +37,6 @@ typedef enum t_bt_map_folder
 } T_BT_MAP_FOLDER;
 
 /**
- * bt_map.h
- *
  * \brief  BT MAP response code.
  *
  * \ingroup BT_MAP
@@ -57,29 +53,24 @@ typedef enum t_bt_map_response_code
 } T_BT_MAP_RESPONSE_CODE;
 
 /**
- * bt_map.h
- *
- * \brief  BT MAP PUSH MESSAGE ACTION.
+ * \brief  BT MAP push message action.
  *
  * \ingroup BT_MAP
  */
 typedef enum t_bt_map_push_msg_action
 {
-    BT_MAP_PUSH_MSG_COMPLETE        = 0x00,  /* Push complete */
-    BT_MAP_PUSH_MSG_CONTINUE        = 0x01,  /* Push next packet */
-    BT_MAP_PUSH_MSG_AGAIN           = 0x02,  /* Push previous packet again */
-    BT_MAP_PUSH_MSG_TO_END          = 0x03,  /* Push packets one by one from begining to end */
+    BT_MAP_PUSH_MSG_COMPLETE        = 0x00,  /* Push complete. */
+    BT_MAP_PUSH_MSG_CONTINUE        = 0x01,  /* Push next packet. */
+    BT_MAP_PUSH_MSG_AGAIN           = 0x02,  /* Push previous packet again. */
+    BT_MAP_PUSH_MSG_TO_END          = 0x03,  /* Push packets one by one from beginning to end. */
 } T_BT_MAP_PUSH_MSG_ACTION;
 
 /**
- * bt_map.h
- *
  * \brief   Initialize MAP profile.
  *
- * \param[in]  link_num          MAP maximum connected link number.
- * \param[in]  mns_server_chann  RFCOMM Server channel to be allocated for MNS.
+ * \param[in]  mns_server_chann  RFCOMM server channel to be allocated for MNS.
  * \param[in]  mns_l2c_psm       L2CAP PSM to be allocated for MNS.
- * \param[in]  support_feat      MAP Client supported features.
+ * \param[in]  support_feat      MAP client supported features.
  *
  * \return          The status of initializing MAP profile.
  * \retval true     MAP profile was initialized successfully.
@@ -87,15 +78,12 @@ typedef enum t_bt_map_push_msg_action
  *
  * \ingroup BT_MAP
  */
-bool bt_map_init(uint8_t  link_num,
-                 uint8_t  mns_server_chann,
+bool bt_map_init(uint8_t  mns_server_chann,
                  uint16_t mns_l2c_psm,
                  uint32_t support_feat);
 
 /**
- * bt_map.h
- *
- * \brief   Accept or reject the incoming MNS Connection.
+ * \brief   Accept or reject the incoming MNS connection.
  *
  * \param[in]  bd_addr    Remote BT address.
  * \param[in]  accept     Accept or reject the connection indication.
@@ -112,8 +100,6 @@ bool bt_map_mns_connect_cfm(uint8_t bd_addr[6],
                             bool    accept);
 
 /**
- * bt_map.h
- *
  * \brief  Send a MAS connection request over RFCOMM.
  *
  * \param[in]  bd_addr         Remote BT address.
@@ -129,12 +115,10 @@ bool bt_map_mas_connect_over_rfc_req(uint8_t bd_addr[6],
                                      uint8_t server_chann);
 
 /**
- * bt_map.h
- *
  * \brief  Send a MAS connection request over L2CAP.
  *
  * \param[in]  bd_addr         Remote BT address.
- * \param[in]  l2c_psm         The remote L2CAP psm defined in SDP record.
+ * \param[in]  l2c_psm         The remote L2CAP PSM defined in SDP record.
  *
  * \return         The status of sending the MAS connection request.
  * \retval true    MAS connection request was sent successfully.
@@ -146,8 +130,6 @@ bool bt_map_mas_connect_over_l2c_req(uint8_t  bd_addr[6],
                                      uint16_t l2c_psm);
 
 /**
- * bt_map.h
- *
  * \brief  Send a MAS disconnection request.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -161,8 +143,6 @@ bool bt_map_mas_connect_over_l2c_req(uint8_t  bd_addr[6],
 bool bt_map_mas_disconnect_req(uint8_t bd_addr[6]);
 
 /**
- * bt_map.h
- *
  * \brief  Acknowledge on receiving an event report Indication.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -178,12 +158,10 @@ bool bt_map_mns_send_event_rsp(uint8_t                bd_addr[6],
                                T_BT_MAP_RESPONSE_CODE rsp_code);
 
 /**
- * bt_map.h
- *
- * \brief  Register or Unregister the message notifications.
+ * \brief  Register or unregister the message notifications.
  *
  * \param[in]  bd_addr     Remote BT address.
- * \param[in]  enable      true to register and false to unregister.
+ * \param[in]  enable      True to register and false to unregister.
  *
  * \return         The status of sending the set folder request.
  * \retval true    Request was sent successfully.
@@ -195,8 +173,6 @@ bool bt_map_mas_msg_notification_set(uint8_t bd_addr[6],
                                      bool    enable);
 
 /**
- * bt_map.h
- *
  * \brief  Request to navigate the folders of MSE.
  *
  * \param[in]  bd_addr    Remote BT address.
@@ -212,8 +188,6 @@ bool bt_map_mas_folder_set(uint8_t         bd_addr[6],
                            T_BT_MAP_FOLDER folder);
 
 /**
- * bt_map.h
- *
  * \brief  Request to get the remote folder listing.
  *
  * \param[in]  bd_addr         Remote BT address.
@@ -231,8 +205,6 @@ bool bt_map_mas_folder_listing_get(uint8_t  bd_addr[6],
                                    uint16_t start_offset);
 
 /**
- * bt_map.h
- *
  * \brief  Request to get the list of messages from the MSE folder.
  *
  * \param[in]  bd_addr         Remote BT address.
@@ -254,14 +226,12 @@ bool bt_map_mas_msg_listing_get(uint8_t   bd_addr[6],
                                 uint16_t  start_offset);
 
 /**
- * bt_map.h
- *
  * \brief  Request to get the message from the MSE folder.
  *
  * \param[in]  bd_addr         Remote BT address.
  * \param[in]  msg_handle      Message handle, null-terminated Unicode text string with 16 hexadecimal digits.
  * \param[in]  handle_len      Length of message handle.
- * \param[in]  native          true for native and false for UTF-8 message.
+ * \param[in]  native          True for native and false for UTF-8 message.
  *
  * \return         The status of sending the get message request.
  * \retval true    Request was sent successfully.
@@ -275,8 +245,6 @@ bool bt_map_mas_msg_get(uint8_t  bd_addr[6],
                         bool     native);
 
 /**
- * bt_map.h
- *
  * \brief  Request to get more data from the remote server.
  *
  * \param[in]  bd_addr     Remote BT address.
@@ -290,8 +258,6 @@ bool bt_map_mas_msg_get(uint8_t  bd_addr[6],
 bool bt_map_mas_get_continue(uint8_t bd_addr[6]);
 
 /**
- * bt_map.h
- *
  * \brief  Request to terminate the ongoing get operation.
  *
  * \param[in]  bd_addr     Remote BT address.
@@ -305,15 +271,13 @@ bool bt_map_mas_get_continue(uint8_t bd_addr[6]);
 bool bt_map_mas_get_abort(uint8_t bd_addr[6]);
 
 /**
- * bt_map.h
- *
  * \brief  Request to send a new message.
  *
  * \param[in]  bd_addr     Remote BT address.
  * \param[in]  folder      Name of the message folder.
  * \param[in]  folder_len  Length of folder name.
- * \param[in]  native      true for native and false for UTF-8 message.
- * \param[in]  more_data   true if the message is partial and more data to send later.
+ * \param[in]  native      True for native and false for UTF-8 message.
+ * \param[in]  more_data   True if the message is partial and more data to send later.
  * \param[in]  msg         The message to be sent.
  * \param[in]  msg_len     Length of message.
  *

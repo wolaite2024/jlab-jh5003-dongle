@@ -23,6 +23,7 @@
 
 #if F_APP_LEA_SUPPORT
 #include "app_lea_unicast_audio.h"
+#include "app_lea_ccp.h"
 #endif
 
 #if F_APP_LINEIN_SUPPORT
@@ -44,6 +45,10 @@
 
 #if F_APP_EQ_COEFF_SUPPORT
 #include "pm.h"
+#endif
+
+#if F_APP_APT_SUPPORT
+#include "app_audio_passthrough.h"
 #endif
 
 // for EQ setting
@@ -212,31 +217,76 @@ void app_eq_deinit(void)
 }
 
 #if F_APP_LEA_SUPPORT
-static void app_eq_media_eq_set(T_AUDIO_EFFECT_INSTANCE eq_instance, uint8_t *dynamic_eq_buf,
+static void app_eq_media_eq_set(T_AUDIO_EFFECT_INSTANCE eq_instance, uint8_t *eq_buf,
                                 uint16_t eq_len)
 {
-    if (mtc_get_btmode() == MULTI_PRO_BT_BREDR)
+    if (mtc_get_btmode() == MULTI_PRO_BT_BREDR && eq_instance != NULL)
     {
-        eq_set(eq_instance, dynamic_eq_buf, eq_len);
+        eq_set(eq_instance, eq_buf, eq_len);
     }
-    else
+    else if (mtc_get_btmode() != MULTI_PRO_BT_BREDR && app_lea_uca_get_eq_instance() != NULL)
     {
-        eq_set(app_lea_uca_get_eq_instance(), dynamic_eq_buf, eq_len);
+        eq_set(app_lea_uca_get_eq_instance(), eq_buf, eq_len);
     }
 }
 
-static void app_eq_media_eq_enable(T_APP_BR_LINK *p_link)
+void app_eq_media_eq_enable(T_EQ_ENABLE_INFO *enable_info)
 {
-    if (mtc_get_btmode() == MULTI_PRO_BT_BREDR && p_link != NULL)
+    if (mtc_get_btmode() == MULTI_PRO_BT_BREDR && enable_info->instance != NULL)
     {
-        app_eq_audio_eq_enable(&p_link->eq_instance, &p_link->audio_eq_enabled);
+        app_eq_audio_eq_enable(&enable_info->instance, &enable_info->is_enable);
     }
-    else if (mtc_get_btmode() == MULTI_PRO_BT_BREDR && app_lea_uca_get_eq_instance() != NULL)
+    else if (mtc_get_btmode() != MULTI_PRO_BT_BREDR && app_lea_uca_get_eq_instance() != NULL)
     {
         app_eq_audio_eq_enable(app_lea_uca_p_eq_instance(), app_lea_uca_get_eq_abled());
     }
 }
 #endif
+
+void app_eq_enable_info_get(uint8_t eq_mode, T_EQ_ENABLE_INFO *enable_info)
+{
+    T_APP_BR_LINK *link = NULL;
+
+    memset(enable_info, 0, sizeof(T_EQ_ENABLE_INFO));
+
+    if (app_db.sw_eq_type == SPK_SW_EQ)
+    {
+#if F_APP_VOICE_SPK_EQ_SUPPORT
+        if (eq_mode == VOICE_SPK_MODE)
+        {
+            link = &app_db.br_link[app_hfp_get_active_idx()];
+            enable_info->instance = link->voice_spk_eq_instance;
+        }
+        else
+#endif
+        {
+            link = &app_db.br_link[app_a2dp_get_active_idx()];
+            enable_info->instance = link->eq_instance;
+            enable_info->is_enable = link->audio_eq_enabled;
+        }
+
+        enable_info->idx = app_cfg_nv.eq_idx;
+    }
+    else
+    {
+#if F_APP_VOICE_MIC_EQ_SUPPORT
+        if (eq_mode == VOICE_MIC_MODE)
+        {
+            link = &app_db.br_link[app_hfp_get_active_idx()];
+            enable_info->instance = link->voice_mic_eq_instance;
+            enable_info->idx = app_cfg_nv.eq_idx;
+        }
+        else
+#endif
+        {
+            enable_info->instance = app_db.apt_eq_instance;
+            enable_info->idx = app_cfg_nv.apt_eq_idx;
+        }
+    }
+
+    APP_PRINT_INFO3("app_eq_enable_info_get: instance %p, is_enable %d, idx %d", enable_info->instance,
+                    enable_info->is_enable, enable_info->idx);
+}
 
 bool app_eq_index_set(T_EQ_TYPE eq_type, uint8_t mode, uint8_t index)
 {
@@ -246,22 +296,20 @@ bool app_eq_index_set(T_EQ_TYPE eq_type, uint8_t mode, uint8_t index)
     bool ret = false;
     uint8_t *dynamic_eq_buf = calloc(1, app_db.max_eq_len);
     T_EQ_STREAM_TYPE stream_type = EQ_STREAM_TYPE_AUDIO;
-    T_APP_BR_LINK *link = &app_db.br_link[app_a2dp_get_active_idx()];
-    T_AUDIO_EFFECT_INSTANCE eq_instance;
+    T_EQ_ENABLE_INFO enable_info;
+
+    app_eq_enable_info_get(mode, &enable_info);
 
 #if F_APP_VOICE_SPK_EQ_SUPPORT
     if (mode == VOICE_SPK_MODE)
     {
         sample_rate = AUDIO_EQ_SAMPLE_RATE_16KHZ;
         stream_type = EQ_STREAM_TYPE_VOICE;
-        link = &app_db.br_link[app_hfp_get_active_idx()];
-        eq_instance = link->voice_spk_eq_instance;
     }
     else
 #endif
     {
         sample_rate = app_eq_sample_rate_get();
-        eq_instance = link->eq_instance;
     }
 
     if (dynamic_eq_buf != NULL)
@@ -280,6 +328,11 @@ bool app_eq_index_set(T_EQ_TYPE eq_type, uint8_t mode, uint8_t index)
         {
             eq_len = app_eq_dsp_param_get(eq_type, stream_type, mode, index, dynamic_eq_buf,
                                           app_db.max_eq_len, EQ_DATA_TO_DSP, sample_rate);
+
+            if (eq_len == 0)
+            {
+                return false;
+            }
         }
 
         if (eq_type == SPK_SW_EQ)
@@ -301,11 +354,12 @@ bool app_eq_index_set(T_EQ_TYPE eq_type, uint8_t mode, uint8_t index)
 #endif
                 {
 #if F_APP_LEA_SUPPORT
-                    app_eq_media_eq_set(eq_instance, dynamic_eq_buf, eq_len);
+                    app_eq_media_eq_set(enable_info.instance, dynamic_eq_buf, eq_len);
 #else
-                    eq_set(eq_instance, dynamic_eq_buf, eq_len);
+                    eq_set(enable_info.instance, dynamic_eq_buf, eq_len);
 #endif
                 }
+
             }
 
             app_cfg_nv.eq_idx = index;
@@ -334,6 +388,9 @@ bool app_eq_index_set(T_EQ_TYPE eq_type, uint8_t mode, uint8_t index)
 bool app_eq_param_set(uint8_t eq_mode, uint8_t index, void *data, uint16_t len)
 {
     uint8_t *buf;
+    T_EQ_ENABLE_INFO enable_info;
+
+    app_eq_enable_info_get(eq_mode, &enable_info);
 
     APP_PRINT_TRACE4("app_eq_param_set: eq_mode %d, index %u, data %p, len 0x%04x", eq_mode, index,
                      data, len);
@@ -344,40 +401,21 @@ bool app_eq_param_set(uint8_t eq_mode, uint8_t index, void *data, uint16_t len)
     {
         if (app_db.sw_eq_type == SPK_SW_EQ)
         {
-            T_APP_BR_LINK *link = NULL;
-            T_AUDIO_EFFECT_INSTANCE eq_instance;
-
-#if F_APP_VOICE_SPK_EQ_SUPPORT
-            if (eq_mode == VOICE_SPK_MODE)
+#if F_APP_USB_AUDIO_SUPPORT
+            if (app_usb_audio_get_ds_track_state() == AUDIO_TRACK_STATE_STARTED)
             {
-                link = &app_db.br_link[app_hfp_get_active_idx()];
-                eq_instance = link->voice_spk_eq_instance;
+                eq_set((T_AUDIO_EFFECT_INSTANCE) app_usb_audio_get_eq_instance(), buf, len);
             }
             else
 #endif
             {
-#if F_APP_USB_AUDIO_SUPPORT
-                if (app_usb_audio_get_ds_track_state() == AUDIO_TRACK_STATE_STARTED)
-                {
-                    eq_set((T_AUDIO_EFFECT_INSTANCE) app_usb_audio_get_eq_instance(), buf, len);
-                }
-                else
-#endif
-                {
-
-                    link = &app_db.br_link[app_a2dp_get_active_idx()];
-                    eq_instance = link->eq_instance;
-                }
-            }
-
 #if F_APP_LEA_SUPPORT
-            app_eq_media_eq_set(eq_instance, buf, len);
+                app_eq_media_eq_set(enable_info.instance, buf, len);
 #else
-            if (eq_instance != NULL)
-            {
-                eq_set(eq_instance, buf, len);
-            }
+                eq_set(enable_info.instance, buf, len);
 #endif
+            }
+
             app_cfg_nv.eq_idx = index;
         }
         else
@@ -990,6 +1028,22 @@ void app_eq_process_sync_user_eq_when_b2b_connected(T_EQ_TYPE eq_type, uint8_t e
             eq_utils_save_eq_to_ftl(eq_offset, final_data, eq_size);
             free(final_data);
             final_data = NULL;
+
+#if F_APP_APT_SUPPORT
+            if ((app_apt_is_normal_apt_on_state(app_db.current_listening_state) ||
+                 app_listening_is_anc_apt_on_state(app_db.current_listening_state)))
+            {
+                if (eq_type == MIC_SW_EQ)
+                {
+                    uint8_t ori_idx = eq_utils_original_eq_index_get(MIC_SW_EQ, APT_MODE, app_cfg_nv.apt_eq_idx);
+
+                    if (eq_idx == ori_idx)
+                    {
+                        app_eq_index_set(MIC_SW_EQ, APT_MODE, app_cfg_nv.apt_eq_idx);
+                    }
+                }
+            }
+#endif
         }
     }
 }
@@ -1042,7 +1096,7 @@ void app_eq_continue_sync_user_eq_when_connected(bool is_first_time, T_EQ_TYPE l
         else
         {
 #if F_APP_APT_SUPPORT
-            eq_idx = eq_utils_original_eq_index_get(MIC_SW_EQ, EQ_MODE_NULL, app_cfg_nv.apt_eq_idx);
+            eq_idx = eq_utils_original_eq_index_get(MIC_SW_EQ, APT_MODE, app_cfg_nv.apt_eq_idx);
 
             if (mic_user_eq_idx_waiting_sync & BIT(eq_idx)) /* sync current mic eq first */
             {
@@ -1089,7 +1143,7 @@ void app_eq_continue_sync_user_eq_when_connected(bool is_first_time, T_EQ_TYPE l
 
 void app_eq_sync_user_eq_when_connected(void)
 {
-#if F_APP_AUDIO_VOCIE_SPK_EQ_INDEPENDENT_CFG
+#if F_APP_AUDIO_VOICE_SPK_EQ_INDEPENDENT_CFG
     spk_user_eq_idx_waiting_sync = 0;
 #else
     spk_user_eq_idx_waiting_sync = app_eq_set_bits(app_cfg_const.user_eq_spk_eq_num);
@@ -1110,7 +1164,7 @@ void app_eq_sync_user_eq_when_connected(void)
     app_eq_continue_sync_user_eq_when_connected(true, EQ_TYPE_MAX, 0, 0, 0);
 }
 
-#if F_APP_SEPARATE_ADJUST_APT_EQ_SUPPORT
+#if (F_APP_SEPARATE_ADJUST_APT_EQ_SUPPORT == 1) || (F_APP_AUDIO_VOICE_SPK_EQ_INDEPENDENT_CFG == 1)
 void app_eq_report_sec_eq_to_src(uint8_t cmd_path, uint8_t app_idx, uint16_t eq_len,
                                  uint8_t *eq_data)
 {
@@ -1184,9 +1238,6 @@ static uint16_t app_eq_dsp_param_get(T_EQ_TYPE eq_type, T_EQ_STREAM_TYPE stream_
 {
     uint16_t eq_len = 0;
 
-    APP_PRINT_INFO5("app_eq_dsp_param_get: eq_type %d, dsp cfg index %d, data %p, len %u, sample_rate %d",
-                    eq_type, index, data, len, sample_rate);
-
 #if F_APP_USER_EQ_SUPPORT
     if ((stream_type == EQ_STREAM_TYPE_AUDIO) || ((stream_type == EQ_STREAM_TYPE_VOICE) &&
                                                   (eq_type == SPK_SW_EQ)))
@@ -1201,6 +1252,9 @@ static uint16_t app_eq_dsp_param_get(T_EQ_TYPE eq_type, T_EQ_STREAM_TYPE stream_
         eq_len = eq_utils_param_get(eq_type, stream_type, eq_mode, index, data, len, eq_data_dest,
                                     sample_rate);
     }
+
+    APP_PRINT_INFO5("app_eq_dsp_param_get: eq_type %d, dsp cfg index %d, data %p, sample_rate %d, len %d",
+                    eq_type, index, data, sample_rate, eq_len);
 
     return eq_len;
 }
@@ -1412,6 +1466,21 @@ bool app_eq_get_link_info(uint8_t cmd_path, uint8_t app_idx, T_AUDIO_EQ_REPORT_D
             ret = true;
         }
     }
+    else if (cmd_path == CMD_PATH_GATT_OVER_BREDR)
+    {
+        T_APP_BR_LINK *p_br_link = (T_APP_BR_LINK *) &app_db.br_link[app_idx];
+
+        if (p_br_link)
+        {
+            eq_report_data->eq_info = &p_br_link->audio_get_eq_info;
+
+            /* EQ: 3 is att header,  6 is trasmint service header */
+            eq_report_data->max_frame_len = p_br_link->mtu_size - 3 - EQ_START_FRAME_HEADER_LEN - 6;
+            eq_report_data->id = p_br_link->id;
+
+            ret = true;
+        }
+    }
 
     return ret;
 }
@@ -1425,7 +1494,8 @@ bool app_eq_report_eq_frame(T_AUDIO_EQ_REPORT_DATA *eq_report_data)
     uint8_t frame_idx = 0;
     uint8_t total_frame_len = 0;
 
-    if (eq_report_data->cmd_path == CMD_PATH_LE)
+    if (eq_report_data->cmd_path == CMD_PATH_LE ||
+        eq_report_data->cmd_path == CMD_PATH_GATT_OVER_BREDR)
     {
         if (p_eq_info->eq_data_offset == 0)
         {
@@ -1666,6 +1736,7 @@ T_AUDIO_EFFECT_INSTANCE app_eq_create(T_EQ_CONTENT_TYPE eq_content_type,
     uint32_t sample_rate;
     T_AUDIO_EFFECT_INSTANCE eq_instance = NULL;
     uint8_t eq_num = eq_utils_num_get(eq_type, eq_mode);
+    uint8_t err = 0;
 
 #if F_APP_VOICE_SPK_EQ_SUPPORT
     if (eq_content_type == EQ_CONTENT_TYPE_VOICE)
@@ -1684,20 +1755,37 @@ T_AUDIO_EFFECT_INSTANCE app_eq_create(T_EQ_CONTENT_TYPE eq_content_type,
 
     if (eq_num != 0)
     {
-        uint8_t *dynamic_eq_buf = calloc(1, app_db.max_eq_len);
+        uint8_t *eq_buf = calloc(1, app_db.max_eq_len);
 
-        if (dynamic_eq_buf != NULL)
+        if (eq_buf != NULL)
         {
-            uint16_t eq_len = app_eq_dsp_param_get(eq_type, stream_type, eq_mode, eq_index, dynamic_eq_buf,
+            uint16_t eq_len = app_eq_dsp_param_get(eq_type, stream_type, eq_mode, eq_index, eq_buf,
                                                    app_db.max_eq_len, EQ_DATA_TO_DSP, sample_rate);
+            if (eq_len != 0)
+            {
+                eq_instance = eq_create(eq_content_type, eq_buf, eq_len);
+            }
+            else
+            {
+                err = 1;
+            }
 
-            eq_instance = eq_create(eq_content_type, dynamic_eq_buf, eq_len);
-            free(dynamic_eq_buf);
+            free(eq_buf);
+            eq_buf = NULL;
         }
         else
         {
-            APP_PRINT_ERROR0("app_eq_create: fail");
+            err = 2;
         }
+    }
+    else
+    {
+        err = 3;
+    }
+
+    if (err != 0)
+    {
+        APP_PRINT_ERROR1("app_eq_create: fail %d", err);
     }
 
     return eq_instance;
@@ -1721,6 +1809,9 @@ static bool app_eq_cmd_operate(uint8_t eq_mode, uint8_t eq_adjust_side, uint8_t 
                                uint8_t eq_idx, uint8_t eq_len_to_dsp, uint8_t *cmd_ptr)
 {
     bool ret = true;
+    T_EQ_ENABLE_INFO enable_info;
+
+    app_eq_enable_info_get(eq_mode, &enable_info);
 
     APP_PRINT_TRACE6("app_eq_cmd_operate: type:%d, mode:%d, side:%d, tone:%d, idx:%d, len:%d",
                      app_db.sw_eq_type, eq_mode, eq_adjust_side, is_play_eq_tone, eq_idx, eq_len_to_dsp);
@@ -1755,47 +1846,23 @@ static bool app_eq_cmd_operate(uint8_t eq_mode, uint8_t eq_adjust_side, uint8_t 
             else
 #endif
             {
-                T_APP_BR_LINK *p_link = &app_db.br_link[app_a2dp_get_active_idx()];
-
                 app_eq_param_set(eq_mode, eq_idx, &cmd_ptr[0], eq_len_to_dsp);
 
-#if F_APP_VOICE_SPK_EQ_SUPPORT
-                if (eq_mode == VOICE_SPK_MODE)
-                {
-                    p_link = &app_db.br_link[app_hfp_get_active_idx()];
-                }
-#endif
-
 #if F_APP_LEA_SUPPORT
-                app_eq_media_eq_enable(p_link);
+                app_eq_media_eq_enable(&enable_info);
 #else
-                if (p_link)
-                {
-                    app_eq_audio_eq_enable(&p_link->eq_instance, &p_link->audio_eq_enabled);
-                }
+                app_eq_audio_eq_enable(&enable_info.instance, &enable_info.is_enable);
 #endif
             }
         }
         else if (eq_adjust_side == app_cfg_const.bud_side)
         {
-            T_APP_BR_LINK *p_link = &app_db.br_link[app_a2dp_get_active_idx()];
-
             app_eq_param_set(eq_mode, eq_idx, &cmd_ptr[0], eq_len_to_dsp);
 
-#if F_APP_VOICE_SPK_EQ_SUPPORT
-            if (eq_mode == VOICE_SPK_MODE)
-            {
-                p_link = &app_db.br_link[app_hfp_get_active_idx()];
-            }
-#endif
-
 #if F_APP_LEA_SUPPORT
-            app_eq_media_eq_enable(p_link);
+            app_eq_media_eq_enable(&enable_info);
 #else
-            if (p_link)
-            {
-                app_eq_audio_eq_enable(&p_link->eq_instance, &p_link->audio_eq_enabled);
-            }
+            app_eq_audio_eq_enable(&enable_info.instance, &enable_info.is_enable);
 #endif
         }
         else if (eq_adjust_side ^ app_cfg_const.bud_side)
@@ -1892,6 +1959,12 @@ uint8_t app_eq_judge_audio_eq_mode(void)
 #endif
 #endif
 
+    T_APP_CALL_STATUS lea_call_status = APP_CALL_IDLE;
+
+#if F_APP_LEA_SUPPORT
+    lea_call_status = app_lea_ccp_get_call_status();
+#endif
+
     if (0)
     {
     }
@@ -1902,7 +1975,8 @@ uint8_t app_eq_judge_audio_eq_mode(void)
     }
 #endif
 #if F_APP_VOICE_SPK_EQ_SUPPORT
-    else if (app_hfp_sco_is_connected() && (eq_utils_num_get(SPK_SW_EQ, VOICE_SPK_MODE) != 0))
+    else if ((app_hfp_sco_is_connected() || lea_call_status != APP_CALL_IDLE) &&
+             (eq_utils_num_get(SPK_SW_EQ, VOICE_SPK_MODE) != 0))
     {
         new_eq_mode = VOICE_SPK_MODE;
     }
@@ -2123,7 +2197,9 @@ void app_eq_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, uin
                 }
             }
 
-            if (cmd_path == CMD_PATH_SPP || cmd_path == CMD_PATH_IAP)
+            if (cmd_path == CMD_PATH_SPP ||
+                cmd_path == CMD_PATH_IAP ||
+                cmd_path == CMD_PATH_GATT_OVER_BREDR)
             {
                 p_audio_eq_info = &app_db.br_link[app_idx].audio_set_eq_info;
             }
@@ -2236,6 +2312,12 @@ void app_eq_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, uin
                                                p_audio_eq_info->eq_data_len - eq_len_to_dsp - 1);
                 }
 #endif
+
+                if (p_audio_eq_info->eq_data_buf != NULL)
+                {
+                    free(p_audio_eq_info->eq_data_buf);
+                    p_audio_eq_info->eq_data_buf = NULL;
+                }
             }
 
             app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
@@ -2286,7 +2368,7 @@ void app_eq_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, uin
                 }
                 else
                 {
-#if ((F_APP_USER_EQ_SUPPORT && F_APP_SEPARATE_ADJUST_APT_EQ_SUPPORT) || (F_APP_AUDIO_VOCIE_SPK_EQ_INDEPENDENT_CFG == 1))
+#if ((F_APP_USER_EQ_SUPPORT && F_APP_SEPARATE_ADJUST_APT_EQ_SUPPORT) || (F_APP_AUDIO_VOICE_SPK_EQ_INDEPENDENT_CFG == 1))
                     if (app_db.remote_session_state == REMOTE_SESSION_STATE_CONNECTED)
                     {
                         uint8_t buf[6] = {0};
@@ -2353,22 +2435,14 @@ void app_eq_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, uin
 #endif
                 {
                     app_eq_index_set(SPK_SW_EQ, eq_mode, eq_idx);
-                    T_APP_BR_LINK *p_link = &app_db.br_link[app_a2dp_get_active_idx()];
+                    T_EQ_ENABLE_INFO enable_info;
 
-#if F_APP_VOICE_SPK_EQ_SUPPORT
-                    if (eq_mode == VOICE_SPK_MODE)
-                    {
-                        p_link = &app_db.br_link[app_hfp_get_active_idx()];
-                    }
-#endif
+                    app_eq_enable_info_get(eq_mode, &enable_info);
 
 #if F_APP_LEA_SUPPORT
-                    app_eq_media_eq_enable(p_link);
+                    app_eq_media_eq_enable(&enable_info);
 #else
-                    if (p_link)
-                    {
-                        app_eq_audio_eq_enable(&p_link->eq_instance, &p_link->audio_eq_enabled);
-                    }
+                    app_eq_audio_eq_enable(&enable_info.instance, &enable_info.is_enable);
 #endif
                 }
 
@@ -2465,6 +2539,7 @@ void app_eq_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, uin
             uint8_t eq_idx = cmd_ptr[4];
             uint8_t adjust_side = cmd_ptr[5];
             uint8_t buf[4] = {EQ_SYNC_RESET_EQ, eq_type, eq_idx, eq_mode};
+            bool is_apply_default_eq = true;
 
 #if F_APP_ERWS_SUPPORT
             T_APP_MODULE_TYPE module_type = APP_MODULE_TYPE_AUDIO_POLICY;
@@ -2478,28 +2553,48 @@ void app_eq_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, uin
             }
 #endif
 
+            if (eq_type == SPK_SW_EQ)
+            {
+                if ((app_db.spk_eq_mode != eq_mode) || (eq_idx != app_cfg_nv.eq_idx))
+                {
+                    is_apply_default_eq = false;
+                }
+            }
+
             if (adjust_side == BOTH_SIDE_ADJUST &&
                 app_db.remote_session_state == REMOTE_SESSION_STATE_CONNECTED)
             {
                 app_eq_reset_user_eq((T_EQ_TYPE)eq_type, eq_mode, eq_idx);
                 app_relay_async_single_with_raw_msg(APP_MODULE_TYPE_AUDIO_POLICY, APP_REMOTE_MSG_SYNC_USER_EQ, buf,
                                                     sizeof(buf));
-                app_relay_sync_single_with_raw_msg(module_type, msg_type, &eq_idx, sizeof(uint8_t),
-                                                   REMOTE_TIMER_HIGH_PRECISION, 0, false);
+
+                if (is_apply_default_eq)
+                {
+                    app_relay_sync_single_with_raw_msg(module_type, msg_type, &eq_idx, sizeof(uint8_t),
+                                                       REMOTE_TIMER_HIGH_PRECISION, 0, false);
+                }
             }
-#if F_APP_SEPARATE_ADJUST_APT_EQ_SUPPORT
+#if (F_APP_SEPARATE_ADJUST_APT_EQ_SUPPORT == 1) || (F_APP_AUDIO_VOICE_SPK_EQ_INDEPENDENT_CFG == 1)
             else if (adjust_side != app_cfg_const.bud_side && adjust_side != BOTH_SIDE_ADJUST)
             {
                 app_relay_async_single_with_raw_msg(APP_MODULE_TYPE_AUDIO_POLICY, APP_REMOTE_MSG_SYNC_USER_EQ, buf,
                                                     sizeof(buf));
-                app_relay_async_single_with_raw_msg(module_type, msg_type, &eq_idx, sizeof(uint8_t));
+
+                if (is_apply_default_eq)
+                {
+                    app_relay_async_single_with_raw_msg(module_type, msg_type, &eq_idx, sizeof(uint8_t));
+                }
             }
 #endif
             else
 #endif  /* F_APP_ERWS_SUPPORT */
             {
                 app_eq_reset_user_eq((T_EQ_TYPE) eq_type, eq_mode, eq_idx);
-                app_eq_index_set((T_EQ_TYPE) eq_type, eq_mode, eq_idx);
+
+                if (is_apply_default_eq)
+                {
+                    app_eq_index_set((T_EQ_TYPE) eq_type, eq_mode, eq_idx);
+                }
             }
 
             if (app_eq_get_link_info(cmd_path, app_idx, &eq_report_data))
@@ -2513,13 +2608,15 @@ void app_eq_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, uin
                 p_eq_info->eq_seq = EQ_INIT_SEQ;
                 p_eq_info->eq_data_offset = 0;
 
-#if F_APP_SEPARATE_ADJUST_APT_EQ_SUPPORT
+#if (F_APP_SEPARATE_ADJUST_APT_EQ_SUPPORT == 1) || (F_APP_AUDIO_VOICE_SPK_EQ_INDEPENDENT_CFG == 1)
                 if (adjust_side != BOTH_SIDE_ADJUST && adjust_side != app_cfg_const.bud_side)
                 {
                     uint8_t buffer[6] = {EQ_SYNC_GET_SECONDARY_EQ_INFO, eq_type, eq_idx, eq_mode, cmd_path, app_idx};
 
                     app_relay_async_single_with_raw_msg(APP_MODULE_TYPE_AUDIO_POLICY, APP_REMOTE_MSG_SYNC_USER_EQ,
                                                         buffer, sizeof(buffer));
+
+                    app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
                 }
                 else
 #endif

@@ -176,6 +176,11 @@ bool dsp_mgr_decoder_action(T_AUDIO_CATEGORY category, T_DSP_IPC_ACTION action);
 bool dsp_mgr_encoder_action(T_AUDIO_CATEGORY category, T_DSP_IPC_ACTION action);
 bool dsp_mgr_vad_action(T_DSP_IPC_ACTION action);
 bool dsp_mgr_line_in_action(T_DSP_IPC_ACTION action);
+bool dsp_mgr_session_decoder_effect_control(T_DSP_MGR_SESSION_HANDLE handle,
+                                            uint8_t                  action);
+
+bool dsp_mgr_session_encoder_effect_control(T_DSP_MGR_SESSION_HANDLE handle,
+                                            uint8_t                  action);
 
 bool dsp_mgr_is_stable(T_DSP_MGR_SESSION_HANDLE handle);
 bool dsp_mgr_power_on_check(void);

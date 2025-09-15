@@ -15,7 +15,6 @@
 #include "rtl876x_i2s.h"
 #include "rtl876x_nvic.h"
 #include "rtl876x_pinmux.h"
-#include "rtl876x_rcc.h"
 #include "trace.h"
 #include "vector_table.h"
 
@@ -67,7 +66,7 @@ static void driver_i2s_init(void)
     I2S_InitStruct.I2S_BClockDiv        = 0x3F;     /* LRCK = 48KHz */
     I2S_InitStruct.I2S_DeviceMode       = I2S_DeviceMode_Master;
     I2S_InitStruct.I2S_RxChannelType    = I2S_Channel_Stereo;
-    I2S_InitStruct.I2S_RxDataWidth      = I2S_Width_24Bits;
+    I2S_InitStruct.I2S_RxDataWidth      = I2S_Data_Width_24Bits;
     I2S_InitStruct.I2S_RxDataFormat     = I2S_Mode;
     I2S_InitStruct.I2S_DMACmd           = I2S_DMA_DISABLE;
     I2S_Init(I2S_NUM, &I2S_InitStruct);

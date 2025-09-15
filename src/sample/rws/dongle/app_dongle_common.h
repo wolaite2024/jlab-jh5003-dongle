@@ -5,7 +5,8 @@
 
 typedef enum
 {
-    ADV_INTERVAL_EVENT_TIMEOUT,
+    ADV_INTERVAL_EVENT_START_FAST_ADV,
+    ADV_INTERVAL_EVENT_START_FAST_ADV_TIMEOUT,
     ADV_INTERVAL_EVENT_BT_STREAMING_START,
     ADV_INTERVAL_EVENT_BT_STREAMING_STOP,
 } T_APP_HEADSET_ADV_EVENT;
@@ -18,6 +19,22 @@ void app_dongle_common_init(void);
     * @return link info
     */
 T_APP_BR_LINK *app_dongle_get_connected_dongle_link(void);
+
+#if F_APP_B2B_ENGAGE_REDUCE_NSE
+/**
+    * @brief  Get dongle cis nse
+    * @param  void
+    * @return dongle cis nse
+    */
+uint8_t app_dongle_get_dongle_cis_nse(void);
+#endif
+
+/**
+    * @brief  Get dongle cis conn handle
+    * @param  void
+    * @return dongle cis connection handle
+    */
+uint16_t app_dongle_get_dongle_cis_conn_handle(void);
 
 /**
     * @brief  Get connected lea phone link
@@ -86,13 +103,6 @@ void app_dongle_check_exit_pairing_state(uint8_t link_state, uint8_t *bd_addr);
 #endif
 
 #if F_APP_LEGACY_DONGLE_BINDING || F_APP_LEA_DONGLE_BINDING
-/**
-    * @brief  Get timer idx for change headset adv interal
-    * @param  void
-    * @return none
-    */
-uint8_t app_dongle_get_change_headset_adv_timer_idx(void);
-
 #if F_APP_LEGACY_DONGLE_BINDING
 /**
     * @brief  Get legacy adv handle for legacy dongle adv

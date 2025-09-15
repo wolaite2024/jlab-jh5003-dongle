@@ -10,8 +10,6 @@
 
 #if LE_AUDIO_CCP_SERVER_SUPPORT
 
-/* FIXME: HID report map not support HOLD YET */
-#define USB_HID_HOLD_SUPPORT        1
 #define USB_HID_BUTTON_SUPPORT      0
 
 #define CCP_CALL_LIST_MAX           (2)
@@ -29,25 +27,6 @@ typedef enum
     CCP_TIMER_ID_MICS           = 0x04,
     CCP_TIMER_ID_TELEPHONY_MUTE = 0x05,
 } T_CCP_TIMER_ID;
-
-typedef struct
-{
-    uint16_t hook_switch    : 1;    /* 0:terminate 1:accept */
-    uint16_t line_busy      : 1;
-    uint16_t line           : 1;
-    uint16_t mute           : 1;    /* 0:un-mute 1:mute */
-    uint16_t flash          : 1;
-#if (USB_HID_HOLD_SUPPORT == 1)
-    uint16_t hold           : 1;
-    uint16_t redial         : 1;
-#else
-    uint16_t redial         : 1;
-    uint16_t speed_dial     : 1;
-#endif
-    uint16_t key_pad        : 4;
-    uint16_t button         : 1;    /* 1:reject */
-    uint16_t rsv            : 4;
-} T_TELEPHONY_HID_INPUT;
 
 typedef struct
 {

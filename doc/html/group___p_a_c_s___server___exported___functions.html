@@ -51,10 +51,10 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:gadd72eaaeb858d1561a19d68c19fb199e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_a_c_s___server___exported___functions.html#gadd72eaaeb858d1561a19d68c19fb199e">pacs_pac_add</a> (<a class="el" href="group___l_e_a___l_i_b___exported___types.html#gaddc9391bc23189606598d54ad592446f">T_AUDIO_DIRECTION</a> direction, const uint8_t *pac_data, uint8_t pac_data_len, bool notify)</td></tr>
-<tr class="memdesc:gadd72eaaeb858d1561a19d68c19fb199e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register PAC record. This api shall be called before pacs_init.  <a href="#gadd72eaaeb858d1561a19d68c19fb199e">More...</a><br /></td></tr>
+<tr class="memdesc:gadd72eaaeb858d1561a19d68c19fb199e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register PAC record. This API shall be called before <a class="el" href="group___p_a_c_s___server___exported___functions.html#gabf7394d1e1c742b84f11b756c23fdef1">pacs_init</a>.  <a href="#gadd72eaaeb858d1561a19d68c19fb199e">More...</a><br /></td></tr>
 <tr class="separator:gadd72eaaeb858d1561a19d68c19fb199e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabf7394d1e1c742b84f11b756c23fdef1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_a_c_s___server___exported___functions.html#gabf7394d1e1c742b84f11b756c23fdef1">pacs_init</a> (<a class="el" href="struct_t___p_a_c_s___p_a_r_a_m_s.html">T_PACS_PARAMS</a> *p_param)</td></tr>
-<tr class="memdesc:gabf7394d1e1c742b84f11b756c23fdef1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize PACS Service. The api shall be called before gap_start_bt_stack.  <a href="#gabf7394d1e1c742b84f11b756c23fdef1">More...</a><br /></td></tr>
+<tr class="memdesc:gabf7394d1e1c742b84f11b756c23fdef1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize PACS Service.  <a href="#gabf7394d1e1c742b84f11b756c23fdef1">More...</a><br /></td></tr>
 <tr class="separator:gabf7394d1e1c742b84f11b756c23fdef1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae0f623127a8111ff7bda5046b74e72d1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_a_c_s___server___exported___functions.html#gae0f623127a8111ff7bda5046b74e72d1">pacs_pac_update</a> (uint8_t pac_id, const uint8_t *pac_data, uint8_t pac_data_len)</td></tr>
 <tr class="memdesc:gae0f623127a8111ff7bda5046b74e72d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update PAC record.  <a href="#gae0f623127a8111ff7bda5046b74e72d1">More...</a><br /></td></tr>
@@ -66,7 +66,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:gacecebc99e437277fc65ef71a0c208441"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set source audio location.  <a href="#gacecebc99e437277fc65ef71a0c208441">More...</a><br /></td></tr>
 <tr class="separator:gacecebc99e437277fc65ef71a0c208441"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0574a3bddfcf19b52acca41b833b0d28"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_a_c_s___server___exported___functions.html#ga0574a3bddfcf19b52acca41b833b0d28">pacs_available_contexts_read_cfm</a> (uint16_t conn_handle, uint16_t cid, uint16_t sink_available_contexts, uint16_t source_available_contexts)</td></tr>
-<tr class="memdesc:ga0574a3bddfcf19b52acca41b833b0d28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send Available contexts read confirm.  <a href="#ga0574a3bddfcf19b52acca41b833b0d28">More...</a><br /></td></tr>
+<tr class="memdesc:ga0574a3bddfcf19b52acca41b833b0d28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send available contexts read confirm.  <a href="#ga0574a3bddfcf19b52acca41b833b0d28">More...</a><br /></td></tr>
 <tr class="separator:ga0574a3bddfcf19b52acca41b833b0d28"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa51ffe9f2aad1e1ad63b4ec396e18e2b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_a_c_s___server___exported___functions.html#gaa51ffe9f2aad1e1ad63b4ec396e18e2b">pacs_update_available_contexts</a> (uint16_t conn_handle, uint16_t sink_available_contexts, uint16_t source_available_contexts)</td></tr>
 <tr class="memdesc:gaa51ffe9f2aad1e1ad63b4ec396e18e2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update available contexts notification.  <a href="#gaa51ffe9f2aad1e1ad63b4ec396e18e2b">More...</a><br /></td></tr>
@@ -118,12 +118,12 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Register PAC record. This api shall be called before pacs_init. </p>
+<p>Register PAC record. This API shall be called before <a class="el" href="group___p_a_c_s___server___exported___functions.html#gabf7394d1e1c742b84f11b756c23fdef1">pacs_init</a>. </p>
 <p>pasc_mgr.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">direction</td><td>Audio direction: <a class="el" href="group___l_e_a___l_i_b___exported___types.html#gaddc9391bc23189606598d54ad592446f">T_AUDIO_DIRECTION</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">pac_data</td><td>Pointer to the PAC data. This parameter shall not use local variables, and audio lib only holds Pointers internally. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pac_data</td><td>Pointer to the PAC data. This parameter shall not use local variables, and the audio lib only holds pointers internally. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">pac_data_len</td><td>PAC data length. This parameter shall not use local variables. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">notify</td><td>Whether notify is supported. <ul>
 <li>true Notify is supported. </li>
@@ -133,7 +133,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>PAC id. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>PAC ID. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">PAC_RECORD_INVALID_ID</td><td>Register PAC record failed. </td></tr>
@@ -159,19 +159,20 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initialize PACS Service. The api shall be called before gap_start_bt_stack. </p>
+<p>Initialize PACS Service. </p>
 <p>pasc_mgr.h</p>
+<p>This API shall be called before <a class="el" href="group___g_a_p___c_o_m_m_o_n___e_x_p_o_r_t___functions.html#ga337f0e91aaa1af727c165620e64d91af">gap_start_bt_stack</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_param</td><td>Pointer to PACS Service parameters: <a class="el" href="struct_t___p_a_c_s___p_a_r_a_m_s.html">T_PACS_PARAMS</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of initialize PACS. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of initializing PACS. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Initialize PACS Service success. </td></tr>
-    <tr><td class="paramname">false</td><td>Initialize PACS Service failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Initializing PACS Service is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Initializing PACS Service failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -214,17 +215,17 @@ Functions</h2></td></tr>
 <p>pasc_mgr.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pac_id</td><td>PAC id. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">pac_data</td><td>Pointer to the PAC data. This parameter shall not use local variables, and audio lib only holds Pointers internally. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pac_id</td><td>PAC ID. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pac_data</td><td>Pointer to the PAC data. This parameter shall not use local variables, and the audio lib only holds pointers internally. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">pac_data_len</td><td>PAC data length. This parameter shall not use local variables.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of update PAC record. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of updating PAC record. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Update PAC record success. </td></tr>
-    <tr><td class="paramname">false</td><td>Update PAC record failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Updating PAC record is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Updating PAC record failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -255,11 +256,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of set sink audio location. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of setting sink audio location. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Set sink audio location success. </td></tr>
-    <tr><td class="paramname">false</td><td>Set sink audio location failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Setting sink audio location is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Setting sink audio location failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -290,11 +291,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of set source audio location. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of setting source audio location. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Set source audio location success. </td></tr>
-    <tr><td class="paramname">false</td><td>Set source audio location failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Setting source audio location is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Setting source audio location failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -339,22 +340,22 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Send Available contexts read confirm. </p>
+<p>Send available contexts read confirm. </p>
 <p>pasc_mgr.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">cid</td><td>Local channel ID assigned by Bluetooth stack. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cid</td><td>Local channel ID assigned by the Bluetooth host. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">sink_available_contexts</td><td>Available sink contexts: <a class="el" href="group___a_u_d_i_o___c_o_n_t_e_x_t.html">Audio Context Type</a>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">source_available_contexts</td><td>Available source contexts: <a class="el" href="group___a_u_d_i_o___c_o_n_t_e_x_t.html">Audio Context Type</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of send available contexts read confirm. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of sending available contexts read confirm. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Send Available contexts read confirm success. </td></tr>
-    <tr><td class="paramname">false</td><td>Send Available contexts read confirm failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Sending available contexts read confirm is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Sending available contexts read confirm failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -403,11 +404,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of update available contexts notification. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of updating available contexts notification. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Update available contexts notification success. </td></tr>
-    <tr><td class="paramname">false</td><td>Update available contexts notification failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Updating available contexts notification is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Updating available contexts notification failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -449,11 +450,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of update supported audio contexts. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of updating supported audio contexts. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Update supported audio contexts success. </td></tr>
-    <tr><td class="paramname">false</td><td>Update supported audio contexts failed. </td></tr>
+    <tr><td class="paramname">true</td><td>Updating supported audio contexts is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Updating supported audio contexts failed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -494,23 +495,24 @@ Functions</h2></td></tr>
 
 <p>Check PAC record codec configuration. </p>
 <p>pasc_mgr.h</p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000045">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000042">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">direction</td><td>Audio direction: <a class="el" href="group___l_e_a___l_i_b___exported___types.html#gaddc9391bc23189606598d54ad592446f">T_AUDIO_DIRECTION</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">codec_id</td><td>Pointer to codec id. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">codec_id</td><td>Pointer to codec ID. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to codec configuration: <a class="el" href="struct_t___c_o_d_e_c___c_f_g.html">T_CODEC_CFG</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of check PAC record codec configuration. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of checking PAC record codec configuration. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>PAC record codec configuration check success. </td></tr>
-    <tr><td class="paramname">false</td><td>PAC record codec configuration check failed. </td></tr>
+    <tr><td class="paramname">true</td><td>PAC record codec configuration check is successful. </td></tr>
+    <tr><td class="paramname">false</td><td>PAC record codec configuration check failed.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>Only used for LC3_CODEC_ID. </dd></dl>
 
 </div>
 </div>

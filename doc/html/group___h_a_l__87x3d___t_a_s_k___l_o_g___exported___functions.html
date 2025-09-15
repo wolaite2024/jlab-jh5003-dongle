@@ -50,7 +50,7 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga40628a3ce9afe854dc268dcb2c8c7ceb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___h_a_l__87x3d___t_a_s_k___l_o_g___exported___functions.html#ga40628a3ce9afe854dc268dcb2c8c7ceb">log_task_init</a> (size_t log_part_addr, size_t log_part_size, size_t log_rb_size, <a class="el" href="group___m_e_m___c_o_n_f_i_g___exported___types.html#ga20f6fc28665b1bdf8326a4826ba69b77">RAM_TYPE</a> rb_ram_type, bool use_dma)</td></tr>
+<tr class="memitem:ga40628a3ce9afe854dc268dcb2c8c7ceb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___h_a_l__87x3d___t_a_s_k___l_o_g___exported___functions.html#ga40628a3ce9afe854dc268dcb2c8c7ceb">log_task_init</a> (size_t log_part_addr, size_t log_part_size, size_t log_rb_size, <a class="el" href="group__x3d___m_e_m___c_o_n_f_i_g___exported___types.html#ga20f6fc28665b1bdf8326a4826ba69b77">RAM_TYPE</a> rb_ram_type, bool use_dma)</td></tr>
 <tr class="memdesc:ga40628a3ce9afe854dc268dcb2c8c7ceb"><td class="mdescLeft">&#160;</td><td class="mdescRight">set up log2flash task  <a href="#ga40628a3ce9afe854dc268dcb2c8c7ceb">More...</a><br /></td></tr>
 <tr class="separator:ga40628a3ce9afe854dc268dcb2c8c7ceb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2bb7a7f9751c2a7ebaefc89a1bffa442"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___h_a_l__87x3d___t_a_s_k___l_o_g___exported___functions.html#ga2bb7a7f9751c2a7ebaefc89a1bffa442">enable_log_to_flash</a> (bool enable_status)</td></tr>
@@ -89,7 +89,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="group___m_e_m___c_o_n_f_i_g___exported___types.html#ga20f6fc28665b1bdf8326a4826ba69b77">RAM_TYPE</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="group__x3d___m_e_m___c_o_n_f_i_g___exported___types.html#ga20f6fc28665b1bdf8326a4826ba69b77">RAM_TYPE</a>&#160;</td>
           <td class="paramname"><em>rb_ram_type</em>, </td>
         </tr>
         <tr>
@@ -107,7 +107,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>set up log2flash task </p>
-<dl class="Added_API_2_12_0_0"><dt><b><a class="el" href="_added__a_p_i_2_12_0_0.html#_Added_API_2_12_0_0000022">Added Since 2.12.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Added_API_2_12_0_0"><dt><b><a class="el" href="_added__a_p_i_2_12_0_0.html#_Added_API_2_12_0_0000021">Added Since 2.12.0.0:</a></b></dt><dd></dd></dl>
 <dl class="section note"><dt>Note</dt><dd>specify the log partition space on the flash through log_part_addr and log_part_size, specify the log2flash cache ring buffer size through the log_rb_size, LOG_BUFFER_SIZE is the reference value. Please keep the log partition space aligned by 4Kbytes. If the log partition space is under the flash block protection region, please unlock the flash bp level before using it as log partition. If the log partition region is assigned at the address more than 16 Mbytes, please consider to use 4-byte address mode for the flash driver, refer to the api fmc_flash_set_4_byte_address_mode. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -177,7 +177,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>format log flash circular block to the init state </p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000130">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000144">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="section note"><dt>Note</dt><dd>If user needs to format the log flash partition when the log2flash task is running, log_flash_format can be used. When log2flash task is running ok, the flash bp level should be unlocked by fmc_flash_nor_set_bp_lv already. So it doesn't need to unlock the flash bp level before calling log_flash_format. </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>This api can't be used before log_task_init. This api is supported in RTL87x3E and RTL87x3D. It is NOT supported in RTL87x3G. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>

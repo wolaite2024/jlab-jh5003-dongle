@@ -18,13 +18,15 @@ extern "C" {
 #define APP_ISOC_BROADCASTER_MAX_BIG_HANDLE_NUM  2
 #define APP_ISOC_BROADCASTER_MAX_BIS_NUM  4
 
-#define APP_SYNC_RECEIVER_MAX_BIG_HANDLE_NUM  2
+#define APP_SYNC_RECEIVER_MAX_BIG_HANDLE_NUM  1
 #define APP_SYNC_RECEIVER_MAX_BIS_NUM  4
 
 /* cccd info */
 #define APP_LEA_PACS_CCCD_ENABLED   0x01
 #define APP_LEA_VCS_CCCD_ENABLED    0x02
 #define APP_LEA_BASS_CCCD_ENABLED   0x04
+#define APP_LEA_MICS_CCCD_ENABLED   0x08
+#define APP_LEA_AICS_CCCD_ENABLED   0x10
 /**
  * @brief  Initialize parameter of bap include ROLE,
 *          cig/big max number,...etc.

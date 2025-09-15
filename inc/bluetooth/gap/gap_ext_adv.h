@@ -3,7 +3,7 @@
 *               Copyright(c) 2016, Realtek Semiconductor Corporation. All rights reserved.
 *********************************************************************************************************
 * @file      gap_ext_adv.h
-* @brief     Header file for Gap ext adv
+* @brief     Header file for GAP ext ADV
 * @details   This file defines extended advertising related API.
 * @author    ranhui
 * @date      2016-02-18
@@ -27,7 +27,7 @@ extern "C"
  *============================================================================*/
 #include "gap_le.h"
 
-/** @addtogroup GAP GAP Module
+/** @addtogroup BT_Host Bluetooth Host
   * @{
   */
 
@@ -35,18 +35,19 @@ extern "C"
   * @{
   */
 
-/** @addtogroup GAP_LE_EXTENDED_ADV GAP LE Extended Adv Module
+/** @addtogroup GAP_LE_EXTENDED_ADV GAP LE Extended ADV Module
+  * @brief GAP LE Extended ADV Module
   * @{
   */
 
 /*============================================================================*
  *                         Macros
  *============================================================================*/
-/** @defgroup GAP_LE_EXTENDED_ADV_Exported_Macros GAP LE Extended Adv Exported Macros
+/** @defgroup GAP_LE_EXTENDED_ADV_Exported_Macros GAP LE Extended ADV Exported Macros
   * @{
   */
 
-/** @defgroup EXT_ADV_PARAM Extended Advertising Parameter flag
+/** @defgroup EXT_ADV_PARAM Extended Advertising Parameter Flag
   * @brief Use the combination of macro definitions to set extended advertising related parameters
            for a specified advertising set by calling @ref le_ext_adv_start_setting.
   * @{
@@ -61,7 +62,7 @@ extern "C"
   * @}
   */
 
-/** @defgroup EXT_ADV_EVT_PROP Extended Advertising Event Properties flag
+/** @defgroup EXT_ADV_EVT_PROP Extended Advertising Event Properties Flag
   * @brief Use the combination of macro definitions to describe the type of advertising event.
            Optional values: @ref T_LE_EXT_ADV_LEGACY_ADV_PROPERTY and @ref T_LE_EXT_ADV_EXTENDED_ADV_PROPERTY.
   * @{
@@ -87,7 +88,7 @@ extern "C"
 /*============================================================================*
  *                         Types
  *============================================================================*/
-/** @defgroup GAP_LE_EXTENDED_ADV_Exported_Types GAP LE Extended Adv Exported Types
+/** @defgroup GAP_LE_EXTENDED_ADV_Exported_Types GAP LE Extended ADV Exported Types
   * @{
   */
 
@@ -95,9 +96,9 @@ extern "C"
 typedef enum
 {
     EXT_ADV_STATE_IDLE,         /**< Idle, no advertising. */
-    EXT_ADV_STATE_START,        /**< Start Advertising. A temporary state, haven't received the result. */
+    EXT_ADV_STATE_START,        /**< Start advertising. A temporary state, haven't received the result. */
     EXT_ADV_STATE_ADVERTISING,  /**< Advertising. */
-    EXT_ADV_STATE_STOP,         /**< Stop Advertising. A temporary state, haven't received the result. */
+    EXT_ADV_STATE_STOP,         /**< Stop advertising. A temporary state, haven't received the result. */
 } T_GAP_EXT_ADV_STATE;
 
 /** @brief Advertising Event Properties values for legacy advertising PDUs. */
@@ -136,12 +137,12 @@ typedef enum
 /*============================================================================*
  *                         Functions
  *============================================================================*/
-/** @defgroup GAP_LE_EXTENDED_ADV_Exported_Functions GAP LE Extended Adv Exported Functions
+/** @defgroup GAP_LE_EXTENDED_ADV_Exported_Functions GAP LE Extended ADV Exported Functions
   * @brief
   * @{
   */
 /**
- * @brief       Initialization the number of advertising sets.
+ * @brief       Initialize the number of advertising sets.
  *
  * @param[in]   adv_set_num Advertising sets number, range: 1 - 10.
  * @return Operation result.
@@ -162,10 +163,10 @@ T_GAP_CAUSE le_ext_adv_init(uint8_t adv_set_num);
 /**
  * @brief   Get a GAP extended advertising parameter.
  *
- *          NOTE: You can call this function with a extended advertising parameter type and it will get a
+ * This function can be called with an extended advertising parameter type and it will get an
  *          extended advertising parameter. Extended advertising parameters are defined in @ref T_LE_EXT_ADV_PARAM_TYPE.
  *
- * @param[in]      param   Advertising parameter type: @ref T_LE_EXT_ADV_PARAM_TYPE
+ * @param[in]      param   Advertising parameter type: @ref T_LE_EXT_ADV_PARAM_TYPE.
  * @param[in,out]  p_value Pointer to the location to get the parameter value.  This is dependent on
  *                         the parameter type and will be cast to the appropriate data type (For example:
  *                         if data type of param is uint16_t, p_value will be cast to pointer of uint16_t).
@@ -204,7 +205,7 @@ T_GAP_CAUSE le_ext_adv_get_param(T_LE_EXT_ADV_PARAM_TYPE param, void *p_value);
 uint8_t le_ext_adv_create_adv_handle(void);
 
 /**
- * @brief  Get the connection ID from the adv handle.
+ * @brief  Get the connection ID from the ADV handle.
  *
  *         If the advertising ends because a connection was created,
  *         application can call le_ext_adv_get_conn_id_by_adv_handle() to get the connection ID
@@ -227,9 +228,9 @@ uint8_t le_ext_adv_create_adv_handle(void);
 uint8_t le_ext_adv_get_conn_id_by_adv_handle(uint8_t adv_handle);
 
 /**
- * @brief  Get adv handle from connection ID.
+ * @brief  Get ADV handle from connection ID.
  *
- *         If the advertising ends because a connection was created,
+ * If the advertising ends because a connection was created,
  *         application can call le_ext_adv_get_adv_handle_by_conn_id() to get the adverting handle information
  *         when the advertising set state switches to EXT_ADV_STATE_IDLE.
  *
@@ -297,7 +298,7 @@ uint8_t le_ext_adv_get_adv_handle_by_conn_id(uint8_t conn_id);
         T_GAP_REMOTE_ADDR_TYPE peer_address_type = GAP_REMOTE_ADDR_LE_PUBLIC;
         uint8_t p_peer_address[6] = {0};
         T_GAP_ADV_FILTER_POLICY filter_policy = GAP_ADV_FILTER_ANY;
-        int8_t tx_power = 127; //Host has no preference.Range: -127 to +20,Units: dBm,0x7F Host has no preference
+        int8_t tx_power = 127; //Host has no preference.Range: -127 to +20,Units: dBm,0x7F Host has no preference.
         T_GAP_PHYS_PRIM_ADV_TYPE primary_adv_phy = GAP_PHYS_PRIM_ADV_1M;
         uint8_t secondary_adv_max_skip = 0;
         T_GAP_PHYS_TYPE secondary_adv_phy = GAP_PHYS_2M;
@@ -335,8 +336,8 @@ T_GAP_CAUSE le_ext_adv_set_adv_param(uint8_t adv_handle, uint16_t adv_event_prop
 /**
  * @brief       Set GAP advertising data for an advertising set.
  *
- *     NOTE: This function just saves the pointer of the advertising data and will not copy the advertising data.
- *         So application should the const array or the global array to save the advertising data.
+ * @note This function just saves the pointer of the advertising data and will not copy the advertising data.
+ *         So the application should use the const array or the global array to save the advertising data.
  *         If application uses a dynamically requested buffer to save the advertising data, do not release it.
  *
  * @param[in]   adv_handle       Identify an advertising set, which is assigned by @ref le_ext_adv_create_adv_handle.
@@ -470,7 +471,7 @@ T_GAP_CAUSE le_ext_adv_set_random(uint8_t adv_handle, uint8_t *random_address);
         T_GAP_REMOTE_ADDR_TYPE peer_address_type = GAP_REMOTE_ADDR_LE_PUBLIC;
         uint8_t p_peer_address[6] = {0};
         T_GAP_ADV_FILTER_POLICY filter_policy = GAP_ADV_FILTER_ANY;
-        int8_t tx_power = 127; //Host has no preference. Range: -127 to +20,Units: dBm,0x7F Host has no preference
+        int8_t tx_power = 127; //Host has no preference. Range: -127 to +20,Units: dBm,0x7F Host has no preference.
         T_GAP_PHYS_PRIM_ADV_TYPE primary_adv_phy = GAP_PHYS_PRIM_ADV_1M;
         uint8_t secondary_adv_max_skip = 0;
         T_GAP_PHYS_TYPE secondary_adv_phy = GAP_PHYS_2M;
@@ -533,18 +534,18 @@ T_GAP_CAUSE le_ext_adv_start_setting(uint8_t adv_handle, uint8_t update_flags);
  * @brief       Set GAP extended advertising enable parameters for an advertising set.
  *
  * @param[in]   adv_handle       Identify an advertising set, which is assigned by @ref le_ext_adv_create_adv_handle.
- * @param[in]   duration         If non-zero, indicates the duration that advertising set is enabled.
-                                 0x0000:        No advertising duration.
-                                 0x0001-0xFFFF: Advertising duration, in units of 10ms.
+ * @param[in]   duration         If non-zero, indicates the duration that the advertising set is enabled.
+                                 @arg 0x0000:        No advertising duration.
+                                 @arg 0x0001-0xFFFF: Advertising duration, in units of 10ms.
  * @param[in]   max_ext_adv_evt  If non-zero, indicates the maximum extended advertising events that shall be
                                  sent prior to disabling the extended advertising set.
-                                 0x00:      No maximum number of advertising events.
-                                 0x01-0xFF: Maximum number of extended advertising events to send prior to terminating
-                                            the extended advertising.
+                                 @arg 0x00:      No maximum number of advertising events.
+                                 @arg 0x01-0xFF: Maximum number of extended advertising events to send prior to terminating
+                                                 the extended advertising.
  *
  * @return Operation result.
  * @retval GAP_CAUSE_SUCCESS  Operation success.
- * @retval GAP_CAUSE_NOT_FIND Operartion failure, the advertising handle is not found.
+ * @retval GAP_CAUSE_NOT_FIND Operation failure, the advertising handle is not found.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -562,7 +563,7 @@ T_GAP_CAUSE le_ext_adv_set_adv_enable_param(uint8_t adv_handle, uint16_t duratio
 
 /**
  * @brief       Enable extended advertising for one or more advertising sets.
-                If device changes to advertising state, @ref app_handle_ext_adv_state_evt will be called, and
+                If the device changes to an advertising state, @ref app_handle_ext_adv_state_evt will be called, and
                 @ref app_gap_callback with cb_type @ref GAP_MSG_LE_EXT_ADV_ENABLE will be called.
  *
  * @param[in]   num_of_sets      Number of advertising sets to enable.
@@ -629,13 +630,13 @@ T_GAP_CAUSE le_ext_adv_set_adv_enable_param(uint8_t adv_handle, uint16_t duratio
         {
             if (ext_adv_state[i].adv_handle == adv_handle)
             {
-                APP_PRINT_INFO2("app_handle_ext_adv_state_evt: adv_handle = %d oldState = %d",
+                APP_PRINT_INFO2("app_handle_ext_adv_state_evt: adv_handle %d oldState %d",
                                 ext_adv_state[i].adv_handle, ext_adv_state[i].ext_adv_state);
                 ext_adv_state[i].ext_adv_state = new_state;
                 break;
             }
         }
-        APP_PRINT_INFO2("app_handle_ext_adv_state_evt: adv_handle = %d newState = %d",
+        APP_PRINT_INFO2("app_handle_ext_adv_state_evt: adv_handle %d newState %d",
                         adv_handle, new_state);
         switch (new_state)
         {
@@ -724,13 +725,13 @@ T_GAP_CAUSE le_ext_adv_enable(uint8_t num_of_sets, uint8_t *adv_handle);
         {
             if (ext_adv_state[i].adv_handle == adv_handle)
             {
-                APP_PRINT_INFO2("app_handle_ext_adv_state_evt: adv_handle = %d oldState = %d",
+                APP_PRINT_INFO2("app_handle_ext_adv_state_evt: adv_handle %d oldState %d",
                                 ext_adv_state[i].adv_handle, ext_adv_state[i].ext_adv_state);
                 ext_adv_state[i].ext_adv_state = new_state;
                 break;
             }
         }
-        APP_PRINT_INFO2("app_handle_ext_adv_state_evt: adv_handle = %d newState = %d",
+        APP_PRINT_INFO2("app_handle_ext_adv_state_evt: adv_handle %d newState %d",
                         adv_handle, new_state);
         switch (new_state)
         {
@@ -843,16 +844,17 @@ T_GAP_CAUSE le_ext_adv_remove_set(uint8_t adv_handle);
 bool le_ext_adv_check_adv_idle(void);
 
 /**
-* @brief  Set extended advertising gap message inform way.
+* @brief  Set extended advertising GAP message inform way.
 *
-*         Default value is True.
-*         If use_msg is True, gap will send the extended advertising gap message to io_queue registered by
+* Default value is True.
+*         If use_msg is True, GAP will send the extended advertising GAP message to io_queue registered by
 *         gap_start_bt_stack. Message type is @ref GAP_MSG_LE_EXT_ADV_STATE_CHANGE.
-*         If use_msg is False, gap will send the extended advertising gap message using callback function registered by
+*         If use_msg is False, GAP will send the extended advertising GAP message using callback function registered by
 *         @ref app_gap_callback. Message type is @ref GAP_MSG_LE_EXT_ADV_STATE_CHANGE_INFO.
 *
 * @param[in] use_msg Whether to use message.
-* @retval void
+*
+* @return void.
 *
 * <b>Example usage</b>
 * \code{.c}
@@ -916,7 +918,7 @@ void le_ext_adv_gap_msg_info_way(bool use_msg);
   * @}
   */
 
-/** End of GAP
+/** End of BT_Host
   * @}
   */
 

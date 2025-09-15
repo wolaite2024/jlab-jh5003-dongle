@@ -102,6 +102,10 @@ static void led_cmd_handle(T_LED_CHANNEL led_ch, bool state)
     }
     else
     {
+        if (!state)
+        {
+            SleepLed_SetIdleMode((SLEEP_LED_CHANNEL)led_ch, led_polarity[led_idx]);
+        }
         SleepLed_Cmd(led_ch, (FunctionalState)state);
     }
 }

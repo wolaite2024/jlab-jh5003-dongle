@@ -1,8 +1,10 @@
 #if F_APP_VCS_SUPPORT
-#include <string.h>
 #include "trace.h"
 #include "gap_conn_le.h"
 #include "vcs_mgr.h"
+#if F_APP_AICS_SUPPORT
+#include "app_lea_aics.h"
+#endif
 #include "app_lea_profile.h"
 #include "app_lea_vol_def.h"
 #include "app_cfg.h"
@@ -90,6 +92,18 @@ void app_lea_vcs_init(void)
 
 #if F_APP_MICS_SUPPORT
     vc_mic_param.mics_enable = true;
+#endif
+#if F_APP_AICS_SUPPORT
+#if F_APP_MICS_SUPPORT
+    if (vc_mic_param.mics_enable)
+    {
+        uint8_t mics_id_array[1] = {0};
+        mics_id_array[0] = AICS_MICS_SRV_ID;
+        vc_mic_param.aics_mics_num = 1;
+        vc_mic_param.p_aics_mics_tbl = mics_id_array;
+        vc_mic_param.aics_total_num += 1;
+    }
+#endif
 #endif
     vc_mic_param.vcs_enable = true;
     ble_audio_vc_mic_init(&vc_mic_param);

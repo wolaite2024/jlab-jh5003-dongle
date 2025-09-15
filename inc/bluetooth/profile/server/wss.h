@@ -3,7 +3,7 @@
 *     Copyright(c) 2017, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * @file     wss.h
-  * @brief    Head file for using weight scale service.
+  * @brief    Header file for using weight scale service.
   * @details  Weight scale data types and external functions declaration.
   * @author   Vera
   * @date
@@ -42,11 +42,11 @@ extern "C"  {
     Included in the characteristic value are a Flags field (for showing the presence of optional fields and
     measurement units), a Weight field, and depending upon the contents of the Flags field, may include one or more optional fields.
 
-    Application shall register weight scale service when initialization through @ref wss_add_service function.
+    Applications shall register weight scale service during initialization through @ref wss_add_service function.
 
-    Application can set the weight scale service parameters through @ref wss_set_parameter function.
+    Applications can set the weight scale service parameters through @ref wss_set_parameter function.
 
-    Application can send the weight-related data of WSS to the client through @ref wss_measurement_indicate function.
+    Applications can send the weight-related data of WSS to the client through @ref wss_measurement_indicate function.
 
   * @{
   */
@@ -59,21 +59,6 @@ extern "C"  {
   * @brief
   * @{
   */
-
-/**
-*  @brief Weight scale service parameter type
-*/
-typedef enum
-{
-    WSS_PARAM_MEASUREMENT_WEIGHTPARAM_FLAG = 0x01,
-    WSS_PARAM_MEASUREMENT_WEIGHT_VALUE,
-    WSS_PARAM_MEASUREMENT_TIME_STAMP,
-    WSS_PARAM_MEASUREMENT_USERID,
-    WSS_PARAM_MEASUREMENT_BMI,
-    WSS_PARAM_MEASUREMENT_HEIGHT_VALUE,
-    WSS_PARAM_FEATURE_READ_CHAR_VAL,
-} T_WSS_PARAM_TYPE;
-
 
 /** @defgroup WSS_Measurement_Flag WSS Measurement Flag
   * @{
@@ -111,23 +96,37 @@ typedef enum
  *                         Types
  *============================================================================*/
 
-/** @defgroup WSS_Service_Exported_Types WSS Service Exported Types
+/** @defgroup WSS_Service_Exported_Types WSS Exported Types
   * @brief
   * @{
   */
 
-/** @defgroup T_WSS_UPSTREAM_MSG_DATA TWS UPSTREAM MSG DATA
+/**
+*  @brief Weight scale service parameter type
+*/
+typedef enum
+{
+    WSS_PARAM_MEASUREMENT_WEIGHTPARAM_FLAG = 0x01,
+    WSS_PARAM_MEASUREMENT_WEIGHT_VALUE,
+    WSS_PARAM_MEASUREMENT_TIME_STAMP,
+    WSS_PARAM_MEASUREMENT_USERID,
+    WSS_PARAM_MEASUREMENT_BMI,
+    WSS_PARAM_MEASUREMENT_HEIGHT_VALUE,
+    WSS_PARAM_FEATURE_READ_CHAR_VAL,
+} T_WSS_PARAM_TYPE;
+
+/** @defgroup T_WSS_UPSTREAM_MSG_DATA WSS Upstream MSG Data
   * @brief Weight scale service callback message content.
   * @{
   */
 typedef union
 {
-    uint8_t notification_indication_index; //!< ref: @ref WSS_Service_Notify_Indicate_Info
-    uint8_t read_value_index; //!< ref: @ref WSS_Service_Read_Info
+    uint8_t notification_indication_index; //!<  @ref WSS_Service_Notify_Indicate_Info.
+    uint8_t read_value_index; //!<  @ref WSS_Service_Read_Info.
 } T_WSS_UPSTREAM_MSG_DATA;
 /** @} End of T_WSS_UPSTREAM_MSG_DATA */
 
-/** @defgroup T_WSS_CALLBACK_DATA TWS CALLBACK DATA
+/** @defgroup T_WSS_CALLBACK_DATA WSS Callback Data
   * @brief Weight scale service data to inform application.
   * @{
   */
@@ -139,7 +138,7 @@ typedef struct
 /** @} End of T_WSS_CALLBACK_DATA */
 
 
-/** @defgroup T_WEIGHT_SCALE_FEATURE_VALUE WEIGHT SCALE FEATURE VALUE
+/** @defgroup T_WEIGHT_SCALE_FEATURE_VALUE Weight Scale Feature Value
   * @brief Weight Scale Feature Value.
   * @{
   */
@@ -154,7 +153,7 @@ typedef struct
 } T_WEIGHT_SCALE_FEATURE_VALUE;
 /** @} End of T_WEIGHT_SCALE_FEATURE_VALUE */
 
-/** @defgroup T_WEIGHT_MEASUREMENT_VALUE_FLAG WEIGHT MEASUREMENT VALUE FLAG
+/** @defgroup T_WEIGHT_MEASUREMENT_VALUE_FLAG Weight Measurement Value Flag
   * @brief Weight Measurement Value Flag.
   * @{
   */
@@ -168,7 +167,7 @@ typedef struct
 } T_WEIGHT_MEASUREMENT_VALUE_FLAG;
 /** @} End of T_WEIGHT_MEASUREMENT_VALUE_FLAG */
 
-/** @defgroup T_WSS_TIME_STAMP WSS TIME STAMP
+/** @defgroup T_WSS_TIME_STAMP WSS Time Stamp
   * @brief Weight Scale Feature Time Stamp.
   * @{
   */
@@ -183,7 +182,7 @@ typedef struct
 } T_WSS_TIME_STAMP;
 /** @} End of T_WSS_TIME_STAMP */
 
-/** @defgroup T_WSS_MEASUREMENT WSS MEASUREMENT
+/** @defgroup T_WSS_MEASUREMENT WSS Measurement
   * @brief Weight Measurement Value.
   * @{
   */
@@ -207,25 +206,25 @@ typedef struct
  *                         Functions
  *============================================================================*/
 
-/** @defgroup WSS_Service_Exported_Functions WSS Service Exported Functions
+/** @defgroup WSS_Service_Exported_Functions WSS Exported Functions
   * @brief
   * @{
   */
 
 /**
-  * @brief       Add Weight scale service to the BLE stack database.
+  * @brief       Add Weight Scale service to the Bluetooth Host.
   *
   *
-  * @param[in]   p_func  Callback when service attribute was read, write or cccd update.
-  * @return Service id generated by the BLE stack: @ref T_SERVER_ID.
+  * @param[in]   p_func  Callback when service attribute is read, written, or CCCD updated.
+  * @return Service ID generated by the Bluetooth Host: @ref T_SERVER_ID.
   * @retval 0xFF Operation failure.
-  * @retval Others Service id assigned by stack.
+  * @retval Others Service ID assigned by Bluetooth Host.
   *
   * <b>Example usage</b>
   * \code{.c}
      void profile_init()
      {
-         server_init(1);
+         server_init(service_num);
          wss_id = wss_add_service(app_handle_profile_message);
      }
   * \endcode
@@ -233,19 +232,19 @@ typedef struct
 T_SERVER_ID wss_add_service(void *p_func);
 
 /**
- * @brief       Set a weight scale service parameter.
+ * @brief       Set a Weight Scale service parameter.
  *
- *              NOTE: You can call this function with a weight scale service parameter type and it will set the
- *                      weight scale service parameter.  Weight scale service parameters are defined in @ref T_WSS_PARAM_TYPE.
- *                      If the "len" field sets to the size of a "uint16_t" ,the
- *                      "p_value" field must point to a data with type of "uint16_t".
+ * Call this function with a Weight Scale service parameter type and it will set the
+ *                      Weight Scale service parameter. Weight Scale service parameters are defined in @ref T_WSS_PARAM_TYPE.
+ *                      If the "len" field is set to the size of a "uint16_t", the
+ *                      "p_value" field must point to data of type "uint16_t".
  *
- * @param[in]   param_type   Weight scale service parameter type: @ref T_WSS_PARAM_TYPE
- * @param[in]   len       Length of data to write
- * @param[in]   p_value Pointer to data to write.  This is dependent on
+ * @param[in]   param_type   Weight Scale service parameter type: @ref T_WSS_PARAM_TYPE.
+ * @param[in]   len       Length of data to write.
+ * @param[in]   p_value Pointer to data to write. This is dependent on
  *                      the parameter type and WILL be cast to the appropriate
- *                      data type (For example: if data type of param is uint16_t, p_value will be cast to
- *                      pointer of uint16_t).
+ *                      data type (For example: if the data type of param is uint16_t, p_value will be cast to
+ *                      a pointer of uint16_t).
  *
  * @return Operation result.
  * @retval true Operation success.
@@ -255,8 +254,7 @@ T_SERVER_ID wss_add_service(void *p_func);
  * \code{.c}
     void test(void)
     {
-        uint32_t weight_feature = 0x0000001f;
-        wss_set_parameter(WSS_PARAM_FEATURE_READ_CHAR_VAL, 4, &weight_feature);
+        bool ret = wss_set_parameter(WSS_PARAM_FEATURE_READ_CHAR_VAL, 4, &weight_feature);
     }
  * \endcode
  */
@@ -267,8 +265,8 @@ bool wss_set_parameter(T_WSS_PARAM_TYPE param_type, uint8_t len, void *p_value);
  * @brief       Send measurement indication data.
  *
  *
- * @param[in]   conn_id  Connection id.
- * @param[in]   service_id  Service id.
+ * @param[in]   conn_id  Connection ID.
+ * @param[in]   service_id  Service ID.
  * @return Operation result.
  * @retval true Operation success.
  * @retval false Operation failure.
@@ -285,7 +283,7 @@ bool wss_set_parameter(T_WSS_PARAM_TYPE param_type, uint8_t len, void *p_value);
         wss_set_parameter(WSS_PARAM_MEASUREMENT_WEIGHTPARAM_FLAG, sizeof(wm_flag), &wm_flag);
         wss_set_parameter(WSS_PARAM_MEASUREMENT_TIME_STAMP, sizeof(wss_measure_time_stamp),
                           &wss_measure_time_stamp);
-        wss_measurement_indicate(p_parse_value->dw_param[0], wss_id);
+        wss_measurement_indicate(conn_id, wss_id);
     }
  * \endcode
  */

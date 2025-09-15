@@ -88,7 +88,7 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Provide the functionalities of command line interface. </p>
-<p>Command line interface provides a prompt where the user types a command, which is expressed as a sequence of characters - typically a command name followed by some parameters, and presses the <b>Return</b> key to execute that command. </p>
+<p>Command line interface provides a prompt where the user types a command, which is expressed as a sequence of characters - typically a command name followed by some parameters, ending with a carriage return and line feed character. </p>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="ga5d434714833783498b5f3b41cd4223b8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga5d434714833783498b5f3b41cd4223b8">&#9670;&nbsp;</a></span>P_CLI_CALLBACK</h2>
@@ -103,7 +103,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Define the prototype of command line callback function. </p>
-<p><a class="el" href="cli_8h_source.html">cli.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">cmd_str</td><td>The entire string (including params) as input by the user. </td></tr>
@@ -136,7 +135,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Define the prototype of command line pattern matching. </p>
-<p><a class="el" href="cli_8h_source.html">cli.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">cmd_str</td><td>The entire string (including params) as input by the user. </td></tr>
@@ -169,7 +167,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Define the structure of command line interface. </p>
-<p><a class="el" href="cli_8h_source.html">cli.h</a> </p>
 
 </div>
 </div>
@@ -191,7 +188,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Register the command passed in using the cli_cmd parameter. </p>
-<p><a class="el" href="cli_8h_source.html">cli.h</a></p>
 <p>Registering a command adds the command to the list of commands that are handled by the command interpreter. Once a command has been registered it can be executed from the command line.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -243,7 +239,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the pointer to the param_idx'th word in the command string. </p>
-<p><a class="el" href="cli_8h_source.html">cli.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">cmd_str</td><td>The start address of the command string. </td></tr>
@@ -273,7 +268,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the number of parameters that follow the command name. </p>
-<p><a class="el" href="cli_8h_source.html">cli.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">cmd_str</td><td>The start address of the command string.</td></tr>
@@ -323,7 +317,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Traverse and echo the help prompts of the specified command list. </p>
-<p><a class="el" href="cli_8h_source.html">cli.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">cmd_list</td><td>The command of which the subcommand list will be traversed. </td></tr>

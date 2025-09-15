@@ -44,17 +44,20 @@ $(function() {
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">TIM Mode<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___t_i_m.html">TIM</a> &raquo; <a class="el" href="group__x3e___t_i_m___exported__constants.html">TIM Exported Constants</a></div></div>  </div>
+<div class="title">TIM Mode<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___t_i_m.html">TIM</a> &raquo; <a class="el" href="group__x3e___t_i_m___exported___constants.html">TIM Exported Constants</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:gaca39281728ad1511dbdd4a0c838b8bfd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___t_i_m___mode.html#gaca39281728ad1511dbdd4a0c838b8bfd">TIM_Mode_FreeRun</a>&#160;&#160;&#160;((uint16_t)0x0000)</td></tr>
+<tr class="memdesc:gaca39281728ad1511dbdd4a0c838b8bfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the TIM mode as free-running mode. In free-running mode, the TIM counts down from 0xFFFFFFFF.  <a href="#gaca39281728ad1511dbdd4a0c838b8bfd">More...</a><br /></td></tr>
 <tr class="separator:gaca39281728ad1511dbdd4a0c838b8bfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga119615a9b3a43818b04ac7709408d5a6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___t_i_m___mode.html#ga119615a9b3a43818b04ac7709408d5a6">TIM_Mode_UserDefine</a>&#160;&#160;&#160;((uint16_t)0x0001)</td></tr>
+<tr class="memdesc:ga119615a9b3a43818b04ac7709408d5a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the TIM mode as user-defined mode. In user-defined mode, the TIM counts down from the value set by TIM_Period in <a class="el" href="struct_t_i_m___time_base_init_type_def.html">TIM_TimeBaseInitTypeDef</a>.  <a href="#ga119615a9b3a43818b04ac7709408d5a6">More...</a><br /></td></tr>
 <tr class="separator:ga119615a9b3a43818b04ac7709408d5a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4a86f6584633dc57995bfe1721a671a8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___t_i_m___mode.html#ga4a86f6584633dc57995bfe1721a671a8">IS_TIM_MODE</a>(mode)</td></tr>
+<tr class="memdesc:ga4a86f6584633dc57995bfe1721a671a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether is the TIM mode.  <a href="#ga4a86f6584633dc57995bfe1721a671a8">More...</a><br /></td></tr>
 <tr class="separator:ga4a86f6584633dc57995bfe1721a671a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -71,6 +74,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Select the TIM mode as free-running mode. In free-running mode, the TIM counts down from 0xFFFFFFFF. </p>
+
 </div>
 </div>
 <a id="ga119615a9b3a43818b04ac7709408d5a6"></a>
@@ -84,6 +89,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Select the TIM mode as user-defined mode. In user-defined mode, the TIM counts down from the value set by TIM_Period in <a class="el" href="struct_t_i_m___time_base_init_type_def.html">TIM_TimeBaseInitTypeDef</a>. </p>
 
 </div>
 </div>
@@ -102,9 +109,11 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">(((mode) == <a class="code" href="group__x3e___t_i_m___mode.html#gaca39281728ad1511dbdd4a0c838b8bfd">TIM_Mode_FreeRun</a>) || \</div><div class="line">                           ((mode) == <a class="code" href="group__x3e___t_i_m___mode.html#ga119615a9b3a43818b04ac7709408d5a6">TIM_Mode_UserDefine</a>))</div><div class="ttc" id="group__x3e___t_i_m___mode_html_ga119615a9b3a43818b04ac7709408d5a6"><div class="ttname"><a href="group__x3e___t_i_m___mode.html#ga119615a9b3a43818b04ac7709408d5a6">TIM_Mode_UserDefine</a></div><div class="ttdeci">#define TIM_Mode_UserDefine</div><div class="ttdef"><b>Definition:</b> rtl876x_tim.h:144</div></div>
-<div class="ttc" id="group__x3e___t_i_m___mode_html_gaca39281728ad1511dbdd4a0c838b8bfd"><div class="ttname"><a href="group__x3e___t_i_m___mode.html#gaca39281728ad1511dbdd4a0c838b8bfd">TIM_Mode_FreeRun</a></div><div class="ttdeci">#define TIM_Mode_FreeRun</div><div class="ttdef"><b>Definition:</b> rtl876x_tim.h:143</div></div>
+<b>Value:</b><div class="fragment"><div class="line">(((mode) == <a class="code" href="group__x3e___t_i_m___mode.html#gaca39281728ad1511dbdd4a0c838b8bfd">TIM_Mode_FreeRun</a>) || \</div><div class="line">                           ((mode) == <a class="code" href="group__x3e___t_i_m___mode.html#ga119615a9b3a43818b04ac7709408d5a6">TIM_Mode_UserDefine</a>))</div><div class="ttc" id="group__x3e___t_i_m___mode_html_ga119615a9b3a43818b04ac7709408d5a6"><div class="ttname"><a href="group__x3e___t_i_m___mode.html#ga119615a9b3a43818b04ac7709408d5a6">TIM_Mode_UserDefine</a></div><div class="ttdeci">#define TIM_Mode_UserDefine</div><div class="ttdoc">Select the TIM mode as user-defined mode. In user-defined mode, the TIM counts down from the value se...</div><div class="ttdef"><b>Definition:</b> rtl876x_tim.h:169</div></div>
+<div class="ttc" id="group__x3e___t_i_m___mode_html_gaca39281728ad1511dbdd4a0c838b8bfd"><div class="ttname"><a href="group__x3e___t_i_m___mode.html#gaca39281728ad1511dbdd4a0c838b8bfd">TIM_Mode_FreeRun</a></div><div class="ttdeci">#define TIM_Mode_FreeRun</div><div class="ttdoc">Select the TIM mode as free-running mode. In free-running mode, the TIM counts down from 0xFFFFFFFF...</div><div class="ttdef"><b>Definition:</b> rtl876x_tim.h:168</div></div>
 </div><!-- fragment -->
+<p>Check whether is the TIM mode. </p>
+
 </div>
 </div>
 </div><!-- contents -->

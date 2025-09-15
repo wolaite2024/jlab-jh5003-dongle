@@ -3,208 +3,235 @@
  */
 
 #include <string.h>
+#include <stdlib.h>
 #include "trace.h"
-#include "os_mem.h"
-#include "rfc.h"
 #include "bt_rfc_int.h"
+#include "bt_rfc.h"
 #include "bt_roleswap.h"
 
-BT_RFC_PROFILE *p_bt_rfc_profile;
-BT_RFC_CHANN *p_bt_rfc_chann;
-
-BT_RFC_CHANN *bt_rfc_alloc_chann(uint8_t bd_addr[6],
-                                 uint8_t local_server_chann)
+typedef struct t_bt_rfc_service
 {
-    uint8_t i;
-    BT_RFC_CHANN *p_chann;
+    struct t_bt_rfc_service *next;
+    P_BT_RFC_SERVICE_CBACK   cback;
+    uint8_t                  server_chann;
+    uint8_t                  service_id;
+} T_BT_RFC_SERVICE;
 
-    for (i = 0; i < BT_RFC_DLCI_NUM; i++)
+typedef struct t_bt_rfc_chann
+{
+    struct t_bt_rfc_chann *next;
+    uint8_t                bd_addr[6];
+    uint8_t                local_server_chann;
+    uint8_t                dlci;
+} T_BT_RFC_CHANN;
+
+typedef struct t_bt_rfc_db
+{
+    T_OS_QUEUE service_list;
+    T_OS_QUEUE chann_list;
+} T_BT_RFC_DB;
+
+static T_BT_RFC_DB *bt_rfc_db;
+
+T_BT_RFC_CHANN *bt_rfc_alloc_chann(uint8_t bd_addr[6],
+                                   uint8_t local_server_chann)
+{
+    T_BT_RFC_CHANN *chann;
+
+    chann = calloc(1, sizeof(T_BT_RFC_CHANN));
+    if (chann != NULL)
     {
-        p_chann = &p_bt_rfc_chann[i];
-        if (p_chann->used == false)
+        memcpy(chann->bd_addr, bd_addr, 6);
+        chann->local_server_chann = local_server_chann;
+        os_queue_in(&bt_rfc_db->chann_list, chann);
+    }
+
+    return chann;
+}
+
+T_BT_RFC_CHANN *bt_rfc_find_chann_by_dlci(uint8_t bd_addr[6],
+                                          uint8_t dlci)
+{
+    T_BT_RFC_CHANN *chann;
+
+    chann = os_queue_peek(&bt_rfc_db->chann_list, 0);
+    while (chann != NULL)
+    {
+        if (!memcmp(chann->bd_addr, bd_addr, 6) &&
+            chann->dlci == dlci)
         {
-            p_chann->used = true;
-            memcpy(p_chann->bd_addr, bd_addr, 6);
-            p_chann->local_server_chann = local_server_chann;
-            return p_chann;
+            break;
         }
+
+        chann = chann->next;
+    }
+
+    return chann;
+}
+
+T_BT_RFC_CHANN *bt_rfc_find_chann_by_server_chann(uint8_t bd_addr[6],
+                                                  uint8_t server_chann)
+{
+    T_BT_RFC_CHANN *chann;
+
+    chann = os_queue_peek(&bt_rfc_db->chann_list, 0);
+    while (chann != NULL)
+    {
+        if (!memcmp(chann->bd_addr, bd_addr, 6) &&
+            chann->local_server_chann == server_chann)
+        {
+            break;
+        }
+
+        chann = chann->next;
+    }
+
+    return chann;
+}
+
+P_BT_RFC_SERVICE_CBACK bt_rfc_find_cback_by_server_chann(uint8_t chann)
+{
+    T_BT_RFC_SERVICE *service;
+
+    service = os_queue_peek(&bt_rfc_db->service_list, 0);
+    while (service != NULL)
+    {
+        if (service->server_chann == chann)
+        {
+            return service->cback;
+        }
+
+        service = service->next;
     }
 
     return NULL;
 }
 
-BT_RFC_CHANN *bt_rfc_find_chann_by_dlci(uint8_t bd_addr[6],
-                                        uint8_t dlci)
+bool bt_rfc_service_id_get(uint8_t  local_server_chann,
+                           uint8_t *service_id)
 {
-    uint8_t i;
-    BT_RFC_CHANN *p_chann;
+    T_BT_RFC_SERVICE *service;
 
-    for (i = 0; i < BT_RFC_DLCI_NUM; i++)
+    service = os_queue_peek(&bt_rfc_db->service_list, 0);
+    while (service != NULL)
     {
-        p_chann = &p_bt_rfc_chann[i];
-        if (p_chann->used == true && !memcmp(p_chann->bd_addr, bd_addr, 6) && p_chann->dlci == dlci)
+        if (service->server_chann == local_server_chann)
         {
-            return p_chann;
-        }
-    }
-
-    return NULL;
-}
-
-BT_RFC_CHANN *bt_rfc_find_chann_by_server_chann(uint8_t bd_addr[6],
-                                                uint8_t chann)
-{
-    uint8_t i;
-    BT_RFC_CHANN *p_chann;
-
-    for (i = 0; i < BT_RFC_DLCI_NUM; i++)
-    {
-        p_chann = &p_bt_rfc_chann[i];
-        if (p_chann->used == true && !memcmp(p_chann->bd_addr, bd_addr, 6) &&
-            p_chann->local_server_chann == chann)
-        {
-            return p_chann;
-        }
-    }
-
-    return NULL;
-}
-
-P_BT_RFC_PROFILE_CBACK bt_rfc_find_cback_by_server_chann(uint8_t chann)
-{
-    uint8_t i;
-
-    for (i = 0; i < BT_RFC_PROFILE_NUM; i++)
-    {
-        if (p_bt_rfc_profile[i].server_chann == chann)
-        {
-            return p_bt_rfc_profile[i].cback;
-        }
-    }
-
-    return NULL;
-}
-
-bool bt_rfc_find_profile_idx_by_server_chann(uint8_t  local_server_chann,
-                                             uint8_t *profile_idx)
-{
-    uint8_t i;
-
-    for (i = 0; i < BT_RFC_PROFILE_NUM; i++)
-    {
-        if (p_bt_rfc_profile[i].server_chann == local_server_chann)
-        {
-            *profile_idx = p_bt_rfc_profile[i].profile_index;
-
+            *service_id = service->service_id;
             return true;
         }
+
+        service = service->next;
     }
 
     return false;
 }
 
-void bt_rfc_free_chann(BT_RFC_CHANN *p_chann)
+void bt_rfc_free_chann(T_BT_RFC_CHANN *chann)
 {
-    memset(p_chann, 0, sizeof(BT_RFC_CHANN));
-    p_chann->used = false;
+    os_queue_delete(&bt_rfc_db->chann_list, chann);
+    free(chann);
 }
 
 void bt_rfc_cback(T_RFC_MSG_TYPE  type,
-                  void           *p_msg)
+                  void           *msg)
 {
-    BT_RFC_CHANN *p_chann;
-    P_BT_RFC_PROFILE_CBACK cback = NULL;
+    T_BT_RFC_CHANN         *chann;
+    P_BT_RFC_SERVICE_CBACK  cback = NULL;
 
     switch (type)
     {
     case RFC_CONN_IND:
         {
-            T_RFC_CONN_IND *p;
-            T_BT_RFC_CONN_IND conn_ind_msg;
-            uint8_t local_server_chann = 0;
-            uint8_t i;
+            T_RFC_CONN_IND *rfc_conn_ind;
 
-            p = (T_RFC_CONN_IND *)p_msg;
-
-            p_chann = bt_rfc_find_chann_by_dlci(p->bd_addr, p->dlci);
-            if (p_chann)
+            rfc_conn_ind = (T_RFC_CONN_IND *)msg;
+            chann = bt_rfc_find_chann_by_dlci(rfc_conn_ind->bd_addr, rfc_conn_ind->dlci);
+            if (chann == NULL)
             {
-                return;
-            }
+                uint8_t           local_server_chann;
+                T_BT_RFC_SERVICE *service;
 
-            local_server_chann = (p->dlci >> 1) & 0x1F;
-            for (i = 0; i < BT_RFC_PROFILE_NUM; i++)
-            {
-                if (p_bt_rfc_profile[i].server_chann == local_server_chann)
+                local_server_chann = (rfc_conn_ind->dlci >> 1) & 0x1F;
+                service = os_queue_peek(&bt_rfc_db->service_list, 0);
+                while (service != NULL)
                 {
-                    p_chann = bt_rfc_alloc_chann(p->bd_addr, local_server_chann);
-                    if (p_chann)
+                    if (service->server_chann == local_server_chann)
                     {
-                        p_chann->dlci = p->dlci;
-                        cback = p_bt_rfc_profile[i].cback;
+                        chann = bt_rfc_alloc_chann(rfc_conn_ind->bd_addr, local_server_chann);
+                        if (chann)
+                        {
+                            T_BT_RFC_CONN_IND conn_ind_msg;
+
+                            chann->dlci = rfc_conn_ind->dlci;
+                            conn_ind_msg.local_server_chann = chann->local_server_chann;
+                            conn_ind_msg.frame_size = rfc_conn_ind->frame_size;
+                            service->cback(chann->bd_addr, BT_RFC_MSG_CONN_IND, &conn_ind_msg);
+                            return;
+                        }
+                        break;
                     }
-                    break;
+
+                    service = service->next;
                 }
             }
 
-            if (cback)
-            {
-                conn_ind_msg.local_server_chann = p_chann->local_server_chann;
-                conn_ind_msg.frame_size = p->frame_size;
-                cback(p_chann->bd_addr, BT_RFC_MSG_CONN_IND, &conn_ind_msg);
-            }
+            rfc_conn_cfm(rfc_conn_ind->bd_addr, rfc_conn_ind->dlci, RFC_REJECT, 0, 0);
         }
         break;
 
     case RFC_CONN_CMPL:
         {
-            T_RFC_CONN_CMPL *p;
-            T_BT_RFC_CONN_CMPL conn_cmpl_msg;
+            T_RFC_CONN_CMPL *conn_cmpl;
 
-            p = (T_RFC_CONN_CMPL *)p_msg;
-
-            p_chann = bt_rfc_find_chann_by_dlci(p->bd_addr, p->dlci);
-            if (p_chann)
+            conn_cmpl = (T_RFC_CONN_CMPL *)msg;
+            chann = bt_rfc_find_chann_by_dlci(conn_cmpl->bd_addr, conn_cmpl->dlci);
+            if (chann)
             {
-                cback = bt_rfc_find_cback_by_server_chann(p_chann->local_server_chann);
+                cback = bt_rfc_find_cback_by_server_chann(chann->local_server_chann);
                 if (cback)
                 {
-                    conn_cmpl_msg.local_server_chann = p_chann->local_server_chann;
-                    conn_cmpl_msg.frame_size = p->frame_size;
-                    conn_cmpl_msg.remain_credits = p->remain_credits;
-                    cback(p_chann->bd_addr, BT_RFC_MSG_CONN_CMPL, &conn_cmpl_msg);
+                    T_BT_RFC_CONN_CMPL conn_cmpl_msg;
+
+                    conn_cmpl_msg.local_server_chann = chann->local_server_chann;
+                    conn_cmpl_msg.frame_size = conn_cmpl->frame_size;
+                    conn_cmpl_msg.remain_credits = conn_cmpl->remain_credits;
+                    cback(chann->bd_addr, BT_RFC_MSG_CONN_CMPL, &conn_cmpl_msg);
                 }
 
-                bt_roleswap_handle_bt_rfc_conn(p->bd_addr, p_chann->local_server_chann);
+                bt_roleswap_handle_bt_rfc_conn(conn_cmpl->bd_addr, chann->local_server_chann);
             }
         }
         break;
 
     case RFC_DISCONN_CMPL:
         {
-            T_RFC_DISCONN_CMPL *p;
-            T_BT_RFC_DISCONN_CMPL disconn_cmpl_msg;
-            uint8_t local_server_chann;
+            T_RFC_DISCONN_CMPL *disconn_cmpl;
 
-            p = (T_RFC_DISCONN_CMPL *)p_msg;
-
-            p_chann = bt_rfc_find_chann_by_dlci(p->bd_addr, p->dlci);
-            if (p_chann)
+            disconn_cmpl = (T_RFC_DISCONN_CMPL *)msg;
+            chann = bt_rfc_find_chann_by_dlci(disconn_cmpl->bd_addr, disconn_cmpl->dlci);
+            if (chann)
             {
-                local_server_chann = p_chann->local_server_chann;
-                bt_rfc_free_chann(p_chann);
+                uint8_t local_server_chann;
+
+                local_server_chann = chann->local_server_chann;
+                bt_rfc_free_chann(chann);
 
                 cback = bt_rfc_find_cback_by_server_chann(local_server_chann);
                 if (cback)
                 {
+                    T_BT_RFC_DISCONN_CMPL disconn_cmpl_msg;
+
                     disconn_cmpl_msg.local_server_chann = local_server_chann;
-                    disconn_cmpl_msg.cause = p->cause;
-                    cback(p->bd_addr, BT_RFC_MSG_DISCONN_CMPL, &disconn_cmpl_msg);
+                    disconn_cmpl_msg.cause = disconn_cmpl->cause;
+                    cback(disconn_cmpl->bd_addr, BT_RFC_MSG_DISCONN_CMPL, &disconn_cmpl_msg);
                 }
 
-                if (p->cause != (HCI_ERR | HCI_ERR_CONN_ROLESWAP))
+                if (disconn_cmpl->cause != (HCI_ERR | HCI_ERR_CONN_ROLESWAP))
                 {
-                    bt_roleswap_handle_bt_rfc_disconn(p->bd_addr, local_server_chann, p->cause);
+                    bt_roleswap_handle_bt_rfc_disconn(disconn_cmpl->bd_addr,
+                                                      local_server_chann,
+                                                      disconn_cmpl->cause);
                 }
             }
         }
@@ -212,20 +239,20 @@ void bt_rfc_cback(T_RFC_MSG_TYPE  type,
 
     case RFC_CREDIT_INFO:
         {
-            T_RFC_CREDIT_INFO *p;
-            T_BT_RFC_CREDIT_INFO credit_msg;
+            T_RFC_CREDIT_INFO *credit_info;
 
-            p = (T_RFC_CREDIT_INFO *)p_msg;
-
-            p_chann = bt_rfc_find_chann_by_dlci(p->bd_addr, p->dlci);
-            if (p_chann)
+            credit_info = (T_RFC_CREDIT_INFO *)msg;
+            chann = bt_rfc_find_chann_by_dlci(credit_info->bd_addr, credit_info->dlci);
+            if (chann)
             {
-                cback = bt_rfc_find_cback_by_server_chann(p_chann->local_server_chann);
+                cback = bt_rfc_find_cback_by_server_chann(chann->local_server_chann);
                 if (cback)
                 {
-                    credit_msg.local_server_chann = p_chann->local_server_chann;
-                    credit_msg.remain_credits = p->remain_credits;
-                    cback(p_chann->bd_addr, BT_RFC_MSG_CREDIT_INFO, &credit_msg);
+                    T_BT_RFC_CREDIT_INFO credit_msg;
+
+                    credit_msg.local_server_chann = chann->local_server_chann;
+                    credit_msg.remain_credits = credit_info->remain_credits;
+                    cback(chann->bd_addr, BT_RFC_MSG_CREDIT_INFO, &credit_msg);
                 }
             }
         }
@@ -233,22 +260,22 @@ void bt_rfc_cback(T_RFC_MSG_TYPE  type,
 
     case RFC_DATA_IND:
         {
-            T_RFC_DATA_IND *p;
-            T_BT_RFC_DATA_IND data_ind_msg;
+            T_RFC_DATA_IND *data_ind;
 
-            p = (T_RFC_DATA_IND *)p_msg;
-
-            p_chann = bt_rfc_find_chann_by_dlci(p->bd_addr, p->dlci);
-            if (p_chann)
+            data_ind = (T_RFC_DATA_IND *)msg;
+            chann = bt_rfc_find_chann_by_dlci(data_ind->bd_addr, data_ind->dlci);
+            if (chann)
             {
-                cback = bt_rfc_find_cback_by_server_chann(p_chann->local_server_chann);
+                cback = bt_rfc_find_cback_by_server_chann(chann->local_server_chann);
                 if (cback)
                 {
-                    data_ind_msg.local_server_chann = p_chann->local_server_chann;
-                    data_ind_msg.buf = p->buf;
-                    data_ind_msg.length = p->length;
-                    data_ind_msg.remain_credits = p->remain_credits;
-                    cback(p_chann->bd_addr, BT_RFC_MSG_DATA_IND, &data_ind_msg);
+                    T_BT_RFC_DATA_IND data_ind_msg;
+
+                    data_ind_msg.local_server_chann = chann->local_server_chann;
+                    data_ind_msg.buf = data_ind->buf;
+                    data_ind_msg.length = data_ind->length;
+                    data_ind_msg.remain_credits = data_ind->remain_credits;
+                    cback(chann->bd_addr, BT_RFC_MSG_DATA_IND, &data_ind_msg);
                 }
             }
         }
@@ -256,17 +283,19 @@ void bt_rfc_cback(T_RFC_MSG_TYPE  type,
 
     case RFC_DATA_RSP:
         {
-            T_BT_RFC_DATA_RSP data_rsp_msg;
-            T_RFC_DATA_RSP *p = (T_RFC_DATA_RSP *)p_msg;
+            T_RFC_DATA_RSP *data_rsp;
 
-            p_chann = bt_rfc_find_chann_by_dlci(p->bd_addr, p->dlci);
-            if (p_chann)
+            data_rsp = (T_RFC_DATA_RSP *)msg;
+            chann = bt_rfc_find_chann_by_dlci(data_rsp->bd_addr, data_rsp->dlci);
+            if (chann)
             {
-                cback = bt_rfc_find_cback_by_server_chann(p_chann->local_server_chann);
+                cback = bt_rfc_find_cback_by_server_chann(chann->local_server_chann);
                 if (cback)
                 {
-                    data_rsp_msg.local_server_chann = p_chann->local_server_chann;
-                    cback(p_chann->bd_addr, BT_RFC_MSG_DATA_RSP, &data_rsp_msg);
+                    T_BT_RFC_DATA_RSP data_rsp_msg;
+
+                    data_rsp_msg.local_server_chann = chann->local_server_chann;
+                    cback(chann->bd_addr, BT_RFC_MSG_DATA_RSP, &data_rsp_msg);
                 }
             }
         }
@@ -274,12 +303,13 @@ void bt_rfc_cback(T_RFC_MSG_TYPE  type,
 
     case RFC_DLCI_CHANGE:
         {
-            T_RFC_DLCI_CHANGE_INFO *p_info = (T_RFC_DLCI_CHANGE_INFO *)p_msg;
+            T_RFC_DLCI_CHANGE_INFO *info;
 
-            p_chann = bt_rfc_find_chann_by_dlci(p_info->bd_addr, p_info->pre_dlci);
-            if (p_chann)
+            info = (T_RFC_DLCI_CHANGE_INFO *)msg;
+            chann = bt_rfc_find_chann_by_dlci(info->bd_addr, info->prev_dlci);
+            if (chann)
             {
-                p_chann->dlci = p_info->curr_dlci;
+                chann->dlci = info->curr_dlci;
             }
         }
         break;
@@ -291,28 +321,21 @@ void bt_rfc_cback(T_RFC_MSG_TYPE  type,
 
 bool bt_rfc_init(void)
 {
-    p_bt_rfc_profile = os_mem_zalloc2(sizeof(BT_RFC_PROFILE) * BT_RFC_PROFILE_NUM);
-    if (p_bt_rfc_profile == NULL)
+    bt_rfc_db = calloc(1, sizeof(T_BT_RFC_DB));
+    if (bt_rfc_db != NULL)
     {
-        return false;
+        os_queue_init(&bt_rfc_db->service_list);
+        os_queue_init(&bt_rfc_db->chann_list);
+        return true;
     }
 
-    p_bt_rfc_chann = os_mem_zalloc2(sizeof(BT_RFC_CHANN) * BT_RFC_DLCI_NUM);
-    if (p_bt_rfc_chann == NULL)
-    {
-        os_mem_free(p_bt_rfc_profile);
-        return false;
-    }
-    return true;
+    return false;
 }
 
-bool bt_rfc_profile_register(uint8_t                server_chann,
-                             P_BT_RFC_PROFILE_CBACK cback)
+bool bt_rfc_service_register(uint8_t                server_chann,
+                             P_BT_RFC_SERVICE_CBACK cback)
 {
-    uint8_t i;
-    uint8_t profile_idx;
-
-    if (p_bt_rfc_profile == NULL)
+    if (bt_rfc_db == NULL)
     {
         if (bt_rfc_init() == false)
         {
@@ -320,20 +343,38 @@ bool bt_rfc_profile_register(uint8_t                server_chann,
         }
     }
 
-    if (server_chann != 0)
+    if (server_chann != 0 && cback != NULL)
     {
-        if (rfc_reg_cb(server_chann, bt_rfc_cback, &profile_idx))
+        T_BT_RFC_SERVICE *service;
+
+        service = os_queue_peek(&bt_rfc_db->service_list, 0);
+        while (service != NULL)
         {
-            for (i = 0; i < BT_RFC_PROFILE_NUM; i++)
+            if (service->server_chann == server_chann)
             {
-                if (p_bt_rfc_profile[i].server_chann == 0)
+                break;
+            }
+
+            service = service->next;
+        }
+
+        if (service == NULL)
+        {
+            service = calloc(1, sizeof(T_BT_RFC_SERVICE));
+            if (service != NULL)
+            {
+                if (rfc_cback_register(server_chann,
+                                       bt_rfc_cback,
+                                       &service->service_id) == true)
                 {
-                    p_bt_rfc_profile[i].cback = cback;
-                    p_bt_rfc_profile[i].server_chann = server_chann;
-                    p_bt_rfc_profile[i].profile_index = profile_idx;
+                    service->cback = cback;
+                    service->server_chann = server_chann;
+                    os_queue_in(&bt_rfc_db->service_list, service);
 
                     return true;
                 }
+
+                free(service);
             }
         }
     }
@@ -347,30 +388,32 @@ bool bt_rfc_conn_req(uint8_t  bd_addr[6],
                      uint16_t frame_size,
                      uint8_t  init_credits)
 {
-    uint8_t profile_idx;
-    BT_RFC_CHANN *p_chann;
+    T_BT_RFC_CHANN *chann;
 
-    p_chann = bt_rfc_find_chann_by_server_chann(bd_addr, local_server_chann);
-    if (p_chann)
+    chann = bt_rfc_find_chann_by_server_chann(bd_addr, local_server_chann);
+    if (chann == NULL)
     {
-        return false;
-    }
-    p_chann = bt_rfc_alloc_chann(bd_addr, local_server_chann);
-    if (p_chann == NULL)
-    {
-        return false;
-    }
-
-    if (bt_rfc_find_profile_idx_by_server_chann(local_server_chann, &profile_idx) == true)
-    {
-        if (rfc_conn_req(bd_addr, remote_server_chann, frame_size, init_credits,
-                         profile_idx, &p_chann->dlci) == true)
+        chann = bt_rfc_alloc_chann(bd_addr, local_server_chann);
+        if (chann != NULL)
         {
-            return true;
+            uint8_t service_id;
+
+            if (bt_rfc_service_id_get(local_server_chann, &service_id) == true)
+            {
+                if (rfc_conn_req(bd_addr,
+                                 remote_server_chann,
+                                 service_id,
+                                 frame_size,
+                                 init_credits,
+                                 &chann->dlci) == true)
+                {
+                    return true;
+                }
+            }
+
+            bt_rfc_free_chann(chann);
         }
     }
-
-    bt_rfc_free_chann(p_chann);
 
     return false;
 }
@@ -381,38 +424,39 @@ bool bt_rfc_conn_cfm(uint8_t  bd_addr[6],
                      uint16_t frame_size,
                      uint8_t  init_credits)
 {
-    BT_RFC_CHANN *p_chann;
+    T_BT_RFC_CHANN *chann;
 
-    p_chann = bt_rfc_find_chann_by_server_chann(bd_addr, local_server_chann);
-    if (p_chann == NULL)
+    chann = bt_rfc_find_chann_by_server_chann(bd_addr, local_server_chann);
+    if (chann != NULL)
     {
-        return false;
+        if (accept)
+        {
+            rfc_conn_cfm(bd_addr, chann->dlci, RFC_ACCEPT, frame_size, init_credits);
+        }
+        else
+        {
+            rfc_conn_cfm(bd_addr, chann->dlci, RFC_REJECT, 0, 0);
+            bt_rfc_free_chann(chann);
+        }
+
+        return true;
     }
 
-    if (accept)
-    {
-        rfc_conn_cfm(bd_addr, p_chann->dlci, RFC_ACCEPT, frame_size, init_credits);
-    }
-    else
-    {
-        rfc_conn_cfm(bd_addr, p_chann->dlci, RFC_REJECT, 0, 0);
-        bt_rfc_free_chann(p_chann);
-    }
-    return true;
+    return false;
 }
 
 bool bt_rfc_data_send(uint8_t   bd_addr[6],
                       uint8_t   local_server_chann,
-                      uint8_t  *p_data,
-                      uint16_t  data_len,
+                      uint8_t  *buf,
+                      uint16_t  buf_len,
                       bool      ack)
 {
-    BT_RFC_CHANN *p_chann;
+    T_BT_RFC_CHANN *chann;
 
-    p_chann = bt_rfc_find_chann_by_server_chann(bd_addr, local_server_chann);
-    if (p_chann)
+    chann = bt_rfc_find_chann_by_server_chann(bd_addr, local_server_chann);
+    if (chann)
     {
-        if (rfc_data_req(bd_addr, p_chann->dlci, p_data, data_len, ack) == true)
+        if (rfc_data_req(bd_addr, chann->dlci, buf, buf_len, ack) == true)
         {
             return true;
         }
@@ -425,12 +469,12 @@ bool bt_rfc_credits_give(uint8_t bd_addr[6],
                          uint8_t local_server_chann,
                          uint8_t credits)
 {
-    BT_RFC_CHANN *p_chann;
+    T_BT_RFC_CHANN *chann;
 
-    p_chann = bt_rfc_find_chann_by_server_chann(bd_addr, local_server_chann);
-    if (p_chann)
+    chann = bt_rfc_find_chann_by_server_chann(bd_addr, local_server_chann);
+    if (chann)
     {
-        if (rfc_data_cfm(bd_addr, p_chann->dlci, credits) == true)
+        if (rfc_data_cfm(bd_addr, chann->dlci, credits) == true)
         {
             return true;
         }
@@ -442,12 +486,12 @@ bool bt_rfc_credits_give(uint8_t bd_addr[6],
 bool bt_rfc_disconn_req(uint8_t bd_addr[6],
                         uint8_t local_server_chann)
 {
-    BT_RFC_CHANN *p_chann;
+    T_BT_RFC_CHANN *chann;
 
-    p_chann = bt_rfc_find_chann_by_server_chann(bd_addr, local_server_chann);
-    if (p_chann)
+    chann = bt_rfc_find_chann_by_server_chann(bd_addr, local_server_chann);
+    if (chann)
     {
-        if (rfc_disconn_req(bd_addr, p_chann->dlci) == true)
+        if (rfc_disconn_req(bd_addr, chann->dlci) == true)
         {
             return true;
         }
@@ -458,14 +502,16 @@ bool bt_rfc_disconn_req(uint8_t bd_addr[6],
 
 bool bt_rfc_get_roleswap_info(uint8_t                 bd_addr[6],
                               uint8_t                 server_chann,
-                              T_ROLESWAP_BT_RFC_INFO *p_info)
+                              T_ROLESWAP_BT_RFC_INFO *info)
 {
-    BT_RFC_CHANN *p_chann;
+    T_BT_RFC_CHANN *chann;
 
-    p_chann = bt_rfc_find_chann_by_server_chann(bd_addr, server_chann);
-    if (p_chann)
+    chann = bt_rfc_find_chann_by_server_chann(bd_addr, server_chann);
+    if (chann)
     {
-        p_info->dlci = p_chann->dlci;
+        memcpy(info->bd_addr, bd_addr, 6);
+        info->local_server_chann = server_chann;
+        info->dlci = chann->dlci;
 
         return true;
     }
@@ -473,20 +519,19 @@ bool bt_rfc_get_roleswap_info(uint8_t                 bd_addr[6],
     return false;
 }
 
-bool bt_rfc_set_roleswap_info(T_ROLESWAP_BT_RFC_INFO *p_info)
+bool bt_rfc_set_roleswap_info(T_ROLESWAP_BT_RFC_INFO *info)
 {
-    BT_RFC_CHANN *p_chann;
+    T_BT_RFC_CHANN *chann;
 
-    p_chann = bt_rfc_find_chann_by_server_chann(p_info->bd_addr, p_info->local_server_chann);
-    if (p_chann == NULL)
+    chann = bt_rfc_find_chann_by_server_chann(info->bd_addr, info->local_server_chann);
+    if (chann == NULL)
     {
-        p_chann = bt_rfc_alloc_chann(p_info->bd_addr, p_info->local_server_chann);
+        chann = bt_rfc_alloc_chann(info->bd_addr, info->local_server_chann);
     }
 
-    if (p_chann)
+    if (chann)
     {
-        p_chann->dlci = p_info->dlci;
-
+        chann->dlci = info->dlci;
         return true;
     }
 
@@ -496,13 +541,12 @@ bool bt_rfc_set_roleswap_info(T_ROLESWAP_BT_RFC_INFO *p_info)
 bool bt_rfc_del_roleswap_info(uint8_t bd_addr[6],
                               uint8_t server_chann)
 {
-    BT_RFC_CHANN *p_chann;
+    T_BT_RFC_CHANN *chann;
 
-    p_chann = bt_rfc_find_chann_by_server_chann(bd_addr, server_chann);
-    if (p_chann)
+    chann = bt_rfc_find_chann_by_server_chann(bd_addr, server_chann);
+    if (chann)
     {
-        bt_rfc_free_chann(p_chann);
-
+        bt_rfc_free_chann(chann);
         return true;
     }
 

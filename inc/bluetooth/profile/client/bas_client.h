@@ -3,7 +3,7 @@
 *     Copyright(c) 2016, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * @file     bas_client.h
-  * @brief    Head file for using battery service client.
+  * @brief    Header file for using battery service client.
   * @details  Battery service client data structs and external functions declaration.
   * @author   jane
   * @date     2016-02-18
@@ -29,15 +29,15 @@ extern "C" {
 /** @defgroup BAS_CLIENT Battery Service Client
   * @brief BAS client
   * @details
-     Application shall register bas client when initialization through @ref bas_add_client function.
+     Applications shall register BAS client during initialization through @ref bas_add_client function.
 
-     Application can start discovery battery service through @ref bas_start_discovery function.
+     Applications can start discovery battery service through @ref bas_start_discovery function.
 
-     Application can read battery level characteristic value through @ref bas_read_battery_level function.
+     Applications can read battery level characteristic value through @ref bas_read_battery_level function.
 
-     Application can config and read the notification flag through @ref bas_set_notify and @ref bas_read_notify function.
+     Applications can config and read the Client Characteristic Configuration through @ref bas_set_notify and @ref bas_read_notify function.
 
-     Application shall handle callback function registered by bas_add_client.
+     Applications shall handle callback function registered by @ref bas_add_client.
   * \code{.c}
     T_APP_RESULT app_client_callback(T_CLIENT_ID client_id, uint8_t conn_id, void *p_data)
     {
@@ -66,7 +66,7 @@ extern "C" {
   * @{
   */
 
-/** @brief  Define links number. range: 0-4 */
+/** @brief  Define links number. */
 #define BAS_MAX_LINKS  4
 
 /** End of BAS_CLIENT_Exported_Macros
@@ -85,11 +85,11 @@ extern "C" {
 /** @brief BAS client handle type*/
 typedef enum
 {
-    HDL_BAS_SRV_START,           //!< start handle of battery service
-    HDL_BAS_SRV_END,             //!< end handle of battery service
-    HDL_BAS_BATTERY_LEVEL,       //!< battery level characteristic value handle
-    HDL_BAS_BATTERY_LEVEL_CCCD,  //!< battery level characteristic CCCD handle
-    HDL_BAS_CACHE_LEN            //!< handle cache length
+    HDL_BAS_SRV_START,           //!< Start handle of battery service.
+    HDL_BAS_SRV_END,             //!< End handle of battery service.
+    HDL_BAS_BATTERY_LEVEL,       //!< Battery level characteristic value handle.
+    HDL_BAS_BATTERY_LEVEL_CCCD,  //!< Battery level characteristic CCCD handle.
+    HDL_BAS_CACHE_LEN            //!< Handle cache length.
 } T_BAS_HANDLE_TYPE;
 
 /** @brief BAS client discovery state*/
@@ -147,8 +147,8 @@ typedef struct
 typedef enum
 {
     BAS_CLIENT_CB_TYPE_DISC_STATE,          //!< Discovery procedure state, done or pending.
-    BAS_CLIENT_CB_TYPE_READ_RESULT,         //!< Read request's result data, responsed from server.
-    BAS_CLIENT_CB_TYPE_WRITE_RESULT,        //!< Write request result, success or fail.
+    BAS_CLIENT_CB_TYPE_READ_RESULT,         //!< Read request's result data, responded from server.
+    BAS_CLIENT_CB_TYPE_WRITE_RESULT,        //!< Write result, success or fail.
     BAS_CLIENT_CB_TYPE_NOTIF_IND_RESULT,    //!< Notification or indication data received from server.
     BAS_CLIENT_CB_TYPE_INVALID              //!< Invalid callback type, no practical usage.
 } T_BAS_CLIENT_CB_TYPE;
@@ -182,18 +182,18 @@ typedef struct
   */
 
 /**
-  * @brief      Add bas client to application.
-  * @param[in]  app_cb pointer of app callback function to handle specific client module data.
-  * @param[in]  link_num initialize link num.
+  * @brief      Add BAS client to application.
+  * @param[in]  app_cb Pointer of APP callback function to handle specific client module data.
+  * @param[in]  link_num Initialize link num.
   * @return Client ID of the specific client module.
-  * @retval 0xff failed.
-  * @retval other success.
+  * @retval 0xff Failed.
+  * @retval other Success.
   *
   * <b>Example usage</b>
   * \code{.c}
     void app_le_profile_init(void)
     {
-        client_init(1);
+        client_init(client_num);
         bas_client_id = bas_add_client(app_client_callback, APP_MAX_LINKS);
     }
   * \endcode
@@ -202,115 +202,101 @@ T_CLIENT_ID bas_add_client(P_FUN_GENERAL_APP_CB app_cb, uint8_t link_num);
 
 /**
   * @brief  Used by application, to start the discovery procedure of battery service.
-  * @param[in]  conn_id connection ID.
-  * @retval true send request to upper stack success.
-  * @retval false send request to upper stack failed.
+  * @param[in]  conn_id Connection ID.
+  * @retval true Send request to Bluetooth Host success.
+  * @retval false Send request to Bluetooth Host failed.
   *
   * <b>Example usage</b>
   * \code{.c}
-    static T_USER_CMD_PARSE_RESULT cmd_basdis(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        uint8_t conn_id = p_parse_value->dw_param[0];
         bool ret = bas_start_discovery(conn_id);
-        ......
     }
   * \endcode
   */
 bool bas_start_discovery(uint8_t conn_id);
 
 /**
-  * @brief  Used by application, to set the notification flag.
-  * @param[in]  conn_id connection ID.
-  * @param[in]  notify value to enable or disable notify.
-  * @retval true send request to upper stack success.
-  * @retval false send request to upper stack failed.
+  * @brief  Used by application, to set the Client Characteristic Configuration.
+  * @param[in]  conn_id Connection ID.
+  * @param[in]  notify Value to enable or disable notify.
+  * @retval true Send request to Bluetooth Host success.
+  * @retval false Send request to Bluetooth Host failed.
   *
   * <b>Example usage</b>
   * \code{.c}
-    static T_USER_CMD_PARSE_RESULT cmd_bascccd(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        uint8_t conn_id = p_parse_value->dw_param[0];
-        bool notify = p_parse_value->dw_param[1];
-        bool ret;
-        ret = bas_set_notify(conn_id, notify);
-        ......
+        bool ret = bas_set_notify(conn_id, notify);
     }
   * \endcode
   */
 bool bas_set_notify(uint8_t conn_id, bool notify);
 
 /**
-  * @brief  Used by application, to read the notification flag.
-  * @param[in]  conn_id connection ID.
-  * @retval true send request to upper stack success.
-  * @retval false send request to upper stack failed.
+  * @brief  Used by application, to read the Client Characteristic Configuration.
+  * @param[in]  conn_id Connection ID.
+  * @retval true Send request to Bluetooth Host success.
+  * @retval false Send request to Bluetooth Host failed.
   *
   * <b>Example usage</b>
   * \code{.c}
-    static T_USER_CMD_PARSE_RESULT cmd_basread(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        uint8_t conn_id = p_parse_value->dw_param[0];
-        bool ret = false;
-        ret = bas_read_notify(conn_id);
-        ......
+        bool ret = bas_read_notify(conn_id);
     }
   * \endcode
   */
 bool bas_read_notify(uint8_t conn_id);
 
 /**
-  * @brief  Used by application, to read battery level.
-  * @param[in]  conn_id connection ID.
-  * @retval true send request to upper stack success.
-  * @retval false send request to upper stack failed.
+  * @brief  Used by the application to read the battery level.
+  * @param[in]  conn_id Connection ID.
+  * @retval true Send request to Bluetooth Host succeeded.
+  * @retval false Send request to Bluetooth Host failed.
   *
   * <b>Example usage</b>
   * \code{.c}
-    static T_USER_CMD_PARSE_RESULT cmd_basread(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        uint8_t conn_id = p_parse_value->dw_param[0];
-        bool ret = false;
-        ret = bas_read_battery_level(conn_id);
-        ......
+        bool ret = bas_read_battery_level(conn_id);
     }
   * \endcode
   */
 bool bas_read_battery_level(uint8_t conn_id);
 
 /**
-  * @brief  Used by application, to get handle cache.
-  * @param[in]  conn_id connection ID.
-  * @param[in]  p_hdl_cache pointer of the handle cache table
-  * @param[in]  len the length of handle cache table
-  * @retval true success.
-  * @retval false failed.
+  * @brief  Used by the application to get the handle cache.
+  * @param[in]  conn_id Connection ID.
+  * @param[in,out]  p_hdl_cache Pointer to the handle cache table.
+  * @param[in]  len The length of the handle cache table.
+  * @retval true Success.
+  * @retval false Failed.
   *
   * <b>Example usage</b>
   * \code{.c}
-    static T_USER_CMD_PARSE_RESULT cmd_bashdl(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        uint8_t conn_id = p_parse_value->dw_param[0];
         uint16_t hdl_cache[HDL_BAS_CACHE_LEN];
         bool ret = bas_get_hdl_cache(conn_id, hdl_cache,
                                      sizeof(uint16_t) * HDL_BAS_CACHE_LEN);
 
-        ......
     }
   * \endcode
   */
 bool bas_get_hdl_cache(uint8_t conn_id, uint16_t *p_hdl_cache, uint8_t len);
 
 /**
-  * @brief  Used by application, to set handle cache.
-  * @param[in]  conn_id connection ID.
-  * @param[in]  p_hdl_cache pointer of the handle cache table
-  * @param[in]  len the length of handle cache table
-  * @retval true success.
-  * @retval false failed.
+  * @brief  Used by the application to set the handle cache.
+  * @param[in]  conn_id Connection ID.
+  * @param[in]  p_hdl_cache Pointer to the handle cache table.
+  * @param[in]  len The length of the handle cache table.
+  * @retval true Success.
+  * @retval false Failed.
   *
   * <b>Example usage</b>
   * \code{.c}
-    void app_discov_services(uint8_t conn_id, bool start)
+    void test(void)
     {
         ......
         if (app_srvs_table.srv_found_flags & APP_DISCOV_BAS_FLAG)

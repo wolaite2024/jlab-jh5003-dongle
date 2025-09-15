@@ -18,14 +18,14 @@ extern "C" {
 /**
  * \defgroup    LEA_GAF_BAP BAP Profile
  *
- * \brief   Basic Audio Profile.
+ * \brief   Basic Audio Profile definitions .
  */
 
 /**
  * \defgroup    BAP_Exported_Macros BAP Profile Exported Macros
  *
- * \ingroup LEA_GAF_BAP
- * \{
+ * \ingroup LEA_GAF_BAP_Def
+ * @{
  */
 
 /**
@@ -33,10 +33,10 @@ extern "C" {
  *
  * \defgroup    BAP_ROLE BAP Role
  *
- * \brief  Define Basic Audio Profile Role.
+ * \brief  Define Basic Audio Profile roles.
  *
- * \ingroup BAP_Exported_Macros
- * \{
+ * \ingroup BAP_Def_Exported_Macros
+ * @{
  */
 #define BAP_BROADCAST_SOURCE_ROLE    0x01       /**< Broadcast Source Role. */
 #define BAP_BROADCAST_SINK_ROLE      0x02       /**< Broadcast Sink Role. */
@@ -48,7 +48,7 @@ extern "C" {
 #define BAP_UNICAST_SRV_SNK_ROLE     0x80       /**< Unicast Server Sink Role. */
 /**
  * End of BAP_ROLE
- * \}
+ * @}
  */
 
 /**
@@ -56,16 +56,16 @@ extern "C" {
  *
  * \defgroup    PACS_CHECK_FILTER PACS Check Filter
  *
- * \brief  Define PACS Check Filter Type.
+ * \brief  Define PACS check filter types.
  *
- * \ingroup BAP_Exported_Macros
- * \{
+ * \ingroup BAP_Def_Exported_Macros
+ * @{
  */
 #define BA_PACS_CHECK_FILTER_CODEC      0x00
 #define BA_PACS_CHECK_FILTER_ALLOCATION 0x01
 /**
  * End of PACS_CHECK_FILTER
- * \}
+ * @}
  */
 
 /**
@@ -73,10 +73,10 @@ extern "C" {
  *
  * \defgroup    PACS_CHAR_EXIST PACS Characteristic Value Exist
  *
- * \brief  Define PACS Characteristic Value Exist Mask.
+ * \brief  Define PACS characteristic value exist mask.
  *
- * \ingroup BAP_Exported_Macros
- * \{
+ * \ingroup BAP_Def_Exported_Macros
+ * @{
  */
 #define PACS_AUDIO_AVAILABLE_CONTEXTS_EXIST 0x01
 #define PACS_AUDIO_SUPPORTED_CONTEXTS_EXIST 0x02
@@ -86,25 +86,25 @@ extern "C" {
 #define PACS_SOURCE_PAC_EXIST               0x20
 /**
  * End of PACS_CHAR_EXIST
- * \}
+ * @}
  */
 
 /**
- * End of BAP_Exported_Macros
- * \}
+ * End of BAP_Def_Exported_Macros
+ * @}
  */
 
 /**
  * \defgroup    BAP_Exported_Types BAP Profile Exported Types
  *
- * \ingroup LEA_GAF_BAP
- * \{
+ * \ingroup LEA_GAF_BAP_Def
+ * @{
  */
 
 /**
  * bap.h
  *
- * \brief  Basic Audio Profile Role Information.
+ * \brief  Basic Audio Profile role information.
  *
  * \ingroup BAP_Exported_Types
  */
@@ -118,30 +118,31 @@ typedef struct
 
     bool    init_gap;
 
-    /**<  For BAP_UNICAST_CLT_SRC_ROLE and BAP_UNICAST_CLT_SNK_ROLE. */
-    uint8_t isoc_cig_max_num;           /**< ISOC CIG maximum number. */
+    uint8_t isoc_cig_max_num;           /**< ISOC CIG maximum number.
+                                             For @ref BAP_UNICAST_CLT_SRC_ROLE and @ref BAP_UNICAST_CLT_SNK_ROLE. */
 
+    uint8_t isoc_cis_max_num;           /**< ISOC CIS maximum number.
+                                             For @ref BAP_UNICAST_CLT_SRC_ROLE, @ref BAP_UNICAST_CLT_SNK_ROLE,
+                                             @ref BAP_UNICAST_SRV_SRC_ROLE and @ref BAP_UNICAST_SRV_SNK_ROLE. */
 
-    /**<  For BAP_UNICAST_CLT_SRC_ROLE, BAP_UNICAST_CLT_SNK_ROLE,
-          BAP_UNICAST_SRV_SRC_ROLE and BAP_UNICAST_SRV_SNK_ROLE. */
-    uint8_t isoc_cis_max_num;           /**< ISOC CIS maximum number. */
+    uint8_t pa_adv_num;                 /**< PA advertiser number. For @ref BAP_BROADCAST_SOURCE_ROLE.*/
+    uint8_t isoc_big_broadcaster_num;   /**< ISOC BIG broadcaster number. For @ref BAP_BROADCAST_SOURCE_ROLE. */
+    uint8_t isoc_bis_broadcaster_num;   /**< ISOC BIS broadcaster number. For @ref BAP_BROADCAST_SOURCE_ROLE. */
 
-    /**<  For BAP_BROADCAST_SOURCE_ROLE. */
-    uint8_t pa_adv_num;                 /**< PA advertiser number. */
-    uint8_t isoc_big_broadcaster_num;   /**< ISOC BIG broadcaster number. */
-    uint8_t isoc_bis_broadcaster_num;   /**< ISOC BIS broadcaster number. */
-
-    /**<  For BAP_BROADCAST_SINK_ROLE and BAP_BROADCAST_ASSISTANT_ROLE. */
-    uint8_t pa_sync_num;                /**< PA Sync number. */
-    uint8_t isoc_big_receiver_num;      /**< ISOC BIG receiver number. */
-    uint8_t isoc_bis_receiver_num;      /**< ISOC BIS receiver number. */
+    uint8_t pa_sync_num;                /**< PA Sync number.
+                                             For @ref BAP_BROADCAST_SINK_ROLE and @ref BAP_BROADCAST_ASSISTANT_ROLE. */
+    uint8_t isoc_big_receiver_num;      /**< ISOC BIG receiver number.
+                                             For @ref BAP_BROADCAST_SINK_ROLE and @ref BAP_BROADCAST_ASSISTANT_ROLE. */
+    uint8_t isoc_bis_receiver_num;      /**< ISOC BIS receiver number.
+                                             For @ref BAP_BROADCAST_SINK_ROLE and @ref BAP_BROADCAST_ASSISTANT_ROLE. */
 } T_BAP_ROLE_INFO;
 
 /**
  * bap.h
  *
- * \brief  BAP Discover All Service Result.
- *         The message data for LE_AUDIO_MSG_BAP_DIS_ALL_DONE.
+ * \brief  BAP discover all service result.
+ *
+ * The message data for @ref LE_AUDIO_MSG_BAP_DIS_ALL_DONE.
  *
  * \ingroup BAP_Exported_Types
  */
@@ -156,12 +157,13 @@ typedef struct
     uint8_t source_ase_num;
     bool    bass_is_found;
     uint8_t brs_char_num;
+    uint16_t cause;
 } T_BAP_DIS_ALL_DONE;
 
 /**
  * bap.h
  *
- * \brief  PACS Characteristics Information.
+ * \brief  PACS characteristics information.
  *
  * \ingroup BAP_Exported_Types
  */
@@ -182,7 +184,7 @@ typedef struct
 /**
  * bap.h
  *
- * \brief  BAP PAC Record Data.
+ * \brief  BAP PAC record data.
  *
  * \ingroup BAP_Exported_Types
  */
@@ -195,13 +197,18 @@ typedef struct
     uint16_t                   pref_audio_contexts;
     uint8_t                    metadata_length;
     uint8_t                   *p_metadata;
+    uint8_t                    codec_cap_length; /**< Only used when
+    Codec_ID does not use LC3_CODEC_ID. The parameter is only valid when the bit CODEC_CAP_VENDOR_INFO_EXIST is set in codec_cap. */
+    uint8_t                   *p_codec_cap; /**< Only used when Codec_ID does not use LC3_CODEC_ID.
+    The parameter is only valid when the bit CODEC_CAP_VENDOR_INFO_EXIST is set in codec_cap. */
 } T_BAP_PAC_RECORD;
 
 /**
  * bap.h
  *
- * \brief  BAP PAC Record Notification Data.
- *         The message data for LE_AUDIO_MSG_BAP_PACS_NOTIFY.
+ * \brief  BAP PAC record notification data.
+ *
+ * The message data for @ref LE_AUDIO_MSG_BAP_PACS_NOTIFY.
  *
  * \ingroup BAP_Exported_Types
  */
@@ -212,15 +219,15 @@ typedef struct
     uint16_t pac_handle;
 } T_BAP_PACS_NOTIFY;
 /**
- * End of BAP_Exported_Types
- * \}
+ * End of BAP_Def_Exported_Types
+ * @}
  */
 
 /**
  * \defgroup    BAP_Exported_Functions BAP Profile Exported Functions
  *
- * \ingroup LEA_GAF_BAP
- * \{
+ * \ingroup LEA_GAF_BAP_Def
+ * @{
  */
 
 /**
@@ -229,11 +236,11 @@ typedef struct
  * \brief  Get PACS characteristics information.
  *
  * \param[in]  conn_handle      Connection handle.
- * \param[in,out]  p_pacs_info  Pointer to PASC characteristics information: @ref T_BAP_PACS_INFO.
+ * \param[in,out]  p_pacs_info  Pointer to PACS characteristics information: @ref T_BAP_PACS_INFO.
  *
- * \return         The result of get PACS characteristics information.
- * \retval true    Get PACS characteristics information success.
- * \retval false   Get PACS characteristics information failed.
+ * \return         The result of getting PACS characteristics information.
+ * \retval true    Getting PACS characteristics information is successful.
+ * \retval false   Getting PACS characteristics information failed.
  *
  * \ingroup BAP_Exported_Functions
  */
@@ -249,9 +256,9 @@ bool bap_pacs_get_info(uint16_t conn_handle, T_BAP_PACS_INFO *p_pacs_info);
  * \param[in]  p_pac_num        Pointer to PAC number.
  * \param[in,out]  p_pac_tbl    Pointer to PAC record data: @ref T_BAP_PAC_RECORD.
  *
- * \return         The result of get PAC record data.
- * \retval true    Get PAC record data success.
- * \retval false   Get PAC record data failed.
+ * \return         The result of getting PAC record data.
+ * \retval true    Getting PAC record data is successful.
+ * \retval false   Getting PAC record data failed.
  *
  * \ingroup BAP_Exported_Functions
  */
@@ -268,9 +275,9 @@ bool bap_pacs_get_pac_record(uint16_t conn_handle, T_AUDIO_DIRECTION direction, 
  * \param[in]  p_pac_num        Pointer to PAC number.
  * \param[in,out]  p_pac_tbl    Pointer to PAC record data: @ref T_BAP_PAC_RECORD.
  *
- * \return         The result of get PAC record data by handle.
- * \retval true    Get PAC record data by handle success.
- * \retval false   Get PAC record data by handle failed.
+ * \return         The result of getting PAC record data by handle.
+ * \retval true    Getting PAC record data by handle is successful.
+ * \retval false   Getting PAC record data by handle failed.
  *
  * \ingroup BAP_Exported_Functions
  */
@@ -321,11 +328,11 @@ uint32_t bap_pacs_get_lc3_src_table_msk(uint16_t conn_handle, uint16_t pref_audi
 /**
  * bap.h
  *
- * \brief  PACS filter the codec configuration by sync handle.
+ * \brief  PACS filters the codec configuration by sync handle.
  *
  * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
  *
- * \param[in]  handle          BLE audio sync handle: @ref T_BLE_AUDIO_SYNC_HANDLE.
+ * \param[in]  handle          LE audio sync handle: @ref T_BLE_AUDIO_SYNC_HANDLE.
  * \param[in]  conn_handle     Connection handle.
  * \param[in]  filter          Check filter type: @ref PACS_CHECK_FILTER.
  *
@@ -338,7 +345,7 @@ uint32_t bap_pacs_check_cfg_by_sync_info(T_BLE_AUDIO_SYNC_HANDLE handle, uint16_
 /**
  * bap.h
  *
- * \brief  PACS filter the codec configuration by BASE data.
+ * \brief  PACS filters the codec configuration by BASE data.
  *
  * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
  *
@@ -360,16 +367,21 @@ uint32_t bap_pacs_check_cfg_by_base_data(T_BASE_DATA_MAPPING *p_base_mapping, ui
  *
  * \param[in]  p_role_info      Pointer to BAP role information: @ref T_BAP_ROLE_INFO.
  *
- * \return         The result of get PAC record data by handle.
- * \retval true    Get PAC record data by handle success.
- * \retval false   Get PAC record data by handle failed.
+ * \return         The result of getting PAC record data by handle.
+ * \retval true    Getting PAC record data by handle is successful.
+ * \retval false   Getting PAC record data by handle failed.
  *
  * \ingroup BAP_Exported_Functions
  */
 bool bap_role_init(T_BAP_ROLE_INFO *p_role_info);
 /**
- * End of BAP_Exported_Types
- * \}
+ * End of BAP_Def_Exported_Functions
+ * @}
+ */
+
+/**
+ * End of LEA_GAF_BAP_Def
+ * @}
  */
 
 #ifdef  __cplusplus

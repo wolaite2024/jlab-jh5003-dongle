@@ -37,7 +37,7 @@ extern "C" {
  * \code{.c}
     void pwr_mgr_init(void)
     {
-#if F_BT_DLPS_EN
+#if F_DLPS_EN
         data_uart_dlps_init();
         lps_mode_set(LPM_DLPS_PFM_MODE);
         lps_mode_pause();
@@ -59,7 +59,7 @@ void data_uart_dlps_init(void);
  * \code{.c}
     static T_USER_CMD_PARSE_RESULT cmd_dlps(T_USER_CMD_PARSED_VALUE *p_parse_value)
     {
-#if F_BT_DLPS_EN
+#if F_DLPS_EN
         if (p_parse_value->dw_param[0] == 0)
         {
             lps_mode_pause();

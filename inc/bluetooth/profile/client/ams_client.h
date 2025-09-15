@@ -35,7 +35,7 @@ extern "C" {
   * @{
   */
 
-/** @brief  Define links number. range: 0-4 */
+/** @brief  Define links number. */
 #define AMS_MAX_LINKS  4
 
 
@@ -51,7 +51,7 @@ extern "C" {
   */
 
 
-/** @brief AMS client remote command id*/
+/** @brief AMS client remote command ID*/
 typedef enum
 {
     REMOTE_CMD_ID_PLAY                  = 0,
@@ -71,7 +71,7 @@ typedef enum
     REMOTE_CMD_ID_RESERVED              = 255
 } T_AMS_REMOTE_CMD_ID;
 
-/** @brief AMS client entity id*/
+/** @brief AMS client entity ID*/
 typedef enum
 {
     ENTITY_ID_PLAYER    = 0,
@@ -80,7 +80,7 @@ typedef enum
     ENTITY_ID_RESERVED  = 255
 } T_AMS_ENTITY_ID;
 
-/** @brief AMS client entity player attribute id*/
+/** @brief AMS client entity player attribute ID*/
 typedef enum
 {
     PLAYER_ATTR_IDPLAYER_ATTR_ID_VOLUME_NAME             = 0,
@@ -89,7 +89,7 @@ typedef enum
     PLAYER_ATTR_ID_RESERVED         = 255
 } T_AMS_ENTITY_PLAYER_ATTR_ID;
 
-/** @brief AMS client entity queue attribute id*/
+/** @brief AMS client entity queue attribute ID*/
 typedef enum
 {
     QUEUE_ATTR_ID_INDEX         = 0,
@@ -99,7 +99,7 @@ typedef enum
     QUEUE_ATTR_ID_RESERVED      = 255
 } T_AMS_ENTITY_QUEUE_ATTR_ID;
 
-/** @brief AMS client entity track attribute id*/
+/** @brief AMS client entity track attribute ID*/
 typedef enum
 {
     TRACK_ATTR_ID_ARTIST    = 0,
@@ -109,7 +109,7 @@ typedef enum
     TRACK_ATTR_ID_RESERVED  = 255
 } T_AMS_ENTITY_TRACK_ATTR_ID;
 
-/** @brief AMS client entity attribute id*/
+/** @brief AMS client entity attribute ID*/
 typedef union
 {
     T_AMS_ENTITY_PLAYER_ATTR_ID     player_atrr_id;
@@ -128,14 +128,14 @@ typedef struct
 /** @brief AMS client handle type*/
 typedef enum
 {
-    AMS_HDL_SRV_START,          //!< service start handle
-    AMS_HDL_SRV_END,            //!< service end handle
-    AMS_HDL_REMOTE_CMD_VALUE,   //!< remote command characteristic value handle
-    AMS_HDL_REMOTE_CMD_CCCD,    //!< remote command characteristic CCCD handle
-    AMS_HDL_ENTITY_UPD_VALUE,   //!< entity update characteristic value handle
-    AMS_HDL_ENTITY_UPD_CCCD,    //!< entity update characteristic CCCD handle
-    AMS_HDL_ENTITY_ATTR_VALUE,  //!< entity attribute characteristic value handle
-    AMS_HDL_CACHE_LEN,          //!< handle cache length
+    AMS_HDL_SRV_START,          //!< Service start handle.
+    AMS_HDL_SRV_END,            //!< Service end handle.
+    AMS_HDL_REMOTE_CMD_VALUE,   //!< Remote command characteristic value handle.
+    AMS_HDL_REMOTE_CMD_CCCD,    //!< Remote command characteristic CCCD handle.
+    AMS_HDL_ENTITY_UPD_VALUE,   //!< Entity update characteristic value handle.
+    AMS_HDL_ENTITY_UPD_CCCD,    //!< Entity update characteristic CCCD handle.
+    AMS_HDL_ENTITY_ATTR_VALUE,  //!< Entity attribute characteristic value handle.
+    AMS_HDL_CACHE_LEN,          //!< Handle cache length.
 } T_AMS_HANDLE_TYPE;
 
 
@@ -212,12 +212,12 @@ typedef union
 /** @brief AMS client callback type*/
 typedef enum
 {
-    AMS_CLIENT_CB_TYPE_DISC_STATE,          //!< Discovery procedure state
-    AMS_CLIENT_CB_TYPE_READ_RESULT,         //!< Read request result
-    AMS_CLIENT_CB_TYPE_WRITE_RESULT,        //!< Write request result, success or fail
-    AMS_CLIENT_CB_TYPE_NOTIF_IND_RESULT,    //!< Notification or indication data received from server
-    AMS_CLIENT_CB_TYPE_DISCONNECT_INFO,     //!< LE link disconnect
-    AMS_CLIENT_CB_TYPE_INVALID              //!< Invalid callback type, no practical usage
+    AMS_CLIENT_CB_TYPE_DISC_STATE,          //!< Discovery procedure state.
+    AMS_CLIENT_CB_TYPE_READ_RESULT,         //!< Read request result.
+    AMS_CLIENT_CB_TYPE_WRITE_RESULT,        //!< Write result, success or fail.
+    AMS_CLIENT_CB_TYPE_NOTIF_IND_RESULT,    //!< Notification or indication data received from server.
+    AMS_CLIENT_CB_TYPE_DISCONNECT_INFO,     //!< LE link disconnect.
+    AMS_CLIENT_CB_TYPE_INVALID              //!< Invalid callback type, no practical usage.
 } T_AMS_CB_TYPE;
 
 /** @brief AMS client callback data*/
@@ -227,25 +227,29 @@ typedef struct
     T_AMS_CB_CONTENT    cb_content;
 } T_AMS_CB_DATA;
 
+/** End of AMS_CLIENT_Exported_Types
+* @}
+*/
+
 /** @defgroup AMS_CLIENT_Exported_Functions AMS Client Exported Functions
   * @brief
   * @{
   */
 
 /**
- * @brief       Add ams client.
+ * @brief       Add AMS client.
  *
- * @param[in]   app_cb  Callbackto notify client read/write/notify/indicate events.
- * @param[in]   link_num Initialize link number
+ * @param[in]   app_cb  Callback to notify client read/write/notify/indicate events.
+ * @param[in]   link_num Initialize link number.
  * @return Client ID of the specific client module.
- * @retval 0xff failed.
- * @retval other success.
+ * @retval 0xff Failed.
+ * @retval other Success.
  *
  * <b>Example usage</b>
  * \code{.c}
-    void ams_init(uint8_t link_num)
+    void test(void)
     {
-        ams_client = ams_add_client(ams_client_cb, link_num);
+        T_CLIENT_ID ams_client = ams_add_client(ams_client_cb, link_num);
     }
  * \endcode
  */
@@ -254,15 +258,14 @@ T_CLIENT_ID ams_add_client(P_FUN_GENERAL_APP_CB app_cb, uint8_t link_num);
 
 /**
   * @brief  Used by application, to start the discovery procedure of AMS.
-  * @param[in]  conn_id connection ID.
-  * @retval true  send request to upper stack success.
-  * @retval false  send request to upper stack failed.
+  * @param[in]  conn_id Connection ID.
+  * @retval true  Send request to Bluetooth Host success.
+  * @retval false  Send request to Bluetooth Host failed.
   *
   * <b>Example usage</b>
   * \code{.c}
-    static T_USER_CMD_PARSE_RESULT test(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        uint8_t conn_id = p_parse_value->dw_param[0];
         bool ret = ams_start_discovery(conn_id);
     }
   * \endcode
@@ -270,37 +273,35 @@ T_CLIENT_ID ams_add_client(P_FUN_GENERAL_APP_CB app_cb, uint8_t link_num);
 bool ams_start_discovery(uint8_t conn_id);
 
 /**
-  * @brief  Used by application, to set the notifcation flag of remote command.
-  * @param[in]  conn_id connection ID.
-  * @param[in]  subscribe  value to enable or disable notify.
-  * @retval true send request to upper stack success.
-  * @retval false send request to upper stack failed.
+  * @brief  Used by application, to set the Client Characteristic Configuration of remote command.
+  * @param[in]  conn_id Connection ID.
+  * @param[in]  subscribe  Value to enable or disable notify.
+  * @retval true Send request to Bluetooth Host success.
+  * @retval false Send request to Bluetooth Host failed.
   */
 bool ams_subscribe_remote_cmd(uint8_t conn_id, bool subscribe);
 
 /**
-  * @brief  Used by application, to set the notifcation flag of entity update.
-  * @param[in]  conn_id connection ID.
-  * @param[in]  subscribe  value to enable or disable notify.
-  * @retval true send request to upper stack success.
-  * @retval false send request to upper stack failed.
+  * @brief  Used by application, to set the Client Characteristic Configuration of entity update.
+  * @param[in]  conn_id Connection ID.
+  * @param[in]  subscribe  Value to enable or disable notify.
+  * @retval true Send request to Bluetooth Host success.
+  * @retval false Send request to Bluetooth Host failed.
   */
 bool ams_subscribe_entity_upd(uint8_t conn_id, bool subscribe);
 
 /**
   * @brief  Used by application, to send remote command.
-  * @param[in]  conn_id connection ID.
+  * @param[in]  conn_id Connection ID.
   * @param[in]  cmd_id  Remote Command ID.
-  * @retval true send request to upper stack success.
-  * @retval false send request to upper stack failed.
+  * @retval true Send request to Bluetooth Host success.
+  * @retval false Send request to Bluetooth Host failed.
   *
   * <b>Example usage</b>
   * \code{.c}
-    static T_USER_CMD_PARSE_RESULT cmd_amscmd(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        uint8_t conn_id = p_parse_value->dw_param[0];
-        uint8_t cmd_id = p_parse_value->dw_param[1];
-        bool ret = ams_write_remote_cmd(conn_id, (T_AMS_REMOTE_CMD_ID)cmd_id);
+        bool ret = ams_write_remote_cmd(conn_id, cmd_id);
     }
   * \endcode
   */
@@ -311,30 +312,23 @@ bool ams_write_remote_cmd(uint8_t conn_id, T_AMS_REMOTE_CMD_ID cmd_id);
   *
   * The Entity Update characteristic is the characteristic by which an MR can inform the MS
   * which entity/attribute pairs it is interested in, and be informed about changes on these whenever they occur.
-  * For example, the MR can be informed about the title of the currently loaded track, or the name of the active media app.
+  * For example, the MR can be informed about the title of the currently loaded track, or the name of the active media APP.
   *
-  * @param[in]  conn_id connection ID.
-  * @param[in]  p_value  entity/attribute pairs.
-  * @param[in]  value_len  value length of p_value.
-  * @retval true send request to upper stack success.
-  * @retval false send request to upper stack failed.
+  * @param[in]  conn_id Connection ID.
+  * @param[in]  p_value  Entity/attribute pairs.
+  * @param[in]  value_len  Value length of p_value.
+  * @retval true Send request to Bluetooth Host success.
+  * @retval false Send request to Bluetooth Host failed.
   *
   * <b>Example usage</b>
   * \code{.c}
-    static T_USER_CMD_PARSE_RESULT cmd_amswrite(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        uint8_t conn_id = p_parse_value->dw_param[0];
-        uint8_t type = p_parse_value->dw_param[1];
-        bool ret = false;
-
-        if (type == 0)
-        {
-            uint8_t cmd[3];
-            cmd[0] = ENTITY_ID_TRACK;
-            cmd[1] = TRACK_ATTR_ID_TITLE;
-            cmd[2] = TRACK_ATTR_ID_DURATION;
-            ret = ams_write_entity_upd_cmd(conn_id, cmd, 3);
-        }
+        uint8_t cmd[3];
+        cmd[0] = ENTITY_ID_TRACK;
+        cmd[1] = TRACK_ATTR_ID_TITLE;
+        cmd[2] = TRACK_ATTR_ID_DURATION;
+        bool ret = ams_write_entity_upd_cmd(conn_id, cmd, 3);
     }
   * \endcode
   */
@@ -346,26 +340,16 @@ bool ams_write_entity_upd_cmd(uint8_t conn_id, uint8_t *p_value, uint8_t value_l
   * This characteristic should ideally only be used if the value of an entity/attribute pair was marked as truncated
   * in the corresponding Entity Update notification, and the MR wants to display more of the associated value.
   *
-  * @param[in]  conn_id connection ID.
+  * @param[in]  conn_id Connection ID.
   * @param[in]  entity_attr  Entity Attribute command.
-  * @retval true send request to upper stack success.
-  * @retval false send request to upper stack failed.
+  * @retval true Send request to Bluetooth Host success.
+  * @retval false Send request to Bluetooth Host failed.
   *
   * <b>Example usage</b>
   * \code{.c}
-    static T_USER_CMD_PARSE_RESULT cmd_amswrite(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        uint8_t conn_id = p_parse_value->dw_param[0];
-        uint8_t type = p_parse_value->dw_param[1];
-        bool ret = false;
-
-        if (type == 1)
-        {
-            T_AMS_ENTITY_ATTR entity;
-            entity.entity_id = ENTITY_ID_TRACK;
-            entity.attr_id.track_attr_id = TRACK_ATTR_ID_TITLE;
-            ret = ams_write_entity_attr(conn_id, entity);
-        }
+        bool ret = ams_write_entity_attr(conn_id, entity);
     }
   * \endcode
   */
@@ -377,21 +361,16 @@ bool ams_write_entity_attr(uint8_t conn_id, T_AMS_ENTITY_ATTR entity_attr);
   * This characteristic should ideally only be used if the value of an entity/attribute pair was marked as truncated
   * in the corresponding Entity Update notification, and the MR wants to display more of the associated value.
   *
-  * @param[in]  conn_id connection ID.
+  * @param[in]  conn_id Connection ID.
   * @param[in]  entity_attr  Entity Attribute command.
-  * @retval true send request to upper stack success.
-  * @retval false send request to upper stack failed.
+  * @retval true Send request to Bluetooth Host success.
+  * @retval false Send request to Bluetooth Host failed.
   *
   * <b>Example usage</b>
   * \code{.c}
-    static T_USER_CMD_PARSE_RESULT cmd_amsread(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        uint8_t conn_id = p_parse_value->dw_param[0];
-        T_AMS_ENTITY_ATTR entity;
-        bool ret;
-        entity.entity_id = ENTITY_ID_TRACK;
-        entity.attr_id.track_attr_id = TRACK_ATTR_ID_TITLE;
-        ret = ams_read_entity_attr(conn_id, entity);
+        bool ret = ams_read_entity_attr(conn_id, entity);
     }
   * \endcode
   */
@@ -399,10 +378,10 @@ bool ams_read_entity_attr(uint8_t conn_id, T_AMS_ENTITY_ATTR entity_attr);
 
 
 /**
-  * @brief  Get the handle for gatt characteristic
+  * @brief  Get the handle for GATT characteristic
   * @param[in]  conn_id          Connection ID.
   * @param[in]  handle_type      Pre-defined Handle Type.
-  * @retval the handle value of a GATT characteristic.
+  * @retval The handle value of a GATT characteristic.
   */
 uint16_t ams_search_handle(uint8_t conn_id, T_AMS_HANDLE_TYPE handle_type);
 

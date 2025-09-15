@@ -18,7 +18,7 @@ typedef enum
 
 typedef struct
 {
-    T_GAMING_CODEC codec_type;
+    T_GAMING_CODEC src_codec_type;
     uint16_t frame_size;
     uint16_t mic_gain;
     uint16_t decoding_pcm_size;

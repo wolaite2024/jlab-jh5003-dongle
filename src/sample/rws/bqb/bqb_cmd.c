@@ -2507,4 +2507,359 @@ err:
     snprintf(buf, buf_len, "Invalid param %s (up/down).\r\n", subcmd);
     return false;
 }
+
+bool bqb_pbp(const char *cmd_str, char *buf, size_t buf_len)
+{
+    char       *subcmd;
+    char       *p_param;
+    int32_t     param_num;
+    uint32_t    param_len;
+    uint8_t     broadcast_code[16];
+    uint8_t     action;
+    uint8_t     i;
+    void       *param_buf;
+
+    param_num = cli_param_num_get(cmd_str);
+    if (param_num < 1)
+    {
+        subcmd = (char *)cmd_str;
+        goto err;
+    }
+
+    subcmd = (char *)cli_param_get(cmd_str, 1, &param_len);
+    subcmd[param_len] = '\0';
+
+    if (!strcmp(subcmd, "bmr_start"))
+    {
+        p_param = subcmd + param_len + 1;
+
+        action = BQB_ACTION_PBP_BMR_START;
+    }
+    else if (!strcmp(subcmd, "bmr_stop"))
+    {
+        p_param = subcmd + param_len + 1;
+
+        action = BQB_ACTION_PBP_BMR_STOP;
+    }
+    else if (!strcmp(subcmd, "broadcast_code"))
+    {
+        if (param_num != 17)
+        {
+            goto err;
+        }
+
+        p_param = subcmd + param_len + 1;
+
+        for (i = 0; i < 16; i++)
+        {
+            broadcast_code[i] = (uint8_t)strtol(cli_param_get(p_param, i, &param_len), NULL, 16);
+        }
+
+        action = BQB_ACTION_PBP_BROADCAST_CODE;
+    }
+    else
+    {
+        goto err;
+    }
+
+    param_buf = malloc(40);
+    if (param_buf != NULL)
+    {
+        uint8_t    *p;
+
+        p = param_buf;
+        LE_UINT16_TO_STREAM(p, BQB_CMD_PBP);
+        LE_UINT8_TO_STREAM(p, action);
+        ARRAY_TO_STREAM(p, broadcast_code, 16);
+
+        if (bqb_send_msg(IO_MSG_CONSOLE_STRING_RX, param_buf) == false)
+        {
+            free(param_buf);
+            goto err;
+        }
+    }
+
+    snprintf(buf, buf_len, "PBP %s from BQB mode.\r\n", p_param);
+    return false;
+
+err:
+    snprintf(buf, buf_len, "Invalid param %s (broadcast code).\r\n", subcmd);
+    return false;
+}
+
+bool bqb_tmap(const char *cmd_str, char *buf, size_t buf_len)
+{
+    char       *subcmd;
+    char       *p_param;
+    int32_t     param_num;
+    uint32_t    param_len;
+    uint8_t     action;
+    uint8_t     gaming_mode;
+    void       *param_buf;
+
+    param_num = cli_param_num_get(cmd_str);
+    if (param_num < 1)
+    {
+        subcmd = (char *)cmd_str;
+        goto err;
+    }
+
+    subcmd = (char *)cli_param_get(cmd_str, 1, &param_len);
+    subcmd[param_len] = '\0';
+
+    if (!strcmp(subcmd, "adv_start"))
+    {
+        p_param = subcmd + param_len + 1;
+
+        action = BQB_ACTION_TMAP_ADV_START;
+    }
+    else if (!strcmp(subcmd, "adv_stop"))
+    {
+        p_param = subcmd + param_len + 1;
+
+        action = BQB_ACTION_TMAP_ADV_STOP;
+    }
+    else if (!strcmp(subcmd, "gaming_mode"))
+    {
+        if (param_num != 2)
+        {
+            goto err;
+        }
+
+        p_param = subcmd + param_len + 1;
+
+        gaming_mode = (uint8_t)strtol(cli_param_get(p_param, 0, &param_len), NULL, 0);
+
+        action = BQB_ACTION_TMAP_GAMING_MODE;
+    }
+    else if (!strcmp(subcmd, "originate"))
+    {
+        p_param = subcmd + param_len + 1;
+
+        action = BQB_ACTION_TMAP_ORIGINATE_CALL;
+    }
+    else if (!strcmp(subcmd, "terminate"))
+    {
+        p_param = subcmd + param_len + 1;
+
+        action = BQB_ACTION_TMAP_TERMINATE_CALL;
+    }
+    else
+    {
+        goto err;
+    }
+
+    param_buf = malloc(40);
+    if (param_buf != NULL)
+    {
+        uint8_t    *p;
+
+        p = param_buf;
+        LE_UINT16_TO_STREAM(p, BQB_CMD_TMAP);
+        LE_UINT8_TO_STREAM(p, action);
+        LE_UINT8_TO_STREAM(p, gaming_mode);
+
+        if (bqb_send_msg(IO_MSG_CONSOLE_STRING_RX, param_buf) == false)
+        {
+            free(param_buf);
+            goto err;
+        }
+    }
+
+    snprintf(buf, buf_len, "TMAP %s from BQB mode.\r\n", p_param);
+    return false;
+
+err:
+    snprintf(buf, buf_len, "Invalid param %s (gaming mode).\r\n", subcmd);
+    return false;
+}
+
+bool bqb_hap(const char *cmd_str, char *buf, size_t buf_len)
+{
+    char       *subcmd;
+    char       *p_param;
+    int32_t     param_num;
+    uint32_t    param_len;
+    uint8_t     action;
+    uint8_t     index;
+    void       *param_buf;
+    uint8_t     feature;
+    uint8_t     preset_prop;
+    char        name[20] = {""};
+
+    param_num = cli_param_num_get(cmd_str);
+    if (param_num < 1)
+    {
+        subcmd = (char *)cmd_str;
+        goto err;
+    }
+
+    subcmd = (char *)cli_param_get(cmd_str, 1, &param_len);
+    subcmd[param_len] = '\0';
+
+    if (!strcmp(subcmd, "has_feature"))
+    {
+        if (param_num != 2)
+        {
+            goto err;
+        }
+
+        p_param = subcmd + param_len + 1;
+
+        feature = (uint8_t)strtol(cli_param_get(p_param, 0, &param_len), NULL, 0);
+
+        action = BQB_ACTION_HAP_FEATURE;
+    }
+    else if (!strcmp(subcmd, "active_index"))
+    {
+        if (param_num != 2)
+        {
+            goto err;
+        }
+
+        p_param = subcmd + param_len + 1;
+
+        index = (uint8_t)strtol(cli_param_get(p_param, 0, &param_len), NULL, 0);
+
+        action = BQB_ACTION_HAP_ACTIVE_INDEX;
+    }
+    else if (!strcmp(subcmd, "preset_name"))
+    {
+        if (param_num != 3)
+        {
+            goto err;
+        }
+
+        p_param = subcmd + param_len + 1;
+
+        index = (uint8_t)strtol(cli_param_get(p_param, 0, &param_len), NULL, 0);
+        p_param += param_len + 1;
+        cli_param_get(p_param, 0, &param_len);
+        if (param_len > 20)
+        {
+            memcpy(name, p_param, 20);
+        }
+        else
+        {
+            memcpy(name, p_param, param_len);
+        }
+
+        action = BQB_ACTION_HAP_PRESET_NAME;
+    }
+    else if (!strcmp(subcmd, "preset_available"))
+    {
+        if (param_num != 2)
+        {
+            goto err;
+        }
+
+        p_param = subcmd + param_len + 1;
+
+        index = (uint8_t)strtol(cli_param_get(p_param, 0, &param_len), NULL, 0);
+
+        action = BQB_ACTION_HAP_PRESET_AVAILABLE;
+    }
+    else if (!strcmp(subcmd, "preset_unavailable"))
+    {
+        if (param_num != 2)
+        {
+            goto err;
+        }
+
+        p_param = subcmd + param_len + 1;
+
+        index = (uint8_t)strtol(cli_param_get(p_param, 0, &param_len), NULL, 0);
+
+        action = BQB_ACTION_HAP_PRESET_UNAVAILABLE;
+    }
+    else if (!strcmp(subcmd, "preset_add"))
+    {
+        if (param_num != 4)
+        {
+            goto err;
+        }
+
+        p_param = subcmd + param_len + 1;
+
+        index = (uint8_t)strtol(cli_param_get(p_param, 0, &param_len), NULL, 0);
+
+        p_param += param_len + 1;
+        cli_param_get(p_param, 0, &param_len);
+        if (param_len > 20)
+        {
+            memcpy(name, p_param, 20);
+        }
+        else
+        {
+            memcpy(name, p_param, param_len);
+        }
+
+        p_param += param_len + 1;
+        preset_prop = (uint8_t)strtol(cli_param_get(p_param, 0, &param_len), NULL, 0);
+
+        action = BQB_ACTION_HAP_PRESET_ADD;
+    }
+    else if (!strcmp(subcmd, "preset_delete"))
+    {
+        if (param_num != 2)
+        {
+            goto err;
+        }
+
+        p_param = subcmd + param_len + 1;
+
+        index = (uint8_t)strtol(cli_param_get(p_param, 0, &param_len), NULL, 0);
+
+        action = BQB_ACTION_HAP_PRESET_DELETE;
+    }
+    else if (!strcmp(subcmd, "rtk_adv_start"))
+    {
+        p_param = subcmd + param_len + 1;
+
+        action = BQB_ACTION_HAP_RTK_ADV_START;
+    }
+    else
+    {
+        goto err;
+    }
+
+    param_buf = malloc(40);
+    if (param_buf != NULL)
+    {
+        uint8_t    *p;
+
+        p = param_buf;
+        LE_UINT16_TO_STREAM(p, BQB_CMD_HAP);
+        LE_UINT8_TO_STREAM(p, action);
+        if (!strcmp(subcmd, "has_feature"))
+        {
+            LE_UINT8_TO_STREAM(p, feature);
+        }
+        else
+        {
+            LE_UINT8_TO_STREAM(p, index);
+        }
+
+        if (!strcmp(subcmd, "preset_name") || !strcmp(subcmd, "preset_add"))
+        {
+            LE_UINT8_TO_STREAM(p, strlen(name));
+            ARRAY_TO_STREAM(p, name, strlen(name));
+            LE_UINT8_TO_STREAM(p, preset_prop);
+        }
+
+        if (bqb_send_msg(IO_MSG_CONSOLE_STRING_RX, param_buf) == false)
+        {
+            free(param_buf);
+            goto err;
+        }
+    }
+
+    snprintf(buf, buf_len, "HAP %s from BQB mode.\r\n", p_param);
+    return false;
+
+err:
+    snprintf(buf, buf_len, "Invalid param %s (gaming mode).\r\n", subcmd);
+    return false;
+}
+
 #endif

@@ -36,8 +36,6 @@
   * @{
   */
 #define TEST_Pin                      P0_0
-#define GPIO_Test_Pin                 GPIO_GetPin(TEST_Pin)
-#define GPIO_IRQ                      GPIO0_IRQn
 /** @} */ /* End of group DLPS_GPIO_Exported_Macros */
 
 static void dlps_gpio_wk_init(void);

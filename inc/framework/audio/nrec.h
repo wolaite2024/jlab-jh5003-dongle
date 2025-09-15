@@ -18,13 +18,11 @@ extern "C" {
  *
  * \brief   Enable and disable Noise Reduction & Echo Canceling.
  * \details NR reduces unwanted ambient sounds using active noise control, and EC improves voice
- *          quality by preventing echos from being captured or created, or possibly removing it
- *          in post-processing.
+ *          quality by preventing echos from being captured or created, or removing them in post-
+ *          processing if possible.
  */
 
 /**
- * nrec.h
- *
  * \brief   Define NREC content type.
  *
  * \ingroup AUDIO_NREC
@@ -32,12 +30,11 @@ extern "C" {
 typedef enum t_nrec_content_type
 {
     NREC_CONTENT_TYPE_VOICE       = 0x00,
-    NREC_CONTENT_TYPE_PASSTHROUGH = 0x01,
+    NREC_CONTENT_TYPE_RECORD      = 0x01,
+    NREC_CONTENT_TYPE_PASSTHROUGH = 0x02,
 } T_NREC_CONTENT_TYPE;
 
 /**
- * nrec.h
- *
  * \brief   Define NREC mode.
  *
  * \ingroup AUDIO_NREC
@@ -49,8 +46,6 @@ typedef enum t_nrec_mode
 } T_NREC_MODE;
 
 /**
- * nrec.h
- *
  * \brief   Create an NREC instance.
  *
  * \param[in] type  NREC content type \ref T_NREC_CONTENT_TYPE.
@@ -65,8 +60,6 @@ typedef enum t_nrec_mode
 T_AUDIO_EFFECT_INSTANCE nrec_create(T_NREC_CONTENT_TYPE type, T_NREC_MODE mode, uint8_t level);
 
 /**
- * nrec.h
- *
  * \brief   Enable the specific NREC instance.
  *
  * \param[in] instance  NREC instance \ref T_AUDIO_EFFECT_INSTANCE.
@@ -80,8 +73,6 @@ T_AUDIO_EFFECT_INSTANCE nrec_create(T_NREC_CONTENT_TYPE type, T_NREC_MODE mode, 
 bool nrec_enable(T_AUDIO_EFFECT_INSTANCE instance);
 
 /**
- * nrec.h
- *
  * \brief   Disable the specific NREC instance.
  *
  * \param[in] instance  NREC instance \ref T_AUDIO_EFFECT_INSTANCE.
@@ -95,11 +86,9 @@ bool nrec_enable(T_AUDIO_EFFECT_INSTANCE instance);
 bool nrec_disable(T_AUDIO_EFFECT_INSTANCE instance);
 
 /**
- * nrec.h
- *
  * \brief   Release the specific NREC instance.
  *
- * \param[in] instancE  NREC instance \ref T_AUDIO_EFFECT_INSTANCE.
+ * \param[in] instance  NREC instance \ref T_AUDIO_EFFECT_INSTANCE.
  *
  * \return  The status of releasing the NREC instance.
  * \retval  true    NREC instance was released successfully.
@@ -110,11 +99,9 @@ bool nrec_disable(T_AUDIO_EFFECT_INSTANCE instance);
 bool nrec_release(T_AUDIO_EFFECT_INSTANCE instance);
 
 /**
- * nrec.h
+ * \brief   Set the mode of the specific NREC instance.
  *
- * \brief   Set the mode of NREC instance.
- *
- * \param[in] instancE  NREC instance \ref T_AUDIO_EFFECT_INSTANCE.
+ * \param[in] instance  NREC instance \ref T_AUDIO_EFFECT_INSTANCE.
  * \param[in] mode      NREC mode \ref T_NREC_MODE.
  *
  * \return  The status of setting the mode of NREC instance.
@@ -126,9 +113,7 @@ bool nrec_release(T_AUDIO_EFFECT_INSTANCE instance);
 bool nrec_mode_set(T_AUDIO_EFFECT_INSTANCE instance, T_NREC_MODE mode);
 
 /**
- * nrec.h
- *
- * \brief   Set the aggressiveness level of NREC instance.
+ * \brief   Set the aggressiveness level of the specific NREC instance.
  *
  * \param[in] instance  NREC instance \ref T_AUDIO_EFFECT_INSTANCE.
  * \param[in] level     NREC aggressiveness level ranges from 0x00 to 0x0f.

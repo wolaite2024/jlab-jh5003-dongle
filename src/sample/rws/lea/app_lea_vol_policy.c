@@ -1,4 +1,3 @@
-#include <string.h>
 #include "trace.h"
 #include "gap_conn_le.h"
 #include "audio_track.h"
@@ -6,7 +5,6 @@
 #include "metadata_def.h"
 #include "vcs_mgr.h"
 #include "app_lea_ascs.h"
-#include "app_lea_profile.h"
 #include "app_lea_vcs.h"
 #include "app_lea_vol_def.h"
 #include "app_lea_mcp.h"
@@ -31,6 +29,18 @@ typedef enum
     LEA_VOL_MSG_TOTAL
 } T_LEA_VOL_REMOTE_MSG;
 
+uint8_t app_lea_vol_gain_get(void)
+{
+    uint8_t vol_level = VOLUME_LEVEL(app_cfg_nv.lea_vol_setting);
+
+    if ((vol_level == 0) && app_cfg_nv.lea_vol_setting)
+    {
+        vol_level = 1;
+    }
+
+    return vol_level;
+}
+
 T_LEA_VOL_CHG_RESULT app_lea_vol_local_volume_change(T_LEA_VOL_CHG_TYPE type)
 {
     uint8_t level;
@@ -38,7 +48,11 @@ T_LEA_VOL_CHG_RESULT app_lea_vol_local_volume_change(T_LEA_VOL_CHG_TYPE type)
 #if F_APP_VCS_SUPPORT
     T_VCS_PARAM vcs_param;
 
-    vcs_get_param(&vcs_param);
+    if (vcs_get_param(&vcs_param) == false)
+    {
+        goto fail;
+    }
+
     app_cfg_nv.lea_vol_setting = vcs_param.volume_setting;
     app_cfg_nv.lea_vol_out_mute = vcs_param.mute;
 #endif
@@ -152,35 +166,42 @@ T_LEA_VOL_CHG_RESULT app_lea_vol_local_volume_change(T_LEA_VOL_CHG_TYPE type)
     vcs_set_param(&vcs_param);
 #endif
 
+fail:
 level_limit:
 mute_unchange:
-    APP_PRINT_TRACE4("app_lea_vol_local_volume_change: type 0x%02X, vol %d, mute %d, ret %d",
-                     type, vcs_param.volume_setting, vcs_param.mute, result);
+    APP_PRINT_TRACE2("app_lea_vol_local_volume_change: type 0x%02X, ret %d", type, result);
 
     return result;
 }
 
 void app_lea_vol_update_track_volume(void)
 {
-    T_MTC_BT_MODE bt_mode = mtc_get_btmode();
+    T_MTC_BT_MODE bt_mode = MULTI_PRO_BT_BREDR;
     T_AUDIO_TRACK_HANDLE track_handle = NULL;
     uint8_t level = 0;
     uint8_t curr_vol;
     uint8_t ret = 0;
 
+#if F_APP_LEA_SUPPORT
+    bt_mode = mtc_get_btmode();
+#endif
     if (bt_mode == MULTI_PRO_BT_CIS)
     {
         T_APP_LE_LINK *p_link = NULL;
         T_LEA_ASE_ENTRY *p_ase_entry;
         uint16_t conn_handle = 0;
 
+#if F_APP_CCP_SUPPORT
         if (app_lea_ccp_get_call_status() != APP_CALL_IDLE)
         {
             conn_handle = app_lea_ccp_get_active_conn_handle();
         }
         else
+#endif
         {
+#if F_APP_MCP_SUPPORT
             conn_handle = app_lea_mcp_get_active_conn_handle();
+#endif
         }
 
         p_link = app_link_find_le_link_by_conn_handle(conn_handle);
@@ -190,6 +211,7 @@ void app_lea_vol_update_track_volume(void)
             goto fail;
         }
 
+#if F_APP_TMAP_CT_SUPPORT || F_APP_TMAP_UMR_SUPPORT
         p_ase_entry = app_lea_ascs_find_ase_entry_by_direction(p_link, DATA_PATH_OUTPUT_FLAG);
         if (p_ase_entry == NULL)
         {
@@ -198,6 +220,7 @@ void app_lea_vol_update_track_volume(void)
         }
 
         track_handle = p_ase_entry->track_handle;
+#endif
         if (track_handle == NULL)
         {
             ret = 3;
@@ -292,15 +315,17 @@ static void app_lea_vol_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t len
 #if F_APP_VCS_SUPPORT
                     T_VCS_PARAM vcs_param;
 
-                    vcs_get_param(&vcs_param);
-                    vcs_param.volume_setting = app_cfg_nv.lea_vol_setting;
-                    vcs_param.mute = app_cfg_nv.lea_vol_out_mute;
-                    vcs_param.volume_flags = VCS_USER_SET_VOLUME_SETTING;
-                    vcs_param.change_counter++;
+                    if (vcs_get_param(&vcs_param))
+                    {
+                        vcs_param.volume_setting = app_cfg_nv.lea_vol_setting;
+                        vcs_param.mute = app_cfg_nv.lea_vol_out_mute;
+                        vcs_param.volume_flags = VCS_USER_SET_VOLUME_SETTING;
+                        vcs_param.change_counter++;
 
-                    app_cfg_nv.lea_vcs_vol_flag = vcs_param.volume_flags;
-                    app_cfg_nv.lea_vcs_change_cnt = vcs_param.change_counter;
-                    vcs_set_param(&vcs_param);
+                        app_cfg_nv.lea_vcs_vol_flag = vcs_param.volume_flags;
+                        app_cfg_nv.lea_vcs_change_cnt = vcs_param.change_counter;
+                        vcs_set_param(&vcs_param);
+                    }
 #endif
                     app_lea_vol_update_track_volume();
                 }

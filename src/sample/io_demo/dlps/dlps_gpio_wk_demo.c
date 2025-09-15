@@ -57,7 +57,7 @@ static void gpio_test(void)
 {
     T_GPIO_LEVEL gpio_level = hal_gpio_get_input_level(TEST_Pin);
 
-    IO_PRINT_INFO1("gpio_test: gpio_level 0x%x", gpio_level);
+    IO_PRINT_INFO1("gpio_test: gpio_level %d", gpio_level);
 }
 
 /**

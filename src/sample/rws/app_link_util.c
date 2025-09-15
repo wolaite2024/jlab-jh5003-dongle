@@ -15,7 +15,10 @@
 #include "app_a2dp.h"
 #include "bt_bond.h"
 #include "app_bond.h"
-#include "app_nrec.h"
+#include "app_bt_point.h"
+#if F_APP_B2S_HTPOLL_SUPPORT
+#include "app_vendor.h"
+#endif
 
 #if XM_XIAOAI_FEATURE_SUPPORT
 #include "app_xiaoai_transport.h"
@@ -37,10 +40,6 @@
 #include "app_sidetone.h"
 #endif
 
-#if F_APP_LEA_SUPPORT
-#include "app_dongle_common.h"
-#endif
-
 #if F_APP_GAMING_DONGLE_SUPPORT
 #include "app_dongle_dual_mode.h"
 #endif
@@ -59,19 +58,7 @@ uint32_t app_link_conn_profiles(void)
 
 uint8_t app_link_get_sco_conn_num(void)
 {
-    uint8_t i;
-    uint8_t num = 0;
-
-    for (i = 0; i < MAX_BR_LINK_NUM; i++)
-    {
-        if (app_db.br_link[i].used == true &&
-            app_db.br_link[i].sco_handle != 0)
-        {
-            num++;
-        }
-    }
-
-    return num;
+    return app_bt_point_br_link_sco_num_get();
 }
 
 uint8_t app_link_get_a2dp_start_num(void)
@@ -89,6 +76,15 @@ uint8_t app_link_get_a2dp_start_num(void)
     }
 
     return num;
+}
+
+void app_link_update_a2dp_streaming(T_APP_BR_LINK *p_link, bool streaming)
+{
+    p_link->streaming_fg = streaming;
+
+#if F_APP_B2S_HTPOLL_SUPPORT
+    app_vendor_htpoll_control(B2S_HTPOLL_EVENT_A2DP_STREAMING_CHANGE);
+#endif
 }
 
 T_APP_BR_LINK *app_link_find_br_link(uint8_t *bd_addr)
@@ -127,6 +123,23 @@ T_APP_BR_LINK *app_link_find_br_link_by_tts_handle(T_TTS_HANDLE handle)
                 p_link = &app_db.br_link[i];
                 break;
             }
+        }
+    }
+
+    return p_link;
+}
+
+T_APP_BR_LINK *app_link_find_br_link_by_conn_handle(uint16_t conn_handle)
+{
+    T_APP_BR_LINK *p_link = NULL;
+    uint8_t i;
+
+    for (i = 0; i < MAX_BR_LINK_NUM; i++)
+    {
+        if (app_db.br_link[i].used && app_db.br_link[i].acl_handle == conn_handle)
+        {
+            p_link = &app_db.br_link[i];
+            break;
         }
     }
 
@@ -348,9 +361,9 @@ bool app_link_free_le_link(T_APP_LE_LINK *p_link)
                 free(p_link->tts_info.tts_frame_buf);
             }
 
-            if (p_link->p_embedded_cmd != NULL)
+            if (p_link->cmd.buf != NULL)
             {
-                free(p_link->p_embedded_cmd);
+                free(p_link->cmd.buf);
             }
 
             if (p_link->audio_set_eq_info.eq_data_buf != NULL)
@@ -420,18 +433,7 @@ bool app_link_reg_le_link_disc_cb(uint8_t conn_id, P_FUN_LE_LINK_DISC_CB p_fun_c
 
 uint8_t app_link_get_le_link_num(void)
 {
-    uint8_t num = 0;
-    uint8_t i;
-
-    for (i = 0; i < MAX_BLE_LINK_NUM; i++)
-    {
-        if (app_db.le_link[i].used == true)
-        {
-            num++;
-        }
-    }
-
-    return num;
+    return app_bt_point_le_link_num_get();
 }
 
 uint8_t app_link_get_le_encrypted_link_num(void)
@@ -453,18 +455,7 @@ uint8_t app_link_get_le_encrypted_link_num(void)
 #if F_APP_LEA_SUPPORT
 uint8_t app_link_get_lea_link_num(void)
 {
-    uint8_t num = 0;
-    uint8_t i;
-
-    for (i = 0; i < MAX_BLE_LINK_NUM; i++)
-    {
-        if (app_db.le_link[i].used == true && app_db.le_link[i].lea_link_state != LEA_LINK_IDLE)
-        {
-            num++;
-        }
-    }
-
-    return num;
+    return app_bt_point_lea_link_num_get();
 }
 #endif
 
@@ -557,48 +548,14 @@ T_APP_BR_LINK *app_link_find_b2s_link(uint8_t *bd_addr)
     return p_link;
 }
 
-bool app_link_is_b2s_link_num_full(void)
-{
-    bool ret = false;
-    uint8_t cause = 0;
-
-    if (0)
-    {
-    }
-    else if (app_db.b2s_connected_num >= app_db.b2s_connected_num_max)
-    {
-        cause = 1;
-        ret = true;
-    }
-#if F_APP_GAMING_DONGLE_SUPPORT
-    /* 2.4 mode only max connected num is 1 */
-    else if (app_cfg_const.enable_dongle_dual_mode &&
-             app_cfg_nv.dongle_rf_mode == DONGLE_RF_MODE_24G && app_db.b2s_connected_num == 1)
-    {
-        cause = 2;
-        ret = true;
-    }
-#endif
-#if F_APP_LEA_SUPPORT && (F_APP_GAMING_DONGLE_SUPPORT == 0)
-    else if (app_db.b2s_connected_num + app_link_get_lea_link_num() >= app_db.b2s_connected_num_max)
-    {
-        //TODO: Need to modify condition if source support dual mode concurrently
-        cause = 3;
-        ret = true;
-    }
-#endif
-    else
-    {
-        ret = false;
-    }
-
-    APP_PRINT_TRACE2("app_link_is_b2s_link_num_full:%d cause: %d", ret, cause);
-    return ret;
-}
-
 uint8_t app_link_get_b2s_link_num(void)
 {
-    return app_db.b2s_connected_num;
+    return app_bt_point_br_link_num_get();
+}
+
+void app_link_set_b2s_link_num(uint8_t num)
+{
+    app_bt_point_br_link_num_set(num);
 }
 
 uint8_t app_link_get_b2s_link_num_with_profile(uint32_t profile_mask)
@@ -757,7 +714,7 @@ uint8_t app_link_get_cmd_set_link_num(void)
     {
         if ((app_db.le_link[i].state == LE_LINK_STATE_CONNECTED) &&
             (app_db.le_link[i].used == true) &&
-            (app_db.le_link[i].cmd_set_enable == true))
+            (app_db.le_link[i].cmd.enable == true))
         {
             conn_num++;
         }
@@ -766,7 +723,7 @@ uint8_t app_link_get_cmd_set_link_num(void)
     for (i = 0; i < MAX_BR_LINK_NUM; i++)
     {
         if ((app_db.br_link[i].connected_profile & (SPP_PROFILE_MASK | IAP_PROFILE_MASK)) &&
-            (app_db.br_link[i].cmd_set_enable == true))
+            (app_db.br_link[i].cmd.enable == true))
         {
             conn_num++;
         }
@@ -788,13 +745,13 @@ void app_link_disallow_legacy_stream(bool disable)
 }
 #endif
 
-bool app_link_le_check_rtk_link_exist(void)
+bool app_link_le_check_common_link_exist(void)
 {
     bool ret = false;
 
     for (uint8_t i = 0; i < MAX_BLE_LINK_NUM; i++)
     {
-        if (app_db.le_link[i].is_rtk_link)
+        if (app_db.le_link[i].is_common_link)
         {
             ret = true;
         }

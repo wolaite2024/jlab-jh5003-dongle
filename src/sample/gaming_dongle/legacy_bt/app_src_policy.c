@@ -48,7 +48,6 @@ static uint8_t *dummy_data;
 #endif
 
 #include "app_downstream_encode.h"
-
 #include "app_upstream_decode.h"
 
 #if F_APP_GAMING_CONTROLLER_SUPPORT
@@ -93,7 +92,7 @@ extern uint32_t __16k16bit_sbc_123456_sbc_len;
 #define SRC_STREAM_IDLE_TIMEOUT     40
 #define SRC_STREAM_IDLE_MAX         1
 
-#define SRC_BITPOOL_MAX_START   37
+#define SRC_BITPOOL_MAX_START   GAMING_SBC_BITPOOL
 #define SRC_BITPOOL_MAX_END     53
 
 #define SRC_NORMAL_TPOLL        20
@@ -464,7 +463,7 @@ __attribute__((unused)) static inline void app_src_init_sbcenc(T_AUDIO_FORMAT_IN
     info->attr.sbc.block_length = 16;
     info->attr.sbc.subband_num = 8;
     info->attr.sbc.allocation_method = 0; /* Loudness */
-    info->attr.sbc.bitpool = 37;
+    info->attr.sbc.bitpool = GAMING_SBC_BITPOOL;
 }
 
 __attribute__((unused)) static inline void app_src_init_sbcenc2(T_AUDIO_FORMAT_INFO *info)
@@ -480,7 +479,7 @@ __attribute__((unused)) static inline void app_src_init_sbcenc2(T_AUDIO_FORMAT_I
     info->attr.sbc.block_length = 16;
     info->attr.sbc.subband_num = 8;
     info->attr.sbc.allocation_method = 0; /* Loudness */
-    info->attr.sbc.bitpool = 37;
+    info->attr.sbc.bitpool = GAMING_SBC_BITPOOL;
 }
 
 __attribute__((unused)) static inline void app_src_init_lc3dec(T_AUDIO_FORMAT_INFO *info)
@@ -5602,7 +5601,7 @@ static bool src_profile_conn(uint8_t *bd_addr, uint32_t profile_mask, T_APP_SRC_
     switch (profile_mask)
     {
     case A2DP_PROFILE_MASK:
-        ret = bt_a2dp_connect_req(bd_addr, sdp_info.protocol_version, BT_A2DP_ROLE_SNK);
+        ret = bt_a2dp_connect_req(bd_addr, sdp_info.protocol_version, BT_A2DP_ROLE_SNK, 0);
         break;
     case SPP_AUDIO_PROFILE_MASK:
         ret = bt_rfc_conn_req(bd_addr, RFC_SPP_AUDIO_CHANN_NUM,
@@ -6232,7 +6231,6 @@ void src_handle_poweron(void)
     app_start_timer(&timer_idx_src_poweron_delay, "src_poweron_delay",
                     src_policy_timer_id, SRC_TIMER_ID_POWERON_DELAY, 0, false,
                     SRC_POWERON_DELAY_TIMEOUT);
-
 }
 
 void src_poweroff_cleanup(void)
@@ -8477,7 +8475,6 @@ void app_src_policy_init(void)
     sys_mgr_cback_register(src_device_dm_cback);
 
     app_timer_reg_cb(src_policy_timeout_cb, &src_policy_timer_id);
-
 }
 
 void app_src_policy_uac_register(SRC_POLICY_UAC_CB_F *p_func)

@@ -1,9 +1,3 @@
-/**
-*********************************************************************************************************
-*               Copyright(c) 2019, Realtek Semiconductor Corporation. All rights reserved.
-*********************************************************************************************************
-*/
-
 #ifndef _RING_BUFFER_H_
 #define _RING_BUFFER_H_
 
@@ -18,29 +12,29 @@
 extern "C" {
 #endif
 
-/** @defgroup 87x3e_RING_BUFFER Ring Buffer Sets
-  * @brief API sets for user application to use ring buffer
+/** @defgroup 87x3e_RING_BUFFER Ring Buffer
+  * @brief API for user application to use ring buffer.
   * @{
   */
 
 /*============================================================================*
  *                                   Types
  *============================================================================*/
-/** @defgroup 87x3e_RING_BUFFER_Exported_Types Ring Buffer Sets Types
+/** @defgroup 87x3e_RING_BUFFER_Exported_Types Ring Buffer Exported Types
   * @{
   */
 
 /**
- * @brief Data structure to control the ring buffer
+ * @brief Data structure to control the ring buffer.
  */
 typedef struct
 {
-    uint8_t    *buf;  //!< memory buffer to store data
+    uint8_t    *buf;  //!< Memory buffer to store data.
     uint32_t
     head;  //!< Indicates the distance between the current read pointer and the buffer starting address
     uint32_t
     tail;  //!< Indicates the distance between the current write pointer and the buffer starting address
-    uint32_t   size;  //!< Size of memory buffer
+    uint32_t   size;  //!< Size of memory buffer.
 } T_RING_BUFFER;
 
 /** End of 87x3e_RING_BUFFER_Exported_Types
@@ -50,96 +44,94 @@ typedef struct
 /*============================================================================*
  *                         Functions
  *============================================================================*/
-/** @defgroup 87x3e_RING_BUFFER_Exported_Functions Ring Buffer API Functions
+/** @defgroup 87x3e_RING_BUFFER_Exported_Functions Ring Buffer Exported Functions
  * @{
  */
 
 /**
- * @brief      Initialize the ring buffer
- * @note       This API will use the ring buffer to manage an existing memory
- * @param[in]  rb    pointer to ring buffer structure
- * @param[in]  buf   an existing memory buffer
- * @param[in]  size  size of the memory buffer
- * @return     true if initialization success, false otherwise
+ * @brief      Initialize the ring buffer.
+ * @note       This API will use the ring buffer to manage an existing memory.
+ * @param[in]  rb    Pointer to ring buffer structure.
+ * @param[in]  buf   An existing memory buffer.
+ * @param[in]  size  Size of the memory buffer.
+ * @return     True if initialization succeeds, false otherwise.
  */
 bool ring_buffer_init(T_RING_BUFFER *rb, void *buf, uint32_t size);
 
 /**
- * @brief      Write data to ring buffer
- * @note       This API support patial write, it means that if the size of the
- *             data you write is larger than the remaining space of the ring
- *             buffer, it will write the data of the remaining space size
- * @param[in]  rb    pointer to ring buffer structure
- * @param[in]  data  data written to ring buffer
- * @param[in]  len   length of data to be written
- * @return     The length of data that successfully written to ring buffer
+ * @brief      Write data to ring buffer.
+ * @note       This API supports partial write, it means that if the size of the
+ *             data written is larger than the remaining space of the ring
+ *             buffer, it will write the data of the remaining space size.
+ * @param[in]  rb    Pointer to ring buffer structure.
+ * @param[in]  data  Data written to ring buffer.
+ * @param[in]  len   Length of data to be written.
+ * @return     The length of data that is successfully written to ring buffer.
  */
 uint32_t ring_buffer_write(T_RING_BUFFER *rb, const uint8_t *data, uint32_t len);
 
 /**
- * @brief      Read data from ring buffer
- * @note       This API support patial read, it means that if you want to read data
- *             from ring buffer to be longer than the data in ring buffer, it will
+ * @brief      Read data from ring buffer.
+ * @note       This API supports partial read, it means that if data to be read
+ *             from ring buffer is longer than the data in ring buffer, it will
  *             read all data in the ring buffer and return the corresponding data length.
- *             After read the data, the data will be removed from the ring buffer
- * @param[in]  rb    pointer to ring buffer structure
- * @param[in]  len   length of data to read
- * @param[out] data  data that be read from the ring buffer
- * @return     The length of data that successfully be read from ring buffer
+ *             After reading the data, the data will be removed from the ring buffer.
+ * @param[in]  rb    Pointer to ring buffer structure.
+ * @param[in]  len   Length of data to read.
+ * @param[out] data  Data that is read from the ring buffer.
+ * @return     The length of data that is successfully read from ring buffer.
  */
 uint32_t ring_buffer_read(T_RING_BUFFER *rb, uint32_t len, uint8_t *data);
 
 /**
- * @brief      Get the remainning space in ring buffer
- * @param[in]  rb    pointer to ring buffer structure
- * @return     The remainning space in ring buffer
+ * @brief      Get the remaining space in the ring buffer.
+ * @param[in]  rb    Pointer to ring buffer structure.
+ * @return     The remaining space in the ring buffer.
  */
 uint32_t ring_buffer_get_remaining_space(T_RING_BUFFER *rb);
 
 /**
- * @brief      Peek data from ring buffer
- * @note       This API support patial peek, it means that if you want to peek data
- *             from ring buffer to be longer than the data in ring buffer, it will
+ * @brief      Peek data from ring buffer.
+ * @note       This API supports partial peek, it means that if data to be peeked
+ *             from ring buffer is longer than the data in ring buffer, it will
  *             peek all data in the ring buffer and return the corresponding data length.
- *             Unlike read data, peek data does not remove data from ring buffer
- * @param[in]  rb    pointer to ring buffer structure
- * @param[in]  len   length of data to peek
- * @param[out] data  data that be peek from the ring buffer
- * @return     The length of data that successfully be peek from ring buffer
+ *             Unlike reading data, peeking data does not remove data from ring buffer.
+ * @param[in]  rb    Pointer to ring buffer structure.
+ * @param[in]  len   Length of data to peek.
+ * @param[out] data  Data that is peeked from the ring buffer.
+ * @return     The length of data that is successfully peeked from ring buffer.
  */
 uint32_t ring_buffer_peek(T_RING_BUFFER *rb, uint32_t len, uint8_t *data);
 
 /**
- * @brief      Remove data from ring buffer
- * @note       This API support patial remove, it means that if you want to remove data
- *             from ring buffer to be longer than the data in ring buffer, it will
- *             remove all data in the ring buffer and return the corresponding data length
- * @param[in]  rb    pointer to ring buffer structure
- * @param[in]  len   length of data to removed
- * @return     The length of data that successfully be removed from ring buffer
+ * @brief      Remove data from ring buffer.
+ * @note       This API supports partial remove, it means that if data to be removed
+ *             from ring buffer is longer than the data in ring buffer, it will
+ *             remove all data in the ring buffer and return the corresponding data length.
+ * @param[in]  rb    Pointer to ring buffer structure.
+ * @param[in]  len   Length of data to be removed.
+ * @return     The length of data that is successfully removed from ring buffer.
  */
 uint32_t ring_buffer_remove(T_RING_BUFFER *rb, uint32_t len);
 
 /**
- * @brief      Get the length of data in the ring buffer
- * @param[in]  rb    pointer to ring buffer structure
- * @return     The length of data in ring buffer
+ * @brief      Get the length of data in the ring buffer.
+ * @param[in]  rb    Pointer to ring buffer structure.
+ * @return     The length of data in ring buffer.
  */
 uint32_t ring_buffer_get_data_count(T_RING_BUFFER *rb);
 
 /**
- * @brief      clear data in the ring buffer
- * @param[in]  rb    pointer to ring buffer structure
- * @return     void
+ * @brief      Clear data in the ring buffer.
+ * @param[in]  rb    Pointer to ring buffer structure.
  */
 void ring_buffer_clear(T_RING_BUFFER *rb);
 
 /**
- * @brief      Deinitialize the ring buffer
- * @note       This API will deinitialize the ring buffer, but you need free the
- *             memory buffer by yourself.
- * @param[in]  rb    pointer to ring buffer structure
- * @return     void
+ * @brief      Deinitialize the ring buffer.
+ * @note       This API will deinitialize the ring buffer, but the memory buffer
+ *             needs to be freed manually.
+ * @param[in]  rb    Pointer to ring buffer structure.
  */
 void ring_buffer_deinit(T_RING_BUFFER *rb);
 
@@ -151,3 +143,5 @@ void ring_buffer_deinit(T_RING_BUFFER *rb);
 }
 #endif /* __cplusplus */
 #endif /* _RING_BUFFER_H_ */
+
+

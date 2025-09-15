@@ -214,7 +214,7 @@ static void uart_rx_gdma_init(void)
     GDMA_StructInit(&GDMA_InitStruct);
     GDMA_InitStruct.GDMA_ChannelNum      = UART_RX_DMA_CHANNEL_NUM;
     GDMA_InitStruct.GDMA_DIR             = GDMA_DIR_PeripheralToMemory;//GDMA_DIR_PeripheralToMemory
-    GDMA_InitStruct.GDMA_BufferSize      = 128;//determine total transfer size
+    GDMA_InitStruct.GDMA_BufferSize      = UART_BUFFER_SIZE;//determine total transfer size
     GDMA_InitStruct.GDMA_SourceInc       = DMA_SourceInc_Fix;
     GDMA_InitStruct.GDMA_DestinationInc  = DMA_DestinationInc_Inc;
     GDMA_InitStruct.GDMA_SourceDataSize  = GDMA_DataSize_Byte;

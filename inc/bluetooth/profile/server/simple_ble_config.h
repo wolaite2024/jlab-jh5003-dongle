@@ -3,8 +3,8 @@
 *     Copyright(c) 2016, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * @file    simple_ble_config.h
-  * @brief   This file includes common constants or types for Simple BLE service/client.
-  *          And some optional feature may be defined in this file.
+  * @brief   This file includes common constants or types for Simple Bluetooth LE service/client.
+  *          And some optional features may be defined in this file.
   * @details
   * @author  Ethan
   * @date    2016-02-18
@@ -21,13 +21,13 @@ extern "C" {
 #endif
 
 
-/** @defgroup SIMP_Service Simple Ble Service
-  * @brief Simple BLE service
+/** @defgroup SIMP_Service Simple Bluetooth LE Service
+  * @brief Simple Bluetooth LE service
   * @{
   */
 
 /** @defgroup SIMP_Service_CONFIG SIMP Service Config
-  * @brief Simple BLE service configuration file
+  * @brief Simple Bluetooth LE service configuration file
   * @{
   */
 /*============================================================================*
@@ -39,7 +39,7 @@ extern "C" {
   */
 
 /** @defgroup SIMP_UUIDs SIMP UUIDs
-  * @brief Simple BLE Profile UUID definitions
+  * @brief Simple Bluetooth LE Profile UUID definitions
   * @{
   */
 #define GATT_UUID_SIMPLE_PROFILE                    0xA00A

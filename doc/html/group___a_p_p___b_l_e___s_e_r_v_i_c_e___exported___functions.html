@@ -53,6 +53,8 @@ Functions</h2></td></tr>
 <tr class="memitem:ga721aeeec02f1c42a4d1f9558688cbf2a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___b_l_e___s_e_r_v_i_c_e___exported___functions.html#ga721aeeec02f1c42a4d1f9558688cbf2a">app_ble_service_init</a> (void)</td></tr>
 <tr class="memdesc:ga721aeeec02f1c42a4d1f9558688cbf2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ble Service module init.  <a href="#ga721aeeec02f1c42a4d1f9558688cbf2a">More...</a><br /></td></tr>
 <tr class="separator:ga721aeeec02f1c42a4d1f9558688cbf2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabe38d2166cc029ccf7a7a6495685b8f3"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___b_l_e___s_e_r_v_i_c_e___exported___functions.html#gabe38d2166cc029ccf7a7a6495685b8f3">app_ble_service_transfer</a> (uint8_t app_idx, uint8_t *data, uint32_t len)</td></tr>
+<tr class="separator:gabe38d2166cc029ccf7a7a6495685b8f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
@@ -80,7 +82,41 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
-<p>NOTES: 4 includes transimit service, ota service, bas, dis service. if more ble service are added, you need to modify this value.</p>
+<p>NOTES: 4 includes transimit service, ota service, bas, dis service. transimit service dongle is added when use LEA. if more ble service are added, you need to modify this value.</p>
+
+</div>
+</div>
+<a id="gabe38d2166cc029ccf7a7a6495685b8f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabe38d2166cc029ccf7a7a6495685b8f3">&#9670;&nbsp;</a></span>app_ble_service_transfer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t app_ble_service_transfer </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>app_idx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

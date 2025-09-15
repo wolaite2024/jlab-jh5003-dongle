@@ -2,7 +2,7 @@
 *****************************************************************************************
 *     Copyright(c) 2017, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
-  * @file     csc_service.h
+  * @file     cscs.h
   * @brief    Variables and interfaces for Cycling Speed and Cadence Service.
   * @details  CSC service data structs and functions.
   * @author   ethan_su
@@ -32,8 +32,8 @@ extern "C" {
     cadence-related data while using the Cycling Speed and Cadence sensor (Server).
     CSC Measurement, CSC Measurement Client Characteristic Configuration descriptor and CSC Feature characteristic are mandatory
     exposed in the Cycling Speed and Cadence Service.
-    if the Multiple Sensor Locations feature is supported, CSC Feature will be mandatory, otherwise optional.
-    if at least one SC Control Point procedure is supported, SC Control Point and SC Control Point Client
+    If the Multiple Sensor Locations feature is supported, CSC Feature will be mandatory, otherwise optional.
+    If at least one SC Control Point procedure is supported, SC Control Point and SC Control Point Client
     Characteristic Configuration Descriptor will be mandatory, otherwise excluded.
 
     The CSC Measurement characteristic is used to send speed-related data and/or cadence-related data.
@@ -43,11 +43,11 @@ extern "C" {
     If the SC Control Point is supported, profiles utilizing this service are required to ensure that the Client configures the
     SC Control Point characteristic for indications (i.e. via the Client Characteristic Configuration descriptor) at the first connection.
 
-    Application shall register Cycling Speed and Cadence service when initialization through @ref cscs_add_service function.
+    Applications shall register Cycling Speed and Cadence service during initialization through @ref cscs_add_service function.
 
-    Application can set the Cycling Speed and Cadence parameters through @ref cscs_set_parameter function.
+    Applications can set the Cycling Speed and Cadence parameters through @ref cscs_set_parameter function.
 
-    Application can send the measurement value through @ref cscs_meas_value_notify function.
+    Applications can send the measurement value through @ref cscs_meas_value_notify function.
 
   * @{
   */
@@ -55,7 +55,7 @@ extern "C" {
 /*============================================================================*
  *                         Macros
  *============================================================================*/
-/** @defgroup CSCS_Exported_Constants CSC Exported Macros
+/** @defgroup CSCS_Exported_Constants CSCS Exported Macros
   * @brief
   * @{
   */
@@ -85,7 +85,7 @@ extern "C" {
 /** @} */
 
 /** @defgroup CSCS_Sensor_Location CSC Sensor Location
-  * @brief CSC supported sensor location  bit mask
+  * @brief CSC supported sensor location bit mask
   * @{
   */
 #define CSCS_SENS_LOC_OTHER_MASK             (1)
@@ -107,21 +107,6 @@ extern "C" {
 /** @} */
 
 /** @} End of CSCS_Optional_Features */
-
-/**
-*  @brief CSC service parameter type
-*/
-typedef enum
-{
-    CSCS_PARAM_CSCS_FEATURE = 0x01,
-    CSCS_PARAM_INC_FLAG = 0x11,
-    CSCS_PARAM_WHEEL_REVOL,
-    CSCS_PARAM_WHEEL_EVT_TIME,
-    CSCS_PARAM_CRANK_REVOL,
-    CSCS_PARAM_CRANK_EVT_TIME,
-    CSCS_PARAM_CTL_PNT_PROG_CLR = 0x17,
-    CSCS_PARAM_SENSOR_LOC = 0x21,
-} T_CSCS_PARAM_TYPE;
 
 
 /** @defgroup CSCS_Upstream_Message CSC Upstream Message
@@ -187,6 +172,47 @@ typedef enum
 
 /** @} End of CSCS_Control_Point */
 
+
+///@cond
+/** @brief  Error codes defined in CSC service. */
+#define CSCS_ERR_PROC_ALREADY_IN_PROG        0x80
+#define CSCS_ERR_CCCD_IMPROPERLY_CFG         0x81
+
+/** @brief  Max bytes of CSC Measurement data. */
+#define CSCS_MAX_MEASUREMENT_VALUE           11
+/** @brief  Max bytes of CSC Control Point data. */
+#define CSCS_MAX_CTL_PNT_VALUE               18
+///@endcond
+
+/** @} End of CSCS_Exported_Constants */
+
+
+
+/*============================================================================*
+ *                         Types
+ *============================================================================*/
+/** @defgroup CSCS_Exported_Types CSCS Exported Types
+  * @brief
+  * @{
+  */
+
+/* Add all public types here */
+
+/**
+*  @brief CSC service parameter type
+*/
+typedef enum
+{
+    CSCS_PARAM_CSCS_FEATURE = 0x01,
+    CSCS_PARAM_INC_FLAG = 0x11,
+    CSCS_PARAM_WHEEL_REVOL,
+    CSCS_PARAM_WHEEL_EVT_TIME,
+    CSCS_PARAM_CRANK_REVOL,
+    CSCS_PARAM_CRANK_EVT_TIME,
+    CSCS_PARAM_CTL_PNT_PROG_CLR = 0x17,
+    CSCS_PARAM_SENSOR_LOC = 0x21,
+} T_CSCS_PARAM_TYPE;
+
 /**
  * @brief CSC sensor locations.
  *
@@ -212,30 +238,6 @@ typedef enum
     CSCS_SENSOR_LOC_MAX
 } T_CSCS_SENSOR_LOCATION;
 
-///@cond
-/** @brief  Error codes defined in CSC service. */
-#define CSCS_ERR_PROC_ALREADY_IN_PROG        0x80
-#define CSCS_ERR_CCCD_IMPROPERLY_CFG         0x81
-
-/** @brief  Max bytes of CSC Measurement data. */
-#define CSCS_MAX_MEASUREMENT_VALUE           11
-/** @brief  Max bytes of CSC Control Point data. */
-#define CSCS_MAX_CTL_PNT_VALUE               18
-///@endcond
-
-/** @} End of CSCS_Exported_Constants */
-
-
-
-/*============================================================================*
- *                         Types
- *============================================================================*/
-/** @defgroup CSCS_Exported_Types CSC Exported Types
-  * @brief
-  * @{
-  */
-
-/* Add all public types here */
 /** @defgroup CSCS_Callback_Data CSC Callback Data
   * @brief CSC data struct for notification data to application.
   * @{
@@ -249,18 +251,18 @@ typedef union
 
 typedef struct
 {
-    uint8_t opcode; //!< ref: @ref CSCS_Control_Point_OpCodes
+    uint8_t opcode; //!<  @ref CSCS_Control_Point_OpCodes.
     T_CSCS_CP_PARAMETER cp_parameter;
 } T_CSCS_WRITE_MSG;
 
 typedef union
 {
-    uint8_t notification_indification_index; //!< ref: @ref CSCS_Notify_Indicate_Info
-    uint8_t read_value_index; //!< ref: @ref CSCS_Read_Info
+    uint8_t notification_indification_index; //!<  @ref CSCS_Notify_Indicate_Info.
+    uint8_t read_value_index; //!<  @ref CSCS_Read_Info.
     T_CSCS_WRITE_MSG write;
 } T_CSCS_UPSTREAM_MSG_DATA;
 
-/** CSC service data to inform application */
+/** CSC service data to inform application. */
 typedef struct
 {
     T_SERVICE_CALLBACK_TYPE     msg_type;
@@ -271,20 +273,20 @@ typedef struct
 /** @brief CSC measurement data, variable length during connection, max can reach 11 bytes */
 typedef struct
 {
-    uint8_t    cur_length;          /**<  length of current CSC measurement data. */
-    uint8_t    value[CSCS_MAX_MEASUREMENT_VALUE];/**<  value of current CSC measurement data. */
+    uint8_t    cur_length;          /**<  Length of current CSC measurement data. */
+    uint8_t    value[CSCS_MAX_MEASUREMENT_VALUE];/**<  Value of current CSC measurement data. */
 } T_CSCS_MEASUREMENT;
 
 /**
  * @brief CSC Control Point data, variable length during connection, max can reach 17 bytes.
  *
- * CSC Control Point data used to store the Control Point Command recieved from the client.
+ * CSC Control Point data used to store the Control Point Command received from the client.
 */
 typedef struct
 {
-    uint8_t    cur_length;            /**<  length of current CSC Control Point data, . */
+    uint8_t    cur_length;            /**<  Length of current CSC Control Point data. */
     uint8_t
-    value[CSCS_MAX_CTL_PNT_VALUE];            /**<  value of current CSC Control Point data, . */
+    value[CSCS_MAX_CTL_PNT_VALUE];            /**<  Value of current CSC Control Point data. */
 } T_CSCS_CONTROL_POINT;
 /** @} End of CSCS_Exported_Types */
 
@@ -293,26 +295,26 @@ typedef struct
  *                         Functions
  *============================================================================*/
 
-/** @defgroup CSCS_Exported_Functions CSC Exported Functions
+/** @defgroup CSCS_Exported_Functions CSCS Exported Functions
   * @brief
   * @{
   */
 
 
 /**
-  * @brief       Add cycling speed and cadence service to the BLE stack database.
+  * @brief       Add cycling speed and cadence service to the Bluetooth Host.
   *
   *
-  * @param[in]   p_func  Callback when service attribute was read, write or cccd update.
-  * @return Service id generated by the BLE stack: @ref T_SERVER_ID.
+  * @param[in]   p_func  Callback when service attribute was read, written or CCCD updated.
+  * @return Service ID generated by the Bluetooth Host: @ref T_SERVER_ID.
   * @retval 0xFF Operation failure.
-  * @retval Others Service id assigned by stack.
+  * @retval Others Service ID assigned by Bluetooth Host.
   *
   * <b>Example usage</b>
   * \code{.c}
      void profile_init()
      {
-         server_init(1);
+         server_init(service_num);
          cscs_id = cscs_add_service(app_handle_profile_message);
      }
   * \endcode
@@ -322,17 +324,17 @@ T_SERVER_ID cscs_add_service(void *p_func);
 /**
  * @brief       Set a cycling speed and cadence service parameter.
  *
- *              NOTE: You can call this function with a cycling speed and cadence service parameter type and it will set the
+ * This function can be called with a cycling speed and cadence service parameter type and it will set the
  *                      cycling speed and cadence service parameter. Cycling speed and cadence service parameters are defined in @ref T_CSCS_PARAM_TYPE.
- *                      If the "len" field sets to the size of a "uint16_t" ,the
- *                      "p_value" field must point to a data with type of "uint16_t".
+ *                      If the "len" field is set to the size of a "uint16_t", the
+ *                      "p_value" field must point to data of type "uint16_t".
  *
- * @param[in]   param_type   Cycling speed and cadence service parameter type: @ref T_CSCS_PARAM_TYPE
- * @param[in]   len       Length of data to write
+ * @param[in]   param_type   Cycling speed and cadence service parameter type: @ref T_CSCS_PARAM_TYPE.
+ * @param[in]   len       Length of data to write.
  * @param[in]   p_value Pointer to data to write.  This is dependent on
  *                      the parameter type and will be cast to the appropriate
- *                      data type (For example: if data type of param is uint16_t, p_value will be cast to
- *                      pointer of uint16_t).
+ *                      data type (For example: if the data type of param is uint16_t, p_value will be cast to
+ *                      a pointer of uint16_t).
  *
  * @return Operation result.
  * @retval true Operation success.
@@ -342,7 +344,7 @@ T_SERVER_ID cscs_add_service(void *p_func);
  * \code{.c}
     void test(void)
     {
-        cscs_set_parameter(CSCS_PARAM_CTL_PNT_PROG_CLR, 0, NULL);
+        bool ret = cscs_set_parameter(CSCS_PARAM_CTL_PNT_PROG_CLR, 0, NULL);
     }
  * \endcode
  */
@@ -351,37 +353,15 @@ bool cscs_set_parameter(T_CSCS_PARAM_TYPE param_type,  uint8_t len, void *p_valu
 /**
  * @brief   Get a cycling speed and cadence parameter.
  *
- *          NOTE: You can call this function with a cycling speed and cadence parameter type and it will get a
- *          gulcose parameter. Cycling speed and cadence service parameters are defined in @ref T_CSCS_PARAM_TYPE.
+ * This function can be called with a cycling speed and cadence parameter type and it will get a
+ *          cycling speed and cadence parameter. Cycling speed and cadence service parameters are defined in @ref T_CSCS_PARAM_TYPE.
  *
- * @param[in]   param_type Cycling speed and cadence parameter type: @ref T_CSCS_PARAM_TYPE
+ * @param[in]   param_type Cycling speed and cadence parameter type: @ref T_CSCS_PARAM_TYPE.
  * @param[in,out]  p_value Pointer to the location to get the parameter value.  This is dependent on
  *                      the parameter type and will be cast to the appropriate
- *                      data type (For example: if data type of param is uint16_t, p_value will be cast to
- *                      pointer of uint16_t).
+ *                      data type (For example: if the data type of param is uint16_t, p_value will be cast to
+ *                      a pointer of uint16_t).
  *
- * @return Operation result.
- * @retval GAP_CAUSE_SUCCESS Operation success.
- * @retval GAP_CAUSE_INVALID_PARAM Operation failure.
- *
- * <b>Example usage</b>
- * \code{.c}
-    void test(void)
-    {
-        int record_num;
-        gls_get_parameter(GLS_PARAM_RECORD_NUM, &len, &record_num);
-    }
- * \endcode
- */
-bool cscs_get_parameter(T_CSCS_PARAM_TYPE param_type, void *p_value);
-
-
-/**
- * @brief       Send measurement value notification data .
- *
- *
- * @param[in]   conn_id  Connection id.
- * @param[in]   service_id  Service id.
  * @return Operation result.
  * @retval true Operation success.
  * @retval false Operation failure.
@@ -390,10 +370,27 @@ bool cscs_get_parameter(T_CSCS_PARAM_TYPE param_type, void *p_value);
  * \code{.c}
     void test(void)
     {
-        bool op_result;
-        uint8_t conn_id = p_parse_value->dw_param[0];
-        cscs_set_parameter(CSCS_PARAM_WHEEL_REVOL, sizeof(cscs_cul_value), &cscs_cul_value);
-        op_result = cscs_meas_value_notify(conn_id, cscs_id);
+        bool ret = cscs_get_parameter(CSCS_PARAM_WHEEL_REVOL, &cscs_cul_value);
+    }
+ * \endcode
+ */
+bool cscs_get_parameter(T_CSCS_PARAM_TYPE param_type, void *p_value);
+
+
+/**
+ * @brief       Send measurement value notification data.
+ *
+ * @param[in]   conn_id  Connection ID.
+ * @param[in]   service_id  Service ID.
+ * @return Operation result.
+ * @retval true Operation success.
+ * @retval false Operation failure.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+    void test(void)
+    {
+        bool op_result = cscs_meas_value_notify(conn_id, cscs_id);
     }
  * \endcode
  */
@@ -405,9 +402,9 @@ bool cscs_meas_value_notify(uint8_t conn_id, T_SERVER_ID service_id);
  * @brief       Send control point indication.
  *
  *
- * @param[in]   conn_id     Connection id.
- * @param[in]   service_id  Service id.
- * @param[in]   op_code     Op code.
+ * @param[in]   conn_id     Connection ID.
+ * @param[in]   service_id  Service ID.
+ * @param[in]   op_code     Opcode.
  * @param[in]   rsp_code    Response code.
  * @return Operation result.
  * @retval true Operation success.

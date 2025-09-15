@@ -16,11 +16,8 @@
  *============================================================================*/
 #include "rtl876x_pinmux.h"
 #include "rtl876x_rcc.h"
-#include "rtl876x_nvic.h"
 #include "rtl876x_ir.h"
-#include "ir_nec_protocol.h"
-#include "vector_table.h"
-#include "platform_utils.h"
+
 /** @defgroup  IR_SEND_POLLING_MODE_DEMO  IR SEND POLLING MODE DEMO
     * @brief  Ir send data implementation demo code
     * @{

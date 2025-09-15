@@ -447,7 +447,7 @@ static const T_UAC2_AS_ISO_EP_DESC uac2_iso_ep_desc_mic =
 };
 #endif
 
-static const T_USB_AUDIO_DRIVER_DESC_HDR *uac2_descs_ctrl_fs[] =
+static T_USB_AUDIO_DRIVER_DESC_HDR *const uac2_descs_ctrl_fs[] =
 {
     (T_USB_AUDIO_DRIVER_DESC_HDR *) &uac2_ia_desc,
 
@@ -472,7 +472,7 @@ static const T_USB_AUDIO_DRIVER_DESC_HDR *uac2_descs_ctrl_fs[] =
     NULL
 };
 
-static const T_USB_AUDIO_DRIVER_DESC_HDR *uac2_descs_ctrl_hs[] =
+static T_USB_AUDIO_DRIVER_DESC_HDR *const uac2_descs_ctrl_hs[] =
 {
     (T_USB_AUDIO_DRIVER_DESC_HDR *) &uac2_ia_desc,
 
@@ -497,7 +497,7 @@ static const T_USB_AUDIO_DRIVER_DESC_HDR *uac2_descs_ctrl_hs[] =
     NULL
 };
 
-static const T_USB_AUDIO_DRIVER_DESC_HDR *uac2_descs_spk_hs[] =
+static T_USB_AUDIO_DRIVER_DESC_HDR *const uac2_descs_spk_hs[] =
 {
 #if UAC_SPK_SUPPORT
     (T_USB_AUDIO_DRIVER_DESC_HDR *) &uac2_std_as_if_desc_alt0_spk,
@@ -514,7 +514,7 @@ static const T_USB_AUDIO_DRIVER_DESC_HDR *uac2_descs_spk_hs[] =
     NULL
 };
 
-static const T_USB_AUDIO_DRIVER_DESC_HDR *uac2_descs_spk_fs[] =
+static T_USB_AUDIO_DRIVER_DESC_HDR *const uac2_descs_spk_fs[] =
 {
 #if UAC_SPK_SUPPORT
     (T_USB_AUDIO_DRIVER_DESC_HDR *) &uac2_std_as_if_desc_alt0_spk,
@@ -531,7 +531,7 @@ static const T_USB_AUDIO_DRIVER_DESC_HDR *uac2_descs_spk_fs[] =
     NULL
 };
 
-static const T_USB_AUDIO_DRIVER_DESC_HDR *uac2_descs_mic_hs[] =
+static T_USB_AUDIO_DRIVER_DESC_HDR *const uac2_descs_mic_hs[] =
 {
 #if UAC_MIC_SUPPORT
     (T_USB_AUDIO_DRIVER_DESC_HDR *) &uac2_std_as_if_desc_alt0_mic,
@@ -545,7 +545,7 @@ static const T_USB_AUDIO_DRIVER_DESC_HDR *uac2_descs_mic_hs[] =
     NULL
 };
 
-static const T_USB_AUDIO_DRIVER_DESC_HDR *uac2_descs_mic_fs[] =
+static T_USB_AUDIO_DRIVER_DESC_HDR *const uac2_descs_mic_fs[] =
 {
 #if UAC_MIC_SUPPORT
     (T_USB_AUDIO_DRIVER_DESC_HDR *) &uac2_std_as_if_desc_alt0_mic,

@@ -16,15 +16,15 @@
 #include <stdint.h>
 #include "storage.h"
 
-/** @defgroup  87x3e_FMC    FMC API
-    * @brief fmc api wrapper
+/** @defgroup  87x3e_FMC    FMC
+    * @brief FMC wrapper.
     * @{
     */
 
 /*============================================================================*
   *                                   Macros
   *============================================================================*/
-/** @defgroup FMC_Exported_Macros FMC Exported Macros
+/** @defgroup 87x3e_FMC_Exported_Macros FMC Exported Macros
     * @brief
     * @{
     */
@@ -32,14 +32,14 @@
 #define FMC_SEC_BLOCK_LEN   0x10000
 
 #define IS_FLASH_SIZE_LARGER_THAN_2MB()            (fmc_flash_get_flash_size(0) > (1 << 21))
-/** End of FMC_Exported_Macros
+/** End of 87x3e_FMC_Exported_Macros
     * @}
     */
 
 /*============================================================================*
   *                                   Types
   *============================================================================*/
-/** @defgroup FMC_TYPE FMC Exported Types
+/** @defgroup 87x3e_FMC_TYPE FMC Exported Types
    * @brief
    * @{
    */
@@ -107,14 +107,14 @@ typedef enum
     DSP_CFG_IMG_2,
 } T_DSP_CFG_IMG_ID;
 
-/** End of FMC_TYPE
+/** End of 87x3e_FMC_TYPE
     * @}
     */
 
 /*============================================================================*
   *                                Functions
   *============================================================================*/
-/** @defgroup FMC_Exported_Flash_Functions FMC Exported Flash Functions
+/** @defgroup 87x3e_FMC_Exported_Flash_Functions FMC Exported Flash Functions
     * @brief
     * @{
     */
@@ -126,206 +126,209 @@ void flash_dsp_cfg_switch(T_DSP_CFG_IMG_ID img_id);
 uint32_t flash_dsp_cfg_addr_get(void);
 
 /**
- * @brief           task-safe of @ref flash_nor_read
- * @param addr      the ram address mapping of nor flash going to be read
- * @param data      data buffer to be read into
- * @param len       read data length
- * @return          true if read successful, otherwise false
+ * @brief           Task-safe NOR flash read.
+ * @param addr      The RAM address mapping of NOR flash going to be read.
+ * @param data      The buffer to be read into.
+ * @param len       The length of read data.
+ * @return          True if read successful, otherwise false.
  */
 bool fmc_flash_nor_read(uint32_t addr, void *data, uint32_t len);
 
 /**
- * @brief           task-safe of @ref flash_nor_write
- * @param addr      the ram address mapping of nor flash going to be written
- * @param data      data buffer to be write into
- * @param len       write data length
- * @return          true if write successful, otherwise false
+ * @brief           Task-safe NOR flash write.
+ * @param addr      The RAM address mapping of NOR flash going to be written.
+ * @param data      The buffer to be written into.
+ * @param len       The length of write data.
+ * @return          True if write successful, otherwise false.
  */
 bool fmc_flash_nor_write(uint32_t addr, void *data, uint32_t len);
 
 /**
- * @brief           task-safe of @ref flash_nor_erase
- * @param addr      the ram address mapping of nor flash going to be erased
- * @param mode      erase mode defined as @ref FMC_FLASH_NOR_ERASE_MODE
- * @return          true if erase successful, otherwise false
+ * @brief           Task-safe NOR flash erase.
+ * @param addr      The RAM address mapping of NOR flash going to be erased.
+ * @param mode      Erase mode defined as @ref FMC_FLASH_NOR_ERASE_MODE.
+ * @return          True if erase successful, otherwise false.
  */
 bool fmc_flash_nor_erase(uint32_t addr, FMC_FLASH_NOR_ERASE_MODE mode);
 
 /**
- * @brief           task-safe nor flash auto dma read
- * @param src       the ram address mapping of nor flash going to be read from
- * @param dst       the ram address going to be written to
- * @param len       dma data length
- * @param cb        call back function which is to be executed when dma finishing @ref FMC_FLASH_NOR_ASYNC_CB
- * @return          true if trigger auto dma read successful, otherwise false
+ * @brief           Task-safe NOR flash auto DMA read.
+ * @param src       The RAM address mapping of NOR flash going to be read from.
+ * @param dst       The RAM address going to be written to.
+ * @param len       DMA data length.
+ * @param cb        Callback function to be executed when DMA finishes.
+ * @return          True if trigger auto DMA read successful, otherwise false.
  */
 bool fmc_flash_nor_auto_dma_read(uint32_t src, uint32_t dst, uint32_t len,
                                  FMC_FLASH_NOR_ASYNC_CB cb);
 /**
- * @brief           switch nor flash clock
+ * @brief           Switch NOR flash clock.
  * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
- * @param idx       specific nor flash @ref FMC_FLASH_NOR_IDX_TYPE
- * @param bit_mode  clock @ref CLK_FREQ_TYPE
- * @return          true if switch clock successful, otherwise false
+ * @param idx       The index of SPIC.
+ * @param required_mhz Clock need to be set.
+ * @param actual_mhz Used to pass back actual flash clock.
+ * @return          True if switch clock successful, otherwise false.
  */
 bool fmc_flash_nor_clock_switch(FMC_SPIC_ID idx, uint32_t required_mhz, uint32_t *actual_mhz);
 
 /**
- * @brief           get the address of a flash partition
- * @param name      a partition name in @ref T_FLASH_PARTITION_NAME
- * @return          the address of the flash partition
+ * @brief           Get the address of a flash partition.
+ * @param name      The partition name in @ref T_FLASH_PARTITION_NAME.
+ * @return          The address of the flash partition.
  */
 uint32_t flash_partition_addr_get(T_FLASH_PARTITION_NAME name);
 
 /**
- * @brief           get the size of a flash partition
- * @param name      a partition in @ref T_FLASH_PARTITION_NAME
- * @return          the size of the flash partition
+ * @brief           Get the size of a flash partition.
+ * @param name      The partition in @ref T_FLASH_PARTITION_NAME.
+ * @return          The size of the flash partition.
  */
 uint32_t flash_partition_size_get(T_FLASH_PARTITION_NAME name);
 
 /**
- * @brief           get the payload address of an image
- * @param id        an image id in @ref FLASH_IMG_ID
- * @return          the payload address of the image
+ * @brief           Get the payload address of an image.
+ * @param id        The image id in @ref FLASH_IMG_ID.
+ * @return          The payload address of the image.
  */
 uint32_t flash_cur_bank_img_payload_addr_get(FLASH_IMG_ID id);
 
 /**
- * @brief           get the header address of the image
- * @param id        the image id in @ref FLASH_IMG_ID
- * @return          the header address of the image
+ * @brief           Get the header address of an image.
+ * @param id        The image id in @ref FLASH_IMG_ID.
+ * @return          The header address of the image.
  */
 uint32_t flash_cur_bank_img_header_addr_get(FLASH_IMG_ID id);
 
 /**
- * @brief           task-safe nor flash set block protect level
- * @param addr      the ram address mapping of nor flash
- * @param bp_lv     the block protect level to be set
- * @return          true if set block protect level successful, otherwise false
+ * @brief           NOR flash set block protect level.
+ * @param addr      The RAM address mapping of NOR flash.
+ * @param bp_lv     The block protect level to be set.
+ * @return          True if set block protect level is successful, otherwise false.
  */
 bool fmc_flash_nor_set_bp_lv(uint32_t addr, uint8_t bp_lv);
 
 /**
- * @brief           get nor flash block protect level
- * @param addr      the ram address mapping of nor flash
- * @param bp_lv     used to pass back the block protect level
- * @return          true if get bp level successful, otherwise false
+ * @brief           Get NOR flash block protect level.
+ * @param addr      The RAM address mapping of NOR flash.
+ * @param bp_lv     Used to pass back the block protect level.
+ * @return          True if get bp level is successful, otherwise false.
  */
 bool fmc_flash_nor_get_bp_lv(uint32_t addr, uint8_t *bp_lv);
 
 /**
- * @brief           get nor flash OTP lock status
- * @param is_lock   used to pass back the lock status
- * @return          true if get lock status successful, otherwise false
+ * @brief           Get NOR flash OTP lock status.
+ * @param is_lock   Used to pass back the lock status.
+ * @return          True if get lock status is successful, otherwise false.
  */
 bool fmc_flash_nor_get_otp(bool *is_lock);
 
 /**
- * @brief           set nor flash OTP lock status
- * @param is_lock   the lock status
- * @return          true if set lock status successful, otherwise false
+ * @brief           Set NOR flash OTP lock status.
+ * @param is_lock   The lock status to be set.
+ * @return          True if set lock status is successful, otherwise false.
  */
 bool fmc_flash_nor_set_otp(bool is_lock);
 
 /**
- * @brief           task-safe of nor flash write OTP
- * @param addr      the address mapping of OTP to be written
- * @param otp_data  data buffer to be written into
- * @param size      write data length
- * @return          true if write successful, otherwise false
+ * @brief           NOR flash write OTP
+ * @param addr      The address mapping of OTP to be written.
+ * @param otp_data  Data buffer to be written into.
+ * @param size      Write data length.
+ * @return          True if write is successful, otherwise false.
  */
 bool fmc_flash_nor_write_otp(uint32_t addr, uint8_t *otp_data, uint32_t size);
 
 /**
- * @brief           task-safe of erase flash OTP
- * @param addr      the address mapping of OTP going to be erased
- * @return          true if erase successful, otherwise false
+ * @brief           Erase flash OTP.
+ * @param addr      The address mapping of OTP going to be erased.
+ * @return          True if erase is successful, otherwise false.
  */
 bool fmc_flash_nor_erase_otp(uint32_t addr);
 
 /**
- * @brief           task-safe of read flash OTP
- * @param addr      the address mapping of OTP going to be read
- * @param otp_data  data buffer to be read into
- * @param size      read data length
- * @return          true if read successful, otherwise false
+ * @brief           Read flash OTP.
+ * @param addr      The address mapping of OTP going to be read.
+ * @param otp_data  Data buffer to be read into.
+ * @param size      Read data length.
+ * @return          True if read is successful, otherwise false.
  */
 bool fmc_flash_nor_read_otp(uint32_t addr, uint8_t *otp_data, uint32_t size);
 
 /**
- * @brief           get the uuid of nor flash
- * @param uuid      used to pass back the uuid of nor flash
- * @param size      the size of uuid
- * @return          true if get the uuid successful, otherwise false
+ * @brief           Get the UUID of NOR flash.
+ * @param uuid      Used to pass back the UUID of NOR flash.
+ * @param size      The size of UUID.
+ * @return          True if getting the UUID is successful, otherwise false.
  */
 bool fmc_flash_nor_get_uuid(uint8_t *uuid, uint8_t size);
 
 /**
- * @brief           init flash OTP(One Time Program)
- * @return          true if init successful, otherwise false
+ * @brief           Init flash OTP (One Time Programmable).
+ * @return          True if init is successful, otherwise false.
  */
 bool fmc_flash_nor_otp_init(void);
 
 /**
- * @brief           get flash size
- *\xrefitem Experimental_Added_API_2_13_0_0 " Experimental Added Since 2.13.0.0" "Added API"
- * @param idx       spic channel number
- * @return          byte size of current flash
+ * @brief           Get flash size.
+ *\xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Added API"
+ * @param idx       SPIC channel number.
+ * @return          The Byte size of current flash.
  */
 uint32_t fmc_flash_get_flash_size(uint8_t idx);
 
-/** @} */ /* End of group FMC_Exported_Flash_Functions */
+/** @} */ /* End of group 87x3e_FMC_Exported_Flash_Functions */
 
 
 
-/** @defgroup FMC_Exported_PSRAM_Functions FMC Exported PSRAM Functions
+/** @defgroup 87x3e_FMC_Exported_PSRAM_Functions FMC Exported PSRAM Functions
     * @brief
     * @{
     */
 
 
 /**
- * @brief           init winbond opi psram (W955D8MBYA)
- * @return          true if init successful, otherwise false
+ * @brief           Init Winbond OPI PSRAM (W955D8MBYA).
+ * @return          True if init is successful, otherwise false.
  */
 bool fmc_psram_winbond_opi_init(void);
 
 /**
- * @brief           init APMemory qpi psram (APS1604M-SQR) only supports quad mode
- * @return          true if init successful, otherwise false
+ * @brief           Init APMemory QPI PSRAM (APS1604M-SQR) which only supports quad mode
+ * @return          True if init is successful, otherwise false.
  */
 bool fmc_psram_ap_memory_qpi_init(void);
 
 /**
- * @brief           init APMemory opi psram (APS6408L-OBx)
- * @return          true if init successful, otherwise false
+ * @brief           Init APMemory OPI PSRAM (APS6408L-OBx).
+ * @return          True if init is successful, otherwise false.
  */
 bool fmc_psram_ap_memory_opi_init(void);
 
 /**
- * @brief           psram mode switch
- * @return          true if init successful, otherwise false
+ * @brief           PSRAM mode switch.
+ * @return          True if the mode switch is successful, otherwise false.
  */
 bool fmc_psram_mode_switch_quad(void);
 /**
- * @brief           spic set clock
+ * @brief           SPIC set clock.
  *
  * \xrefitem Added_API_2_13_0_0 "Added Since 2.13.0.0" "Added API"
  *
- * @param spic_id       The spic index, please refer to FMC_SPIC_ID.
- * @param  require_mhz  require spic freqency
- * @param  actual_mhz     the freqency of current spic
- * @return              true if switch clock successful, otherwise false
+ * @param spic_id       The index of SPIC.
+ * @param  require_mhz  Required SPIC frequency.
+ * @param  actual_mhz     The frequency of current SPIC.
+ * @return              True if switching the clock is successful, otherwise false.
  */
 bool fmc_spic_clock_switch(FMC_SPIC_ID spic_id, uint32_t required_mhz, uint32_t *actual_mhz);
 
 
 //bool fmc_psram_clock_switch(CLK_FREQ_TYPE clk);
 
-/** @} */ /* End of group FMC_Exported_PSRAM_Functions */
+/** @} */ /* End of group 87x3e_FMC_Exported_PSRAM_Functions */
 
 /** @} */ /* End of group 87x3e_FMC */
 
 #endif  // __FMC_API_H_
+
+
 

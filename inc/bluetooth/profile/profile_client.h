@@ -3,15 +3,17 @@
 *     Copyright(c) 2016, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * @file     profile_client.h
-  * @brief    Head file for profile client structure.
-  * @details  This file can use when parameter use_ext of the client_cfg_use_ext_api is false.
+  * @brief    Header file for profile client structure.
+  * @details  This file can be used when parameter use_ext of the client_cfg_use_ext_api is false.
   * @author   ethan_su
   * @date     2016-02-18
   * @version  v1.0
   * *************************************************************************************
   */
 
-/* Define to prevent recursive inclusion */
+/*============================================================================*
+ *               Define to prevent recursive inclusion
+ *============================================================================*/
 #ifndef PROFILE_CLIENT_H
 #define PROFILE_CLIENT_H
 
@@ -32,13 +34,20 @@ extern "C" {
   * @{
   */
 
-/** @defgroup GATT_CLIENT_LEGACY_API GATT Client API
-  * @brief The GATT Client APIs can use when parameter use_ext of the client_cfg_use_ext_api is false.
+/** @defgroup GATT_CLIENT_LEGACY_API GATT Client Legacy API
+  * @brief The GATT Client APIs can be used when parameter use_ext of the client_cfg_use_ext_api is false.
+  * @{
+  */
+
+/*============================================================================*
+ *                         Types
+ *============================================================================*/
+/** @defgroup GATT_Client_Exported_Types GATT Client Exported Types
   * @{
   */
 
 /** @defgroup P_FUN_GENERAL_APP_CB General Client Callback Function Point Definition
-  * @{ function pointer used in each specific profile, to send events to application
+  * @{ Function pointer used in each specific profile, to send events to application.
   */
 typedef T_APP_RESULT(*P_FUN_GENERAL_APP_CB)(T_CLIENT_ID client_id, uint8_t conn_id, void *p_data);
 /** End of P_FUN_GENERAL_APP_CB
@@ -75,11 +84,13 @@ typedef struct
     P_FUN_NOTIFY_IND_RESULT_CB notify_ind_result_cb;//!< Notify Indication callback function pointer
     P_FUN_DISCONNECT_CB        disconnect_cb;       //!< Disconnection callback function pointer
 } T_FUN_CLIENT_CBS;
-/** End of T_FUN_CLIENT_CBS * @} */
+/** End of T_FUN_CLIENT_CBS
+  * @}
+  */
 
 /** End of GATT_Client_Exported_Types
-* @}
-*/
+  * @}
+  */
 /*============================================================================*
  *                         Functions
  *============================================================================*/
@@ -88,14 +99,14 @@ typedef struct
   */
 /**
   * @brief  Used by application, register general client callback.
-  * @param[in]  p_fun_cb  Fuction offered by application.
-  * @retval None
+  * @param[in]  p_fun_cb  Function offered by application.
+  * @return void.
  *
  * <b>Example usage</b>
  * \code{.c}
     void app_le_profile_init(void)
     {
-        client_init(1);
+        client_init(client_num);
         simple_ble_client_id = simp_ble_add_client(app_client_callback);
         client_register_general_client_cb(app_client_callback);
     }
@@ -143,7 +154,7 @@ bool client_register_spec_client_cb(T_CLIENT_ID *p_out_client_id,
 
 /**
   * @brief  Send discovery all primary services request.
-  * @param[in]  conn_id        Connection ID
+  * @param[in]  conn_id        Connection ID.
   * @param[in]  client_id      Client ID of specific client module.
   * @retval GAP_CAUSE_SUCCESS  Discovery request success.
   * @retval other              Discovery request failed.
@@ -151,20 +162,20 @@ bool client_register_spec_client_cb(T_CLIENT_ID *p_out_client_id,
 T_GAP_CAUSE client_all_primary_srv_discovery(uint8_t conn_id, T_CLIENT_ID client_id);
 
 /**
-  * @brief  Send discovery services by 16 bit UUID request.
-  * @param[in]  conn_id        Connection ID
+  * @brief  Send discovery services by 16-bit UUID request.
+  * @param[in]  conn_id        Connection ID.
   * @param[in]  client_id      Client ID of specific client module.
-  * @param[in]  uuid16         16 bit UUID.
+  * @param[in]  uuid16         16-bit UUID.
   * @retval GAP_CAUSE_SUCCESS  Discovery request success.
   * @retval other              Discovery request failed.
   */
 T_GAP_CAUSE client_by_uuid_srv_discovery(uint8_t conn_id, T_CLIENT_ID client_id, uint16_t uuid16);
 
 /**
-  * @brief  Send discovery services by 128 bit UUID request.
-  * @param[in]  conn_id        Connection ID
+  * @brief  Send discovery services by 128-bit UUID request.
+  * @param[in]  conn_id        Connection ID.
   * @param[in]  client_id      Client ID of specific client module.
-  * @param[in]  p_uuid128      128 bit UUID.
+  * @param[in]  p_uuid128      128-bit UUID.
   * @retval GAP_CAUSE_SUCCESS  Discovery request success.
   * @retval other              Discovery request failed.
   */
@@ -173,7 +184,7 @@ T_GAP_CAUSE client_by_uuid128_srv_discovery(uint8_t conn_id, T_CLIENT_ID client_
 
 /**
   * @brief  Send discovery relationship services request.
-  * @param[in]  conn_id        Connection ID
+  * @param[in]  conn_id        Connection ID.
   * @param[in]  client_id      Client ID of specific client module.
   * @param[in]  start_handle   Start handle of range to be searched.
   * @param[in]  end_handle     End handle of range to be searched.
@@ -185,7 +196,7 @@ T_GAP_CAUSE client_relationship_discovery(uint8_t conn_id, T_CLIENT_ID client_id
 
 /**
   * @brief  Send discovery characteristics request.
-  * @param[in]  conn_id        Connection ID
+  * @param[in]  conn_id        Connection ID.
   * @param[in]  client_id      Client ID of specific client module.
   * @param[in]  start_handle   Start handle of range to be searched.
   * @param[in]  end_handle     End handle of range to be searched.
@@ -196,12 +207,12 @@ T_GAP_CAUSE client_all_char_discovery(uint8_t conn_id, T_CLIENT_ID client_id, ui
                                       uint16_t end_handle);
 
 /**
-  * @brief  Send discovery characteristics request by caracteristic uuid.
-  * @param[in]  conn_id        Connection ID
+  * @brief  Send discovery characteristics request by characteristic uuid.
+  * @param[in]  conn_id        Connection ID.
   * @param[in]  client_id      Client ID of specific client module.
-  * @param[in]  start_handle   Start handle of range to be searched.
-  * @param[in]  end_handle     End handle of range to be searched.
-  * @param[in]  uuid16         16bit characteristic uuid to be searched.
+  * @param[in]  start_handle   Start handle of the range to be searched.
+  * @param[in]  end_handle     End handle of the range to be searched.
+  * @param[in]  uuid16         16-bit characteristic uuid to be searched.
   * @retval GAP_CAUSE_SUCCESS  Discovery request success.
   * @retval other              Discovery request failed.
   */
@@ -209,12 +220,12 @@ T_GAP_CAUSE client_by_uuid_char_discovery(uint8_t conn_id, T_CLIENT_ID client_id
                                           uint16_t start_handle,
                                           uint16_t end_handle, uint16_t uuid16);
 /**
-  * @brief  Send discovery characteristics request by caracteristic uuid.
-  * @param[in]  conn_id        Connection ID
+  * @brief  Send discovery characteristics request by characteristic uuid.
+  * @param[in]  conn_id        Connection ID.
   * @param[in]  client_id      Client ID of specific client module.
-  * @param[in]  start_handle   Start handle of range to be searched.
-  * @param[in]  end_handle     End handle of range to be searched.
-  * @param[in]  p_uuid128      128bit characteristic uuid to be searched.
+  * @param[in]  start_handle   Start handle of the range to be searched.
+  * @param[in]  end_handle     End handle of the range to be searched.
+  * @param[in]  p_uuid128      128-bit characteristic uuid to be searched.
   * @retval GAP_CAUSE_SUCCESS  Discovery request success.
   * @retval other              Discovery request failed.
   */
@@ -223,10 +234,10 @@ T_GAP_CAUSE client_by_uuid128_char_discovery(uint8_t conn_id, T_CLIENT_ID client
                                              uint16_t end_handle, uint8_t *p_uuid128);
 /**
   * @brief  Send discovery characteristics descriptor request.
-  * @param[in]  conn_id        Connection ID
+  * @param[in]  conn_id        Connection ID.
   * @param[in]  client_id      Client ID of specific client module.
-  * @param[in]  start_handle   Start handle of range to be searched.
-  * @param[in]  end_handle     End handle of range to be searched.
+  * @param[in]  start_handle   Start handle of the range to be searched.
+  * @param[in]  end_handle     End handle of the range to be searched.
   * @retval GAP_CAUSE_SUCCESS  Discovery request success.
   * @retval other              Discovery request failed.
   */
@@ -235,7 +246,7 @@ T_GAP_CAUSE client_all_char_descriptor_discovery(uint8_t conn_id, T_CLIENT_ID cl
 
 /**
   * @brief  Read characteristic by handle request.
-  * @param[in]  conn_id        Connection ID
+  * @param[in]  conn_id        Connection ID.
   * @param[in]  client_id      Client ID of specific client module.
   * @param[in]  handle         Request handle.
   * @retval GAP_CAUSE_SUCCESS  Read request success.
@@ -244,13 +255,13 @@ T_GAP_CAUSE client_all_char_descriptor_discovery(uint8_t conn_id, T_CLIENT_ID cl
 T_GAP_CAUSE client_attr_read(uint8_t conn_id, T_CLIENT_ID client_id, uint16_t handle);
 
 /**
-  * @brief  Read characteristic by 16 bit UUID request.
-  * @param[in]  conn_id       Connection ID
+  * @brief  Read characteristic by 16-bit UUID request.
+  * @param[in]  conn_id       Connection ID.
   * @param[in]  client_id     Client ID of specific client module.
-  * @param[in]  start_handle  Start handle of range to be searched.
-  * @param[in]  end_handle    End handle of range to be searched.
-  * @param[in]  uuid16        Request 16 bit UUID.
-  * @param[in]  p_uuid128     Request 128 bit UUID.
+  * @param[in]  start_handle  Start handle of the range to be searched.
+  * @param[in]  end_handle    End handle of the range to be searched.
+  * @param[in]  uuid16        Request 16-bit UUID.
+  * @param[in]  p_uuid128     Request 128-bit UUID.
   * @retval GAP_CAUSE_SUCCESS Read request success.
   * @retval other             Read request failed.
   */
@@ -259,7 +270,7 @@ T_GAP_CAUSE client_attr_read_using_uuid(uint8_t conn_id, T_CLIENT_ID client_id,
                                         uint16_t end_handle, uint16_t uuid16, uint8_t *p_uuid128);
 /**
  * @brief  Write characteristic request.
- * @param[in]  conn_id    Connection ID
+ * @param[in]  conn_id    Connection ID.
  * @param[in]  client_id  Client ID of specific client module.
  * @param[in]  write_type Type of write.
  * @param[in]  handle     Attribute handle.
@@ -274,13 +285,13 @@ T_GAP_CAUSE client_attr_read_using_uuid(uint8_t conn_id, T_CLIENT_ID client_id,
  *
  * <b>Example usage</b>
  * \code{.c}
-    //if write_type is GATT_WRITE_TYPE_SIGNED_CMD, GAP_MSG_LE_GATT_SIGNED_STATUS_INFO will be notified to app
+    //if write_type is GATT_WRITE_TYPE_SIGNED_CMD, GAP_MSG_LE_GATT_SIGNED_STATUS_INFO will be notified to APP
     T_APP_RESULT app_gap_callback(uint8_t cb_type, void *p_cb_data)
     {
         T_APP_RESULT result = APP_RESULT_SUCCESS;
         T_LE_CB_DATA cb_data;
         memcpy(&cb_data, p_cb_data, sizeof(T_LE_CB_DATA));
-        APP_PRINT_TRACE1("app_gap_callback: cb_type = %d", cb_type);
+        APP_PRINT_TRACE1("app_gap_callback: cb_type %d", cb_type);
         switch (cb_type)
         {
         ...
@@ -302,9 +313,9 @@ T_GAP_CAUSE client_attr_write(uint8_t conn_id, T_CLIENT_ID client_id,
                               uint16_t handle, uint16_t length, uint8_t *p_data);
 
 /**
-  * @brief  Confirm from application when receive indication from server.
-  * @param[in]  conn_id       Connection ID indicate which link is.
-  * @retval true: Confirm OK.
+  * @brief  Confirm from the application when receiving an indication from the server.
+  * @param[in]  conn_id       Connection ID indicating which link it is.
+  * @retval true: Confirm success.
   * @retval false: Confirm failed.
   */
 T_GAP_CAUSE client_attr_ind_confirm(uint8_t conn_id);
@@ -314,7 +325,7 @@ T_GAP_CAUSE client_attr_ind_confirm(uint8_t conn_id);
  *
  * \xrefitem Added_API_2_13_0_0 "Added Since 2.13.0.0" "Added API"
  *
- * @param[in] conn_id         Connection id indicate which link is.
+ * @param[in] conn_id         Connection ID indicating which link it is.
  * @retval GAP_CAUSE_SUCCESS: Exchange MTU request success.
  * @retval other: Exchange MTU request failed.
  *
@@ -349,12 +360,12 @@ T_GAP_CAUSE client_send_exchange_mtu_req(uint8_t conn_id);
 /**
  * @brief Get the header point of the notification data buffer.
  * This function is used to get the header buffer point of the notification command data.
- * This function only can be called in notify_ind_result_cb.
+ * This function can only be called in notify_ind_result_cb.
  *
- * @param[in] conn_id         Connection id indicate which link is.
+ * @param[in] conn_id         Connection ID indicating which link it is.
  * @param[in,out] pp_buffer   Pointer to the address of the buffer.
  * @param[in,out] p_offset    Pointer to the offset of the data.
- * @return Buffer get result
+ * @return Buffer get result.
  * @retval true Success.
  * @retval false Failed.
  *
@@ -384,7 +395,7 @@ bool client_get_notify_data_buffer(uint8_t conn_id, uint8_t **pp_buffer, uint16_
 
 /**
  * @brief  Read multiple variable characteristic values.
- * @param[in]  conn_id        Connection ID
+ * @param[in]  conn_id        Connection ID.
  * @param[in]  client_id      Client ID of specific client module.
  * @param[in]  num_handle     The number of p_handle.
  * @param[in]  p_handle       Handle array.
@@ -403,7 +414,6 @@ bool client_get_notify_data_buffer(uint8_t conn_id, uint8_t **pp_buffer, uint16_
             T_CLIENT_APP_CB_DATA *p_client_app_cb_data = (T_CLIENT_APP_CB_DATA *)p_data;
             switch (p_client_app_cb_data->cb_type)
             {
-#if F_BT_ATT_READ_MULTIPLE_VARIABLE
             case CLIENT_APP_CB_TYPE_READ_MULTI_RESULT:
                 APP_PRINT_INFO3("CLIENT_APP_CB_TYPE_READ_MULTI_RESULT: client_id %d, cause 0x%x, num_handle %d",
                                 p_client_app_cb_data->cb_content.read_multi_result_data.client_id,
@@ -420,7 +430,6 @@ bool client_get_notify_data_buffer(uint8_t conn_id, uint8_t **pp_buffer, uint16_
                     }
                 }
                 break;
-#endif
             default:
                 break;
             }
@@ -449,7 +458,7 @@ bool client_get_notify_data_buffer(uint8_t conn_id, uint8_t **pp_buffer, uint16_
             }
         }
 
-        APP_PRINT_WARN0("simp_ble_client_read_multi: Request fail! Please check!");
+        APP_PRINT_WARN0("simp_ble_client_read_multi: Request failed! Please check!");
         return false;
     }
  * \endcode
@@ -458,14 +467,14 @@ T_GAP_CAUSE client_attr_read_multi_variable(uint8_t conn_id, T_CLIENT_ID client_
                                             uint16_t num_handle, uint16_t *p_handle);
 
 /** End of GATT_Client_Exported_Functions
-* @}
-*/
+  * @}
+  */
 /** End of GATT_CLIENT_LEGACY_API
-* @}
-*/
+  * @}
+  */
 /** End of GATT_CLIENT_API
-* @}
-*/
+  * @}
+  */
 
 
 

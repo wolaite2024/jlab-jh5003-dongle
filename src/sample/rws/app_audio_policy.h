@@ -168,7 +168,11 @@ typedef enum
     TONE_APT_VOL_MAX,                   //0x5F
 
     TONE_APT_VOL_MIN,                   //0x60
+#if F_APP_FINDMY_FEATURE_SUPPORT
+    TONE_FINDMY_SOUND,                  //0x61
+#else
     TONE_APT_EQ_0,                      //0x61
+#endif
     TONE_APT_EQ_1,                      //0x62
     TONE_APT_EQ_2,                      //0x63
     TONE_APT_EQ_3,                      //0x64
@@ -222,6 +226,8 @@ typedef enum
     TONE_HA_PROG_8,                     //0x8A
     TONE_HA_PROG_9,                     //0x8B
 
+    TONE_GFPS_DULT_FIND,                //0x8C
+
 #if CONFIG_REALTEK_APP_TEAMS_FEATURE_SUPPORT
     TONE_CHARGE_NOW = 0x55,             //0x55
     TONE_HOURS_LEFT_1,                  //0x56
@@ -254,10 +260,6 @@ typedef enum
     TONE_POWER_ON_BT_24G_MODE           = 0x6A,   //reuse of TONE_APT_EQ_9
     TONE_SWITCH_SOURCE_TO_DONGLE        = 0x67,   //resue of TONE_APT_EQ_6
     TONE_SWITCH_SOURCE_TO_BT            = 0x68,   //resue of TONE_APT_EQ_7
-#endif
-
-#if F_APP_FINDMY_FEATURE_SUPPORT
-    TONE_FINDMY_SOUND                   = 0x61,   //resue of TONE_APT_EQ_0
 #endif
 
     TONE_TYPE_MAX                       = 0xA0, // Tone1 128bytes + Tone2 32bytes
@@ -644,6 +646,8 @@ void app_audio_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, 
 void app_audio_remote_join_set(bool enable);
 bool app_audio_get_a2dp_active(void);
 void app_audio_restart_track(void);
+void app_audio_set_gaming_mode(bool gaming_mode);
+bool app_audio_get_gaming_mode(void);
 
 #if F_APP_COMMON_DONGLE_SUPPORT
 void app_audio_update_dongle_flag(bool is_dongle);

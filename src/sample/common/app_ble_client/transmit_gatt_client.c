@@ -2,47 +2,35 @@
 *****************************************************************************************
 *     Copyright(c) 2016, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
-  * @file    transmit_client.c
-  * @brief   transmit BLE client source file.
+  * @file    transmit_gatt_client.c
+  * @brief   transmit gatt client source file.
   * @details
-  * @author  jane
-  * @date    2016-02-18
-  * @version v1.0
+  * @author  cen
+  * @date    2024-05-31
+  * @version v1.1
   ******************************************************************************
   */
 
 #if TRANSMIT_CLIENT_SUPPORT
 /** Add Includes here **/
-#include <trace.h>
 #include <string.h>
-#include <stdio.h>
-
+#include "trace.h"
 #include "gap_msg.h"
-#include <transmit_gatt_client.h>
-#include <os_mem.h>
+#include "transmit_gatt_client.h"
 
-/********************************************************************************************************
-* local static variables defined here, only used in this source file.
-********************************************************************************************************/
+/** @brief  Transmit Service related UUIDs. */
 #define TRANSMIT_SVC_CHAR_UUID_RX_DATA         0xFD03
 #define TRANSMIT_SVC_CHAR_UUID_TX_DATA         0xFD04
-
-
-/** @brief Transmit Service Attribute Index */
-#define TRANSMIT_SVC_RX_DATA_INDEX              2 /**< @brief Index for battery level chars's value */
-#define TRANSMIT_SVC_TX_DATA_INDEX              4 /**< @brief CCCD Index for battery level chars's value */
-#define TRANSMIT_SVC_TX_DATA_CCCD_INDEX         5 /**< @brief CCCD Index for battery level chars's value */
 
 uint8_t GATT_UUID128_TRANSMIT_SRV[16] = { 0x12, 0xA2, 0x4D, 0x2E, 0xFE, 0x14, 0x48, 0x8e, 0x93, 0xD2, 0x17, 0x3C, 0xFD, 0x02, 0x00, 0x00};
 /**<  Callback used to send data to app from transmit client layer. */
 static P_FUN_CLIENT_GENERAL_APP_CB transmit_client_cb = NULL;
 
 /**
-  * @brief  Used by application, to write data of V2 write Characteristic.
-  * @param[in]  conn_id connection ID.
-  * @param[in]  length  write data length
-  * @param[in]  p_value point the value to write
-  * @param[in]  type    write type.
+  * @brief  Used by application, to write Characteristic.
+  * @param[in]  conn_handle  connection handle.
+  * @param[in]  length  write data length.
+  * @param[in]  p_value point the value to write.
   * @retval true send request to upper stack success.
   * @retval false send request to upper stack failed.
   */
@@ -220,7 +208,7 @@ T_APP_RESULT transmit_client_callback(uint16_t conn_handle, T_GATT_CLIENT_EVENT 
   */
 bool transmit_client_init(P_FUN_CLIENT_GENERAL_APP_CB app_cb)
 {
-    T_ATTR_UUID srv_uuid;
+    T_ATTR_UUID srv_uuid = {0};
     srv_uuid.is_uuid16 = false;
     memcpy(srv_uuid.p.uuid128, GATT_UUID128_TRANSMIT_SRV, 16);
 

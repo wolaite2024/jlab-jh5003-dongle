@@ -44,10 +44,6 @@ $(function() {
 &#160;
 
 <h3><a id="index_r"></a>- r -</h3><ul>
-<li>R
-: <a class="el" href="struct____blake2bp__state.html#a2b4141f218ccd067ffab2df01ee9d4ff">__blake2bp_state</a>
-, <a class="el" href="struct____blake2sp__state.html#a17857d4511fb12b6ff949bea982844e9">__blake2sp_state</a>
-</li>
 <li>r
 : <a class="el" href="union_p_p_e___r_e_g___l_y_rx___k_e_y___m_a_x___type_def.html#a40f5cf0e34dad6e75588dea942aee4f7">PPE_REG_LYRx_KEY_MAX_TypeDef</a>
 , <a class="el" href="union_p_p_e___r_e_g___l_y_rx___k_e_y___m_i_n___type_def.html#a40f5cf0e34dad6e75588dea942aee4f7">PPE_REG_LYRx_KEY_MIN_TypeDef</a>
@@ -1362,7 +1358,6 @@ $(function() {
 </li>
 <li>r_result_for_fit
 : <a class="el" href="struct_t___d_s_p___i_m_a_g_e.html#af671a6f6e9b22869c041125243f81918">T_DSP_IMAGE</a>
-, <a class="el" href="structt__dsp__image.html#af671a6f6e9b22869c041125243f81918">t_dsp_image</a>
 </li>
 <li>r_RM3_adpll_iso0
 : <a class="el" href="union___a_o_n___f_a_s_t___s_r_a_m___r_m3___i_s_o0__9___t_y_p_e.html#a5c0963395428d97dd97518cca90a4f63">_AON_FAST_SRAM_RM3_ISO0_9_TYPE</a>
@@ -2234,6 +2229,10 @@ $(function() {
 <li>random_out
 : <a class="el" href="struct_t_r_n_g___type_def.html#a6aedd4b78d293b4a2e50a66c41d8e0d5">TRNG_TypeDef</a>
 </li>
+<li>random_param
+: <a class="el" href="structt__bt__event__param__traffic__qos__cmpl.html#a57ca1b7ac93b41e54241b82c9c90e31f">t_bt_event_param_traffic_qos_cmpl</a>
+, <a class="el" href="structt__bt__traffic__qos__param.html#a32444e1b2b5ad06180cfe294f7481945">t_bt_traffic_qos_param</a>
+</li>
 <li>random_req
 : <a class="el" href="struct_r_a_n___g_e_n___type_def.html#a3c5c5bfbfbae3560b8d472c66ff75f46">RAN_GEN_TypeDef</a>
 </li>
@@ -2253,9 +2252,6 @@ $(function() {
 </li>
 <li>raw_data
 : <a class="el" href="structt__app__dsp__extensible__param.html#ad11c56b4339f6292ac553d617053d29f">t_app_dsp_extensible_param</a>
-</li>
-<li>raw_data_address
-: <a class="el" href="structhal__idu__decompress__info.html#a846e3e1b51d7048793e337db2e9c880c">hal_idu_decompress_info</a>
 </li>
 <li>RAW_DST_TRAN
 : <a class="el" href="struct_g_d_m_a___type_def.html#ac261b65f054a6befdb769934328e05e3">GDMA_TypeDef</a>
@@ -2338,7 +2334,8 @@ $(function() {
 : <a class="el" href="struct_c_a_c_h_e___type_def.html#aeb617f35582307af749c2d01edd6d9b6">CACHE_TypeDef</a>
 </li>
 <li>rd_ptr
-: <a class="el" href="structtuya__ble__queue__t.html#ade1bb466c52d4d6b05213276d9463e30">tuya_ble_queue_t</a>
+: <a class="el" href="union_j_p_u___b_b_c___r_d___p_t_r___type_def.html#a33cbbf485ff9d86a8784c9911fe4c074">JPU_BBC_RD_PTR_TypeDef</a>
+, <a class="el" href="structtuya__ble__queue__t.html#ade1bb466c52d4d6b05213276d9463e30">tuya_ble_queue_t</a>
 </li>
 <li>rd_quad_io
 : <a class="el" href="union_d_b_i_c___v_a_l_i_d___c_m_d___type_def.html#a52bbbbaa4487857328daa7ecf8d03857">DBIC_VALID_CMD_TypeDef</a>
@@ -2379,6 +2376,9 @@ $(function() {
 <li>rdsr_dummy_length
 : <a class="el" href="union_d_b_i_c___a_u_t_o___l_e_n_g_t_h___type_def.html#a5dab9dfea4b70f584305003a2d5c173c">DBIC_AUTO_LENGTH_TypeDef</a>
 </li>
+<li>re_charge_voltage
+: <a class="el" href="struct__charger__utils__config.html#ad2b7acc0a09715e87ac37a4ad8526471">_charger_utils_config</a>
+</li>
 <li>re_power_on
 : <a class="el" href="union___b_t_a_o_n___f_a_s_t__0x172___t_y_p_e.html#a46d2b20dd9a7a1a03340aa965f5ee0fd">_BTAON_FAST_0x172_TYPE</a>
 </li>
@@ -2404,10 +2404,11 @@ $(function() {
 : <a class="el" href="struct_t___b_a_s_s___c_l_i_e_n_t___b_r_s___d_a_t_a.html#acbde1d5ac87a188aa234e14d8b7c7069">T_BASS_CLIENT_BRS_DATA</a>
 </li>
 <li>READ_CNT
-: <a class="el" href="struct_i2_s___type_def.html#ae121cea90bdc5ee01ffdd72b280680e2">I2S_TypeDef</a>
+: <a class="el" href="struct___x3_d___i2_s___type_def.html#ae121cea90bdc5ee01ffdd72b280680e2">_X3D_I2S_TypeDef</a>
+, <a class="el" href="struct___x3_e___i2_s___type_def.html#ae121cea90bdc5ee01ffdd72b280680e2">_X3E_I2S_TypeDef</a>
 </li>
 <li>read_data
-: <a class="el" href="group___a_m_s___c_l_i_e_n_t.html#ga22b890fafbd72bf8835ba3f8de2a1a29">T_AMS_CB_CONTENT</a>
+: <a class="el" href="union_t___a_m_s___c_b___c_o_n_t_e_n_t.html#a22b890fafbd72bf8835ba3f8de2a1a29">T_AMS_CB_CONTENT</a>
 </li>
 <li>READ_DUAL_ADDR_DATA
 : <a class="el" href="struct_l_c_d_c___d_b_i_c___type_def.html#a08f4b0a238844cbce95802ec6a502a56">LCDC_DBIC_TypeDef</a>
@@ -2426,9 +2427,6 @@ $(function() {
 </li>
 <li>read_len
 : <a class="el" href="struct_t___r_e_a_d___m_u_l_t_i___d_a_t_a.html#a76a0e59d0de1933103aca6901045926a">T_READ_MULTI_DATA</a>
-</li>
-<li>Read_Matrix_Size
-: <a class="el" href="struct_p_p_e___input_layer___init___typedef.html#ad71a71ddf7e010c8216f0f8d1c61c5f9">PPE_InputLayer_Init_Typedef</a>
 </li>
 <li>read_multi_result_data
 : <a class="el" href="union_t___c_l_i_e_n_t___c_b___d_a_t_a.html#ad52fe3192a17f8f90b18eac40f410880">T_CLIENT_CB_DATA</a>
@@ -2627,10 +2625,14 @@ $(function() {
 : <a class="el" href="structtuya__ble__r__air__recv__packet.html#a4044cf327806e50336d8ca248e412af9">tuya_ble_r_air_recv_packet</a>
 </li>
 <li>recv_tws_addr
-: <a class="el" href="struct_r_a_n_d_o_m___a_d_d_r___m_g_r___e_v_t___d_a_t_a.html#ae5d33d7bc90bff05c564ca8948e93b15">RANDOM_ADDR_MGR_EVT_DATA</a>
+: <a class="el" href="struct_r_a_n_d_o_m___a_d_d_r___m_g_r___e_v_t___d_a_t_a.html#aed682680db95d82e96c965b0980497a4">RANDOM_ADDR_MGR_EVT_DATA</a>
+</li>
+<li>recved
+: <a class="el" href="struct_t___a_p_p___c_f_g___c_o_n_s_t.html#a7dab826120da05820cc32c7f0b16dcbf">T_APP_CFG_CONST</a>
 </li>
 <li>redial
 : <a class="el" href="union_a_p_p___t_e_l_e_p_h_o_n_y___h_i_d___i_n_p_u_t___r_e_p_o_r_t.html#ad51b57578d09afecf241ed309aab6932">APP_TELEPHONY_HID_INPUT_REPORT</a>
+, <a class="el" href="struct_t___t_e_l_e_p_h_o_n_y___h_i_d___i_n_p_u_t.html#a108479ff1196f0af055854002c1dc928">T_TELEPHONY_HID_INPUT</a>
 , <a class="el" href="union_t_e_l_e_p_h_o_n_y___h_i_d___i_n_p_u_t___r_e_p_o_r_t.html#ad51b57578d09afecf241ed309aab6932">TELEPHONY_HID_INPUT_REPORT</a>
 </li>
 <li>ref_saiyan_mode_en
@@ -2639,10 +2641,17 @@ $(function() {
 <li>ref_saiyan_mode_role
 : <a class="el" href="struct_t___e_n_g_a_g_e___c_f_g.html#a26501e8056f17ba546b23649ae1b2123">T_ENGAGE_CFG</a>
 </li>
-<li>reg
-: <a class="el" href="struct_aes.html#a97d45fb141a1491447ee6fa1c608746d">Aes</a>
-, <a class="el" href="struct_des3.html#ac0efd8e8da90a21e16ed1ee1c0541174">Des3</a>
-, <a class="el" href="struct_des.html#ac0efd8e8da90a21e16ed1ee1c0541174">Des</a>
+<li>refresh_line_addr_incr
+: <a class="el" href="union_j_d_i___d_a_t_a___w_r_i_t_t_e_n___v_e_r_t_i_c_a_l___type_def.html#adc1305ebeeaae6177f84fe09bd21ffa9">JDI_DATA_WRITTEN_VERTICAL_TypeDef</a>
+</li>
+<li>refresh_line_addr_incr_num
+: <a class="el" href="union_j_d_i___d_a_t_a___w_r_i_t_t_e_n___v_e_r_t_i_c_a_l___type_def.html#a96386ced9f7dd59c9b2fd134eead4792">JDI_DATA_WRITTEN_VERTICAL_TypeDef</a>
+</li>
+<li>refresh_line_num
+: <a class="el" href="union_j_d_i___d_a_t_a___w_r_i_t_t_e_n___v_e_r_t_i_c_a_l___type_def.html#a80d1f6815c3e5567dca887dbffce692c">JDI_DATA_WRITTEN_VERTICAL_TypeDef</a>
+</li>
+<li>refresh_start_line_addr
+: <a class="el" href="union_j_d_i___d_a_t_a___w_r_i_t_t_e_n___v_e_r_t_i_c_a_l___type_def.html#a31680a956688340c685d47c6030b2efa">JDI_DATA_WRITTEN_VERTICAL_TypeDef</a>
 </li>
 <li>REG0X_300k_DUMMY0
 : <a class="el" href="union___a_o_n___f_a_s_t___r_e_g0_x__300k___t_y_p_e.html#a76f56677f426e530a12cef5ab8eb00fe">_AON_FAST_REG0X_300k_TYPE</a>
@@ -3961,17 +3970,17 @@ $(function() {
 <li>REG_0x3A4
 : <a class="el" href="struct_s_y_s___b_l_k_c_t_r_l___type_def.html#ad22e4d9584a56c89cdd7387d96ab00fc">SYS_BLKCTRL_TypeDef</a>
 </li>
+<li>REG_0x40
+: <a class="el" href="struct_h_w___a_e_s___type_def.html#a2e1767917b991f39cfd134d5b5c40846">HW_AES_TypeDef</a>
+</li>
 <li>reg_0x40
 : <a class="el" href="struct_h_w___a_e_s___type_def.html#afa4ff1c4ce70b07c41fa0d4b6d30fcf7">HW_AES_TypeDef</a>
 </li>
-<li>REG_0x40
-: <a class="el" href="struct_h_w___a_e_s___type_def.html#ac8b063dffdfca2299884391c2c321056">HW_AES_TypeDef</a>
+<li>REG_0x44
+: <a class="el" href="struct_h_w___a_e_s___type_def.html#a6977ce022260e04da17014251c4956cd">HW_AES_TypeDef</a>
 </li>
 <li>reg_0x44
 : <a class="el" href="struct_h_w___a_e_s___type_def.html#a40b300ec66faff4165c6219596411629">HW_AES_TypeDef</a>
-</li>
-<li>REG_0x44
-: <a class="el" href="struct_h_w___a_e_s___type_def.html#a8e33c2c64728563a9b9e0e4804eb64d2">HW_AES_TypeDef</a>
 </li>
 <li>reg_0x48
 : <a class="el" href="struct_h_w___a_e_s___type_def.html#a3525deab0e7895a5d339244d3b2039e3">HW_AES_TypeDef</a>
@@ -4013,7 +4022,7 @@ $(function() {
 : <a class="el" href="struct_h_w___a_e_s___type_def.html#a60540613a8345f4f87ab2b00041c3899">HW_AES_TypeDef</a>
 </li>
 <li>REG_0x80
-: <a class="el" href="struct_h_w___a_e_s___type_def.html#aec37a8f0cf05fd79788ac26830955b58">HW_AES_TypeDef</a>
+: <a class="el" href="struct_h_w___a_e_s___type_def.html#aaa9e4e788c43d19326ebbe457c96387c">HW_AES_TypeDef</a>
 </li>
 <li>reg_0x80
 : <a class="el" href="struct_h_w___a_e_s___type_def.html#a976daeb3de99c4e562432ea804911573">HW_AES_TypeDef</a>
@@ -4022,7 +4031,7 @@ $(function() {
 : <a class="el" href="struct_h_w___a_e_s___type_def.html#af417010c111e60125ce4b9d056b67958">HW_AES_TypeDef</a>
 </li>
 <li>REG_0x84
-: <a class="el" href="struct_h_w___a_e_s___type_def.html#a8449db9cb10bc115f2b282655cf43547">HW_AES_TypeDef</a>
+: <a class="el" href="struct_h_w___a_e_s___type_def.html#a0a3ad6dc5a56ee2491e8a44ae475c8b5">HW_AES_TypeDef</a>
 </li>
 <li>reg_0x88
 : <a class="el" href="struct_h_w___a_e_s___type_def.html#ad2b6e368597e74a7b93851a736f6c542">HW_AES_TypeDef</a>
@@ -4030,11 +4039,11 @@ $(function() {
 <li>reg_0x8c
 : <a class="el" href="struct_h_w___a_e_s___type_def.html#a007f81c9cc2065c605cc76740045ee8c">HW_AES_TypeDef</a>
 </li>
-<li>REG_0xc0
-: <a class="el" href="struct_h_w___a_e_s___type_def.html#ae67cd7bb45e147081ce8f24db872099f">HW_AES_TypeDef</a>
-</li>
 <li>reg_0xc0
 : <a class="el" href="struct_h_w___a_e_s___type_def.html#a4262490f0f91049a456f0d7357f04a3c">HW_AES_TypeDef</a>
+</li>
+<li>REG_0xc0
+: <a class="el" href="struct_h_w___a_e_s___type_def.html#a796a81194eac4552f4296ec6f503e9dc">HW_AES_TypeDef</a>
 </li>
 <li>REG_194_w1o_B7toB0
 : <a class="el" href="union___a_o_n___f_a_s_t__0x184___t_y_p_e.html#a921fc80efdb561746f6bc4bc751975b7">_AON_FAST_0x184_TYPE</a>
@@ -4994,12 +5003,6 @@ $(function() {
 <li>reg_otp_wp_start_addr
 : <a class="el" href="struct_o_t_p___r_a_n_g___p_r_o_t_e_c_t___type_def.html#ae34a4d76117e4b1bad6df60d302f226c">OTP_RANG_PROTECT_TypeDef</a>
 </li>
-<li>REG_PAD_DUMMY0
-: <a class="el" href="group__x3e___p_i_n_m_u_x___exported___constants.html#ga5c186f2c77873d90c2a6744e6b5db086">_AON_FAST_REG_PAD_TYPE</a>
-</li>
-<li>REG_PAD_DUMMY1
-: <a class="el" href="group__x3e___p_i_n_m_u_x___exported___constants.html#ga80d56d5b56cca571e29c2cc0f338f145">_AON_FAST_REG_PAD_TYPE</a>
-</li>
 <li>REG_PAD_POWER_DOMAIN_32K_DUMMY1
 : <a class="el" href="union___a_o_n___f_a_s_t___r_e_g___p_a_d___p_o_w_e_r___d_o_m_a_i_n__32_k___t_y_p_e.html#a979fecf0ae9fdc5fbf09af5b6c1c876f">_AON_FAST_REG_PAD_POWER_DOMAIN_32K_TYPE</a>
 </li>
@@ -5857,7 +5860,6 @@ $(function() {
 </li>
 <li>release_date
 : <a class="el" href="union_p_p_e___r_e_g___r_e_l_e_a_s_e___d_a_t_e___type_def.html#ae4512f2ac825e3c54dc713f0c33805e1">PPE_REG_RELEASE_DATE_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___r_e_l_e_a_s_e___d_a_t_e___type_def.html#a8acf64080ff0a827d042b44c0ab0bc82">PPEV2_REG_RELEASE_DATE_TypeDef</a>
 </li>
 <li>release_ver
 : <a class="el" href="uniont__release__ver.html#a545b26ad5aea477f81f19c8853fa3e67">t_release_ver</a>
@@ -5873,7 +5875,6 @@ $(function() {
 </li>
 <li>reload_en
 : <a class="el" href="union_p_p_e___r_e_g___l_d___c_f_g___type_def.html#a35eb3959cfd3342d22ab8fe04de38fce">PPE_REG_LD_CFG_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_d___c_f_g___type_def.html#a6ff44a473d2307ea21e99d3057e12c58">PPEV2_REG_LD_CFG_TypeDef</a>
 </li>
 <li>RELOAD_SRC
 : <a class="el" href="union_l_c_d_c___d_m_a___c_f_g___l_o_wx___type_def.html#a7be85f2349e779bf407b0191978292fe">LCDC_DMA_CFG_LOWx_TypeDef</a>
@@ -5882,6 +5883,12 @@ $(function() {
 : <a class="el" href="structt__bt__rfc__conn__cmpl.html#a86476aa05b90c9b5cc98d38061fd23da">t_bt_rfc_conn_cmpl</a>
 , <a class="el" href="structt__bt__rfc__credit__info.html#a86476aa05b90c9b5cc98d38061fd23da">t_bt_rfc_credit_info</a>
 , <a class="el" href="structt__bt__rfc__data__ind.html#a86476aa05b90c9b5cc98d38061fd23da">t_bt_rfc_data_ind</a>
+</li>
+<li>remain_lea
+: <a class="el" href="struct_t___l_i_n_k_b_a_c_k___a_c_t_i_v_e___n_o_d_e.html#a60196e4a3c55fe51901a493032c9c35d">T_LINKBACK_ACTIVE_NODE</a>
+</li>
+<li>remain_len
+: <a class="el" href="struct_t___c_h_a_t_g_p_t___t_r_a_n_s___s_e_p_a_r_a_t_e.html#a788f04e75f5a95db0cfe69fb0bdd202f">T_CHATGPT_TRANS_SEPARATE</a>
 </li>
 <li>remain_profs
 : <a class="el" href="struct_t___l_i_n_k_b_a_c_k___a_c_t_i_v_e___n_o_d_e.html#a123928f2bdc00e8e336270ffaa2a0df7">T_LINKBACK_ACTIVE_NODE</a>
@@ -5896,12 +5903,15 @@ $(function() {
 : <a class="el" href="structt__tuya__ota__rws__mgr.html#ad78e9d09e9d7e813b7588d33452e8825">t_tuya_ota_rws_mgr</a>
 </li>
 <li>remote_addr
-: <a class="el" href="struct_t___b_t___b_o_n_d___m_o_d_i_f_y.html#a17acea8c4a5544fcba6010c065df1bc7">T_BT_BOND_MODIFY</a>
+: <a class="el" href="struct_t___a_p_p___b_t___p_a_n___d_e_m_o___a_p_p___d_b.html#a17acea8c4a5544fcba6010c065df1bc7">T_APP_BT_PAN_DEMO_APP_DB</a>
+, <a class="el" href="struct_t___b_t___b_o_n_d___m_o_d_i_f_y.html#a17acea8c4a5544fcba6010c065df1bc7">T_BT_BOND_MODIFY</a>
+, <a class="el" href="struct_t___b_t___d_i_r_e_c_t___g_a_t_t___s_e_r_v_e_r___s_e_r_v_i_c_e___g_e_t___a_l_l_o_w___i_n_f_o.html#a17acea8c4a5544fcba6010c065df1bc7">T_BT_DIRECT_GATT_SERVER_SERVICE_GET_ALLOW_INFO</a>
 , <a class="el" href="struct_t___g_a_p___v_e_n_d_o_r___r_o_l_e___s_w_i_t_c_h.html#a17acea8c4a5544fcba6010c065df1bc7">T_GAP_VENDOR_ROLE_SWITCH</a>
 , <a class="el" href="struct_t___o_t_a___s_r_v___c_h_a_n_g_e___i_n_f_o.html#a17acea8c4a5544fcba6010c065df1bc7">T_OTA_SRV_CHANGE_INFO</a>
 </li>
 <li>remote_addr_type
-: <a class="el" href="struct_t___g_a_p___a_c_l___s_t_a_t_u_s___i_n_f_o.html#abf0f809db5a1320edc0a254e5e7655b0">T_GAP_ACL_STATUS_INFO</a>
+: <a class="el" href="struct_t___b_t___d_i_r_e_c_t___g_a_t_t___s_e_r_v_e_r___s_e_r_v_i_c_e___g_e_t___a_l_l_o_w___i_n_f_o.html#a3be2f0cf69152fdd0f962da76e4d929b">T_BT_DIRECT_GATT_SERVER_SERVICE_GET_ALLOW_INFO</a>
+, <a class="el" href="struct_t___g_a_p___a_c_l___s_t_a_t_u_s___i_n_f_o.html#abf0f809db5a1320edc0a254e5e7655b0">T_GAP_ACL_STATUS_INFO</a>
 , <a class="el" href="struct_t___g_a_p___a_c_l___s_t_a_t_u_s___p_a_r_a_m___r_e_s_o_l_v_e.html#abf0f809db5a1320edc0a254e5e7655b0">T_GAP_ACL_STATUS_PARAM_RESOLVE</a>
 , <a class="el" href="struct_t___g_a_p___k_e_y_p_r_e_s_s___n_o_t_i_f___i_n_f_o.html#abf0f809db5a1320edc0a254e5e7655b0">T_GAP_KEYPRESS_NOTIF_INFO</a>
 , <a class="el" href="struct_t___g_a_p___k_e_y_p_r_e_s_s___n_o_t_i_f___r_s_p.html#abf0f809db5a1320edc0a254e5e7655b0">T_GAP_KEYPRESS_NOTIF_RSP</a>
@@ -5911,19 +5921,19 @@ $(function() {
 , <a class="el" href="struct_t___g_a_p___u_s_e_r___p_a_s_s_k_e_y___r_e_q___i_n_d.html#abf0f809db5a1320edc0a254e5e7655b0">T_GAP_USER_PASSKEY_REQ_IND</a>
 , <a class="el" href="struct_t___g_a_t_t___s_e_r_v_e_r___s_e_r_v_i_c_e___c_h_a_n_g_e___g_e_t___s_e_r_v_i_c_e___c_h_a_n_g_e___s_t_a_t_e___i_n_d.html#abf0f809db5a1320edc0a254e5e7655b0">T_GATT_SERVER_SERVICE_CHANGE_GET_SERVICE_CHANGE_STATE_IND</a>
 , <a class="el" href="struct_t___g_a_t_t___s_e_r_v_e_r___s_e_r_v_i_c_e___c_h_a_n_g_e___s_e_t___s_e_r_v_i_c_e___c_h_a_n_g_e___s_t_a_t_e___i_n_d.html#abf0f809db5a1320edc0a254e5e7655b0">T_GATT_SERVER_SERVICE_CHANGE_SET_SERVICE_CHANGE_STATE_IND</a>
-, <a class="el" href="group___g_a_p___b_o_n_d___manager.html#gabf0f809db5a1320edc0a254e5e7655b0">T_GATT_SERVER_STORE_IND</a>
-, <a class="el" href="group___g_a_p___b_o_n_d___manager.html#gabf0f809db5a1320edc0a254e5e7655b0">T_GET_REMOTE_CLIENT_SUPPORTED_FEATURES_IND</a>
-, <a class="el" href="group___g_a_p___b_o_n_d___manager.html#gabf0f809db5a1320edc0a254e5e7655b0">T_LE_ACL_STATUS_INFO</a>
-, <a class="el" href="group___g_a_p___b_o_n_d___manager.html#gabf0f809db5a1320edc0a254e5e7655b0">T_LE_ACL_STATUS_PARAM_RESOLVE</a>
-, <a class="el" href="group___g_a_p___b_o_n_d___manager.html#gabf0f809db5a1320edc0a254e5e7655b0">T_LE_AUTHEN_KEY_REQ_IND</a>
-, <a class="el" href="group___g_a_p___b_o_n_d___manager.html#gabf0f809db5a1320edc0a254e5e7655b0">T_LE_AUTHEN_RESULT_IND</a>
+, <a class="el" href="struct_t___g_a_t_t___s_e_r_v_e_r___s_t_o_r_e___i_n_d.html#abf0f809db5a1320edc0a254e5e7655b0">T_GATT_SERVER_STORE_IND</a>
+, <a class="el" href="struct_t___g_e_t___r_e_m_o_t_e___c_l_i_e_n_t___s_u_p_p_o_r_t_e_d___f_e_a_t_u_r_e_s___i_n_d.html#abf0f809db5a1320edc0a254e5e7655b0">T_GET_REMOTE_CLIENT_SUPPORTED_FEATURES_IND</a>
+, <a class="el" href="struct_t___l_e___a_c_l___s_t_a_t_u_s___i_n_f_o.html#abf0f809db5a1320edc0a254e5e7655b0">T_LE_ACL_STATUS_INFO</a>
+, <a class="el" href="struct_t___l_e___a_c_l___s_t_a_t_u_s___p_a_r_a_m___r_e_s_o_l_v_e.html#abf0f809db5a1320edc0a254e5e7655b0">T_LE_ACL_STATUS_PARAM_RESOLVE</a>
+, <a class="el" href="struct_t___l_e___a_u_t_h_e_n___k_e_y___r_e_q___i_n_d.html#abf0f809db5a1320edc0a254e5e7655b0">T_LE_AUTHEN_KEY_REQ_IND</a>
+, <a class="el" href="struct_t___l_e___a_u_t_h_e_n___r_e_s_u_l_t___i_n_d.html#abf0f809db5a1320edc0a254e5e7655b0">T_LE_AUTHEN_RESULT_IND</a>
 , <a class="el" href="struct_t___l_e___b_o_n_d___k_e_y___r_e_q.html#abf0f809db5a1320edc0a254e5e7655b0">T_LE_BOND_KEY_REQ</a>
 , <a class="el" href="struct_t___l_e___c_r_e_a_t_e___c_o_n_n___i_n_d.html#abf0f809db5a1320edc0a254e5e7655b0">T_LE_CREATE_CONN_IND</a>
 , <a class="el" href="struct_t___l_e___d_i_r_e_c_t___a_d_v___i_n_f_o.html#abf0f809db5a1320edc0a254e5e7655b0">T_LE_DIRECT_ADV_INFO</a>
 , <a class="el" href="struct_t___l_e___s_c_a_n___i_n_f_o.html#abf0f809db5a1320edc0a254e5e7655b0">T_LE_SCAN_INFO</a>
-, <a class="el" href="group___g_a_p___b_o_n_d___manager.html#gabf0f809db5a1320edc0a254e5e7655b0">T_SET_CCCD_DATA_PENDING_INFO</a>
-, <a class="el" href="group___g_a_p___b_o_n_d___manager.html#gabf0f809db5a1320edc0a254e5e7655b0">T_SET_REMOTE_CLIENT_SUPPORTED_FEATURES_INFO</a>
-, <a class="el" href="group___g_a_p___b_o_n_d___manager.html#gabf0f809db5a1320edc0a254e5e7655b0">T_SIGN_COUNTER_RESULT_INFO</a>
+, <a class="el" href="struct_t___s_e_t___c_c_c_d___d_a_t_a___p_e_n_d_i_n_g___i_n_f_o.html#abf0f809db5a1320edc0a254e5e7655b0">T_SET_CCCD_DATA_PENDING_INFO</a>
+, <a class="el" href="struct_t___s_e_t___r_e_m_o_t_e___c_l_i_e_n_t___s_u_p_p_o_r_t_e_d___f_e_a_t_u_r_e_s___i_n_f_o.html#abf0f809db5a1320edc0a254e5e7655b0">T_SET_REMOTE_CLIENT_SUPPORTED_FEATURES_INFO</a>
+, <a class="el" href="struct_t___s_i_g_n___c_o_u_n_t_e_r___r_e_s_u_l_t___i_n_f_o.html#abf0f809db5a1320edc0a254e5e7655b0">T_SIGN_COUNTER_RESULT_INFO</a>
 </li>
 <li>remote_apt_sub_volume_out_level
 : <a class="el" href="struct_t___a_p_p___d_b.html#aecf5f771702fbccd0736e8cb681a8053">T_APP_DB</a>
@@ -6039,6 +6049,7 @@ $(function() {
 <li>remote_hfp_brsf_capability
 : <a class="el" href="struct_t___a_p_p___b_r___l_i_n_k.html#a14666205db95bfee7d6b2f37f467dff1">T_APP_BR_LINK</a>
 , <a class="el" href="structt__app__br__link.html#a14666205db95bfee7d6b2f37f467dff1">t_app_br_link</a>
+, <a class="el" href="struct_t___b_p___r_o_l_e_s_w_a_p___l_i_n_k.html#a14666205db95bfee7d6b2f37f467dff1">T_BP_ROLESWAP_LINK</a>
 </li>
 <li>remote_identity_addr
 : <a class="el" href="struct_t___l_e___b_o_n_d___e_n_t_r_y.html#a566790ff87615402c7343d3055275e3e">T_LE_BOND_ENTRY</a>
@@ -6059,6 +6070,9 @@ $(function() {
 <li>remote_is_dongle
 : <a class="el" href="struct_t___a_p_p___d_b.html#add2ad2bcc1338d9e647512d708d3837a">T_APP_DB</a>
 , <a class="el" href="struct_t___r_o_l_e_s_w_a_p___a_p_p___d_b.html#add2ad2bcc1338d9e647512d708d3837a">T_ROLESWAP_APP_DB</a>
+</li>
+<li>remote_le_acl_interval
+: <a class="el" href="struct_t___a_p_p___d_b.html#a1f28187978276d6afa447bcc84aeb9bd">T_APP_DB</a>
 </li>
 <li>remote_level
 : <a class="el" href="group___a_p_p___c_f_g.html#gabf6177cb1fb55abed345f72ac8dcdf69">T_APP_CFG_NV</a>
@@ -6122,7 +6136,7 @@ $(function() {
 </li>
 <li>remote_sign_count
 : <a class="el" href="struct_t___l_e___g_a_t_t___s_i_g_n_e_d___s_t_a_t_u_s___i_n_f_o.html#a4f556733da99eb5c6a59af256745130e">T_LE_GATT_SIGNED_STATUS_INFO</a>
-, <a class="el" href="group___g_a_p___b_o_n_d___manager.html#ga4f556733da99eb5c6a59af256745130e">T_SIGN_COUNTER_RESULT_INFO</a>
+, <a class="el" href="struct_t___s_i_g_n___c_o_u_n_t_e_r___r_e_s_u_l_t___i_n_f_o.html#a4f556733da99eb5c6a59af256745130e">T_SIGN_COUNTER_RESULT_INFO</a>
 </li>
 <li>remote_spk_channel
 : <a class="el" href="struct_t___a_p_p___d_b.html#a877bcd52d1a9ed2e89e21fd5def90d79">T_APP_DB</a>
@@ -6146,12 +6160,13 @@ $(function() {
 : <a class="el" href="structt__audio__path.html#aceb73033d2145fdf9bb5c7dafd68f60b">t_audio_path</a>
 </li>
 <li>report
-: <a class="el" href="union_a_p_p___t_e_l_e_p_h_o_n_y___h_i_d___i_n_p_u_t___r_e_p_o_r_t.html#a788d6666ecbf3d8a25afca4786b75f6c">APP_TELEPHONY_HID_INPUT_REPORT</a>
-, <a class="el" href="union_a_p_p___t_e_l_e_p_h_o_n_y___h_i_d___o_u_t_p_u_t___r_e_p_o_r_t.html#a0e05bce9cdaa17f4419987f9898050b1">APP_TELEPHONY_HID_OUTPUT_REPORT</a>
+: <a class="el" href="union_a_p_p___t_e_l_e_p_h_o_n_y___h_i_d___i_n_p_u_t___r_e_p_o_r_t.html#a4974df9bc91a2e8c456c5b596b9797d5">APP_TELEPHONY_HID_INPUT_REPORT</a>
+, <a class="el" href="union_a_p_p___t_e_l_e_p_h_o_n_y___h_i_d___o_u_t_p_u_t___r_e_p_o_r_t.html#ae2907414cef6a04cd24d893a8540551c">APP_TELEPHONY_HID_OUTPUT_REPORT</a>
 , <a class="el" href="union_b_l_e___s_c_a_n___e_v_t___d_a_t_a.html#aab62c936f20b00b02f5f0e992dd01823">BLE_SCAN_EVT_DATA</a>
+, <a class="el" href="structt__bt__hid__parser.html#a73dec6cce1f34dfa8188a8cec17adb7b">t_bt_hid_parser</a>
 , <a class="el" href="union_t___h_i_d___w_r_i_t_e___p_a_r_a_m_e_t_e_r.html#a4842d0f929722229e4ddd984fb3c7149">T_HID_WRITE_PARAMETER</a>
-, <a class="el" href="union_t_e_l_e_p_h_o_n_y___h_i_d___i_n_p_u_t___r_e_p_o_r_t.html#a931bd723a579a5b1da3bd1696e0e8252">TELEPHONY_HID_INPUT_REPORT</a>
-, <a class="el" href="union_t_e_l_e_p_h_o_n_y___h_i_d___o_u_t_p_u_t___r_e_p_o_r_t.html#a69da1ebc496530dfebe5d054b3124635">TELEPHONY_HID_OUTPUT_REPORT</a>
+, <a class="el" href="union_t_e_l_e_p_h_o_n_y___h_i_d___i_n_p_u_t___r_e_p_o_r_t.html#a00e22ab35af38087cc38c2ef5add3b8f">TELEPHONY_HID_INPUT_REPORT</a>
+, <a class="el" href="union_t_e_l_e_p_h_o_n_y___h_i_d___o_u_t_p_u_t___r_e_p_o_r_t.html#aaf75a5522c4854692bcb7f949a2dddc1">TELEPHONY_HID_OUTPUT_REPORT</a>
 </li>
 <li>report_action
 : <a class="el" href="struct_t___a_p_p___t_e_a_m_s___h_i_d___c_l_a_s_s_i_c___d_a_t_a.html#a9d0d3bf7ce5249475c12ba53bb04d5fc">T_APP_TEAMS_HID_CLASSIC_DATA</a>
@@ -6161,7 +6176,7 @@ $(function() {
 : <a class="el" href="struct_t___a_p_p___c_f_g___n_v.html#a0c6b908a0ed0886a2964c47058e6a1a2">T_APP_CFG_NV</a>
 </li>
 <li>report_data
-: <a class="el" href="union_t___h_i_d___w_r_i_t_e___p_a_r_a_m_e_t_e_r.html#a95be7fb6066a0ab4a40c384be1c0242c">T_HID_WRITE_PARAMETER</a>
+: <a class="el" href="union_t___h_i_d___w_r_i_t_e___p_a_r_a_m_e_t_e_r.html#ac0fcf81217a5d5e931dd7fbaa4983118">T_HID_WRITE_PARAMETER</a>
 </li>
 <li>report_data_len
 : <a class="el" href="struct_t___r_e_a_l_c_a_s_t___s_c_a_n___a_d_v___i_n_f_o.html#acfeb615623b8979ac7eb67416792fd6e">T_REALCAST_SCAN_ADV_INFO</a>
@@ -6169,18 +6184,24 @@ $(function() {
 <li>report_id
 : <a class="el" href="group___a_p_p___h_f_p___a_g.html#ga725a13d8d43f65c0f5e8adc271f71573">hids_report_t</a>
 , <a class="el" href="struct_t___a_p_p___t_e_a_m_s___h_i_d___c_l_a_s_s_i_c___d_a_t_a.html#a725a13d8d43f65c0f5e8adc271f71573">T_APP_TEAMS_HID_CLASSIC_DATA</a>
-, <a class="el" href="structt__bt__event__param__hid__device__control__data__ind.html#a385bc0e763dd5580a2d9352f733a00d6">t_bt_event_param_hid_device_control_data_ind</a>
-, <a class="el" href="structt__bt__event__param__hid__device__get__report__ind.html#a385bc0e763dd5580a2d9352f733a00d6">t_bt_event_param_hid_device_get_report_ind</a>
-, <a class="el" href="structt__bt__event__param__hid__device__interrupt__data__ind.html#a385bc0e763dd5580a2d9352f733a00d6">t_bt_event_param_hid_device_interrupt_data_ind</a>
-, <a class="el" href="structt__bt__event__param__hid__device__set__report__ind.html#a385bc0e763dd5580a2d9352f733a00d6">t_bt_event_param_hid_device_set_report_ind</a>
+, <a class="el" href="structt__bt__event__param__hid__device__control__data__ind.html#a725a13d8d43f65c0f5e8adc271f71573">t_bt_event_param_hid_device_control_data_ind</a>
+, <a class="el" href="structt__bt__event__param__hid__device__get__report__ind.html#a725a13d8d43f65c0f5e8adc271f71573">t_bt_event_param_hid_device_get_report_ind</a>
+, <a class="el" href="structt__bt__event__param__hid__device__interrupt__data__ind.html#a725a13d8d43f65c0f5e8adc271f71573">t_bt_event_param_hid_device_interrupt_data_ind</a>
+, <a class="el" href="structt__bt__event__param__hid__device__set__report__ind.html#a725a13d8d43f65c0f5e8adc271f71573">t_bt_event_param_hid_device_set_report_ind</a>
 , <a class="el" href="structt__bt__event__param__hid__host__get__report__rsp.html#a725a13d8d43f65c0f5e8adc271f71573">t_bt_event_param_hid_host_get_report_rsp</a>
-, <a class="el" href="structt__bt__event__param__hid__host__interrupt__data__ind.html#a385bc0e763dd5580a2d9352f733a00d6">t_bt_event_param_hid_host_interrupt_data_ind</a>
+, <a class="el" href="structt__bt__event__param__hid__host__interrupt__data__ind.html#a725a13d8d43f65c0f5e8adc271f71573">t_bt_event_param_hid_host_interrupt_data_ind</a>
 </li>
 <li>report_ids
 : <a class="el" href="struct__usb__hid__driver__report__desc__parser.html#a834695e97aef4568ce580888c66a3de6">_usb_hid_driver_report_desc_parser</a>
 </li>
+<li>report_len
+: <a class="el" href="structt__bt__hid__parser.html#abfc44665263c031e3cce25516735ec11">t_bt_hid_parser</a>
+</li>
 <li>report_phone
 : <a class="el" href="structt__apt__volume__relay__msg.html#a98c3f2550491a7c80926d9ab0ad41d1d">t_apt_volume_relay_msg</a>
+</li>
+<li>report_pos_in_bit
+: <a class="el" href="structt__bt__hid__parser.html#a070a0918caf5e1ecf62635663ddc6550">t_bt_hid_parser</a>
 </li>
 <li>report_size
 : <a class="el" href="struct_t___a_p_p___t_e_a_m_s___h_i_d___c_l_a_s_s_i_c___d_a_t_a.html#a2e8995260dea77984e399d6fb0d26a68">T_APP_TEAMS_HID_CLASSIC_DATA</a>
@@ -6203,6 +6224,7 @@ $(function() {
 , <a class="el" href="structt__bt__event__param__hid__device__set__report__ind.html#a082cbd2ab34b2f8c1afaf98b3b19fac0">t_bt_event_param_hid_device_set_report_ind</a>
 , <a class="el" href="structt__bt__event__param__hid__host__get__report__rsp.html#a082cbd2ab34b2f8c1afaf98b3b19fac0">t_bt_event_param_hid_host_get_report_rsp</a>
 , <a class="el" href="structt__bt__event__param__hid__host__interrupt__data__ind.html#a082cbd2ab34b2f8c1afaf98b3b19fac0">t_bt_event_param_hid_host_interrupt_data_ind</a>
+, <a class="el" href="structt__bt__hid__parser.html#ad556a191e7b07a2d1c9b71449dc7bcc8">t_bt_hid_parser</a>
 , <a class="el" href="structt__cfu__struct.html#a082cbd2ab34b2f8c1afaf98b3b19fac0">t_cfu_struct</a>
 </li>
 <li>report_uart_event_only_once
@@ -6236,6 +6258,9 @@ $(function() {
 <li>reportLen
 : <a class="el" href="union_t___h_i_d___w_r_i_t_e___p_a_r_a_m_e_t_e_r.html#aec38712aa2fc88a9ab469cd4ed7f10a9">T_HID_WRITE_PARAMETER</a>
 </li>
+<li>req_packed_format
+: <a class="el" href="struct_j_p_u___d_e_c___c_f_g.html#a99b7d8c1836e410aa84d95bb0a72ef9b">JPU_DEC_CFG</a>
+</li>
 <li>req_rsp
 : <a class="el" href="struct____attribute____.html#a3e83c63387f9fc843a213f383678f799">__attribute__</a>
 </li>
@@ -6248,6 +6273,9 @@ $(function() {
 <li>requested_opcode
 : <a class="el" href="struct_t___c_c_p___c_l_i_e_n_t___c_a_l_l___c_p___n_o_t_i_f_y.html#aee0a4b6020513ae10d88cd5f9ed4abfe">T_CCP_CLIENT_CALL_CP_NOTIFY</a>
 , <a class="el" href="struct_t___m_c_p___c_l_i_e_n_t___m_e_d_i_a___c_p___n_o_t_i_f_y.html#aee0a4b6020513ae10d88cd5f9ed4abfe">T_MCP_CLIENT_MEDIA_CP_NOTIFY</a>
+</li>
+<li>required_usages
+: <a class="el" href="structt__bt__hid__parser.html#a3be8310e2a0122f7860214906474a61f">t_bt_hid_parser</a>
 </li>
 <li>res
 : <a class="el" href="unionctrl__attr.html#a02c5331ad595bf249e579d0b17c2ed32">ctrl_attr</a>
@@ -6264,12 +6292,6 @@ $(function() {
 <li>res_l_en_set
 : <a class="el" href="union_s_e_g_c_o_m___l_c_d___f_c_r___type_def.html#aa37a0d9a090b19996a5cbde467bc6a78">SEGCOM_LCD_FCR_TypeDef</a>
 </li>
-<li>reseed_counter
-: <a class="el" href="structmbedtls__ctr__drbg__context.html#a76b42f79e2b87fdedce8fe5d111cb6e4">mbedtls_ctr_drbg_context</a>
-</li>
-<li>reseed_interval
-: <a class="el" href="structmbedtls__ctr__drbg__context.html#acddf82eab45c3e3156d45beedf9141a4">mbedtls_ctr_drbg_context</a>
-</li>
 <li>reserve
 : <a class="el" href="structt__app__dsp__extensible__brightness.html#a20ea6fe2cf4d004446da1d0ce4be5848">t_app_dsp_extensible_brightness</a>
 , <a class="el" href="structtuya__ble__device__unbind__t.html#ac6c17ab632a9c78bc9fa846e9baeea7b">tuya_ble_device_unbind_t</a>
@@ -6282,8 +6304,7 @@ $(function() {
 : <a class="el" href="structtuya__ble__device__param__t.html#aac830b502a199b4b7f2a0c0d59feaa9c">tuya_ble_device_param_t</a>
 </li>
 <li>reserved
-: <a class="el" href="struct____blake2b__param.html#aa0e91778bf142b6a29f8e13697f08671">__blake2b_param</a>
-, <a class="el" href="union___a_o_n___f_a_s_t___b_t___a_n_a_p_a_r___o_s_c40_m___t_y_p_e.html#a5a6ed8c04a3db86066924b1a1bf4dad3">_AON_FAST_BT_ANAPAR_OSC40M_TYPE</a>
+: <a class="el" href="union___a_o_n___f_a_s_t___b_t___a_n_a_p_a_r___o_s_c40_m___t_y_p_e.html#a5a6ed8c04a3db86066924b1a1bf4dad3">_AON_FAST_BT_ANAPAR_OSC40M_TYPE</a>
 , <a class="el" href="union___a_o_n___f_a_s_t___m_e_m___v_s_e_l___s_y_n_c___e_n___m_i_s_c___t_y_p_e.html#a5a6ed8c04a3db86066924b1a1bf4dad3">_AON_FAST_MEM_VSEL_SYNC_EN_MISC_TYPE</a>
 , <a class="el" href="union___a_o_n___f_a_s_t___r_e_g__0x588___t_y_p_e.html#a5a6ed8c04a3db86066924b1a1bf4dad3">_AON_FAST_REG_0x588_TYPE</a>
 , <a class="el" href="union___a_o_n___f_a_s_t___r_e_g__0x5_e_a___t_y_p_e.html#a5a6ed8c04a3db86066924b1a1bf4dad3">_AON_FAST_REG_0x5EA_TYPE</a>
@@ -6405,15 +6426,6 @@ $(function() {
 , <a class="el" href="union_p_p_e___r_e_g___l_y_rx___k_e_y___m_a_x___type_def.html#a6f870da055446e379ee49ff6b6a26d6b">PPE_REG_LYRx_KEY_MAX_TypeDef</a>
 , <a class="el" href="union_p_p_e___r_e_g___l_y_rx___k_e_y___m_i_n___type_def.html#a6f870da055446e379ee49ff6b6a26d6b">PPE_REG_LYRx_KEY_MIN_TypeDef</a>
 , <a class="el" href="union_p_p_e___r_e_g___l_y_rx___p_i_c___c_f_g___type_def.html#a6f870da055446e379ee49ff6b6a26d6b">PPE_REG_LYRx_PIC_CFG_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___g_l_b___s_t_a_t_u_s___type_def.html#a0d8eb623df7418922d33f9c580e92934">PPEV2_REG_GLB_STATUS_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___i_n_t_r___c_l_r___type_def.html#a0d8eb623df7418922d33f9c580e92934">PPEV2_REG_INTR_CLR_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___i_n_t_r___m_a_s_k___type_def.html#a0d8eb623df7418922d33f9c580e92934">PPEV2_REG_INTR_MASK_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___i_n_t_r___r_a_w___type_def.html#a0d8eb623df7418922d33f9c580e92934">PPEV2_REG_INTR_RAW_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___i_n_t_r___s_t_a_t_u_s___type_def.html#a0d8eb623df7418922d33f9c580e92934">PPEV2_REG_INTR_STATUS_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_d___c_f_g___type_def.html#a0d8eb623df7418922d33f9c580e92934">PPEV2_REG_LD_CFG_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_l___c_f_g___type_def.html#a0d8eb623df7418922d33f9c580e92934">PPEV2_REG_LL_CFG_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_l_p___type_def.html#a0d8eb623df7418922d33f9c580e92934">PPEV2_REG_LLP_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_y_r___e_n_a_b_l_e___type_def.html#a0d8eb623df7418922d33f9c580e92934">PPEV2_REG_LYR_ENABLE_TypeDef</a>
 , <a class="el" href="struct_r_t_k___p_k_t___h_e_a_d_e_r.html#a5a6ed8c04a3db86066924b1a1bf4dad3">RTK_PKT_HEADER</a>
 , <a class="el" href="struct_s_u_b___i_m_g___h_e_a_d_e_r.html#aa43c4c21b173ada1b6b7568956f0d650">SUB_IMG_HEADER</a>
 , <a class="el" href="struct_s_y_s___b_l_k_c_t_r_l___type_def.html#a7bf40766b2370063448ccc7b72fdb985">SYS_BLKCTRL_TypeDef</a>
@@ -6437,11 +6449,15 @@ $(function() {
 </li>
 <li>Reserved0
 : <a class="el" href="union_f_w_u_p_d_a_t_e___c_o_n_t_e_n_t___r_e_s_p_o_n_s_e.html#a73ff723dd8fcfbedea722027486f62fa">FWUPDATE_CONTENT_RESPONSE</a>
-, <a class="el" href="struct_f_w_u_p_d_a_t_e___o_f_f_e_r___c_o_m_m_a_n_d.html#ada09753b1ff3dcdffa68f2efb935e9a1">FWUPDATE_OFFER_COMMAND</a>
 </li>
 <li>reserved0
 : <a class="el" href="struct_f_w_u_p_d_a_t_e___o_f_f_e_r___c_o_m_m_a_n_d.html#a41d97db724f4cb89bc3263f802c32493">FWUPDATE_OFFER_COMMAND</a>
-, <a class="el" href="struct_f_w_u_p_d_a_t_e___o_f_f_e_r___i_n_f_o___o_n_l_y___c_o_m_m_a_n_d.html#ad3ad0a13f360006e5a3e4aacd268702e">FWUPDATE_OFFER_INFO_ONLY_COMMAND</a>
+</li>
+<li>Reserved0
+: <a class="el" href="struct_f_w_u_p_d_a_t_e___o_f_f_e_r___c_o_m_m_a_n_d.html#ada09753b1ff3dcdffa68f2efb935e9a1">FWUPDATE_OFFER_COMMAND</a>
+</li>
+<li>reserved0
+: <a class="el" href="struct_f_w_u_p_d_a_t_e___o_f_f_e_r___i_n_f_o___o_n_l_y___c_o_m_m_a_n_d.html#a41d97db724f4cb89bc3263f802c32493">FWUPDATE_OFFER_INFO_ONLY_COMMAND</a>
 </li>
 <li>Reserved0
 : <a class="el" href="struct_f_w_u_p_d_a_t_e___o_f_f_e_r___r_e_s_p_o_n_s_e_1_1_hid_cfu_offer_response_1_1_cfu_offer_response.html#aa6d0bea93fc8f0e64d1f664d3ea01153">FWUPDATE_OFFER_RESPONSE::HidCfuOfferResponse::CfuOfferResponse</a>
@@ -6574,24 +6590,24 @@ $(function() {
 , <a class="el" href="union_d_b_i_c___r_x_f_l_r___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">DBIC_RXFLR_TypeDef</a>
 , <a class="el" href="union_d_b_i_c___r_x_f_t_l_r___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">DBIC_RXFTLR_TypeDef</a>
 , <a class="el" href="union_d_b_i_c___r_x_o_i_c_r___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">DBIC_RXOICR_TypeDef</a>
-, <a class="el" href="union_d_b_i_c___r_x_u_i_c_r___type_def.html#ac399c1cda6062d6014d5631c8b26c974">DBIC_RXUICR_TypeDef</a>
+, <a class="el" href="union_d_b_i_c___r_x_u_i_c_r___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">DBIC_RXUICR_TypeDef</a>
 , <a class="el" href="union_d_b_i_c___s_e_r___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">DBIC_SER_TypeDef</a>
 , <a class="el" href="union_d_b_i_c___s_r___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">DBIC_SR_TypeDef</a>
-, <a class="el" href="union_d_b_i_c___s_s_i_e_n_r___type_def.html#ac399c1cda6062d6014d5631c8b26c974">DBIC_SSIENR_TypeDef</a>
+, <a class="el" href="union_d_b_i_c___s_s_i_e_n_r___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">DBIC_SSIENR_TypeDef</a>
 , <a class="el" href="union_d_b_i_c___s_t___d_r___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">DBIC_ST_DR_TypeDef</a>
 , <a class="el" href="union_d_b_i_c___t_p_r1___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">DBIC_TPR1_TypeDef</a>
 , <a class="el" href="union_d_b_i_c___t_x___n_d_f___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">DBIC_TX_NDF_TypeDef</a>
-, <a class="el" href="union_d_b_i_c___t_x_f_l_r___type_def.html#ac399c1cda6062d6014d5631c8b26c974">DBIC_TXFLR_TypeDef</a>
-, <a class="el" href="union_d_b_i_c___t_x_f_t_l_r___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">DBIC_TXFTLR_TypeDef</a>
+, <a class="el" href="union_d_b_i_c___t_x_f_l_r___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">DBIC_TXFLR_TypeDef</a>
+, <a class="el" href="union_d_b_i_c___t_x_f_t_l_r___type_def.html#ac399c1cda6062d6014d5631c8b26c974">DBIC_TXFTLR_TypeDef</a>
 , <a class="el" href="union_d_b_i_c___t_x_o_i_c_r___type_def.html#ac399c1cda6062d6014d5631c8b26c974">DBIC_TXOICR_TypeDef</a>
 , <a class="el" href="union_d_b_i_c___u_s_e_r___l_e_n_g_t_h___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">DBIC_USER_LENGTH_TypeDef</a>
-, <a class="el" href="union_d_b_i_c___v_a_l_i_d___c_m_d___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">DBIC_VALID_CMD_TypeDef</a>
+, <a class="el" href="union_d_b_i_c___v_a_l_i_d___c_m_d___type_def.html#ac399c1cda6062d6014d5631c8b26c974">DBIC_VALID_CMD_TypeDef</a>
 , <a class="el" href="union_d_b_i_c___w_r_i_t_e___d_u_a_l___a_d_d_r___d_a_t_a___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">DBIC_WRITE_DUAL_ADDR_DATA_TypeDef</a>
 , <a class="el" href="union_d_b_i_c___w_r_i_t_e___d_u_a_l___d_a_t_a___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">DBIC_WRITE_DUAL_DATA_TypeDef</a>
 , <a class="el" href="union_d_b_i_c___w_r_i_t_e___e_n_a_b_l_e___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">DBIC_WRITE_ENABLE_TypeDef</a>
-, <a class="el" href="union_d_b_i_c___w_r_i_t_e___q_u_a_d___a_d_d_r___d_a_t_a___type_def.html#ac399c1cda6062d6014d5631c8b26c974">DBIC_WRITE_QUAD_ADDR_DATA_TypeDef</a>
-, <a class="el" href="union_d_b_i_c___w_r_i_t_e___q_u_a_d___d_a_t_a___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">DBIC_WRITE_QUAD_DATA_TypeDef</a>
-, <a class="el" href="union_d_b_i_c___w_r_i_t_e___s_i_n_g_l_e___type_def.html#ac399c1cda6062d6014d5631c8b26c974">DBIC_WRITE_SINGLE_TypeDef</a>
+, <a class="el" href="union_d_b_i_c___w_r_i_t_e___q_u_a_d___a_d_d_r___d_a_t_a___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">DBIC_WRITE_QUAD_ADDR_DATA_TypeDef</a>
+, <a class="el" href="union_d_b_i_c___w_r_i_t_e___q_u_a_d___d_a_t_a___type_def.html#ac399c1cda6062d6014d5631c8b26c974">DBIC_WRITE_QUAD_DATA_TypeDef</a>
+, <a class="el" href="union_d_b_i_c___w_r_i_t_e___s_i_n_g_l_e___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">DBIC_WRITE_SINGLE_TypeDef</a>
 , <a class="el" href="union_e_d_p_i___a_a_c_t_i_v_e___type_def.html#ac399c1cda6062d6014d5631c8b26c974">EDPI_AACTIVE_TypeDef</a>
 , <a class="el" href="union_e_d_p_i___a_b_a_c_k___p_o_r_c_h___type_def.html#ac399c1cda6062d6014d5631c8b26c974">EDPI_ABACK_PORCH_TypeDef</a>
 , <a class="el" href="union_e_d_p_i___c_m_d___c_t_l___type_def.html#ac399c1cda6062d6014d5631c8b26c974">EDPI_CMD_CTL_TypeDef</a>
@@ -6615,54 +6631,137 @@ $(function() {
 , <a class="el" href="union_e_d_p_i___t_o_t_a_l___type_def.html#ac399c1cda6062d6014d5631c8b26c974">EDPI_TOTAL_TypeDef</a>
 , <a class="el" href="union_e_d_p_i___v_i_d_e_o___c_t_l___type_def.html#ac399c1cda6062d6014d5631c8b26c974">EDPI_VIDEO_CTL_TypeDef</a>
 , <a class="el" href="union_i_d_u___c_t_l0___type_def.html#ac399c1cda6062d6014d5631c8b26c974">IDU_CTL0_TypeDef</a>
-, <a class="el" href="union_i_d_u___i_n_t___c_f_g__t.html#af1c0623c66cf0a734d99ea2cb7b48ad6">IDU_INT_CFG_t</a>
-, <a class="el" href="union_i_n_t___c_l_e_a_r___type_def.html#ac399c1cda6062d6014d5631c8b26c974">INT_CLEAR_TypeDef</a>
-, <a class="el" href="union_i_n_t___e_n_a_b_l_e___type_def.html#ac399c1cda6062d6014d5631c8b26c974">INT_ENABLE_TypeDef</a>
-, <a class="el" href="union_i_n_t___m_a_s_k___type_def.html#ac399c1cda6062d6014d5631c8b26c974">INT_MASK_TypeDef</a>
-, <a class="el" href="union_i_n_t___r_a_w___s_t_a_t_u_s___type_def.html#ac399c1cda6062d6014d5631c8b26c974">INT_RAW_STATUS_TypeDef</a>
-, <a class="el" href="union_i_n_t___s_t_a_t_u_s___type_def.html#ac399c1cda6062d6014d5631c8b26c974">INT_STATUS_TypeDef</a>
+, <a class="el" href="union_i_d_u___i_n_t___c_l_e_a_r___type_def.html#ac399c1cda6062d6014d5631c8b26c974">IDU_INT_CLEAR_TypeDef</a>
+, <a class="el" href="union_i_d_u___i_n_t___e_n_a_b_l_e___type_def.html#ac399c1cda6062d6014d5631c8b26c974">IDU_INT_ENABLE_TypeDef</a>
+, <a class="el" href="union_i_d_u___i_n_t___m_a_s_k___type_def.html#ac399c1cda6062d6014d5631c8b26c974">IDU_INT_MASK_TypeDef</a>
+, <a class="el" href="union_i_d_u___i_n_t___r_a_w___s_t_a_t_u_s___type_def.html#ac399c1cda6062d6014d5631c8b26c974">IDU_INT_RAW_STATUS_TypeDef</a>
+, <a class="el" href="union_i_d_u___i_n_t___s_t_a_t_u_s___type_def.html#ac399c1cda6062d6014d5631c8b26c974">IDU_INT_STATUS_TypeDef</a>
+, <a class="el" href="union_i_d_u___r_e_s_e_r_v_e_d1___type_def.html#ac399c1cda6062d6014d5631c8b26c974">IDU_RESERVED1_TypeDef</a>
+, <a class="el" href="union_i_d_u___r_x___f_i_f_o___d_m_a___t_h_r_e_s_h_o_l_d___type_def.html#ac399c1cda6062d6014d5631c8b26c974">IDU_RX_FIFO_DMA_THRESHOLD_TypeDef</a>
+, <a class="el" href="union_i_d_u___r_x___f_i_f_o___i_n_t___t_h_r_e_s_h_o_l_d___type_def.html#ac399c1cda6062d6014d5631c8b26c974">IDU_RX_FIFO_INT_THRESHOLD_TypeDef</a>
+, <a class="el" href="union_i_d_u___r_x___f_i_f_o___o_f_f_s_e_t___type_def.html#ac399c1cda6062d6014d5631c8b26c974">IDU_RX_FIFO_OFFSET_TypeDef</a>
+, <a class="el" href="union_i_d_u___t_x___f_i_f_o___d_m_a___t_h_r_e_s_h_o_l_d___type_def.html#ac399c1cda6062d6014d5631c8b26c974">IDU_TX_FIFO_DMA_THRESHOLD_TypeDef</a>
+, <a class="el" href="union_i_d_u___t_x___f_i_f_o___i_n_t___t_h_r_e_s_h_o_l_d___type_def.html#ac399c1cda6062d6014d5631c8b26c974">IDU_TX_FIFO_INT_THRESHOLD_TypeDef</a>
+, <a class="el" href="union_i_d_u___t_x___f_i_f_o___o_f_f_s_e_t___type_def.html#ac399c1cda6062d6014d5631c8b26c974">IDU_TX_FIFO_OFFSET_TypeDef</a>
+, <a class="el" href="union_j_d_i___c_t_l0___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">JDI_CTL0_TypeDef</a>
+, <a class="el" href="union_j_d_i___c_t_l1___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">JDI_CTL1_TypeDef</a>
+, <a class="el" href="union_j_d_i___d_a_t_a___t_r_a_n_s_f_e_r___d_u_m_m_y___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">JDI_DATA_TRANSFER_DUMMY_TypeDef</a>
+, <a class="el" href="union_j_d_i___d_a_t_a___w_r_i_t_t_e_n___h_o_r_i_z_o_n_t_a_l___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">JDI_DATA_WRITTEN_HORIZONTAL_TypeDef</a>
+, <a class="el" href="union_j_d_i___d_a_t_a___w_r_i_t_t_e_n___v_e_r_t_i_c_a_l___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">JDI_DATA_WRITTEN_VERTICAL_TypeDef</a>
+, <a class="el" href="union_j_d_i___i_n_t___c_l_e_a_r___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">JDI_INT_CLEAR_TypeDef</a>
+, <a class="el" href="union_j_d_i___i_n_t___e_n_a_b_l_e___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">JDI_INT_ENABLE_TypeDef</a>
+, <a class="el" href="union_j_d_i___i_n_t___m_a_s_k___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">JDI_INT_MASK_TypeDef</a>
+, <a class="el" href="union_j_d_i___i_n_t___r_a_w___s_t_a_t_u_s___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">JDI_INT_RAW_STATUS_TypeDef</a>
+, <a class="el" href="union_j_d_i___i_n_t___s_t_a_t_u_s___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">JDI_INT_STATUS_TypeDef</a>
+, <a class="el" href="union_j_d_i___m_o_d_e___s_e_l___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">JDI_MODE_SEL_TypeDef</a>
+, <a class="el" href="union_j_d_i___o_u_t_p_u_t___l_i_n_e___c_o_u_n_t_e_r___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">JDI_OUTPUT_LINE_COUNTER_TypeDef</a>
+, <a class="el" href="union_j_d_i___r_x___f_i_f_o___d_m_a___t_h_r_e_s_h_o_l_d___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">JDI_RX_FIFO_DMA_THRESHOLD_TypeDef</a>
+, <a class="el" href="union_j_d_i___r_x___f_i_f_o___i_n_t___t_h_r_e_s_h_o_l_d___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">JDI_RX_FIFO_INT_THRESHOLD_TypeDef</a>
+, <a class="el" href="union_j_d_i___r_x___f_i_f_o___o_f_f_s_e_t___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">JDI_RX_FIFO_OFFSET_TypeDef</a>
+, <a class="el" href="union_j_d_i___r_x___f_i_f_o___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">JDI_RX_FIFO_TypeDef</a>
+, <a class="el" href="union_j_d_i___t_x___f_i_f_o___d_m_a___t_h_r_e_s_h_o_l_d___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">JDI_TX_FIFO_DMA_THRESHOLD_TypeDef</a>
+, <a class="el" href="union_j_d_i___t_x___f_i_f_o___i_n_t___t_h_r_e_s_h_o_l_d___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">JDI_TX_FIFO_INT_THRESHOLD_TypeDef</a>
+, <a class="el" href="union_j_d_i___t_x___f_i_f_o___o_f_f_s_e_t___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">JDI_TX_FIFO_OFFSET_TypeDef</a>
+, <a class="el" href="union_j_d_i___t_x___f_i_f_o___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">JDI_TX_FIFO_TypeDef</a>
+, <a class="el" href="union_j_p_u___b_b_c___b_u_s_y___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_BBC_BUSY_TypeDef</a>
+, <a class="el" href="union_j_p_u___b_b_c___c_o_m_m_a_n_d___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_BBC_COMMAND_TypeDef</a>
+, <a class="el" href="union_j_p_u___b_b_c___c_t_r_l___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_BBC_CTRL_TypeDef</a>
+, <a class="el" href="union_j_p_u___b_b_c___c_u_r___p_o_s___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_BBC_CUR_POS_TypeDef</a>
+, <a class="el" href="union_j_p_u___b_b_c___d_a_t_a___c_n_t___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_BBC_DATA_CNT_TypeDef</a>
+, <a class="el" href="union_j_p_u___b_b_c___f_l_u_s_h___c_m_d___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_BBC_FLUSH_CMD_TypeDef</a>
+, <a class="el" href="union_j_p_u___b_b_c___i_n_t___a_d_d_r___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_BBC_INT_ADDR_TypeDef</a>
+, <a class="el" href="union_j_p_u___b_b_c___s_t_r_m___c_t_r_l___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_BBC_STRM_CTRL_TypeDef</a>
+, <a class="el" href="union_j_p_u___c_l_p___i_n_f_o___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_CLP_INFO_TypeDef</a>
+, <a class="el" href="union_j_p_u___c_o_e_f___a_d_d_r___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_COEF_ADDR_TypeDef</a>
+, <a class="el" href="union_j_p_u___c_o_e_f___c_t_r_l___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_COEF_CTRL_TypeDef</a>
+, <a class="el" href="union_j_p_u___d_p_b___c_o_n_f_i_g___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_DPB_CONFIG_TypeDef</a>
+, <a class="el" href="union_j_p_u___d_p_b___c_s_t_r_i_d_e___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_DPB_CSTRIDE_TypeDef</a>
+, <a class="el" href="union_j_p_u___d_p_b___y_s_t_r_i_d_e___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_DPB_YSTRIDE_TypeDef</a>
+, <a class="el" href="union_j_p_u___d_p_c_m___d_i_f_f___c_b___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_DPCM_DIFF_CB_TypeDef</a>
+, <a class="el" href="union_j_p_u___d_p_c_m___d_i_f_f___c_r___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_DPCM_DIFF_CR_TypeDef</a>
+, <a class="el" href="union_j_p_u___d_p_c_m___d_i_f_f___y___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_DPCM_DIFF_Y_TypeDef</a>
+, <a class="el" href="union_j_p_u___g_b_u___b_b_e_r___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_GBU_BBER_TypeDef</a>
+, <a class="el" href="union_j_p_u___g_b_u___b_b_h_r___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_GBU_BBHR_TypeDef</a>
+, <a class="el" href="union_j_p_u___g_b_u___b_b_i_r___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_GBU_BBIR_TypeDef</a>
+, <a class="el" href="union_j_p_u___g_b_u___b_b_s_r___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_GBU_BBSR_TypeDef</a>
+, <a class="el" href="union_j_p_u___g_b_u___b_c_n_t___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_GBU_BCNT_TypeDef</a>
+, <a class="el" href="union_j_p_u___g_b_u___c_t_r_l___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_GBU_CTRL_TypeDef</a>
+, <a class="el" href="union_j_p_u___g_b_u___f_f___r_p_t_r___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_GBU_FF_RPTR_TypeDef</a>
+, <a class="el" href="union_j_p_u___g_b_u___f_f___w_p_t_r___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_GBU_FF_WPTR_TypeDef</a>
+, <a class="el" href="union_j_p_u___g_b_u___p_b_i_t__08___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_GBU_PBIT_08_TypeDef</a>
+, <a class="el" href="union_j_p_u___g_b_u___p_b_i_t__16___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_GBU_PBIT_16_TypeDef</a>
+, <a class="el" href="union_j_p_u___g_b_u___p_b_i_t__24___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_GBU_PBIT_24_TypeDef</a>
+, <a class="el" href="union_j_p_u___g_b_u___p_b_i_t___b_u_s_y___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_GBU_PBIT_BUSY_TypeDef</a>
+, <a class="el" href="union_j_p_u___g_b_u___w_d___p_t_r___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_GBU_WD_PTR_TypeDef</a>
+, <a class="el" href="union_j_p_u___h_u_f_f___a_d_d_r___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_HUFF_ADDR_TypeDef</a>
+, <a class="el" href="union_j_p_u___h_u_f_f___c_t_r_l___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_HUFF_CTRL_TypeDef</a>
+, <a class="el" href="union_j_p_u___i_f___i_n_f_o___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_IF_INFO_TypeDef</a>
+, <a class="el" href="union_j_p_u___i_n_t_r___m_a_s_k___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_INTR_MASK_TypeDef</a>
+, <a class="el" href="union_j_p_u___m_c_u___i_n_f_o___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_MCU_INFO_TypeDef</a>
+, <a class="el" href="union_j_p_u___o_p___i_n_f_o___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_OP_INFO_TypeDef</a>
+, <a class="el" href="union_j_p_u___p_i_c___c_t_r_l___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_PIC_CTRL_TypeDef</a>
+, <a class="el" href="union_j_p_u___p_i_c___e_r_r_m_b___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_PIC_ERRMB_TypeDef</a>
+, <a class="el" href="union_j_p_u___p_i_c___s_e_t_m_b___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_PIC_SETMB_TypeDef</a>
+, <a class="el" href="union_j_p_u___p_i_c___s_t_a_r_t___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_PIC_START_TypeDef</a>
+, <a class="el" href="union_j_p_u___p_i_c___s_t_a_t_u_s___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_PIC_STATUS_TypeDef</a>
+, <a class="el" href="union_j_p_u___q_m_a_t___a_d_d_r___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_QMAT_ADDR_TypeDef</a>
+, <a class="el" href="union_j_p_u___q_m_a_t___c_t_r_l___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_QMAT_CTRL_TypeDef</a>
+, <a class="el" href="union_j_p_u___q_m_a_t___d_a_t_a___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_QMAT_DATA_TypeDef</a>
+, <a class="el" href="union_j_p_u___r_o_t___i_n_f_o___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_ROT_INFO_TypeDef</a>
+, <a class="el" href="union_j_p_u___r_s_t___c_o_u_n_t___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_RST_COUNT_TypeDef</a>
+, <a class="el" href="union_j_p_u___r_s_t___i_n_d_e_x___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_RST_INDEX_TypeDef</a>
+, <a class="el" href="union_j_p_u___s_c_l___i_n_f_o___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_SCL_INFO_TypeDef</a>
+, <a class="el" href="union_j_p_u___w_r_a_p___c_f_g___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_WRAP_CFG_TypeDef</a>
+, <a class="el" href="union_j_p_u___w_r_a_p___d_o_n_e___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_WRAP_DONE_TypeDef</a>
+, <a class="el" href="union_j_p_u___w_r_a_p___i_n_t___c_l_r___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_WRAP_INT_CLR_TypeDef</a>
+, <a class="el" href="union_j_p_u___w_r_a_p___i_n_t___e_n___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_WRAP_INT_EN_TypeDef</a>
+, <a class="el" href="union_j_p_u___w_r_a_p___i_n_t___m_s_k___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_WRAP_INT_MSK_TypeDef</a>
+, <a class="el" href="union_j_p_u___w_r_a_p___i_n_t___r_a_w___s_t_a_t_u_s___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_WRAP_INT_RAW_STATUS_TypeDef</a>
+, <a class="el" href="union_j_p_u___w_r_a_p___i_n_t___s_t_a_t_u_s___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_WRAP_INT_STATUS_TypeDef</a>
+, <a class="el" href="union_j_p_u___w_r_a_p___r_g_b___p_f___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_WRAP_RGB_PF_TypeDef</a>
+, <a class="el" href="union_j_p_u___w_r_e_s_p___c_h_e_c_k___type_def.html#ac399c1cda6062d6014d5631c8b26c974">JPU_WRESP_CHECK_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___d_m_a___c_f_g___h_i_g_hx___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_DMA_CFG_HIGHx_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___d_m_a___c_f_g___l_o_wx___type_def.html#ad478c04e35f4a7415b83baee73beacfe">LCDC_DMA_CFG_LOWx_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___d_m_a___c_t_l___h_i_g_hx___w___type_def.html#ac44d2fa8f289ed1d211b3bb971b299b0">LCDC_DMA_CTL_HIGHx_W_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___d_m_a___c_t_l___l_o_wx___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_DMA_CTL_LOWx_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___d_m_a___dma_cfg_reg___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_DMA_DmaCfgReg_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___d_m_a___dma_os_num___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_DMA_DmaOsNum_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___d_m_a___d_s_r___h_i_g_h___type_def.html#ac399c1cda6062d6014d5631c8b26c974">LCDC_DMA_DSR_HIGH_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___d_m_a___l_l_px___type_def.html#a7f2db8d2e5f02692a8fc10d41f7e5e0d">LCDC_DMA_LLPx_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___d_m_a___s_g_r___h_i_g_h___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_DMA_SGR_HIGH_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___d_m_a___dma_os_num___type_def.html#ac399c1cda6062d6014d5631c8b26c974">LCDC_DMA_DmaOsNum_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___d_m_a___d_s_r___h_i_g_h___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_DMA_DSR_HIGH_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___d_m_a___l_l_px___type_def.html#ad478c04e35f4a7415b83baee73beacfe">LCDC_DMA_LLPx_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___d_m_a___s_g_r___h_i_g_h___type_def.html#ac399c1cda6062d6014d5631c8b26c974">LCDC_DMA_SGR_HIGH_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___d_m_a_l_l___d_m_a___c_f_g___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_DMALL_DMA_CFG_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___d_m_a_l_l___r_s_v_d10___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_DMALL_RSVD10_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___d_m_a_l_l___r_s_v_d10___type_def.html#ac399c1cda6062d6014d5631c8b26c974">LCDC_DMALL_RSVD10_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___d_m_a_l_l___r_s_v_d1___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_DMALL_RSVD1_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___d_m_a_l_l___r_s_v_d2___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_DMALL_RSVD2_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___d_m_a_l_l___r_s_v_d3___type_def.html#ac399c1cda6062d6014d5631c8b26c974">LCDC_DMALL_RSVD3_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___d_m_a_l_l___r_s_v_d2___type_def.html#ac399c1cda6062d6014d5631c8b26c974">LCDC_DMALL_RSVD2_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___d_m_a_l_l___r_s_v_d3___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_DMALL_RSVD3_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___d_m_a_l_l___r_s_v_d4___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_DMALL_RSVD4_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___d_m_a_l_l___r_s_v_d5___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_DMALL_RSVD5_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___d_m_a_l_l___r_s_v_d6___type_def.html#ac399c1cda6062d6014d5631c8b26c974">LCDC_DMALL_RSVD6_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___d_m_a_l_l___r_s_v_d5___type_def.html#ac399c1cda6062d6014d5631c8b26c974">LCDC_DMALL_RSVD5_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___d_m_a_l_l___r_s_v_d6___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_DMALL_RSVD6_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___d_m_a_l_l___r_s_v_d7___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_DMALL_RSVD7_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___d_m_a_l_l___r_s_v_d8___type_def.html#ac399c1cda6062d6014d5631c8b26c974">LCDC_DMALL_RSVD8_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___d_m_a_l_l___r_s_v_d9___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_DMALL_RSVD9_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___d_m_a_l_l___r_s_v_d8___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_DMALL_RSVD8_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___d_m_a_l_l___r_s_v_d9___type_def.html#ac399c1cda6062d6014d5631c8b26c974">LCDC_DMALL_RSVD9_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___a_x_i___m_u_x___m_o_d_e___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_HANDLER_AXI_MUX_MODE_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___b_i_t___s_w_a_p___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_HANDLER_BIT_SWAP_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___c_t_r_l___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_HANDLER_DMA_FIFO_CTRL_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___i_c_r___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_HANDLER_DMA_FIFO_ICR_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___i_m_r___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_HANDLER_DMA_FIFO_IMR_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___s_r___type_def.html#ac399c1cda6062d6014d5631c8b26c974">LCDC_HANDLER_DMA_FIFO_SR_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___s_r___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_HANDLER_DMA_FIFO_SR_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___m_u_l_t_i___b_l_o_c_k___c_t_r_l___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_HANDLER_DMA_MULTI_BLOCK_CTRL_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___f_t___i_n___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_HANDLER_FT_IN_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___f_t___o_u_t___type_def.html#ac399c1cda6062d6014d5631c8b26c974">LCDC_HANDLER_FT_OUT_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___f_t___o_u_t___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_HANDLER_FT_OUT_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___i_n_f_i_n_i_t_e___m_o_d_e___c_t_r___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_HANDLER_INFINITE_MODE_CTR_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___i_n_t_e_r_f_a_c_e___s_e_l_e_c_t___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_HANDLER_INTERFACE_SELECT_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___o_p_e_r_a_t_e___c_t_r___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_HANDLER_OPERATE_CTR_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___r_s_v_d1___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_HANDLER_RSVD1_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___r_s_v_d2___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_HANDLER_RSVD2_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___r_s_v_d3___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_HANDLER_RSVD3_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___r_s_v_d4___type_def.html#ac399c1cda6062d6014d5631c8b26c974">LCDC_HANDLER_RSVD4_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___r_s_v_d4___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_HANDLER_RSVD4_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___r_s_v_d5___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_HANDLER_RSVD5_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___s_p_i_c___c_m_d___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_HANDLER_SPIC_CMD_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___s_p_i_c___r_x___f_i_f_o___r_e_a_d___s_i_z_e___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_HANDLER_SPIC_RX_FIFO_READ_SIZE_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___s_p_i_c___s_c_l_k___p_h_y___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_HANDLER_SPIC_SCLK_PHY_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___s_p_i_c___t_x___d_u_m_m_y___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_HANDLER_SPIC_TX_DUMMY_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___t_e_a_r___c_t_r___type_def.html#af1c0623c66cf0a734d99ea2cb7b48ad6">LCDC_HANDLER_TEAR_CTR_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___s_p_i_c___s_c_l_k___p_h_y___type_def.html#ac399c1cda6062d6014d5631c8b26c974">LCDC_HANDLER_SPIC_SCLK_PHY_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___s_p_i_c___t_x___d_u_m_m_y___type_def.html#ac399c1cda6062d6014d5631c8b26c974">LCDC_HANDLER_SPIC_TX_DUMMY_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___t_e_a_r___c_t_r___type_def.html#ac399c1cda6062d6014d5631c8b26c974">LCDC_HANDLER_TEAR_CTR_TypeDef</a>
 , <a class="el" href="union_p_p_e___f_u_n_c___c_f_g___type_def.html#ac399c1cda6062d6014d5631c8b26c974">PPE_FUNC_CFG_TypeDef</a>
 , <a class="el" href="union_p_p_e___g_l_b___c_t_l___type_def.html#ac399c1cda6062d6014d5631c8b26c974">PPE_GLB_CTL_TypeDef</a>
 , <a class="el" href="union_p_p_e___i_n_t_r___c_l_r___type_def.html#ac399c1cda6062d6014d5631c8b26c974">PPE_INTR_CLR_TypeDef</a>
@@ -6687,19 +6786,13 @@ $(function() {
 , <a class="el" href="union_p_p_e___r_s_v_d1___type_def.html#ac399c1cda6062d6014d5631c8b26c974">PPE_RSVD1_TypeDef</a>
 , <a class="el" href="union_r_e_s_e_r_v_e_d1___type_def.html#ac399c1cda6062d6014d5631c8b26c974">RESERVED1_TypeDef</a>
 , <a class="el" href="union_r_l_e___f_a_s_t_l_z___c_t_l___type_def.html#ac399c1cda6062d6014d5631c8b26c974">RLE_FASTLZ_CTL_TypeDef</a>
-, <a class="el" href="union_r_x___f_i_f_o___d_m_a___t_h_r_e_s_h_o_l_d___type_def.html#ac399c1cda6062d6014d5631c8b26c974">RX_FIFO_DMA_THRESHOLD_TypeDef</a>
-, <a class="el" href="union_r_x___f_i_f_o___i_n_t___t_h_r_e_s_h_o_l_d___type_def.html#ac399c1cda6062d6014d5631c8b26c974">RX_FIFO_INT_THRESHOLD_TypeDef</a>
-, <a class="el" href="union_r_x___f_i_f_o___o_f_f_s_e_t___type_def.html#ac399c1cda6062d6014d5631c8b26c974">RX_FIFO_OFFSET_TypeDef</a>
 </li>
 <li>RESERVED_0
 : <a class="el" href="struct_so_c___v_e_n_d_o_r___r_e_g___type_def.html#abcaaf72e5e847d5459d34f02015b8733">SoC_VENDOR_REG_TypeDef</a>
 , <a class="el" href="struct_s_y_s___b_l_k_c_t_r_l___type_def.html#a7529aed61fd602d85d4ef7d37189667a">SYS_BLKCTRL_TypeDef</a>
 </li>
 <li>reserved_0
-: <a class="el" href="union_t_x___f_i_f_o___d_m_a___t_h_r_e_s_h_o_l_d___type_def.html#ac399c1cda6062d6014d5631c8b26c974">TX_FIFO_DMA_THRESHOLD_TypeDef</a>
-, <a class="el" href="union_t_x___f_i_f_o___i_n_t___t_h_r_e_s_h_o_l_d___type_def.html#ac399c1cda6062d6014d5631c8b26c974">TX_FIFO_INT_THRESHOLD_TypeDef</a>
-, <a class="el" href="union_t_x___f_i_f_o___o_f_f_s_e_t___type_def.html#ac399c1cda6062d6014d5631c8b26c974">TX_FIFO_OFFSET_TypeDef</a>
-, <a class="el" href="union_y_u_v___s_b_f___c_t_l___type_def.html#ac399c1cda6062d6014d5631c8b26c974">YUV_SBF_CTL_TypeDef</a>
+: <a class="el" href="union_y_u_v___s_b_f___c_t_l___type_def.html#ac399c1cda6062d6014d5631c8b26c974">YUV_SBF_CTL_TypeDef</a>
 </li>
 <li>reserved_1
 : <a class="el" href="union_d_b_i_b___c_f_g___type_def.html#ab7186e9013f8e106144826f19363381a">DBIB_CFG_TypeDef</a>
@@ -6708,7 +6801,7 @@ $(function() {
 , <a class="el" href="union_d_b_i_c___d_e_v_i_c_e___i_n_f_o___type_def.html#ab7186e9013f8e106144826f19363381a">DBIC_DEVICE_INFO_TypeDef</a>
 , <a class="el" href="union_d_b_i_c___p_a_g_e___r_e_a_d___type_def.html#ab7186e9013f8e106144826f19363381a">DBIC_PAGE_READ_TypeDef</a>
 , <a class="el" href="union_d_b_i_c___s_s_i_e_n_r___type_def.html#ab7186e9013f8e106144826f19363381a">DBIC_SSIENR_TypeDef</a>
-, <a class="el" href="union_d_b_i_c___t_p_r1___type_def.html#af3ce7361b82ebf53d7e96fba9f54643f">DBIC_TPR1_TypeDef</a>
+, <a class="el" href="union_d_b_i_c___t_p_r1___type_def.html#ab7186e9013f8e106144826f19363381a">DBIC_TPR1_TypeDef</a>
 , <a class="el" href="union_d_b_i_c___u_s_e_r___l_e_n_g_t_h___type_def.html#af3ce7361b82ebf53d7e96fba9f54643f">DBIC_USER_LENGTH_TypeDef</a>
 , <a class="el" href="union_e_d_p_i___a_a_c_t_i_v_e___type_def.html#af3ce7361b82ebf53d7e96fba9f54643f">EDPI_AACTIVE_TypeDef</a>
 , <a class="el" href="union_e_d_p_i___a_b_a_c_k___p_o_r_c_h___type_def.html#af3ce7361b82ebf53d7e96fba9f54643f">EDPI_ABACK_PORCH_TypeDef</a>
@@ -6717,19 +6810,28 @@ $(function() {
 , <a class="el" href="union_e_d_p_i___v_i_d_e_o___c_t_l___type_def.html#af3ce7361b82ebf53d7e96fba9f54643f">EDPI_VIDEO_CTL_TypeDef</a>
 , <a class="el" href="union_i_d_u___c_t_l0___type_def.html#af3ce7361b82ebf53d7e96fba9f54643f">IDU_CTL0_TypeDef</a>
 , <a class="el" href="union_i_d_u___c_t_l1___type_def.html#af3ce7361b82ebf53d7e96fba9f54643f">IDU_CTL1_TypeDef</a>
+, <a class="el" href="union_j_d_i___d_a_t_a___w_r_i_t_t_e_n___v_e_r_t_i_c_a_l___type_def.html#ab7186e9013f8e106144826f19363381a">JDI_DATA_WRITTEN_VERTICAL_TypeDef</a>
+, <a class="el" href="union_j_p_u___c_o_e_f___c_t_r_l___type_def.html#af3ce7361b82ebf53d7e96fba9f54643f">JPU_COEF_CTRL_TypeDef</a>
+, <a class="el" href="union_j_p_u___g_b_u___c_t_r_l___type_def.html#af3ce7361b82ebf53d7e96fba9f54643f">JPU_GBU_CTRL_TypeDef</a>
+, <a class="el" href="union_j_p_u___h_u_f_f___c_t_r_l___type_def.html#af3ce7361b82ebf53d7e96fba9f54643f">JPU_HUFF_CTRL_TypeDef</a>
+, <a class="el" href="union_j_p_u___m_c_u___i_n_f_o___type_def.html#af3ce7361b82ebf53d7e96fba9f54643f">JPU_MCU_INFO_TypeDef</a>
+, <a class="el" href="union_j_p_u___p_i_c___c_t_r_l___type_def.html#af3ce7361b82ebf53d7e96fba9f54643f">JPU_PIC_CTRL_TypeDef</a>
+, <a class="el" href="union_j_p_u___p_i_c___s_e_t_m_b___type_def.html#af3ce7361b82ebf53d7e96fba9f54643f">JPU_PIC_SETMB_TypeDef</a>
+, <a class="el" href="union_j_p_u___q_m_a_t___c_t_r_l___type_def.html#af3ce7361b82ebf53d7e96fba9f54643f">JPU_QMAT_CTRL_TypeDef</a>
+, <a class="el" href="union_j_p_u___w_r_a_p___r_g_b___p_f___type_def.html#af3ce7361b82ebf53d7e96fba9f54643f">JPU_WRAP_RGB_PF_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___d_m_a___c_f_g___h_i_g_hx___type_def.html#ab7186e9013f8e106144826f19363381a">LCDC_DMA_CFG_HIGHx_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___d_m_a___c_f_g___l_o_wx___type_def.html#ab7186e9013f8e106144826f19363381a">LCDC_DMA_CFG_LOWx_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___d_m_a___c_t_l___l_o_wx___type_def.html#af3ce7361b82ebf53d7e96fba9f54643f">LCDC_DMA_CTL_LOWx_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___d_m_a___c_t_l___l_o_wx___type_def.html#ab7186e9013f8e106144826f19363381a">LCDC_DMA_CTL_LOWx_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___c_t_r_l___type_def.html#ab7186e9013f8e106144826f19363381a">LCDC_HANDLER_DMA_FIFO_CTRL_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___i_c_r___type_def.html#ab7186e9013f8e106144826f19363381a">LCDC_HANDLER_DMA_FIFO_ICR_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___i_m_r___type_def.html#ab7186e9013f8e106144826f19363381a">LCDC_HANDLER_DMA_FIFO_IMR_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___s_r___type_def.html#af3ce7361b82ebf53d7e96fba9f54643f">LCDC_HANDLER_DMA_FIFO_SR_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___m_u_l_t_i___b_l_o_c_k___c_t_r_l___type_def.html#ab7186e9013f8e106144826f19363381a">LCDC_HANDLER_DMA_MULTI_BLOCK_CTRL_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___i_n_f_i_n_i_t_e___m_o_d_e___c_t_r___type_def.html#ab7186e9013f8e106144826f19363381a">LCDC_HANDLER_INFINITE_MODE_CTR_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___i_n_t_e_r_f_a_c_e___s_e_l_e_c_t___type_def.html#af3ce7361b82ebf53d7e96fba9f54643f">LCDC_HANDLER_INTERFACE_SELECT_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___s_p_i_c___s_c_l_k___p_h_y___type_def.html#af3ce7361b82ebf53d7e96fba9f54643f">LCDC_HANDLER_SPIC_SCLK_PHY_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___i_n_t_e_r_f_a_c_e___s_e_l_e_c_t___type_def.html#ab7186e9013f8e106144826f19363381a">LCDC_HANDLER_INTERFACE_SELECT_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___s_p_i_c___s_c_l_k___p_h_y___type_def.html#ab7186e9013f8e106144826f19363381a">LCDC_HANDLER_SPIC_SCLK_PHY_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___s_p_i_c___t_x___d_u_m_m_y___type_def.html#ab7186e9013f8e106144826f19363381a">LCDC_HANDLER_SPIC_TX_DUMMY_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___t_e_a_r___c_t_r___type_def.html#af3ce7361b82ebf53d7e96fba9f54643f">LCDC_HANDLER_TEAR_CTR_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___t_e_a_r___c_t_r___type_def.html#ab7186e9013f8e106144826f19363381a">LCDC_HANDLER_TEAR_CTR_TypeDef</a>
 , <a class="el" href="union_p_p_e___l_a_y_e_r0___b_u_s___c_f_g___type_def.html#af3ce7361b82ebf53d7e96fba9f54643f">PPE_LAYER0_BUS_CFG_TypeDef</a>
 , <a class="el" href="union_p_p_e___l_a_y_e_r0___h_s___c_f_g___type_def.html#af3ce7361b82ebf53d7e96fba9f54643f">PPE_LAYER0_HS_CFG_TypeDef</a>
 , <a class="el" href="union_p_p_e___l_a_y_e_r_x___b_u_s___c_f_g___type_def.html#af3ce7361b82ebf53d7e96fba9f54643f">PPE_LAYERX_BUS_CFG_TypeDef</a>
@@ -6741,32 +6843,32 @@ $(function() {
 , <a class="el" href="struct_s_y_s___b_l_k_c_t_r_l___type_def.html#aa12368d3c1d13e34271db1395befa260">SYS_BLKCTRL_TypeDef</a>
 </li>
 <li>reserved_2
-: <a class="el" href="union_d_b_i_b___c_t_r_l0___type_def.html#a4601a78f61c21e093770520ddc207d4e">DBIB_CTRL0_TypeDef</a>
+: <a class="el" href="union_d_b_i_b___c_t_r_l0___type_def.html#ae04e15e9087864cb80bdde4e85744adb">DBIB_CTRL0_TypeDef</a>
 , <a class="el" href="union_e_d_p_i___v_i_d_e_o___c_t_l___type_def.html#ae04e15e9087864cb80bdde4e85744adb">EDPI_VIDEO_CTL_TypeDef</a>
 , <a class="el" href="union_i_d_u___c_t_l1___type_def.html#ae04e15e9087864cb80bdde4e85744adb">IDU_CTL1_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___d_m_a___c_f_g___h_i_g_hx___type_def.html#a4601a78f61c21e093770520ddc207d4e">LCDC_DMA_CFG_HIGHx_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___d_m_a___c_f_g___l_o_wx___type_def.html#a4601a78f61c21e093770520ddc207d4e">LCDC_DMA_CFG_LOWx_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___d_m_a___c_t_l___l_o_wx___type_def.html#a50b223df92282d04dfa46306b53a9905">LCDC_DMA_CTL_LOWx_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___i_c_r___type_def.html#a4601a78f61c21e093770520ddc207d4e">LCDC_HANDLER_DMA_FIFO_ICR_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___d_m_a___c_t_l___l_o_wx___type_def.html#a24ac028a58398fa113500a78522d51f4">LCDC_DMA_CTL_LOWx_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___i_c_r___type_def.html#ae04e15e9087864cb80bdde4e85744adb">LCDC_HANDLER_DMA_FIFO_ICR_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___i_m_r___type_def.html#a4601a78f61c21e093770520ddc207d4e">LCDC_HANDLER_DMA_FIFO_IMR_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___s_r___type_def.html#ae04e15e9087864cb80bdde4e85744adb">LCDC_HANDLER_DMA_FIFO_SR_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___m_u_l_t_i___b_l_o_c_k___c_t_r_l___type_def.html#a4601a78f61c21e093770520ddc207d4e">LCDC_HANDLER_DMA_MULTI_BLOCK_CTRL_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___s_r___type_def.html#a4601a78f61c21e093770520ddc207d4e">LCDC_HANDLER_DMA_FIFO_SR_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___m_u_l_t_i___b_l_o_c_k___c_t_r_l___type_def.html#ae04e15e9087864cb80bdde4e85744adb">LCDC_HANDLER_DMA_MULTI_BLOCK_CTRL_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___i_n_t_e_r_f_a_c_e___s_e_l_e_c_t___type_def.html#a4601a78f61c21e093770520ddc207d4e">LCDC_HANDLER_INTERFACE_SELECT_TypeDef</a>
 </li>
 <li>RESERVED_2
-: <a class="el" href="struct_s_y_s___b_l_k_c_t_r_l___type_def.html#a54aed6c80813feb7e2904ba82805948e">SYS_BLKCTRL_TypeDef</a>
+: <a class="el" href="struct_s_y_s___b_l_k_c_t_r_l___type_def.html#a32d676d6a52007436d74c5bf7d7ef525">SYS_BLKCTRL_TypeDef</a>
 </li>
 <li>reserved_3
-: <a class="el" href="union_d_b_i_b___c_t_r_l0___type_def.html#ae28e5f33ecf633992bdd3aa7afa916a6">DBIB_CTRL0_TypeDef</a>
+: <a class="el" href="union_d_b_i_b___c_t_r_l0___type_def.html#a257962ad5baebae8817a64487ae51bdf">DBIB_CTRL0_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___d_m_a___c_f_g___h_i_g_hx___type_def.html#a354461a98f6d0da657adbcb5aa6c8686">LCDC_DMA_CFG_HIGHx_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___s_r___type_def.html#ae28e5f33ecf633992bdd3aa7afa916a6">LCDC_HANDLER_DMA_FIFO_SR_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___s_r___type_def.html#a257962ad5baebae8817a64487ae51bdf">LCDC_HANDLER_DMA_FIFO_SR_TypeDef</a>
 </li>
 <li>RESERVED_3
-: <a class="el" href="struct_s_y_s___b_l_k_c_t_r_l___type_def.html#abcfee0fc93fef6c6afd39d6b9f69b1d5">SYS_BLKCTRL_TypeDef</a>
+: <a class="el" href="struct_s_y_s___b_l_k_c_t_r_l___type_def.html#a1ac15a8af15b5e984688253a1778e898">SYS_BLKCTRL_TypeDef</a>
 </li>
 <li>reserved_4
-: <a class="el" href="union_d_b_i_b___c_t_r_l0___type_def.html#ae782b7a8b9d68523d29b69afc189f4ab">DBIB_CTRL0_TypeDef</a>
-, <a class="el" href="union_l_c_d_c___d_m_a___c_f_g___h_i_g_hx___type_def.html#a7639cf7e952525bbfa79470f245d05c7">LCDC_DMA_CFG_HIGHx_TypeDef</a>
+: <a class="el" href="union_d_b_i_b___c_t_r_l0___type_def.html#aff331c033f4bbd00fff96f69c6bb9315">DBIB_CTRL0_TypeDef</a>
+, <a class="el" href="union_l_c_d_c___d_m_a___c_f_g___h_i_g_hx___type_def.html#aaf2eb7a7615ec891d7e5a9d49d433f37">LCDC_DMA_CFG_HIGHx_TypeDef</a>
 </li>
 <li>RESERVED_4
 : <a class="el" href="struct_s_y_s___b_l_k_c_t_r_l___type_def.html#ac2fafd8082cacde980e553c4506819d7">SYS_BLKCTRL_TypeDef</a>
@@ -6805,7 +6907,7 @@ $(function() {
 : <a class="el" href="struct_t___a_p_p___c_f_g___c_o_n_s_t.html#a101a2e57d6e8ebcf07a164ff8693420b">T_APP_CFG_CONST</a>
 </li>
 <li>reset_lcd_display_module
-: <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___i_n_t_e_r_f_a_c_e___s_e_l_e_c_t___type_def.html#add1a412f6bf971d37383f3458d62a289">LCDC_HANDLER_INTERFACE_SELECT_TypeDef</a>
+: <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___i_n_t_e_r_f_a_c_e___s_e_l_e_c_t___type_def.html#a09526cc65eb2f19c07a5f3a6bb759d7b">LCDC_HANDLER_INTERFACE_SELECT_TypeDef</a>
 </li>
 <li>reset_response_data
 : <a class="el" href="structtuya__ble__cb__evt__param__t.html#a81046406aade1a611784e0a2a717a340">tuya_ble_cb_evt_param_t</a>
@@ -6824,7 +6926,7 @@ $(function() {
 </li>
 <li>resolve
 : <a class="el" href="union_t___g_a_p___a_c_l___s_t_a_t_u_s___p_a_r_a_m.html#ac0cfb9577fb094d3dc5d557df346af31">T_GAP_ACL_STATUS_PARAM</a>
-, <a class="el" href="group___g_a_p___b_o_n_d___manager.html#ga859b156036a2bf70528ab0d91f2eb0c3">T_LE_ACL_STATUS_PARAM</a>
+, <a class="el" href="union_t___l_e___a_c_l___s_t_a_t_u_s___p_a_r_a_m.html#a859b156036a2bf70528ab0d91f2eb0c3">T_LE_ACL_STATUS_PARAM</a>
 </li>
 <li>resolved_remote_bd
 : <a class="el" href="struct_t___l_e___k_e_y___e_n_t_r_y.html#a054bdb71604eef30cc6a5e2de4cb78ac">T_LE_KEY_ENTRY</a>
@@ -6835,6 +6937,9 @@ $(function() {
 <li>response_code
 : <a class="el" href="struct_t___a_s_e___c_p___n_o_t_i_f_y___a_r_r_a_y___p_a_r_a_m.html#afda306714e0c6774fcb661cbed401b65">T_ASE_CP_NOTIFY_ARRAY_PARAM</a>
 , <a class="el" href="struct_t___a_u_d_i_o___a_s_e___c_p___e_r_r_o_r.html#afda306714e0c6774fcb661cbed401b65">T_AUDIO_ASE_CP_ERROR</a>
+</li>
+<li>restart_interval
+: <a class="el" href="union_j_p_u___r_s_t___i_n_t_e_r_v_a_l___type_def.html#aaac8d0dade983da2a427888269ff9bc0">JPU_RST_INTERVAL_TypeDef</a>
 </li>
 <li>restore_a2dp_when_bud_in_ear_in_15s
 : <a class="el" href="struct_t___a_p_p___c_f_g___c_o_n_s_t.html#a931e29245e6af59f1ca693bc0580b14e">T_APP_CFG_CONST</a>
@@ -6881,11 +6986,9 @@ $(function() {
 </li>
 <li>result_lyr_current_line_index
 : <a class="el" href="union_p_p_e___r_e_g___l_i_n_e___o_v_e_r___i_n_d_e_x___type_def.html#ad9ead32244aca2af64e07dd9a3e690a4">PPE_REG_LINE_OVER_INDEX_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_i_n_e___o_v_e_r___i_n_d_e_x___type_def.html#a7c25f5c9aeb0b34f81ec312408d82592">PPEV2_REG_LINE_OVER_INDEX_TypeDef</a>
 </li>
 <li>result_lyr_en
 : <a class="el" href="union_p_p_e___r_e_g___l_y_r___e_n_a_b_l_e___type_def.html#a3cf0927fcbb89d297be044c82971042e">PPE_REG_LYR_ENABLE_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_y_r___e_n_a_b_l_e___type_def.html#a184dfcab6abd3814daa38a6cfe489bb6">PPEV2_REG_LYR_ENABLE_TypeDef</a>
 </li>
 <li>result_num
 : <a class="el" href="struct_t___g_c_s___d_i_s_c_o_v_e_r_y___r_e_s_u_l_t.html#a3870aaa2ca586ee5921b02b1253afb4b">T_GCS_DISCOVERY_RESULT</a>
@@ -6897,16 +7000,19 @@ $(function() {
 <li>resume
 : <a class="el" href="struct__usb__interface.html#a96b4319dea52348add4d3490ccb33aaa">_usb_interface</a>
 , <a class="el" href="union_p_p_e___g_l_b___c_t_l___type_def.html#aa441df277a6e6596d459863d32502775">PPE_GLB_CTL_TypeDef</a>
+, <a class="el" href="struct_t___a_p_p___v_e_n_d_o_r___c_m_d.html#a0adf463e3a606769dafe75e2449e38f6">T_APP_VENDOR_CMD</a>
 </li>
 <li>resume_a2dp_by_in_ear
 : <a class="el" href="struct_t___a_p_p___d_b.html#ada67910e0334769ecedb12a3e588cc3d">T_APP_DB</a>
+</li>
+<li>resume_a2dp_track_later
+: <a class="el" href="struct_t___a_p_p___d_b.html#a49652e9d168f422a2d70de5f1ff9ebbd">T_APP_DB</a>
 </li>
 <li>resume_addr
 : <a class="el" href="struct_t___a_p_p___d_b.html#a84906fae860646044491f2de08f2d2cf">T_APP_DB</a>
 </li>
 <li>resume_fg
-: <a class="el" href="structt__app__br__link.html#a3836bd2cfb3b9b6bdef6593c57cb354f">t_app_br_link</a>
-, <a class="el" href="struct_t___a_p_p___b_r___l_i_n_k.html#a3836bd2cfb3b9b6bdef6593c57cb354f">T_APP_BR_LINK</a>
+: <a class="el" href="struct_t___a_p_p___b_r___l_i_n_k.html#a3836bd2cfb3b9b6bdef6593c57cb354f">T_APP_BR_LINK</a>
 </li>
 <li>resv
 : <a class="el" href="struct_b_l_e___c_o_n_t_r_o_l_l_e_r___h_i_d___i_n_p_u_t___r_e_p_o_r_t.html#a81de417edcf5619a3c1ccf7124a45be2">BLE_CONTROLLER_HID_INPUT_REPORT</a>
@@ -6927,6 +7033,9 @@ $(function() {
 <li>RESV1
 : <a class="el" href="struct_i_f8080___type_def.html#abc8dce3bb02b7e478519182b1bb3bc57">IF8080_TypeDef</a>
 </li>
+<li>resved
+: <a class="el" href="struct_t___a_p_p___c_f_g___c_o_n_s_t.html#a4bcc5584d11b528d13678e72f2615e13">T_APP_CFG_CONST</a>
+</li>
 <li>resved0
 : <a class="el" href="struct_m_p4___a_u_d_i_o___d_e_s_c_r_i_p_t.html#af44820368c3697f68b57cfde710bf03c">MP4_AUDIO_DESCRIPT</a>
 </li>
@@ -6941,7 +7050,6 @@ $(function() {
 </li>
 <li>ret
 : <a class="el" href="struct__usb__if__param.html#a601d0db684a57e3d3621516ff23b7011">_usb_if_param</a>
-, <a class="el" href="struct_w_o_l_f___e_v_e_n_t.html#a6baa346e44f4c2158d2be4f9b77b8203">WOLF_EVENT</a>
 </li>
 <li>RET_SYS_REG0X_DUMMY1
 : <a class="el" href="union___a_o_n___f_a_s_t___r_e_g0_x___r_e_t___s_y_s___t_y_p_e.html#ad0fbe3241bcf1e24a1af72bd443a2cbe">_AON_FAST_REG0X_RET_SYS_TYPE</a>
@@ -6967,13 +7075,10 @@ $(function() {
 : <a class="el" href="struct_o_t_a___r_w_s.html#a4a0a8d687202eb0f66b2361be63016c5">OTA_RWS</a>
 </li>
 <li>return0_field
-: <a class="el" href="struct_t_r_n_g___type_def.html#abd1b07f9af3f6619e79975234c1a6452">TRNG_TypeDef</a>
+: <a class="el" href="struct_t_r_n_g___type_def.html#a527d3a3d3e18062488fa323ea816a1ca">TRNG_TypeDef</a>
 </li>
 <li>REV
 : <a class="el" href="struct_r_x_i300___typedef.html#a03570066cbfa0cf0be278ca7bb8fcea1">RXI300_Typedef</a>
-</li>
-<li>rev3
-: <a class="el" href="struct___t___a_d_p___c_m_d___p_a_r_s_e___s_t_r_u_c_t.html#a6dc469c5e993fd60fd31eef8b33f17b6">_T_ADP_CMD_PARSE_STRUCT</a>
 </li>
 <li>REVD
 : <a class="el" href="struct_i_r___type_def.html#a59f55e800274ed870db25d0880fc6326">IR_TypeDef</a>
@@ -7026,8 +7131,8 @@ $(function() {
 : <a class="el" href="struct_t___a_p_p___b_r___l_i_n_k.html#a446bfe9191e9963420f09700e51e4ecf">T_APP_BR_LINK</a>
 </li>
 <li>rfc_credit
-: <a class="el" href="structt__app__br__link.html#a2a40e134d6f8916722e129118b9144d5">t_app_br_link</a>
-, <a class="el" href="struct_t___a_p_p___b_r___l_i_n_k.html#a2a40e134d6f8916722e129118b9144d5">T_APP_BR_LINK</a>
+: <a class="el" href="struct_t___a_p_p___b_r___l_i_n_k.html#a2a40e134d6f8916722e129118b9144d5">T_APP_BR_LINK</a>
+, <a class="el" href="structt__app__br__link.html#a2a40e134d6f8916722e129118b9144d5">t_app_br_link</a>
 </li>
 <li>rfc_frame_size
 : <a class="el" href="structt__app__br__link.html#a67b062b9d8ffb77caad44bf56fb235c1">t_app_br_link</a>
@@ -7071,12 +7176,10 @@ $(function() {
 <li>rfc_spp_credit
 : <a class="el" href="struct_t___a_p_p___b_r___l_i_n_k.html#aa37ec9629bd9a7e19a855198d6b69c62">T_APP_BR_LINK</a>
 , <a class="el" href="structt__app__br__link.html#aa37ec9629bd9a7e19a855198d6b69c62">t_app_br_link</a>
-, <a class="el" href="struct_t___s_p_p___d_e_m_o___l_i_n_k.html#aa37ec9629bd9a7e19a855198d6b69c62">T_SPP_DEMO_LINK</a>
 </li>
 <li>rfc_spp_frame_size
 : <a class="el" href="struct_t___a_p_p___b_r___l_i_n_k.html#ad554b358be752ed946eaeb6c1af41bdd">T_APP_BR_LINK</a>
 , <a class="el" href="structt__app__br__link.html#ad554b358be752ed946eaeb6c1af41bdd">t_app_br_link</a>
-, <a class="el" href="struct_t___s_p_p___d_e_m_o___l_i_n_k.html#ad554b358be752ed946eaeb6c1af41bdd">T_SPP_DEMO_LINK</a>
 </li>
 <li>RFC_STORE
 : <a class="el" href="union___a_o_n___f_a_s_t__0x370___t_y_p_e.html#a3fcfcbef62d311018f2a1f1566ba7869">_AON_FAST_0x370_TYPE</a>
@@ -7084,13 +7187,13 @@ $(function() {
 , <a class="el" href="union___b_t_a_o_n___r_e_g__0x18___t_y_p_e.html#ab990f97b495e7960c7892c2ba42fb5ee">_BTAON_REG_0x18_TYPE</a>
 </li>
 <li>rff
-: <a class="el" href="union_d_b_i_c___s_r___type_def.html#affbde44927791a5e4f1319d3a5f94cee">DBIC_SR_TypeDef</a>
+: <a class="el" href="union_d_b_i_c___s_r___type_def.html#af8b98c67ed7e70936bf63d32e1969c40">DBIC_SR_TypeDef</a>
 </li>
 <li>rfne
 : <a class="el" href="union_d_b_i_c___s_r___type_def.html#aeaaee23e06adbf759c290d885ea1eed4">DBIC_SR_TypeDef</a>
 </li>
 <li>rft
-: <a class="el" href="union_d_b_i_c___r_x_f_t_l_r___type_def.html#ad622fe67c3b118a2b0177472067b062d">DBIC_RXFTLR_TypeDef</a>
+: <a class="el" href="union_d_b_i_c___r_x_f_t_l_r___type_def.html#ad7361f809efc2e4e2ffd43622c12f6c6">DBIC_RXFTLR_TypeDef</a>
 </li>
 <li>rfu
 : <a class="el" href="struct_h_r_s___n_o_t_i_f_y___i_n_d_i_c_a_t_e___f_l_a_g.html#ab37578440c8242021e4d62fbd5886cbc">HRS_NOTIFY_INDICATE_FLAG</a>
@@ -7126,6 +7229,22 @@ $(function() {
 <li>RG0X_CODEC_LDO_DUMMY9
 : <a class="el" href="union___a_o_n___f_a_s_t___r_g0_x___c_o_d_e_c___l_d_o___t_y_p_e.html#abe8e053b286462b8503cb707507fec5a">_AON_FAST_RG0X_CODEC_LDO_TYPE</a>
 </li>
+<li>rgb_format
+: <a class="el" href="union_j_p_u___w_r_a_p___r_g_b___p_f___type_def.html#a21b302db9d024962ee733144a2aaf1c0">JPU_WRAP_RGB_PF_TypeDef</a>
+</li>
+<li>RGB_PF
+: <a class="el" href="struct_j_p_u___w_r_a_p_p_e_r___type_def.html#aa1702c94b258868da89668856e5ca777">JPU_WRAPPER_TypeDef</a>
+</li>
+<li>rgb_type
+: <a class="el" href="struct_j_p_u___d_e_c___c_f_g.html#a5df3d5094159470b97851f726aa09a75">JPU_DEC_CFG</a>
+, <a class="el" href="struct_j_p_u___e_n_c___c_f_g.html#a5df3d5094159470b97851f726aa09a75">JPU_ENC_CFG</a>
+</li>
+<li>rgbType
+: <a class="el" href="struct_j_p_u___d_e_c___p_a_r_a_m.html#a2aafc33325e700fc54523459bdc5ff8d">JPU_DEC_PARAM</a>
+, <a class="el" href="struct_j_p_u___d_e_c___p_a_r_a_m___i_n_t.html#a2aafc33325e700fc54523459bdc5ff8d">JPU_DEC_PARAM_INT</a>
+, <a class="el" href="struct_j_p_u___e_n_c___p_a_r_a_m.html#a09f47a3fe4c1a0cc6ef6c72d305bc133">JPU_ENC_PARAM</a>
+, <a class="el" href="struct_j_p_u___e_n_c___p_a_r_a_m___i_n_t.html#a09f47a3fe4c1a0cc6ef6c72d305bc133">JPU_ENC_PARAM_INT</a>
+</li>
 <li>RIF_STS
 : <a class="el" href="union___a_o_n___f_a_s_t__0x124___t_y_p_e.html#a8ce9c91371b994c8941eb1da118c17f1">_AON_FAST_0x124_TYPE</a>
 </li>
@@ -7137,18 +7256,6 @@ $(function() {
 </li>
 <li>right_click_anc_en
 : <a class="el" href="struct_t___d_u_r_i_a_n___d_b.html#a83e4cd12ded7cc3c1bed5aef8f215c4b">T_DURIAN_DB</a>
-</li>
-<li>right_ear_control
-: <a class="el" href="structt__bt__avp__event__control__settings.html#a3e756d3be2973b540afd286057fc1c58">t_bt_avp_event_control_settings</a>
-</li>
-<li>right_ear_gian
-: <a class="el" href="structt__bt__avp__event__apt__gain__settings.html#a3d620024ad845ad831f0ed2272c8bd88">t_bt_avp_event_apt_gain_settings</a>
-</li>
-<li>right_ear_longpress_control
-: <a class="el" href="struct_t___b_t___a_v_p___e_v_e_n_t___c_l_i_c_k___s_e_t_t_i_n_g_s.html#ad813af201e463fae3978aba505a84835">T_BT_AVP_EVENT_CLICK_SETTINGS</a>
-</li>
-<li>right_ear_tone
-: <a class="el" href="structt__bt__avp__event__apt__tone__settings.html#a7b2c0882a40aca93297f2285f628dc50">t_bt_avp_event_apt_tone_settings</a>
 </li>
 <li>right_gain
 : <a class="el" href="structt__audio__event__param__line__in__signal__out__refreshed.html#aa069eff09dd2fba99117828b9284220c">t_audio_event_param_line_in_signal_out_refreshed</a>
@@ -7196,9 +7303,6 @@ $(function() {
 : <a class="el" href="struct_l_c_d_c___d_b_i_c___type_def.html#aa196fddf0ba7d6e3ce29bdb04eb38b94">LCDC_DBIC_TypeDef</a>
 , <a class="el" href="struct_s_p_i___type_def.html#a288b765b7b1a17c1a5fb38454098621d">SPI_TypeDef</a>
 , <a class="el" href="struct_s_p_i_c___type_def.html#aa196fddf0ba7d6e3ce29bdb04eb38b94">SPIC_TypeDef</a>
-</li>
-<li>rk
-: <a class="el" href="structmbedtls__aes__context.html#af391a0fa774c2fb9fa7f9cfcf29678ba">mbedtls_aes_context</a>
 </li>
 <li>RLE_FASTLZ_CTL
 : <a class="el" href="struct_i_d_u___type_def.html#afa0dff19581b15619db6621b25ad4b99">IDU_TypeDef</a>
@@ -7252,7 +7356,7 @@ $(function() {
 : <a class="el" href="struct_l_c_d_c___ramless___q_s_p_i___type_def.html#ab4453a350244b70df8c817adbb43c5fa">LCDC_Ramless_QSPI_TypeDef</a>
 </li>
 <li>rm_rdsr
-: <a class="el" href="union_d_b_i_c___v_a_l_i_d___c_m_d___type_def.html#a2f58a76ef27e55368645f3d8a8c84a7b">DBIC_VALID_CMD_TypeDef</a>
+: <a class="el" href="union_d_b_i_c___v_a_l_i_d___c_m_d___type_def.html#a675735082d7425b42aee952ef97573f0">DBIC_VALID_CMD_TypeDef</a>
 </li>
 <li>rm_wen
 : <a class="el" href="union_d_b_i_c___v_a_l_i_d___c_m_d___type_def.html#a5255c1ab81f0f2be03af73b934ae4024">DBIC_VALID_CMD_TypeDef</a>
@@ -8027,23 +8131,68 @@ $(function() {
 <li>RO_WK_REG0X_DUMMY1
 : <a class="el" href="union___a_o_n___f_a_s_t___r_o___w_k___r_e_g0_x___t_y_p_e.html#a71b3662f1d6e23dfa00e807de8940b60">_AON_FAST_RO_WK_REG0X_TYPE</a>
 </li>
+<li>roi_en
+: <a class="el" href="union_j_p_u___c_l_p___i_n_f_o___type_def.html#aa5494324b9244afec6f8f58ecddabd90">JPU_CLP_INFO_TypeDef</a>
+</li>
+<li>roi_height
+: <a class="el" href="union_j_p_u___c_l_p___s_i_z_e___type_def.html#a31eba8b26199f1dc6c9e9ec51dc02f7e">JPU_CLP_SIZE_TypeDef</a>
+</li>
+<li>roi_width
+: <a class="el" href="union_j_p_u___c_l_p___s_i_z_e___type_def.html#a75f1a385a4921dc3c3104ca6b3ed3d5f">JPU_CLP_SIZE_TypeDef</a>
+</li>
+<li>roi_x_base
+: <a class="el" href="union_j_p_u___c_l_p___b_a_s_e___type_def.html#a546bbdd96b0b1608b25507a058f49a20">JPU_CLP_BASE_TypeDef</a>
+</li>
+<li>roi_y_base
+: <a class="el" href="union_j_p_u___c_l_p___b_a_s_e___type_def.html#a81c68b22df1c09cd9a5a5b06b9ea446d">JPU_CLP_BASE_TypeDef</a>
+</li>
+<li>roiEnable
+: <a class="el" href="struct_j_p_u___d_e_c___c_f_g.html#abd5c61eff26711493de112cff7fd6dac">JPU_DEC_CFG</a>
+, <a class="el" href="struct_j_p_u___d_e_c___p_a_r_a_m.html#abd5c61eff26711493de112cff7fd6dac">JPU_DEC_PARAM</a>
+, <a class="el" href="struct_j_p_u___d_e_c___p_a_r_a_m___i_n_t.html#a7691b474f3db215216c23aacf0cfa1bc">JPU_DEC_PARAM_INT</a>
+</li>
+<li>roiHeight
+: <a class="el" href="struct_j_p_u___d_e_c___p_a_r_a_m.html#a70f37f53930ae3cfabf713aaeb181dd0">JPU_DEC_PARAM</a>
+, <a class="el" href="struct_j_p_u___d_e_c___p_a_r_a_m___i_n_t.html#a89195e87c2a2dd6fe31fe1352a9b2b57">JPU_DEC_PARAM_INT</a>
+</li>
+<li>roiMcuHeight
+: <a class="el" href="struct_j_p_u___d_e_c___c_f_g.html#a77e67249b8e08b0f831d169a99f8a1f7">JPU_DEC_CFG</a>
+</li>
+<li>roiMcuWidth
+: <a class="el" href="struct_j_p_u___d_e_c___c_f_g.html#ae8e7c377bab6bc5dea876b94c4352192">JPU_DEC_CFG</a>
+</li>
+<li>roiOffsetX
+: <a class="el" href="struct_j_p_u___d_e_c___c_f_g.html#a04fb621115d0c2cb7c5a5abde3262863">JPU_DEC_CFG</a>
+, <a class="el" href="struct_j_p_u___d_e_c___p_a_r_a_m.html#a04fb621115d0c2cb7c5a5abde3262863">JPU_DEC_PARAM</a>
+, <a class="el" href="struct_j_p_u___d_e_c___p_a_r_a_m___i_n_t.html#a3b1f42cc7e3612f97bc5f148f8e61800">JPU_DEC_PARAM_INT</a>
+</li>
+<li>roiOffsetY
+: <a class="el" href="struct_j_p_u___d_e_c___c_f_g.html#a1b2f41aef90d15584183bfb17daed7a0">JPU_DEC_CFG</a>
+, <a class="el" href="struct_j_p_u___d_e_c___p_a_r_a_m.html#a1b2f41aef90d15584183bfb17daed7a0">JPU_DEC_PARAM</a>
+, <a class="el" href="struct_j_p_u___d_e_c___p_a_r_a_m___i_n_t.html#ab8fd1ba94981229ca5fe5cc485b2ef48">JPU_DEC_PARAM_INT</a>
+</li>
+<li>roiWidth
+: <a class="el" href="struct_j_p_u___d_e_c___p_a_r_a_m.html#af8da99708092c503f69d905e429a82cc">JPU_DEC_PARAM</a>
+, <a class="el" href="struct_j_p_u___d_e_c___p_a_r_a_m___i_n_t.html#a7baff4f93e1364140a25b1f9a1ce43ce">JPU_DEC_PARAM_INT</a>
+</li>
 <li>role
 : <a class="el" href="struct___l_i_s_t_e_n___s_a_v_e___f_i_l_e___h_e_a_d_e_r___s_t_r_u_c_t.html#a5b9aeb2bb7989ef331f452dd9626f139">_LISTEN_SAVE_FILE_HEADER_STRUCT</a>
 , <a class="el" href="structt__audio__route__sport__cfg.html#aba3555b4ac20e0b6ac83bd606aa899ed">t_audio_route_sport_cfg</a>
 , <a class="el" href="structt__bt__a2dp__stream__endpoint.html#a9921c949752af4f5993722ef14997cc8">t_bt_a2dp_stream_endpoint</a>
+, <a class="el" href="struct_t___b_t___d_i_r_e_c_t___g_a_t_t___s_e_r_v_e_r___s_e_r_v_i_c_e___g_e_t___a_l_l_o_w___i_n_f_o.html#a5b9aeb2bb7989ef331f452dd9626f139">T_BT_DIRECT_GATT_SERVER_SERVICE_GET_ALLOW_INFO</a>
 , <a class="el" href="structt__bt__event__param__a2dp__config__cmpl.html#a5b9aeb2bb7989ef331f452dd9626f139">t_bt_event_param_a2dp_config_cmpl</a>
 , <a class="el" href="structt__bt__event__param__a2dp__sniffing__conn__cmpl.html#a5b9aeb2bb7989ef331f452dd9626f139">t_bt_event_param_a2dp_sniffing_conn_cmpl</a>
 , <a class="el" href="structt__bt__event__param__a2dp__sniffing__start__ind.html#a5b9aeb2bb7989ef331f452dd9626f139">t_bt_event_param_a2dp_sniffing_start_ind</a>
 , <a class="el" href="structt__bt__event__param__a2dp__stream__start__ind.html#a5b9aeb2bb7989ef331f452dd9626f139">t_bt_event_param_a2dp_stream_start_ind</a>
 , <a class="el" href="structt__bt__event__param__remote__roleswap__status.html#a0e4a00222c74e97bfdb54e0cb84021be">t_bt_event_param_remote_roleswap_status</a>
-, <a class="el" href="group___b_t___s_y_s_c_a_l_l___exported___functions.html#ga27f1354495797a1c311e2a5710baca57">T_BT_LE_ISO_SYNC_REF_AP_INFO</a>
+, <a class="el" href="struct_t___b_t___l_e___i_s_o___s_y_n_c___r_e_f___a_p___i_n_f_o.html#a27f1354495797a1c311e2a5710baca57">T_BT_LE_ISO_SYNC_REF_AP_INFO</a>
 , <a class="el" href="struct_t___g_a_p___c_o_n_n___i_n_f_o.html#a5ca689361f0a8439ea62665b5a3f3df1">T_GAP_CONN_INFO</a>
 , <a class="el" href="struct_t___g_a_p___h_a_n_d_o_v_e_r___a_c_l___i_n_f_o.html#a5b9aeb2bb7989ef331f452dd9626f139">T_GAP_HANDOVER_ACL_INFO</a>
 , <a class="el" href="struct_t___g_a_p___h_a_n_d_o_v_e_r___l2_c___i_n_f_o.html#a5b9aeb2bb7989ef331f452dd9626f139">T_GAP_HANDOVER_L2C_INFO</a>
 , <a class="el" href="struct_t___i_s_o_c_h___i_n_f_o.html#a87de8a8f0b9937287d550ca971a834ad">T_ISOCH_INFO</a>
 , <a class="el" href="structt__sport__misc__cfg.html#a7588ad3f9cb19acd4ec6b863a774ca9a">t_sport_misc_cfg</a>
 , <a class="el" href="struct_t___s_p_o_r_t___t_d_m.html#a5b9aeb2bb7989ef331f452dd9626f139">T_SPORT_TDM</a>
-, <a class="el" href="uniont__syncclk__latch__info.html#a5b9aeb2bb7989ef331f452dd9626f139">t_syncclk_latch_info</a>
+, <a class="el" href="group__x3d___p_l_a_t_f_o_r_m___u_t_i_l_s.html#ga5b9aeb2bb7989ef331f452dd9626f139">t_syncclk_latch_info</a>
 , <a class="el" href="struct_t___t_m_a_s___c_l_i_e_n_t___r_e_a_d___r_o_l_e___r_e_s_u_l_t.html#a0e7373371a02cdf4c0352fe22a39d7f8">T_TMAS_CLIENT_READ_ROLE_RESULT</a>
 </li>
 <li>role_decided
@@ -8082,8 +8231,38 @@ $(function() {
 <li>rom_rx2_vsel
 : <a class="el" href="union___a_o_n___f_a_s_t___r_e_g___r_a_m_r_o_m___v_s_e_l___t_y_p_e.html#ad53239c356dedde03520f98268be5153">_AON_FAST_REG_RAMROM_VSEL_TYPE</a>
 </li>
-<li>rounds
-: <a class="el" href="struct_aes.html#a0125a293d2aab776e75aa8dd3f4ed1ed">Aes</a>
+<li>rot_deg_factor
+: <a class="el" href="union_j_p_u___r_o_t___i_n_f_o___type_def.html#ac9aeb2cf0c03426b53385519c4ed74d6">JPU_ROT_INFO_TypeDef</a>
+</li>
+<li>ROT_INFO
+: <a class="el" href="struct_j_p_u___type_def.html#af869a9fddc3f11b95fd3084348051553">JPU_TypeDef</a>
+</li>
+<li>rot_mir_en
+: <a class="el" href="union_j_p_u___r_o_t___i_n_f_o___type_def.html#a19cf2216a46663e781417d580dd8797a">JPU_ROT_INFO_TypeDef</a>
+</li>
+<li>rotAngle
+: <a class="el" href="struct_j_p_u___d_e_c___p_a_r_a_m.html#a2a890a5be62e9c49eee61c956db02b64">JPU_DEC_PARAM</a>
+, <a class="el" href="struct_j_p_u___d_e_c___p_a_r_a_m___i_n_t.html#aebbca6514ab96a451503de0e74c2caa6">JPU_DEC_PARAM_INT</a>
+, <a class="el" href="struct_j_p_u___e_n_c___p_a_r_a_m.html#a2a890a5be62e9c49eee61c956db02b64">JPU_ENC_PARAM</a>
+, <a class="el" href="struct_j_p_u___e_n_c___p_a_r_a_m___i_n_t.html#aebbca6514ab96a451503de0e74c2caa6">JPU_ENC_PARAM_INT</a>
+</li>
+<li>rotationAngle
+: <a class="el" href="struct_j_p_u___e_n_c___c_f_g.html#aea7282135ab174394878c7547b2bb7c5">JPU_ENC_CFG</a>
+</li>
+<li>rotationEnable
+: <a class="el" href="struct_j_p_u___d_e_c___c_f_g.html#a836ba68da5f389a6322335531462ef62">JPU_DEC_CFG</a>
+</li>
+<li>rotatorStride
+: <a class="el" href="struct_j_p_u___d_e_c___c_f_g.html#a7da7d7a178507b1ab14cb7a636f9837d">JPU_DEC_CFG</a>
+</li>
+<li>rotMir
+: <a class="el" href="struct_j_p_u___d_e_c___c_f_g.html#a8e1a026ee3f5f5dc41fa9ad0faa5e4c7">JPU_DEC_CFG</a>
+</li>
+<li>rotMirEnable
+: <a class="el" href="struct_j_p_u___e_n_c___c_f_g.html#af0b18ddab4c3897c7baceee459e689c7">JPU_ENC_CFG</a>
+</li>
+<li>rotMirMode
+: <a class="el" href="struct_j_p_u___e_n_c___c_f_g.html#a26f1475718747c56240b6809f690249b">JPU_ENC_CFG</a>
 </li>
 <li>ROWCR
 : <a class="el" href="struct_k_e_y_s_c_a_n___type_def.html#a6c10cd135377a7696fde3cb985587a39">KEYSCAN_TypeDef</a>
@@ -8097,14 +8276,11 @@ $(function() {
 <li>rpy
 : <a class="el" href="structqmi__imu__algo__data.html#a1ba0a7c98794a4cda502c52d222ab614">qmi_imu_algo_data</a>
 </li>
-<li>rr_interval
-: <a class="el" href="struct_t___h_e_a_r_t___r_a_t_e___m_e_a_s_u_r_e_m_e_n_t___v_a_l_u_e.html#a1a8f7014b9821cc003119a5bd9a85a15">T_HEART_RATE_MEASUREMENT_VALUE</a>
-</li>
 <li>rr_interval_bit
 : <a class="el" href="struct_t___h_e_a_r_t___r_a_t_e___m_e_a_s_u_r_e_m_e_n_t___v_a_l_u_e___f_l_a_g.html#a7f6c81ee731813ffab5e55fe6dc0ddb3">T_HEART_RATE_MEASUREMENT_VALUE_FLAG</a>
 </li>
-<li>rsa
-: <a class="el" href="struct_signature_ctx.html#a7db74e49e5922ef8e3fe210d0e0e6d9c">SignatureCtx</a>
+<li>rr_interval_len
+: <a class="el" href="struct_t___h_e_a_r_t___r_a_t_e___m_e_a_s_u_r_e_m_e_n_t___v_a_l_u_e.html#a5de2fe2b371ff4b43e74c6f006fa3df1">T_HEART_RATE_MEASUREMENT_VALUE</a>
 </li>
 <li>RSA_finish
 : <a class="el" href="struct_h_w___r_s_a___type_def.html#a0f36aa01714c9a03090128094b022822">HW_RSA_TypeDef</a>
@@ -8129,6 +8305,11 @@ $(function() {
 </li>
 <li>rsp_len
 : <a class="el" href="structt__bt__event__param__avrcp__vendor__rsp.html#a255042d27ce8f06e5072628d44680553">t_bt_event_param_avrcp_vendor_rsp</a>
+</li>
+<li>rsp_msg
+: <a class="el" href="structt__bt__pan__event__param__filter__multi__addr__set__rsp.html#a87cd00d57896f9f93662334f19dc8c67">t_bt_pan_event_param_filter_multi_addr_set_rsp</a>
+, <a class="el" href="structt__bt__pan__event__param__filter__net__type__set__rsp.html#a87cd00d57896f9f93662334f19dc8c67">t_bt_pan_event_param_filter_net_type_set_rsp</a>
+, <a class="el" href="structt__bt__pan__event__param__setup__conn__rsp.html#a87cd00d57896f9f93662334f19dc8c67">t_bt_pan_event_param_setup_conn_rsp</a>
 </li>
 <li>rssi
 : <a class="el" href="struct_t___a_p_p___l_e___s_c_a_n___i_n_f_o.html#a3b962e67ba74725bd60ca3c29f785abe">T_APP_LE_SCAN_INFO</a>
@@ -8164,14 +8345,35 @@ $(function() {
 <li>RST_CNT
 : <a class="el" href="struct_c_a_c_h_e___type_def.html#a1d21b7df7083354550aa8053ed5238e0">CACHE_TypeDef</a>
 </li>
+<li>rst_cnt
+: <a class="el" href="union_j_p_u___r_s_t___c_o_u_n_t___type_def.html#ad652965de65c8cc251cce95aa5142ca4">JPU_RST_COUNT_TypeDef</a>
+</li>
+<li>RST_COUNT
+: <a class="el" href="struct_j_p_u___type_def.html#a288aebb91b192e6faf65e08b2df697fe">JPU_TypeDef</a>
+</li>
+<li>RST_INDEX
+: <a class="el" href="struct_j_p_u___type_def.html#a9a9034169208e75d15cef34621f306f8">JPU_TypeDef</a>
+</li>
+<li>rst_indx
+: <a class="el" href="union_j_p_u___r_s_t___i_n_d_e_x___type_def.html#a6f6c5306354156306defae48406b3af6">JPU_RST_INDEX_TypeDef</a>
+</li>
+<li>RST_INTVAL
+: <a class="el" href="struct_j_p_u___type_def.html#ab8affc09d6d0e8ba6ef362ebb5a8ad8b">JPU_TypeDef</a>
+</li>
 <li>RST_LVL
 : <a class="el" href="struct_a_o_n___w_d_g___type_def.html#ab33ce1bd0d8cddf31597d60b75dab0af">AON_WDG_TypeDef</a>
 </li>
 <li>rst_n_aac
 : <a class="el" href="struct_s_y_s___b_l_k_c_t_r_l___type_def.html#aae89329dbe1be1cf867ded025a559bf5">SYS_BLKCTRL_TypeDef</a>
 </li>
+<li>rstIntval
+: <a class="el" href="struct_j_p_u___d_e_c___c_f_g.html#a35e05efa27adfc1d3830b24465ffc3cd">JPU_DEC_CFG</a>
+, <a class="el" href="struct_j_p_u___d_e_c___i_n_f_o.html#a35e05efa27adfc1d3830b24465ffc3cd">JPU_DEC_INFO</a>
+, <a class="el" href="struct_j_p_u___e_n_c___c_f_g.html#a35e05efa27adfc1d3830b24465ffc3cd">JPU_ENC_CFG</a>
+, <a class="el" href="struct_j_p_u___e_n_c___i_n_f_o.html#ad08495e58c416abf4f258275eb3a1737">JPU_ENC_INFO</a>
+</li>
 <li>rsv
-: <a class="el" href="struct____attribute____.html#a5f419eaddbbfbee1dd46c2ef8376709d">__attribute__</a>
+: <a class="el" href="struct____attribute____.html#a5c5d68350191dc26727218ef0ce86f1d">__attribute__</a>
 , <a class="el" href="struct__hal__usb__request__block.html#a5f419eaddbbfbee1dd46c2ef8376709d">_hal_usb_request_block</a>
 , <a class="el" href="struct___t___b_i_n___i_n_f_o.html#a5f419eaddbbfbee1dd46c2ef8376709d">_T_BIN_INFO</a>
 , <a class="el" href="struct__t__usb__core__config.html#a5f419eaddbbfbee1dd46c2ef8376709d">_t_usb_core_config</a>
@@ -8187,11 +8389,15 @@ $(function() {
 </li>
 <li>rsv
 : <a class="el" href="structhids__id__t.html#a5f419eaddbbfbee1dd46c2ef8376709d">hids_id_t</a>
+, <a class="el" href="struct_t___a_p_p___b_t___p_o_i_n_t___m_g_r.html#a6b4c61e45e0070db9d606d9c12a73d92">T_APP_BT_POINT_MGR</a>
 , <a class="el" href="struct_t___a_p_p___c_f_g2___c_o_n_s_t.html#a89e20639c7561f92b6a1f39421ae2e99">T_APP_CFG2_CONST</a>
 , <a class="el" href="group___a_p_p___c_f_g.html#ga97dfd32e28f8ebfc9bb9a9b9b21909a6">T_APP_CFG_CONST</a>
 , <a class="el" href="group___a_p_p___c_f_g.html#ga5f419eaddbbfbee1dd46c2ef8376709d">T_APP_CFG_NV</a>
 , <a class="el" href="struct_t___a_p_p___c_t_r_l___d_a_t_a.html#a5f419eaddbbfbee1dd46c2ef8376709d">T_APP_CTRL_DATA</a>
 , <a class="el" href="struct_t___a_p_p___d_s_p___c_f_g___v_o_l_u_m_e.html#a5f419eaddbbfbee1dd46c2ef8376709d">T_APP_DSP_CFG_VOLUME</a>
+, <a class="el" href="struct_t___c_h_a_t_g_p_t___s_t_a_r_t___v_o_i_c_e.html#a5f419eaddbbfbee1dd46c2ef8376709d">T_CHATGPT_START_VOICE</a>
+, <a class="el" href="struct_t___c_h_a_t_g_p_t___t_r_a_n_s___l1___h_e_a_d_e_r.html#a5f419eaddbbfbee1dd46c2ef8376709d">T_CHATGPT_TRANS_L1_HEADER</a>
+, <a class="el" href="struct_t___c_h_a_t_g_p_t___t_r_a_n_s___l2___h_e_a_d_e_r.html#a5f419eaddbbfbee1dd46c2ef8376709d">T_CHATGPT_TRANS_L2_HEADER</a>
 , <a class="el" href="struct_t___d_o_n_g_l_e___c_o_n_t_r_o_l___d_a_t_a.html#a5f419eaddbbfbee1dd46c2ef8376709d">T_DONGLE_CONTROL_DATA</a>
 , <a class="el" href="struct_t___d_o_n_g_l_e___l_i_n_k_b_a_c_k___s_t_a_t_u_s.html#a5f419eaddbbfbee1dd46c2ef8376709d">T_DONGLE_LINKBACK_STATUS</a>
 , <a class="el" href="structt__jsa__cal__para.html#a7414493b51b83fa6b55e5f372185bc56">t_jsa_cal_para</a>
@@ -8199,6 +8405,7 @@ $(function() {
 , <a class="el" href="struct_t___l_e_a___b_s_t.html#a5f419eaddbbfbee1dd46c2ef8376709d">T_LEA_BST</a>
 , <a class="el" href="structt__main__header.html#ac1f8e49110426a50b4fb640738be6919">t_main_header</a>
 , <a class="el" href="structt__sub__image__header.html#a39d2b4c3d077f1f2c54fd9d069e64a44">t_sub_image_header</a>
+, <a class="el" href="struct_t___t_e_l_e_p_h_o_n_y___h_i_d___i_n_p_u_t.html#a6b4c61e45e0070db9d606d9c12a73d92">T_TELEPHONY_HID_INPUT</a>
 , <a class="el" href="union_t___u_s_b___d_m___e_v_t___m_s_k.html#a6b4c61e45e0070db9d606d9c12a73d92">T_USB_DM_EVT_MSK</a>
 </li>
 <li>RSV0
@@ -8225,9 +8432,11 @@ $(function() {
 <li>RSV2
 : <a class="el" href="struct_r_t_c___l_e_d___type_def.html#a39482bd6f7ec372503cc0a2e6b3ccef1">RTC_LED_TypeDef</a>
 </li>
+<li>rsv4
+: <a class="el" href="struct_t___a_p_p___d_b.html#a1cf61f44415ebe515f200a0e6c440f75">T_APP_DB</a>
+</li>
 <li>rsv8
 : <a class="el" href="struct_t___d_s_p___i_m_a_g_e.html#a2d7d82334e0cabed0ce8c76af1db6d99">T_DSP_IMAGE</a>
-, <a class="el" href="structt__dsp__image.html#a2d7d82334e0cabed0ce8c76af1db6d99">t_dsp_image</a>
 </li>
 <li>rsv_1
 : <a class="el" href="group___a_p_p___c_f_g.html#ga95dc018d97935c0ade8cdb8568b780d5">T_APP_CFG_NV</a>
@@ -8273,28 +8482,24 @@ $(function() {
 , <a class="el" href="union___a_o_n___f_a_s_t__0x12_e___t_y_p_e.html#a49ca8a3415055a9571e59beba3bcb25f">_AON_FAST_0x12E_TYPE</a>
 , <a class="el" href="union___a_o_n___f_a_s_t__0x13_a___t_y_p_e.html#a49ca8a3415055a9571e59beba3bcb25f">_AON_FAST_0x13A_TYPE</a>
 , <a class="el" href="union___a_o_n___f_a_s_t__0x142___t_y_p_e.html#a49ca8a3415055a9571e59beba3bcb25f">_AON_FAST_0x142_TYPE</a>
+, <a class="el" href="union___a_o_n___f_a_s_t__0x154___t_y_p_e.html#a49ca8a3415055a9571e59beba3bcb25f">_AON_FAST_0x154_TYPE</a>
 </li>
 <li>rsvd
 : <a class="el" href="union___a_o_n___f_a_s_t__0x154___t_y_p_e.html#ac6afa72984587556813605e9102d667d">_AON_FAST_0x154_TYPE</a>
 </li>
 <li>RSVD
-: <a class="el" href="union___a_o_n___f_a_s_t__0x154___t_y_p_e.html#a49ca8a3415055a9571e59beba3bcb25f">_AON_FAST_0x154_TYPE</a>
-, <a class="el" href="union___a_o_n___f_a_s_t__0x156___t_y_p_e.html#a49ca8a3415055a9571e59beba3bcb25f">_AON_FAST_0x156_TYPE</a>
+: <a class="el" href="union___a_o_n___f_a_s_t__0x156___t_y_p_e.html#a49ca8a3415055a9571e59beba3bcb25f">_AON_FAST_0x156_TYPE</a>
 </li>
 <li>rsvd
 : <a class="el" href="union___a_o_n___f_a_s_t__0x156___t_y_p_e.html#ac6afa72984587556813605e9102d667d">_AON_FAST_0x156_TYPE</a>
 </li>
 <li>RSVD
 : <a class="el" href="union___a_o_n___f_a_s_t__0x15_a___t_y_p_e.html#a49ca8a3415055a9571e59beba3bcb25f">_AON_FAST_0x15A_TYPE</a>
+, <a class="el" href="union___a_o_n___f_a_s_t__0x15_e___t_y_p_e.html#a49ca8a3415055a9571e59beba3bcb25f">_AON_FAST_0x15E_TYPE</a>
 </li>
 <li>rsvd
 : <a class="el" href="union___a_o_n___f_a_s_t__0x15_e___t_y_p_e.html#ac6afa72984587556813605e9102d667d">_AON_FAST_0x15E_TYPE</a>
-</li>
-<li>RSVD
-: <a class="el" href="union___a_o_n___f_a_s_t__0x15_e___t_y_p_e.html#a49ca8a3415055a9571e59beba3bcb25f">_AON_FAST_0x15E_TYPE</a>
-</li>
-<li>rsvd
-: <a class="el" href="union___a_o_n___f_a_s_t__0x164___t_y_p_e.html#ac6afa72984587556813605e9102d667d">_AON_FAST_0x164_TYPE</a>
+, <a class="el" href="union___a_o_n___f_a_s_t__0x164___t_y_p_e.html#ac6afa72984587556813605e9102d667d">_AON_FAST_0x164_TYPE</a>
 </li>
 <li>RSVD
 : <a class="el" href="union___a_o_n___f_a_s_t__0x166___t_y_p_e.html#a49ca8a3415055a9571e59beba3bcb25f">_AON_FAST_0x166_TYPE</a>
@@ -8335,13 +8540,13 @@ $(function() {
 <li>RSVD
 : <a class="el" href="union___a_o_n___f_a_s_t__0x_c4___t_y_p_e.html#a49ca8a3415055a9571e59beba3bcb25f">_AON_FAST_0xC4_TYPE</a>
 , <a class="el" href="union___a_o_n___f_a_s_t__0x_e_a___t_y_p_e.html#a49ca8a3415055a9571e59beba3bcb25f">_AON_FAST_0xEA_TYPE</a>
+, <a class="el" href="union___a_o_n___f_a_s_t__0x_f4___t_y_p_e.html#a49ca8a3415055a9571e59beba3bcb25f">_AON_FAST_0xF4_TYPE</a>
 </li>
 <li>rsvd
 : <a class="el" href="union___a_o_n___f_a_s_t__0x_f4___t_y_p_e.html#ac6afa72984587556813605e9102d667d">_AON_FAST_0xF4_TYPE</a>
 </li>
 <li>RSVD
-: <a class="el" href="union___a_o_n___f_a_s_t__0x_f4___t_y_p_e.html#a49ca8a3415055a9571e59beba3bcb25f">_AON_FAST_0xF4_TYPE</a>
-, <a class="el" href="union___a_o_n___f_a_s_t___a_o_n___r_e_g10_x___m_u_x___s_e_l___t_y_p_e.html#a49ca8a3415055a9571e59beba3bcb25f">_AON_FAST_AON_REG10X_MUX_SEL_TYPE</a>
+: <a class="el" href="union___a_o_n___f_a_s_t___a_o_n___r_e_g10_x___m_u_x___s_e_l___t_y_p_e.html#a49ca8a3415055a9571e59beba3bcb25f">_AON_FAST_AON_REG10X_MUX_SEL_TYPE</a>
 , <a class="el" href="union___a_o_n___f_a_s_t___a_o_n___r_e_g11_x___m_u_x___s_e_l___t_y_p_e.html#a49ca8a3415055a9571e59beba3bcb25f">_AON_FAST_AON_REG11X_MUX_SEL_TYPE</a>
 , <a class="el" href="union___a_o_n___f_a_s_t___a_o_n___r_e_g12_x___m_u_x___s_e_l___t_y_p_e.html#a49ca8a3415055a9571e59beba3bcb25f">_AON_FAST_AON_REG12X_MUX_SEL_TYPE</a>
 , <a class="el" href="union___a_o_n___f_a_s_t___a_o_n___r_e_g6_x___m_u_x___s_e_l___t_y_p_e.html#a49ca8a3415055a9571e59beba3bcb25f">_AON_FAST_AON_REG6X_MUX_SEL_TYPE</a>
@@ -8443,6 +8648,8 @@ $(function() {
 , <a class="el" href="union___b_t_a_o_n___f_a_s_t__0x_f4___t_y_p_e.html#ac6afa72984587556813605e9102d667d">_BTAON_FAST_0xF4_TYPE</a>
 , <a class="el" href="union___b_t_a_o_n___f_a_s_t___b_t___p_w_d_p_a_d___t_y_p_e.html#ac6afa72984587556813605e9102d667d">_BTAON_FAST_BT_PWDPAD_TYPE</a>
 , <a class="el" href="struct___i_m_g___c_t_r_l___h_e_a_d_e_r___f_o_r_m_a_t.html#ac6afa72984587556813605e9102d667d">_IMG_CTRL_HEADER_FORMAT</a>
+, <a class="el" href="union_b_l_e___d_e_v_i_c_e___i_n_f_o.html#a3bea081d6c1261ea25f46913bd03e70b">BLE_DEVICE_INFO</a>
+, <a class="el" href="union_b_l_e___d_e_v_i_c_e___i_n_f_o___m_o_d_e.html#a12144a8b7d28e438d97bd2606d534990">BLE_DEVICE_INFO_MODE</a>
 </li>
 <li>RSVD
 : <a class="el" href="struct_c_a_c_h_e___type_def.html#acff8e43b696640a18d2ed5a7dd0daba5">CACHE_TypeDef</a>
@@ -8464,6 +8671,7 @@ $(function() {
 </li>
 <li>rsvd
 : <a class="el" href="struct_h_w___s_h_a256___type_def.html#ae64d741298dbf9d92cb3c985b49b7077">HW_SHA256_TypeDef</a>
+, <a class="el" href="union_i_o_s___o_t_a___t_y_p_e.html#a12144a8b7d28e438d97bd2606d534990">IOS_OTA_TYPE</a>
 , <a class="el" href="struct_m_o_d_e_m___p2___r_e_g5_e.html#ac6afa72984587556813605e9102d667d">MODEM_P2_REG5E</a>
 , <a class="el" href="struct_m_o_d_e_m___p3___r_e_g06.html#ac6afa72984587556813605e9102d667d">MODEM_P3_REG06</a>
 , <a class="el" href="struct_m_o_d_e_m___p6___r_e_g4_e.html#ac6afa72984587556813605e9102d667d">MODEM_P6_REG4E</a>
@@ -8511,36 +8719,24 @@ $(function() {
 , <a class="el" href="union_p_p_e___r_e_g___l_y_rx___k_e_y___m_i_n___type_def.html#a25b7bd55c0afa663eb3cffbb0c453a6f">PPE_REG_LYRx_KEY_MIN_TypeDef</a>
 , <a class="el" href="union_p_p_e___r_e_g___l_y_rx___l_i_n_e___l_e_n___type_def.html#a25b7bd55c0afa663eb3cffbb0c453a6f">PPE_REG_LYRx_LINE_LEN_TypeDef</a>
 , <a class="el" href="union_p_p_e___r_e_g___s_e_c_u_r_e___type_def.html#a25b7bd55c0afa663eb3cffbb0c453a6f">PPE_REG_SECURE_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___b_u_s___e_r_r___d_e_t_a_i_l___type_def.html#a0a08aa8caf0ecf4c24281fec4ee15ed9">PPEV2_REG_BUS_ERR_DETAIL_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___d_i_v0___e_r_r___d_e_t_a_i_l___type_def.html#a0a08aa8caf0ecf4c24281fec4ee15ed9">PPEV2_REG_DIV0_ERR_DETAIL_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___i_n_t_r___c_l_r___type_def.html#a0a08aa8caf0ecf4c24281fec4ee15ed9">PPEV2_REG_INTR_CLR_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___i_n_t_r___m_a_s_k___type_def.html#a0a08aa8caf0ecf4c24281fec4ee15ed9">PPEV2_REG_INTR_MASK_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___i_n_t_r___r_a_w___type_def.html#a0a08aa8caf0ecf4c24281fec4ee15ed9">PPEV2_REG_INTR_RAW_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___i_n_t_r___s_t_a_t_u_s___type_def.html#a0a08aa8caf0ecf4c24281fec4ee15ed9">PPEV2_REG_INTR_STATUS_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_y_r0___b_u_s___c_f_g___type_def.html#a0a08aa8caf0ecf4c24281fec4ee15ed9">PPEV2_REG_LYR0_BUS_CFG_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_y_r0___h_s___c_f_g___type_def.html#a0a08aa8caf0ecf4c24281fec4ee15ed9">PPEV2_REG_LYR0_HS_CFG_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_y_r0___p_i_c___c_f_g___type_def.html#a0a08aa8caf0ecf4c24281fec4ee15ed9">PPEV2_REG_LYR0_PIC_CFG_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_y_rx___b_u_s___c_f_g___type_def.html#a0a08aa8caf0ecf4c24281fec4ee15ed9">PPEV2_REG_LYRx_BUS_CFG_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_y_rx___h_s___c_f_g___type_def.html#a0a08aa8caf0ecf4c24281fec4ee15ed9">PPEV2_REG_LYRx_HS_CFG_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_y_rx___k_e_y___m_a_x___type_def.html#a0a08aa8caf0ecf4c24281fec4ee15ed9">PPEV2_REG_LYRx_KEY_MAX_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_y_rx___k_e_y___m_i_n___type_def.html#a0a08aa8caf0ecf4c24281fec4ee15ed9">PPEV2_REG_LYRx_KEY_MIN_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___s_e_c_u_r_e___type_def.html#a0a08aa8caf0ecf4c24281fec4ee15ed9">PPEV2_REG_SECURE_TypeDef</a>
 , <a class="el" href="struct_r_a_n___g_e_n___type_def.html#ae64d741298dbf9d92cb3c985b49b7077">RAN_GEN_TypeDef</a>
 , <a class="el" href="union_r_f___m_o_d_e___v_a_l_i_d___t_y_p_e.html#a12144a8b7d28e438d97bd2606d534990">RF_MODE_VALID_TYPE</a>
 , <a class="el" href="union_r_f_c___p0___r_e_g04.html#ac6afa72984587556813605e9102d667d">RFC_P0_REG04</a>
 , <a class="el" href="union_r_f_c___p_i___v_e_n_d_o_r___r_e_g.html#ac85388da58e586ae119667e0bb2622ec">RFC_PI_VENDOR_REG</a>
 , <a class="el" href="struct_r_x_i300___typedef.html#ae64d741298dbf9d92cb3c985b49b7077">RXI300_Typedef</a>
-, <a class="el" href="union_s_e_g_c_o_m__com__pin__cfg.html#a0a08aa8caf0ecf4c24281fec4ee15ed9">SEGCOM_com_pin_cfg</a>
+, <a class="el" href="struct_s_e_g_c_o_m__com__pin__cfg.html#a0a08aa8caf0ecf4c24281fec4ee15ed9">SEGCOM_com_pin_cfg</a>
 , <a class="el" href="group___x2_g___s_e_g_c_o_m.html#gadf42c4b0fc355f7e6178eb99ca35ad54">SEGCOM_CR_TypeDef</a>
 , <a class="el" href="group___x2_g___s_e_g_c_o_m.html#ga0a08aa8caf0ecf4c24281fec4ee15ed9">SEGCOM_LCD_CR_TypeDef</a>
-, <a class="el" href="group___x2_g___s_e_g_c_o_m.html#ga0a08aa8caf0ecf4c24281fec4ee15ed9">SEGCOM_LCD_FCR_TypeDef</a>
-, <a class="el" href="union_s_e_g_c_o_m___l_c_d___s_r___type_def.html#a25b7bd55c0afa663eb3cffbb0c453a6f">SEGCOM_LCD_SR_TypeDef</a>
+, <a class="el" href="union_s_e_g_c_o_m___l_c_d___f_c_r___type_def.html#a25b7bd55c0afa663eb3cffbb0c453a6f">SEGCOM_LCD_FCR_TypeDef</a>
+, <a class="el" href="group___x2_g___s_e_g_c_o_m.html#ga0a08aa8caf0ecf4c24281fec4ee15ed9">SEGCOM_LCD_SR_TypeDef</a>
 </li>
 <li>RSVD
 : <a class="el" href="struct_so_c___v_e_n_d_o_r___r_e_g___type_def.html#abc7b3783a455256f84885b4c953b5488">SoC_VENDOR_REG_TypeDef</a>
 </li>
 <li>rsvd
 : <a class="el" href="struct_so_c___v_e_n_d_o_r___r_e_g___type_def.html#ae64d741298dbf9d92cb3c985b49b7077">SoC_VENDOR_REG_TypeDef</a>
+, <a class="el" href="union_s_p_p___d_e_v_i_c_e___i_n_f_o.html#a583d0edd77366be19d136dd07da4c5f7">SPP_DEVICE_INFO</a>
+, <a class="el" href="union_s_p_p___d_e_v_i_c_e___i_n_f_o___m_o_d_e.html#a12144a8b7d28e438d97bd2606d534990">SPP_DEVICE_INFO_MODE</a>
 </li>
 <li>RSVD
 : <a class="el" href="struct_s_y_s___b_l_k_c_t_r_l___type_def.html#abdc78c3ee6d94fa75a6abea218bb976e">SYS_BLKCTRL_TypeDef</a>
@@ -8604,12 +8800,16 @@ $(function() {
 </li>
 <li>RSVD0
 : <a class="el" href="struct_a_o_n___w_d_g___type_def.html#a09861ebc5f718f46394bf5aa71b63f3a">AON_WDG_TypeDef</a>
-, <a class="el" href="struct_g_d_m_a___channel_type_def.html#a09861ebc5f718f46394bf5aa71b63f3a">GDMA_ChannelTypeDef</a>
+</li>
+<li>rsvd0
+: <a class="el" href="union_f_m_c___s_p_i_c___a_c_c_e_s_s___i_n_f_o.html#a6c6bfd6626cf591e245c5306a0944d7f">FMC_SPIC_ACCESS_INFO</a>
+</li>
+<li>RSVD0
+: <a class="el" href="struct_g_d_m_a___channel_type_def.html#a09861ebc5f718f46394bf5aa71b63f3a">GDMA_ChannelTypeDef</a>
 , <a class="el" href="struct_g_d_m_a___type_def.html#a09861ebc5f718f46394bf5aa71b63f3a">GDMA_TypeDef</a>
 </li>
 <li>rsvd0
-: <a class="el" href="struct_h_w___a_e_s___type_def.html#afca255f9f3cf589314ed5b45e62747a7">HW_AES_TypeDef</a>
-, <a class="el" href="struct_h_w___r_s_a___type_def.html#acc3a7f833140e99f492f3c92f7321d5b">HW_RSA_TypeDef</a>
+: <a class="el" href="struct_h_w___r_s_a___type_def.html#acc3a7f833140e99f492f3c92f7321d5b">HW_RSA_TypeDef</a>
 , <a class="el" href="struct_h_w___s_h_a256___type_def.html#afca255f9f3cf589314ed5b45e62747a7">HW_SHA256_TypeDef</a>
 </li>
 <li>RSVD0
@@ -8640,7 +8840,10 @@ $(function() {
 : <a class="el" href="struct_s_p_i3_w_i_r_e___type_def.html#a74ba2bef95223644fd9f397588123b76">SPI3WIRE_TypeDef</a>
 </li>
 <li>rsvd0
-: <a class="el" href="group___b_t___s_y_s_c_a_l_l___exported___functions.html#ga6c6bfd6626cf591e245c5306a0944d7f">T_BT_LE_ISO_SYNC_REF_AP_INFO</a>
+: <a class="el" href="struct_t___b_t___l_e___i_s_o___s_y_n_c___r_e_f___a_p___i_n_f_o.html#a6c6bfd6626cf591e245c5306a0944d7f">T_BT_LE_ISO_SYNC_REF_AP_INFO</a>
+, <a class="el" href="uniont__cfu__offer__version.html#a63855018108e12908c327d22b990b98d">t_cfu_offer_version</a>
+, <a class="el" href="structt__fw__update__special__offer.html#a63855018108e12908c327d22b990b98d">t_fw_update_special_offer</a>
+, <a class="el" href="structt__fw__update__standard__offer.html#a63855018108e12908c327d22b990b98d">t_fw_update_standard_offer</a>
 , <a class="el" href="struct_t_r_n_g___type_def.html#afca255f9f3cf589314ed5b45e62747a7">TRNG_TypeDef</a>
 </li>
 <li>RSVD0
@@ -8663,13 +8866,13 @@ $(function() {
 </li>
 <li>RSVD1
 : <a class="el" href="union___a_o_n___f_a_s_t__0x164___t_y_p_e.html#abac7a0fbecfe9a7dd3724a395e8c675e">_AON_FAST_0x164_TYPE</a>
-, <a class="el" href="union___a_o_n___f_a_s_t__0x172___t_y_p_e.html#abac7a0fbecfe9a7dd3724a395e8c675e">_AON_FAST_0x172_TYPE</a>
 </li>
 <li>rsvd1
 : <a class="el" href="union___a_o_n___f_a_s_t__0x172___t_y_p_e.html#ae8429eeee89115c8a60e2c828c5e8ae4">_AON_FAST_0x172_TYPE</a>
 </li>
 <li>RSVD1
-: <a class="el" href="union___a_o_n___f_a_s_t__0x178___t_y_p_e.html#abac7a0fbecfe9a7dd3724a395e8c675e">_AON_FAST_0x178_TYPE</a>
+: <a class="el" href="union___a_o_n___f_a_s_t__0x172___t_y_p_e.html#abac7a0fbecfe9a7dd3724a395e8c675e">_AON_FAST_0x172_TYPE</a>
+, <a class="el" href="union___a_o_n___f_a_s_t__0x178___t_y_p_e.html#abac7a0fbecfe9a7dd3724a395e8c675e">_AON_FAST_0x178_TYPE</a>
 , <a class="el" href="union___a_o_n___f_a_s_t__0x17_e___t_y_p_e.html#abac7a0fbecfe9a7dd3724a395e8c675e">_AON_FAST_0x17E_TYPE</a>
 , <a class="el" href="union___a_o_n___f_a_s_t__0x180___t_y_p_e.html#abac7a0fbecfe9a7dd3724a395e8c675e">_AON_FAST_0x180_TYPE</a>
 , <a class="el" href="union___a_o_n___f_a_s_t__0x182___t_y_p_e.html#abac7a0fbecfe9a7dd3724a395e8c675e">_AON_FAST_0x182_TYPE</a>
@@ -8704,17 +8907,22 @@ $(function() {
 </li>
 <li>RSVD1
 : <a class="el" href="struct_a_o_n___w_d_g___type_def.html#af847f236caadf27237a39fac5385a7a0">AON_WDG_TypeDef</a>
-, <a class="el" href="struct_g_d_m_a___channel_type_def.html#af847f236caadf27237a39fac5385a7a0">GDMA_ChannelTypeDef</a>
+</li>
+<li>rsvd1
+: <a class="el" href="union_f_m_c___s_p_i_c___a_c_c_e_s_s___i_n_f_o.html#af1ea752d393d8f7e1a3466ff7e470a52">FMC_SPIC_ACCESS_INFO</a>
+</li>
+<li>RSVD1
+: <a class="el" href="struct_g_d_m_a___channel_type_def.html#af847f236caadf27237a39fac5385a7a0">GDMA_ChannelTypeDef</a>
 , <a class="el" href="struct_g_d_m_a___type_def.html#af847f236caadf27237a39fac5385a7a0">GDMA_TypeDef</a>
 , <a class="el" href="struct_g_p_i_o___type_def.html#a42057ef764eaab1cbb4c19316305aa06">GPIO_TypeDef</a>
 </li>
 <li>rsvd1
-: <a class="el" href="struct_h_w___a_e_s___type_def.html#ad65671e108caa7645ac51bfd61dfee53">HW_AES_TypeDef</a>
-, <a class="el" href="struct_h_w___r_s_a___type_def.html#a6e3c0f769e26aaad4173b5199f0da930">HW_RSA_TypeDef</a>
+: <a class="el" href="struct_h_w___r_s_a___type_def.html#ad65671e108caa7645ac51bfd61dfee53">HW_RSA_TypeDef</a>
 , <a class="el" href="struct_h_w___s_h_a256___type_def.html#ad65671e108caa7645ac51bfd61dfee53">HW_SHA256_TypeDef</a>
 </li>
 <li>RSVD1
-: <a class="el" href="struct_l_c_d_c___d_m_a___link_list___type_def.html#a55a58c2fb9ede5a9d5ce21ea2fda1889">LCDC_DMA_LinkList_TypeDef</a>
+: <a class="el" href="struct_j_p_u___type_def.html#ac4f9c8ea619449b76f8ecb6467be9083">JPU_TypeDef</a>
+, <a class="el" href="struct_l_c_d_c___d_m_a___link_list___type_def.html#a55a58c2fb9ede5a9d5ce21ea2fda1889">LCDC_DMA_LinkList_TypeDef</a>
 , <a class="el" href="struct_l_c_d_c___d_m_a___link_list_type_def.html#ac4f9c8ea619449b76f8ecb6467be9083">LCDC_DMA_LinkListTypeDef</a>
 , <a class="el" href="struct_l_c_d_c___handler___type_def.html#a55a58c2fb9ede5a9d5ce21ea2fda1889">LCDC_Handler_TypeDef</a>
 , <a class="el" href="struct_l_c_d_c___ramless___q_s_p_i___type_def.html#ae7068bdf1f82d8158441a79c9af2cd43">LCDC_Ramless_QSPI_TypeDef</a>
@@ -8742,17 +8950,7 @@ $(function() {
 </li>
 <li>RSVD1
 : <a class="el" href="struct_p_p_e___type_def.html#a55a58c2fb9ede5a9d5ce21ea2fda1889">PPE_TypeDef</a>
-</li>
-<li>rsvd1
-: <a class="el" href="union_p_p_e_v2___r_e_g___d_i_v0___e_r_r___d_e_t_a_i_l___type_def.html#a22358c3bfa67e60088f24474b44f3839">PPEV2_REG_DIV0_ERR_DETAIL_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_y_r0___b_u_s___c_f_g___type_def.html#a22358c3bfa67e60088f24474b44f3839">PPEV2_REG_LYR0_BUS_CFG_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_y_r0___h_s___c_f_g___type_def.html#a22358c3bfa67e60088f24474b44f3839">PPEV2_REG_LYR0_HS_CFG_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_y_rx___b_u_s___c_f_g___type_def.html#a22358c3bfa67e60088f24474b44f3839">PPEV2_REG_LYRx_BUS_CFG_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_y_rx___h_s___c_f_g___type_def.html#a22358c3bfa67e60088f24474b44f3839">PPEV2_REG_LYRx_HS_CFG_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_y_rx___p_i_c___c_f_g___type_def.html#a22358c3bfa67e60088f24474b44f3839">PPEV2_REG_LYRx_PIC_CFG_TypeDef</a>
-</li>
-<li>RSVD1
-: <a class="el" href="struct_p_s_r_a_m_c___type_def.html#a15afdcec6676c814a29b5f9642e6991a">PSRAMC_TypeDef</a>
+, <a class="el" href="struct_p_s_r_a_m_c___type_def.html#a15afdcec6676c814a29b5f9642e6991a">PSRAMC_TypeDef</a>
 </li>
 <li>rsvd1
 : <a class="el" href="union_r_f_c___p0___r_e_g04.html#ae8429eeee89115c8a60e2c828c5e8ae4">RFC_P0_REG04</a>
@@ -8771,7 +8969,9 @@ $(function() {
 <li>rsvd1
 : <a class="el" href="uniont__anc__drv__mp__ext__data.html#af1ea752d393d8f7e1a3466ff7e470a52">t_anc_drv_mp_ext_data</a>
 , <a class="el" href="union_t___a_n_c___m_p___e_x_t___d_a_t_a.html#af1ea752d393d8f7e1a3466ff7e470a52">T_ANC_MP_EXT_DATA</a>
-, <a class="el" href="group___b_t___s_y_s_c_a_l_l___exported___functions.html#gaf1ea752d393d8f7e1a3466ff7e470a52">T_BT_LE_ISO_SYNC_REF_AP_INFO</a>
+, <a class="el" href="struct_t___b_t___l_e___i_s_o___s_y_n_c___r_e_f___a_p___i_n_f_o.html#af1ea752d393d8f7e1a3466ff7e470a52">T_BT_LE_ISO_SYNC_REF_AP_INFO</a>
+, <a class="el" href="structt__fw__update__special__offer.html#a3a462f1e59f75324743f69a5cdd36190">t_fw_update_special_offer</a>
+, <a class="el" href="structt__fw__update__standard__offer.html#ac4d50114b697301d74584a6564ffc2ca">t_fw_update_standard_offer</a>
 , <a class="el" href="struct_t_r_n_g___type_def.html#ad65671e108caa7645ac51bfd61dfee53">TRNG_TypeDef</a>
 </li>
 <li>RSVD1
@@ -8779,6 +8979,7 @@ $(function() {
 </li>
 <li>RSVD10
 : <a class="el" href="struct_g_d_m_a___type_def.html#a0251e3a006bb17039ee59e97b3af4d45">GDMA_TypeDef</a>
+, <a class="el" href="struct_j_p_u___type_def.html#aeeccf7b81a7465146b6725ff7439077a">JPU_TypeDef</a>
 , <a class="el" href="struct_l_c_d_c___d_m_a___link_list___type_def.html#ae902c7216a0e817b7fe776e99e83e7f3">LCDC_DMA_LinkList_TypeDef</a>
 </li>
 <li>rsvd11
@@ -8786,9 +8987,11 @@ $(function() {
 </li>
 <li>RSVD11
 : <a class="el" href="struct_g_d_m_a___type_def.html#ab9182b9af0df4efc9b6add15f1891895">GDMA_TypeDef</a>
+, <a class="el" href="struct_j_p_u___type_def.html#ae1a2a5721e10e5be666fdaad1233dd0e">JPU_TypeDef</a>
 </li>
 <li>RSVD12
 : <a class="el" href="struct_g_d_m_a___type_def.html#ab5c9d9ca1a494d566177af867c8cf499">GDMA_TypeDef</a>
+, <a class="el" href="struct_j_p_u___type_def.html#a6b3418317bab48c9a2f54521300eab5b">JPU_TypeDef</a>
 </li>
 <li>RSVD13
 : <a class="el" href="struct_g_d_m_a___type_def.html#add907da9759c54c39b1f8a5c78951246">GDMA_TypeDef</a>
@@ -8838,11 +9041,12 @@ $(function() {
 , <a class="el" href="struct_g_p_i_o___type_def.html#a2b1944623ffdb6a39c87f7e6c56bed85">GPIO_TypeDef</a>
 </li>
 <li>rsvd2
-: <a class="el" href="struct_h_w___r_s_a___type_def.html#ab3edda5477e94e2df8d6d4a50bd41554">HW_RSA_TypeDef</a>
+: <a class="el" href="struct_h_w___r_s_a___type_def.html#a5438aadb22175b52b67eb3314f51e967">HW_RSA_TypeDef</a>
 , <a class="el" href="struct_h_w___s_h_a256___type_def.html#af4e08e240c465df57dc14b96a48e5f46">HW_SHA256_TypeDef</a>
 </li>
 <li>RSVD2
-: <a class="el" href="struct_l_c_d_c___d_m_a___link_list___type_def.html#a612e0a308e6f06c90c2b28d995614ad7">LCDC_DMA_LinkList_TypeDef</a>
+: <a class="el" href="struct_j_p_u___type_def.html#a1dde5cf7fc5e2d1e586c0d9cf77f5268">JPU_TypeDef</a>
+, <a class="el" href="struct_l_c_d_c___d_m_a___link_list___type_def.html#a612e0a308e6f06c90c2b28d995614ad7">LCDC_DMA_LinkList_TypeDef</a>
 , <a class="el" href="struct_l_c_d_c___d_m_a___link_list_type_def.html#a928c54920e978e8adb1d1a01ca840fc8">LCDC_DMA_LinkListTypeDef</a>
 , <a class="el" href="struct_l_c_d_c___handler___type_def.html#a612e0a308e6f06c90c2b28d995614ad7">LCDC_Handler_TypeDef</a>
 , <a class="el" href="struct_p_e_r_i___i_n_t___type_def.html#a612e0a308e6f06c90c2b28d995614ad7">PERI_INT_TypeDef</a>
@@ -8855,7 +9059,6 @@ $(function() {
 </li>
 <li>rsvd2
 : <a class="el" href="union_p_p_e___r_e_g___l_y_rx___p_i_c___c_f_g___type_def.html#ab3edda5477e94e2df8d6d4a50bd41554">PPE_REG_LYRx_PIC_CFG_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_y_rx___p_i_c___c_f_g___type_def.html#a54a3935d233cc860a79966c12c394574">PPEV2_REG_LYRx_PIC_CFG_TypeDef</a>
 </li>
 <li>RSVD2
 : <a class="el" href="struct_p_s_r_a_m_c___type_def.html#acb94b66e66d06baf6e9a7ff032c8447c">PSRAMC_TypeDef</a>
@@ -8867,7 +9070,7 @@ $(function() {
 : <a class="el" href="struct_s_d_i_o___type_def.html#a2dfa4c8138a0fcbf6de17997a7b73d08">SDIO_TypeDef</a>
 </li>
 <li>rsvd2
-: <a class="el" href="group___x2_g___s_e_g_c_o_m.html#ga54a3935d233cc860a79966c12c394574">SEGCOM_LCD_SR_TypeDef</a>
+: <a class="el" href="union_s_e_g_c_o_m___l_c_d___s_r___type_def.html#ab3edda5477e94e2df8d6d4a50bd41554">SEGCOM_LCD_SR_TypeDef</a>
 , <a class="el" href="struct_so_c___v_e_n_d_o_r___r_e_g___type_def.html#af4e08e240c465df57dc14b96a48e5f46">SoC_VENDOR_REG_TypeDef</a>
 </li>
 <li>RSVD2
@@ -8876,8 +9079,9 @@ $(function() {
 <li>rsvd2
 : <a class="el" href="uniont__anc__drv__mp__ext__data.html#a01649710a5ba47d9a93722fc0914127f">t_anc_drv_mp_ext_data</a>
 , <a class="el" href="union_t___a_n_c___m_p___e_x_t___d_a_t_a.html#a01649710a5ba47d9a93722fc0914127f">T_ANC_MP_EXT_DATA</a>
+, <a class="el" href="structt__fw__update__standard__offer.html#a245f1b9e33575d765f74219a01dbb2c6">t_fw_update_standard_offer</a>
 , <a class="el" href="union_t___l_l_a_p_t___e_x_t___d_a_t_a.html#a01649710a5ba47d9a93722fc0914127f">T_LLAPT_EXT_DATA</a>
-, <a class="el" href="struct_t_r_n_g___type_def.html#a46d1162c21eadd89005c33737a24f76e">TRNG_TypeDef</a>
+, <a class="el" href="struct_t_r_n_g___type_def.html#ad00c7e08b5847bf012b9ebecfd9c109b">TRNG_TypeDef</a>
 </li>
 <li>RSVD20
 : <a class="el" href="struct_g_d_m_a___type_def.html#a43d53088d9860f5dc3d6a989f2f2c8cb">GDMA_TypeDef</a>
@@ -8922,14 +9126,14 @@ $(function() {
 : <a class="el" href="struct_h_w___r_s_a___type_def.html#a3c986353b48ab26cdfd039981f6530af">HW_RSA_TypeDef</a>
 </li>
 <li>RSVD3
-: <a class="el" href="struct_l_c_d_c___d_m_a___link_list___type_def.html#a21b40833f2d2ed640562d209207d56e1">LCDC_DMA_LinkList_TypeDef</a>
+: <a class="el" href="struct_j_p_u___type_def.html#a0dd3f8a34253bb9243722ef7fcdc02e7">JPU_TypeDef</a>
+, <a class="el" href="struct_l_c_d_c___d_m_a___link_list___type_def.html#a21b40833f2d2ed640562d209207d56e1">LCDC_DMA_LinkList_TypeDef</a>
 , <a class="el" href="struct_l_c_d_c___d_m_a___link_list_type_def.html#ac79ed6d4bac9e3c9e6fdb8efd3f3f511">LCDC_DMA_LinkListTypeDef</a>
 , <a class="el" href="struct_l_c_d_c___handler___type_def.html#a21b40833f2d2ed640562d209207d56e1">LCDC_Handler_TypeDef</a>
 </li>
 <li>rsvd3
 : <a class="el" href="union_m_o_d_e_m___p_s_d___r_e_p_o_r_t___e_l_e_m_e_n_t___s___t_y_p_e.html#a07de578d3072cd5f85c6740ba107c2f0">MODEM_PSD_REPORT_ELEMENT_S_TYPE</a>
 , <a class="el" href="union_p_p_e___r_e_g___l_y_rx___p_i_c___c_f_g___type_def.html#a3c986353b48ab26cdfd039981f6530af">PPE_REG_LYRx_PIC_CFG_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___l_y_rx___p_i_c___c_f_g___type_def.html#aabc9885ce437df5204f17e0458211ddc">PPEV2_REG_LYRx_PIC_CFG_TypeDef</a>
 </li>
 <li>RSVD3
 : <a class="el" href="struct_p_s_r_a_m_c___type_def.html#a4c0692ff5720fee57682135f5178dd4d">PSRAMC_TypeDef</a>
@@ -8942,7 +9146,8 @@ $(function() {
 : <a class="el" href="struct_s_y_s___b_l_k_c_t_r_l___type_def.html#a21b40833f2d2ed640562d209207d56e1">SYS_BLKCTRL_TypeDef</a>
 </li>
 <li>rsvd3
-: <a class="el" href="struct_t_r_n_g___type_def.html#a60eb41eb7413e5e982cd50df8f84fb5f">TRNG_TypeDef</a>
+: <a class="el" href="structt__fw__update__standard__offer.html#ac67adda688fe24bd9870d837c52793d1">t_fw_update_standard_offer</a>
+, <a class="el" href="struct_t_r_n_g___type_def.html#a71e60b4db5e6b057233dff54bb9d3325">TRNG_TypeDef</a>
 </li>
 <li>RSVD30
 : <a class="el" href="struct_g_d_m_a___type_def.html#a729d31521b04c36a96b9f2beafe3839a">GDMA_TypeDef</a>
@@ -8956,15 +9161,20 @@ $(function() {
 <li>RSVD4
 : <a class="el" href="struct_g_d_m_a___channel_type_def.html#a768c59ebf25fcd86bf2d2f5666b8d65c">GDMA_ChannelTypeDef</a>
 , <a class="el" href="struct_g_d_m_a___type_def.html#a768c59ebf25fcd86bf2d2f5666b8d65c">GDMA_TypeDef</a>
+, <a class="el" href="struct_j_p_u___type_def.html#a611c42d84c8cdc21878f78fec333ff95">JPU_TypeDef</a>
 , <a class="el" href="struct_l_c_d_c___d_m_a___link_list___type_def.html#a366e634336d662b4ab754ad39e6c4a1a">LCDC_DMA_LinkList_TypeDef</a>
 , <a class="el" href="struct_l_c_d_c___handler___type_def.html#a366e634336d662b4ab754ad39e6c4a1a">LCDC_Handler_TypeDef</a>
 , <a class="el" href="struct_p_p_e___r_e_s_u_l_t___l_a_y_e_r___type_def.html#a21c54b635dd4c58dc0810d9e526bd61d">PPE_RESULT_LAYER_TypeDef</a>
 , <a class="el" href="struct_s_d_i_o___type_def.html#a611c42d84c8cdc21878f78fec333ff95">SDIO_TypeDef</a>
 , <a class="el" href="struct_s_y_s___b_l_k_c_t_r_l___type_def.html#acc3dddb6ea68c193cdfe12accc99adbc">SYS_BLKCTRL_TypeDef</a>
 </li>
+<li>rsvd4
+: <a class="el" href="structt__fw__update__standard__offer.html#a11684c397fb8158d82a91cd0ec6dc4e0">t_fw_update_standard_offer</a>
+</li>
 <li>RSVD5
 : <a class="el" href="struct_g_d_m_a___channel_type_def.html#a9498bfd998f842f379b9a04578d9e8cc">GDMA_ChannelTypeDef</a>
 , <a class="el" href="struct_g_d_m_a___type_def.html#a9498bfd998f842f379b9a04578d9e8cc">GDMA_TypeDef</a>
+, <a class="el" href="struct_j_p_u___type_def.html#a0bbf9fff9d13eb0224b02fabd0e4a261">JPU_TypeDef</a>
 , <a class="el" href="struct_l_c_d_c___d_m_a___link_list___type_def.html#aa8565401c0dc46c237b8c73430c30a50">LCDC_DMA_LinkList_TypeDef</a>
 , <a class="el" href="struct_l_c_d_c___handler___type_def.html#aa8565401c0dc46c237b8c73430c30a50">LCDC_Handler_TypeDef</a>
 , <a class="el" href="struct_s_y_s___b_l_k_c_t_r_l___type_def.html#ae31756024bc3dd8ca076ba1d64717cb9">SYS_BLKCTRL_TypeDef</a>
@@ -8972,25 +9182,30 @@ $(function() {
 <li>RSVD6
 : <a class="el" href="struct_g_d_m_a___channel_type_def.html#a7f69c298e41512e78dd4c9233cb6255f">GDMA_ChannelTypeDef</a>
 , <a class="el" href="struct_g_d_m_a___type_def.html#a7f69c298e41512e78dd4c9233cb6255f">GDMA_TypeDef</a>
+, <a class="el" href="struct_j_p_u___type_def.html#ae5bf84de3c46b142fb29487d795f620d">JPU_TypeDef</a>
 , <a class="el" href="struct_l_c_d_c___d_m_a___link_list___type_def.html#a33e87fc7551363afb5f721627222478d">LCDC_DMA_LinkList_TypeDef</a>
 </li>
 <li>RSVD7
 : <a class="el" href="struct_g_d_m_a___channel_type_def.html#ac4c6d4c3385048f9a4699c7c24196f19">GDMA_ChannelTypeDef</a>
 , <a class="el" href="struct_g_d_m_a___type_def.html#ac4c6d4c3385048f9a4699c7c24196f19">GDMA_TypeDef</a>
+, <a class="el" href="struct_j_p_u___type_def.html#a660674c586cbdb9daa67b5f9787b7be5">JPU_TypeDef</a>
 , <a class="el" href="struct_l_c_d_c___d_m_a___link_list___type_def.html#af64c893586a563bb7202de35cd607ad2">LCDC_DMA_LinkList_TypeDef</a>
 , <a class="el" href="struct_s_y_s___b_l_k_c_t_r_l___type_def.html#aea180f9e51c2526440182c54e359ccbe">SYS_BLKCTRL_TypeDef</a>
 </li>
 <li>RSVD8
 : <a class="el" href="struct_g_d_m_a___type_def.html#a0c39a60879641661939ff96923649391">GDMA_TypeDef</a>
+, <a class="el" href="struct_j_p_u___type_def.html#a5dbf8ca0ab961efc593e3b9c32527351">JPU_TypeDef</a>
 , <a class="el" href="struct_l_c_d_c___d_m_a___link_list___type_def.html#a33fa62433391bd635c2d5ffecad19318">LCDC_DMA_LinkList_TypeDef</a>
 , <a class="el" href="struct_s_y_s___b_l_k_c_t_r_l___type_def.html#a977e699fd86eea5aacab01bce90d5c42">SYS_BLKCTRL_TypeDef</a>
 </li>
 <li>RSVD9
 : <a class="el" href="struct_g_d_m_a___type_def.html#aafa5f0aded812c5efe90073cede841fc">GDMA_TypeDef</a>
+, <a class="el" href="struct_j_p_u___type_def.html#a3ebef4f5683a9bca9f027837d9629d8a">JPU_TypeDef</a>
 , <a class="el" href="struct_l_c_d_c___d_m_a___link_list___type_def.html#a2e568c0de2f61eef2cc8e620ae490458">LCDC_DMA_LinkList_TypeDef</a>
 </li>
 <li>RSVD_0
-: <a class="el" href="struct_i2_s___type_def.html#acd78b3f14924caa1f8c1fec876cd504d">I2S_TypeDef</a>
+: <a class="el" href="struct___x3_d___i2_s___type_def.html#a757fb9c16b441a8dd6e1626eb9cb5b72">_X3D_I2S_TypeDef</a>
+, <a class="el" href="struct___x3_e___i2_s___type_def.html#acd78b3f14924caa1f8c1fec876cd504d">_X3E_I2S_TypeDef</a>
 , <a class="el" href="struct_so_c___v_e_n_d_o_r___r_e_g___type_def.html#a757fb9c16b441a8dd6e1626eb9cb5b72">SoC_VENDOR_REG_TypeDef</a>
 </li>
 <li>RSVD_0C
@@ -9033,37 +9248,49 @@ $(function() {
 : <a class="el" href="struct_s_y_s___b_l_k_c_t_r_l___type_def.html#a972dfab92a3a6aec4fbf371cf00acd12">SYS_BLKCTRL_TypeDef</a>
 </li>
 <li>RSVD_1
-: <a class="el" href="struct_i2_s___type_def.html#a8a80a09b129b4e695a47ea87108596a1">I2S_TypeDef</a>
+: <a class="el" href="struct___x3_d___i2_s___type_def.html#a8a80a09b129b4e695a47ea87108596a1">_X3D_I2S_TypeDef</a>
+, <a class="el" href="struct___x3_e___i2_s___type_def.html#a8a80a09b129b4e695a47ea87108596a1">_X3E_I2S_TypeDef</a>
 , <a class="el" href="struct_so_c___v_e_n_d_o_r___r_e_g___type_def.html#a2ebd97ecefdffaa74ed722aabe0b53db">SoC_VENDOR_REG_TypeDef</a>
 </li>
 <li>rsvd_1
 : <a class="el" href="union_t___a_n_c___d_r_v___l_o_g___e_n_a_b_l_e.html#a635c308154da37733be13c9454e7df31">T_ANC_DRV_LOG_ENABLE</a>
 </li>
 <li>RSVD_2
-: <a class="el" href="struct_i2_s___type_def.html#a8f8f38f5480f94b3d50cfa629dbcce7a">I2S_TypeDef</a>
+: <a class="el" href="struct___x3_d___i2_s___type_def.html#a8f8f38f5480f94b3d50cfa629dbcce7a">_X3D_I2S_TypeDef</a>
+, <a class="el" href="struct___x3_e___i2_s___type_def.html#a8f8f38f5480f94b3d50cfa629dbcce7a">_X3E_I2S_TypeDef</a>
 , <a class="el" href="struct_so_c___v_e_n_d_o_r___r_e_g___type_def.html#ac22bd714e458b416a94e73497358916e">SoC_VENDOR_REG_TypeDef</a>
 </li>
 <li>rsvd_2
 : <a class="el" href="union_t___a_n_c___d_r_v___l_o_g___e_n_a_b_l_e.html#ae46a885b308d487d62e5ba3217cb39b6">T_ANC_DRV_LOG_ENABLE</a>
 </li>
 <li>RSVD_3
-: <a class="el" href="struct_i2_s___type_def.html#a0f091cd130694d7c8d9b01b5d6ec6443">I2S_TypeDef</a>
+: <a class="el" href="struct___x3_d___i2_s___type_def.html#acdfff1347c3e7619e31720c6d13b01b5">_X3D_I2S_TypeDef</a>
+, <a class="el" href="struct___x3_e___i2_s___type_def.html#ace8eb6bc6386f80f2e92dfee55e4cdab">_X3E_I2S_TypeDef</a>
 </li>
 <li>RSVD_4
-: <a class="el" href="struct_i2_s___type_def.html#abbf2b6b01b3a88df21903e5297c598ff">I2S_TypeDef</a>
+: <a class="el" href="struct___x3_d___i2_s___type_def.html#a243348279c6978b8ec8beb4b03b98dd0">_X3D_I2S_TypeDef</a>
+, <a class="el" href="struct___x3_e___i2_s___type_def.html#a85f948a7df606b856dd903315bbb77ad">_X3E_I2S_TypeDef</a>
 </li>
 <li>RSVD_5
-: <a class="el" href="struct_i2_s___type_def.html#ae274a416e7190b8bf3159eabe1955ea4">I2S_TypeDef</a>
+: <a class="el" href="struct___x3_d___i2_s___type_def.html#a2023f3a0a2a2cfb5bcfa270777c4017c">_X3D_I2S_TypeDef</a>
+, <a class="el" href="struct___x3_e___i2_s___type_def.html#adde1212dfada096b3e304d132ed81c8c">_X3E_I2S_TypeDef</a>
 </li>
 <li>RSVD_6
-: <a class="el" href="struct_i2_s___type_def.html#adabe57bf3cafbf1d932de4a9058922d4">I2S_TypeDef</a>
+: <a class="el" href="struct___x3_d___i2_s___type_def.html#a5606024142135b5b34a59e06d3a82592">_X3D_I2S_TypeDef</a>
+, <a class="el" href="struct___x3_e___i2_s___type_def.html#af7dba1ec450f21de827e9a7a4acc4483">_X3E_I2S_TypeDef</a>
 </li>
 <li>rsvd_group_info
-: <a class="el" href="structt__dsp__image.html#a9363b6b1a8d204e699e9dcd9c5980094">t_dsp_image</a>
-, <a class="el" href="struct_t___d_s_p___i_m_a_g_e.html#a9363b6b1a8d204e699e9dcd9c5980094">T_DSP_IMAGE</a>
+: <a class="el" href="struct_t___d_s_p___i_m_a_g_e.html#a9363b6b1a8d204e699e9dcd9c5980094">T_DSP_IMAGE</a>
 </li>
 <li>rsvd_slot
 : <a class="el" href="struct_t___a_p_p___b_t___s_n_i_f_f_i_n_g___p_a_r_a_m.html#a34f45ce4c01d537127beb19e046b0204">T_APP_BT_SNIFFING_PARAM</a>
+</li>
+<li>rsvd_slots
+: <a class="el" href="structt__bt__event__param__traffic__qos__cmpl.html#af54272342e8f526d92fcc1ddcd6adef7">t_bt_event_param_traffic_qos_cmpl</a>
+, <a class="el" href="structt__bt__traffic__qos__param.html#af54272342e8f526d92fcc1ddcd6adef7">t_bt_traffic_qos_param</a>
+</li>
+<li>rt_jdi_mip_start
+: <a class="el" href="union_j_d_i___c_t_l0___type_def.html#a3bac7db46940ecc63e836090cd08370a">JDI_CTL0_TypeDef</a>
 </li>
 <li>rtc_in_sel
 : <a class="el" href="union___a_o_n___f_a_s_t__0x1_f_e___t_y_p_e.html#a1962fe9d15448fd8e6179b9ec2481401">_AON_FAST_0x1FE_TYPE</a>
@@ -9104,7 +9331,6 @@ $(function() {
 </li>
 <li>rtl_ver
 : <a class="el" href="union_p_p_e___r_e_g___r_t_l___v_e_r___type_def.html#af7f90ac17089c0df633203ae98c1aee6">PPE_REG_RTL_VER_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___r_t_l___v_e_r___type_def.html#aa837f254f4679a194f128ca1e3349e87">PPEV2_REG_RTL_VER_TypeDef</a>
 </li>
 <li>RTLVER
 : <a class="el" href="struct_a_d_c___type_def.html#ae2803e0fb49fe5541e526df059bde11e">ADC_TypeDef</a>
@@ -9123,7 +9349,6 @@ $(function() {
 </li>
 <li>run_state
 : <a class="el" href="union_p_p_e___r_e_g___g_l_b___s_t_a_t_u_s___type_def.html#afb90b0b3847688874eec975794d79e29">PPE_REG_GLB_STATUS_TypeDef</a>
-, <a class="el" href="union_p_p_e_v2___r_e_g___g_l_b___s_t_a_t_u_s___type_def.html#a7252705bd7ee85267552bf640631e4f9">PPEV2_REG_GLB_STATUS_TypeDef</a>
 </li>
 <li>RVD0
 : <a class="el" href="union_r_e_g___a_o_n___f_w___o_n_r_e_g___s.html#adbd6033e7a713b83b1ffb5aaa83c9407">REG_AON_FW_ONREG_S</a>
@@ -9171,7 +9396,7 @@ $(function() {
 : <a class="el" href="struct_t___a_p_p___c_f_g___c_o_n_s_t.html#a7887ca9e8603ca42d92c58e6c468169b">T_APP_CFG_CONST</a>
 </li>
 <li>rws_key_mapping
-: <a class="el" href="struct_t___a_p_p___c_f_g___c_o_n_s_t.html#a6a4fd1f83aec9d2b26eeb2674c881653">T_APP_CFG_CONST</a>
+: <a class="el" href="struct_t___a_p_p___c_f_g___c_o_n_s_t.html#a1578b8ad70b1c0f8160dea9691489f00">T_APP_CFG_CONST</a>
 </li>
 <li>rws_linkloss_linkback_timeout
 : <a class="el" href="struct_t___a_p_p___c_f_g___c_o_n_s_t.html#a5a1d9f46fbe4b970b512aadbb54a5eb9">T_APP_CFG_CONST</a>
@@ -9211,13 +9436,14 @@ $(function() {
 : <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___s_r___type_def.html#a091a76316cb0f2ff0f7755f372029220">LCDC_HANDLER_DMA_FIFO_SR_TypeDef</a>
 </li>
 <li>rx_auto_done_int_clr
-: <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___i_c_r___type_def.html#ad685fa66225d88477aed0cbd7384d4fc">LCDC_HANDLER_DMA_FIFO_ICR_TypeDef</a>
+: <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___i_c_r___type_def.html#a924d4949beb4a218cbacd3fc93fbad58">LCDC_HANDLER_DMA_FIFO_ICR_TypeDef</a>
 </li>
 <li>rx_auto_done_int_msk
-: <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___i_m_r___type_def.html#a98f3973ae5cc59a400608f122c7e74d6">LCDC_HANDLER_DMA_FIFO_IMR_TypeDef</a>
+: <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___i_m_r___type_def.html#af6410b45f1d05129f1f74495383a209c">LCDC_HANDLER_DMA_FIFO_IMR_TypeDef</a>
 </li>
 <li>RX_BCLK
-: <a class="el" href="struct_i2_s___type_def.html#a245fc193b19be13cd48eca7167b050f1">I2S_TypeDef</a>
+: <a class="el" href="struct___x3_d___i2_s___type_def.html#a245fc193b19be13cd48eca7167b050f1">_X3D_I2S_TypeDef</a>
+, <a class="el" href="struct___x3_e___i2_s___type_def.html#a245fc193b19be13cd48eca7167b050f1">_X3E_I2S_TypeDef</a>
 </li>
 <li>rx_buf_size
 : <a class="el" href="structt__console__param.html#ae01327dd23f7bb0d4bba2076cddc61ad">t_console_param</a>
@@ -9234,22 +9460,22 @@ $(function() {
 </li>
 <li>rx_cmd_seqn
 : <a class="el" href="struct_t___a_p_p___b_r___l_i_n_k.html#aff858c9f9b643444352667e13834298b">T_APP_BR_LINK</a>
-, <a class="el" href="structt__app__br__link.html#aff858c9f9b643444352667e13834298b">t_app_br_link</a>
 , <a class="el" href="struct_t___a_p_p___l_e___l_i_n_k.html#aff858c9f9b643444352667e13834298b">T_APP_LE_LINK</a>
-, <a class="el" href="structt__app__le__link.html#aff858c9f9b643444352667e13834298b">t_app_le_link</a>
 </li>
 <li>RX_CNT
 : <a class="el" href="struct_i_f8080___type_def.html#a08aa47b745381158f930693c1ff14bc6">IF8080_TypeDef</a>
 , <a class="el" href="struct_l_c_d_c___handler___type_def.html#abe4a00406fd973cc39751a78030928c0">LCDC_Handler_TypeDef</a>
 </li>
 <li>RX_CNT_CTRL
-: <a class="el" href="struct_i2_s___type_def.html#af22672a4068369257374c64c3fd7c546">I2S_TypeDef</a>
+: <a class="el" href="struct___x3_d___i2_s___type_def.html#af22672a4068369257374c64c3fd7c546">_X3D_I2S_TypeDef</a>
+, <a class="el" href="struct___x3_e___i2_s___type_def.html#af22672a4068369257374c64c3fd7c546">_X3E_I2S_TypeDef</a>
 </li>
 <li>RX_CNT_INT_SEL
 : <a class="el" href="struct_i_r___type_def.html#a807888a496f90ecffb7c0e4c38dedf2f">IR_TypeDef</a>
 </li>
 <li>RX_CNT_VAL
-: <a class="el" href="struct_i2_s___type_def.html#afa2e89d28e746df21be8e17383fdd351">I2S_TypeDef</a>
+: <a class="el" href="struct___x3_d___i2_s___type_def.html#afa2e89d28e746df21be8e17383fdd351">_X3D_I2S_TypeDef</a>
+, <a class="el" href="struct___x3_e___i2_s___type_def.html#afa2e89d28e746df21be8e17383fdd351">_X3E_I2S_TypeDef</a>
 </li>
 <li>RX_CONFIG
 : <a class="el" href="struct_i_r___type_def.html#a9b1a173b5c8cb4b91806a9fb2b484060">IR_TypeDef</a>
@@ -9258,7 +9484,8 @@ $(function() {
 : <a class="el" href="struct_t___c_o_n_s_o_l_e___p_a_r_s_e_r.html#a7f54806bef3aba1005672eb2a069ed35">T_CONSOLE_PARSER</a>
 </li>
 <li>rx_data
-: <a class="el" href="union_t___t_r_a_n_s_m_i_t___s_r_v___m_s_g___d_a_t_a.html#a4b9dffebfe534f0fff14456de293d7f3">T_TRANSMIT_SRV_MSG_DATA</a>
+: <a class="el" href="union_t___c_h_a_t_g_p_t___s_r_v___m_s_g___d_a_t_a.html#a6caecc2d9edf30203d3894e55cc02200">T_CHATGPT_SRV_MSG_DATA</a>
+, <a class="el" href="union_t___t_r_a_n_s_m_i_t___s_r_v___m_s_g___d_a_t_a.html#a4b9dffebfe534f0fff14456de293d7f3">T_TRANSMIT_SRV_MSG_DATA</a>
 </li>
 <li>rx_data_length
 : <a class="el" href="structt__sport__trx__cfg.html#a5b0129b76c2ca5b4f205140ca92b3577">t_sport_trx_cfg</a>
@@ -9267,7 +9494,11 @@ $(function() {
 : <a class="el" href="struct_i_d_u___d_m_a__config.html#a8ca323e9abd38330279b57af90bda0b3">IDU_DMA_config</a>
 </li>
 <li>rx_dma_enable
-: <a class="el" href="union_r_x___f_i_f_o___d_m_a___t_h_r_e_s_h_o_l_d___type_def.html#a3b11b22433ba9152602b575fb5c27011">RX_FIFO_DMA_THRESHOLD_TypeDef</a>
+: <a class="el" href="union_i_d_u___r_x___f_i_f_o___d_m_a___t_h_r_e_s_h_o_l_d___type_def.html#a3b11b22433ba9152602b575fb5c27011">IDU_RX_FIFO_DMA_THRESHOLD_TypeDef</a>
+, <a class="el" href="union_j_d_i___r_x___f_i_f_o___d_m_a___t_h_r_e_s_h_o_l_d___type_def.html#ac06ca1bd3a7979e6a103a5f4b2cc2094">JDI_RX_FIFO_DMA_THRESHOLD_TypeDef</a>
+</li>
+<li>RX_DMA_Enable
+: <a class="el" href="struct_j_d_i___srtuct_init___type_def.html#a6ea950adfe4b9afcc296d564faf65e52">JDI_SrtuctInit_TypeDef</a>
 </li>
 <li>rx_dmac_en
 : <a class="el" href="union_d_b_i_c___d_m_a_c_r___type_def.html#a283f618616a3c5ad1ed911b8ac6f0c6c">DBIC_DMACR_TypeDef</a>
@@ -9278,36 +9509,49 @@ $(function() {
 <li>RX_ESCAPE_READ_1
 : <a class="el" href="struct_d_p_h_y___type_def.html#a854e0a609fc20478db7efd7a129c4a33">DPHY_TypeDef</a>
 </li>
+<li>rx_fifo
+: <a class="el" href="union_i_d_u___r_x___f_i_f_o___type_def.html#a5bbfd5062f28db1b0d8a51cd6b16c523">IDU_RX_FIFO_TypeDef</a>
+</li>
 <li>RX_FIFO
 : <a class="el" href="struct_i_d_u___type_def.html#a08b6aea6ccb20821ac880c772e97767c">IDU_TypeDef</a>
 , <a class="el" href="struct_i_r___type_def.html#a08b6aea6ccb20821ac880c772e97767c">IR_TypeDef</a>
-</li>
-<li>rx_fifo
-: <a class="el" href="union_r_x___f_i_f_o___type_def.html#a5bbfd5062f28db1b0d8a51cd6b16c523">RX_FIFO_TypeDef</a>
+, <a class="el" href="struct_j_d_i___type_def.html#a08b6aea6ccb20821ac880c772e97767c">JDI_TypeDef</a>
 </li>
 <li>RX_FIFO_0_RD
-: <a class="el" href="struct_i2_s___type_def.html#a3119031b7168f840a82ec4a147b0890c">I2S_TypeDef</a>
+: <a class="el" href="struct___x3_d___i2_s___type_def.html#a3119031b7168f840a82ec4a147b0890c">_X3D_I2S_TypeDef</a>
+, <a class="el" href="struct___x3_e___i2_s___type_def.html#a741f846c6388e99dca29d62ab7a312c5">_X3E_I2S_TypeDef</a>
 </li>
 <li>RX_FIFO_1_RD
-: <a class="el" href="struct_i2_s___type_def.html#aa55e0dad9c00056c5064e022e3be8d78">I2S_TypeDef</a>
+: <a class="el" href="struct___x3_d___i2_s___type_def.html#aa55e0dad9c00056c5064e022e3be8d78">_X3D_I2S_TypeDef</a>
 </li>
 <li>rx_fifo_clear
 : <a class="el" href="union_i_d_u___c_t_l1___type_def.html#af81514cca2ad51783ee02f73ffdfddea">IDU_CTL1_TypeDef</a>
+, <a class="el" href="union_j_d_i___c_t_l1___type_def.html#ac67285b3c348f8ff233d060af59dccba">JDI_CTL1_TypeDef</a>
+</li>
+<li>rx_fifo_data
+: <a class="el" href="union_j_d_i___r_x___f_i_f_o___type_def.html#ac112d5f7327abe8c1df4ebea313254e4">JDI_RX_FIFO_TypeDef</a>
 </li>
 <li>rx_fifo_dma_enable
-: <a class="el" href="struct_i_d_u___init_type_def.html#a882d8445044f49bee26921d350ea5452">IDU_InitTypeDef</a>
+: <a class="el" href="struct_i_d_u___init_type_def.html#ab8b80130d175690476cd38a3d36b7f4e">IDU_InitTypeDef</a>
 </li>
 <li>rx_fifo_dma_threshold
 : <a class="el" href="struct_i_d_u___init_type_def.html#abd31412f898feb8551ba82459f232d99">IDU_InitTypeDef</a>
+, <a class="el" href="union_i_d_u___r_x___f_i_f_o___d_m_a___t_h_r_e_s_h_o_l_d___type_def.html#acc06a0d565458ad520574df1e1abf8df">IDU_RX_FIFO_DMA_THRESHOLD_TypeDef</a>
 </li>
 <li>RX_FIFO_DMA_THRESHOLD
 : <a class="el" href="struct_i_d_u___type_def.html#a3bd9d88f95dada4fdf61f414ccff5673">IDU_TypeDef</a>
 </li>
 <li>rx_fifo_dma_threshold
-: <a class="el" href="union_r_x___f_i_f_o___d_m_a___t_h_r_e_s_h_o_l_d___type_def.html#acc06a0d565458ad520574df1e1abf8df">RX_FIFO_DMA_THRESHOLD_TypeDef</a>
+: <a class="el" href="union_j_d_i___r_x___f_i_f_o___d_m_a___t_h_r_e_s_h_o_l_d___type_def.html#a80d6d172e7d565c931afa78967057b24">JDI_RX_FIFO_DMA_THRESHOLD_TypeDef</a>
+</li>
+<li>RX_FIFO_DMA_Threshold
+: <a class="el" href="struct_j_d_i___srtuct_init___type_def.html#af6f7e6be582a1c039bc3c4b74c2abd3b">JDI_SrtuctInit_TypeDef</a>
+</li>
+<li>RX_FIFO_DMA_THRESHOLD
+: <a class="el" href="struct_j_d_i___type_def.html#a3bd9d88f95dada4fdf61f414ccff5673">JDI_TypeDef</a>
 </li>
 <li>rx_fifo_empty_status
-: <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___s_r___type_def.html#a00e68cde8a228654af2a9d0854104fdd">LCDC_HANDLER_DMA_FIFO_SR_TypeDef</a>
+: <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___s_r___type_def.html#ac8702c92527988aa4aadcce50ae2585c">LCDC_HANDLER_DMA_FIFO_SR_TypeDef</a>
 </li>
 <li>rx_fifo_entry
 : <a class="el" href="union_d_b_i_c___c_t_r_l_r2___type_def.html#a5363030c195ab9f0b93bb36fd13ed758">DBIC_CTRLR2_TypeDef</a>
@@ -9320,68 +9564,93 @@ $(function() {
 </li>
 <li>rx_fifo_int_threshold
 : <a class="el" href="struct_i_d_u___init_type_def.html#a16ffbe2bf9560952ff5f9c75c2065e3e">IDU_InitTypeDef</a>
+, <a class="el" href="union_i_d_u___r_x___f_i_f_o___i_n_t___t_h_r_e_s_h_o_l_d___type_def.html#a42eb77c8f717ba1c799086f877baa62a">IDU_RX_FIFO_INT_THRESHOLD_TypeDef</a>
 </li>
 <li>RX_FIFO_INT_THRESHOLD
 : <a class="el" href="struct_i_d_u___type_def.html#a1c5ebda15ad3697a2fa8898b3f44d471">IDU_TypeDef</a>
 </li>
 <li>rx_fifo_int_threshold
-: <a class="el" href="union_r_x___f_i_f_o___i_n_t___t_h_r_e_s_h_o_l_d___type_def.html#a42eb77c8f717ba1c799086f877baa62a">RX_FIFO_INT_THRESHOLD_TypeDef</a>
+: <a class="el" href="union_j_d_i___r_x___f_i_f_o___i_n_t___t_h_r_e_s_h_o_l_d___type_def.html#a5bb95e732f2a34b121dc67488795e73e">JDI_RX_FIFO_INT_THRESHOLD_TypeDef</a>
+</li>
+<li>RX_FIFO_Int_Threshold
+: <a class="el" href="struct_j_d_i___srtuct_init___type_def.html#aedbc55ea8efaa0144aade85235b06635">JDI_SrtuctInit_TypeDef</a>
+</li>
+<li>RX_FIFO_INT_THRESHOLD
+: <a class="el" href="struct_j_d_i___type_def.html#a1c5ebda15ad3697a2fa8898b3f44d471">JDI_TypeDef</a>
 </li>
 <li>rx_fifo_map
-: <a class="el" href="struct_i2_s___data_sel_type_def.html#ac7c86b8c09cf1e7dc6696496ca7d16d5">I2S_DataSelTypeDef</a>
-, <a class="el" href="structt__sport__data__sel__cfg.html#acdc638fc90aa549d9830f09d3c9b5f9e">t_sport_data_sel_cfg</a>
+: <a class="el" href="structt__sport__data__sel__cfg.html#acdc638fc90aa549d9830f09d3c9b5f9e">t_sport_data_sel_cfg</a>
+</li>
+<li>rx_fifo_offset
+: <a class="el" href="union_i_d_u___r_x___f_i_f_o___o_f_f_s_e_t___type_def.html#ae3d73769ae6be2b56e618a3a734f2c9d">IDU_RX_FIFO_OFFSET_TypeDef</a>
 </li>
 <li>RX_FIFO_OFFSET
 : <a class="el" href="struct_i_d_u___type_def.html#acdfb8a222ba1aed1306294460a8b230d">IDU_TypeDef</a>
 </li>
 <li>rx_fifo_offset
+: <a class="el" href="union_j_d_i___r_x___f_i_f_o___o_f_f_s_e_t___type_def.html#ae11f9fcd0f8a58d82571d821c022a816">JDI_RX_FIFO_OFFSET_TypeDef</a>
+</li>
+<li>RX_FIFO_OFFSET
+: <a class="el" href="struct_j_d_i___type_def.html#acdfb8a222ba1aed1306294460a8b230d">JDI_TypeDef</a>
+</li>
+<li>rx_fifo_offset
 : <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___o_f_f_s_e_t___type_def.html#ae3d73769ae6be2b56e618a3a734f2c9d">LCDC_HANDLER_DMA_FIFO_OFFSET_TypeDef</a>
-, <a class="el" href="union_r_x___f_i_f_o___o_f_f_s_e_t___type_def.html#ae3d73769ae6be2b56e618a3a734f2c9d">RX_FIFO_OFFSET_TypeDef</a>
 </li>
 <li>rx_fifo_overflow_int
-: <a class="el" href="union_i_d_u___i_n_t___c_f_g__t.html#ab5338d8aff07e45a7965ce20b58020f3">IDU_INT_CFG_t</a>
+: <a class="el" href="struct_i_d_u__interrupt__config.html#ae14dcf70af217ec3a20b5ba02cf79c58">IDU_interrupt_config</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___s_r___type_def.html#a137cbc82eef4a16c7eba11755686a002">LCDC_HANDLER_DMA_FIFO_SR_TypeDef</a>
 </li>
 <li>rx_fifo_overflow_int_clr
-: <a class="el" href="union_i_n_t___c_l_e_a_r___type_def.html#afb6a6483c2b2ed59dbfd7d2705f9836f">INT_CLEAR_TypeDef</a>
+: <a class="el" href="union_i_d_u___i_n_t___c_l_e_a_r___type_def.html#afb6a6483c2b2ed59dbfd7d2705f9836f">IDU_INT_CLEAR_TypeDef</a>
+, <a class="el" href="union_j_d_i___i_n_t___c_l_e_a_r___type_def.html#adcb569b488ee05f6e5f497e2af2c8c0f">JDI_INT_CLEAR_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___i_c_r___type_def.html#afb6a6483c2b2ed59dbfd7d2705f9836f">LCDC_HANDLER_DMA_FIFO_ICR_TypeDef</a>
 </li>
 <li>rx_fifo_overflow_int_en
-: <a class="el" href="union_i_n_t___e_n_a_b_l_e___type_def.html#ae2cbdd770c67f6e131c32b0cab28330b">INT_ENABLE_TypeDef</a>
+: <a class="el" href="union_i_d_u___i_n_t___e_n_a_b_l_e___type_def.html#ae2cbdd770c67f6e131c32b0cab28330b">IDU_INT_ENABLE_TypeDef</a>
+, <a class="el" href="union_j_d_i___i_n_t___e_n_a_b_l_e___type_def.html#a5c2aba5ab78f35aef94b1749f3d642c6">JDI_INT_ENABLE_TypeDef</a>
 </li>
 <li>rx_fifo_overflow_int_msk
-: <a class="el" href="union_i_n_t___m_a_s_k___type_def.html#a5340ede08fe64aedbaae67c8223402d1">INT_MASK_TypeDef</a>
+: <a class="el" href="union_i_d_u___i_n_t___m_a_s_k___type_def.html#a5340ede08fe64aedbaae67c8223402d1">IDU_INT_MASK_TypeDef</a>
+, <a class="el" href="union_j_d_i___i_n_t___m_a_s_k___type_def.html#a7615be3008b7065d0a9a1a6531750a96">JDI_INT_MASK_TypeDef</a>
 , <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___i_m_r___type_def.html#a5340ede08fe64aedbaae67c8223402d1">LCDC_HANDLER_DMA_FIFO_IMR_TypeDef</a>
 </li>
 <li>rx_fifo_overflow_int_raw_status
-: <a class="el" href="union_i_n_t___r_a_w___s_t_a_t_u_s___type_def.html#a0e029eae9cf8079cfd4565189273e372">INT_RAW_STATUS_TypeDef</a>
+: <a class="el" href="union_i_d_u___i_n_t___r_a_w___s_t_a_t_u_s___type_def.html#a0e029eae9cf8079cfd4565189273e372">IDU_INT_RAW_STATUS_TypeDef</a>
+, <a class="el" href="union_j_d_i___i_n_t___r_a_w___s_t_a_t_u_s___type_def.html#ad37dbe15c1005c9059b54ad8529b8db5">JDI_INT_RAW_STATUS_TypeDef</a>
 </li>
 <li>rx_fifo_overflow_int_status
-: <a class="el" href="union_i_n_t___s_t_a_t_u_s___type_def.html#a082c689c40e2c08a3261684e2bbb99de">INT_STATUS_TypeDef</a>
+: <a class="el" href="union_i_d_u___i_n_t___s_t_a_t_u_s___type_def.html#a082c689c40e2c08a3261684e2bbb99de">IDU_INT_STATUS_TypeDef</a>
+, <a class="el" href="union_j_d_i___i_n_t___s_t_a_t_u_s___type_def.html#a36db14f93d84ba678045c8f7116902e7">JDI_INT_STATUS_TypeDef</a>
 </li>
 <li>RX_FIFO_REG0
-: <a class="el" href="struct_i2_s___type_def.html#a7a469ef8149835d9c9d504036d1a963c">I2S_TypeDef</a>
+: <a class="el" href="struct___x3_d___i2_s___type_def.html#a7a469ef8149835d9c9d504036d1a963c">_X3D_I2S_TypeDef</a>
+, <a class="el" href="struct___x3_e___i2_s___type_def.html#a7a469ef8149835d9c9d504036d1a963c">_X3E_I2S_TypeDef</a>
 </li>
 <li>RX_FIFO_REG1
-: <a class="el" href="struct_i2_s___type_def.html#adb537e11ccfd4b415826d2b9bdfc6681">I2S_TypeDef</a>
+: <a class="el" href="struct___x3_d___i2_s___type_def.html#adb537e11ccfd4b415826d2b9bdfc6681">_X3D_I2S_TypeDef</a>
 </li>
 <li>rx_fifo_threshold_int
-: <a class="el" href="union_i_d_u___i_n_t___c_f_g__t.html#a597e6445f431567b55dc8cb9307cdc95">IDU_INT_CFG_t</a>
+: <a class="el" href="struct_i_d_u__interrupt__config.html#a6c4ce0f81d2172bcc3a5102a99fe454c">IDU_interrupt_config</a>
 </li>
 <li>rx_fifo_threshold_int_clr
-: <a class="el" href="union_i_n_t___c_l_e_a_r___type_def.html#a81da90402f777cc770661771e1dcbe6d">INT_CLEAR_TypeDef</a>
+: <a class="el" href="union_i_d_u___i_n_t___c_l_e_a_r___type_def.html#a81da90402f777cc770661771e1dcbe6d">IDU_INT_CLEAR_TypeDef</a>
+, <a class="el" href="union_j_d_i___i_n_t___c_l_e_a_r___type_def.html#a66c4ad9459710dc9a6ff714197cd8d62">JDI_INT_CLEAR_TypeDef</a>
 </li>
 <li>rx_fifo_threshold_int_en
-: <a class="el" href="union_i_n_t___e_n_a_b_l_e___type_def.html#ad28cfd7ec46c2bd45c355c45e403db5e">INT_ENABLE_TypeDef</a>
+: <a class="el" href="union_i_d_u___i_n_t___e_n_a_b_l_e___type_def.html#ad28cfd7ec46c2bd45c355c45e403db5e">IDU_INT_ENABLE_TypeDef</a>
+, <a class="el" href="union_j_d_i___i_n_t___e_n_a_b_l_e___type_def.html#acfa8d1a1374b855379ca017f73c9c958">JDI_INT_ENABLE_TypeDef</a>
 </li>
 <li>rx_fifo_threshold_int_msk
-: <a class="el" href="union_i_n_t___m_a_s_k___type_def.html#a5a7461a9e10d3c5e9add0a43a299e86d">INT_MASK_TypeDef</a>
+: <a class="el" href="union_i_d_u___i_n_t___m_a_s_k___type_def.html#a5a7461a9e10d3c5e9add0a43a299e86d">IDU_INT_MASK_TypeDef</a>
+, <a class="el" href="union_j_d_i___i_n_t___m_a_s_k___type_def.html#afc46b522094c4d48b1915617ec998e86">JDI_INT_MASK_TypeDef</a>
 </li>
 <li>rx_fifo_threshold_int_raw_status
-: <a class="el" href="union_i_n_t___r_a_w___s_t_a_t_u_s___type_def.html#af285b0f2808e6ba7314637dd41005ede">INT_RAW_STATUS_TypeDef</a>
+: <a class="el" href="union_i_d_u___i_n_t___r_a_w___s_t_a_t_u_s___type_def.html#af285b0f2808e6ba7314637dd41005ede">IDU_INT_RAW_STATUS_TypeDef</a>
+, <a class="el" href="union_j_d_i___i_n_t___r_a_w___s_t_a_t_u_s___type_def.html#ab1b615d0d8e041a89cf121c534c2720c">JDI_INT_RAW_STATUS_TypeDef</a>
 </li>
 <li>rx_fifo_threshold_int_status
-: <a class="el" href="union_i_n_t___s_t_a_t_u_s___type_def.html#a180cd6fbebc27d8512479a3e2a81635c">INT_STATUS_TypeDef</a>
+: <a class="el" href="union_i_d_u___i_n_t___s_t_a_t_u_s___type_def.html#a180cd6fbebc27d8512479a3e2a81635c">IDU_INT_STATUS_TypeDef</a>
+, <a class="el" href="union_j_d_i___i_n_t___s_t_a_t_u_s___type_def.html#aa6f5669ef6033865ad205eade4caf698">JDI_INT_STATUS_TypeDef</a>
 </li>
 <li>rx_format_type
 : <a class="el" href="structt__sport__trx__cfg.html#ab61c8a03754694042f6e38941cd6df23">t_sport_trx_cfg</a>
@@ -9404,14 +9673,14 @@ $(function() {
 , <a class="el" href="struct_t___g_a_p___s_c_o___p_a_r_a_m___c_h_a_n_g_e___i_n_f_o.html#a9ce595b3296a1dd2cfd6e8bf3f9360d1">T_GAP_SCO_PARAM_CHANGE_INFO</a>
 </li>
 <li>rx_ndf
-: <a class="el" href="union_d_b_i_c___r_x___n_d_f___type_def.html#a337bd683584cdd6dc8bc9a3d7e8071a0">DBIC_RX_NDF_TypeDef</a>
+: <a class="el" href="union_d_b_i_c___r_x___n_d_f___type_def.html#ab42ffc69cf07dcfa6a0891fefe8c3502">DBIC_RX_NDF_TypeDef</a>
 </li>
 <li>RX_NDF
 : <a class="el" href="struct_l_c_d_c___d_b_i_c___type_def.html#a2cb3bfd001409a0902c38113040fd3a7">LCDC_DBIC_TypeDef</a>
 , <a class="el" href="struct_s_p_i_c___type_def.html#a2cb3bfd001409a0902c38113040fd3a7">SPIC_TypeDef</a>
 </li>
 <li>rx_output_cnt_clr
-: <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___i_c_r___type_def.html#a9000ca8a611818087e96f00390152098">LCDC_HANDLER_DMA_FIFO_ICR_TypeDef</a>
+: <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___d_m_a___f_i_f_o___i_c_r___type_def.html#a36370ba5df38c0bd65f28c0c1928df4c">LCDC_HANDLER_DMA_FIFO_ICR_TypeDef</a>
 </li>
 <li>rx_phy
 : <a class="el" href="struct_t___l_e___a_o_x___c_o_n_n___i_q___r_e_p_o_r_t___i_n_f_o.html#af6f4df0bdb65a0bc41eb5deda9d34600">T_LE_AOX_CONN_IQ_REPORT_INFO</a>
@@ -9429,7 +9698,7 @@ $(function() {
 : <a class="el" href="struct_t___c_o_n_s_o_l_e___p_a_r_s_e_r.html#a4fc9180ac04cfbfe9525e20c5f4c9bbf">T_CONSOLE_PARSER</a>
 </li>
 <li>rx_read_byte_num
-: <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___r_x___l_e_n___type_def.html#a28e6e5e7a9cca492c1effcbb0e6e6cbf">LCDC_HANDLER_RX_LEN_TypeDef</a>
+: <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___r_x___l_e_n___type_def.html#a0a6cfacc93d0a5e792ab4b9af4dcb85d">LCDC_HANDLER_RX_LEN_TypeDef</a>
 </li>
 <li>rx_read_cnt
 : <a class="el" href="union_l_c_d_c___h_a_n_d_l_e_r___r_x___c_n_t___type_def.html#a6e326df8611c3cdf41c859182226bc4c">LCDC_HANDLER_RX_CNT_TypeDef</a>
@@ -9439,6 +9708,9 @@ $(function() {
 </li>
 <li>rx_sample_rate
 : <a class="el" href="structt__sport__trx__cfg.html#a86c3fde2c9faca51272db2efbba8256e">t_sport_trx_cfg</a>
+</li>
+<li>rx_seqn
+: <a class="el" href="struct_t___a_p_p___v_e_n_d_o_r___c_m_d.html#a5c98d4e725a9611670ea8e87efa1085d">T_APP_VENDOR_CMD</a>
 </li>
 <li>RX_SR
 : <a class="el" href="struct_i_r___type_def.html#ad448ea342fbaf6b906a99a6eb89fa095">IR_TypeDef</a>
@@ -9488,10 +9760,10 @@ $(function() {
 : <a class="el" href="union_d_b_i_c___i_m_r___type_def.html#a7bfb3772f023fa2543f28cc3714832a0">DBIC_IMR_TypeDef</a>
 </li>
 <li>rxfir
-: <a class="el" href="union_d_b_i_c___r_i_s_r___type_def.html#a5976855c2a24ad1133032c61f520c973">DBIC_RISR_TypeDef</a>
+: <a class="el" href="union_d_b_i_c___r_i_s_r___type_def.html#a2a1bf32c74bac1b0c6e69dacc762abfa">DBIC_RISR_TypeDef</a>
 </li>
 <li>rxfis
-: <a class="el" href="union_d_b_i_c___i_s_r___type_def.html#aef803bc66ac625b34491d1725000ad82">DBIC_ISR_TypeDef</a>
+: <a class="el" href="union_d_b_i_c___i_s_r___type_def.html#adae382a25da0483643b2ce6f44525df0">DBIC_ISR_TypeDef</a>
 </li>
 <li>rxflr
 : <a class="el" href="union_d_b_i_c___r_x_f_l_r___type_def.html#a12adfe3e4f95c9165e3a3ac8a3f85719">DBIC_RXFLR_TypeDef</a>
@@ -9516,7 +9788,7 @@ $(function() {
 : <a class="el" href="struct_p_h_y___c_f_g.html#ad0ad64bf6178c4e6ca3d04b436f06469">PHY_CFG</a>
 </li>
 <li>rxi300_intr
-: <a class="el" href="struct_so_c___v_e_n_d_o_r___r_e_g___type_def.html#a9e8553a796d8caae46a8d98c45337463">SoC_VENDOR_REG_TypeDef</a>
+: <a class="el" href="struct_so_c___v_e_n_d_o_r___r_e_g___type_def.html#a4143413236e91a2d776f3e428df1c869">SoC_VENDOR_REG_TypeDef</a>
 </li>
 <li>rxi300_intr_en
 : <a class="el" href="struct_so_c___v_e_n_d_o_r___r_e_g___type_def.html#af1bd40fd2298f0ef00526a505a8d6753">SoC_VENDOR_REG_TypeDef</a>
@@ -9525,7 +9797,7 @@ $(function() {
 : <a class="el" href="struct_u_a_r_t___type_def.html#a3c5cffaafbdcd31a648a289978271666">UART_TypeDef</a>
 </li>
 <li>rxoicr
-: <a class="el" href="union_d_b_i_c___r_x_o_i_c_r___type_def.html#a593bc9d9de5177123ea847ccef28e570">DBIC_RXOICR_TypeDef</a>
+: <a class="el" href="union_d_b_i_c___r_x_o_i_c_r___type_def.html#a135289df8c8f816a0633ae36701cd515">DBIC_RXOICR_TypeDef</a>
 </li>
 <li>RXOICR
 : <a class="el" href="struct_l_c_d_c___d_b_i_c___type_def.html#ac4a7fd303abed73d838fbf4d71265fc9">LCDC_DBIC_TypeDef</a>
@@ -9545,7 +9817,7 @@ $(function() {
 : <a class="el" href="struct_u_a_r_t___init_type_def.html#af8d97f58569bf70b54ecc38fc32ca812">UART_InitTypeDef</a>
 </li>
 <li>rxuicr
-: <a class="el" href="union_d_b_i_c___r_x_u_i_c_r___type_def.html#a91fd09ec120c1445abb65f1d85201a44">DBIC_RXUICR_TypeDef</a>
+: <a class="el" href="union_d_b_i_c___r_x_u_i_c_r___type_def.html#a0e63aeea824461639e460a1ddb50dc21">DBIC_RXUICR_TypeDef</a>
 </li>
 <li>RXUICR
 : <a class="el" href="struct_l_c_d_c___d_b_i_c___type_def.html#a86d9ff939271de8ce797024dfa50c5c2">LCDC_DBIC_TypeDef</a>
@@ -9553,7 +9825,7 @@ $(function() {
 , <a class="el" href="struct_s_p_i_c___type_def.html#a86d9ff939271de8ce797024dfa50c5c2">SPIC_TypeDef</a>
 </li>
 <li>rxuim
-: <a class="el" href="union_d_b_i_c___i_m_r___type_def.html#ab90a7d4db7ff8e280d02fbb6d1e87f9e">DBIC_IMR_TypeDef</a>
+: <a class="el" href="union_d_b_i_c___i_m_r___type_def.html#a0ff6fd538060df4420d4c37ad598f4ac">DBIC_IMR_TypeDef</a>
 </li>
 <li>rxuir
 : <a class="el" href="union_d_b_i_c___r_i_s_r___type_def.html#a7d4128f1a9b2a19f6bebf14202fbde7d">DBIC_RISR_TypeDef</a>

@@ -15,8 +15,6 @@
  *                              Header Files
  *============================================================================*/
 #include "trace.h"
-#include <stdlib.h>
-
 #include "rtl876x_rcc.h"
 #include "rtl876x_spi.h"
 #include "rtl876x_nvic.h"
@@ -184,6 +182,7 @@ static void spi_slave_rx_dma_handler(void)
 
     GDMA_INTConfig(SPI_SLAVE_RX_DMA_CHANNEL_NUM, GDMA_INT_Transfer, DISABLE);
     GDMA_ClearINTPendingBit(SPI_SLAVE_RX_DMA_CHANNEL_NUM, GDMA_INT_Transfer);
+    /* It is recommended to post the os msg to the task thread for data processing. */
 
     for (uint16_t i = 0; i < TEST_SIZE / 50; i++)
     {

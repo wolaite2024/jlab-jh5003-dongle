@@ -54,6 +54,13 @@ void app_lea_adv_stop(void);
  */
 void app_lea_adv_update_interval(uint16_t interval);
 
+/**@brief Update BLE advertising interval by hfp call state
+
+ * @param  No parameter.
+ * @return void
+ */
+void app_lea_adv_update_interval_hfp(void);
+
 /**@brief Get state of BLE advertising in lea scenario
 
  * @param  No parameter.

@@ -305,16 +305,13 @@ static void app_spp_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t bu
 
 void app_spp_init(void)
 {
-    /* TODO: Set the right service_num */
-    uint8_t service_num = 1;
-
     if (!(app_cfg_const.supported_profile_mask & SPP_PROFILE_MASK))
     {
         APP_PRINT_WARN0("app_spp_init: not support spp");
         return;
     }
 
-    bt_spp_init(app_cfg_const.spp_link_number, service_num);
+    bt_spp_init();
 
     bt_spp_service_register((uint8_t *)spp_service_class_uuid128, RFC_SPP_CHANN_NUM);
 

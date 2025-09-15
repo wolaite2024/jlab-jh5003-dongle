@@ -43,7 +43,7 @@ static const T_ATTRIB_APPL bas_attr_tbl[] =
 
     /* <<Characteristic>>, .. */
     {
-        ATTRIB_FLAG_VOID,                           /* flags */
+        ATTRIB_FLAG_VALUE_INCL,                           /* flags */
         {                                           /* type_value */
             LO_WORD(GATT_UUID_CHARACTERISTIC),
             HI_WORD(GATT_UUID_CHARACTERISTIC),
@@ -114,7 +114,8 @@ const static uint16_t bas_attr_tbl_size = sizeof(bas_attr_tbl);
 bool bas_send_battery_level_notify(uint16_t conn_handle,
                                    uint8_t service_id, uint8_t battery_level)
 {
-    return gatt_svc_send_data(conn_handle, 0, service_id, GATT_SVC_BAS_BATTERY_LEVEL_INDEX,
+    return gatt_svc_send_data(conn_handle, L2C_FIXED_CID_ATT, service_id,
+                              GATT_SVC_BAS_BATTERY_LEVEL_INDEX,
                               &battery_level, sizeof(battery_level), GATT_PDU_TYPE_NOTIFICATION);
 }
 #endif

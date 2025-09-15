@@ -41,6 +41,9 @@ typedef enum
     BQB_CMD_MCP             = 0x0010,
     BQB_CMD_CCP             = 0x0011,
     BQB_CMD_VCS             = 0x0012,
+    BQB_CMD_PBP             = 0x0013,
+    BQB_CMD_TMAP            = 0x0014,
+    BQB_CMD_HAP             = 0x0015,
 } T_BQB_CMD;
 
 
@@ -172,6 +175,26 @@ typedef enum
 
 #define BQB_ACTION_VCS_UP                       0x01
 #define BQB_ACTION_VCS_DOWN                     0x02
+
+#define BQB_ACTION_PBP_BMR_START                0x01
+#define BQB_ACTION_PBP_BMR_STOP                 0x02
+#define BQB_ACTION_PBP_BROADCAST_CODE           0x03
+
+#define BQB_ACTION_TMAP_ADV_START               0x01
+#define BQB_ACTION_TMAP_ADV_STOP                0x02
+#define BQB_ACTION_TMAP_GAMING_MODE             0x03
+#define BQB_ACTION_TMAP_ORIGINATE_CALL          0x04
+#define BQB_ACTION_TMAP_TERMINATE_CALL          0x05
+
+#define BQB_ACTION_HAP_FEATURE                  0x01
+#define BQB_ACTION_HAP_ACTIVE_INDEX             0x02
+#define BQB_ACTION_HAP_PRESET_NAME              0x03
+#define BQB_ACTION_HAP_PRESET_AVAILABLE         0x04
+#define BQB_ACTION_HAP_PRESET_UNAVAILABLE       0x05
+#define BQB_ACTION_HAP_PRESET_ADD               0x06
+#define BQB_ACTION_HAP_PRESET_DELETE            0x07
+#define BQB_ACTION_HAP_RTK_ADV_START            0x08
+
 /**
   * @brief  Register bqb command.
   * @param  None

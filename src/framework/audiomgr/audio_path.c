@@ -23,7 +23,6 @@
 /* TODO Remove Start */
 #include "bin_loader.h"
 #include "bt_types.h"
-#include "bt_mgr.h"
 #include "dsp_shm.h"
 #include "dsp_driver.h"
 #include "dsp_ipc.h"
@@ -149,16 +148,16 @@ static const uint16_t mix_strategy_map[AUDIO_CATEGORY_NUMBER] =
 {
     /* AUDIO */
     [AUDIO_CATEGORY_AUDIO] =
-    (RECORD_BIT | APT_BIT | VP_BIT | TONE_BIT | LLAPT_BIT | ANC_BIT | VAD_BIT | SIDETONE_BIT),
+    (RECORD_BIT | TONE_BIT | VP_BIT | APT_BIT | LLAPT_BIT | ANC_BIT | VAD_BIT | SIDETONE_BIT),
     /* VOICE */
     [AUDIO_CATEGORY_VOICE] =
-    (VP_BIT | TONE_BIT | LLAPT_BIT | ANC_BIT | SIDETONE_BIT),
+    (TONE_BIT | VP_BIT | LLAPT_BIT | ANC_BIT | SIDETONE_BIT),
     /* RECORD */
     [AUDIO_CATEGORY_RECORD] =
-    (AUDIO_BIT | VP_BIT | TONE_BIT | LLAPT_BIT | ANC_BIT | SIDETONE_BIT),
+    (AUDIO_BIT | TONE_BIT | VP_BIT | LLAPT_BIT | ANC_BIT | SIDETONE_BIT),
     /* ANALOG */
     [AUDIO_CATEGORY_ANALOG] =
-    (VP_BIT | TONE_BIT | LLAPT_BIT | ANC_BIT | SIDETONE_BIT),
+    (TONE_BIT | VP_BIT | LLAPT_BIT | ANC_BIT | SIDETONE_BIT),
 
 #if (TARGET_RTL8753GFE == 1)
     /* TONE */
@@ -169,7 +168,7 @@ static const uint16_t mix_strategy_map[AUDIO_CATEGORY_NUMBER] =
     (RECORD_BIT | LLAPT_BIT | ANC_BIT | SIDETONE_BIT),
     /* APT */
     [AUDIO_CATEGORY_APT] =
-    (VP_BIT | TONE_BIT | ANC_BIT | VAD_BIT | SIDETONE_BIT),
+    (TONE_BIT | VP_BIT | ANC_BIT | VAD_BIT | SIDETONE_BIT),
 #else
 
 #if (CONFIG_REALTEK_AM_AUDIO_STEREO_SUPPORT == 1)
@@ -181,31 +180,30 @@ static const uint16_t mix_strategy_map[AUDIO_CATEGORY_NUMBER] =
     (RECORD_BIT | LLAPT_BIT | ANC_BIT | SIDETONE_BIT),
     /* APT */
     [AUDIO_CATEGORY_APT] =
-    (VP_BIT | TONE_BIT | ANC_BIT | VAD_BIT | SIDETONE_BIT),
+    (TONE_BIT | VP_BIT | ANC_BIT | VAD_BIT | SIDETONE_BIT),
 #else
     /* TONE */
     [AUDIO_CATEGORY_TONE] =
-    (AUDIO_BIT | VOICE_BIT | RECORD_BIT | APT_BIT | LLAPT_BIT | ANC_BIT | SIDETONE_BIT),
+    (AUDIO_BIT | VOICE_BIT | RECORD_BIT | ANALOG_BIT | APT_BIT | LLAPT_BIT | ANC_BIT | SIDETONE_BIT),
     /* VP */
     [AUDIO_CATEGORY_VP] =
-    (AUDIO_BIT | VOICE_BIT | RECORD_BIT | APT_BIT | LLAPT_BIT | ANC_BIT | SIDETONE_BIT),
+    (AUDIO_BIT | VOICE_BIT | RECORD_BIT | ANALOG_BIT | APT_BIT | LLAPT_BIT | ANC_BIT | SIDETONE_BIT),
     /* APT */
     [AUDIO_CATEGORY_APT] =
-    (VP_BIT | TONE_BIT | ANC_BIT | VAD_BIT | AUDIO_BIT | SIDETONE_BIT),
+    (TONE_BIT | VP_BIT | ANC_BIT | VAD_BIT | AUDIO_BIT | SIDETONE_BIT),
 #endif
 
 #endif
-
 
     /* LLAPT */
     [AUDIO_CATEGORY_LLAPT] =
-    (AUDIO_BIT | VOICE_BIT | RECORD_BIT | ANALOG_BIT | VP_BIT | TONE_BIT | VAD_BIT | SIDETONE_BIT),
+    (AUDIO_BIT | VOICE_BIT | RECORD_BIT | ANALOG_BIT | TONE_BIT | VP_BIT | VAD_BIT | SIDETONE_BIT),
     /* ANC */
     [AUDIO_CATEGORY_ANC] =
-    (AUDIO_BIT | VOICE_BIT | RECORD_BIT | ANALOG_BIT | APT_BIT | VP_BIT | TONE_BIT | VAD_BIT | SIDETONE_BIT),
+    (AUDIO_BIT | VOICE_BIT | RECORD_BIT | ANALOG_BIT | TONE_BIT | VP_BIT | APT_BIT | VAD_BIT | SIDETONE_BIT),
     /* VAD */
     [AUDIO_CATEGORY_VAD] =
-    (AUDIO_BIT | APT_BIT | VP_BIT | TONE_BIT | ANALOG_BIT | SIDETONE_BIT),
+    (AUDIO_BIT | ANALOG_BIT | TONE_BIT | VP_BIT | APT_BIT | SIDETONE_BIT),
     /*SIDETONE*/
     [AUDIO_CATEGORY_SIDETONE] =
     (AUDIO_BIT |
@@ -216,30 +214,30 @@ static const uint16_t priority_strategy_map[AUDIO_CATEGORY_NUMBER] =
 {
     /* AUDIO */
     [AUDIO_CATEGORY_AUDIO] =
-    (VOICE_BIT | VP_BIT | TONE_BIT | ANC_BIT | LLAPT_BIT | SIDETONE_BIT),
+    (VOICE_BIT | TONE_BIT | VP_BIT | ANC_BIT | LLAPT_BIT | SIDETONE_BIT),
     /* VOICE */
     [AUDIO_CATEGORY_VOICE] =
-    (VP_BIT | TONE_BIT),
+    (TONE_BIT | VP_BIT),
     /* RECORD */
     [AUDIO_CATEGORY_RECORD] =
     (VOICE_BIT),
     /* ANALOG */
     [AUDIO_CATEGORY_ANALOG] =
-    (VOICE_BIT | VP_BIT | TONE_BIT | SIDETONE_BIT),
+    (VOICE_BIT | TONE_BIT | VP_BIT | SIDETONE_BIT),
     /* TONE */
     [AUDIO_CATEGORY_TONE] = 0,
     /* VP */
     [AUDIO_CATEGORY_VP] = 0,
     /* APT */
     [AUDIO_CATEGORY_APT] =
-    (AUDIO_BIT | VOICE_BIT | VP_BIT | TONE_BIT | SIDETONE_BIT),
+    (AUDIO_BIT | VOICE_BIT | TONE_BIT | VP_BIT | SIDETONE_BIT),
     /* LLAPT */
     [AUDIO_CATEGORY_LLAPT] = 0,
     /* ANC */
     [AUDIO_CATEGORY_ANC] = 0,
     /* VAD */
     [AUDIO_CATEGORY_VAD] =
-    (VOICE_BIT | RECORD_BIT | ANALOG_BIT | APT_BIT | VP_BIT | TONE_BIT | LLAPT_BIT | ANC_BIT),
+    (VOICE_BIT | RECORD_BIT | ANALOG_BIT | TONE_BIT | VP_BIT | APT_BIT | LLAPT_BIT | ANC_BIT),
     /*SIDETONE*/
     [AUDIO_CATEGORY_SIDETONE] = 0,
 };
@@ -4114,6 +4112,32 @@ bool audio_path_sw_sidetone_enable(int16_t gain, uint8_t level)
 bool audio_path_sw_sidetone_disable(void)
 {
     return dsp_ipc_sidetone_set(0, 0, 0);
+}
+
+bool audio_path_decoder_effect_control(T_AUDIO_PATH_HANDLE handle, uint8_t action)
+{
+    T_AUDIO_PATH *path;
+
+    path = (T_AUDIO_PATH *)handle;
+    if (path != NULL)
+    {
+        return dsp_mgr_session_decoder_effect_control(path->dsp_session, action);
+    }
+
+    return false;
+}
+
+bool audio_path_encoder_effect_control(T_AUDIO_PATH_HANDLE handle, uint8_t action)
+{
+    T_AUDIO_PATH *path;
+
+    path = (T_AUDIO_PATH *)handle;
+    if (path != NULL)
+    {
+        return dsp_mgr_session_encoder_effect_control(path->dsp_session, action);
+    }
+
+    return false;
 }
 
 bool audio_path_hw_sidetone_enable(int16_t gain, uint8_t level)

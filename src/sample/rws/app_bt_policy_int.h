@@ -64,6 +64,7 @@ typedef enum
     EVENT_BUD_LINKLOST_TIMEOUT                = 0x29,
     EVENT_BUD_WAIT_COUPLING_TO                = 0x2a,
     EVENT_BUD_ENGAGE_ACTION_ADJUST            = 0x2b,
+    EVENT_LINKBACK_START                      = 0x2f,
     EVENT_SRC_CONN_SUC                        = 0x30,
     EVENT_SRC_CONN_FAIL                       = 0x31,
     EVENT_SRC_CONN_FAIL_ACL_EXIST             = 0x32,
@@ -86,6 +87,7 @@ typedef enum
     EVENT_PROFILE_DISCONN                     = 0x44,
     EVENT_PROFILE_SDP_DISCOV_STOP             = 0x45,
     EVENT_PROFILE_CONN_FAIL                   = 0x46,
+    EVENT_LEA_CONN_TIMEOUT                    = 0x4f,
     EVENT_ROLESWAP                            = 0x50,
     EVENT_ROLE_MASTER                         = 0x51,
     EVENT_ROLE_SLAVE                          = 0x52,
@@ -164,6 +166,7 @@ typedef struct
     bool b2s_connected_vp_is_played;
     T_APP_CALL_STATUS call_status;
     uint8_t tpoll_value;
+    uint16_t remote_hfp_brsf_capability;
 
 #if F_APP_DURIAN_SUPPORT
     uint8_t audio_opus_status;
@@ -267,6 +270,8 @@ typedef enum
 typedef enum
 {
     PRI_REQ_LET_SEC_TO_DISCONN           = 0x01,
+    PRI_REQ_LET_SEC_ENABLE_ADV           = 0x02,
+    PRI_REQ_LET_SEC_DISENABLE_ADV        = 0x03,
 } T_PRI_REQ;
 
 bool app_bt_policy_is_startup_state(void);

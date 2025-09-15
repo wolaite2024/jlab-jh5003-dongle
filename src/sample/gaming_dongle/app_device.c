@@ -36,9 +36,7 @@
 #endif
 
 #if TARGET_RTL8763EAU
-#include "os_timer.h"
 #include "app_usb.h"
-#include "usb_dm.h"
 #endif
 
 #if (AUDIO_TEST_ENABLE == 1)
@@ -88,6 +86,11 @@
 #endif
 #endif
 
+#if F_APP_GAMING_LE_FIX_CHANNEL_SUPPORT
+#include "app_gaming_sync.h"
+#include "gap_fix_chann_conn.h"
+#endif
+
 static uint8_t device_timer_id = 0;
 
 void (*app_power_on_hook)(void) = NULL;
@@ -123,11 +126,7 @@ typedef enum _ACTIVE_CLK_SRC
     CLK_SRC_OSC,
     CLK_SRC_DEF_MAX,
 } ACTIVE_CLK_SRC_TYPE;
-typedef void *TimerHandle_t;
-typedef void (*VOID_FUNC)();
 extern void (*set_clock_output)(ACTIVE_CLK_SRC_TYPE type, bool is_enable);
-extern void (*set_clock_gen)();
-extern TimerHandle_t internal_32k_cal_timer;
 #endif
 typedef enum
 {
@@ -137,32 +136,6 @@ typedef enum
     APP_TIMER_DSP_INIT,
     APP_TIMER_POWER_ON,
 } T_DEVICE_TIMER;
-
-#if TARGET_RTL8763EAU
-void app_device_set_cpu_to_osc(void)
-{
-    os_timer_stop(&internal_32k_cal_timer); // 32k sdmk timer need xtal40 as ref clock
-
-    set_clock_output(CLK_SRC_OSC, true);
-    set_clock_gen(CLK_40M, CLK_SRC_OSC);
-    set_clock_gen(CLK_CPU, CLK_SRC_OSC);
-    set_clock_gen(CLK_SPIC0, CLK_SRC_OSC);
-
-    set_clock_output(CLK_SRC_XTAL, false);
-}
-
-void app_device_set_cpu_to_xtal(void)
-{
-    set_clock_output(CLK_SRC_XTAL, true);
-    set_clock_gen(CLK_SPIC0, CLK_SRC_XTAL);
-    set_clock_gen(CLK_CPU, CLK_SRC_XTAL);
-    set_clock_gen(CLK_40M, CLK_SRC_XTAL);
-
-    os_timer_start(&internal_32k_cal_timer); // 32k sdmk timer need xtal40 as ref clock
-
-    set_clock_output(CLK_SRC_OSC, false);
-}
-#endif
 
 static bool app_set_le_psd_chnl_map_option(bool enable)
 {
@@ -332,7 +305,6 @@ void app_device_factory_reset(void)
     app_cfg_reset();
 
     app_cfg_nv.factory_reset_done = 1;
-
     if (app_cfg_store() != 0)
     {
         APP_PRINT_ERROR0("app_device_dm_cback: save nv cfg data error");
@@ -411,7 +383,11 @@ static void app_device_dm_cback(T_SYS_EVENT event_type, void *event_buf, uint16_
                 app_line_in_power_on_check();
                 le_audio_set_audio_path(app_cfg_const.dongle_media_device);
             }
+#if TARGET_RTL8763EAU
+            power_mode_set(POWER_LPS_MODE);
+#else
             power_mode_set(POWER_DLPS_MODE);
+#endif
 
             //Update battery volume after power on
             if (app_cfg_const.discharger_support)
@@ -735,6 +711,9 @@ static void app_device_bt_cback(T_BT_EVENT event_type, void *event_buf, uint16_t
             }
 #endif
 
+#if F_APP_GAMING_LE_FIX_CHANNEL_SUPPORT
+            le_fixed_chann_reg(LE_FIX_CHANNEL_ID);
+#endif
         }
         break;
 

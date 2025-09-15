@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>BT AUDIO SDK: Keyscan Interrupt Definition</title>
+<title>BT AUDIO SDK: KeyScan Interrupt Definition</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -44,23 +44,29 @@ $(function() {
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Keyscan Interrupt Definition<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___key_scan.html">KeyScan</a> &raquo; <a class="el" href="group__x3e___key_scan___exported___constants.html">KeyScan Exported Constants</a></div></div>  </div>
+<div class="title">KeyScan Interrupt Definition<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___key_scan.html">KeyScan</a> &raquo; <a class="el" href="group__x3e___key_scan___exported___constants.html">KeyScan Exported Constants</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga60337557bf14ca8de15e436aa72183e3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___keyscan___interrupt___definition.html#ga60337557bf14ca8de15e436aa72183e3">KEYSCAN_INT_THRESHOLD</a>&#160;&#160;&#160;((uint16_t)(0x1 &lt;&lt; 4))</td></tr>
+<tr class="memdesc:ga60337557bf14ca8de15e436aa72183e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">KeyScan FIFO threshold interrupt. when data in the FIFO reaches the threshold level, the interrupt is triggered.  <a href="#ga60337557bf14ca8de15e436aa72183e3">More...</a><br /></td></tr>
 <tr class="separator:ga60337557bf14ca8de15e436aa72183e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3252d65eb9b50f88480b12fe03a48663"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___keyscan___interrupt___definition.html#ga3252d65eb9b50f88480b12fe03a48663">KEYSCAN_INT_OVER_READ</a>&#160;&#160;&#160;((uint16_t)(0x1 &lt;&lt; 3))</td></tr>
+<tr class="memdesc:ga3252d65eb9b50f88480b12fe03a48663"><td class="mdescLeft">&#160;</td><td class="mdescRight">KeyScan FIFO over read interrupt. When there is no data in the FIFO, reading the FIFO will trigger this interrupt to prevent over-reading.  <a href="#ga3252d65eb9b50f88480b12fe03a48663">More...</a><br /></td></tr>
 <tr class="separator:ga3252d65eb9b50f88480b12fe03a48663"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga18e8808447418baf8e70b801da8542df"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___keyscan___interrupt___definition.html#ga18e8808447418baf8e70b801da8542df">KEYSCAN_INT_SCAN_END</a>&#160;&#160;&#160;((uint16_t)(0x1 &lt;&lt; 2))</td></tr>
+<tr class="memdesc:ga18e8808447418baf8e70b801da8542df"><td class="mdescLeft">&#160;</td><td class="mdescRight">KeyScan finish interrupt. Whether the key value is scanned or not, the interrupt will be triggered as long as the scanning action is completed.  <a href="#ga18e8808447418baf8e70b801da8542df">More...</a><br /></td></tr>
 <tr class="separator:ga18e8808447418baf8e70b801da8542df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad3559f004bff4e906c952ef9c59a88de"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___keyscan___interrupt___definition.html#gad3559f004bff4e906c952ef9c59a88de">KEYSCAN_INT_FIFO_NOT_EMPTY</a>&#160;&#160;&#160;((uint16_t)(0x1 &lt;&lt; 1))</td></tr>
+<tr class="memdesc:gad3559f004bff4e906c952ef9c59a88de"><td class="mdescLeft">&#160;</td><td class="mdescRight">KeyScan FIFO not empty interrupt. If there is data in the FIFO, the interrupt will be triggered.  <a href="#gad3559f004bff4e906c952ef9c59a88de">More...</a><br /></td></tr>
 <tr class="separator:gad3559f004bff4e906c952ef9c59a88de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7d049e1e2bb7255ffd0dc1be07fdf654"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___keyscan___interrupt___definition.html#ga7d049e1e2bb7255ffd0dc1be07fdf654">KEYSCAN_INT_ALL_RELEASE</a>&#160;&#160;&#160;((uint16_t)(0x1 &lt;&lt; 0))</td></tr>
+<tr class="memdesc:ga7d049e1e2bb7255ffd0dc1be07fdf654"><td class="mdescLeft">&#160;</td><td class="mdescRight">KeyScan all release interrupt. When the release time count reaches the set value, if no key is pressed, the interrupt is triggered.  <a href="#ga7d049e1e2bb7255ffd0dc1be07fdf654">More...</a><br /></td></tr>
 <tr class="separator:ga7d049e1e2bb7255ffd0dc1be07fdf654"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga45dd25e0ca280847be940538274544af"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___keyscan___interrupt___definition.html#ga45dd25e0ca280847be940538274544af">IS_KEYSCAN_CONFIG_IT</a>(IT)&#160;&#160;&#160;((((IT) &amp; (uint32_t)0xFFF8) == 0x00) &amp;&amp; ((IT) != 0x00))</td></tr>
+<tr class="memdesc:ga45dd25e0ca280847be940538274544af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether is the KeyScan interrupt.  <a href="#ga45dd25e0ca280847be940538274544af">More...</a><br /></td></tr>
 <tr class="separator:ga45dd25e0ca280847be940538274544af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -77,6 +83,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>KeyScan FIFO threshold interrupt. when data in the FIFO reaches the threshold level, the interrupt is triggered. </p>
+
 </div>
 </div>
 <a id="ga3252d65eb9b50f88480b12fe03a48663"></a>
@@ -90,6 +98,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>KeyScan FIFO over read interrupt. When there is no data in the FIFO, reading the FIFO will trigger this interrupt to prevent over-reading. </p>
 
 </div>
 </div>
@@ -105,6 +115,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>KeyScan finish interrupt. Whether the key value is scanned or not, the interrupt will be triggered as long as the scanning action is completed. </p>
+
 </div>
 </div>
 <a id="gad3559f004bff4e906c952ef9c59a88de"></a>
@@ -119,6 +131,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>KeyScan FIFO not empty interrupt. If there is data in the FIFO, the interrupt will be triggered. </p>
+
 </div>
 </div>
 <a id="ga7d049e1e2bb7255ffd0dc1be07fdf654"></a>
@@ -132,6 +146,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>KeyScan all release interrupt. When the release time count reaches the set value, if no key is pressed, the interrupt is triggered. </p>
 
 </div>
 </div>
@@ -150,6 +166,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Check whether is the KeyScan interrupt. </p>
 
 </div>
 </div>

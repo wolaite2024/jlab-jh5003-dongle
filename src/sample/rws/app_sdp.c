@@ -4,7 +4,6 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include <string.h>
 #include "app_cfg.h"
 #include "bt_types.h"
 #include "bt_sdp.h"
@@ -166,7 +165,7 @@ static const uint8_t hid_mouse_sdp_record[] =
     //Total length
     SDP_DATA_ELEM_SEQ_HDR_2BYTE,
     0x01,
-    0x00,
+    0x06,
 
     //Attribute SDP_ATTR_SRV_CLASS_ID_LIST
     SDP_UNSIGNED_TWO_BYTE,
@@ -389,6 +388,14 @@ static const uint8_t hid_mouse_sdp_record[] =
     SDP_BOOL_ONE_BYTE,
     0x01,
 
+    //Attribute HIDSupervisionTimeout
+    SDP_UNSIGNED_TWO_BYTE,
+    (uint8_t)(0x020C >> 8),
+    (uint8_t)(0x020C),
+    SDP_UNSIGNED_TWO_BYTE,
+    (uint8_t)(0x2580 >> 8),
+    (uint8_t)(0x2580),
+
     //Attribute HIDNormallyConnectable
     SDP_UNSIGNED_TWO_BYTE,
     (uint8_t)(0x020D >> 8),
@@ -411,7 +418,7 @@ static const uint8_t hid_keyboard_sdp_record[] =
     //Total length
     SDP_DATA_ELEM_SEQ_HDR_2BYTE,
     0x01,
-    0x53,
+    0x59,
 
     //Attribute SDP_ATTR_SRV_CLASS_ID_LIST
     SDP_UNSIGNED_TWO_BYTE,
@@ -669,6 +676,14 @@ static const uint8_t hid_keyboard_sdp_record[] =
     (uint8_t)(0x020A),
     SDP_BOOL_ONE_BYTE,
     0x01,
+
+    //Attribute HIDSupervisionTimeout
+    SDP_UNSIGNED_TWO_BYTE,
+    (uint8_t)(0x020C >> 8),
+    (uint8_t)(0x020C),
+    SDP_UNSIGNED_TWO_BYTE,
+    (uint8_t)(0x0C80 >> 8),
+    (uint8_t)(0x0C80),
 
     //Attribute HIDNormallyConnectable
     SDP_UNSIGNED_TWO_BYTE,
@@ -2187,8 +2202,8 @@ static const uint8_t hsp_ag_sdp_record[] =
     SDP_DATA_ELEM_SEQ_HDR,      //0x35
     0x06,                               //6 bytes
     SDP_UUID16_HDR,                     //0x19
-    (uint8_t)(UUID_HEADSET_AUDIO_GATEWAY >> 8),   //0x1112
-    (uint8_t)(UUID_HEADSET_AUDIO_GATEWAY),
+    (uint8_t)(UUID_HEADSET >> 8),   //0x1108
+    (uint8_t)(UUID_HEADSET),
     SDP_UNSIGNED_TWO_BYTE,               //0x09
     (uint8_t)(0x0102 >> 8),         //version number default hs1.2
     (uint8_t)(0x0102)
@@ -2277,8 +2292,8 @@ static const uint8_t hfp_ag_sdp_record[] =
     SDP_DATA_ELEM_SEQ_HDR,      //0x35
     0x06,                               //6 bytes
     SDP_UUID16_HDR,                 //0x19
-    (uint8_t)(UUID_HANDSFREE_AUDIO_GATEWAY >> 8), //0x111F
-    (uint8_t)(UUID_HANDSFREE_AUDIO_GATEWAY),
+    (uint8_t)(UUID_HANDSFREE >> 8), //0x111E
+    (uint8_t)(UUID_HANDSFREE),
     SDP_UNSIGNED_TWO_BYTE,           //0x09
     (uint8_t)(0x0109 >> 8),     //version number default hf1.9
     (uint8_t)(0x0109),
@@ -3574,19 +3589,7 @@ void app_sdp_init(void)
         bt_sdp_record_add((void *)spp_sdp_record);
 #endif
 
-#if F_APP_SPECIFIC_UUID_SUPPORT
-        if (app_cfg_const.enable_specific_service_uuid)
-        {
-            memcpy(&spp_specific_uuid_sdp_record[8], app_cfg_const.specific_service_uuid, 16);
-            bt_sdp_record_add((void *)spp_specific_uuid_sdp_record);
-        }
-        else
-        {
-            bt_sdp_record_add((void *)rtk_vendor_spp_sdp_record);
-        }
-#else
         bt_sdp_record_add((void *)rtk_vendor_spp_sdp_record);
-#endif
     }
 
     if (app_cfg_const.supported_profile_mask & IAP_PROFILE_MASK)

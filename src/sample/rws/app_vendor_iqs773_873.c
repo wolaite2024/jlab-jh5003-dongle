@@ -2,10 +2,12 @@
 #include "rtl876x.h"
 #include "rtl876x_i2c.h"
 #include "trace.h"
+#include "pm.h"
 #include "app_sensor.h"
 #include "app_sensor_i2c.h"
 #include "rtl876x_pinmux.h"
 #include "hal_gpio.h"
+#include "io_dlps.h"
 #include "platform_utils.h"
 #include "app_timer.h"
 #include "app_dlps.h"
@@ -1640,6 +1642,16 @@ static void i2c_iqs_addr_log(void)
 }
 #endif
 
+static void app_sensor_iqs_enter_dlps(void)
+{
+    POWERMode lps_mode = power_mode_get();
+
+    if (lps_mode == POWER_POWERDOWN_MODE)
+    {
+        hal_gpio_irq_disable(app_cfg_const.gsensor_int_pinmux);
+    }
+}
+
 void i2c_iqs_initial(void)
 {
     app_timer_reg_cb(i2c_iqs_timeout_cb, &psensor_iqs_timer_id);
@@ -1650,6 +1662,7 @@ void i2c_iqs_initial(void)
         i2c_iqs_addr_log();
     }
 #endif
+    io_dlps_register_enter_cb(app_sensor_iqs_enter_dlps);
 }
 
 

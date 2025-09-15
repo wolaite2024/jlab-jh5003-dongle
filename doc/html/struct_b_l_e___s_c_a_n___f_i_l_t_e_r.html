@@ -44,7 +44,7 @@ $(function() {
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">BLE_SCAN_FILTER Struct Reference<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___b_t___m_a_n_a_g_e_r.html">BT Manager</a> &raquo; <a class="el" href="group___b_l_e___s_c_a_n.html">BLE SCAN</a></div></div>  </div>
+<div class="title">BLE_SCAN_FILTER Struct Reference<div class="ingroups"><a class="el" href="group___l_e___s_c_a_n.html">LE Scan</a> &raquo; <a class="el" href="group___l_e___s_c_a_n___exported___types.html">LE Scan Exported Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -82,7 +82,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Filter falgs <a class="el" href="group___b_l_e___s_c_a_n___f_i_l_t_e_r.html">BLE SCAN FILTER</a> </p>
+<p>Filter flags <a class="el" href="struct_b_l_e___s_c_a_n___f_i_l_t_e_r.html">BLE_SCAN_FILTER</a>. </p>
 
 </div>
 </div>
@@ -97,7 +97,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Advertising event properties <a class="el" href="group___e_x_t___a_d_v___e_v_t___p_r_o_p.html">Extended Advertising Event Properties flag</a> intended to filter: used when <a class="el" href="group___b_l_e___s_c_a_n___f_i_l_t_e_r.html#ga82090afc72d60f492dab655a1e074a3d">BLE_SCAN_FILTER_EVT_TYPE_BIT</a> is set in filter_flags </p>
+<p>Advertising event properties <a class="el" href="group___e_x_t___a_d_v___e_v_t___p_r_o_p.html">Extended Advertising Event Properties Flag</a> intended to filter: used when <a class="el" href="group___l_e___s_c_a_n___f_i_l_t_e_r.html#ga82090afc72d60f492dab655a1e074a3d">BLE_SCAN_FILTER_EVT_TYPE_BIT</a> is set in filter_flags. </p>
 
 </div>
 </div>
@@ -112,7 +112,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The length of data pointed by <a class="el" href="struct_b_l_e___s_c_a_n___f_i_l_t_e_r.html#a3493e7e17d3d1d502dc9d10759bf9622">ad_struct</a> intended to filter: used when <a class="el" href="group___b_l_e___s_c_a_n___f_i_l_t_e_r.html#gad60bb7ae2c3a2cc5f82b80f03093ffa5">BLE_SCAN_FILTER_ADV_DATA_BIT</a> is set in filter_flags </p>
+<p>The length of data pointed by <a class="el" href="struct_b_l_e___s_c_a_n___f_i_l_t_e_r.html#a3493e7e17d3d1d502dc9d10759bf9622">ad_struct</a> intended to filter: used when <a class="el" href="group___l_e___s_c_a_n___f_i_l_t_e_r.html#gad60bb7ae2c3a2cc5f82b80f03093ffa5">BLE_SCAN_FILTER_ADV_DATA_BIT</a> is set in filter_flags. </p>
 
 </div>
 </div>
@@ -127,7 +127,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Number of address(es) intended to filter, it should be corresponding with address(es) <a class="el" href="struct_b_l_e___s_c_a_n___f_i_l_t_e_r.html#a111dd0eb922fe6fec76382297c307526">p_scan_addr</a> pointed to: used when <a class="el" href="group___b_l_e___s_c_a_n___f_i_l_t_e_r.html#gabc7cb9b364bbc4cf2c3e4c79c32b4eee">BLE_SCAN_FILTER_REMOTE_ADDR_BIT</a> is set in filter_flags </p>
+<p>Number of address(es) intended to filter, it should be corresponding with address(es) <a class="el" href="struct_b_l_e___s_c_a_n___f_i_l_t_e_r.html#a111dd0eb922fe6fec76382297c307526">p_scan_addr</a> pointed to: used when <a class="el" href="group___l_e___s_c_a_n___f_i_l_t_e_r.html#gabc7cb9b364bbc4cf2c3e4c79c32b4eee">BLE_SCAN_FILTER_REMOTE_ADDR_BIT</a> is set in filter_flags. </p>
 
 </div>
 </div>
@@ -142,7 +142,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Advertising data intended to filter, and the first byte should be <a class="el" href="group___a_d_v___d_a_t_a___t_y_p_e.html">EIR Data Type, Advertising Data Type (AD Type) and OOB Data Type Definitions</a> : used when <a class="el" href="group___b_l_e___s_c_a_n___f_i_l_t_e_r.html#gad60bb7ae2c3a2cc5f82b80f03093ffa5">BLE_SCAN_FILTER_ADV_DATA_BIT</a> is set in filter_flags </p>
+<p>Advertising data intended to filter, and the first byte should be ADV_DATA_TYPE: used when <a class="el" href="group___l_e___s_c_a_n___f_i_l_t_e_r.html#gad60bb7ae2c3a2cc5f82b80f03093ffa5">BLE_SCAN_FILTER_ADV_DATA_BIT</a> is set in filter_flags. </p>
 
 </div>
 </div>
@@ -157,7 +157,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p><a class="el" href="struct_b_l_e___s_c_a_n___a_d_d_r.html">BLE_SCAN_ADDR</a>, Pointer to remote address(es) intended to filter: used when <a class="el" href="group___b_l_e___s_c_a_n___f_i_l_t_e_r.html#gabc7cb9b364bbc4cf2c3e4c79c32b4eee">BLE_SCAN_FILTER_REMOTE_ADDR_BIT</a> is set in filter_flags </p>
+<p><a class="el" href="struct_b_l_e___s_c_a_n___a_d_d_r.html">BLE_SCAN_ADDR</a>. Pointer to remote address(es) intended to filter: used when <a class="el" href="group___l_e___s_c_a_n___f_i_l_t_e_r.html#gabc7cb9b364bbc4cf2c3e4c79c32b4eee">BLE_SCAN_FILTER_REMOTE_ADDR_BIT</a> is set in filter_flags. </p>
 
 </div>
 </div>

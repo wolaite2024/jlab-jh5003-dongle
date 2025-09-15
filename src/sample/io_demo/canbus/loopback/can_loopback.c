@@ -18,7 +18,6 @@
 #include "rtl_can.h"
 #include "trace.h"
 #include "rtl876x_rcc.h"
-#include "rtl876x_pinmux.h"
 
 /*============================================================================*
  *                              Variables
@@ -29,12 +28,12 @@
  *============================================================================*/
 static void can_driver_init(void)
 {
-    CAN_DeInit();
+    CAN_DeInit(CAN0);
 
     /* Enable rcc for CAN before initialize. */
-    RCC_PeriphClockCmd(APBPeriph_CAN, APBPeriph_CAN_CLOCK, ENABLE);
+    RCC_PeriphClockCmd(APBPeriph_CAN0, APBPeriph_CAN0_CLOCK, ENABLE);
 
-    IO_PRINT_INFO1("can_driver_init: BUS state: %d, waiting...", CAN_GetBusState());
+    IO_PRINT_INFO1("can_driver_init: BUS state: %d, waiting...", CAN_GetBusState(CAN0));
 
     /* Initialize CAN. */
     CAN_InitTypeDef init_struct = {0};
@@ -55,21 +54,21 @@ static void can_driver_init(void)
     init_struct.CAN_FdBitTiming.b.can_fd_sjw = 1;
     init_struct.CAN_FdBitTiming.b.can_fd_tseg1 = 1;
     init_struct.CAN_FdBitTiming.b.can_fd_tseg2 = 4;
-    init_struct.CAN_FdSspCal.b.can_fd_ssp_auto = ENABLE;
+    init_struct.CAN_FdSspAutoEn = ENABLE;
     init_struct.CAN_FdSspCal.b.can_fd_ssp_dco = \
                                                 (init_struct.CAN_FdBitTiming.b.can_fd_tseg1 + 2) * (init_struct.CAN_FdBitTiming.b.can_fd_brp + 1);
     init_struct.CAN_FdSspCal.b.can_fd_ssp_min = 0;
     init_struct.CAN_FdSspCal.b.can_fd_ssp = 0;
 
-    init_struct.CAN_TestModeSel = CAN_TEST_MODE_LOOP_BACK;
+    init_struct.CAN_TestModeSel = CAN_TEST_MODE_INT_LOOPBACK;
 
-    CAN_Init(&init_struct);
+    CAN_Init(CAN0, &init_struct);
 
     /* CAN enable */
-    CAN_Cmd(ENABLE);
+    CAN_Cmd(CAN0, ENABLE);
 
     /* polling CAN bus on status */
-    while (CAN_GetBusState() != CAN_BUS_STATE_ON)
+    while (CAN_GetBusState(CAN0) != CAN_BUS_STATE_ON)
     {
         __asm volatile
         (
@@ -77,7 +76,7 @@ static void can_driver_init(void)
         );
     }
 
-    IO_PRINT_INFO1("can_driver_init: BUS ON %d", CAN_GetBusState());
+    IO_PRINT_INFO1("can_driver_init: BUS ON %d", CAN_GetBusState(CAN0));
 }
 
 void can_loopback(uint32_t buf_id, CANDataFrameSel_TypeDef frame_type, \
@@ -96,9 +95,9 @@ void can_loopback(uint32_t buf_id, CANDataFrameSel_TypeDef frame_type, \
     rx_frame_type.rx_dma_en = RESET;
     rx_frame_type.auto_reply_bit = RESET;
 
-    rx_error = CAN_SetMsgBufRxMode(&rx_frame_type);
+    rx_error = CAN_SetMsgBufRxMode(CAN0, &rx_frame_type);
 
-    while (CAN_GetRamState() != CAN_RAM_STATE_IDLE)
+    while (CAN_GetRamState(CAN0) != CAN_RAM_STATE_IDLE)
     {
         __asm volatile
         (
@@ -138,9 +137,9 @@ void can_loopback(uint32_t buf_id, CANDataFrameSel_TypeDef frame_type, \
         break;
     }
 
-    tx_error = CAN_SetMsgBufTxMode(&tx_frame_type, tx_data, data_len);
+    tx_error = CAN_SetMsgBufTxMode(CAN0, &tx_frame_type, tx_data, data_len);
 
-    while (CAN_GetRamState() != CAN_RAM_STATE_IDLE)
+    while (CAN_GetRamState(CAN0) != CAN_RAM_STATE_IDLE)
     {
         __asm volatile
         (
@@ -154,7 +153,7 @@ void can_loopback(uint32_t buf_id, CANDataFrameSel_TypeDef frame_type, \
     }
 
     /* Polling tx done. */
-    while (SET != CAN_GetMBnTxDoneFlag(tx_frame_type.msg_buf_id))
+    while (SET != CAN_GetMBnTxDoneFlag(CAN0, tx_frame_type.msg_buf_id))
     {
         __asm volatile
         (
@@ -165,7 +164,7 @@ void can_loopback(uint32_t buf_id, CANDataFrameSel_TypeDef frame_type, \
     IO_PRINT_INFO0("can_loopback: BUS TX done");
 
     /* Polling rx done. */
-    while (SET != CAN_GetMBnRxDoneFlag(rx_frame_type.msg_buf_id))
+    while (SET != CAN_GetMBnRxDoneFlag(CAN0, rx_frame_type.msg_buf_id))
     {
         __asm volatile
         (
@@ -175,11 +174,11 @@ void can_loopback(uint32_t buf_id, CANDataFrameSel_TypeDef frame_type, \
 
     /* Receive rx data. */
     CANMsgBufInfo_TypeDef mb_info;
-    CAN_GetMsgBufInfo(rx_frame_type.msg_buf_id, &mb_info);
+    CAN_GetMsgBufInfo(CAN0, rx_frame_type.msg_buf_id, &mb_info);
 
     uint8_t rx_data[64];
     memset(rx_data, 0, 64);
-    CAN_GetRamData(mb_info.data_length, rx_data);
+    CAN_GetRamData(CAN0, mb_info.data_length, rx_data);
 
     CANDataFrameSel_TypeDef get_frame_type = CAN_CheckFrameType(mb_info.rtr_bit, mb_info.ide_bit,
                                                                 mb_info.edl_bit);

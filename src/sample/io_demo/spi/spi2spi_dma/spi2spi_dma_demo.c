@@ -204,6 +204,7 @@ static void spi2spi_dma_handler(void)
     GDMA_ClearAllTypeINT(SPI2SPI_DMA_CHANNEL_NUM);
     GDMA_channel_release(SPI2SPI_DMA_CHANNEL_NUM);
     //GDMA_Cmd(SPI2SPI_DMA_CHANNEL_NUM, ENABLE);
+    /* It is recommended to post the os msg to the task thread for data processing. */
 }
 
 /** @} */ /* End of group SPI2SPI_DMA_DEMO */

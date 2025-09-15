@@ -282,6 +282,14 @@ static uint16_t lhdc_frame_size_get(uint32_t                    sample_rate,
 {
     uint16_t frame_size;
 
+    /* For both 44.1kHz and 48kHz, the input frame size is 240 samples
+     * for the 5ms frame duration.
+     */
+    if (sample_rate == 44100)
+    {
+        sample_rate = 48000;
+    }
+
     switch (frame_duration)
     {
     case AUDIO_LHDC_FRAME_DURATION_5_MS:

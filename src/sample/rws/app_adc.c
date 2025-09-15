@@ -488,7 +488,7 @@ bool app_adc_enable_read_adc_io(uint8_t input_pin)
         Pad_Config(input_pin, PAD_SW_MODE, PAD_IS_PWRON, PAD_PULL_NONE, PAD_OUT_DISABLE, PAD_OUT_LOW);
         Pad_PowerOrShutDownValue(input_pin, 0);
 
-        sys_hall_set_rglx_auxadc(input_pin);
+        ADC_HighBypassCmd(input_pin, ENABLE);
 
         ADC_InitTypeDef ADC_InitStruct;
         ADC_StructInit(&ADC_InitStruct);

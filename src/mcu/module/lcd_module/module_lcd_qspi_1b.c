@@ -25,13 +25,19 @@
 #include "module_lcd_te.h"
 #include "lcd_sh8601z_454_qspi_1b.h"
 
+#define LCD_SPIC_CLK                     P9_4
+#define LCD_SPIC_CSN                     P9_2
+#define LCD_SPIC_SIO0                    P9_3
+#define SPIC_ID                          FMC_SPIC_ID_2
+#define SPIC_GDMA_TX_HANDSHAKE           GDMA_Handshake_SPIC2_TX
+#define SPIC_GDMA_DESTINATION_ADDR       ((uint32_t)(&(SPIC2->DR[0].WORD)))
+
 static uint8_t lcd_qspi_dma_ch_num = 0xa5;
 
 #define LCD_DMA_CHANNEL_NUM              lcd_qspi_dma_ch_num
 #define LCD_DMA_CHANNEL_INDEX            DMA_CH_BASE(lcd_qspi_dma_ch_num)
 #define LCD_DMA_CHANNEL_IRQ              DMA_CH_IRQ(lcd_qspi_dma_ch_num)
 
-static GDMA_LLIDef GDMA_LLIStruct_LAST;
 typedef struct _t_lcd_pin
 {
     uint8_t lcd_rst;
@@ -102,17 +108,19 @@ void lcd_driver_init(void)
 static void lcd_cs_pin_init(void)
 {
     hal_gpio_init();
-    hal_gpio_init_pin(P9_2, GPIO_TYPE_AON, GPIO_DIR_OUTPUT, GPIO_PULL_NONE);
-    hal_gpio_set_level(P9_2, GPIO_LEVEL_HIGH);
+    hal_gpio_init_pin(LCD_SPIC_CSN, GPIO_TYPE_AON, GPIO_DIR_OUTPUT, GPIO_PULL_NONE);
+    hal_gpio_set_level(LCD_SPIC_CSN, GPIO_LEVEL_HIGH);
 }
 
 void lcd_pad_init(void)
 {
-    Pinmux_Config(P9_3, IDLE_MODE); //SIO0
-    Pinmux_Config(P9_4, IDLE_MODE); //CLK
+    Pinmux_Config(LCD_SPIC_SIO0, IDLE_MODE); //SIO0
+    Pinmux_Config(LCD_SPIC_CLK, IDLE_MODE); //CLK
 
-    Pad_Config(P9_3, PAD_PINMUX_MODE, PAD_IS_PWRON, PAD_PULL_NONE, PAD_OUT_DISABLE, PAD_OUT_LOW);
-    Pad_Config(P9_4, PAD_PINMUX_MODE, PAD_IS_PWRON, PAD_PULL_NONE, PAD_OUT_DISABLE, PAD_OUT_LOW);
+    Pad_Config(LCD_SPIC_SIO0, PAD_PINMUX_MODE, PAD_IS_PWRON, PAD_PULL_NONE, PAD_OUT_DISABLE,
+               PAD_OUT_LOW);
+    Pad_Config(LCD_SPIC_CLK, PAD_PINMUX_MODE, PAD_IS_PWRON, PAD_PULL_NONE, PAD_OUT_DISABLE,
+               PAD_OUT_LOW);
 
     lcd_cs_pin_init();
     lcd_dcx_init();
@@ -124,12 +132,12 @@ void lcd_pad_init(void)
 
 void lcd_cs_pin_no_active(void)
 {
-    hal_gpio_set_level(P9_2, GPIO_LEVEL_HIGH);
+    hal_gpio_set_level(LCD_SPIC_CSN, GPIO_LEVEL_HIGH);
 }
 
 void lcd_cs_pin_active(void)
 {
-    hal_gpio_set_level(P9_2, GPIO_LEVEL_LOW);
+    hal_gpio_set_level(LCD_SPIC_CSN, GPIO_LEVEL_LOW);
 }
 
 /**
@@ -140,9 +148,10 @@ void lcd_cs_pin_active(void)
 void lcd_device_init(void)
 {
     lcd_pad_init();
-    fmc_spic2_init();
-    set_clock_gen_rate(CLK_SPIC2, CLK_80MHZ, CLK_80MHZ);
-    fmc_spic2_set_baud(1);
+    fmc_spic_init(SPIC_ID);
+    uint32_t spic2_freq = 0;
+    fmc_spic_clock_switch(SPIC_ID, 100, &spic2_freq);
+    fmc_spic_set_baud(SPIC_ID, 1);
 }
 
 void rtk_lcd_hal_init(void)
@@ -180,11 +189,11 @@ void rtk_lcd_hal_update_framebuffer(uint8_t *buf, uint32_t len)
     GDMA_InitStruct.GDMA_SourceMsize         = GDMA_Msize_4;
     GDMA_InitStruct.GDMA_DestinationMsize    = GDMA_Msize_4;
 
-    GDMA_InitStruct.GDMA_DestHandshake       = GDMA_Handshake_SPIC2_TX;
+    GDMA_InitStruct.GDMA_DestHandshake       = SPIC_GDMA_TX_HANDSHAKE;
     GDMA_InitStruct.GDMA_DIR                 = GDMA_DIR_MemoryToPeripheral;
     GDMA_InitStruct.GDMA_SourceInc           = DMA_SourceInc_Inc;
     GDMA_InitStruct.GDMA_DestinationInc      = DMA_DestinationInc_Fix;
-    GDMA_InitStruct.GDMA_DestinationAddr     = (uint32_t)(&(SPIC2->DR[0].WORD));
+    GDMA_InitStruct.GDMA_DestinationAddr     = SPIC_GDMA_DESTINATION_ADDR;
     GDMA_Init(LCD_DMA_CHANNEL_INDEX, &GDMA_InitStruct);
     GDMA_INTConfig(LCD_DMA_CHANNEL_NUM, GDMA_INT_Transfer, ENABLE);
     GDMA_SetSourceAddress(LCD_DMA_CHANNEL_INDEX, (uint32_t)buf);
@@ -211,7 +220,7 @@ void rtk_lcd_hal_update_framebuffer(uint8_t *buf, uint32_t len)
         GDMA_Cmd(LCD_DMA_CHANNEL_NUM, ENABLE);
         lcd_dma_transfer_done();
     }
-    while (fmc_spic2_in_busy());
+    while (fmc_spic_in_busy(SPIC_ID));
     lcd_cs_pin_no_active();
 }
 
@@ -234,7 +243,7 @@ void rtk_lcd_hal_rect_fill(uint16_t xStart, uint16_t yStart, uint16_t w, uint16_
     GDMA_InitStruct.GDMA_SourceMsize         = GDMA_Msize_1;
     GDMA_InitStruct.GDMA_DestinationMsize    = GDMA_Msize_1;
 
-    GDMA_InitStruct.GDMA_DestHandshake       = GDMA_Handshake_SPIC2_TX;
+    GDMA_InitStruct.GDMA_DestHandshake       = SPIC_GDMA_TX_HANDSHAKE;
     GDMA_InitStruct.GDMA_DIR                 = GDMA_DIR_MemoryToPeripheral;
     GDMA_InitStruct.GDMA_SourceInc           = DMA_SourceInc_Fix;
     GDMA_InitStruct.GDMA_DestinationInc      = DMA_DestinationInc_Fix;
@@ -249,7 +258,7 @@ void rtk_lcd_hal_rect_fill(uint16_t xStart, uint16_t yStart, uint16_t w, uint16_
     color_buf = color_buf | color_buf << 16;
 
     GDMA_SetSourceAddress(LCD_DMA_CHANNEL_INDEX, (uint32_t)&color_buf);
-    GDMA_SetDestinationAddress(LCD_DMA_CHANNEL_INDEX, (uint32_t)(&(SPIC2->DR[0].WORD)));
+    GDMA_SetDestinationAddress(LCD_DMA_CHANNEL_INDEX, SPIC_GDMA_DESTINATION_ADDR);
 
     uint32_t section_hight = 10;
     uint32_t left_line = h % section_hight;
@@ -267,7 +276,7 @@ void rtk_lcd_hal_rect_fill(uint16_t xStart, uint16_t yStart, uint16_t w, uint16_
         GDMA_Cmd(LCD_DMA_CHANNEL_NUM, ENABLE);
         lcd_dma_transfer_done();
     }
-    while (fmc_spic2_in_busy());
+    while (fmc_spic_in_busy(SPIC_ID));
     lcd_cs_pin_no_active();
 }
 
@@ -290,7 +299,7 @@ void rtk_lcd_hal_start_transfer(uint8_t *buf, uint32_t len)
     GDMA_InitStruct.GDMA_SourceMsize         = GDMA_Msize_4;
     GDMA_InitStruct.GDMA_DestinationMsize    = GDMA_Msize_4;
 
-    GDMA_InitStruct.GDMA_DestHandshake       = GDMA_Handshake_SPIC2_TX;
+    GDMA_InitStruct.GDMA_DestHandshake       = SPIC_GDMA_TX_HANDSHAKE;
     GDMA_InitStruct.GDMA_DIR                 = GDMA_DIR_MemoryToPeripheral;
     GDMA_InitStruct.GDMA_SourceInc           = DMA_SourceInc_Inc;
     GDMA_InitStruct.GDMA_DestinationInc      = DMA_DestinationInc_Fix;
@@ -300,7 +309,7 @@ void rtk_lcd_hal_start_transfer(uint8_t *buf, uint32_t len)
 
     GDMA_SetBufferSize(LCD_DMA_CHANNEL_INDEX, len << 1);
 
-    GDMA_SetDestinationAddress(LCD_DMA_CHANNEL_INDEX, (uint32_t)(&(SPIC2->DR[0].WORD)));
+    GDMA_SetDestinationAddress(LCD_DMA_CHANNEL_INDEX, SPIC_GDMA_DESTINATION_ADDR);
     GDMA_SetSourceAddress(LCD_DMA_CHANNEL_INDEX, (uint32_t)buf);
     GDMA_Cmd(LCD_DMA_CHANNEL_NUM, ENABLE);
 }
@@ -309,7 +318,7 @@ void rtk_lcd_hal_transfer_done(void)
 {
     while (GDMA_GetTransferINTStatus(LCD_DMA_CHANNEL_NUM) != SET);
     GDMA_ClearINTPendingBit(LCD_DMA_CHANNEL_NUM, GDMA_INT_Transfer);
-    while (fmc_spic2_in_busy());
+    while (fmc_spic_in_busy(SPIC_ID));
     lcd_cs_pin_no_active();
 }
 
@@ -356,7 +365,7 @@ void rtk_hal_lcd_fill(uint8_t *addr)
         rtk_lcd_hal_start_transfer((uint8_t *)(addr + offset), left_line * LCD_WIDTH);
         lcd_dma_transfer_done();
     }
-    while (fmc_spic2_in_busy());
+    while (fmc_spic_in_busy(SPIC_ID));
     lcd_cs_pin_no_active();
 }
 
@@ -379,7 +388,7 @@ void rtk_lcd_hal_start_transfer_test(uint8_t *buf, uint16_t xStart, uint16_t ySt
     GDMA_InitStruct.GDMA_SourceMsize         = GDMA_Msize_1;
     GDMA_InitStruct.GDMA_DestinationMsize    = GDMA_Msize_1;
 
-    GDMA_InitStruct.GDMA_DestHandshake       = GDMA_Handshake_SPIC2_TX;
+    GDMA_InitStruct.GDMA_DestHandshake       = SPIC_GDMA_TX_HANDSHAKE;
     GDMA_InitStruct.GDMA_DIR                 = GDMA_DIR_MemoryToPeripheral;
     GDMA_InitStruct.GDMA_SourceInc           = DMA_SourceInc_Inc;
     GDMA_InitStruct.GDMA_DestinationInc      = DMA_DestinationInc_Fix;
@@ -387,7 +396,7 @@ void rtk_lcd_hal_start_transfer_test(uint8_t *buf, uint16_t xStart, uint16_t ySt
     GDMA_Init(LCD_DMA_CHANNEL_INDEX, &GDMA_InitStruct);
     GDMA_INTConfig(LCD_DMA_CHANNEL_NUM, GDMA_INT_Transfer, ENABLE);
 
-    GDMA_SetDestinationAddress(LCD_DMA_CHANNEL_INDEX, (uint32_t)(&(SPIC2->DR[0].WORD)));
+    GDMA_SetDestinationAddress(LCD_DMA_CHANNEL_INDEX, SPIC_GDMA_DESTINATION_ADDR);
     GDMA_SetSourceAddress(LCD_DMA_CHANNEL_INDEX, (uint32_t)buf);
 
     rtk_lcd_hal_set_window(0, 0, w, h);
@@ -412,7 +421,7 @@ void rtk_lcd_hal_start_transfer_test(uint8_t *buf, uint16_t xStart, uint16_t ySt
         GDMA_Cmd(LCD_DMA_CHANNEL_NUM, ENABLE);
         lcd_dma_transfer_done();
     }
-    while (fmc_spic2_in_busy());
+    while (fmc_spic_in_busy(SPIC_ID));
     lcd_cs_pin_no_active();
 }
 #endif

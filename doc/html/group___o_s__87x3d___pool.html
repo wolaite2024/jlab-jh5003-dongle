@@ -57,19 +57,19 @@ Macros</h2></td></tr>
 <tr class="memitem:ga001df07c085e5d3b6e6a10b5e9ddc049"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s__87x3d___pool.html#ga001df07c085e5d3b6e6a10b5e9ddc049">OS_POOL_INVALID_HANDLE</a>&#160;&#160;&#160;0xFF</td></tr>
 <tr class="memdesc:ga001df07c085e5d3b6e6a10b5e9ddc049"><td class="mdescLeft">&#160;</td><td class="mdescRight">The invalid pool handle. Valid pool handles should be less than OS_POOL_INVALID_HANDLE.  <a href="#ga001df07c085e5d3b6e6a10b5e9ddc049">More...</a><br /></td></tr>
 <tr class="separator:ga001df07c085e5d3b6e6a10b5e9ddc049"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga34e3df01f31b2c3bb8688a228f4079d7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s__87x3d___pool.html#ga34e3df01f31b2c3bb8688a228f4079d7">os_pool_create</a>(p_handle,  ram_type,  buf_size,  buf_count)&#160;&#160;&#160;os_pool_create_intern(p_handle, ram_type, buf_size, buf_count, __func__, __LINE__)</td></tr>
+<tr class="memitem:ga34e3df01f31b2c3bb8688a228f4079d7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s__87x3d___pool.html#ga34e3df01f31b2c3bb8688a228f4079d7">os_pool_create</a>(p_handle,  ram_type,  buf_size,  buf_count)&#160;&#160;&#160;<a class="el" href="group___o_s__87x3e___pool.html#ga5806a6c82709f112b26afdbd70cb0fb6">os_pool_create_intern</a>(p_handle, ram_type, buf_size, buf_count, __func__, __LINE__)</td></tr>
 <tr class="memdesc:ga34e3df01f31b2c3bb8688a228f4079d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates and initialize a memory pool.  <a href="#ga34e3df01f31b2c3bb8688a228f4079d7">More...</a><br /></td></tr>
 <tr class="separator:ga34e3df01f31b2c3bb8688a228f4079d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga48dd65884eab601dcc4da905b2670dac"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s__87x3d___pool.html#ga48dd65884eab601dcc4da905b2670dac">os_pool_extend</a>(handle,  buf_size,  buf_count)&#160;&#160;&#160;os_pool_extend_intern(handle, buf_size, buf_count, __func__, __LINE__)</td></tr>
+<tr class="memitem:ga48dd65884eab601dcc4da905b2670dac"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s__87x3d___pool.html#ga48dd65884eab601dcc4da905b2670dac">os_pool_extend</a>(handle,  buf_size,  buf_count)&#160;&#160;&#160;<a class="el" href="group___o_s__87x3e___pool.html#gab00563d07eed1f4b4da980dca08784b9">os_pool_extend_intern</a>(handle, buf_size, buf_count, __func__, __LINE__)</td></tr>
 <tr class="memdesc:ga48dd65884eab601dcc4da905b2670dac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extend a set of buffers to the created memory pool. The extended pool buffers have the same RAM type with the created buffers.  <a href="#ga48dd65884eab601dcc4da905b2670dac">More...</a><br /></td></tr>
 <tr class="separator:ga48dd65884eab601dcc4da905b2670dac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadfb05fc78a8e0a19efb2b5af182b9dcf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s__87x3d___pool.html#gadfb05fc78a8e0a19efb2b5af182b9dcf">os_pool_delete</a>(handle)&#160;&#160;&#160;os_pool_delete_intern(handle, __func__, __LINE__)</td></tr>
+<tr class="memitem:gadfb05fc78a8e0a19efb2b5af182b9dcf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s__87x3d___pool.html#gadfb05fc78a8e0a19efb2b5af182b9dcf">os_pool_delete</a>(handle)&#160;&#160;&#160;<a class="el" href="group___o_s__87x3e___pool.html#ga195b8622b969823a778d3da29b51e309">os_pool_delete_intern</a>(handle, __func__, __LINE__)</td></tr>
 <tr class="memdesc:gadfb05fc78a8e0a19efb2b5af182b9dcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a memory pool.  <a href="#gadfb05fc78a8e0a19efb2b5af182b9dcf">More...</a><br /></td></tr>
 <tr class="separator:gadfb05fc78a8e0a19efb2b5af182b9dcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga607c349ef44783385d8bfa10b7da8394"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s__87x3d___pool.html#ga607c349ef44783385d8bfa10b7da8394">os_buffer_get</a>(handle,  buf_size)&#160;&#160;&#160;os_buffer_get_intern(handle, buf_size, __func__, __LINE__)</td></tr>
+<tr class="memitem:ga607c349ef44783385d8bfa10b7da8394"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s__87x3d___pool.html#ga607c349ef44783385d8bfa10b7da8394">os_buffer_get</a>(handle,  buf_size)&#160;&#160;&#160;<a class="el" href="group___o_s__87x3e___pool.html#ga5e34df2ca5d2c467b22a821efdd73100">os_buffer_get_intern</a>(handle, buf_size, __func__, __LINE__)</td></tr>
 <tr class="memdesc:ga607c349ef44783385d8bfa10b7da8394"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a pool buffer from the specified memory pool. The allocated pool buffer size may be larger than the required size.  <a href="#ga607c349ef44783385d8bfa10b7da8394">More...</a><br /></td></tr>
 <tr class="separator:ga607c349ef44783385d8bfa10b7da8394"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga92d39983d27b732d2e19ec908c866c84"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s__87x3d___pool.html#ga92d39983d27b732d2e19ec908c866c84">os_buffer_put</a>(p_buf)&#160;&#160;&#160;os_buffer_put_intern(p_buf, __func__, __LINE__)</td></tr>
+<tr class="memitem:ga92d39983d27b732d2e19ec908c866c84"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s__87x3d___pool.html#ga92d39983d27b732d2e19ec908c866c84">os_buffer_put</a>(p_buf)&#160;&#160;&#160;<a class="el" href="group___o_s__87x3e___pool.html#ga97e7cd0b4db93ac158f777ef73e991a1">os_buffer_put_intern</a>(p_buf, __func__, __LINE__)</td></tr>
 <tr class="memdesc:ga92d39983d27b732d2e19ec908c866c84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free and return the pool buffer to the specified memory pool.  <a href="#ga92d39983d27b732d2e19ec908c866c84">More...</a><br /></td></tr>
 <tr class="separator:ga92d39983d27b732d2e19ec908c866c84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -138,7 +138,7 @@ Memory Pool Overview</div></div>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;os_pool_create_intern(p_handle, ram_type, buf_size, buf_count, __func__, __LINE__)</td>
+          <td></td><td>&#160;&#160;&#160;<a class="el" href="group___o_s__87x3e___pool.html#ga5806a6c82709f112b26afdbd70cb0fb6">os_pool_create_intern</a>(p_handle, ram_type, buf_size, buf_count, __func__, __LINE__)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -198,7 +198,7 @@ Memory Pool Overview</div></div>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;os_pool_extend_intern(handle, buf_size, buf_count, __func__, __LINE__)</td>
+          <td></td><td>&#160;&#160;&#160;<a class="el" href="group___o_s__87x3e___pool.html#gab00563d07eed1f4b4da980dca08784b9">os_pool_extend_intern</a>(handle, buf_size, buf_count, __func__, __LINE__)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -235,7 +235,7 @@ Memory Pool Overview</div></div>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">handle</td><td>)</td>
-          <td>&#160;&#160;&#160;os_pool_delete_intern(handle, __func__, __LINE__)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="group___o_s__87x3e___pool.html#ga195b8622b969823a778d3da29b51e309">os_pool_delete_intern</a>(handle, __func__, __LINE__)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -280,7 +280,7 @@ Memory Pool Overview</div></div>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;os_buffer_get_intern(handle, buf_size, __func__, __LINE__)</td>
+          <td></td><td>&#160;&#160;&#160;<a class="el" href="group___o_s__87x3e___pool.html#ga5e34df2ca5d2c467b22a821efdd73100">os_buffer_get_intern</a>(handle, buf_size, __func__, __LINE__)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -309,7 +309,7 @@ Memory Pool Overview</div></div>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">p_buf</td><td>)</td>
-          <td>&#160;&#160;&#160;os_buffer_put_intern(p_buf, __func__, __LINE__)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="group___o_s__87x3e___pool.html#ga97e7cd0b4db93ac158f777ef73e991a1">os_buffer_put_intern</a>(p_buf, __func__, __LINE__)</td>
         </tr>
       </table>
 </div><div class="memdoc">

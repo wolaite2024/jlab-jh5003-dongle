@@ -3,7 +3,7 @@
 *               Copyright(c) 2021, Realtek Semiconductor Corporation. All rights reserved.
 *********************************************************************************************************
 * @file      gap_pa_adv.h
-* @brief     Header file for GAP PA adv
+* @brief     Header file for GAP PA ADV
 * @details   This file defines advertising state of PA related API.
 * @author
 * @date      2021-07-12
@@ -27,7 +27,7 @@ extern "C"
  *============================================================================*/
 #include "gap_le.h"
 
-/** @addtogroup GAP GAP Module
+/** @addtogroup BT_Host Bluetooth Host
   * @{
   */
 
@@ -35,18 +35,19 @@ extern "C"
   * @{
   */
 
-/** @addtogroup GAP_LE_PA_ADV GAP LE PA Adv Module
+/** @addtogroup GAP_LE_PA_ADV GAP LE PA ADV Module
+  * @brief GAP LE PA ADV Module
   * @{
   */
 
 /*============================================================================*
  *                         Macros
  *============================================================================*/
-/** @defgroup GAP_LE_PA_ADV_Exported_Macros GAP LE PA Adv Exported Macros
+/** @defgroup GAP_LE_PA_ADV_Exported_Macros GAP LE PA ADV Exported Macros
   * @{
   */
 
-/** @defgroup PA_ADV_PARAM Periodic Advertising Parameter flag
+/** @defgroup PA_ADV_PARAM Periodic Advertising Parameter Flag
   * @brief    Use the combination of macro definitions to set periodic advertising related parameters
   *           for the specified advertising set by calling @ref le_pa_adv_start_setting.
   * @{
@@ -57,7 +58,7 @@ extern "C"
   * @}
   */
 
-/** @defgroup PA_ADV_PERIODIC_ADV_PROP Periodic Advertising Properties flag
+/** @defgroup PA_ADV_PERIODIC_ADV_PROP Periodic Advertising Properties Flag
   * @brief Use the combination of macro definitions to indicate which fields should be included in the advertising packet.
   * @{
   */
@@ -66,7 +67,7 @@ extern "C"
   * @}
   */
 
-/** @defgroup PA_ADV_ENABLE Periodic Advertising Enable flag
+/** @defgroup PA_ADV_ENABLE Periodic Advertising Enable Flag
   * @brief Use the combination of macro definitions to describe the enable parameters.
   * @{
   */
@@ -82,7 +83,7 @@ extern "C"
 /*============================================================================*
  *                         Types
  *============================================================================*/
-/** @defgroup GAP_LE_PA_ADV_Exported_Types GAP LE PA Adv Exported Types
+/** @defgroup GAP_LE_PA_ADV_Exported_Types GAP LE PA ADV Exported Types
   * @{
   */
 
@@ -104,14 +105,14 @@ typedef enum
 /*============================================================================*
  *                         Functions
  *============================================================================*/
-/** @defgroup GAP_LE_PA_ADV_Exported_Functions GAP LE PA Adv Exported Functions
+/** @defgroup GAP_LE_PA_ADV_Exported_Functions GAP LE PA ADV Exported Functions
   * @brief
   * @{
   */
 /**
  * @brief       Initialize the number of advertising sets for advertising state in periodic advertising.
  *
- *              NOTE: If PA advertising state will be used, @ref le_ext_adv_gap_msg_info_way(false) should be invoked.
+ * @note If PA advertising state will be used, @ref le_ext_adv_gap_msg_info_way (false) should be invoked.
  *
  * @param[in]   adv_set_num Advertising sets number.
  * @return GAP Operation result.
@@ -136,13 +137,13 @@ T_GAP_CAUSE le_pa_adv_init(uint8_t adv_set_num);
  *                                            adv_event_prop specified by adv_handle has been configured as @ref LE_EXT_ADV_EXTENDED_ADV_NON_SCAN_NON_CONN_UNDIRECTED or
  *                                            or LE_EXT_ADV_EXTENDED_ADV_NON_SCAN_NON_CONN_DIRECTED.
  * @param[in]   periodic_adv_interval_min     Minimum advertising interval for periodic advertising.
-                                              Range: 0x0006 to 0xFFFF
-                                              Time = N * 1.25 ms
-                                              Time Range: 7.5 ms to 81.91875 s
+                                              @arg Range: 0x0006 to 0xFFFF.
+                                              @arg Time = N * 1.25 ms.
+                                              @arg Time Range: 7.5 ms to 81.91875 s.
  * @param[in]   periodic_adv_interval_max     Maximum advertising interval for periodic advertising.
-                                              Range: 0x0006 to 0xFFFF
-                                              Time = N * 1.25 ms
-                                              Time Range: 7.5 ms to 81.91875 s
+                                              @arg Range: 0x0006 to 0xFFFF.
+                                              @arg Time = N * 1.25 ms.
+                                              @arg Time Range: 7.5 ms to 81.91875 s.
  * @param[in]   periodic_adv_prop             A bit field that indicates which fields should be included in the advertising packet. @ref PA_ADV_PERIODIC_ADV_PROP.
  *
  * @return GAP operation result.
@@ -164,23 +165,22 @@ T_GAP_CAUSE le_pa_adv_set_periodic_adv_param(uint8_t adv_handle, uint16_t period
 /**
  * @brief       Set GAP periodic advertising data for the specified advertising set.
  *
- *              NOTE: This function just saves the pointer of the advertising data and will not copy the advertising data.
+ * @note This function just saves the pointer of the advertising data and will not copy the advertising data.
  *                    So application should use the const array or the global array to save the advertising data.
  *                    If application uses a dynamically requested buffer to save the advertising data, do not release it before
  *                    configuration of advertising data is completed.
  *
  * @param[in]   adv_handle               Used to identify an advertising set, which is assigned by @ref le_ext_adv_create_adv_handle.
- * @param[in]   periodic_adv_data_len    The length of periodic advertising data.
- *                                       NOTE: If periodic advertising state is @ref PA_ADV_STATE_WAIT_EXT_ADV_STATE_ADVERTISING or
- *                                             @ref PA_ADV_STATE_ADVERTISING, periodic_adv_data_len should have the range of values
- *                                             0 to 252.
+ * @param[in]   periodic_adv_data_len    The length of periodic advertising data. \n
+ *                                       If periodic advertising state is @ref PA_ADV_STATE_WAIT_EXT_ADV_STATE_ADVERTISING or
+ *                                       @ref PA_ADV_STATE_ADVERTISING, periodic_adv_data_len should have the range of values 0 to 252.
  * @param[in]   p_periodic_adv_data      Pointer to periodic advertising data to write.
- * @param[in]   pa_unchanged_data_flag   Unchanged data (just update the Advertising DID of the periodic advertising).
- *                                       NOTE: If periodic advertising state is @ref PA_ADV_STATE_WAIT_EXT_ADV_STATE_ADVERTISING or
- *                                             @ref PA_ADV_STATE_ADVERTISING, and configuration of non-zero periodic advertising data
- *                                             has been completed, then pa_unchanged_data_flag could be configured as True or False.
- *                                             Otherwise, pa_unchanged_data_flag should be configured as False.
- *                                             If pa_unchanged_data_flag is True, periodic_adv_data_len should be zero.
+ * @param[in]   pa_unchanged_data_flag   Unchanged data (just update the Advertising DID of the periodic advertising). \n
+ *                                       If periodic advertising state is @ref PA_ADV_STATE_WAIT_EXT_ADV_STATE_ADVERTISING or
+ *                                       @ref PA_ADV_STATE_ADVERTISING, and configuration of non-zero periodic advertising data
+ *                                       has been completed, then pa_unchanged_data_flag could be configured as True or False.
+ *                                       Otherwise, pa_unchanged_data_flag should be configured as False. \n
+ *                                       If pa_unchanged_data_flag is True, periodic_adv_data_len should be zero.
  *
  * @return GAP operation result.
  * @retval GAP_CAUSE_SUCCESS  GAP operation success.
@@ -202,11 +202,11 @@ T_GAP_CAUSE le_pa_adv_set_periodic_adv_data(uint8_t adv_handle, uint16_t periodi
 /**
  * @brief       Request the Controller to set periodic advertising related parameters for the specified advertising set.
  *
- *              NOTE: This function can be called after stack is ready.
- *              Explanation: If stack is ready, Application will be notified by message @ref GAP_MSG_LE_DEV_STATE_CHANGE
+ * This function can be called after Bluetooth Host is ready. \n
+ *              Explanation: If Bluetooth Host is ready, the application will be notified by message @ref GAP_MSG_LE_DEV_STATE_CHANGE
  *                           with new_state about gap_init_state which is configured as @ref GAP_INIT_STATE_STACK_READY.
  *
- *              If sending request operation is success, the result of setting periodic advertising related parameters will be returned by
+ * If sending request operation is success, the result of setting periodic advertising related parameters will be returned by
  *              @ref app_gap_callback with cb_type @ref GAP_MSG_LE_PA_ADV_START_SETTING.
  *
  * @param[in]   adv_handle        Used to identify an advertising set.
@@ -257,11 +257,11 @@ T_GAP_CAUSE le_pa_adv_start_setting(uint8_t adv_handle, uint8_t pa_update_flags)
 /**
  * @brief       Request the Controller to enable or disable the periodic advertising for the specified advertising set.
  *
- *              NOTE: This function can be called after stack is ready.
- *              Explanation: If stack is ready, Application will be notified by message @ref GAP_MSG_LE_DEV_STATE_CHANGE
+ * This function can be called after Bluetooth Host is ready. \n
+ *              Explanation: If Bluetooth Host is ready, the application will be notified by message @ref GAP_MSG_LE_DEV_STATE_CHANGE
  *                           with new_state about gap_init_state which is configured as @ref GAP_INIT_STATE_STACK_READY.
  *
- *              If sending request operation is success, the result of enable or disable periodic advertising will be returned by
+ * If sending request operation is success, the result of enable or disable periodic advertising will be returned by
  *              @ref app_gap_callback with cb_type @ref GAP_MSG_LE_PA_ADV_SET_PERIODIC_ADV_ENABLE, periodic advertising state will
  *              be returned by @ref app_gap_callback with cb_type @ref GAP_MSG_LE_PA_ADV_STATE_CHANGE_INFO.
  *
@@ -366,7 +366,7 @@ T_GAP_CAUSE le_pa_adv_set_periodic_adv_enable(uint8_t adv_handle, uint8_t enable
   * @}
   */
 
-/** End of GAP
+/** End of BT_Host
   * @}
   */
 

@@ -56,9 +56,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga47aa4c44584be1d0a02c6d85a0a6f1a7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___l_e_a___a_s_c_s___exported___functions.html#ga47aa4c44584be1d0a02c6d85a0a6f1a7">app_lea_ascs_cis_exist</a> (void)</td></tr>
 <tr class="memdesc:ga47aa4c44584be1d0a02c6d85a0a6f1a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if current has any cis exist.  <a href="#ga47aa4c44584be1d0a02c6d85a0a6f1a7">More...</a><br /></td></tr>
 <tr class="separator:ga47aa4c44584be1d0a02c6d85a0a6f1a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf6e0813ed8bd3a51160b74a83d0765f9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___l_e_a___a_s_c_s___exported___functions.html#gaf6e0813ed8bd3a51160b74a83d0765f9">app_lea_ascs_alloc_ase_entry</a> (uint16_t conn_handle, uint8_t ase_id, <a class="el" href="struct_t___c_o_d_e_c___c_f_g.html">T_CODEC_CFG</a> codec_cfg)</td></tr>
-<tr class="memdesc:gaf6e0813ed8bd3a51160b74a83d0765f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate ase entry by LE entry connection handle and update ase id, codec parameters.  <a href="#gaf6e0813ed8bd3a51160b74a83d0765f9">More...</a><br /></td></tr>
-<tr class="separator:gaf6e0813ed8bd3a51160b74a83d0765f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad22bf486b8d1fc1f363f141936079ed8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___l_e_a___a_s_c_s___exported___functions.html#gad22bf486b8d1fc1f363f141936079ed8">app_lea_ascs_alloc_ase_entry</a> (uint16_t conn_handle, uint8_t ase_id, uint8_t codec_id[<a class="el" href="group___c_o_d_e_c___i_d___l_e_n.html#ga8c013327b1737e320779eb44c695c8c4">CODEC_ID_LEN</a>], <a class="el" href="struct_t___c_o_d_e_c___c_f_g.html">T_CODEC_CFG</a> codec_cfg)</td></tr>
+<tr class="memdesc:gad22bf486b8d1fc1f363f141936079ed8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate ase entry by LE entry connection handle and update ase id, codec parameters.  <a href="#gad22bf486b8d1fc1f363f141936079ed8">More...</a><br /></td></tr>
+<tr class="separator:gad22bf486b8d1fc1f363f141936079ed8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafab3ab21a472e3431663a3d7199303dc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___l_e_a___a_s_c_s___exported___functions.html#gafab3ab21a472e3431663a3d7199303dc">app_lea_ascs_free_ase_entry</a> (<a class="el" href="structt__lea__ase__entry.html">T_LEA_ASE_ENTRY</a> *p_ase_entry)</td></tr>
 <tr class="memdesc:gafab3ab21a472e3431663a3d7199303dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free ase entry.  <a href="#gafab3ab21a472e3431663a3d7199303dc">More...</a><br /></td></tr>
 <tr class="separator:gafab3ab21a472e3431663a3d7199303dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -131,8 +131,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="gaf6e0813ed8bd3a51160b74a83d0765f9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf6e0813ed8bd3a51160b74a83d0765f9">&#9670;&nbsp;</a></span>app_lea_ascs_alloc_ase_entry()</h2>
+<a id="gad22bf486b8d1fc1f363f141936079ed8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad22bf486b8d1fc1f363f141936079ed8">&#9670;&nbsp;</a></span>app_lea_ascs_alloc_ase_entry()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -148,6 +148,12 @@ Functions</h2></td></tr>
           <td></td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>ase_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>codec_id</em>[CODEC_ID_LEN], </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -168,6 +174,7 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">conn_handle</td><td>LE entry connection handle </td></tr>
     <tr><td class="paramname">ase_id</td><td>audio stream endpoint identifier </td></tr>
+    <tr><td class="paramname">codec_id</td><td>codec identifier </td></tr>
     <tr><td class="paramname">codec_cfg</td><td>codec parameters </td></tr>
   </table>
   </dd>

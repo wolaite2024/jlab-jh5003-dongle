@@ -20,7 +20,7 @@
 #include "gap_le.h"
 #include <gap_le_types.h>
 
-/** @addtogroup GAP_LE_DTM GAP LE Direct Test Mode Module
+/** @addtogroup GAP_LE_DTM GAP LE Direct Test Mode
   * @brief GAP LE Direct Test Mode Module
   * @{
   */
@@ -44,10 +44,10 @@ typedef enum
     GAP_DTM_PACKET_PAYLOAD_1100 = 0x01,     /**< Repeated '11110000' (in transmission order) sequence. */
     GAP_DTM_PACKET_PAYLOAD_10 = 0x02,       /**< Repeated '10101010' (in transmission order) sequence. */
     GAP_DTM_PACKET_PAYLOAD_PRBS15 = 0x03,   /**< PRBS15 sequence. */
-    GAP_DTM_PACKET_PAYLOAD_ALL1 = 0x04,     /**< Repeated '11111111' (in transmission order) sequence. . */
-    GAP_DTM_PACKET_PAYLOAD_ALL0 = 0x05,     /**< Repeated '00000000' (in transmission order) sequence. . */
-    GAP_DTM_PACKET_PAYLOAD_0011 = 0x06,     /**< Repeated '00001111' (in transmission order) sequence. . */
-    GAP_DTM_PACKET_PAYLOAD_01 = 0x07        /**< Repeated '01010101' (in transmission order) sequence. . */
+    GAP_DTM_PACKET_PAYLOAD_ALL1 = 0x04,     /**< Repeated '11111111' (in transmission order) sequence. */
+    GAP_DTM_PACKET_PAYLOAD_ALL0 = 0x05,     /**< Repeated '00000000' (in transmission order) sequence. */
+    GAP_DTM_PACKET_PAYLOAD_0011 = 0x06,     /**< Repeated '00001111' (in transmission order) sequence. */
+    GAP_DTM_PACKET_PAYLOAD_01 = 0x07        /**< Repeated '01010101' (in transmission order) sequence. */
 } T_GAP_DTM_PACKET_PAYLOAD_TYPE;
 
 typedef enum
@@ -75,7 +75,7 @@ typedef enum
 * @brief   Start a test where the DUT receives test reference packets at a fixed interval.
             The tester generates the test reference packets.
 *
-* @param[in]   rx_chann - channel to receive packets.
+* @param[in]   rx_chann - Channel to receive packets.
 *
 * @retval GAP_CAUSE_SUCCESS: Operation success.
 * @retval GAP_CAUSE_SEND_REQ_FAILED: Operation fail.
@@ -102,12 +102,12 @@ typedef enum
            status = p_data->p_le_receive_test_rsp->cause;
            if (status == 0)
            {
-               APP_PRINT_INFO2("dtm_event_trace: ev = 0x%x, st = 0x%x", (event & 0x8000) >> 15, event & 0x1);
+               APP_PRINT_INFO2("dtm_event_trace: ev 0x%x, st 0x%x", (event & 0x8000) >> 15, event & 0x1);
            }
            else
            {
                event |= 1;
-               APP_PRINT_INFO2("dtm_evt_trace: EV = 0x%x, st = 0x%x", (event & 0x8000) >> 15, event & 0x1);
+               APP_PRINT_INFO2("dtm_evt_trace: EV 0x%x, st 0x%x", (event & 0x8000) >> 15, event & 0x1);
            }
            dtm_uart_send_bytes(event);
            break;
@@ -122,9 +122,9 @@ T_GAP_CAUSE le_dtm_receiver_test(uint8_t rx_chann);
 * @brief   Start a test where the DUT generates test reference packets at a fixed interval.
             The Controller shall transmit at maximum power.
 *
-* @param[in]   tx_chann - channel to transmit packets.
-* @param[in]   data_len - length in bytes of payload data in each packet.
-* @param[in]   pkt_pl - the value of packet payload.
+* @param[in]   tx_chann - Channel to transmit packets.
+* @param[in]   data_len - Length in bytes of payload data in each packet.
+* @param[in]   pkt_pl - The value of packet payload.
 *
 * @retval GAP_CAUSE_SUCCESS: Operation success.
 * @retval GAP_CAUSE_SEND_REQ_FAILED: Operation fail.
@@ -153,12 +153,12 @@ T_GAP_CAUSE le_dtm_receiver_test(uint8_t rx_chann);
         status = p_data->le_cause.cause;
            if (status == 0)
            {
-               APP_PRINT_INFO2("dtm_evt_trace: ev = 0x%x, st = 0x%x", (event & 0x8000) >> 15, event & 0x1);
+               APP_PRINT_INFO2("dtm_evt_trace: ev 0x%x, st 0x%x", (event & 0x8000) >> 15, event & 0x1);
            }
            else
            {
                event |= 1;
-               APP_PRINT_INFO2("dtm_evt_trace: st = 0x%x, st = 0x%x", (event & 0x8000) >> 15, event & 0x1);
+               APP_PRINT_INFO2("dtm_evt_trace: st 0x%x, st 0x%x", (event & 0x8000) >> 15, event & 0x1);
            }
            dtm_uart_send_bytes(event);
            break;
@@ -200,13 +200,13 @@ T_GAP_CAUSE le_dtm_transmitter_test(uint8_t tx_chann, uint8_t data_len, uint8_t 
              {
                  event |= 1 << 15;
                  event |= p_data->p_le_dtm_test_end_rsp->num_pkts;
-                 APP_PRINT_INFO2("dtm_evt_trace: ev = 0x%x, packet count = 0x%x", (event & 0x8000) >> 15,
+                 APP_PRINT_INFO2("dtm_evt_trace: ev 0x%x, packet count 0x%x", (event & 0x8000) >> 15,
                                  event & 0x7fff);
              }
              else
              {
                  event |= 1;
-                 APP_PRINT_INFO2("dtm_evt_trace: ev = 0x%x, st = 0x%x", (event & 0x8000) >> 15, event & 0x1);
+                 APP_PRINT_INFO2("dtm_evt_trace: ev 0x%x, st 0x%x", (event & 0x8000) >> 15, event & 0x1);
              }
              dtm_uart_send_bytes(event);
              break;
@@ -220,9 +220,9 @@ T_GAP_CAUSE le_dtm_test_end(void);
 /**
 * @brief   Start a test where the DUT receives test reference packets at a fixed interval.
 *
-* @param[in]   rx_chann - channel to receive packets.
-* @param[in]   phy - physical to receive packets.
-* @param[in]   mod_idx - modulation index to receive packets.
+* @param[in]   rx_chann - Channel to receive packets.
+* @param[in]   phy - Physical to receive packets.
+* @param[in]   mod_idx - Modulation index to receive packets.
 *
 * @retval GAP_CAUSE_SUCCESS: Operation success.
 * @retval GAP_CAUSE_SEND_REQ_FAILED: Operation fail.
@@ -234,12 +234,11 @@ T_GAP_CAUSE le_dtm_test_end(void);
         static uint8_t phy = 1;
         static uint8_t mod_idx = 0;
         rx_chann = (command & 0x3f00) >> 8;
-#if F_BT_LE_5_0_SUPPORT
+
         if (le_dtm_enhanced_receiver_test(rx_chann, phy, mod_idx) != GAP_CAUSE_SUCCESS)
         {
             APP_PRINT_ERROR0("dtm_test_req: le_dtm_enhanced_receiver_test fail");
         }
-#endif
     }
 
     T_APP_RESULT app_gap_callback(uint8_t cb_type, void *p_cb_data)
@@ -252,21 +251,19 @@ T_GAP_CAUSE le_dtm_test_end(void);
         switch (cb_type)
         {
         ...
-#if F_BT_LE_5_0_SUPPORT
         case GAP_MSG_LE_DTM_ENHANCED_RECEIVER_TEST:
-#endif
-        status = p_data->le_cause.cause;
-        if (status == 0)
-        {
-            APP_PRINT_INFO2("app_gap_callback: event 0x%x, status 0x%x", (event & 0x8000) >> 15, event & 0x1);
-        }
-        else
-        {
-            event |= 1;
-            APP_PRINT_INFO2("app_gap_callback: event 0x%x, status 0x%x", (event & 0x8000) >> 15, event & 0x1);
-        }
-        dtm_uart_send_bytes(event);
-        break;
+            status = p_data->le_cause.cause;
+            if (status == 0)
+            {
+                APP_PRINT_INFO2("app_gap_callback: event 0x%x, status 0x%x", (event & 0x8000) >> 15, event & 0x1);
+            }
+            else
+            {
+                event |= 1;
+                APP_PRINT_INFO2("app_gap_callback: event 0x%x, status 0x%x", (event & 0x8000) >> 15, event & 0x1);
+            }
+            dtm_uart_send_bytes(event);
+            break;
         ...
     }
   * \endcode
@@ -278,8 +275,8 @@ T_GAP_CAUSE le_dtm_enhanced_receiver_test(uint8_t rx_chann, uint8_t phy, uint8_t
 *
 * @param[in]   tx_chann - Channel to transmit packets.
 * @param[in]   data_len - Length in bytes of payload data in each packet.
-* @param[in]   pkt_pl - the value of packet payload.
-* @param[in]   phy - physical to transmit packets.
+* @param[in]   pkt_pl - The value of packet payload.
+* @param[in]   phy - Physical to transmit packets.
 *
 * @retval GAP_CAUSE_SUCCESS: Operation success.
 * @retval GAP_CAUSE_SEND_REQ_FAILED: Operation fail.
@@ -291,13 +288,12 @@ T_GAP_CAUSE le_dtm_enhanced_receiver_test(uint8_t rx_chann, uint8_t phy, uint8_t
         static uint8_t phy = 1;
         tx_chann = (command & 0x3f00) >> 8;
         data_len = up_2_bits << 6 | (command & 0xfc) >> 2;
-        pkt_pl = command & 0x03;;
-#if F_BT_LE_5_0_SUPPORT
+        pkt_pl = command & 0x03;
+
         if (le_dtm_enhanced_transmitter_test(tx_chann, data_len, pkt_pl, phy) != GAP_CAUSE_SUCCESS)
         {
            APP_PRINT_ERROR0("dtm_test_req: le_dtm_enhanced_transmitter_test fail");
         }
-#endif
     }
 
     T_APP_RESULT app_gap_callback(uint8_t cb_type, void *p_cb_data)
@@ -310,21 +306,19 @@ T_GAP_CAUSE le_dtm_enhanced_receiver_test(uint8_t rx_chann, uint8_t phy, uint8_t
         switch (cb_type)
         {
          ...
-#if F_BT_LE_5_0_SUPPORT
         case GAP_MSG_LE_DTM_ENHANCED_TRANSMITTER_TEST:
-#endif
-         status = p_data->le_cause.cause;
-         if (status == 0)
-         {
-             APP_PRINT_INFO2("app_gap_callback: event 0x%x, status 0x%x", (event & 0x8000) >> 15, event & 0x1);
-         }
-         else
-         {
-             event |= 1;
-             APP_PRINT_INFO2("app_gap_callback: event 0x%x, status 0x%x", (event & 0x8000) >> 15, event & 0x1);
-         }
-         dtm_uart_send_bytes(event);
-         break;
+            status = p_data->le_cause.cause;
+            if (status == 0)
+            {
+                APP_PRINT_INFO2("app_gap_callback: event 0x%x, status 0x%x", (event & 0x8000) >> 15, event & 0x1);
+            }
+            else
+            {
+                event |= 1;
+                APP_PRINT_INFO2("app_gap_callback: event 0x%x, status 0x%x", (event & 0x8000) >> 15, event & 0x1);
+            }
+            dtm_uart_send_bytes(event);
+            break;
 
          ...
     }
@@ -337,19 +331,19 @@ T_GAP_CAUSE le_dtm_enhanced_transmitter_test(uint8_t tx_chann, uint8_t data_len,
 /**
 * @brief   Start a test where the DUT receives test reference packets at a fixed interval.
 *
-* @param[in]   rx_chann - channel to receive packets.
-                          Range: 0x00 to 0x27.
-* @param[in]   phy - physical to receive packets: @ref T_GAP_PHYS_TYPE.
-* @param[in]   modulation_index - modulation index to receive packets: @ref T_GAP_DTM_MODULATION_INDEX_TYPE.
-* @param[in]   expected_cte_length - the expected length of the Constant Tone Extensions in received
+* @param[in]   rx_channel - Channel to receive packets.
+                            Range: 0x00 to 0x27.
+* @param[in]   phy - Physical to receive packets: @ref T_GAP_PHYS_TYPE.
+* @param[in]   modulation_index - Modulation index to receive packets: @ref T_GAP_DTM_MODULATION_INDEX_TYPE.
+* @param[in]   expected_cte_length - The expected length of the Constant Tone Extensions in received
                                      test reference packets.
                                      Range: 0x00 (No Constant Tone Extension expected (default)) or 0x02 to 0x14.
                                      Units: 8 us.
-* @param[in]   expected_cte_type - the expected type of the Constant Tone Extensions in received
+* @param[in]   expected_cte_type - The expected type of the Constant Tone Extensions in received
                                    test reference packets: @ref T_GAP_CTE_TYPE.
-* @param[in]   slot_durations - modulation index to receive packets and shall be ignored when expected_cte_type
+* @param[in]   slot_durations - Modulation index to receive packets and shall be ignored when expected_cte_type
                                 is not set to GAP_CTE_TYPE_AOA: @ref T_GAP_SLOT_DUATIONS_TYPE.
-* @param[in]   switching_pattern_length - the number of Antenna IDs in the pattern and shall be ignored when
+* @param[in]   switching_pattern_length - The number of Antenna IDs in the pattern and shall be ignored when
                                           expected_cte_type is not set to GAP_CTE_TYPE_AOA.
                                           Range: 0x02 to max_switching_pattern_length supported by controller
                                                  max_switching_pattern_length shall be less than or equal to 0x4B.
@@ -404,19 +398,19 @@ T_GAP_CAUSE le_dtm_receiver_test_v3(uint8_t rx_channel, T_GAP_PHYS_TYPE phy,
 /**
 * @brief   Start a test where the DUT receives test reference packets at a fixed interval.
 *
-* @param[in]   tx_channel - channel to transmit packets.
+* @param[in]   tx_channel - Channel to transmit packets.
                             Range: 0x00 to 0x27.
-* @param[in]   test_data_length - length in bytes of payload data in each packet.
+* @param[in]   test_data_length - Length in bytes of payload data in each packet.
                                   Range: 0x00 to 0xFF.
-* @param[in]   packet_payload - contents of the payload of the test reference packets:
+* @param[in]   packet_payload - Contents of the payload of the test reference packets:
 *                               @ref T_GAP_DTM_PACKET_PAYLOAD_TYPE.
-* @param[in]   phy - physical to transmit packets: @ref T_GAP_DTM_PHYS_TYPE.
-* @param[in]   cte_length - the length of the Constant Tone Extension in the test reference packets.
+* @param[in]   phy - Physical to transmit packets: @ref T_GAP_DTM_PHYS_TYPE.
+* @param[in]   cte_length - The length of the Constant Tone Extension in the test reference packets.
                             Range: 0x00 (Do not transmit a Constant Tone Extension) or 0x02 to 0x14.
                             Units: 8 us.
-* @param[in]   cte_type - the type of the Constant Tone Extension in the test reference packets.
+* @param[in]   cte_type - The type of the Constant Tone Extension in the test reference packets.
                           @ref T_GAP_CTE_TYPE.
-* @param[in]   switching_pattern_length - the number of Antenna IDs in the pattern and shall be ignored when
+* @param[in]   switching_pattern_length - The number of Antenna IDs in the pattern and shall be ignored when
                                           cte_type is set to GAP_CTE_TYPE_AOA.
                                           Range: 0x02 to max_switching_pattern_length supported by controller
                                                  max_switching_pattern_length shall be less than or equal to 0x4B.

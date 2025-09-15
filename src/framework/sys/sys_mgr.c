@@ -15,8 +15,6 @@
 #include "sys_mgr.h"
 
 /* TODO Remove Start */
-#include "app_msg.h"
-
 void *hEventQueueHandleAu;
 /* TODO Remove End */
 

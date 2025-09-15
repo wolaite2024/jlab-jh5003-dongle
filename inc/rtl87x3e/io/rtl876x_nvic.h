@@ -1,12 +1,12 @@
 /**
 *********************************************************************************************************
-*               Copyright(c) 2015, Realtek Semiconductor Corporation. All rights reserved.
+*               Copyright(c) 2024, Realtek Semiconductor Corporation. All rights reserved.
 *********************************************************************************************************
 * @file      rtl876x_nvic.h
 * @brief
 * @details
 * @author    elliot chen
-* @date      2015-05-19
+* @date      2024-07-18
 * @version   v1.0
 * *********************************************************************************************************
 */
@@ -23,7 +23,7 @@ extern "C" {
 
 
 /** @addtogroup 87x3e_NVIC NVIC
-  * @brief NVIC driver module
+  * @brief NVIC driver module.
   * @{
   */
 
@@ -37,20 +37,19 @@ extern "C" {
   */
 
 /**
-  * @brief  NVIC Init Structure definition
+  * @brief  NVIC init structure definition.
   */
 
 typedef struct
 {
-    IRQn_Type NVIC_IRQChannel;                  /*!< Specifies the IRQ channel to be enabled or disabled.
-                                                                    This parameter can be a value of @ref IRQn_Type*/
+    IRQn_Type NVIC_IRQChannel;                  /*!< Specifies the IRQ channel. This parameter can be a value of @ref IRQn_Type. */
 
     uint32_t NVIC_IRQChannelPriority;           /*!< Specifies the priority for the IRQ channel. This parameter can be a value
-                                                                    between 0 and x as described in the table .*/
+                                                                    between 0 and x as described in the table. */
 
     FunctionalState
     NVIC_IRQChannelCmd;         /*!< Specifies whether the IRQ channel defined in NVIC_IRQChannel
-                                                                     will be enabled or disabled.*/
+                                                                     will be enabled or disabled. */
 } NVIC_InitTypeDef;
 
 /**
@@ -67,12 +66,29 @@ typedef struct
   */
 
 /**
-  * @brief  Initializes the NVIC peripheral according to the specified
-  *         parameters in the NVIC_InitStruct.
-  * @param  NVIC_InitStruct: pointer to a NVIC_InitTypeDef structure that contains
-  *         the configuration information for the specified NVIC peripheral.
-  * @retval None
-  */
+ *
+ * \brief     Initializes the NVIC peripheral according to the specified
+ *            parameters in the NVIC_InitStruct.
+ *
+ * \param[in] NVIC_InitStruct: Pointer to a \ref NVIC_InitTypeDef structure that contains
+ *            the configuration information for the specified NVIC peripheral.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * void i2c0_init(void)
+ * {
+ *     //add code here.
+ *     RamVectorTableUpdate(I2C0_VECTORn, (IRQ_Fun)I2C0_Handler);
+ *
+ *     NVIC_InitTypeDef NVIC_InitStruct;
+ *     NVIC_InitStruct.NVIC_IRQChannel = I2C0_IRQn;
+ *     NVIC_InitStruct.NVIC_IRQChannelPriority = 3;
+ *     NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
+ *     NVIC_Init(&NVIC_InitStruct);
+ * }
+ * \endcode
+ */
 extern void (*NVIC_Init)(NVIC_InitTypeDef *NVIC_InitStruct);
 
 #ifdef __cplusplus
@@ -85,5 +101,5 @@ extern void (*NVIC_Init)(NVIC_InitTypeDef *NVIC_InitStruct);
 /** @} */ /* End of group 87x3e_NVIC */
 
 
-/******************* (C) COPYRIGHT 2015 Realtek Semiconductor Corporation *****END OF FILE****/
+/******************* (C) COPYRIGHT 2024 Realtek Semiconductor Corporation *****END OF FILE****/
 

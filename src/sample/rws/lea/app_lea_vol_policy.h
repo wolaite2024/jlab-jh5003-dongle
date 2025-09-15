@@ -25,6 +25,13 @@ typedef enum
 } T_LEA_VOL_CHG_RESULT;
 
 /**
+ * @brief  transfer the vcs volume to volume gain
+ * @param  No parameter.
+ * @return The volume gain
+ */
+uint8_t app_lea_vol_gain_get(void);
+
+/**
  * @brief  Update volume and set vcs paramaters if vcs support
  * @param  type  change type of volume
  * @return The result of update volume

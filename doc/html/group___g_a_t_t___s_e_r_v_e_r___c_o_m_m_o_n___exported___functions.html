@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>BT AUDIO SDK: GATT Common Server Exported Functions</title>
+<title>BT AUDIO SDK: GATT Server Common Exported Functions</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -44,7 +44,7 @@ $(function() {
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">GATT Common Server Exported Functions<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___b_l_u_e_t_o_o_t_h.html">Bluetooth</a> &raquo; <a class="el" href="group___p_r_o_f_i_l_e___a_p_i.html">Profile</a> &raquo; <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___a_p_i.html">GATT Server API</a> &raquo; <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___a_p_i.html">GATT Common Server API</a></div></div>  </div>
+<div class="title">GATT Server Common Exported Functions<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___b_l_u_e_t_o_o_t_h.html">Bluetooth</a> &raquo; <a class="el" href="group___p_r_o_f_i_l_e___a_p_i.html">Profile</a> &raquo; <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___a_p_i.html">GATT Server API</a> &raquo; <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___a_p_i.html">GATT Server Common API</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -54,7 +54,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga69f3a8c88a1c2d5255f87e69e135311b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize parameters of GATT Server.  <a href="#ga69f3a8c88a1c2d5255f87e69e135311b">More...</a><br /></td></tr>
 <tr class="separator:ga69f3a8c88a1c2d5255f87e69e135311b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab38d20d45b00eba0738f921661424e18"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#gab38d20d45b00eba0738f921661424e18">server_builtin_service_reg</a> (bool reg)</td></tr>
-<tr class="memdesc:gab38d20d45b00eba0738f921661424e18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register builtin services including GAP and GATT service.  <a href="#gab38d20d45b00eba0738f921661424e18">More...</a><br /></td></tr>
+<tr class="memdesc:gab38d20d45b00eba0738f921661424e18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register built-in services including GAP and GATT services.  <a href="#gab38d20d45b00eba0738f921661424e18">More...</a><br /></td></tr>
 <tr class="separator:gab38d20d45b00eba0738f921661424e18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5fd0c8616de60433af1c09853edb20b7"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga5fd0c8616de60433af1c09853edb20b7">server_get_start_handle</a> (<a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a> service_id)</td></tr>
 <tr class="memdesc:ga5fd0c8616de60433af1c09853edb20b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the start handle of the service.  <a href="#ga5fd0c8616de60433af1c09853edb20b7">More...</a><br /></td></tr>
@@ -84,17 +84,12 @@ Functions</h2></td></tr>
 <p>Initialize parameters of GATT Server. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">service_num</td><td>Set the number of services that needs to register. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">service_num</td><td>Set the number of services that need to register. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td><b>Example usage</b> <div class="fragment"><div class="line"><span class="keywordtype">void</span> app_le_profile_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga69f3a8c88a1c2d5255f87e69e135311b">server_init</a>(1);</div><div class="line">}</div></div><!-- fragment --> </td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>void.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> app_le_profile_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga69f3a8c88a1c2d5255f87e69e135311b">server_init</a>(service_num);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="gab38d20d45b00eba0738f921661424e18"></a>
@@ -113,21 +108,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Register builtin services including GAP and GATT service. </p>
-<p>If application does not need to register GAP and GATT service. Application shall call server_builtin_service_reg(false) before <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga69f3a8c88a1c2d5255f87e69e135311b" title="Initialize parameters of GATT Server. ">server_init()</a>.</p>
+<p>Register built-in services including GAP and GATT services. </p>
+<p>If the application does not need to register GAP and GATT services, the application shall call server_builtin_service_reg(false) before <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga69f3a8c88a1c2d5255f87e69e135311b" title="Initialize parameters of GATT Server. ">server_init()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">reg</td><td>Whether to register builtin services. Default value is true. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">reg</td><td>Whether to register built-in services. The default value is true. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td><b>Example usage</b> <div class="fragment"><div class="line"><span class="keywordtype">void</span> app_le_profile_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#gab38d20d45b00eba0738f921661424e18">server_builtin_service_reg</a>(<span class="keyword">false</span>);</div><div class="line">    <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga69f3a8c88a1c2d5255f87e69e135311b">server_init</a>(1);</div><div class="line">    simp_srv_id = <a class="code" href="group___s_i_m_p___service___exported___functions.html#ga67af3dc85c06595757de67de3e9918c6">simp_ble_service_add_service</a>(app_profile_callback);</div><div class="line">    <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___exported___functions.html#ga2fcbc3f5f19d9fdfb3e48923145e98f4">server_register_app_cb</a>(app_profile_callback);</div><div class="line">}</div></div><!-- fragment --> </td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>void.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> app_le_profile_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#gab38d20d45b00eba0738f921661424e18">server_builtin_service_reg</a>(<span class="keyword">false</span>);</div><div class="line">    <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga69f3a8c88a1c2d5255f87e69e135311b">server_init</a>(service_num);</div><div class="line">    simp_srv_id = <a class="code" href="group___s_i_m_p___service___exported___functions.html#ga67af3dc85c06595757de67de3e9918c6">simp_ble_service_add_service</a>(app_profile_callback);</div><div class="line">    <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___exported___functions.html#ga2fcbc3f5f19d9fdfb3e48923145e98f4">server_register_app_cb</a>(app_profile_callback);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga5fd0c8616de60433af1c09853edb20b7"></a>
@@ -153,7 +143,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Start handle </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Start handle. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">0</td><td>Failed. </td></tr>
@@ -161,7 +151,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint16_t start_handle;</div><div class="line">    start_handle = <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga5fd0c8616de60433af1c09853edb20b7">server_get_start_handle</a>(simp_srv_id);</div><div class="line">}</div></div><!-- fragment --> 
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint16_t start_handle = <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga5fd0c8616de60433af1c09853edb20b7">server_get_start_handle</a>(service_id);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga6102ff8d3ad404ebecd3c5cf416a9fa6"></a>
@@ -183,15 +173,15 @@ Functions</h2></td></tr>
 <p>Configure the server interface. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">use_ext</td><td>Wether use the extension API. Default value is false. <ul>
-<li>true Use the API in <a class="el" href="profile__server__ext_8h_source.html" title="Head file for server structure. ">profile_server_ext.h</a>. </li>
-<li>false Use the API in <a class="el" href="profile__server_8h_source.html" title="Head file for server structure. ">profile_server.h</a>. </li>
+    <tr><td class="paramdir">[in]</td><td class="paramname">use_ext</td><td>Whether to use the extension API. The default value is false. <ul>
+<li>true Use the API in <a class="el" href="profile__server__ext_8h_source.html" title="Header file for server structure. ">profile_server_ext.h</a>. </li>
+<li>false Use the API in <a class="el" href="profile__server_8h_source.html" title="Header file for server structure. ">profile_server.h</a>. </li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Configure result </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Configure result. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">true</td><td>Success. </td></tr>
@@ -199,7 +189,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga6102ff8d3ad404ebecd3c5cf416a9fa6">server_cfg_use_ext_api</a>(<span class="keyword">true</span>);</div><div class="line">}</div></div><!-- fragment --> 
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keywordtype">bool</span> ret = <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga6102ff8d3ad404ebecd3c5cf416a9fa6">server_cfg_use_ext_api</a>(<span class="keyword">true</span>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

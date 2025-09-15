@@ -45,13 +45,14 @@ $(function() {
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">PAD Power Mode<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___p_i_n_m_u_x.html">PINMUX</a> &raquo; <a class="el" href="group__x3e___p_i_n_m_u_x___exported___constants.html">PINMUX Exported Constants</a> &raquo; <a class="el" href="group__x3e___p_i_n_m_u_x___exported___types.html">PINMUX Exported Types</a></div></div>  </div>
+<div class="title">PAD Power Mode<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___p_i_n_m_u_x.html">PINMUX</a> &raquo; <a class="el" href="group__x3e___p_i_n_m_u_x___exported___types.html">PINMUX Exported Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga19c56469d586751af1ab53bd19c072bd"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="group__x3e___p_a_d___power___mode.html#gac2e804c73a9d287080d1cf1207e6a177">_PAD_PWR_Mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___p_a_d___power___mode.html#ga19c56469d586751af1ab53bd19c072bd">PAD_PWR_Mode</a></td></tr>
+<tr class="memitem:ga19c56469d586751af1ab53bd19c072bd"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="group___p_a_d___power___mode.html#gac2e804c73a9d287080d1cf1207e6a177">_PAD_PWR_Mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___p_a_d___power___mode.html#ga19c56469d586751af1ab53bd19c072bd">PAD_PWR_Mode</a></td></tr>
+<tr class="memdesc:ga19c56469d586751af1ab53bd19c072bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pad power mode definition.  <a href="#ga19c56469d586751af1ab53bd19c072bd">More...</a><br /></td></tr>
 <tr class="separator:ga19c56469d586751af1ab53bd19c072bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
@@ -59,9 +60,14 @@ Enumerations</h2></td></tr>
 <tr class="memitem:gac2e804c73a9d287080d1cf1207e6a177"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___p_a_d___power___mode.html#gac2e804c73a9d287080d1cf1207e6a177">_PAD_PWR_Mode</a> { <br />
 &#160;&#160;<a class="el" href="group__x3e___p_a_d___power___mode.html#ggac2e804c73a9d287080d1cf1207e6a177a9631cfde7cf1cb8730383ec0837fa2d2">PAD_SHUTDOWN</a>, 
 <br />
+&#160;&#160;<a class="el" href="group__x3e___p_a_d___power___mode.html#ggac2e804c73a9d287080d1cf1207e6a177a64ef7041a073bac1e848da51333064e0">PAD_IS_PWRON</a> = 1, 
+<br />
+&#160;&#160;<a class="el" href="group__x3e___p_a_d___power___mode.html#ggac2e804c73a9d287080d1cf1207e6a177a9631cfde7cf1cb8730383ec0837fa2d2">PAD_SHUTDOWN</a>, 
+<br />
 &#160;&#160;<a class="el" href="group__x3e___p_a_d___power___mode.html#ggac2e804c73a9d287080d1cf1207e6a177a64ef7041a073bac1e848da51333064e0">PAD_IS_PWRON</a> = 1
 <br />
  }</td></tr>
+<tr class="memdesc:gac2e804c73a9d287080d1cf1207e6a177"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pad power mode definition.  <a href="group__x3e___p_a_d___power___mode.html#gac2e804c73a9d287080d1cf1207e6a177">More...</a><br /></td></tr>
 <tr class="separator:gac2e804c73a9d287080d1cf1207e6a177"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -73,10 +79,12 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef enum <a class="el" href="group__x3e___p_a_d___power___mode.html#gac2e804c73a9d287080d1cf1207e6a177">_PAD_PWR_Mode</a>  <a class="el" href="group__x3e___p_a_d___power___mode.html#ga19c56469d586751af1ab53bd19c072bd">PAD_PWR_Mode</a></td>
+          <td class="memname">typedef enum <a class="el" href="group___p_a_d___power___mode.html#gac2e804c73a9d287080d1cf1207e6a177">_PAD_PWR_Mode</a>  <a class="el" href="group___p_a_d___power___mode.html#ga19c56469d586751af1ab53bd19c072bd">PAD_PWR_Mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Pad power mode definition. </p>
 
 </div>
 </div>
@@ -88,13 +96,19 @@ Enumerations</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="group__x3e___p_a_d___power___mode.html#gac2e804c73a9d287080d1cf1207e6a177">_PAD_PWR_Mode</a></td>
+          <td class="memname">enum <a class="el" href="group___p_a_d___power___mode.html#gac2e804c73a9d287080d1cf1207e6a177">_PAD_PWR_Mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Pad power mode definition. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggac2e804c73a9d287080d1cf1207e6a177a9631cfde7cf1cb8730383ec0837fa2d2"></a>PAD_SHUTDOWN&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ggac2e804c73a9d287080d1cf1207e6a177a64ef7041a073bac1e848da51333064e0"></a>PAD_IS_PWRON&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ggac2e804c73a9d287080d1cf1207e6a177a9631cfde7cf1cb8730383ec0837fa2d2"></a>PAD_SHUTDOWN&#160;</td><td class="fielddoc"><p>Shutdown power of pad. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggac2e804c73a9d287080d1cf1207e6a177a64ef7041a073bac1e848da51333064e0"></a>PAD_IS_PWRON&#160;</td><td class="fielddoc"><p>Enable power of pad. </p>
+</td></tr>
 </table>
 
 </div>

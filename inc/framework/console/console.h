@@ -18,8 +18,6 @@ extern "C" {
  * \brief   Provide console interfaces.
  */
 /**
- * console.h
- *
  * \brief Define console parameter.
  *
  * \ingroup CONSOLE
@@ -33,8 +31,6 @@ typedef struct t_console_param
 } T_CONSOLE_PARAM;
 
 /**
- * console.h
- *
  * \brief Define console mode.
  *
  * \ingroup CONSOLE
@@ -46,8 +42,6 @@ typedef enum t_console_mode
 } T_CONSOLE_MODE;
 
 /**
- * console.h
- *
  * \brief  Define console parser prototype in binary mode.
  *
  * \param[in]  buf     The start address of the data.
@@ -62,8 +56,6 @@ typedef enum t_console_mode
 typedef bool (*P_CONSOLE_PARSER)(uint8_t *buf, uint32_t len);
 
 /**
- * console.h
- *
  * \brief Define console event.
  *
  * \ingroup CONSOLE
@@ -79,8 +71,6 @@ typedef enum t_console_evt
 } T_CONSOLE_EVT;
 
 /**
- * console.h
- *
  * \brief  Define console event callback prototype.
  *
  * \param[in]  evt     Console callback event \ref T_CONSOLE_EVT.
@@ -96,8 +86,6 @@ typedef enum t_console_evt
 typedef bool (*P_CONSOLE_CALLBACK)(T_CONSOLE_EVT evt, uint8_t *buf, uint32_t len);
 
 /**
- * console.h
- *
  * \brief Define console IO operations.
  *
  * \ingroup CONSOLE
@@ -115,8 +103,8 @@ typedef struct t_console_op
 /**
  * \brief  Initiate the console.
  *
- * \param[in] console_param   console parameter \ref T_CONSOLE_PARAM.
- * \param[in] console_op      console operation \ref T_CONSOLE_OP.
+ * \param[in] console_param   The console parameter \ref T_CONSOLE_PARAM.
+ * \param[in] console_op      The console operation \ref T_CONSOLE_OP.
  *
  * \return          The status of Initiating the console.
  * \retval true     Console was initiated successfully.
@@ -129,7 +117,7 @@ bool console_init(T_CONSOLE_PARAM *console_param, T_CONSOLE_OP *console_op);
 /**
  * \brief  Set the console mode.
  *
- * \param[in] mode  console mode \ref T_CONSOLE_MODE.
+ * \param[in] mode  The console mode \ref T_CONSOLE_MODE.
  *
  * \return          The status of setting the console mode.
  * \retval true     Console mode was set successfully.
@@ -151,7 +139,7 @@ T_CONSOLE_MODE console_get_mode(void);
 /**
  * \brief  Register the console parser in binary mode.
  *
- * \param[in] parser    console parser \ref P_CONSOLE_PARSER.
+ * \param[in] parser    The console parser \ref P_CONSOLE_PARSER.
  *
  * \return          The status of registering parser.
  * \retval true     Parser was registered successfully.

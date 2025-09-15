@@ -104,9 +104,20 @@ typedef struct
 #endif
 } T_DISC_RESULT;
 
+typedef struct
+{
+    uint8_t bd_addr[6];
+} T_BUD_ADV_INFO;
+
 static tDISC_CB disc_mgr_cb;
 
 #if F_APP_LEA_DONGLE_BINDING
+static T_BUD_ADV_INFO bud_adv_info[] =
+{
+    [DEVICE_BUD_SIDE_LEFT]  = {.bd_addr = {0}},
+    [DEVICE_BUD_SIDE_RIGHT] = {.bd_addr = {0}},
+};
+
 static bool scan_by_mmi = false;
 #endif
 
@@ -318,7 +329,7 @@ void adapter_dual_mode_link_mgr(T_ADAPTER_LINK_EVENT event, uint8_t ble_conn_id)
     {
         if (headset_conn_status == HEADSET_PHONE_CONNECTED)
         {
-            if (bt_a2dp_connect_req(app_cfg_nv.public_bud_addr, 0, BT_A2DP_ROLE_SNK))
+            if (bt_a2dp_connect_req(app_cfg_nv.public_bud_addr, 0, BT_A2DP_ROLE_SNK, 0))
             {
                 new_link_state = ADAPTER_LINK_STATE_A2DP_CONNECTING;
             }
@@ -518,6 +529,23 @@ bool adapter_get_scan_by_mmi(void)
     return scan_by_mmi;
 }
 
+bool adapter_get_bud_side_by_addr(uint8_t *addr, T_DEVICE_BUD_SIDE *bud_side)
+{
+    bool ret = false;
+
+    for (uint8_t i = 0; i < sizeof(bud_adv_info) / sizeof(T_BUD_ADV_INFO); i++)
+    {
+        if (!memcmp(addr, bud_adv_info[i].bd_addr, 6))
+        {
+            *bud_side = (T_DEVICE_BUD_SIDE)i;
+            ret = true;
+            break;
+        }
+    }
+
+    return ret;
+}
+
 #if F_APP_LEA_DONGLE_BINDING
 static void save_bud_addr_to_nv(uint8_t *addr, uint8_t bud_side)
 {
@@ -604,6 +632,8 @@ static void adapter_dongle_scan_callback(uint8_t cb_type, void *result)
 
         if (allow_connect)
         {
+            memcpy(bud_adv_info[lea_adv_data->bud_side].bd_addr, p_report->bd_addr, 6);
+
 #if F_APP_LEA_DONGLE_BINDING
             save_bud_addr_to_nv(p_report->bd_addr, lea_adv_data->bud_side);
             save_bud_public_addr_to_nv(lea_adv_data->public_addr, lea_adv_data->is_stereo);

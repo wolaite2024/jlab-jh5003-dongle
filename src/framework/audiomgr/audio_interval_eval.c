@@ -472,7 +472,7 @@ void audio_inteval_evaluator_update(T_AUDIO_INTERVAL_EVAL_HANDLE handle, uint16_
 
     if (interval > 500.0f)
     {
-        AUDIO_PRINT_TRACE0("audio_inteval_evaluator_update: interval too large");
+        AUDIO_PRINT_INFO0("audio_inteval_evaluator_update: interval too large");
         audio_interval_evaluator_reset(handle);
         return;
     }

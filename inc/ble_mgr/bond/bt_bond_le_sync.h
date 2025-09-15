@@ -47,14 +47,12 @@ typedef struct
 } T_BT_LE_LTK;
 
 /**
- * @brief bt_le_dev_info_clear
- * clear all device information
+ * @brief Clear all device information.
  */
 void bt_le_dev_info_clear(void);
 
 /**
- * @brief bt_le_dev_info_cmp
- * comapre device information
+ * @brief Compare device information.
  * @param p_info1
  * @param p_info2
  * @return true
@@ -63,8 +61,7 @@ void bt_le_dev_info_clear(void);
 bool bt_le_dev_info_cmp(T_BT_LE_DEV_DATA *p_info1, T_BT_LE_DEV_DATA *p_info2);
 
 /**
- * @brief bt_le_dev_info_get
- * get device information by entry
+ * @brief Get device information by entry.
  * @param p_entry
  * @param pp_info
  * @param p_info_len
@@ -74,8 +71,7 @@ bool bt_le_dev_info_cmp(T_BT_LE_DEV_DATA *p_info1, T_BT_LE_DEV_DATA *p_info2);
 bool bt_le_dev_info_get(T_LE_BOND_ENTRY *p_entry, T_BT_LE_DEV_DATA **pp_info, uint16_t *p_info_len);
 
 /**
- * @brief bt_le_dev_info_set
- * set device information
+ * @brief Set device information.
  * @param p_bond_info
  * @param p_info
  * @return T_LE_BOND_ENTRY*
@@ -83,8 +79,7 @@ bool bt_le_dev_info_get(T_LE_BOND_ENTRY *p_entry, T_BT_LE_DEV_DATA **pp_info, ui
 T_LE_BOND_ENTRY *bt_le_dev_info_set(T_BT_BOND_INFO *p_bond_info, T_BT_LE_DEV_INFO *p_info);
 
 /**
- * @brief bt_le_dev_info_set_cccd
- * set cccd information by entry
+ * @brief Set cccd information by entry.
  * @param p_entry
  * @param p_cccd
  * @return true
@@ -95,8 +90,7 @@ bool bt_le_dev_info_set_cccd(T_LE_BOND_ENTRY *p_entry, T_BT_CCCD_DATA *p_cccd);
 T_LE_BOND_ENTRY *bt_le_dev_info_pre_set(T_BT_BOND_INFO *p_bond_info, uint8_t *p_key);
 
 /**
- * @brief bt_le_dev_info_get_local_ltk
- * get local LTK by entry
+ * @brief Get local LTK by entry.
  * @param p_entry
  * @param p_key
  * @return true
@@ -105,16 +99,14 @@ T_LE_BOND_ENTRY *bt_le_dev_info_pre_set(T_BT_BOND_INFO *p_bond_info, uint8_t *p_
 bool bt_le_dev_info_get_local_ltk(T_LE_BOND_ENTRY *p_entry, uint8_t *p_key);
 
 /**
- * @brief bt_le_dev_info_find
- * find device information
+ * @brief Find device information.
  * @param p_info
  * @return T_LE_BOND_ENTRY*
  */
 T_LE_BOND_ENTRY *bt_le_dev_info_find(T_BT_BOND_INFO *p_info);
 
 /**
- * @brief bt_le_dev_info_set_high_priority
- * set high priority device information
+ * @brief Set high priority device information.
  * @param p_info
  * @return true
  * @return false
@@ -122,8 +114,7 @@ T_LE_BOND_ENTRY *bt_le_dev_info_find(T_BT_BOND_INFO *p_info);
 bool bt_le_dev_info_set_high_priority(T_BT_BOND_INFO *p_info);
 
 /**
- * @brief bt_le_dev_info_remove
- * remove device information
+ * @brief Remove device information.
  * @param p_info
  * @return true
  * @return false
@@ -131,8 +122,7 @@ bool bt_le_dev_info_set_high_priority(T_BT_BOND_INFO *p_info);
 bool bt_le_dev_info_remove(T_BT_BOND_INFO *p_info);
 
 /**
- * @brief bt_le_clear_bond_state
- * clear bond state
+ * @brief Clear bond state.
  * @param p_entry
  * @return true
  * @return false

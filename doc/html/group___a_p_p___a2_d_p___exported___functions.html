@@ -56,6 +56,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga533402724b9beccece9d90619820fbcf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___a2_d_p___exported___functions.html#ga533402724b9beccece9d90619820fbcf">app_a2dp_is_streaming</a> (void)</td></tr>
 <tr class="memdesc:ga533402724b9beccece9d90619820fbcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">judge whether a2dp is streaming  <a href="#ga533402724b9beccece9d90619820fbcf">More...</a><br /></td></tr>
 <tr class="separator:ga533402724b9beccece9d90619820fbcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1269799e95448edbc760fc13aa73102e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___a2_d_p___exported___functions.html#ga1269799e95448edbc760fc13aa73102e">app_a2dp_get_streaming_num</a> (void)</td></tr>
+<tr class="memdesc:ga1269799e95448edbc760fc13aa73102e"><td class="mdescLeft">&#160;</td><td class="mdescRight">get a2dp streaming link num  <a href="#ga1269799e95448edbc760fc13aa73102e">More...</a><br /></td></tr>
+<tr class="separator:ga1269799e95448edbc760fc13aa73102e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9f3275a8615262d70bdc638534a49ea6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___a2_d_p___exported___functions.html#ga9f3275a8615262d70bdc638534a49ea6">app_a2dp_get_streaming_idx</a> (uint8_t *idx)</td></tr>
+<tr class="memdesc:ga9f3275a8615262d70bdc638534a49ea6"><td class="mdescLeft">&#160;</td><td class="mdescRight">get a2dp streaming link idx  <a href="#ga9f3275a8615262d70bdc638534a49ea6">More...</a><br /></td></tr>
+<tr class="separator:ga9f3275a8615262d70bdc638534a49ea6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafdc31e0c48f494afc4100198f9cb85d7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_p_p___a2_d_p___exported___functions.html#gafdc31e0c48f494afc4100198f9cb85d7">app_a2dp_set_active_idx</a> (uint8_t idx)</td></tr>
 <tr class="memdesc:gafdc31e0c48f494afc4100198f9cb85d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">set current active a2dp link index  <a href="#gafdc31e0c48f494afc4100198f9cb85d7">More...</a><br /></td></tr>
 <tr class="separator:gafdc31e0c48f494afc4100198f9cb85d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -119,6 +125,60 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>bool </dd></dl>
+
+</div>
+</div>
+<a id="ga1269799e95448edbc760fc13aa73102e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1269799e95448edbc760fc13aa73102e">&#9670;&nbsp;</a></span>app_a2dp_get_streaming_num()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t app_a2dp_get_streaming_num </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get a2dp streaming link num </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">void</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>link num </dd></dl>
+
+</div>
+</div>
+<a id="ga9f3275a8615262d70bdc638534a49ea6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9f3275a8615262d70bdc638534a49ea6">&#9670;&nbsp;</a></span>app_a2dp_get_streaming_idx()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool app_a2dp_get_streaming_idx </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>idx</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get a2dp streaming link idx </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">idx</td><td>link idx </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if get success </dd></dl>
 
 </div>
 </div>

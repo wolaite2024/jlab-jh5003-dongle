@@ -51,30 +51,43 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga2e34ec005023dd6ce3032da725e29ebc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__interrupts__definition.html#ga2e34ec005023dd6ce3032da725e29ebc">I2C_INT_GEN_CALL</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(11))</td></tr>
+<tr class="memdesc:ga2e34ec005023dd6ce3032da725e29ebc"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C general call interrupt. When a general call address is received and it is acknowledged.  <a href="#ga2e34ec005023dd6ce3032da725e29ebc">More...</a><br /></td></tr>
 <tr class="separator:ga2e34ec005023dd6ce3032da725e29ebc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaff61062648e549de3e24a03180bb52ac"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__interrupts__definition.html#gaff61062648e549de3e24a03180bb52ac">I2C_INT_START_DET</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(10))</td></tr>
+<tr class="memdesc:gaff61062648e549de3e24a03180bb52ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C start detect interrupt. When a start or restart condition has occurred on the I2C interface.  <a href="#gaff61062648e549de3e24a03180bb52ac">More...</a><br /></td></tr>
 <tr class="separator:gaff61062648e549de3e24a03180bb52ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga03747def7365f8f484aa1944bb964f88"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__interrupts__definition.html#ga03747def7365f8f484aa1944bb964f88">I2C_INT_STOP_DET</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(9))</td></tr>
+<tr class="memdesc:ga03747def7365f8f484aa1944bb964f88"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C stop detect interrupt. When a stop condition has occurred on the I2C interface.  <a href="#ga03747def7365f8f484aa1944bb964f88">More...</a><br /></td></tr>
 <tr class="separator:ga03747def7365f8f484aa1944bb964f88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga633401012e347b5499be01c51907d842"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__interrupts__definition.html#ga633401012e347b5499be01c51907d842">I2C_INT_ACTIVITY</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(8))</td></tr>
+<tr class="memdesc:ga633401012e347b5499be01c51907d842"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C activity interrupt. When I2C is activity on the bus.  <a href="#ga633401012e347b5499be01c51907d842">More...</a><br /></td></tr>
 <tr class="separator:ga633401012e347b5499be01c51907d842"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga13c6c5bba74fcc53a75b62da4ff00b4b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__interrupts__definition.html#ga13c6c5bba74fcc53a75b62da4ff00b4b">I2C_INT_RX_DONE</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(7))</td></tr>
+<tr class="memdesc:ga13c6c5bba74fcc53a75b62da4ff00b4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C slave RX done interrupt. When the I2C is acting as a slave-transmitter and the master does not acknowledge a transmitted byte. This occurs on the last byte of the transmission, indicating that the transmission is done.  <a href="#ga13c6c5bba74fcc53a75b62da4ff00b4b">More...</a><br /></td></tr>
 <tr class="separator:ga13c6c5bba74fcc53a75b62da4ff00b4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab176df91d48ce976020c00114e3e6e32"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__interrupts__definition.html#gab176df91d48ce976020c00114e3e6e32">I2C_INT_TX_ABRT</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(6))</td></tr>
+<tr class="memdesc:gab176df91d48ce976020c00114e3e6e32"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C TX abort interrupt. When an I2C transmitter is unable to complete the intended actions on the contents of the transmit FIFO.  <a href="#gab176df91d48ce976020c00114e3e6e32">More...</a><br /></td></tr>
 <tr class="separator:gab176df91d48ce976020c00114e3e6e32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga530342bfad66bc17010a5e6ddf0f0f15"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__interrupts__definition.html#ga530342bfad66bc17010a5e6ddf0f0f15">I2C_INT_RD_REQ</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(5))</td></tr>
+<tr class="memdesc:ga530342bfad66bc17010a5e6ddf0f0f15"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C slave RX request interrupt. When I2C is acting as a slave and another I2C master is attempting to read data from I2C.  <a href="#ga530342bfad66bc17010a5e6ddf0f0f15">More...</a><br /></td></tr>
 <tr class="separator:ga530342bfad66bc17010a5e6ddf0f0f15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8a77e1d07288ad8168e5b1632ff4657f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__interrupts__definition.html#ga8a77e1d07288ad8168e5b1632ff4657f">I2C_INT_TX_EMPTY</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(4))</td></tr>
+<tr class="memdesc:ga8a77e1d07288ad8168e5b1632ff4657f"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C TX FIFO empty interrupt. When the transmit buffer is at or below the threshold value.  <a href="#ga8a77e1d07288ad8168e5b1632ff4657f">More...</a><br /></td></tr>
 <tr class="separator:ga8a77e1d07288ad8168e5b1632ff4657f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaed1cae9249e5777a7d666c714f9638ad"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__interrupts__definition.html#gaed1cae9249e5777a7d666c714f9638ad">I2C_INT_TX_OVER</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(3))</td></tr>
+<tr class="memdesc:gaed1cae9249e5777a7d666c714f9638ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C TX FIFO overflow interrupt. When transmit buffer is filled to 24 and the processor attempts to issue another I2C command.  <a href="#gaed1cae9249e5777a7d666c714f9638ad">More...</a><br /></td></tr>
 <tr class="separator:gaed1cae9249e5777a7d666c714f9638ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga56a1983722862345c550f890d9af3a9e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__interrupts__definition.html#ga56a1983722862345c550f890d9af3a9e">I2C_INT_RX_FULL</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(2))</td></tr>
+<tr class="memdesc:ga56a1983722862345c550f890d9af3a9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C RX FIFO full interrupt. When the receive buffer reaches or goes above the RX FIFO threshold value.  <a href="#ga56a1983722862345c550f890d9af3a9e">More...</a><br /></td></tr>
 <tr class="separator:ga56a1983722862345c550f890d9af3a9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf8aebfdc6e5953066e7a4de836b29e03"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__interrupts__definition.html#gaf8aebfdc6e5953066e7a4de836b29e03">I2C_INT_RX_OVER</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(1))</td></tr>
+<tr class="memdesc:gaf8aebfdc6e5953066e7a4de836b29e03"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C RX FIFO overflow interrupt. When the receive buffer is completely filled to 40 and an additional byte is received from an external I2C device.  <a href="#gaf8aebfdc6e5953066e7a4de836b29e03">More...</a><br /></td></tr>
 <tr class="separator:gaf8aebfdc6e5953066e7a4de836b29e03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae5dfaa39259e3829ad6075be5dd8831a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__interrupts__definition.html#gae5dfaa39259e3829ad6075be5dd8831a">I2C_INT_RX_UNDER</a>&#160;&#160;&#160;((uint32_t)<a class="el" href="group___platform___macros___exported___macros.html#ga0516b617ff71641806a58031238ea5f4">BIT</a>(0))</td></tr>
+<tr class="memdesc:gae5dfaa39259e3829ad6075be5dd8831a"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C RX FIFO underflow interrupt. When the processor attempts to read the receive buffer when it is empty.  <a href="#gae5dfaa39259e3829ad6075be5dd8831a">More...</a><br /></td></tr>
 <tr class="separator:gae5dfaa39259e3829ad6075be5dd8831a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafd68f3f5eeb0a84fd55decae9938818a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i2_c__interrupts__definition.html#gafd68f3f5eeb0a84fd55decae9938818a">I2C_GET_INT</a>(INT)</td></tr>
+<tr class="memdesc:gafd68f3f5eeb0a84fd55decae9938818a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the input parameter is valid.  <a href="#gafd68f3f5eeb0a84fd55decae9938818a">More...</a><br /></td></tr>
 <tr class="separator:gafd68f3f5eeb0a84fd55decae9938818a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -91,6 +104,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>I2C general call interrupt. When a general call address is received and it is acknowledged. </p>
+
 </div>
 </div>
 <a id="gaff61062648e549de3e24a03180bb52ac"></a>
@@ -104,6 +119,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>I2C start detect interrupt. When a start or restart condition has occurred on the I2C interface. </p>
 
 </div>
 </div>
@@ -119,6 +136,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>I2C stop detect interrupt. When a stop condition has occurred on the I2C interface. </p>
+
 </div>
 </div>
 <a id="ga633401012e347b5499be01c51907d842"></a>
@@ -132,6 +151,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>I2C activity interrupt. When I2C is activity on the bus. </p>
 
 </div>
 </div>
@@ -147,6 +168,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>I2C slave RX done interrupt. When the I2C is acting as a slave-transmitter and the master does not acknowledge a transmitted byte. This occurs on the last byte of the transmission, indicating that the transmission is done. </p>
+
 </div>
 </div>
 <a id="gab176df91d48ce976020c00114e3e6e32"></a>
@@ -160,6 +183,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>I2C TX abort interrupt. When an I2C transmitter is unable to complete the intended actions on the contents of the transmit FIFO. </p>
 
 </div>
 </div>
@@ -175,6 +200,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>I2C slave RX request interrupt. When I2C is acting as a slave and another I2C master is attempting to read data from I2C. </p>
+
 </div>
 </div>
 <a id="ga8a77e1d07288ad8168e5b1632ff4657f"></a>
@@ -188,6 +215,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>I2C TX FIFO empty interrupt. When the transmit buffer is at or below the threshold value. </p>
 
 </div>
 </div>
@@ -203,6 +232,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>I2C TX FIFO overflow interrupt. When transmit buffer is filled to 24 and the processor attempts to issue another I2C command. </p>
+
 </div>
 </div>
 <a id="ga56a1983722862345c550f890d9af3a9e"></a>
@@ -216,6 +247,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>I2C RX FIFO full interrupt. When the receive buffer reaches or goes above the RX FIFO threshold value. </p>
 
 </div>
 </div>
@@ -231,6 +264,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>I2C RX FIFO overflow interrupt. When the receive buffer is completely filled to 40 and an additional byte is received from an external I2C device. </p>
+
 </div>
 </div>
 <a id="gae5dfaa39259e3829ad6075be5dd8831a"></a>
@@ -244,6 +279,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>I2C RX FIFO underflow interrupt. When the processor attempts to read the receive buffer when it is empty. </p>
 
 </div>
 </div>
@@ -262,19 +299,21 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">(((INT) == <a class="code" href="group__x3e___i2_c__interrupts__definition.html#ga2e34ec005023dd6ce3032da725e29ebc">I2C_INT_GEN_CALL</a>) || ((INT) == <a class="code" href="group__x3e___i2_c__interrupts__definition.html#gaff61062648e549de3e24a03180bb52ac">I2C_INT_START_DET</a>) || \</div><div class="line">                             ((INT) == <a class="code" href="group__x3e___i2_c__interrupts__definition.html#ga03747def7365f8f484aa1944bb964f88">I2C_INT_STOP_DET</a>) || ((INT) == <a class="code" href="group__x3e___i2_c__interrupts__definition.html#ga633401012e347b5499be01c51907d842">I2C_INT_ACTIVITY</a>) || \</div><div class="line">                             ((INT) == <a class="code" href="group__x3e___i2_c__interrupts__definition.html#ga13c6c5bba74fcc53a75b62da4ff00b4b">I2C_INT_RX_DONE</a>)  || ((INT) == <a class="code" href="group__x3e___i2_c__interrupts__definition.html#gab176df91d48ce976020c00114e3e6e32">I2C_INT_TX_ABRT</a>) || \</div><div class="line">                             ((INT) == <a class="code" href="group__x3e___i2_c__interrupts__definition.html#ga530342bfad66bc17010a5e6ddf0f0f15">I2C_INT_RD_REQ</a>)   || ((INT) == <a class="code" href="group__x3e___i2_c__interrupts__definition.html#ga8a77e1d07288ad8168e5b1632ff4657f">I2C_INT_TX_EMPTY</a>) || \</div><div class="line">                             ((INT) == <a class="code" href="group__x3e___i2_c__interrupts__definition.html#gaed1cae9249e5777a7d666c714f9638ad">I2C_INT_TX_OVER</a>)  || ((INT) == <a class="code" href="group__x3e___i2_c__interrupts__definition.html#ga56a1983722862345c550f890d9af3a9e">I2C_INT_RX_FULL</a>) || \</div><div class="line">                             ((INT) == <a class="code" href="group__x3e___i2_c__interrupts__definition.html#gaf8aebfdc6e5953066e7a4de836b29e03">I2C_INT_RX_OVER</a>)  || ((INT) == <a class="code" href="group__x3e___i2_c__interrupts__definition.html#gae5dfaa39259e3829ad6075be5dd8831a">I2C_INT_RX_UNDER</a>))</div><div class="ttc" id="group__x3e___i2_c__interrupts__definition_html_gae5dfaa39259e3829ad6075be5dd8831a"><div class="ttname"><a href="group__x3e___i2_c__interrupts__definition.html#gae5dfaa39259e3829ad6075be5dd8831a">I2C_INT_RX_UNDER</a></div><div class="ttdeci">#define I2C_INT_RX_UNDER</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:221</div></div>
-<div class="ttc" id="group__x3e___i2_c__interrupts__definition_html_ga8a77e1d07288ad8168e5b1632ff4657f"><div class="ttname"><a href="group__x3e___i2_c__interrupts__definition.html#ga8a77e1d07288ad8168e5b1632ff4657f">I2C_INT_TX_EMPTY</a></div><div class="ttdeci">#define I2C_INT_TX_EMPTY</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:217</div></div>
-<div class="ttc" id="group__x3e___i2_c__interrupts__definition_html_ga56a1983722862345c550f890d9af3a9e"><div class="ttname"><a href="group__x3e___i2_c__interrupts__definition.html#ga56a1983722862345c550f890d9af3a9e">I2C_INT_RX_FULL</a></div><div class="ttdeci">#define I2C_INT_RX_FULL</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:219</div></div>
-<div class="ttc" id="group__x3e___i2_c__interrupts__definition_html_gaff61062648e549de3e24a03180bb52ac"><div class="ttname"><a href="group__x3e___i2_c__interrupts__definition.html#gaff61062648e549de3e24a03180bb52ac">I2C_INT_START_DET</a></div><div class="ttdeci">#define I2C_INT_START_DET</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:211</div></div>
-<div class="ttc" id="group__x3e___i2_c__interrupts__definition_html_ga2e34ec005023dd6ce3032da725e29ebc"><div class="ttname"><a href="group__x3e___i2_c__interrupts__definition.html#ga2e34ec005023dd6ce3032da725e29ebc">I2C_INT_GEN_CALL</a></div><div class="ttdeci">#define I2C_INT_GEN_CALL</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:210</div></div>
-<div class="ttc" id="group__x3e___i2_c__interrupts__definition_html_gaed1cae9249e5777a7d666c714f9638ad"><div class="ttname"><a href="group__x3e___i2_c__interrupts__definition.html#gaed1cae9249e5777a7d666c714f9638ad">I2C_INT_TX_OVER</a></div><div class="ttdeci">#define I2C_INT_TX_OVER</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:218</div></div>
-<div class="ttc" id="group__x3e___i2_c__interrupts__definition_html_gaf8aebfdc6e5953066e7a4de836b29e03"><div class="ttname"><a href="group__x3e___i2_c__interrupts__definition.html#gaf8aebfdc6e5953066e7a4de836b29e03">I2C_INT_RX_OVER</a></div><div class="ttdeci">#define I2C_INT_RX_OVER</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:220</div></div>
-<div class="ttc" id="group__x3e___i2_c__interrupts__definition_html_ga633401012e347b5499be01c51907d842"><div class="ttname"><a href="group__x3e___i2_c__interrupts__definition.html#ga633401012e347b5499be01c51907d842">I2C_INT_ACTIVITY</a></div><div class="ttdeci">#define I2C_INT_ACTIVITY</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:213</div></div>
-<div class="ttc" id="group__x3e___i2_c__interrupts__definition_html_ga13c6c5bba74fcc53a75b62da4ff00b4b"><div class="ttname"><a href="group__x3e___i2_c__interrupts__definition.html#ga13c6c5bba74fcc53a75b62da4ff00b4b">I2C_INT_RX_DONE</a></div><div class="ttdeci">#define I2C_INT_RX_DONE</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:214</div></div>
-<div class="ttc" id="group__x3e___i2_c__interrupts__definition_html_ga03747def7365f8f484aa1944bb964f88"><div class="ttname"><a href="group__x3e___i2_c__interrupts__definition.html#ga03747def7365f8f484aa1944bb964f88">I2C_INT_STOP_DET</a></div><div class="ttdeci">#define I2C_INT_STOP_DET</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:212</div></div>
-<div class="ttc" id="group__x3e___i2_c__interrupts__definition_html_ga530342bfad66bc17010a5e6ddf0f0f15"><div class="ttname"><a href="group__x3e___i2_c__interrupts__definition.html#ga530342bfad66bc17010a5e6ddf0f0f15">I2C_INT_RD_REQ</a></div><div class="ttdeci">#define I2C_INT_RD_REQ</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:216</div></div>
-<div class="ttc" id="group__x3e___i2_c__interrupts__definition_html_gab176df91d48ce976020c00114e3e6e32"><div class="ttname"><a href="group__x3e___i2_c__interrupts__definition.html#gab176df91d48ce976020c00114e3e6e32">I2C_INT_TX_ABRT</a></div><div class="ttdeci">#define I2C_INT_TX_ABRT</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:215</div></div>
+<b>Value:</b><div class="fragment"><div class="line">(((INT) == <a class="code" href="group__x3e___i2_c__interrupts__definition.html#ga2e34ec005023dd6ce3032da725e29ebc">I2C_INT_GEN_CALL</a>) || ((INT) == <a class="code" href="group__x3e___i2_c__interrupts__definition.html#gaff61062648e549de3e24a03180bb52ac">I2C_INT_START_DET</a>) || \</div><div class="line">                             ((INT) == <a class="code" href="group__x3e___i2_c__interrupts__definition.html#ga03747def7365f8f484aa1944bb964f88">I2C_INT_STOP_DET</a>) || ((INT) == <a class="code" href="group__x3e___i2_c__interrupts__definition.html#ga633401012e347b5499be01c51907d842">I2C_INT_ACTIVITY</a>) || \</div><div class="line">                             ((INT) == <a class="code" href="group__x3e___i2_c__interrupts__definition.html#ga13c6c5bba74fcc53a75b62da4ff00b4b">I2C_INT_RX_DONE</a>)  || ((INT) == <a class="code" href="group__x3e___i2_c__interrupts__definition.html#gab176df91d48ce976020c00114e3e6e32">I2C_INT_TX_ABRT</a>) || \</div><div class="line">                             ((INT) == <a class="code" href="group__x3e___i2_c__interrupts__definition.html#ga530342bfad66bc17010a5e6ddf0f0f15">I2C_INT_RD_REQ</a>)   || ((INT) == <a class="code" href="group__x3e___i2_c__interrupts__definition.html#ga8a77e1d07288ad8168e5b1632ff4657f">I2C_INT_TX_EMPTY</a>) || \</div><div class="line">                             ((INT) == <a class="code" href="group__x3e___i2_c__interrupts__definition.html#gaed1cae9249e5777a7d666c714f9638ad">I2C_INT_TX_OVER</a>)  || ((INT) == <a class="code" href="group__x3e___i2_c__interrupts__definition.html#ga56a1983722862345c550f890d9af3a9e">I2C_INT_RX_FULL</a>) || \</div><div class="line">                             ((INT) == <a class="code" href="group__x3e___i2_c__interrupts__definition.html#gaf8aebfdc6e5953066e7a4de836b29e03">I2C_INT_RX_OVER</a>)  || ((INT) == <a class="code" href="group__x3e___i2_c__interrupts__definition.html#gae5dfaa39259e3829ad6075be5dd8831a">I2C_INT_RX_UNDER</a>))</div><div class="ttc" id="group__x3e___i2_c__interrupts__definition_html_gae5dfaa39259e3829ad6075be5dd8831a"><div class="ttname"><a href="group__x3e___i2_c__interrupts__definition.html#gae5dfaa39259e3829ad6075be5dd8831a">I2C_INT_RX_UNDER</a></div><div class="ttdeci">#define I2C_INT_RX_UNDER</div><div class="ttdoc">I2C RX FIFO underflow interrupt. When the processor attempts to read the receive buffer when it is em...</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:255</div></div>
+<div class="ttc" id="group__x3e___i2_c__interrupts__definition_html_ga8a77e1d07288ad8168e5b1632ff4657f"><div class="ttname"><a href="group__x3e___i2_c__interrupts__definition.html#ga8a77e1d07288ad8168e5b1632ff4657f">I2C_INT_TX_EMPTY</a></div><div class="ttdeci">#define I2C_INT_TX_EMPTY</div><div class="ttdoc">I2C TX FIFO empty interrupt. When the transmit buffer is at or below the threshold value...</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:251</div></div>
+<div class="ttc" id="group__x3e___i2_c__interrupts__definition_html_ga56a1983722862345c550f890d9af3a9e"><div class="ttname"><a href="group__x3e___i2_c__interrupts__definition.html#ga56a1983722862345c550f890d9af3a9e">I2C_INT_RX_FULL</a></div><div class="ttdeci">#define I2C_INT_RX_FULL</div><div class="ttdoc">I2C RX FIFO full interrupt. When the receive buffer reaches or goes above the RX FIFO threshold value...</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:253</div></div>
+<div class="ttc" id="group__x3e___i2_c__interrupts__definition_html_gaff61062648e549de3e24a03180bb52ac"><div class="ttname"><a href="group__x3e___i2_c__interrupts__definition.html#gaff61062648e549de3e24a03180bb52ac">I2C_INT_START_DET</a></div><div class="ttdeci">#define I2C_INT_START_DET</div><div class="ttdoc">I2C start detect interrupt. When a start or restart condition has occurred on the I2C interface...</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:245</div></div>
+<div class="ttc" id="group__x3e___i2_c__interrupts__definition_html_ga2e34ec005023dd6ce3032da725e29ebc"><div class="ttname"><a href="group__x3e___i2_c__interrupts__definition.html#ga2e34ec005023dd6ce3032da725e29ebc">I2C_INT_GEN_CALL</a></div><div class="ttdeci">#define I2C_INT_GEN_CALL</div><div class="ttdoc">I2C general call interrupt. When a general call address is received and it is acknowledged. </div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:244</div></div>
+<div class="ttc" id="group__x3e___i2_c__interrupts__definition_html_gaed1cae9249e5777a7d666c714f9638ad"><div class="ttname"><a href="group__x3e___i2_c__interrupts__definition.html#gaed1cae9249e5777a7d666c714f9638ad">I2C_INT_TX_OVER</a></div><div class="ttdeci">#define I2C_INT_TX_OVER</div><div class="ttdoc">I2C TX FIFO overflow interrupt. When transmit buffer is filled to 24 and the processor attempts to is...</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:252</div></div>
+<div class="ttc" id="group__x3e___i2_c__interrupts__definition_html_gaf8aebfdc6e5953066e7a4de836b29e03"><div class="ttname"><a href="group__x3e___i2_c__interrupts__definition.html#gaf8aebfdc6e5953066e7a4de836b29e03">I2C_INT_RX_OVER</a></div><div class="ttdeci">#define I2C_INT_RX_OVER</div><div class="ttdoc">I2C RX FIFO overflow interrupt. When the receive buffer is completely filled to 40 and an additional ...</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:254</div></div>
+<div class="ttc" id="group__x3e___i2_c__interrupts__definition_html_ga633401012e347b5499be01c51907d842"><div class="ttname"><a href="group__x3e___i2_c__interrupts__definition.html#ga633401012e347b5499be01c51907d842">I2C_INT_ACTIVITY</a></div><div class="ttdeci">#define I2C_INT_ACTIVITY</div><div class="ttdoc">I2C activity interrupt. When I2C is activity on the bus. </div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:247</div></div>
+<div class="ttc" id="group__x3e___i2_c__interrupts__definition_html_ga13c6c5bba74fcc53a75b62da4ff00b4b"><div class="ttname"><a href="group__x3e___i2_c__interrupts__definition.html#ga13c6c5bba74fcc53a75b62da4ff00b4b">I2C_INT_RX_DONE</a></div><div class="ttdeci">#define I2C_INT_RX_DONE</div><div class="ttdoc">I2C slave RX done interrupt. When the I2C is acting as a slave-transmitter and the master does not ac...</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:248</div></div>
+<div class="ttc" id="group__x3e___i2_c__interrupts__definition_html_ga03747def7365f8f484aa1944bb964f88"><div class="ttname"><a href="group__x3e___i2_c__interrupts__definition.html#ga03747def7365f8f484aa1944bb964f88">I2C_INT_STOP_DET</a></div><div class="ttdeci">#define I2C_INT_STOP_DET</div><div class="ttdoc">I2C stop detect interrupt. When a stop condition has occurred on the I2C interface. </div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:246</div></div>
+<div class="ttc" id="group__x3e___i2_c__interrupts__definition_html_ga530342bfad66bc17010a5e6ddf0f0f15"><div class="ttname"><a href="group__x3e___i2_c__interrupts__definition.html#ga530342bfad66bc17010a5e6ddf0f0f15">I2C_INT_RD_REQ</a></div><div class="ttdeci">#define I2C_INT_RD_REQ</div><div class="ttdoc">I2C slave RX request interrupt. When I2C is acting as a slave and another I2C master is attempting to...</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:250</div></div>
+<div class="ttc" id="group__x3e___i2_c__interrupts__definition_html_gab176df91d48ce976020c00114e3e6e32"><div class="ttname"><a href="group__x3e___i2_c__interrupts__definition.html#gab176df91d48ce976020c00114e3e6e32">I2C_INT_TX_ABRT</a></div><div class="ttdeci">#define I2C_INT_TX_ABRT</div><div class="ttdoc">I2C TX abort interrupt. When an I2C transmitter is unable to complete the intended actions on the con...</div><div class="ttdef"><b>Definition:</b> rtl876x_i2c.h:249</div></div>
 </div><!-- fragment -->
+<p>Check if the input parameter is valid. </p>
+
 </div>
 </div>
 </div><!-- contents -->

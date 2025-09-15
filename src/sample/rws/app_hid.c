@@ -472,7 +472,7 @@ void app_hid_init(void)
 {
     if (app_cfg_const.supported_profile_mask & HID_PROFILE_MASK)
     {
-        bt_hid_device_init(app_cfg_const.hid_link_number, true);
+        bt_hid_device_init(true);
 #if F_APP_HID_MOUSE_SUPPORT
         bt_hid_device_descriptor_set(hid_descriptor_mouse_boot_mode,
                                      sizeof(hid_descriptor_mouse_boot_mode));
@@ -480,6 +480,10 @@ void app_hid_init(void)
 #if F_APP_HID_KEYBOARD_SUPPORT
         bt_hid_device_descriptor_set(hid_descriptor_keyboard_boot_mode,
                                      sizeof(hid_descriptor_keyboard_boot_mode));
+#endif
+#if F_APP_GAMING_CONTROLLER_SUPPORT
+        bt_hid_device_descriptor_set(hid_descriptor_game_controller,
+                                     sizeof(hid_descriptor_game_controller));
 #endif
 
 #if F_APP_GAMING_CONTROLLER_SUPPORT && F_APP_BT_HID_CONTROLLER_SUPPORT

@@ -1,5 +1,7 @@
 #if F_APP_USB_HID_SUPPORT & F_APP_USB_AUDIO_SUPPORT
 #include <string.h>
+#include <stdlib.h>
+#include "os_queue.h"
 #include "usb_dm.h"
 #include "app_msg.h"
 #include "usb_msg.h"
@@ -88,20 +90,16 @@ typedef struct _usb_host_detect_db
     T_OS_TYPE os_type;
     T_RECORDER recorder;
     T_USB_HOST_DETECT_HID_INFO hid_info;
-    HOST_DETECT_CB cb;
 } T_USB_HOST_DETECT_DB;
 
-T_USB_HOST_DETECT_DB usb_host_detect_db;
+typedef struct _usb_host_detect_elem
+{
+    struct _usb_host_detect_elem *p_next;
+    HOST_DETECT_CB cb;
+} T_USB_HOST_DETECT_ELEM;
 
-#define USB_HOST_DETECT_CALLBACK(cb, type)              \
-    if(cb)                                              \
-    {                                                   \
-        if (usb_host_detect_db.os_type != type)         \
-        {                                               \
-            usb_host_detect_db.os_type = type;          \
-            cb(type);                                   \
-        }                                               \
-    }
+static T_OS_QUEUE usb_host_detect_cb_list;
+T_USB_HOST_DETECT_DB usb_host_detect_db;
 
 static bool usb_host_detect_trigger_evt(T_USB_EVT evt, uint32_t param)
 {
@@ -156,6 +154,28 @@ static bool usb_host_detect_dm_cb(T_USB_DM_EVT evt, T_USB_DM_EVT_PARAM *param)
     return 0;
 }
 
+static void usb_host_detect_event_post(T_OS_TYPE os_type)
+{
+    T_USB_HOST_DETECT_ELEM *p_elem = NULL;
+
+    if (usb_host_detect_db.os_type == os_type)
+    {
+        return;
+    }
+
+    for (uint8_t i = 0; i < usb_host_detect_cb_list.count; i++)
+    {
+        p_elem = os_queue_peek(&usb_host_detect_cb_list, i);
+
+        if (p_elem != NULL && p_elem->cb != NULL)
+        {
+            p_elem->cb(os_type);
+        }
+    }
+
+    usb_host_detect_db.os_type = os_type;
+}
+
 void usb_host_detect_os_type_handle(void)
 {
     T_RECORDER recorder = usb_host_detect_db.recorder;
@@ -163,7 +183,7 @@ void usb_host_detect_os_type_handle(void)
 //  recorder.set_volume, recorder.set_res, recorder.first_ctrlreq, recorder.audio_mute, recorder.audio_data_xmit);
     if (recorder.in_nak == IN_NAK_STATUS_NOTRCVD)
     {
-        USB_HOST_DETECT_CALLBACK(usb_host_detect_db.cb, OS_TYPE_PS);
+        usb_host_detect_event_post(OS_TYPE_PS);
         //USB_PRINT_INFO0("usb_host_detect_os_type_handle, OS_TYPE_PS");
         return;
     }
@@ -175,12 +195,12 @@ void usb_host_detect_os_type_handle(void)
     {
         if (usb_host_detect_db.os_type == OS_TYPE_PS)
         {
-            USB_HOST_DETECT_CALLBACK(usb_host_detect_db.cb, OS_TYPE_UNDEF);
+            usb_host_detect_event_post(OS_TYPE_UNDEF);
         }
     }
     if (recorder.clear_feature)
     {
-        USB_HOST_DETECT_CALLBACK(usb_host_detect_db.cb, OS_TYPE_SWITCH);
+        usb_host_detect_event_post(OS_TYPE_SWITCH);
         //USB_PRINT_INFO0("usb_host_detect_os_type_handle, OS_TYPE_SWITCH");
         return;
     }
@@ -194,19 +214,19 @@ void usb_host_detect_os_type_handle(void)
         {
             if (recorder.set_res)
             {
-                USB_HOST_DETECT_CALLBACK(usb_host_detect_db.cb, OS_TYPE_ANDROID);
+                usb_host_detect_event_post(OS_TYPE_ANDROID);
                 //USB_PRINT_INFO0("usb_host_detect_os_type_handle, OS_TYPE_ANDROID");
                 return;
             }
         }
         if (recorder.first_ctrlreq == CTRL_REQ_GET_DEVICE_DESC)
         {
-            USB_HOST_DETECT_CALLBACK(usb_host_detect_db.cb, OS_TYPE_WINDOWS);
+            usb_host_detect_event_post(OS_TYPE_WINDOWS);
             //USB_PRINT_INFO0("usb_host_detect_os_type_handle, OS_TYPE_WINDOWS");
         }
         else
         {
-            USB_HOST_DETECT_CALLBACK(usb_host_detect_db.cb, OS_TYPE_IOS);
+            usb_host_detect_event_post(OS_TYPE_IOS);
             //USB_PRINT_INFO0("usb_host_detect_os_type_handle, OS_TYPE_IOS");
         }
         return;
@@ -250,7 +270,7 @@ void usb_host_detect_evt_handle(uint8_t evt, uint32_t param)
     case USB_EVT_PLUG:
         {
             memset(&usb_host_detect_db.recorder, 0, sizeof(T_RECORDER));
-            USB_HOST_DETECT_CALLBACK(usb_host_detect_db.cb, OS_TYPE_UNDEF);
+            usb_host_detect_event_post(OS_TYPE_UNDEF);
             T_USB_DM_EVT_MSK evt_msk = {0};
             evt_msk.b.in_nak = 1;
             evt_msk.b.setup_peek = 1;
@@ -429,14 +449,41 @@ void usb_host_detect_hid_info_register(T_USB_HOST_DETECT_HID_INFO info)
     memcpy(&usb_host_detect_db.hid_info, &info, sizeof(T_USB_HOST_DETECT_HID_INFO));
 }
 
-void usb_host_detect_init(HOST_DETECT_CB cb)
+bool usb_host_detect_cback_register(HOST_DETECT_CB cb)
+{
+    T_USB_HOST_DETECT_ELEM *p_elem = (T_USB_HOST_DETECT_ELEM *)usb_host_detect_cb_list.p_first;
+
+    while (p_elem != NULL)
+    {
+        if (p_elem->cb == cb)
+        {
+            return true;
+        }
+
+        p_elem = p_elem->p_next;
+    }
+
+    p_elem = malloc(sizeof(T_USB_HOST_DETECT_ELEM));
+    if (p_elem != NULL)
+    {
+        p_elem->cb = cb;
+        os_queue_in(&usb_host_detect_cb_list, p_elem);
+        return true;
+    }
+
+    return false;
+}
+
+void usb_host_detect_init(void)
 {
     T_USB_DM_EVT_MSK evt_msk = {0};
     evt_msk.b.in_nak = 1;
     evt_msk.b.setup_peek = 1;
     usb_dm_cb_register(evt_msk, usb_host_detect_dm_cb);
     memset(&usb_host_detect_db, 0, sizeof(T_USB_HOST_DETECT_DB));
-    usb_host_detect_db.cb = cb;
+
+    os_queue_init(&usb_host_detect_cb_list);
+
     app_timer_reg_cb(usb_host_detect_timeout_cb, &usb_host_detect_db.hid_ep_nak_id);
     app_timer_reg_cb(usb_host_detect_timeout_cb, &usb_host_detect_db.audio_set_vol_id);
     app_ipc_subscribe(USB_IPC_TOPIC, usb_host_detect_ipc_cback);

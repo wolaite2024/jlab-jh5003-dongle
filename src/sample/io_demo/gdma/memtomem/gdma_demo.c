@@ -15,6 +15,7 @@
  *                              Header Files
  *============================================================================*/
 #include "dma_channel.h"
+#include "trace.h"
 #include "rtl876x_gdma.h"
 #include "rtl876x_nvic.h"
 #include "rtl876x_rcc.h"
@@ -32,8 +33,10 @@
     * @{
     */
 
-static uint8_t GDMA_SendBuffer[100];
-static uint8_t GDMA_RecvBuffer[100];
+#define GDMA_TRANSFER_SIZE      100
+
+static uint8_t GDMA_SendBuffer[GDMA_TRANSFER_SIZE];
+static uint8_t GDMA_RecvBuffer[GDMA_TRANSFER_SIZE];
 static uint8_t mem_to_mem_dma_ch_num = 0xa5;
 
 #define DEMO_DMA_CHANNEL_NUM     mem_to_mem_dma_ch_num
@@ -67,11 +70,11 @@ void gdma_demo(void)
     }
 
     /*--------------initialize test buffer---------------------*/
-    for (i = 0; i < 100; i++)
+    for (i = 0; i < GDMA_TRANSFER_SIZE; i++)
     {
         GDMA_SendBuffer[i] = (i & 0xff);
     }
-    for (i = 0; i < 100; i++)
+    for (i = 0; i < GDMA_TRANSFER_SIZE; i++)
     {
         GDMA_RecvBuffer[i] = 0;
     }
@@ -79,7 +82,7 @@ void gdma_demo(void)
     GDMA_StructInit(&GDMA_InitStruct);
     GDMA_InitStruct.GDMA_ChannelNum      = DEMO_DMA_CHANNEL_NUM;
     GDMA_InitStruct.GDMA_DIR             = GDMA_DIR_MemoryToMemory;
-    GDMA_InitStruct.GDMA_BufferSize      = 100;//determine total transfer size
+    GDMA_InitStruct.GDMA_BufferSize      = GDMA_TRANSFER_SIZE;//determine total transfer size
     GDMA_InitStruct.GDMA_SourceInc       = DMA_SourceInc_Inc;
     GDMA_InitStruct.GDMA_DestinationInc  = DMA_DestinationInc_Inc;
     GDMA_InitStruct.GDMA_SourceDataSize  = GDMA_DataSize_Byte;
@@ -110,7 +113,17 @@ static void demo_dma_handler(void)
 {
     GDMA_ClearAllTypeINT(DEMO_DMA_CHANNEL_NUM);
 
-    GDMA_Cmd(DEMO_DMA_CHANNEL_NUM, ENABLE);
+    /* Compare whether the destination data which transported by GDMA is equal to the source data*/
+    for (uint32_t i = 0; i < GDMA_TRANSFER_SIZE; i++)
+    {
+        if (GDMA_SendBuffer[i] != GDMA_RecvBuffer[i])
+        {
+            IO_PRINT_ERROR3("demo_dma_handler: Data transmission error! index %d GDMA_SendBuffer = %d, GDMA_RecvBuffer = %d",
+                            i, GDMA_SendBuffer[i], GDMA_RecvBuffer[i]);
+        }
+    }
+
+    IO_PRINT_INFO0("demo_dma_handler: Data transmission completion!");
 }
 /** @} */ /* End of group GDMA_Demo_Exported_Functions */
 /** @} */ /* End of group GDMA_DEMO_GDMA */

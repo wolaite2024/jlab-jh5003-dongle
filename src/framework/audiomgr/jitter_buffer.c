@@ -264,9 +264,9 @@ void jitter_buffer_asrc_ratio_adjust(uint32_t bt_clk, int ratio_ppm)
     jb_db->current_asrc_ppm = ratio_ppm;
     param[0] = jb_asrc_final_offset;
     param[1] = bt_clk;
-    AUDIO_PRINT_TRACE3("jitter_buffer_asrc_ratio_adjust: clk 0x%x ppm %d jb_asrc_final_offset 0x%x",
-                       bt_clk,
-                       ratio_ppm, jb_asrc_final_offset);
+    AUDIO_PRINT_INFO3("jitter_buffer_asrc_ratio_adjust: clk 0x%x ppm %d jb_asrc_final_offset 0x%x",
+                      bt_clk,
+                      ratio_ppm, jb_asrc_final_offset);
     dsp_ipc_set_rws_asrc_ratio(param);
 }
 
@@ -551,8 +551,8 @@ bool jitter_buffer_asrc_pid_controller(T_JITTER_BUFFER_HANDLE handle, uint32_t l
                 buffer_jb_db->average_count = 0;
                 check_error = buffer_jb_db->average_latency - target_latency;
                 msg.asrc_ppm = check_error / (LATENCY_REPORT_PERIOD_MS * AVERAGE_CHECK_WINDOW / 1000);
-                AUDIO_PRINT_TRACE2("jitter_buffer_asrc_pid_func: longterm asrc adjust err %d ppm %d",
-                                   check_error, msg.asrc_ppm);
+                AUDIO_PRINT_INFO2("jitter_buffer_asrc_pid_func: longterm asrc adjust err %d ppm %d",
+                                  check_error, msg.asrc_ppm);
                 if (msg.asrc_ppm > LONGTERM_ASRC_LIMITATION)
                 {
                     msg.asrc_ppm = LONGTERM_ASRC_LIMITATION;
@@ -619,9 +619,9 @@ bool jitter_buffer_asrc_pid_controller(T_JITTER_BUFFER_HANDLE handle, uint32_t l
         }
     }
 
-    AUDIO_PRINT_TRACE4("jitter_buffer_asrc_pid_controller: ppm %d error %d latency_report %d tgt latency %d",
-                       (int)(asrc_pid->current_asrc_ppm),
-                       (int)(asrc_pid->error), latency_report, target_latency);
+    AUDIO_PRINT_INFO4("jitter_buffer_asrc_pid_controller: ppm %d error %d latency_report %d tgt latency %d",
+                      (int)(asrc_pid->current_asrc_ppm),
+                      (int)(asrc_pid->error), latency_report, target_latency);
 
     /*
         AUDIO_PRINT_TRACE5("jitter_buffer_asrc_pid_func: error %d, error1 %d, total %d, error-error_1 %d, current_asrc_ppm %d, %d",

@@ -62,7 +62,7 @@ Data Fields</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Bearer List Current Calls characteristic. </p>
-<p><a class="el" href="ccp__client_8h_source.html" title="Head file for Call Control Client. ">ccp_client.h</a> </p>
+<p><a class="el" href="ccp__client_8h_source.html" title="Header file for Call Control Client. ">ccp_client.h</a> </p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a id="a6c6633fc03b3e03a1b1205d4024f821f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6c6633fc03b3e03a1b1205d4024f821f">&#9670;&nbsp;</a></span>p_bearer_list_current_calls</h2>
@@ -75,13 +75,13 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>A list of current calls</p>
-<p>Each list item in the list of calls shall have the structure </p><ul>
-<li>List_Item_Length[i] (1 octet) : Total length of the item, excluding the octet for the List_Item_Length field itself </li>
-<li>Call_Index[i] (1 octet): A number chosen by Call Control Server to identify call </li>
-<li>Call_State[i] (1 octet): <a class="el" href="group___t___t_b_s___c_a_l_l___s_t_a_t_e.html">Call State of the call</a> </li>
-<li>Call_Flags[i] (1 octet): A bit field, <a class="el" href="group___t_b_s___c_a_l_l___f_l_a_g_s___b_i_t___def.html">Call_Flags bit definitions</a> </li>
-<li>Call_URI[i] (variable): Incoming Call URI or Outgoing Call URI </li>
+<p>A list of current calls.</p>
+<p>Each list item in the list of calls shall have the structure. </p><ul>
+<li>List_Item_Length[i] (1 octet) : Total length of the item, excluding the octet for the List_Item_Length field itself. </li>
+<li>Call_Index[i] (1 octet): A number chosen by Call Control Server to identify call. </li>
+<li>Call_State[i] (1 octet): <a class="el" href="group___t___t_b_s___c_a_l_l___s_t_a_t_e.html">Call State of the Call</a>. </li>
+<li>Call_Flags[i] (1 octet): A bit field, <a class="el" href="group___t_b_s___c_a_l_l___f_l_a_g_s___b_i_t___def.html">Call Flags Bit Definitions</a>. </li>
+<li>Call_URI[i] (variable): Incoming Call URI or Outgoing Call URI. </li>
 </ul>
 
 </div>
@@ -98,8 +98,8 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <ul>
-<li>0 : No calls are available </li>
-<li>other values </li>
+<li>0 : No calls are available. </li>
+<li>Other values. </li>
 </ul>
 
 </div>

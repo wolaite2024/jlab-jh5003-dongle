@@ -50,6 +50,7 @@ typedef struct
 
 
 static T_DIRECT_MGR direct_mgr;
+static uint16_t ble_default_conn_interval = 0;
 
 static T_DIRECT_DEV *alloc_direct_node_by_addr(uint8_t *bd_addr, uint8_t bd_type);
 static T_DIRECT_DEV *find_direct_node_by_addr(uint8_t *bd_addr, uint8_t bd_type);
@@ -219,6 +220,13 @@ static bool ble_direct_create_conn(uint8_t *bd_addr, uint8_t bd_type)
         conn_req_param.conn_interval_max = BLE_CONN_GAMING_CI_DEF;
     }
 #endif
+
+    if (ble_default_conn_interval != 0)
+    {
+        conn_req_param.conn_interval_min = ble_default_conn_interval;
+        conn_req_param.conn_interval_max = ble_default_conn_interval;
+    }
+
     conn_req_param.conn_latency = BLE_CONN_SLAVE_LATENCY_DEF;
     conn_req_param.supv_tout = BLE_CONN_TIMEOUT_DEF;
     conn_req_param.ce_len_min = 2 * (conn_req_param.conn_interval_min - 1);
@@ -234,6 +242,9 @@ static bool ble_direct_create_conn(uint8_t *bd_addr, uint8_t bd_type)
     }
 #endif
 
+    APP_PRINT_TRACE2("ble_direct_create_conn: addr %s interval %d", TRACE_BDADDR(bd_addr),
+                     conn_req_param.conn_interval_min);
+
     if (le_connect(init_phys, bd_addr, peer_bd_type, local_bd_type, 0) != GAP_CAUSE_SUCCESS)
     {
         APP_PRINT_ERROR0("ble_direct_create_conn: le_connect fail");
@@ -241,6 +252,11 @@ static bool ble_direct_create_conn(uint8_t *bd_addr, uint8_t bd_type)
     }
 
     return true;
+}
+
+void ble_direct_set_conn_interval(uint16_t interval)
+{
+    ble_default_conn_interval = interval;
 }
 
 bool ble_direct_connect(uint8_t *bd_addr, uint8_t bd_type)

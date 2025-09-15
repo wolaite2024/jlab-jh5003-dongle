@@ -54,7 +54,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:gacd22e3cc5dc6b8c54a48723efa8b2ec9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a device information service parameter.  <a href="#gacd22e3cc5dc6b8c54a48723efa8b2ec9">More...</a><br /></td></tr>
 <tr class="separator:gacd22e3cc5dc6b8c54a48723efa8b2ec9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6a9d465b3db427a7cc2f17b97f28d3e3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_i_s___exported___functions.html#ga6a9d465b3db427a7cc2f17b97f28d3e3">dis_add_service</a> (void *p_func)</td></tr>
-<tr class="memdesc:ga6a9d465b3db427a7cc2f17b97f28d3e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add device information service to the BLE stack database.  <a href="#ga6a9d465b3db427a7cc2f17b97f28d3e3">More...</a><br /></td></tr>
+<tr class="memdesc:ga6a9d465b3db427a7cc2f17b97f28d3e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add device information service to the Bluetooth Host.  <a href="#ga6a9d465b3db427a7cc2f17b97f28d3e3">More...</a><br /></td></tr>
 <tr class="separator:ga6a9d465b3db427a7cc2f17b97f28d3e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -92,12 +92,12 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Set a device information service parameter. </p>
-<p>NOTE: You can call this function with a device information service parameter type and it will set the device information service parameter. Device information service parameters are defined in <a class="el" href="group___d_i_s___p_a_r_a_m___t_y_p_e.html#ga268bbe9ba95ce46ff973dcf5cd26389c">T_DIS_PARAM_TYPE</a>. If the "len" field sets to the size of a "uint16_t" ,the "p_value" field must point to a data with type of "uint16_t".</p>
+<p>This function can be called with a device information service parameter type and it will set the device information service parameter. Device information service parameters are defined in <a class="el" href="group___d_i_s___p_a_r_a_m___t_y_p_e.html#ga268bbe9ba95ce46ff973dcf5cd26389c">T_DIS_PARAM_TYPE</a>. If the "len" field is set to the size of a "uint16_t", the "p_value" field must point to data with the type "uint16_t".</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">param_type</td><td>Device information service parameter type: <a class="el" href="group___d_i_s___p_a_r_a_m___t_y_p_e.html#ga268bbe9ba95ce46ff973dcf5cd26389c">T_DIS_PARAM_TYPE</a> </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Length of data to write </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_value</td><td>Pointer to data to write. This is dependent on the parameter type and WILL be cast to the appropriate data type (For example: if data type of param is uint16_t, p_value will be cast to pointer of uint16_t).</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">param_type</td><td>Device information service parameter type: <a class="el" href="group___d_i_s___p_a_r_a_m___t_y_p_e.html#ga268bbe9ba95ce46ff973dcf5cd26389c">T_DIS_PARAM_TYPE</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Length of data to write. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_value</td><td>Pointer to data to write. This is dependent on the parameter type and WILL be cast to the appropriate data type (For example: if the data type of param is uint16_t, p_value will be cast to a pointer of uint16_t).</td></tr>
   </table>
   </dd>
 </dl>
@@ -109,7 +109,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keyword">const</span> uint8_t dis_manufacture_name[] = <span class="stringliteral">&quot;Realtek BT&quot;</span>;</div><div class="line">    <a class="code" href="group___d_i_s___exported___functions.html#gacd22e3cc5dc6b8c54a48723efa8b2ec9">dis_set_parameter</a>(<a class="code" href="group___d_i_s___p_a_r_a_m___t_y_p_e.html#gga268bbe9ba95ce46ff973dcf5cd26389ca66f46966d836a85fe550b2845b1d19c6">DIS_PARAM_MANUFACTURER_NAME</a>,</div><div class="line">                  <span class="keyword">sizeof</span>(dis_manufacture_name),</div><div class="line">                  (<span class="keywordtype">void</span> *)dis_manufacture_name);</div><div class="line">}</div></div><!-- fragment --> 
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keyword">const</span> uint8_t dis_manufacture_name[] = <span class="stringliteral">&quot;Realtek BT&quot;</span>;</div><div class="line">    <span class="keywordtype">bool</span> ret = <a class="code" href="group___d_i_s___exported___functions.html#gacd22e3cc5dc6b8c54a48723efa8b2ec9">dis_set_parameter</a>(<a class="code" href="group___d_i_s___p_a_r_a_m___t_y_p_e.html#gga268bbe9ba95ce46ff973dcf5cd26389ca66f46966d836a85fe550b2845b1d19c6">DIS_PARAM_MANUFACTURER_NAME</a>,</div><div class="line">                                 <span class="keyword">sizeof</span>(dis_manufacture_name),</div><div class="line">                                 (<span class="keywordtype">void</span> *)dis_manufacture_name);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga6a9d465b3db427a7cc2f17b97f28d3e3"></a>
@@ -128,22 +128,22 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Add device information service to the BLE stack database. </p>
+<p>Add device information service to the Bluetooth Host. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_func</td><td>Callback when service attribute was read, write or cccd update. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_func</td><td>Callback when service attribute was read, write or CCCD update. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Service id generated by the BLE stack: <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Service ID generated by the Bluetooth Host: <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a>. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">0xFF</td><td>Operation failure. </td></tr>
-    <tr><td class="paramname">others</td><td>Service id assigned by stack.</td></tr>
+    <tr><td class="paramname">others</td><td>Service ID assigned by Bluetooth Host.</td></tr>
   </table>
   </dd>
 </dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> profile_init()</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga69f3a8c88a1c2d5255f87e69e135311b">server_init</a>(1);</div><div class="line">    dis_id = <a class="code" href="group___d_i_s___exported___functions.html#ga6a9d465b3db427a7cc2f17b97f28d3e3">dis_add_service</a>(app_handle_profile_message);</div><div class="line">}</div></div><!-- fragment --> 
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> profile_init()</div><div class="line">{</div><div class="line">    <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga69f3a8c88a1c2d5255f87e69e135311b">server_init</a>(service_num);</div><div class="line">    dis_id = <a class="code" href="group___d_i_s___exported___functions.html#ga6a9d465b3db427a7cc2f17b97f28d3e3">dis_add_service</a>(app_handle_profile_message);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

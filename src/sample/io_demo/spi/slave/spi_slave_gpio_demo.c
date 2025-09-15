@@ -208,6 +208,7 @@ static void spi0_handler(void)
 
     if (SPI_GetINTStatus(SPI0, SPI_INT_RXF) == SET)
     {
+        /* It is recommended to post the os msg to the task thread for data processing. */
         len = SPI_GetRxFIFOLen(SPI0);
         IO_PRINT_INFO1("spi0_handler: len %d", len);
 
@@ -242,11 +243,13 @@ static void spi1_handler(void)
     if (SPI_GetINTStatus(SPI1, SPI_INT_TXE) == SET)
     {
         SPI_INTConfig(SPI1, SPI_INT_TXE, DISABLE);
+        /* It is recommended to post the os msg to the task thread for data processing. */
         IO_PRINT_INFO0("spi1_handler: SPI1 TX FIFO Empty");
     }
 
     if (SPI_GetINTStatus(SPI1, SPI_INT_RXF) == SET)
     {
+        /* It is recommended to post the os msg to the task thread for data processing. */
         len1 = SPI_GetRxFIFOLen(SPI1);
         IO_PRINT_INFO1("spi1_handler: len1 %d", len1);
 

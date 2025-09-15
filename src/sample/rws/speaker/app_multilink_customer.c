@@ -14,18 +14,15 @@
 #include "app_hfp.h"
 #include "app_a2dp.h"
 #include "app_bt_policy_api.h"
-#include "app_audio_policy.h"
 #include "app_mmi.h"
+#include "audio.h"
 
 #if F_APP_GAMING_DONGLE_SUPPORT
 #include "app_dongle_record.h"
-#include "app_dongle_dual_mode.h"
 #endif
 
 #if F_APP_USB_AUDIO_SUPPORT
 #include "app_usb_audio.h"
-#include "app_usb_audio_hid.h"
-#include "app_usb_mmi.h"
 #include "usb_msg.h"
 #include "app_ipc.h"
 
@@ -35,6 +32,7 @@ static uint8_t usb_stream_status = 0;
 #endif
 
 #if F_APP_LINEIN_SUPPORT
+#include "app_ipc.h"
 #include "app_line_in.h"
 
 #define LINE_IN_IPC_TOPIC   "line_in"
@@ -129,8 +127,8 @@ void app_multilink_customer_set_dongle_priority(uint8_t link_index)
             audio_link_mgr[i].music_priority = 2;
         }
 
-        APP_PRINT_TRACE2("app_multilink_customer_set_dongle_priority: audio_link_mgr[%d] = %d", i,
-                         audio_link_mgr[i].music_priority);
+        APP_PRINT_INFO2("app_multilink_customer_set_dongle_priority: audio_link_mgr[%d] = %d", i,
+                        audio_link_mgr[i].music_priority);
     }
 
     app_multilink_customer_update_dongle_record_status(app_dongle_get_record_state());
@@ -240,9 +238,9 @@ void app_multilink_customer_line_in_unplug(void)
 
 static void app_multilink_customer_a2dp_pause(uint8_t link_index)
 {
-    APP_PRINT_TRACE5("app_multilink_customer_a2dp_pause: idx %x active idx %x music_event %x play_status %x",
-                     link_index, app_a2dp_get_active_idx(), app_db.br_link[link_index].a2dp_track_handle,
-                     audio_link_mgr[link_index].music_event, app_db.br_link[link_index].avrcp_play_status);
+    APP_PRINT_INFO5("app_multilink_customer_a2dp_pause: idx %x active idx %x music_event %x play_status %x",
+                    link_index, app_a2dp_get_active_idx(), app_db.br_link[link_index].a2dp_track_handle,
+                    audio_link_mgr[link_index].music_event, app_db.br_link[link_index].avrcp_play_status);
 
     if ((link_index == app_a2dp_get_active_idx()) && (app_db.br_link[link_index].a2dp_track_handle))
     {
@@ -307,7 +305,7 @@ static void app_multilink_customer_a2dp_resume(uint8_t link_index)
 }
 #endif
 
-static bool app_multilink_customer_check_hfp_is_idle(void)
+bool app_multilink_customer_check_hfp_is_idle(void)
 {
     bool ret = false;
 
@@ -319,6 +317,7 @@ static bool app_multilink_customer_check_hfp_is_idle(void)
         }
     }
 
+    APP_PRINT_TRACE1("app_multilink_customer_check_hfp_is_idle: ret:%d", ret);
     return ret;
 }
 
@@ -346,22 +345,29 @@ static bool app_multilink_customer_check_upstream_preemptible(uint8_t index)
 #endif
         array_idx == CUSTOMER_APP_MAX_LINK_NUM)
     {
-        return ret;
+        ret = false;
+        goto exit;
     }
 
-    if (!app_multilink_customer_check_record_running(active_record_idx)) // no record running
+    if ((record_array_idx == CUSTOMER_APP_MAX_LINK_NUM)
+        || (!app_multilink_customer_check_record_running(active_record_idx))) // no record running
     {
         ret = true;
     }
-    else if (record_array_idx != CUSTOMER_APP_MAX_LINK_NUM && audio_link_mgr[array_idx].record_status &&
+    else if (audio_link_mgr[array_idx].record_status &&
              (record_array_idx == array_idx ||
               (audio_link_mgr[array_idx].record_priority < audio_link_mgr[record_array_idx].record_priority)))
     {
         ret = true;
     }
 
-    APP_PRINT_TRACE4("app_multilink_customer_check_upstream_preemptible: record status %x active_record_idx %x, check index %x ret %d",
-                     audio_link_mgr[record_array_idx].record_status, active_record_idx, index, ret);
+exit:
+    if (record_array_idx != CUSTOMER_APP_MAX_LINK_NUM)
+    {
+        APP_PRINT_TRACE4("app_multilink_customer_check_upstream_preemptible: record status %x active_record_idx %x, check index %x ret %d",
+                         audio_link_mgr[record_array_idx].record_status, active_record_idx, index, ret);
+    }
+
     return ret;
 }
 
@@ -437,13 +443,13 @@ static void app_multilink_customer_audio_link_stop(uint8_t link_index, bool chec
 
 static void app_multilink_customer_audio_link_resume(uint8_t link_index, bool check_legacy_idx)
 {
-    APP_PRINT_TRACE5("app_multilink_customer_audio_link_resume: idx %x, check legacy %d, usb up %d down %d, active a2dp idx %x",
-                     link_index, check_legacy_idx, usb_up_stream_running, usb_down_stream_running,
-                     app_a2dp_get_active_idx());
-
+    APP_PRINT_INFO3("app_multilink_customer_audio_link_resume: idx %x, check legacy %d, active_a2dp_idx %x",
+                    link_index, check_legacy_idx, app_a2dp_get_active_idx());
     if (link_index == multilink_usb_idx)
     {
 #if F_APP_USB_AUDIO_SUPPORT
+        APP_PRINT_INFO2("app_multilink_customer_audio_link_resume: usb up %d down %d",
+                        usb_up_stream_running, usb_down_stream_running);
         if (usb_down_stream_running)
         {
             app_multilink_customer_music_event_handle(multilink_usb_idx, JUDGE_EVENT_A2DP_START);
@@ -636,9 +642,14 @@ static uint8_t app_multilink_customer_audio_link_priority_check(void)
 
         if (app_multilink_customer_check_record_running(active_record_idx))
         {
-            has_upstream = true;
-            link_index = audio_link_mgr[app_multilink_customer_find_array_index(active_record_idx)].idx;
-            goto priority_check_done;
+            uint8_t array_idx = app_multilink_customer_find_array_index(active_record_idx);
+
+            if (array_idx != CUSTOMER_APP_MAX_LINK_NUM)
+            {
+                has_upstream = true;
+                link_index = audio_link_mgr[array_idx].idx;
+                goto priority_check_done;
+            }
         }
 
     // check started link
@@ -693,8 +704,8 @@ static uint8_t app_multilink_customer_audio_link_priority_check(void)
     }
 
 priority_check_done:
-    APP_PRINT_TRACE4("app_multilink_customer_audio_link_priority_check: upstream %x music %x resume %x link_index %x",
-                     has_upstream, has_link_started_music, has_link_wait_resumed_music, link_index);
+    APP_PRINT_INFO4("app_multilink_customer_audio_link_priority_check: upstream %x music %x resume %x link_index %x",
+                    has_upstream, has_link_started_music, has_link_wait_resumed_music, link_index);
 
     return link_index;
 }
@@ -714,8 +725,8 @@ void app_multilink_customer_music_event_handle(uint8_t index, T_APP_JUDGE_A2DP_E
 
     if ((audio_link_mgr[array_idx].music_event != event) && (event != JUDGE_EVENT_SNIFFING_STOP))
     {
-        APP_PRINT_TRACE4("app_multilink_customer_music_event_handle: link_index %d, A2DP_event(%d -> %d), active_music_idx %d",
-                         index, audio_link_mgr[array_idx].music_event, event, active_music_idx);
+        APP_PRINT_INFO4("app_multilink_customer_music_event_handle: link_index %d, A2DP_event(%d -> %d), active_music_idx %d",
+                        index, audio_link_mgr[array_idx].music_event, event, active_music_idx);
         audio_link_mgr[array_idx].music_event = event;
     }
 
@@ -728,8 +739,8 @@ void app_multilink_customer_music_event_handle(uint8_t index, T_APP_JUDGE_A2DP_E
 
     if (active_music_idx != new_active_music_idx)
     {
-        APP_PRINT_TRACE2("app_multilink_customer_music_event_handle: active_music_idx %d -> %d",
-                         active_music_idx, new_active_music_idx);
+        APP_PRINT_INFO2("app_multilink_customer_music_event_handle: active_music_idx %d -> %d",
+                        active_music_idx, new_active_music_idx);
 
         app_multilink_customer_audio_link_stop(active_music_idx, true);
 
@@ -758,12 +769,12 @@ void app_multilink_customer_music_event_handle(uint8_t index, T_APP_JUDGE_A2DP_E
 void app_multilink_customer_hfp_status_changed(uint8_t prev_call_status, uint8_t *bd_addr)
 {
 #if F_APP_GAMING_DONGLE_SUPPORT
-    APP_PRINT_TRACE4("app_multilink_customer_hfp_status_changed: hfp_status: %x -> %x (dongle upstream %d), active_music_idx %d",
-                     prev_call_status, app_hfp_get_call_status(), app_multilink_customer_check_dongle_upstream_running(),
-                     active_music_idx);
+    APP_PRINT_INFO4("app_multilink_customer_hfp_status_changed: hfp_status: %x -> %x (dongle upstream %d), active_music_idx %d",
+                    prev_call_status, app_hfp_get_call_status(), app_multilink_customer_check_dongle_upstream_running(),
+                    active_music_idx);
 #else
-    APP_PRINT_TRACE3("app_multilink_customer_hfp_status_changed: hfp_status: %x -> %x, active_music_idx %d",
-                     prev_call_status, app_hfp_get_call_status(), active_music_idx);
+    APP_PRINT_INFO3("app_multilink_customer_hfp_status_changed: hfp_status: %x -> %x, active_music_idx %d",
+                    prev_call_status, app_hfp_get_call_status(), active_music_idx);
 #endif
 
     if (app_hfp_get_call_status() == APP_CALL_IDLE)
@@ -784,7 +795,7 @@ void app_multilink_customer_sco_disconneted(void)
 
 static void app_multilink_coustomer_record_track_start(uint8_t index)
 {
-    APP_PRINT_TRACE1("app_multilink_coustomer_record_track_start: index %d", index);
+    APP_PRINT_INFO1("app_multilink_coustomer_record_track_start: index %d", index);
 
     if (index == multilink_usb_idx) // usb channel
     {
@@ -901,15 +912,15 @@ static void app_multilink_customer_check_record_index_update(uint8_t index)
         return;
     }
 
-    APP_PRINT_TRACE2("app_multilink_customer_check_record_index_update: idx %x, record_status: %d",
-                     index, audio_link_mgr[array_idx].record_status);
+    APP_PRINT_INFO2("app_multilink_customer_check_record_index_update: idx %x, record_status: %d",
+                    index, audio_link_mgr[array_idx].record_status);
 
     new_active_record_idx = app_multilink_customer_record_link_priority_check();
 
     if (active_record_idx != new_active_record_idx)
     {
-        APP_PRINT_TRACE2("app_multilink_customer_check_record_index_update: active_record_idx %d -> %d",
-                         active_record_idx, new_active_record_idx);
+        APP_PRINT_INFO2("app_multilink_customer_check_record_index_update: active_record_idx %d -> %d",
+                        active_record_idx, new_active_record_idx);
 
         app_multilink_customer_record_link_stop(active_record_idx);
         app_multilink_customer_set_active_record_index(new_active_record_idx);
@@ -917,26 +928,26 @@ static void app_multilink_customer_check_record_index_update(uint8_t index)
 
     array_idx = app_multilink_customer_find_array_index(active_record_idx);
 
-    if (array_idx != CUSTOMER_APP_MAX_LINK_NUM && audio_link_mgr[array_idx].record_status)
+    if (array_idx != CUSTOMER_APP_MAX_LINK_NUM)
     {
-        if (active_record_idx == index)
+        if ((active_record_idx == index) && (audio_link_mgr[array_idx].record_status))
         {
             app_multilink_customer_record_link_start();
         }
-    }
-    else
-    {
-        if ((active_record_idx == index) && (!audio_link_mgr[array_idx].record_status))
+        else
         {
-            app_multilink_customer_record_link_stop(active_record_idx);
-            active_record_idx = CUSTOMER_APP_MAX_LINK_NUM;
-        }
+            if ((active_record_idx == index) && (!audio_link_mgr[array_idx].record_status))
+            {
+                app_multilink_customer_record_link_stop(active_record_idx);
+                active_record_idx = CUSTOMER_APP_MAX_LINK_NUM;
+            }
 
-        // upstream end, check active music index
-        app_multilink_customer_music_event_handle(index, audio_link_mgr[array_idx].music_event);
+            // upstream end, check active music index
+            app_multilink_customer_music_event_handle(index, audio_link_mgr[array_idx].music_event);
 #if (F_APP_GAMING_DONGLE_SUPPORT == 0)
-        app_multilink_customer_a2dp_resume(active_music_idx);
+            app_multilink_customer_a2dp_resume(active_music_idx);
 #endif
+        }
     }
 }
 
@@ -960,8 +971,8 @@ static void app_multilink_customer_usb_upstream_event_handle(bool record_status)
 {
     uint8_t new_active_record_idx;
 
-    APP_PRINT_TRACE2("app_multilink_customer_usb_upstream_event_handle: record_status: %d -> %d",
-                     audio_link_mgr[USB_AUDIO_LINK_INDEX].record_status, record_status);
+    APP_PRINT_INFO2("app_multilink_customer_usb_upstream_event_handle: record_status: %d -> %d",
+                    audio_link_mgr[USB_AUDIO_LINK_INDEX].record_status, record_status);
 
     audio_link_mgr[USB_AUDIO_LINK_INDEX].record_status = record_status;
 
@@ -998,8 +1009,8 @@ static void app_multilink_customer_handle_usb_event(T_APP_MULTILINK_CUSTOMER_STR
 {
     app_multilink_customer_update_usb_stream_status(event);
 
-    APP_PRINT_TRACE2("app_multilink_customer_handle_usb_event: stream_event: %d, usb_stream_status: %d",
-                     event, usb_stream_status);
+    APP_PRINT_INFO2("app_multilink_customer_handle_usb_event: stream_event: %d, usb_stream_status: %d",
+                    event, usb_stream_status);
 
     if (event == APP_MULTILINK_CUSTOMER_USB_UPSTREAM_START)
     {
@@ -1097,7 +1108,7 @@ static void app_multilink_customer_usb_ipc_cback(uint32_t id, void *msg)
 #if F_APP_LINEIN_SUPPORT
 static void app_multilink_customer_handle_line_in_event(T_APP_MULTILINK_CUSTOMER_STREAM_EVENT event)
 {
-    APP_PRINT_TRACE1("app_multilink_customer_handle_line_in_event: stream_event: %d", event);
+    APP_PRINT_INFO1("app_multilink_customer_handle_line_in_event: stream_event: %d", event);
 
     if (event == APP_MULTILINK_CUSTOMER_LINE_IN_DOWNSTREAM_START)
     {

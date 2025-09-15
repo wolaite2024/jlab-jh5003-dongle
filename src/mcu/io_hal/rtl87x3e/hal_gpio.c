@@ -56,7 +56,11 @@ typedef struct t_gpio_state
     uint32_t debounce_time;
 } T_GPIO_SW_CONTEXT;
 
-T_GPIO_SW_CONTEXT hal_gpio_sw_context = {0};
+T_GPIO_SW_CONTEXT hal_gpio_sw_context =
+{
+    .pin_flags = 0,
+    .debounce_time = 30,
+};
 
 bool hal_gpio_init_flag = false;
 
@@ -338,6 +342,11 @@ T_GPIO_STATUS hal_gpio_irq_disable(uint8_t pin_index)
 
 T_GPIO_STATUS hal_gpio_set_debounce_time(uint8_t ms)
 {
+    if (!ms)
+    {
+        ms = 1;
+    }
+
     hal_gpio_sw_context.debounce_time = ms;
 
     return GPIO_STATUS_OK;

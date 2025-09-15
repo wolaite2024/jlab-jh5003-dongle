@@ -6589,7 +6589,6 @@ typedef struct
 
 #define LOG_UART_REG_BASE           0x40011000UL
 #define UART_REG_BASE               0x40012000UL
-#define LOG_UART1_REG_BASE          0x40024000UL
 
 #define HW_AES_REG_BASE             0x40014000UL
 #define IR_REG_BASE                 0x40016800UL

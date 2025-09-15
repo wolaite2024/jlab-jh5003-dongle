@@ -147,13 +147,13 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga8c492d3f1023286cda13fcbc63b0823f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the remote control local address.  <a href="#ga8c492d3f1023286cda13fcbc63b0823f">More...</a><br /></td></tr>
 <tr class="separator:ga8c492d3f1023286cda13fcbc63b0823f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabaaab010557a3812a72b6d7b929f59a5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_e_m_o_t_e___c_o_n_t_r_o_l.html#gabaaab010557a3812a72b6d7b929f59a5">remote_local_addr_get</a> (uint8_t bd_addr[6])</td></tr>
-<tr class="memdesc:gabaaab010557a3812a72b6d7b929f59a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the remote control local address.  <a href="#gabaaab010557a3812a72b6d7b929f59a5">More...</a><br /></td></tr>
+<tr class="memdesc:gabaaab010557a3812a72b6d7b929f59a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the remote control local address.  <a href="#gabaaab010557a3812a72b6d7b929f59a5">More...</a><br /></td></tr>
 <tr class="separator:gabaaab010557a3812a72b6d7b929f59a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3cc2911adfcddbcbad7887b3b58e01ea"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_e_m_o_t_e___c_o_n_t_r_o_l.html#ga3cc2911adfcddbcbad7887b3b58e01ea">remote_peer_addr_set</a> (uint8_t bd_addr[6])</td></tr>
 <tr class="memdesc:ga3cc2911adfcddbcbad7887b3b58e01ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the remote control peer address.  <a href="#ga3cc2911adfcddbcbad7887b3b58e01ea">More...</a><br /></td></tr>
 <tr class="separator:ga3cc2911adfcddbcbad7887b3b58e01ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab4ba44c4298415186a44e23169dd8e89"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_e_m_o_t_e___c_o_n_t_r_o_l.html#gab4ba44c4298415186a44e23169dd8e89">remote_peer_addr_get</a> (uint8_t bd_addr[6])</td></tr>
-<tr class="memdesc:gab4ba44c4298415186a44e23169dd8e89"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the remote control peer address.  <a href="#gab4ba44c4298415186a44e23169dd8e89">More...</a><br /></td></tr>
+<tr class="memdesc:gab4ba44c4298415186a44e23169dd8e89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the remote control peer address.  <a href="#gab4ba44c4298415186a44e23169dd8e89">More...</a><br /></td></tr>
 <tr class="separator:gab4ba44c4298415186a44e23169dd8e89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga18d05e252befbe902b45f385eafe1d57"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___r_e_m_o_t_e___c_o_n_t_r_o_l.html#ga18d05e252befbe902b45f385eafe1d57">remote_session_open</a> (uint8_t bd_addr[6])</td></tr>
 <tr class="memdesc:ga18d05e252befbe902b45f385eafe1d57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an remote control session.  <a href="#ga18d05e252befbe902b45f385eafe1d57">More...</a><br /></td></tr>
@@ -208,7 +208,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Remote control relay handle. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a> </p>
 
 </div>
 </div>
@@ -225,13 +224,12 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Remote control relay callback prototype. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">msg_id</td><td>The remote relay message id. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">msg_id</td><td>The remote relay message ID. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">status</td><td>The relay status for the message <a class="el" href="group___r_e_m_o_t_e___c_o_n_t_r_o_l.html#gaace2acad12d0cc49aac6a477ccb1c74b">T_REMOTE_RELAY_STATUS</a>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">buf</td><td>The remote relay message payload buffer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>The remote relay message playload length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>The remote relay message payload length. </td></tr>
   </table>
   </dd>
 </dl>
@@ -251,7 +249,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Remote roleswap sync callback prototype. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a> </p>
 
 </div>
 </div>
@@ -269,7 +266,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Remote control's session state. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a> </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga3fafc6057a393641404e5040d6f0aca9a0d477163c2943e4e2aa3059ac6f26db4"></a>REMOTE_SESSION_STATE_DISCONNECTED&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga3fafc6057a393641404e5040d6f0aca9afbcee5b9edd81f34b499c2d811a8c2f3"></a>REMOTE_SESSION_STATE_CONNECTED&#160;</td><td class="fielddoc"></td></tr>
@@ -290,7 +286,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Define remote control session mode. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a> </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggab64196a8e33f6c135126a4d43e4b6efdae14cc3834e1699c60ff61870445220dc"></a>REMOTE_SESSION_MODE_ACTIVE&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ggab64196a8e33f6c135126a4d43e4b6efda33863da052f37acbd54e256a66757d9a"></a>REMOTE_SESSION_MODE_SLEEP_PENDING&#160;</td><td class="fielddoc"></td></tr>
@@ -313,7 +308,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Define remote control session role. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a> </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggad48900c988433e8bd9e07b08a225fdf4a673a27baaad47fd731a4458b2250a6a6"></a>REMOTE_SESSION_ROLE_SINGLE&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ggad48900c988433e8bd9e07b08a225fdf4a52f9edca7136cdeaabe8942e059fa05e"></a>REMOTE_SESSION_ROLE_PRIMARY&#160;</td><td class="fielddoc"></td></tr>
@@ -335,7 +329,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Define remote control timer type. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a> </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga3c3ff337bc7252c709cee6e8495078efad731d11bcb59fbd1f8399b0a4357665f"></a>REMOTE_TIMER_DEFAULT&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga3c3ff337bc7252c709cee6e8495078efa9191a0b2d473a18b118b1f226cd6eed3"></a>REMOTE_TIMER_LOW_PRECISION&#160;</td><td class="fielddoc"></td></tr>
@@ -357,7 +350,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Define remote control relay status. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a> </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaace2acad12d0cc49aac6a477ccb1c74ba138db92152b890c79583d53a3a7fdb4f"></a>REMOTE_RELAY_STATUS_ASYNC_RCVD&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ggaace2acad12d0cc49aac6a477ccb1c74ba2342aa7c3f71f03534bc9194071d4895"></a>REMOTE_RELAY_STATUS_ASYNC_LOOPBACK&#160;</td><td class="fielddoc"></td></tr>
@@ -391,18 +383,17 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Initialize remote control manager. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">role</td><td>Remote control session role <a class="el" href="group___r_e_m_o_t_e___c_o_n_t_r_o_l.html#gad48900c988433e8bd9e07b08a225fdf4">T_REMOTE_SESSION_ROLE</a>.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The status of initializing remote controll manager. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of initializing remote control manager. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Remote controll manager was initialized successfully. </td></tr>
-    <tr><td class="paramname">false</td><td>Remote controll manager was failed to initialize. </td></tr>
+    <tr><td class="paramname">true</td><td>Remote control manager was initialized successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>Remote control manager was failed to initialize. </td></tr>
   </table>
   </dd>
 </dl>
@@ -426,7 +417,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Set the remote control session role. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">role</td><td>Remote control session role <a class="el" href="group___r_e_m_o_t_e___c_o_n_t_r_o_l.html#gad48900c988433e8bd9e07b08a225fdf4">T_REMOTE_SESSION_ROLE</a>.</td></tr>
@@ -461,7 +451,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the remote control session role. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a></p>
 <dl class="section return"><dt>Returns</dt><dd>The remote control session role <a class="el" href="group___r_e_m_o_t_e___c_o_n_t_r_o_l.html#gad48900c988433e8bd9e07b08a225fdf4">T_REMOTE_SESSION_ROLE</a>. </dd></dl>
 
 </div>
@@ -483,10 +472,9 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Set the remote control local address. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote control local bluetooth address.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote control local Bluetooth address.</td></tr>
   </table>
   </dd>
 </dl>
@@ -517,11 +505,10 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>get the remote control local address. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a></p>
+<p>Get the remote control local address. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote control local bluetooth address.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote control local Bluetooth address.</td></tr>
   </table>
   </dd>
 </dl>
@@ -553,10 +540,9 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Set the remote control peer address. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote control peer bluetooth address.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote control peer Bluetooth address.</td></tr>
   </table>
   </dd>
 </dl>
@@ -587,11 +573,10 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>get the remote control peer address. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a></p>
+<p>Get the remote control peer address. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote control peer bluetooth address.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote control peer Bluetooth address.</td></tr>
   </table>
   </dd>
 </dl>
@@ -623,10 +608,9 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Create an remote control session. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote bluetooth device address.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote Bluetooth device address.</td></tr>
   </table>
   </dd>
 </dl>
@@ -658,10 +642,9 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Release the remote control session. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote bluetooth device address.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote Bluetooth device address.</td></tr>
   </table>
   </dd>
 </dl>
@@ -693,7 +676,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the remote control session state. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a></p>
 <dl class="section return"><dt>Returns</dt><dd>The remote control session state <a class="el" href="group___r_e_m_o_t_e___c_o_n_t_r_o_l.html#ga3fafc6057a393641404e5040d6f0aca9">T_REMOTE_SESSION_STATE</a>. </dd></dl>
 
 </div>
@@ -715,7 +697,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the remote control session mode. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">mode</td><td>Pass back the remote control session mode <a class="el" href="group___r_e_m_o_t_e___c_o_n_t_r_o_l.html#gab64196a8e33f6c135126a4d43e4b6efd">T_REMOTE_SESSION_MODE</a>.</td></tr>
@@ -750,7 +731,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Set the remote control session mode. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">mode</td><td>The remote control session mode <a class="el" href="group___r_e_m_o_t_e___c_o_n_t_r_o_l.html#gab64196a8e33f6c135126a4d43e4b6efd">T_REMOTE_SESSION_MODE</a>.</td></tr>
@@ -807,11 +787,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Start the remote roleswap procedure. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote shadowing bluetooth address. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">context</td><td>Uesr defined context for starting roleswap. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote shadowing Bluetooth address. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">context</td><td>User defined context for starting roleswap. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">stop_after_shadow</td><td>Whether to stop after shadow is finished. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">cback</td><td>Callback function for application to sync data during roleswap.</td></tr>
   </table>
@@ -855,7 +834,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Confirm the remote roleswap start procedure. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">accept</td><td>Whether roleswap start request is accepted. </td></tr>
@@ -891,10 +869,9 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Stop the remote roleswap procedure. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote shadowing bluetooth address.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote shadowing Bluetooth address.</td></tr>
   </table>
   </dd>
 </dl>
@@ -926,7 +903,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Register remote control relay callback. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">cback</td><td>Remote control relay callback <a class="el" href="group___r_e_m_o_t_e___c_o_n_t_r_o_l.html#ga2923700da45777cd2e358d8eab2b13bf">P_REMOTE_RELAY_CBACK</a>.</td></tr>
@@ -954,7 +930,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Unregister remote control relay callback. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>The remote control relay handle <a class="el" href="group___r_e_m_o_t_e___c_o_n_t_r_o_l.html#ga14eb8bece21a3e1a0f43e1ecf8fd6b53">T_REMOTE_RELAY_HANDLE</a>.</td></tr>
@@ -1017,11 +992,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Relay an asynchronous message to the remote side. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>The remote control relay handle <a class="el" href="group___r_e_m_o_t_e___c_o_n_t_r_o_l.html#ga14eb8bece21a3e1a0f43e1ecf8fd6b53">T_REMOTE_RELAY_HANDLE</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">msg_id</td><td>The asynchronous message id. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">msg_id</td><td>The asynchronous message ID. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">msg_buf</td><td>The asynchronous message payload buffer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">msg_len</td><td>The asynchronous message payload length. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">loopback</td><td>Set the asynchronous message loopback or not. <ul>
@@ -1100,11 +1074,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Relay a synchronous message to the remote side. </p>
-<p><a class="el" href="remote_8h_source.html">remote.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>The remote control relay handle <a class="el" href="group___r_e_m_o_t_e___c_o_n_t_r_o_l.html#ga14eb8bece21a3e1a0f43e1ecf8fd6b53">T_REMOTE_RELAY_HANDLE</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">msg_id</td><td>The synchronous message id. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">msg_id</td><td>The synchronous message ID. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">msg_buf</td><td>The synchronous message payload buffer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">msg_len</td><td>The synchronous message payload length. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">timer_type</td><td>The synchronous timer type <a class="el" href="group___r_e_m_o_t_e___c_o_n_t_r_o_l.html#ga3c3ff337bc7252c709cee6e8495078ef">T_REMOTE_TIMER_TYPE</a>. </td></tr>

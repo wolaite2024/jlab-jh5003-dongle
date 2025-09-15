@@ -26,7 +26,7 @@
  * @brief Config DLPS
  * 0-Disable DLPS, 1-Enable DLPS
  */
-#define F_BT_DLPS_EN 1
+#define F_DLPS_EN 1
 
 /**
  * @brief Config APP LE link number

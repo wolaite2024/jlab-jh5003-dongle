@@ -23,7 +23,6 @@ extern "C" {
 typedef enum
 {
     ADP_DETECT_5V,
-    ADP_DETECT_IO,
     ADP_DETECT_MAX,
 } T_ADP_DETECT;
 
@@ -77,49 +76,6 @@ typedef enum
   * @}
   */
 
-
-/** @defgroup T_ADP_IO_GPIO_STATE adp state
- * @{
- */
-
-typedef enum
-{
-    ADP_IO_GPIO_CLOSE,
-    ADP_IO_GPIO_OPEN,
-} T_ADP_IO_GPIO_STATE;
-
-/** End of group T_ADP_IO_GPIO_STATE
-  * @}
-  */
-
-/** @defgroup T_ADP_IO_DEBOUNCE_TIME adp io debounce time
- * @{
- */
-typedef enum
-{
-    IO_DEBOUNCE_TIME_0MS,       /*!< ADP IO debounce time 0ms.   */
-    IO_DEBOUNCE_TIME_10MS,      /*!< ADP IO debounce time 10ms.  */
-    IO_DEBOUNCE_TIME_20MS,      /*!< ADP IO debounce time 20ms.  */
-    IO_DEBOUNCE_TIME_40MS,      /*!< ADP IO debounce time 40ms.  */
-    IO_DEBOUNCE_TIME_60MS,      /*!< ADP IO debounce time 60ms.  */
-    IO_DEBOUNCE_TIME_80MS,      /*!< ADP IO debounce time 80ms.  */
-    IO_DEBOUNCE_TIME_100MS,     /*!< ADP IO debounce time 100ms. */
-    IO_DEBOUNCE_TIME_200MS,     /*!< ADP IO debounce time 200ms. */
-    IO_DEBOUNCE_TIME_300MS,     /*!< ADP IO debounce time 300ms. */
-    IO_DEBOUNCE_TIME_400MS,     /*!< ADP IO debounce time 400ms. */
-    IO_DEBOUNCE_TIME_500MS,     /*!< ADP IO debounce time 500ms. */
-    IO_DEBOUNCE_TIME_600MS,     /*!< ADP IO debounce time 600ms. */
-    IO_DEBOUNCE_TIME_700MS,     /*!< ADP IO debounce time 700ms. */
-    IO_DEBOUNCE_TIME_800MS,     /*!< ADP IO debounce time 800ms. */
-    IO_DEBOUNCE_TIME_900MS,     /*!< ADP IO debounce time 900ms. */
-    IO_DEBOUNCE_TIME_1000MS,    /*!< ADP IO debounce time 1000ms.*/
-    IO_DEBOUNCE_TIME_MAX,
-} T_ADP_IO_DEBOUNCE_TIME;
-
-/** End of group T_ADP_IO_DEBOUNCE_TIME
-  * @}
-  */
-
 /** @defgroup T_ADP_WAKE_UP_MODE adp wake up mode
  * @{
  */
@@ -165,11 +121,10 @@ typedef void (*P_ADP_ISR_CBACK)(void);
 typedef void (*P_ADP_PLUG_CBACK)(T_ADP_PLUG_EVENT event, void *user_data);
 
 /**
-  * @brief  Update adp io/5V interrupt callback
-  * @param  adp_type: use adp 5v or adp io
+  * @brief  Update adp 5V interrupt callback
+  * @param  adp_type: use adp 5v
   *     This parameter can be one of the following values:
   *     @arg ADP_DETECT_5V: use adp 5v.
-  *     @arg ADP_DETECT_IO: use adp io.
   * @param  cback: adp interrupt callback function
   * @retval true: Update adp interrupt callback success
   * @retval false: Update adp interrupt callback failed
@@ -177,21 +132,19 @@ typedef void (*P_ADP_PLUG_CBACK)(T_ADP_PLUG_EVENT event, void *user_data);
 bool adp_update_isr_cb(T_ADP_DETECT adp_type, P_ADP_ISR_CBACK cback);
 
 /**
-  * @brief  Get adp io/5V current level
-  * @param  adp_type: use adp 5v or adp io
+  * @brief  Get adp 5V current level
+  * @param  adp_type: use adp 5v
   *     This parameter can be one of the following values:
   *     @arg ADP_DETECT_5V: use adp 5v.
-  *     @arg ADP_DETECT_IO: use adp io.
   * @retval return adp current level
   */
 T_ADP_LEVEL adp_get_level(T_ADP_DETECT adp_type);
 
 /**
-  * @brief  Register adp io/5V callback
-  * @param  adp_type: use adp 5v or adp io
+  * @brief  Register adp 5V callback
+  * @param  adp_type: use adp 5v
   *     This parameter can be one of the following values:
   *     @arg ADP_DETECT_5V: use adp 5v.
-  *     @arg ADP_DETECT_IO: use adp io.
   * @param  cback: adp callback function
   * @param  user_data: user data
   * @retval true: Register adp callback success
@@ -200,11 +153,10 @@ T_ADP_LEVEL adp_get_level(T_ADP_DETECT adp_type);
 bool adp_register_state_change_cb(T_ADP_DETECT adp_type, P_ADP_PLUG_CBACK cback, void *user_data);
 
 /**
-  * @brief  Unregister adp io/5V callback
-  * @param  adp_type: use adp 5v or adp io
+  * @brief  Unregister adp 5V callback
+  * @param  adp_type: use adp 5v
   *     This parameter can be one of the following values:
   *     @arg ADP_DETECT_5V: use adp 5v.
-  *     @arg ADP_DETECT_IO: use adp io.
   * @param  cback: adp callback function
   * @retval true: Unregister adp callback success
   * @retval false: Unregister adp callback failed
@@ -212,21 +164,19 @@ bool adp_register_state_change_cb(T_ADP_DETECT adp_type, P_ADP_PLUG_CBACK cback,
 bool adp_unregister_state_change_cb(T_ADP_DETECT adp_type, P_ADP_PLUG_CBACK cback);
 
 /**
-  * @brief  Get adp io/5V current state
-  * @param  adp_type: use adp 5v or adp io
+  * @brief  Get adp 5V current state
+  * @param  adp_type: use adp 5v
   *     This parameter can be one of the following values:
   *     @arg ADP_DETECT_5V: use adp 5v.
-  *     @arg ADP_DETECT_IO: use adp io.
   * @retval return adp current state
   */
 T_ADP_STATE adp_get_current_state(T_ADP_DETECT adp_type);
 
 /**
-  * @brief  Get adp io/5V function debounce time
-  * @param  adp_type: use adp 5v or adp io
+  * @brief  Get adp 5V function debounce time
+  * @param  adp_type: use adp 5v
   *     This parameter can be one of the following values:
   *     @arg ADP_DETECT_5V: use adp 5v.
-  *     @arg ADP_DETECT_IO: use adp io.
   * @param  io_in_debounce_time: adp in debounce time
   * @param  io_out_debounce_time: adp out debounce time
   * @retval true: get adp io debounce time success
@@ -234,33 +184,6 @@ T_ADP_STATE adp_get_current_state(T_ADP_DETECT adp_type);
   */
 bool adp_get_debounce_time(T_ADP_DETECT adp_type, uint32_t *p_in_debounce_ms,
                            uint32_t *p_out_debounce_ms);
-
-/**
-  * @brief  Only can set adp io function debounce time
-  * @param  adp_type: only can be set ADP_DETECT_IO
-  * @param  io_in_debounce_time: adp io in debounce time
-  * @param  io_out_debounce_time: adp io out debounce time
-  * @retval true: set adp io debounce success
-  * @retval false: adp type error or debounce time overflow
-  */
-bool adp_set_debounce_time(T_ADP_DETECT adp_type, T_ADP_IO_DEBOUNCE_TIME io_in_debounce_time,
-                           T_ADP_IO_DEBOUNCE_TIME io_out_debounce_time);
-
-/**
- * @brief  Close adp function
- * @param  adp_type: only can be set ADP_DETECT_IO
- * @retval true: close adp io function success
- * @retval false: adp type error
- */
-bool adp_close(T_ADP_DETECT adp_type);
-
-/**
-  * @brief  Open adp function
-  * @param  adp_type: only can be set ADP_DETECT_IO
-  * @retval true: open adp io function success
-  * @retval false: adp type error
-  */
-bool adp_open(T_ADP_DETECT adp_type);
 
 /**
   * @brief  adapter wake up function enable

@@ -20,8 +20,6 @@ extern "C" {
  */
 
 /**
- * bt_sdp.h
- *
  * \brief   Start SDP discovery.
  *
  * \param[in]  bd_addr          Bluetooth address of remote device.
@@ -42,8 +40,6 @@ bool bt_sdp_discov_start(uint8_t             bd_addr[6],
                          T_BT_SDP_UUID_DATA  uuid_data);
 
 /**
- * bt_sdp.h
- *
  * \brief   Stop SDP discovery.
  *
  * \param[in]  bd_addr          Bluetooth address of remote device.
@@ -57,8 +53,6 @@ bool bt_sdp_discov_start(uint8_t             bd_addr[6],
 bool bt_sdp_discov_stop(uint8_t bd_addr[6]);
 
 /**
- * bt_sdp.h
- *
  * \brief   Start DID discovery.
  *
  * \param[in]  bd_addr          Bluetooth address of remote device.
@@ -73,8 +67,6 @@ bool bt_sdp_discov_stop(uint8_t bd_addr[6]);
 bool bt_did_discov_start(uint8_t bd_addr[6]);
 
 /**
- * bt_sdp.h
- *
  * \brief   Add an SDP record to BT stack.
  *
  * \param[in]  p_buf    Address of SDP record buffer.
@@ -88,13 +80,11 @@ bool bt_did_discov_start(uint8_t bd_addr[6]);
 bool bt_sdp_record_add(void *p_buf);
 
 /**
- * bt_sdp.h
- *
  * \brief   Delete an SDP record from BT stack.
  *
  * \param[in]  p_buf    Address of SDP record buffer.
  *
- * \return          The status of deletinging an SDP record.
+ * \return          The status of deleting an SDP record.
  * \retval true     SDP record was deleted successfully.
  * \retval false    SDP record was failed to delete.
  *
@@ -103,8 +93,6 @@ bool bt_sdp_record_add(void *p_buf);
 bool bt_sdp_record_delete(void *p_buf);
 
 /**
- * bt_sdp.h
- *
  * \brief   Find an attribute of the given value in an SDP record data.
  *
  * \param[in]  buf            Buffer address of the SDP record data.
@@ -120,8 +108,6 @@ uint8_t *bt_sdp_attr_find(uint8_t  *buf,
                           uint32_t  attr_value);
 
 /**
- * bt_sdp.h
- *
  * \brief   Get an attribute value in an SDP element.
  *
  * \param[in]  buf            Buffer address of the SDP element.
@@ -135,8 +121,6 @@ uint32_t bt_sdp_value_get(uint8_t  *buf,
                           uint16_t  len);
 
 /**
- * bt_sdp.h
- *
  * \brief   Get an UUID data value in an SDP element.
  *
  * \param[in]   buf            Buffer address of the SDP element.
@@ -154,8 +138,6 @@ bool bt_sdp_uuid_value_get(uint8_t            *buf,
                            T_BT_SDP_UUID_DATA *p_data);
 
 /**
- * bt_sdp.h
- *
  * \brief   Get the address of SDP data element in an SDP element.
  *
  * \param[in]  buf            Buffer address of the SDP element.
@@ -171,8 +153,6 @@ uint8_t *bt_sdp_elem_access(uint8_t  *buf,
                             uint16_t  index);
 
 /**
- * bt_sdp.h
- *
  * \brief   Decode SDP data element in an SDP element.
  *
  * \param[in]   buf           Buffer address of the SDP element.

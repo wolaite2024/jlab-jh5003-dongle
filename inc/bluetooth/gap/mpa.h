@@ -24,11 +24,8 @@ extern "C" {
  */
 
 /**
- * mpa.h
- *
  * \name  MPA_L2C_MODE
  * \brief L2CAP channel mode.
- * \anchor  MPA_L2C_MODE
  */
 /**
  * \ingroup     MPA
@@ -37,11 +34,8 @@ extern "C" {
 #define MPA_L2C_MODE_ERTM               (1 << 0x03)    /**< L2CAP channel mode: enhanced retransmission mode. */
 
 /**
- * mpa.h
- *
  * \name  MPA_SEC_SETTING
  * \brief Protocol security requirement settings bit mask.
- * \anchor  MPA_SEC_SETTING
  *
  */
 /**
@@ -56,11 +50,8 @@ extern "C" {
 /**@}*/
 
 /**
- * mpa.h
- *
  * \name  MPA_ATT_PSM_DATA_PATH
  * \brief The ATT data path of the L2CAP channel using \ref PSM_ATT.
- * \anchor  MPA_ATT_PSM_DATA_PATH
  *
  */
 /**
@@ -72,8 +63,6 @@ extern "C" {
 /**@}*/
 
 /**
- * mpa.h
- *
  * \brief    Response of registering protocol over L2CAP. It will be received in
  *           the callback function registered by \ref mpa_reg_l2c_proto with message
  *           type as \ref L2C_PROTO_REG_RSP.
@@ -88,8 +77,6 @@ typedef struct
 } T_MPA_L2C_PROTO_REG_RSP;
 
 /**
- * mpa.h
- *
  * \brief    Indication of remote L2CAP connection request. It will be received in
  *           the callback function registered by \ref mpa_reg_l2c_proto with message
  *           type as \ref L2C_CONN_IND.
@@ -104,8 +91,6 @@ typedef struct
 } T_MPA_L2C_CONN_IND;
 
 /**
- * mpa.h
- *
  * \brief    Response of starting L2CAP connection request. It will be received in
  *           the callback function registered by \ref mpa_reg_l2c_proto with message
  *           type as \ref L2C_CONN_RSP.
@@ -121,8 +106,6 @@ typedef struct
 } T_MPA_L2C_CONN_RSP;
 
 /**
- * mpa.h
- *
  * \brief    Information of L2CAP channel establish result. It will be received
  *           in the callback function registered by \ref mpa_reg_l2c_proto with
  *           message type as \ref L2C_CONN_CMPL.
@@ -142,8 +125,6 @@ typedef struct
 } T_MPA_L2C_CONN_CMPL_INFO;
 
 /**
- * mpa.h
- *
  * \brief    Indication of L2CAP data received from remote side. It will be received
  *           in the callback function registered by \ref mpa_reg_l2c_proto with
  *           message type as \ref L2C_DATA_IND.
@@ -161,8 +142,6 @@ typedef struct
 } T_MPA_L2C_DATA_IND;
 
 /**
- * mpa.h
- *
  * \brief    Indication of L2CAP data response with ack flag set. It will be received
  *           in the callback function registered by \ref mpa_reg_l2c_proto with
  *           message type as \ref L2C_DATA_RSP.
@@ -177,8 +156,6 @@ typedef struct
 } T_MPA_L2C_DATA_RSP;
 
 /**
- * mpa.h
- *
  * \brief    Indication of receiving L2CAP disconnection request from remote device. It will
  *           be received in the callback function registered by \ref mpa_reg_l2c_proto
  *           with message type as \ref L2C_DISCONN_IND.
@@ -193,8 +170,6 @@ typedef struct
 } T_MPA_L2C_DISCONN_IND;
 
 /**
- * mpa.h
- *
  * \brief    Response of sending L2CAP disconnection request to remote device. It will be
  *           received in the callback function registered by \ref mpa_reg_l2c_proto
  *           with message type as \ref L2C_DISCONN_RSP.
@@ -209,8 +184,6 @@ typedef struct
 } T_MPA_L2C_DISCONN_RSP;
 
 /**
- * mpa.h
- *
  * \brief    Response of registering protocol security into Bluetooth stack. It will be
  *           received in the callback function registered by \ref mpa_reg_l2c_proto
  *           with message type as \ref L2C_SEC_REG_RSP.
@@ -227,8 +200,6 @@ typedef struct
 } T_MPA_L2C_SEC_REG_RSP;
 
 /**
- * mpa.h
- *
  * \brief    Indication to request user's authorization for service connection
  *           establish. It will be received in the callback function registered by
  *           \ref mpa_reg_l2c_proto with message type as \ref L2C_PROTO_AUTHOR_IND.
@@ -245,8 +216,6 @@ typedef struct
 } T_MPA_AUTHOR_REQ_IND;
 
 /**
- * mpa.h
- *
  * \brief    Reponse of authenticaion on profile over RFCOMM channel. It will be
  *           received in the callback function registered by \ref mpa_reg_rfc_authen_cb.
  *
@@ -262,8 +231,6 @@ typedef struct
 } T_MPA_RFC_AUTHEN_RSP;
 
 /**
- * mpa.h
- *
  * \brief    L2CAP confirm cause used in \ref mpa_send_l2c_conn_cfm API.
  *
  * \ingroup  MPA
@@ -281,8 +248,6 @@ typedef enum
 } T_MPA_L2C_CONN_CFM_CAUSE;
 
 /**
- * mpa.h
- *
  * \brief   Messages types that protocols will get through callback function registed by \ref mpa_reg_l2c_proto.
  *
  * \ingroup     MPA
@@ -302,8 +267,6 @@ typedef enum
 } T_PROTO_MSG;
 
 /**
- * mpa.h
- *
  * \brief   Prototype of callback function to handle L2CAP related messages from MPA.
  * \details Message types are defined in \ref T_PROTO_MSG. Message data is located
  *          at \c p_buf and the content of data is dependent on message type.\n
@@ -313,8 +276,6 @@ typedef enum
 typedef void (* P_PROTO_CB)(void *p_buf, T_PROTO_MSG msg);
 
 /**
- * mpa.h
- *
  * \brief   Prototype of callback function to handle response of authenticaion on profile over RFCOMM channel.
  *
  * \ingroup  MPA
@@ -322,8 +283,6 @@ typedef void (* P_PROTO_CB)(void *p_buf, T_PROTO_MSG msg);
 typedef void (* P_RFC_AUTHEN_CB)(T_MPA_RFC_AUTHEN_RSP *p_rsp);
 
 /**
- * mpa.h
- *
  * \brief    Register a callback function to handle L2CAP related messages for a specific PSM.
  *
  * \param[in]  psm          Protocol service multiplexer that the callback function is related.
@@ -368,8 +327,6 @@ typedef void (* P_RFC_AUTHEN_CB)(T_MPA_RFC_AUTHEN_RSP *p_rsp);
 bool mpa_reg_l2c_proto(uint16_t psm, P_PROTO_CB callback, uint8_t *p_proto_id);
 
 /**
- * mpa.h
- *
  * \brief    Setting the data path of the L2CAP channel using \ref PSM_ATT.
  *
  * \param[in]  data_path Data processing method. Should be use \ref MPA_ATT_PSM_DATA_PATH.
@@ -393,8 +350,6 @@ bool mpa_reg_l2c_proto(uint16_t psm, P_PROTO_CB callback, uint8_t *p_proto_id);
 bool mpa_set_att_psm_data_path(uint8_t data_path);
 
 /**
- * mpa.h
- *
  * \brief    Send a request to create a L2CAP connection. If the request was successfully sent,
  *           \ref L2C_CONN_RSP will be received in the callback function registed by
  *           \ref mpa_reg_l2c_proto to indicate whether the procedure was started successfully.
@@ -474,8 +429,6 @@ void mpa_send_l2c_conn_req(uint16_t psm, uint16_t uuid, uint16_t proto_id,
                            uint16_t mtu_size, uint8_t *bd_addr, uint8_t mode, uint16_t flush_timeout);
 
 /**
- * mpa.h
- *
  * \brief    Send a confirmation for a L2CAP connection request from remote device. If the
  *           confirmation was successfully sent with cause as \ref MPA_L2C_CONN_ACCEPT,
  *           \ref L2C_CONN_CMPL will also be received in the callback function registered by
@@ -533,8 +486,6 @@ void mpa_send_l2c_conn_cfm(T_MPA_L2C_CONN_CFM_CAUSE cause, uint16_t cid, uint16_
                            uint8_t mode, uint16_t flush_timeout);
 
 /**
- * mpa.h
- *
  * \brief    Send a request to disconnect a L2CAP connection. If the request was successfully sent,
  *           \ref L2C_DISCONN_RSP will be received in the callback function registed by
  *           \ref mpa_reg_l2c_proto to show the result of disconnection.
@@ -615,8 +566,6 @@ void mpa_send_l2c_conn_cfm(T_MPA_L2C_CONN_CFM_CAUSE cause, uint16_t cid, uint16_
 void mpa_send_l2c_disconn_req(uint16_t cid);
 
 /**
- * mpa.h
- *
  * \brief    Send a confirmation for a L2CAP disconnection request from remote device.
  *
  * \param[in]  cid              Local channel ID of the L2CAP channel.
@@ -655,8 +604,6 @@ void mpa_send_l2c_disconn_req(uint16_t cid);
 void mpa_send_l2c_disconn_cfm(uint16_t cid);
 
 /**
- * mpa.h
- *
  * \brief    Get buffer from Bluetooth stack to put in L2CAP data which will be sent to remote device.
  *
  * \param[in]  size         Length of L2CAP data.
@@ -712,8 +659,6 @@ void *mpa_get_l2c_buf(uint8_t proto_id, uint16_t cid, uint8_t dlci, uint16_t siz
                       uint16_t offset, bool ack);
 
 /**
- * mpa.h
- *
  * \brief    Send a request to send L2CAP data to remote device.
  *
  * \param[in]  p_buf        Address of L2CAP data buffer which is allocated by \ref mpa_get_l2c_buf.
@@ -769,8 +714,6 @@ void mpa_send_l2c_data_req(void *p_buf, uint16_t offset, uint16_t cid,
                            uint16_t length, bool auto_flush);
 
 /**
- * mpa.h
- *
  * \brief    Send a request to register/deregister a protocol security entry over L2CAP.
  *           The security will be used when establishing a L2CAP channel. If the
  *           request was successfully sent, a message whose type is \ref L2C_SEC_REG_RSP
@@ -826,8 +769,6 @@ void mpa_send_l2c_sec_reg_req(uint8_t active, uint16_t psm, uint16_t server_chan
 
 
 /**
- * mpa.h
- *
  * \brief    Send a confirmation for authorization request indication. This function
  *           is used when receiving a message whose type is \ref L2C_PROTO_AUTHOR_IND
  *           and data is \ref T_MPA_AUTHOR_REQ_IND in the callback function registered
@@ -878,8 +819,6 @@ void mpa_send_l2c_sec_reg_req(uint8_t active, uint16_t psm, uint16_t server_chan
 void mpa_send_author_cfm(uint8_t *bd_addr, T_GAP_CFM_CAUSE result);
 
 /**
- * mpa.h
- *
  * \brief    Register a callback function to handle authentication responses over RFCOMM.
  *           <b>This API can only be used when realize RFCOMM protocol.</b>
  *
@@ -914,8 +853,6 @@ void mpa_send_author_cfm(uint8_t *bd_addr, T_GAP_CFM_CAUSE result);
 void mpa_reg_rfc_authen_cb(P_RFC_AUTHEN_CB p_func);
 
 /**
- * mpa.h
- *
  * \brief    Send a request to start authentication for a profile on RFCOMM channel.
  *           If the request was successfully sent, a response message will
  *           be received in the callback function registered by \ref mpa_reg_rfc_authen_cb.

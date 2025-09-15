@@ -58,6 +58,8 @@ Macros</h2></td></tr>
 <tr class="separator:ga1eec1d4e4c0dee5f7ec2652785349ec0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga85d713f67322c483706bfe51e9d4dc6c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t___interrupts___definition.html#ga85d713f67322c483706bfe51e9d4dc6c">UART_INT_MODEM_STS</a>&#160;&#160;&#160;((uint16_t)(1 &lt;&lt; 3))</td></tr>
 <tr class="separator:ga85d713f67322c483706bfe51e9d4dc6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2ee298820c144f9940e10a7a92383b8e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t___interrupts___definition.html#ga2ee298820c144f9940e10a7a92383b8e">UART_INT_TX_DONE</a>&#160;&#160;&#160;((uint16_t)(1 &lt;&lt; 4))</td></tr>
+<tr class="separator:ga2ee298820c144f9940e10a7a92383b8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab95dc75d54f24e5b99daf54f7d30348e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t___interrupts___definition.html#gab95dc75d54f24e5b99daf54f7d30348e">UART_INT_IDLE</a>&#160;&#160;&#160;((uint16_t)(1 &lt;&lt; 7))</td></tr>
 <tr class="separator:gab95dc75d54f24e5b99daf54f7d30348e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga450a46a633df5525d644af6ed4a52da6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t___interrupts___definition.html#ga450a46a633df5525d644af6ed4a52da6">IS_UART_IT</a>(IT)&#160;&#160;&#160;((((IT) &amp; 0xFFFFFFF0) == 0x00) &amp;&amp; ((IT) != 0x00))</td></tr>
@@ -123,6 +125,20 @@ Macros</h2></td></tr>
 
 </div>
 </div>
+<a id="ga2ee298820c144f9940e10a7a92383b8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2ee298820c144f9940e10a7a92383b8e">&#9670;&nbsp;</a></span>UART_INT_TX_DONE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define UART_INT_TX_DONE&#160;&#160;&#160;((uint16_t)(1 &lt;&lt; 4))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="gab95dc75d54f24e5b99daf54f7d30348e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gab95dc75d54f24e5b99daf54f7d30348e">&#9670;&nbsp;</a></span>UART_INT_IDLE</h2>
 
@@ -170,11 +186,12 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">((IT) &amp; (<a class="code" href="group___u_a_r_t___interrupts___definition.html#ga3722b5e6b8f7730c795696fcfc5a54a5">UART_INT_RD_AVA</a> | <a class="code" href="group___u_a_r_t___interrupts___definition.html#ga37ac1ac9f536c1988fe840fbe1f53c06">UART_INT_FIFO_EMPTY</a> | <a class="code" href="group___u_a_r_t___interrupts___definition.html#ga1eec1d4e4c0dee5f7ec2652785349ec0">UART_INT_LINE_STS</a> |\</div><div class="line">                                    <a class="code" href="group___u_a_r_t___interrupts___definition.html#ga85d713f67322c483706bfe51e9d4dc6c">UART_INT_MODEM_STS</a> | <a class="code" href="group___u_a_r_t___interrupts___definition.html#gab95dc75d54f24e5b99daf54f7d30348e">UART_INT_IDLE</a>))</div><div class="ttc" id="group___u_a_r_t___interrupts___definition_html_gab95dc75d54f24e5b99daf54f7d30348e"><div class="ttname"><a href="group___u_a_r_t___interrupts___definition.html#gab95dc75d54f24e5b99daf54f7d30348e">UART_INT_IDLE</a></div><div class="ttdeci">#define UART_INT_IDLE</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:105</div></div>
-<div class="ttc" id="group___u_a_r_t___interrupts___definition_html_ga85d713f67322c483706bfe51e9d4dc6c"><div class="ttname"><a href="group___u_a_r_t___interrupts___definition.html#ga85d713f67322c483706bfe51e9d4dc6c">UART_INT_MODEM_STS</a></div><div class="ttdeci">#define UART_INT_MODEM_STS</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:104</div></div>
-<div class="ttc" id="group___u_a_r_t___interrupts___definition_html_ga3722b5e6b8f7730c795696fcfc5a54a5"><div class="ttname"><a href="group___u_a_r_t___interrupts___definition.html#ga3722b5e6b8f7730c795696fcfc5a54a5">UART_INT_RD_AVA</a></div><div class="ttdeci">#define UART_INT_RD_AVA</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:101</div></div>
-<div class="ttc" id="group___u_a_r_t___interrupts___definition_html_ga1eec1d4e4c0dee5f7ec2652785349ec0"><div class="ttname"><a href="group___u_a_r_t___interrupts___definition.html#ga1eec1d4e4c0dee5f7ec2652785349ec0">UART_INT_LINE_STS</a></div><div class="ttdeci">#define UART_INT_LINE_STS</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:103</div></div>
-<div class="ttc" id="group___u_a_r_t___interrupts___definition_html_ga37ac1ac9f536c1988fe840fbe1f53c06"><div class="ttname"><a href="group___u_a_r_t___interrupts___definition.html#ga37ac1ac9f536c1988fe840fbe1f53c06">UART_INT_FIFO_EMPTY</a></div><div class="ttdeci">#define UART_INT_FIFO_EMPTY</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:102</div></div>
+<b>Value:</b><div class="fragment"><div class="line">((IT) &amp; (<a class="code" href="group___u_a_r_t___interrupts___definition.html#ga3722b5e6b8f7730c795696fcfc5a54a5">UART_INT_RD_AVA</a> | <a class="code" href="group___u_a_r_t___interrupts___definition.html#ga37ac1ac9f536c1988fe840fbe1f53c06">UART_INT_FIFO_EMPTY</a> | <a class="code" href="group___u_a_r_t___interrupts___definition.html#ga1eec1d4e4c0dee5f7ec2652785349ec0">UART_INT_LINE_STS</a> |\</div><div class="line">                                    <a class="code" href="group___u_a_r_t___interrupts___definition.html#ga85d713f67322c483706bfe51e9d4dc6c">UART_INT_MODEM_STS</a> | <a class="code" href="group___u_a_r_t___interrupts___definition.html#ga2ee298820c144f9940e10a7a92383b8e">UART_INT_TX_DONE</a> | <a class="code" href="group___u_a_r_t___interrupts___definition.html#gab95dc75d54f24e5b99daf54f7d30348e">UART_INT_IDLE</a>))</div><div class="ttc" id="group___u_a_r_t___interrupts___definition_html_gab95dc75d54f24e5b99daf54f7d30348e"><div class="ttname"><a href="group___u_a_r_t___interrupts___definition.html#gab95dc75d54f24e5b99daf54f7d30348e">UART_INT_IDLE</a></div><div class="ttdeci">#define UART_INT_IDLE</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:104</div></div>
+<div class="ttc" id="group___u_a_r_t___interrupts___definition_html_ga2ee298820c144f9940e10a7a92383b8e"><div class="ttname"><a href="group___u_a_r_t___interrupts___definition.html#ga2ee298820c144f9940e10a7a92383b8e">UART_INT_TX_DONE</a></div><div class="ttdeci">#define UART_INT_TX_DONE</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:103</div></div>
+<div class="ttc" id="group___u_a_r_t___interrupts___definition_html_ga85d713f67322c483706bfe51e9d4dc6c"><div class="ttname"><a href="group___u_a_r_t___interrupts___definition.html#ga85d713f67322c483706bfe51e9d4dc6c">UART_INT_MODEM_STS</a></div><div class="ttdeci">#define UART_INT_MODEM_STS</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:102</div></div>
+<div class="ttc" id="group___u_a_r_t___interrupts___definition_html_ga3722b5e6b8f7730c795696fcfc5a54a5"><div class="ttname"><a href="group___u_a_r_t___interrupts___definition.html#ga3722b5e6b8f7730c795696fcfc5a54a5">UART_INT_RD_AVA</a></div><div class="ttdeci">#define UART_INT_RD_AVA</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:99</div></div>
+<div class="ttc" id="group___u_a_r_t___interrupts___definition_html_ga1eec1d4e4c0dee5f7ec2652785349ec0"><div class="ttname"><a href="group___u_a_r_t___interrupts___definition.html#ga1eec1d4e4c0dee5f7ec2652785349ec0">UART_INT_LINE_STS</a></div><div class="ttdeci">#define UART_INT_LINE_STS</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:101</div></div>
+<div class="ttc" id="group___u_a_r_t___interrupts___definition_html_ga37ac1ac9f536c1988fe840fbe1f53c06"><div class="ttname"><a href="group___u_a_r_t___interrupts___definition.html#ga37ac1ac9f536c1988fe840fbe1f53c06">UART_INT_FIFO_EMPTY</a></div><div class="ttdeci">#define UART_INT_FIFO_EMPTY</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:100</div></div>
 </div><!-- fragment -->
 </div>
 </div>

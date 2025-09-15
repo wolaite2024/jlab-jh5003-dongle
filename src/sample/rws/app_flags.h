@@ -22,7 +22,12 @@
 #define F_APP_BQB_CLI_SUPPORT                       1
 #define F_APP_BQB_CLI_HFP_AG_SUPPORT                0
 #define F_APP_BQB_CLI_MAP_SUPPORT                   0
-
+#define F_APP_CHARGER_CASE_SUPPORT                  0
+#if F_APP_CHARGER_CASE_SUPPORT
+#define F_APP_MAX_BT_POINT_NUM                      3
+#else
+#define F_APP_MAX_BT_POINT_NUM                      2
+#endif
 #define F_APP_MULTI_LINK_ENABLE                     1
 #define F_APP_RWS_MULTI_SPK_SUPPORT                 0
 #define F_APP_SINGLE_MUTLILINK_SCENERIO_1           0 //this macro only enable in single mode, and if it enable, F_APP_MUTILINK_VA_PREEMPTIVE must be disable
@@ -33,8 +38,9 @@
 #define F_APP_CALL_HOLD_SUPPORT                     0
 #define F_APP_VOICE_SPK_EQ_SUPPORT                  1
 #define F_APP_VOICE_MIC_EQ_SUPPORT                  1
-#define F_APP_AUDIO_VOCIE_SPK_EQ_INDEPENDENT_CFG    0
-#define F_APP_AUDIO_VOCIE_SPK_EQ_COMPENSATION_CFG   0
+#define F_APP_AUDIO_VOICE_SPK_EQ_INDEPENDENT_CFG    0
+#define F_APP_AUDIO_VOICE_SPK_EQ_COMPENSATION_CFG   0
+#define F_APP_ROLESWITCH_WHEN_SCO_CHANGE            0
 
 #define F_APP_DUT_MODE_AUTO_POWER_OFF               1
 #define F_APP_VOICE_NREC_SUPPORT                    1
@@ -53,9 +59,7 @@
 #define F_APP_CFU_FEATURE_SUPPORT                   0
 #define F_APP_CFU_SPP_SUPPORT                       0
 #define F_APP_CFU_BLE_CHANNEL_SUPPORT               0
-#define F_APP_CHARGER_CASE_SUPPORT                  0
 #define F_APP_FIND_EAR_BUD_SUPPORT                  0
-#define F_APP_ADP_CMD_SUPPORT                       1
 #define F_APP_EXT_MIC_SWITCH_SUPPORT                0
 
 //Dongle related
@@ -89,7 +93,6 @@
 #define F_APP_A2DP_CODEC_LDAC_SUPPORT               0
 #define F_APP_A2DP_CODEC_LC3_SUPPORT                0
 #define F_APP_A2DP_CODEC_LHDC_SUPPORT               0
-#define F_APP_SPECIFIC_UUID_SUPPORT                 1
 #define F_APP_HFP_AG_SUPPORT                        0
 
 #define F_APP_IAP_RTK_SUPPORT                       0
@@ -102,6 +105,8 @@
 
 #define F_APP_BT_PROFILE_PBAP_SUPPORT               0
 #define F_APP_BT_PROFILE_MAP_SUPPORT                0
+
+#define F_APP_GATT_OVER_BREDR_SUPPORT               0
 
 #define F_APP_HANDLE_TOO_SMALL_ABS_VOL              0
 
@@ -142,23 +147,22 @@
 #define F_APP_KEY_EXTEND_FEATURE                    1
 #define F_APP_RWS_KEY_SUPPORT                       1
 #define F_APP_EXT_FLASH_SUPPORT                     0
+#define F_APP_QDECODE_SUPPORT                       0
 
 #define F_APP_SLIDE_SWITCH_SUPPORT                  1
+#if F_APP_SLIDE_SWITCH_SUPPORT
 #define F_APP_SLIDE_SWITCH_POWER_ON_OFF             1
 #define F_APP_SLIDE_SWITCH_LISTENING_MODE           0
 #define F_APP_SLIDE_SWITCH_MIC_MUTE_TOGGLE          0
-
-#if (F_APP_SLIDE_SWITCH_SUPPORT == 0)
-#undef F_APP_SLIDE_SWITCH_POWER_ON_OFF
-#define F_APP_SLIDE_SWITCH_POWER_ON_OFF             0
-#undef F_APP_SLIDE_SWITCH_LISTENING_MODE
-#define F_APP_SLIDE_SWITCH_LISTENING_MODE           0
-#undef F_APP_SLIDE_SWITCH_MIC_MUTE_TOGGLE
-#define F_APP_SLIDE_SWITCH_MIC_MUTE_TOGGLE          0
 #endif
 
+//----- [chargerbox cmd related] -----
+#define F_APP_ADP_5V_CMD_SUPPORT                    0
 #define F_APP_ONE_WIRE_UART_SUPPORT                 1
 #if F_APP_ONE_WIRE_UART_SUPPORT
+#define F_APP_ONE_WIRE_UART_TX_MODE_PUSH_PULL       0 // 0:open-drain, 1:push-pull, evb default use open-drain mode
+#undef F_APP_ADP_5V_CMD_SUPPORT
+#define F_APP_ADP_5V_CMD_SUPPORT                    0
 #undef F_APP_CONSOLE_SUPPORT
 #define F_APP_CONSOLE_SUPPORT                       1
 #undef F_APP_CLI_BINARY_MP_SUPPORT
@@ -179,23 +183,12 @@
 
 //RHE related
 #define F_APP_BRIGHTNESS_SUPPORT                    0
+#define F_APP_POWER_ON_DELAY_APPLY_ANC_SUPPORT      0
 #define F_APP_POWER_ON_DELAY_APPLY_APT_SUPPORT      0
 #define F_APP_SEPARATE_ADJUST_APT_EQ_SUPPORT        0
 #define F_APP_LLAPT_SCENARIO_CHOOSE_SUPPORT         0
 #define F_APP_SEPARATE_ADJUST_APT_VOLUME_SUPPORT    0
 #define F_APP_ADJUST_NOTIFICATION_VOL_SUPPORT       0
-
-#if (F_APP_LISTENING_MODE_SUPPORT == 0)
-#undef F_APP_ANC_SUPPORT
-#define F_APP_ANC_SUPPORT                           0
-#undef F_APP_APT_SUPPORT
-#define F_APP_APT_SUPPORT                           0
-#endif
-
-#if ((F_APP_APT_SUPPORT == 0) || (F_APP_ANC_SUPPORT == 0))
-#undef F_APP_BRIGHTNESS_SUPPORT
-#define F_APP_BRIGHTNESS_SUPPORT                    0
-#endif
 
 //----- [3rd party related] -----
 #define AMA_FEATURE_SUPPORT                         0
@@ -216,6 +209,9 @@
 
 #define F_APP_SAMPLE_CONFIG_TEAMS_RWS_SUPPORT       0
 #define F_APP_SAMPLE_CONFIG_TEAMS_SINGLE_SUPPORT    0
+
+#undef F_APP_CHATGPT_SUPPORT
+#define F_APP_CHATGPT_SUPPORT                       0
 
 #if F_APP_SINGLE_MUTLILINK_SCENERIO_1
 #undef F_APP_MUTILINK_VA_PREEMPTIVE
@@ -264,16 +260,20 @@
 #endif /* F_APP_SAMPLE_CONFIG_TEAMS_SINGLE_SUPPORT */
 
 //----- [Add more target here] -----
-#if TARGET_SINGLE
+#if F_APP_STEREO
 #undef F_APP_ERWS_SUPPORT
 #define F_APP_ERWS_SUPPORT                          0
-#undef F_APP_BLE_BOND_SYNC_SUPPORT
-#define F_APP_BLE_BOND_SYNC_SUPPORT                 0
-#undef F_APP_BOND_MGR_BLE_SYNC
-#define F_APP_BOND_MGR_BLE_SYNC                     0
-#endif /* TARGET_SINGLE */
+#undef F_APP_AMP_SUPPORT
+#define F_APP_AMP_SUPPORT                           1
+#undef F_APP_LINEIN_SUPPORT
+#define F_APP_LINEIN_SUPPORT                        1
+#undef F_APP_USB_AUDIO_SUPPORT
+#define F_APP_USB_AUDIO_SUPPORT                     1
+#undef F_APP_USB_HID_SUPPORT
+#define F_APP_USB_HID_SUPPORT                       1
+#endif /* F_APP_STEREO */
 
-#if TARGET_LOCAL_PLAYBACK
+#if F_APP_LOCAL_PLAYBACK
 #undef F_APP_LOCAL_PLAYBACK_SUPPORT
 #define F_APP_LOCAL_PLAYBACK_SUPPORT                1
 #undef F_APP_BQB_CLI_SUPPORT
@@ -286,7 +286,7 @@
 #define F_APP_MULTI_LINK_ENABLE                     0
 #undef F_APP_TTS_SUPPORT
 #define F_APP_TTS_SUPPORT                           0
-#endif /* TARGET_LOCAL_PLAYBACK */
+#endif /* F_APP_LOCAL_PLAYBACK */
 
 #if TARGET_RTL8763EWM
 #define IC_NAME                                     "RTL8763EWM"
@@ -312,13 +312,15 @@
 #undef F_APP_MUTILINK_VA_PREEMPTIVE
 #define F_APP_MUTILINK_VA_PREEMPTIVE                0
 #undef F_APP_USB_AUDIO_SUPPORT
-#define F_APP_USB_AUDIO_SUPPORT                     1
+#define F_APP_USB_AUDIO_SUPPORT                     0
 #undef F_APP_USB_HID_SUPPORT
-#define F_APP_USB_HID_SUPPORT                       1
+#define F_APP_USB_HID_SUPPORT                       0
 #undef F_APP_USB_SUSPEND_SUPPORT
-#define F_APP_USB_SUSPEND_SUPPORT                   1
+#define F_APP_USB_SUSPEND_SUPPORT                   0
+#if F_APP_SLIDE_SWITCH_SUPPORT
 #undef F_APP_SLIDE_SWITCH_MIC_MUTE_TOGGLE
 #define F_APP_SLIDE_SWITCH_MIC_MUTE_TOGGLE          1
+#endif
 
 #undef F_APP_BLE_SWIFT_PAIR_SUPPORT
 #define F_APP_BLE_SWIFT_PAIR_SUPPORT                1
@@ -343,6 +345,8 @@
 #if F_APP_APT_SUPPORT
 #undef F_APP_BRIGHTNESS_SUPPORT
 #define F_APP_BRIGHTNESS_SUPPORT                    1
+#undef F_APP_POWER_ON_DELAY_APPLY_ANC_SUPPORT
+#define F_APP_POWER_ON_DELAY_APPLY_ANC_SUPPORT      1
 #undef F_APP_POWER_ON_DELAY_APPLY_APT_SUPPORT
 #define F_APP_POWER_ON_DELAY_APPLY_APT_SUPPORT      1
 #undef F_APP_SEPARATE_ADJUST_APT_EQ_SUPPORT
@@ -392,45 +396,16 @@
 #undef  F_APP_LISTENING_MODE_SUPPORT
 #define F_APP_LISTENING_MODE_SUPPORT                0
 
-#if TARGET_RTL8763ESE   // ++++  #if TARGET_RTL8763ESE
+#if TARGET_RTL8763ESE
 #define IC_NAME                                     "RTL8763ESE"
 
-/*--- Product macro  ---*/
-#define RTL8763ESE_PRODUCT_NORMAL_RWS               0  // DSP: normal_rws
-#define RTL8763ESE_PRODUCT_3D_RWS                   0  // DSP: 3d_rws
-/*--- Product macro  ---*/
-
-#if RTL8763ESE_PRODUCT_STEREO
-#undef F_APP_ERWS_SUPPORT
-#define F_APP_ERWS_SUPPORT                          0
-#undef F_APP_BLE_BOND_SYNC_SUPPORT
-#define F_APP_BLE_BOND_SYNC_SUPPORT                 0
-#undef F_APP_BOND_MGR_BLE_SYNC
-#define F_APP_BOND_MGR_BLE_SYNC                     0
-#undef F_APP_USB_AUDIO_SUPPORT
-#define F_APP_USB_AUDIO_SUPPORT                     1
-#undef F_APP_USB_HID_SUPPORT
-#define F_APP_USB_HID_SUPPORT                       1
-#undef F_APP_MUTLILINK_SOURCE_PRIORITY_UI
-#define F_APP_MUTLILINK_SOURCE_PRIORITY_UI          1
-#undef F_APP_LINEIN_SUPPORT
-#define F_APP_LINEIN_SUPPORT                        1
-#endif
-
-#if RTL8763ESE_PRODUCT_NORMAL_RWS
+#if TARGET_PRODUCT_NORMAL_RWS
 #undef  F_APP_LISTENING_MODE_SUPPORT
 #define F_APP_LISTENING_MODE_SUPPORT                1
 #undef F_APP_ANC_SUPPORT
 #define F_APP_ANC_SUPPORT                           1
 #undef F_APP_APT_SUPPORT
 #define F_APP_APT_SUPPORT                           1
-#endif
-
-#if RTL8763ESE_PRODUCT_3D_RWS
-#undef F_APP_SUPPORT_SPATIAL_AUDIO
-#define F_APP_SUPPORT_SPATIAL_AUDIO                 1
-#undef F_APP_USER_EQ_SUPPORT
-#define F_APP_USER_EQ_SUPPORT                       0
 #endif
 
 #if RTL8763ESE_PRODUCT_SPEAKER
@@ -462,8 +437,10 @@
 #define F_APP_MUTLILINK_SOURCE_PRIORITY_UI          1
 #undef F_APP_MUTILINK_VA_PREEMPTIVE
 #define F_APP_MUTILINK_VA_PREEMPTIVE                0
+#if F_APP_SLIDE_SWITCH_SUPPORT
 #undef  F_APP_SLIDE_SWITCH_MIC_MUTE_TOGGLE
 #define F_APP_SLIDE_SWITCH_MIC_MUTE_TOGGLE          1
+#endif
 #undef F_APP_COMMON_DONGLE_SUPPORT
 #define F_APP_COMMON_DONGLE_SUPPORT                 1
 #undef F_APP_GAMING_DONGLE_SUPPORT
@@ -474,7 +451,7 @@
 #define F_APP_QDECODE_SUPPORT                       1
 #endif
 
-#else  // === #if TARGET_RTL8763ESE
+#else  // TARGET_RTL8763ESE
 #define IC_NAME                                     "RTL8763EHA"
 
 #undef F_APP_HEARABLE_SUPPORT
@@ -486,7 +463,7 @@
 #undef F_APP_APT_SUPPORT
 #define F_APP_APT_SUPPORT                           1
 
-#endif
+#endif  // TARGET_RTL8763ESE
 
 #if F_APP_ANC_SUPPORT && F_APP_APT_SUPPORT
 #undef F_APP_SUPPORT_ANC_APT_COEXIST
@@ -497,6 +474,8 @@
 #if F_APP_APT_SUPPORT
 #undef F_APP_BRIGHTNESS_SUPPORT
 #define F_APP_BRIGHTNESS_SUPPORT                    1
+#undef F_APP_POWER_ON_DELAY_APPLY_ANC_SUPPORT
+#define F_APP_POWER_ON_DELAY_APPLY_ANC_SUPPORT      1
 #undef F_APP_POWER_ON_DELAY_APPLY_APT_SUPPORT
 #define F_APP_POWER_ON_DELAY_APPLY_APT_SUPPORT      1
 #undef F_APP_SEPARATE_ADJUST_APT_EQ_SUPPORT
@@ -509,24 +488,13 @@
 #if F_APP_ANC_SUPPORT
 #undef F_APP_LLAPT_SCENARIO_CHOOSE_SUPPORT
 #define F_APP_LLAPT_SCENARIO_CHOOSE_SUPPORT         1
-#endif
+#endif  // F_APP_ANC_SUPPORT
+#endif  // F_APP_APT_SUPPORT
 
-#endif  // --- #if TARGET_RTL8763ESE
-
-#if F_APP_SUPPORT_SPATIAL_AUDIO
-#undef F_APP_DUAL_AUDIO_EFFECT
-#define F_APP_DUAL_AUDIO_EFFECT                     1
-#undef F_APP_DUAL_AUDIO_TWS_SPATIAL_AUDIO
-#define F_APP_DUAL_AUDIO_TWS_SPATIAL_AUDIO          0
-#undef F_APP_SENSOR_MEMS_SUPPORT
-#define F_APP_SENSOR_MEMS_SUPPORT                   0
-#undef F_APP_SENSOR_INV42607_SUPPORT
-#define F_APP_SENSOR_INV42607_SUPPORT               0
-#endif
 
 /*--- Feature macro  ---*/
 
-#endif
+#endif  // TARGET_RTL8763ESE || TARGET_RTL8763EHA
 
 #if TARGET_RTL8763EFL || TARGET_RTL8773ESL || TARGET_RTL8773EWE
 #undef F_APP_LEA_SUPPORT
@@ -536,6 +504,14 @@
 #undef F_APP_USER_EQ_SUPPORT
 #define F_APP_USER_EQ_SUPPORT                       1
 
+#if F_APP_STEREO
+#undef F_APP_USB_AUDIO_SUPPORT
+#define F_APP_USB_AUDIO_SUPPORT                     0
+#undef F_APP_USB_HID_SUPPORT
+#define F_APP_USB_HID_SUPPORT                       0
+#endif
+#define F_APP_PERIODIC_WAKEUP                       0
+
 #if TARGET_RTL8773ESL
 #define IC_NAME                                     "RTL8773ESL"
 
@@ -544,64 +520,47 @@
 #define F_APP_ANC_SUPPORT                           1
 #undef F_APP_AIRPLANE_SUPPORT
 #define F_APP_AIRPLANE_SUPPORT                      1
+#undef F_APP_LLAPT_SCENARIO_CHOOSE_SUPPORT
+#define F_APP_LLAPT_SCENARIO_CHOOSE_SUPPORT         1
+
 #if F_APP_ANC_SUPPORT && F_APP_APT_SUPPORT
 #undef F_APP_SUPPORT_ANC_APT_COEXIST
 #define F_APP_SUPPORT_ANC_APT_COEXIST               1
 #endif
-#undef F_APP_HEARABLE_SUPPORT
-#define F_APP_HEARABLE_SUPPORT                      1
 
 //RHE related
 #if F_APP_APT_SUPPORT
 #undef F_APP_BRIGHTNESS_SUPPORT
 #define F_APP_BRIGHTNESS_SUPPORT                    1
+#undef F_APP_POWER_ON_DELAY_APPLY_ANC_SUPPORT
+#define F_APP_POWER_ON_DELAY_APPLY_ANC_SUPPORT      1
 #undef F_APP_POWER_ON_DELAY_APPLY_APT_SUPPORT
 #define F_APP_POWER_ON_DELAY_APPLY_APT_SUPPORT      1
 #undef F_APP_SEPARATE_ADJUST_APT_EQ_SUPPORT
 #define F_APP_SEPARATE_ADJUST_APT_EQ_SUPPORT        1
 #undef F_APP_SEPARATE_ADJUST_APT_VOLUME_SUPPORT
 #define F_APP_SEPARATE_ADJUST_APT_VOLUME_SUPPORT    1
-#if F_APP_ANC_SUPPORT
-#undef F_APP_LLAPT_SCENARIO_CHOOSE_SUPPORT
-#define F_APP_LLAPT_SCENARIO_CHOOSE_SUPPORT         1
-#endif
-#endif
+#endif // F_APP_APT_SUPPORT
+
+#undef F_APP_HEARABLE_SUPPORT
+#define F_APP_HEARABLE_SUPPORT                      1
 #undef F_APP_ADJUST_NOTIFICATION_VOL_SUPPORT
 #define F_APP_ADJUST_NOTIFICATION_VOL_SUPPORT       1
-#endif
-#else
-#if TARGET_RTL8773ESL
+
+#endif  // F_APP_LISTENING_MODE_SUPPORT
+
+#else   // TARGET_RTL8773ESL
+#if TARGET_RTL8763EFL
 #define IC_NAME                                     "RTL8763EFL"
 #else
 #define IC_NAME                                     "RTL8773EWE"
-#endif
+#endif  // TARGET_RTL8763EFL
+
 #undef F_APP_ANC_SUPPORT
 #define F_APP_ANC_SUPPORT                           0
-#endif
 
-#if RTL87x3EFL_PRODUCT_STEREO || TARGET_RTL8773EWE
-#undef F_APP_ERWS_SUPPORT
-#define F_APP_ERWS_SUPPORT                          0
-#undef F_APP_QDECODE_SUPPORT
-#define F_APP_QDECODE_SUPPORT                       0
-#undef F_APP_MUTILINK_VA_PREEMPTIVE
-#define F_APP_MUTILINK_VA_PREEMPTIVE                0
-#undef F_APP_MUTLILINK_SOURCE_PRIORITY_UI
-#define F_APP_MUTLILINK_SOURCE_PRIORITY_UI          0
-#undef F_APP_USB_AUDIO_SUPPORT
-#define F_APP_USB_AUDIO_SUPPORT                     0
-#undef F_APP_USB_HID_SUPPORT
-#define F_APP_USB_HID_SUPPORT                       0
-#undef F_APP_AMP_SUPPORT
-#define F_APP_AMP_SUPPORT                           1
-#endif
-
-#if RTL87x3EFL_PRODUCT_STEREO
-#undef F_APP_LINEIN_SUPPORT
-#define F_APP_LINEIN_SUPPORT                        1
-#endif
-
-#endif
+#endif  // TARGET_RTL8773ESL
+#endif  // TARGET_RTL8763EFL || TARGET_RTL8773ESL || TARGET_RTL8773EWE
 
 #if TARGET_RTL8773DO
 #define IC_NAME                                     "RTL8773DO"
@@ -627,8 +586,10 @@
 
 #undef F_APP_LEA_SUPPORT
 #define F_APP_LEA_SUPPORT                           1
+#if F_APP_SLIDE_SWITCH_SUPPORT
 #undef  F_APP_SLIDE_SWITCH_MIC_MUTE_TOGGLE
 #define F_APP_SLIDE_SWITCH_MIC_MUTE_TOGGLE          1
+#endif
 #if F_APP_ANC_SUPPORT && F_APP_APT_SUPPORT
 #undef F_APP_SUPPORT_ANC_APT_COEXIST
 #define F_APP_SUPPORT_ANC_APT_COEXIST               1
@@ -640,6 +601,8 @@
 #if F_APP_APT_SUPPORT
 #undef F_APP_BRIGHTNESS_SUPPORT
 #define F_APP_BRIGHTNESS_SUPPORT                    1
+#undef F_APP_POWER_ON_DELAY_APPLY_ANC_SUPPORT
+#define F_APP_POWER_ON_DELAY_APPLY_ANC_SUPPORT      1
 #undef F_APP_POWER_ON_DELAY_APPLY_APT_SUPPORT
 #define F_APP_POWER_ON_DELAY_APPLY_APT_SUPPORT      1
 #undef F_APP_SEPARATE_ADJUST_APT_EQ_SUPPORT
@@ -679,30 +642,6 @@
 #undef F_APP_CONFERENCE_DONGLE_SUPPORT
 #define F_APP_CONFERENCE_DONGLE_SUPPORT             1
 
-#if F_APP_IS_STEREO  //current the stereo just is gaming headset
-#undef F_APP_COMMON_DONGLE_SUPPORT
-#define F_APP_COMMON_DONGLE_SUPPORT                 1
-#undef F_APP_GAMING_DONGLE_SUPPORT
-#define F_APP_GAMING_DONGLE_SUPPORT                 1
-#undef F_APP_CONFERENCE_DONGLE_SUPPORT
-#define F_APP_CONFERENCE_DONGLE_SUPPORT             0
-#undef F_APP_24G_BT_AUDIO_SOURCE_CTRL_SUPPORT
-#define F_APP_24G_BT_AUDIO_SOURCE_CTRL_SUPPORT      1
-#undef  F_APP_DONGLE_MULTI_PAIRING
-#define F_APP_DONGLE_MULTI_PAIRING                  1
-#undef F_APP_QDECODE_SUPPORT
-#define F_APP_QDECODE_SUPPORT                       1
-#undef F_APP_MUTILINK_VA_PREEMPTIVE
-#define F_APP_MUTILINK_VA_PREEMPTIVE                0
-#undef F_APP_MUTLILINK_SOURCE_PRIORITY_UI
-#define F_APP_MUTLILINK_SOURCE_PRIORITY_UI          1
-#undef F_APP_USB_AUDIO_SUPPORT
-#define F_APP_USB_AUDIO_SUPPORT                     1
-#undef F_APP_USB_HID_SUPPORT
-#define F_APP_USB_HID_SUPPORT                       1
-#undef F_APP_AMP_SUPPORT
-#define F_APP_AMP_SUPPORT                           1
-#endif
 #endif
 
 #if TARGET_RTL8773DFL
@@ -778,30 +717,6 @@
 #undef F_APP_CONFERENCE_DONGLE_SUPPORT
 #define F_APP_CONFERENCE_DONGLE_SUPPORT             1
 
-#if F_APP_IS_STEREO  //current the stereo just is gaming headset
-#undef F_APP_COMMON_DONGLE_SUPPORT
-#define F_APP_COMMON_DONGLE_SUPPORT                 1
-#undef F_APP_GAMING_DONGLE_SUPPORT
-#define F_APP_GAMING_DONGLE_SUPPORT                 1
-#undef F_APP_CONFERENCE_DONGLE_SUPPORT
-#define F_APP_CONFERENCE_DONGLE_SUPPORT             0
-#undef F_APP_24G_BT_AUDIO_SOURCE_CTRL_SUPPORT
-#define F_APP_24G_BT_AUDIO_SOURCE_CTRL_SUPPORT      1
-#undef  F_APP_DONGLE_MULTI_PAIRING
-#define F_APP_DONGLE_MULTI_PAIRING                  1
-#undef F_APP_QDECODE_SUPPORT
-#define F_APP_QDECODE_SUPPORT                       1
-#undef F_APP_MUTILINK_VA_PREEMPTIVE
-#define F_APP_MUTILINK_VA_PREEMPTIVE                0
-#undef F_APP_MUTLILINK_SOURCE_PRIORITY_UI
-#define F_APP_MUTLILINK_SOURCE_PRIORITY_UI          1
-#undef F_APP_USB_AUDIO_SUPPORT
-#define F_APP_USB_AUDIO_SUPPORT                     1
-#undef F_APP_USB_HID_SUPPORT
-#define F_APP_USB_HID_SUPPORT                       1
-#undef F_APP_AMP_SUPPORT
-#define F_APP_AMP_SUPPORT                           1
-#endif
 #endif
 
 //----- [Target related] -----
@@ -824,6 +739,8 @@
 #define F_APP_RWS_MULTI_SPK_SUPPORT                 0
 #undef F_APP_DYNAMIC_ADJUST_B2B_TX_POWER
 #define F_APP_DYNAMIC_ADJUST_B2B_TX_POWER           0
+#undef F_APP_RWS_KEY_SUPPORT
+#define F_APP_RWS_KEY_SUPPORT                       0
 #endif
 
 #if F_APP_SENSOR_MEMS_SUPPORT
@@ -838,6 +755,33 @@
 #endif
 #endif
 
+#if (F_APP_LISTENING_MODE_SUPPORT == 0)
+#undef F_APP_ANC_SUPPORT
+#define F_APP_ANC_SUPPORT                           0
+#undef F_APP_APT_SUPPORT
+#define F_APP_APT_SUPPORT                           0
+
+#undef F_APP_SUPPORT_ANC_APT_COEXIST
+#define F_APP_SUPPORT_ANC_APT_COEXIST               0
+#undef F_APP_BRIGHTNESS_SUPPORT
+#define F_APP_BRIGHTNESS_SUPPORT                    0
+#undef F_APP_POWER_ON_DELAY_APPLY_ANC_SUPPORT
+#define F_APP_POWER_ON_DELAY_APPLY_ANC_SUPPORT      0
+#undef F_APP_POWER_ON_DELAY_APPLY_APT_SUPPORT
+#define F_APP_POWER_ON_DELAY_APPLY_APT_SUPPORT      0
+#undef F_APP_SEPARATE_ADJUST_APT_EQ_SUPPORT
+#define F_APP_SEPARATE_ADJUST_APT_EQ_SUPPORT        0
+#undef F_APP_SEPARATE_ADJUST_APT_VOLUME_SUPPORT
+#define F_APP_SEPARATE_ADJUST_APT_VOLUME_SUPPORT    0
+#undef F_APP_LLAPT_SCENARIO_CHOOSE_SUPPORT
+#define F_APP_LLAPT_SCENARIO_CHOOSE_SUPPORT         0
+#endif
+
+#if ((F_APP_APT_SUPPORT == 0) || (F_APP_ANC_SUPPORT == 0))
+#undef F_APP_BRIGHTNESS_SUPPORT
+#define F_APP_BRIGHTNESS_SUPPORT                    0
+#endif
+
 #if F_APP_FINDMY_FEATURE_SUPPORT
 /** @brief  Config ANCS Client: 0-Not built in, 1-Open ANCS client function */
 #define F_BT_ANCS_CLIENT_SUPPORT                    0
@@ -848,16 +792,14 @@
 #define F_APP_FINDMY_USE_UARP                       0 //this macro enable firmware update function
 #endif
 
-#if (F_APP_USER_EQ_SUPPORT == 1)
-#undef F_APP_AUDIO_VOCIE_SPK_EQ_INDEPENDENT_CFG
-#define F_APP_AUDIO_VOCIE_SPK_EQ_INDEPENDENT_CFG    1
-#undef F_APP_AUDIO_VOCIE_SPK_EQ_COMPENSATION_CFG
-#define F_APP_AUDIO_VOCIE_SPK_EQ_COMPENSATION_CFG   1
-#endif
-
 #if F_APP_ERWS_SUPPORT && F_APP_LEA_SUPPORT
 #undef  F_APP_B2B_HTPOLL_CONTROL
 #define F_APP_B2B_HTPOLL_CONTROL                    1
+#endif
+
+#if F_APP_ERWS_SUPPORT == 0
+#undef  F_APP_B2S_HTPOLL_SUPPORT
+#define F_APP_B2S_HTPOLL_SUPPORT                    1
 #endif
 
 /* Gaming headset related
@@ -872,6 +814,11 @@
 #else
 #define F_APP_LEA_SUPPORT                           1
 #endif
+
+#undef  CONFIG_REALTEK_GFPS_FEATURE_SUPPORT
+#define CONFIG_REALTEK_GFPS_FEATURE_SUPPORT         0
+#undef  F_APP_HEARABLE_SUPPORT
+#define F_APP_HEARABLE_SUPPORT                      0
 
 #undef  F_APP_LEA_DISABLE_BIS
 #define F_APP_LEA_DISABLE_BIS                       1
@@ -909,6 +856,15 @@
 #endif
 
 #if (TARGET_LE_AUDIO_GAMING == 1)
+#define F_APP_GAMING_LE_FIX_CHANNEL_SUPPORT                1
+#if F_APP_GAMING_LE_FIX_CHANNEL_SUPPORT == 1
+#undef  F_BT_LE_FIX_CHANN_SUPPORT
+#define F_BT_LE_FIX_CHANN_SUPPORT                   1
+#endif
+#undef  F_APP_GATT_OVER_BREDR_SUPPORT
+#define F_APP_GATT_OVER_BREDR_SUPPORT               1
+#undef  F_APP_B2B_ENGAGE_REDUCE_NSE
+#define F_APP_B2B_ENGAGE_REDUCE_NSE                 1
 #undef  F_APP_LEA_DONGLE_BINDING
 #define F_APP_LEA_DONGLE_BINDING                    1
 #undef  F_APP_LEA_ALWAYS_CONVERSATION
@@ -922,13 +878,15 @@
 #undef  F_APP_GAMING_LE_AUDIO_24G_STREAM_FIRST
 #define F_APP_GAMING_LE_AUDIO_24G_STREAM_FIRST      1
 #undef  F_APP_DISABLE_LEA_PHONE_SUPPORT
-#define F_APP_DISABLE_LEA_PHONE_SUPPORT             1
+#define F_APP_DISABLE_LEA_PHONE_SUPPORT             0
 #undef  F_APP_INCREASE_RTK_APP_LINK_PRIORITY_TEMPORARILY
 #define F_APP_INCREASE_RTK_APP_LINK_PRIORITY_TEMPORARILY    1
 
 #if F_APP_ERWS_SUPPORT && F_APP_LEA_SUPPORT
+#define F_APP_B2B_ENGAGE_IMPROVE_BY_LE_FIX_CHANNEL  1
+
 #undef  F_APP_B2B_ENGAGE_IMPROVE_BY_LEA_DONGLE
-#define F_APP_B2B_ENGAGE_IMPROVE_BY_LEA_DONGLE      1
+#define F_APP_B2B_ENGAGE_IMPROVE_BY_LEA_DONGLE      0
 #undef  F_APP_B2B_HTPOLL_CONTROL
 #define F_APP_B2B_HTPOLL_CONTROL                    1
 #endif
@@ -1037,6 +995,44 @@
 #endif
 
 #endif
+
+#if F_APP_STEREO
+#if F_APP_USB_AUDIO_SUPPORT && F_APP_LINEIN_SUPPORT
+#undef F_APP_MUTLILINK_SOURCE_PRIORITY_UI
+#define F_APP_MUTLILINK_SOURCE_PRIORITY_UI          1
+#undef F_APP_SINGLE_MUTLILINK_SCENERIO_1
+#define F_APP_SINGLE_MUTLILINK_SCENERIO_1           0
+#endif
+#endif
+
+#if TARGET_PRODUCT_3D_RWS
+#undef F_APP_SUPPORT_SPATIAL_AUDIO
+#define F_APP_SUPPORT_SPATIAL_AUDIO                 1
+#undef F_APP_USER_EQ_SUPPORT
+#define F_APP_USER_EQ_SUPPORT                       0
+#undef F_APP_AUDIO_VOICE_SPK_EQ_INDEPENDENT_CFG
+#define F_APP_AUDIO_VOICE_SPK_EQ_INDEPENDENT_CFG    0
+#undef F_APP_AUDIO_VOICE_SPK_EQ_COMPENSATION_CFG
+#define F_APP_AUDIO_VOICE_SPK_EQ_COMPENSATION_CFG   0
+#endif
+
+#if (F_APP_USER_EQ_SUPPORT == 1)
+#undef F_APP_AUDIO_VOICE_SPK_EQ_INDEPENDENT_CFG
+#define F_APP_AUDIO_VOICE_SPK_EQ_INDEPENDENT_CFG    1
+#undef F_APP_AUDIO_VOICE_SPK_EQ_COMPENSATION_CFG
+#define F_APP_AUDIO_VOICE_SPK_EQ_COMPENSATION_CFG   1
+#endif
+
+#if F_APP_SUPPORT_SPATIAL_AUDIO
+#undef F_APP_DUAL_AUDIO_EFFECT
+#define F_APP_DUAL_AUDIO_EFFECT                     1
+#undef F_APP_DUAL_AUDIO_TWS_SPATIAL_AUDIO
+#define F_APP_DUAL_AUDIO_TWS_SPATIAL_AUDIO          0
+#undef F_APP_SENSOR_MEMS_SUPPORT
+#define F_APP_SENSOR_MEMS_SUPPORT                   0
+#undef F_APP_SENSOR_INV42607_SUPPORT
+#define F_APP_SENSOR_INV42607_SUPPORT               0
+#endif // F_APP_SUPPORT_SPATIAL_AUDIO
 
 /** End of APP_CHARGER
 * @}

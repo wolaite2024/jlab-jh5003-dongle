@@ -42,8 +42,8 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#groups">Modules</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">Pool Management<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___o_s.html">OSIF</a> &raquo; <a class="el" href="group___o_s__87x3e.html">rtl87x3e</a></div></div>  </div>
 </div><!--header-->
@@ -52,32 +52,25 @@ $(function() {
 <p>Manage task-safe and fixed-size blocks of dynamic memory.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga001df07c085e5d3b6e6a10b5e9ddc049"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s__87x3e___pool.html#ga001df07c085e5d3b6e6a10b5e9ddc049">OS_POOL_INVALID_HANDLE</a>&#160;&#160;&#160;0xFF</td></tr>
-<tr class="memdesc:ga001df07c085e5d3b6e6a10b5e9ddc049"><td class="mdescLeft">&#160;</td><td class="mdescRight">The invalid pool handle. Valid pool handles should be less than OS_POOL_INVALID_HANDLE.  <a href="#ga001df07c085e5d3b6e6a10b5e9ddc049">More...</a><br /></td></tr>
-<tr class="separator:ga001df07c085e5d3b6e6a10b5e9ddc049"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga34e3df01f31b2c3bb8688a228f4079d7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s__87x3e___pool.html#ga34e3df01f31b2c3bb8688a228f4079d7">os_pool_create</a>(p_handle,  ram_type,  buf_size,  buf_count)&#160;&#160;&#160;os_pool_create_intern(p_handle, ram_type, buf_size, buf_count, __func__, __LINE__)</td></tr>
-<tr class="memdesc:ga34e3df01f31b2c3bb8688a228f4079d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates and initialize a memory pool.  <a href="#ga34e3df01f31b2c3bb8688a228f4079d7">More...</a><br /></td></tr>
-<tr class="separator:ga34e3df01f31b2c3bb8688a228f4079d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga48dd65884eab601dcc4da905b2670dac"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s__87x3e___pool.html#ga48dd65884eab601dcc4da905b2670dac">os_pool_extend</a>(handle,  buf_size,  buf_count)&#160;&#160;&#160;os_pool_extend_intern(handle, buf_size, buf_count, __func__, __LINE__)</td></tr>
-<tr class="memdesc:ga48dd65884eab601dcc4da905b2670dac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extend a set of buffers to the created memory pool. The extended pool buffers have the same RAM type with the created buffers.  <a href="#ga48dd65884eab601dcc4da905b2670dac">More...</a><br /></td></tr>
-<tr class="separator:ga48dd65884eab601dcc4da905b2670dac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadfb05fc78a8e0a19efb2b5af182b9dcf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s__87x3e___pool.html#gadfb05fc78a8e0a19efb2b5af182b9dcf">os_pool_delete</a>(handle)&#160;&#160;&#160;os_pool_delete_intern(handle, __func__, __LINE__)</td></tr>
-<tr class="memdesc:gadfb05fc78a8e0a19efb2b5af182b9dcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a memory pool.  <a href="#gadfb05fc78a8e0a19efb2b5af182b9dcf">More...</a><br /></td></tr>
-<tr class="separator:gadfb05fc78a8e0a19efb2b5af182b9dcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga607c349ef44783385d8bfa10b7da8394"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s__87x3e___pool.html#ga607c349ef44783385d8bfa10b7da8394">os_buffer_get</a>(handle,  buf_size)&#160;&#160;&#160;os_buffer_get_intern(handle, buf_size, __func__, __LINE__)</td></tr>
-<tr class="memdesc:ga607c349ef44783385d8bfa10b7da8394"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a pool buffer from the specified memory pool. The allocated pool buffer size may be larger than the required size.  <a href="#ga607c349ef44783385d8bfa10b7da8394">More...</a><br /></td></tr>
-<tr class="separator:ga607c349ef44783385d8bfa10b7da8394"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga92d39983d27b732d2e19ec908c866c84"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s__87x3e___pool.html#ga92d39983d27b732d2e19ec908c866c84">os_buffer_put</a>(p_buf)&#160;&#160;&#160;os_buffer_put_intern(p_buf, __func__, __LINE__)</td></tr>
-<tr class="memdesc:ga92d39983d27b732d2e19ec908c866c84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free and return the pool buffer to the specified memory pool.  <a href="#ga92d39983d27b732d2e19ec908c866c84">More...</a><br /></td></tr>
-<tr class="separator:ga92d39983d27b732d2e19ec908c866c84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:group___o_s__87x3e___pool___exported__functions"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s__87x3e___pool___exported__functions.html">Pool Management Exported Functions</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group___o_s__87x3e___pool___exported___types"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s__87x3e___pool___exported___types.html">Pool Management Exported Types</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga66481b00eb5e3e4b0655c75b5d32b78c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s__87x3e___pool.html#ga66481b00eb5e3e4b0655c75b5d32b78c">os_pool_dump</a> (uint8_t handle)</td></tr>
-<tr class="memdesc:ga66481b00eb5e3e4b0655c75b5d32b78c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dump the pool buffers of the specified memory pool.  <a href="#ga66481b00eb5e3e4b0655c75b5d32b78c">More...</a><br /></td></tr>
-<tr class="separator:ga66481b00eb5e3e4b0655c75b5d32b78c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga5806a6c82709f112b26afdbd70cb0fb6"><td class="memItemLeft" align="right" valign="top">bool(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s__87x3e___pool.html#ga5806a6c82709f112b26afdbd70cb0fb6">os_pool_create_intern</a> )(uint8_t *p_handle, <a class="el" href="group__x3d___m_e_m___c_o_n_f_i_g___exported___types.html#ga20f6fc28665b1bdf8326a4826ba69b77">RAM_TYPE</a> ram_type, uint16_t buf_size, uint16_t buf_count, const char *p_func, uint32_t file_line)</td></tr>
+<tr class="separator:ga5806a6c82709f112b26afdbd70cb0fb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab00563d07eed1f4b4da980dca08784b9"><td class="memItemLeft" align="right" valign="top">bool(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s__87x3e___pool.html#gab00563d07eed1f4b4da980dca08784b9">os_pool_extend_intern</a> )(uint8_t handle, uint16_t buf_size, uint16_t buf_count, const char *p_func, uint32_t file_line)</td></tr>
+<tr class="separator:gab00563d07eed1f4b4da980dca08784b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga195b8622b969823a778d3da29b51e309"><td class="memItemLeft" align="right" valign="top">bool(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s__87x3e___pool.html#ga195b8622b969823a778d3da29b51e309">os_pool_delete_intern</a> )(uint8_t handle, const char *p_func, uint32_t file_line)</td></tr>
+<tr class="separator:ga195b8622b969823a778d3da29b51e309"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5e34df2ca5d2c467b22a821efdd73100"><td class="memItemLeft" align="right" valign="top">void *(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s__87x3e___pool.html#ga5e34df2ca5d2c467b22a821efdd73100">os_buffer_get_intern</a> )(uint8_t handle, uint16_t buf_size, const char *p_func, uint32_t file_line)</td></tr>
+<tr class="separator:ga5e34df2ca5d2c467b22a821efdd73100"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga97e7cd0b4db93ac158f777ef73e991a1"><td class="memItemLeft" align="right" valign="top">bool(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___o_s__87x3e___pool.html#ga97e7cd0b4db93ac158f777ef73e991a1">os_buffer_put_intern</a> )(void *p_buf, const char *p_func, uint32_t file_line)</td></tr>
+<tr class="separator:ga97e7cd0b4db93ac158f777ef73e991a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Manage task-safe and fixed-size blocks of dynamic memory. </p>
@@ -87,279 +80,75 @@ Functions</h2></td></tr>
 <img src="OS-pool-overview.jpg" alt="OS-pool-overview.jpg" width="601px" height="481px"/>
 <div class="caption">
 Memory Pool Overview</div></div>
- <h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="ga001df07c085e5d3b6e6a10b5e9ddc049"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga001df07c085e5d3b6e6a10b5e9ddc049">&#9670;&nbsp;</a></span>OS_POOL_INVALID_HANDLE</h2>
+ <h2 class="groupheader">Variable Documentation</h2>
+<a id="ga5806a6c82709f112b26afdbd70cb0fb6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5806a6c82709f112b26afdbd70cb0fb6">&#9670;&nbsp;</a></span>os_pool_create_intern</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define OS_POOL_INVALID_HANDLE&#160;&#160;&#160;0xFF</td>
+          <td class="memname">bool(* os_pool_create_intern) (uint8_t *p_handle, <a class="el" href="group__x3d___m_e_m___c_o_n_f_i_g___exported___types.html#ga20f6fc28665b1bdf8326a4826ba69b77">RAM_TYPE</a> ram_type, uint16_t buf_size, uint16_t buf_count, const char *p_func, uint32_t file_line)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>The invalid pool handle. Valid pool handles should be less than OS_POOL_INVALID_HANDLE. </p>
-<p>os_pool.h </p>
-
 </div>
 </div>
-<a id="ga34e3df01f31b2c3bb8688a228f4079d7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga34e3df01f31b2c3bb8688a228f4079d7">&#9670;&nbsp;</a></span>os_pool_create</h2>
+<a id="gab00563d07eed1f4b4da980dca08784b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab00563d07eed1f4b4da980dca08784b9">&#9670;&nbsp;</a></span>os_pool_extend_intern</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define os_pool_create</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">p_handle, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">ram_type, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">buf_size, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">buf_count&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;os_pool_create_intern(p_handle, ram_type, buf_size, buf_count, __func__, __LINE__)</td>
+          <td class="memname">bool(* os_pool_extend_intern) (uint8_t handle, uint16_t buf_size, uint16_t buf_count, const char *p_func, uint32_t file_line)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Creates and initialize a memory pool. </p>
-<p>os_pool.h</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_handle</td><td>Used to pass back a handle by which the memory pool can be referenced.</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">ram_type</td><td>RAM type for the memory pool buffer. <ul>
-<li><code>RAM_TYPE_DATA_ON</code> Data ON RAM type. </li>
-<li><code>RAM_TYPE_DATA_OFF</code> Data OFF RAM type. </li>
-<li><code>RAM_TYPE_BUFFER_ON</code> BUFFER ON RAM type. </li>
-<li><code>RAM_TYPE_BUFFER_OFF</code> BUFFER OFF RAM type.</li>
-</ul>
-</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">buf_size</td><td>The pool buffer size in bytes.</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">buf_count</td><td>The number of pool buffers allocated.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The status of the memory pool creation. </dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">true</td><td>Pool was created successfully. </td></tr>
-    <tr><td class="paramname">false</td><td>Pool was failed to create.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#define BUF_SIZE 0x40</span></div><div class="line"><span class="preprocessor">#define BUF_NUM  16</span></div><div class="line"></div><div class="line"><span class="keywordtype">int</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t handle;</div><div class="line"></div><div class="line">    <span class="comment">// Create a memory pool capable of containing 16 buffers.</span></div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___o_s__87x3d___pool.html#ga34e3df01f31b2c3bb8688a228f4079d7">os_pool_create</a>(&amp;handle, <a class="code" href="group__x3e___m_e_m___c_o_n_f_i_g___exported___types.html#gga20f6fc28665b1bdf8326a4826ba69b77a53394a9ecf33e56adc53407220bae73d">RAM_TYPE_DATA_ON</a>, BUF_SIZE, BUF_NUM) == <span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">// Memory pool created successfully.</span></div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        <span class="comment">// Memory pool failed to create.</span></div><div class="line">        <span class="keywordflow">return</span> -1;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keywordflow">return</span> 0;</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="ga48dd65884eab601dcc4da905b2670dac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga48dd65884eab601dcc4da905b2670dac">&#9670;&nbsp;</a></span>os_pool_extend</h2>
+<a id="ga195b8622b969823a778d3da29b51e309"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga195b8622b969823a778d3da29b51e309">&#9670;&nbsp;</a></span>os_pool_delete_intern</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define os_pool_extend</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">handle, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">buf_size, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">buf_count&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;os_pool_extend_intern(handle, buf_size, buf_count, __func__, __LINE__)</td>
+          <td class="memname">bool(* os_pool_delete_intern) (uint8_t handle, const char *p_func, uint32_t file_line)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Extend a set of buffers to the created memory pool. The extended pool buffers have the same RAM type with the created buffers. </p>
-<p>os_pool.h</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>The handle of the created memory pool.</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">buf_size</td><td>The pool buffer size in bytes.</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">buf_count</td><td>The number of pool buffers allocated.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The status of the memory pool extension. </dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">true</td><td>Pool was extended successfully. </td></tr>
-    <tr><td class="paramname">false</td><td>Pool was failed to extend.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#define BUF_SIZE1 0x40</span></div><div class="line"><span class="preprocessor">#define BUF_NUM1  16</span></div><div class="line"><span class="preprocessor">#define BUF_SIZE2 0x20</span></div><div class="line"><span class="preprocessor">#define BUF_NUM2  8</span></div><div class="line"></div><div class="line"><span class="keywordtype">int</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t handle;</div><div class="line"></div><div class="line">    <span class="comment">// Create a memory pool capable of containing 16 buffers.</span></div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___o_s__87x3d___pool.html#ga34e3df01f31b2c3bb8688a228f4079d7">os_pool_create</a>(&amp;handle, <a class="code" href="group__x3e___m_e_m___c_o_n_f_i_g___exported___types.html#gga20f6fc28665b1bdf8326a4826ba69b77a53394a9ecf33e56adc53407220bae73d">RAM_TYPE_DATA_ON</a>, BUF_SIZE1, BUF_NUM1) == <span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">// Memory pool created successfully.</span></div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        <span class="comment">// Memory pool failed to create.</span></div><div class="line">        <span class="keywordflow">return</span> -1;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">// Extend the memory pool to have extra 8 buffers each in 0x20 bytes.</span></div><div class="line">    <a class="code" href="group___o_s__87x3d___pool.html#ga48dd65884eab601dcc4da905b2670dac">os_pool_extend</a>(handle, BUF_SIZE2, BUF_NUM2);</div><div class="line"></div><div class="line">    <span class="keywordflow">return</span> 0;</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="gadfb05fc78a8e0a19efb2b5af182b9dcf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gadfb05fc78a8e0a19efb2b5af182b9dcf">&#9670;&nbsp;</a></span>os_pool_delete</h2>
+<a id="ga5e34df2ca5d2c467b22a821efdd73100"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5e34df2ca5d2c467b22a821efdd73100">&#9670;&nbsp;</a></span>os_buffer_get_intern</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define os_pool_delete</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">handle</td><td>)</td>
-          <td>&#160;&#160;&#160;os_pool_delete_intern(handle, __func__, __LINE__)</td>
+          <td class="memname">void*(* os_buffer_get_intern) (uint8_t handle, uint16_t buf_size, const char *p_func, uint32_t file_line)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Delete a memory pool. </p>
-<p>os_pool.h</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>The handle of the memory pool to be deleted.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The status of the memory pool deletion. </dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">true</td><td>Pool was deleted successfully. </td></tr>
-    <tr><td class="paramname">false</td><td>Pool was failed to delete.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#define BUF_SIZE 0x40</span></div><div class="line"><span class="preprocessor">#define BUF_NUM  16</span></div><div class="line"></div><div class="line"><span class="keywordtype">int</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t handle;</div><div class="line"></div><div class="line">    <span class="comment">// Create a memory pool capable of containing 16 buffers.</span></div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___o_s__87x3d___pool.html#ga34e3df01f31b2c3bb8688a228f4079d7">os_pool_create</a>(&amp;handle, <a class="code" href="group__x3e___m_e_m___c_o_n_f_i_g___exported___types.html#gga20f6fc28665b1bdf8326a4826ba69b77a53394a9ecf33e56adc53407220bae73d">RAM_TYPE_DATA_ON</a>, BUF_SIZE, BUF_NUM) == <span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">// Memory pool created successfully.</span></div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        <span class="comment">// Memory pool failed to create.</span></div><div class="line">        <span class="keywordflow">return</span> -1;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">// Delete the memory pool.</span></div><div class="line">    <a class="code" href="group___o_s__87x3d___pool.html#gadfb05fc78a8e0a19efb2b5af182b9dcf">os_pool_delete</a>(handle);</div><div class="line"></div><div class="line">    <span class="keywordflow">return</span> 0;</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="ga607c349ef44783385d8bfa10b7da8394"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga607c349ef44783385d8bfa10b7da8394">&#9670;&nbsp;</a></span>os_buffer_get</h2>
+<a id="ga97e7cd0b4db93ac158f777ef73e991a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga97e7cd0b4db93ac158f777ef73e991a1">&#9670;&nbsp;</a></span>os_buffer_put_intern</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define os_buffer_get</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">handle, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">buf_size&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;os_buffer_get_intern(handle, buf_size, __func__, __LINE__)</td>
+          <td class="memname">bool(* os_buffer_put_intern) (void *p_buf, const char *p_func, uint32_t file_line)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Allocate a pool buffer from the specified memory pool. The allocated pool buffer size may be larger than the required size. </p>
-<p>os_pool.h</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>The handle of the created memory pool.</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">buf_size</td><td>The pool buffer size in bytes.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The address of the allocated pool buffer. If the address is NULL, the buffer allocation failed.</dd></dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#define BUF_SIZE1 0x40</span></div><div class="line"><span class="preprocessor">#define BUF_NUM1  16</span></div><div class="line"><span class="preprocessor">#define BUF_SIZE2 0x20</span></div><div class="line"><span class="preprocessor">#define BUF_NUM2  8</span></div><div class="line"></div><div class="line"><span class="keywordtype">int</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t handle;</div><div class="line">    <span class="keywordtype">void</span> *p_buf;</div><div class="line"></div><div class="line">    <span class="comment">// Create a memory pool capable of containing 16 buffers.</span></div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___o_s__87x3d___pool.html#ga34e3df01f31b2c3bb8688a228f4079d7">os_pool_create</a>(&amp;handle, <a class="code" href="group__x3e___m_e_m___c_o_n_f_i_g___exported___types.html#gga20f6fc28665b1bdf8326a4826ba69b77a53394a9ecf33e56adc53407220bae73d">RAM_TYPE_DATA_ON</a>, BUF_SIZE1, BUF_NUM1) == <span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">// Memory pool created successfully.</span></div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        <span class="comment">// Memory pool failed to create.</span></div><div class="line">        <span class="keywordflow">return</span> -1;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">// Extend the memory pool to have extra 8 buffers each in 0x20 bytes.</span></div><div class="line">    <a class="code" href="group___o_s__87x3d___pool.html#ga48dd65884eab601dcc4da905b2670dac">os_pool_extend</a>(handle, BUF_SIZE2, BUF_NUM2);</div><div class="line"></div><div class="line">    <span class="comment">// Allocate a pool buffer in 0x30 bytes. While, the memory pool will</span></div><div class="line">    <span class="comment">// give a buffer in 0x40 bytes.</span></div><div class="line">    p_buf = <a class="code" href="group___o_s__87x3d___pool.html#ga607c349ef44783385d8bfa10b7da8394">os_buffer_get</a>(handle, 0x30);</div><div class="line"></div><div class="line">    <span class="keywordflow">return</span> 0;</div><div class="line">}</div></div><!-- fragment --> 
-</div>
-</div>
-<a id="ga92d39983d27b732d2e19ec908c866c84"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga92d39983d27b732d2e19ec908c866c84">&#9670;&nbsp;</a></span>os_buffer_put</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define os_buffer_put</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">p_buf</td><td>)</td>
-          <td>&#160;&#160;&#160;os_buffer_put_intern(p_buf, __func__, __LINE__)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Free and return the pool buffer to the specified memory pool. </p>
-<p>os_pool.h</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>The address of the pool buffer allocated by <a class="el" href="group___o_s__87x3e___pool.html#ga607c349ef44783385d8bfa10b7da8394" title="Allocate a pool buffer from the specified memory pool. The allocated pool buffer size may be larger t...">os_buffer_get()</a> API function.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The status of the pool buffer freeing. </dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">true</td><td>Pool was freed successfully. </td></tr>
-    <tr><td class="paramname">false</td><td>Pool was failed to free.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#define BUF_SIZE1 0x40</span></div><div class="line"><span class="preprocessor">#define BUF_NUM1  16</span></div><div class="line"><span class="preprocessor">#define BUF_SIZE2 0x20</span></div><div class="line"><span class="preprocessor">#define BUF_NUM2  8</span></div><div class="line"></div><div class="line"><span class="keywordtype">int</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t handle;</div><div class="line">    <span class="keywordtype">void</span> *p_buf;</div><div class="line"></div><div class="line">    <span class="comment">// Create a memory pool capable of containing 16 buffers.</span></div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___o_s__87x3d___pool.html#ga34e3df01f31b2c3bb8688a228f4079d7">os_pool_create</a>(&amp;handle, <a class="code" href="group__x3e___m_e_m___c_o_n_f_i_g___exported___types.html#gga20f6fc28665b1bdf8326a4826ba69b77a53394a9ecf33e56adc53407220bae73d">RAM_TYPE_DATA_ON</a>, BUF_SIZE1, BUF_NUM1) == <span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">// Memory pool created successfully.</span></div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        <span class="comment">// Memory pool failed to create.</span></div><div class="line">        <span class="keywordflow">return</span> -1;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">// Extend the memory pool to have extra 8 buffers each in 0x20 bytes.</span></div><div class="line">    <a class="code" href="group___o_s__87x3d___pool.html#ga48dd65884eab601dcc4da905b2670dac">os_pool_extend</a>(handle, BUF_SIZE2, BUF_NUM2);</div><div class="line"></div><div class="line">    <span class="comment">// Allocate a pool buffer in 0x30 bytes. While, the memory pool will</span></div><div class="line">    <span class="comment">// give a buffer in 0x40 bytes.</span></div><div class="line">    p_buf = <a class="code" href="group___o_s__87x3d___pool.html#ga607c349ef44783385d8bfa10b7da8394">os_buffer_get</a>(handle, 0x30);</div><div class="line"></div><div class="line">    <span class="comment">// Free the pool buffer by the address.</span></div><div class="line">    <a class="code" href="group___o_s__87x3d___pool.html#ga92d39983d27b732d2e19ec908c866c84">os_buffer_put</a>(p_buf);</div><div class="line"></div><div class="line">    <span class="keywordflow">return</span> 0;</div><div class="line">}</div></div><!-- fragment --> 
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="ga66481b00eb5e3e4b0655c75b5d32b78c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga66481b00eb5e3e4b0655c75b5d32b78c">&#9670;&nbsp;</a></span>os_pool_dump()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void os_pool_dump </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>handle</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Dump the pool buffers of the specified memory pool. </p>
-<p>os_pool.h</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>The handle of the memory pool buffer to be dumped. If the memory pool handle is invalid, all created memory pools will be dumped.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#define BUF_SIZE1 0x40</span></div><div class="line"><span class="preprocessor">#define BUF_NUM1  16</span></div><div class="line"><span class="preprocessor">#define BUF_SIZE2 0x20</span></div><div class="line"><span class="preprocessor">#define BUF_NUM2  8</span></div><div class="line"></div><div class="line"><span class="keywordtype">int</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t handle;</div><div class="line">    <span class="keywordtype">void</span> *p_buf;</div><div class="line"></div><div class="line">    <span class="comment">// Create a memory pool capable of containing 16 buffers.</span></div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___o_s__87x3d___pool.html#ga34e3df01f31b2c3bb8688a228f4079d7">os_pool_create</a>(&amp;handle, <a class="code" href="group__x3e___m_e_m___c_o_n_f_i_g___exported___types.html#gga20f6fc28665b1bdf8326a4826ba69b77a53394a9ecf33e56adc53407220bae73d">RAM_TYPE_DATA_ON</a>, BUF_SIZE1, BUF_NUM1) == <span class="keyword">true</span>)</div><div class="line">    {</div><div class="line">        <span class="comment">// Memory pool created successfully.</span></div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">        <span class="comment">// Memory pool failed to create.</span></div><div class="line">        <span class="keywordflow">return</span> -1;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">// Extend the memory pool to have extra 8 buffers each in 0x20 bytes.</span></div><div class="line">    <a class="code" href="group___o_s__87x3d___pool.html#ga48dd65884eab601dcc4da905b2670dac">os_pool_extend</a>(handle, BUF_SIZE2, BUF_NUM2);</div><div class="line"></div><div class="line">    <span class="comment">// Allocate a pool buffer in 0x30 bytes. While, the memory pool will</span></div><div class="line">    <span class="comment">// give a buffer in 0x40 bytes.</span></div><div class="line">    p_buf = <a class="code" href="group___o_s__87x3d___pool.html#ga607c349ef44783385d8bfa10b7da8394">os_buffer_get</a>(handle, 0x30);</div><div class="line"></div><div class="line">    <span class="comment">// Dump the memory pool.</span></div><div class="line">    <a class="code" href="group___o_s__87x3d___pool.html#ga66481b00eb5e3e4b0655c75b5d32b78c">os_pool_dump</a>(handle);</div><div class="line"></div><div class="line">    <span class="keywordflow">return</span> 0;</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

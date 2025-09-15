@@ -175,6 +175,7 @@ static void spi_master_rx_dma_handler(void)
     IO_PRINT_INFO0("spi_master_rx_dma_handler");
     GDMA_ClearINTPendingBit(SPI_MASTER_RX_DMA_CHANNEL_NUM, GDMA_INT_Transfer);
 
+    /* It is recommended to post the os msg to the task thread for data processing. */
     for (uint16_t idx = 0; idx < TEST_SIZE; idx++)
     {
         IO_PRINT_INFO2("spi_master_rx_dma_handler: DMA master read_buf[%d] 0x%x", idx, read_buf[idx]);

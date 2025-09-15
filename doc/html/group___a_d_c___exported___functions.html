@@ -60,71 +60,71 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga6c6e754d1d0a98d56e465efaf73272ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills each ADC_InitStruct member with its default value.  <a href="#ga6c6e754d1d0a98d56e465efaf73272ec">More...</a><br /></td></tr>
 <tr class="separator:ga6c6e754d1d0a98d56e465efaf73272ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2c6af6a81dc97f93e31fe3c95127bb69"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#ga2c6af6a81dc97f93e31fe3c95127bb69">ADC_INTConfig</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx, uint32_t ADC_IT, <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gac9a7e9a35d2513ec15c3b537aaa4fba1">FunctionalState</a> newState)</td></tr>
-<tr class="memdesc:ga2c6af6a81dc97f93e31fe3c95127bb69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables the specified ADC interrupts.  <a href="#ga2c6af6a81dc97f93e31fe3c95127bb69">More...</a><br /></td></tr>
+<tr class="memdesc:ga2c6af6a81dc97f93e31fe3c95127bb69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable the specified ADC interrupts.  <a href="#ga2c6af6a81dc97f93e31fe3c95127bb69">More...</a><br /></td></tr>
 <tr class="separator:ga2c6af6a81dc97f93e31fe3c95127bb69"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac5702fb9c8382d8ca442dc18ab449a33"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#gac5702fb9c8382d8ca442dc18ab449a33">ADC_Read</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx, uint8_t ScheduleIndex)</td></tr>
-<tr class="memdesc:gac5702fb9c8382d8ca442dc18ab449a33"><td class="mdescLeft">&#160;</td><td class="mdescRight">read ADC data according to specific channel.  <a href="#gac5702fb9c8382d8ca442dc18ab449a33">More...</a><br /></td></tr>
+<tr class="memdesc:gac5702fb9c8382d8ca442dc18ab449a33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read ADC data according to specific channel.  <a href="#gac5702fb9c8382d8ca442dc18ab449a33">More...</a><br /></td></tr>
 <tr class="separator:gac5702fb9c8382d8ca442dc18ab449a33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga42a2c72d717194e902f8243066b27587"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#ga42a2c72d717194e902f8243066b27587">ADC_Cmd</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx, uint8_t adcMode, <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gac9a7e9a35d2513ec15c3b537aaa4fba1">FunctionalState</a> NewState)</td></tr>
-<tr class="memdesc:ga42a2c72d717194e902f8243066b27587"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables the ADC peripheral.  <a href="#ga42a2c72d717194e902f8243066b27587">More...</a><br /></td></tr>
+<tr class="memdesc:ga42a2c72d717194e902f8243066b27587"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable the specified ADC peripheral.  <a href="#ga42a2c72d717194e902f8243066b27587">More...</a><br /></td></tr>
 <tr class="separator:ga42a2c72d717194e902f8243066b27587"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaad43031284d3c872fedebd99107e0354"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#gaad43031284d3c872fedebd99107e0354">ADC_SchTableConfig</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx, uint16_t Index, uint8_t adcMode)</td></tr>
 <tr class="memdesc:gaad43031284d3c872fedebd99107e0354"><td class="mdescLeft">&#160;</td><td class="mdescRight">Config ADC schedule table.  <a href="#gaad43031284d3c872fedebd99107e0354">More...</a><br /></td></tr>
 <tr class="separator:gaad43031284d3c872fedebd99107e0354"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa1cf1937bdc6a8a1c26f0886beb7b912"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#gaa1cf1937bdc6a8a1c26f0886beb7b912">ADC_GetFifoData</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx, uint16_t *outBuf, uint16_t count)</td></tr>
-<tr class="memdesc:gaa1cf1937bdc6a8a1c26f0886beb7b912"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data from ADC FIFO.  <a href="#gaa1cf1937bdc6a8a1c26f0886beb7b912">More...</a><br /></td></tr>
+<tr class="memdesc:gaa1cf1937bdc6a8a1c26f0886beb7b912"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get data from ADC FIFO.  <a href="#gaa1cf1937bdc6a8a1c26f0886beb7b912">More...</a><br /></td></tr>
 <tr class="separator:gaa1cf1937bdc6a8a1c26f0886beb7b912"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf9fbfc0d4c4cb129d9b4e57f1352a6a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#gaf9fbfc0d4c4cb129d9b4e57f1352a6a6">ADC_HighBypassCmd</a> (uint8_t channelNum, <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gac9a7e9a35d2513ec15c3b537aaa4fba1">FunctionalState</a> NewState)</td></tr>
-<tr class="memdesc:gaf9fbfc0d4c4cb129d9b4e57f1352a6a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Config ADC bypass resistor.Attention!!!Channels using bypass mode cannot over 0.9V!!!!  <a href="#gaf9fbfc0d4c4cb129d9b4e57f1352a6a6">More...</a><br /></td></tr>
+<tr class="memdesc:gaf9fbfc0d4c4cb129d9b4e57f1352a6a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Config ADC high bypass resistance mode. Attention!!!Channels using bypass mode cannot over 0.9V!!!!  <a href="#gaf9fbfc0d4c4cb129d9b4e57f1352a6a6">More...</a><br /></td></tr>
 <tr class="separator:gaf9fbfc0d4c4cb129d9b4e57f1352a6a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3ab0eb3bd7dc3425f6996a5c77670add"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#ga3ab0eb3bd7dc3425f6996a5c77670add">ADC_GetHighBypassRes</a> (uint16_t RawData, uint8_t adcMode)</td></tr>
-<tr class="memdesc:ga3ab0eb3bd7dc3425f6996a5c77670add"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get ADC Result in high bypass resistor mode.  <a href="#ga3ab0eb3bd7dc3425f6996a5c77670add">More...</a><br /></td></tr>
+<tr class="memdesc:ga3ab0eb3bd7dc3425f6996a5c77670add"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get ADC Result in high bypass resistance mode.  <a href="#ga3ab0eb3bd7dc3425f6996a5c77670add">More...</a><br /></td></tr>
 <tr class="separator:ga3ab0eb3bd7dc3425f6996a5c77670add"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2143c1e79b07a02ebbab9e70c889276d"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#ga2143c1e79b07a02ebbab9e70c889276d">ADC_GetRes</a> (uint16_t RawData, uint8_t adcMode)</td></tr>
-<tr class="memdesc:ga2143c1e79b07a02ebbab9e70c889276d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get ADC Result.  <a href="#ga2143c1e79b07a02ebbab9e70c889276d">More...</a><br /></td></tr>
+<tr class="memdesc:ga2143c1e79b07a02ebbab9e70c889276d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get ADC conversion result.  <a href="#ga2143c1e79b07a02ebbab9e70c889276d">More...</a><br /></td></tr>
 <tr class="separator:ga2143c1e79b07a02ebbab9e70c889276d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9d14031170dfd83ff0192be39d620a1a"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#ga9d14031170dfd83ff0192be39d620a1a">ADC_GetResistance</a> (void)</td></tr>
-<tr class="memdesc:ga9d14031170dfd83ff0192be39d620a1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the EXT_SINGLE_ENDED_DIVIDE mode resistance value,The value read out is the value of resistance, which needs to be added separately, and the unit is k ohm.  <a href="#ga9d14031170dfd83ff0192be39d620a1a">More...</a><br /></td></tr>
+<tr class="memdesc:ga9d14031170dfd83ff0192be39d620a1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the EXT_SINGLE_ENDED_DIVIDE mode resistance value, the value read out is the value of resistance, which needs to be added separately.  <a href="#ga9d14031170dfd83ff0192be39d620a1a">More...</a><br /></td></tr>
 <tr class="separator:ga9d14031170dfd83ff0192be39d620a1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac39fc029def1478f8e7198bce49b6d64"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#gac39fc029def1478f8e7198bce49b6d64">ADC_HwEvgEn</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx, <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gac9a7e9a35d2513ec15c3b537aaa4fba1">FunctionalState</a> Newstate)</td></tr>
-<tr class="memdesc:gac39fc029def1478f8e7198bce49b6d64"><td class="mdescLeft">&#160;</td><td class="mdescRight">adc hardware averaged en .  <a href="#gac39fc029def1478f8e7198bce49b6d64">More...</a><br /></td></tr>
+<tr class="memdesc:gac39fc029def1478f8e7198bce49b6d64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable the ADC hardware average mode.  <a href="#gac39fc029def1478f8e7198bce49b6d64">More...</a><br /></td></tr>
 <tr class="separator:gac39fc029def1478f8e7198bce49b6d64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae1f481c34030d7d285b5d3395e885858"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#gae1f481c34030d7d285b5d3395e885858">ADC_HwEvgSel</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx, <a class="el" href="group___a_d_c___clock___config.html#gaa54a5ee0af3184503a3fbe340b291ec9">T_ADC_DTAT_AVG_SEL</a> data_sel_by)</td></tr>
-<tr class="memdesc:gae1f481c34030d7d285b5d3395e885858"><td class="mdescLeft">&#160;</td><td class="mdescRight">adc hardware averaged sel.  <a href="#gae1f481c34030d7d285b5d3395e885858">More...</a><br /></td></tr>
+<tr class="memitem:gae1f481c34030d7d285b5d3395e885858"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#gae1f481c34030d7d285b5d3395e885858">ADC_HwEvgSel</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx, <a class="el" href="group___a_d_c___a_v_g___select.html#gaa54a5ee0af3184503a3fbe340b291ec9">T_ADC_DTAT_AVG_SEL</a> data_sel_by)</td></tr>
+<tr class="memdesc:gae1f481c34030d7d285b5d3395e885858"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the hardware average number of times.  <a href="#gae1f481c34030d7d285b5d3395e885858">More...</a><br /></td></tr>
 <tr class="separator:gae1f481c34030d7d285b5d3395e885858"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga77a2174cfb13b203b91f182d0fcd7707"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#ga77a2174cfb13b203b91f182d0fcd7707">ADC_HwEvgRead</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx)</td></tr>
-<tr class="memdesc:ga77a2174cfb13b203b91f182d0fcd7707"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the data after ADC turn on hardware average.  <a href="#ga77a2174cfb13b203b91f182d0fcd7707">More...</a><br /></td></tr>
-<tr class="separator:ga77a2174cfb13b203b91f182d0fcd7707"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad320b1104b81eea4d97308a2861bbae2"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#gad320b1104b81eea4d97308a2861bbae2">ADC_ClearINTPendingBit</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx, uint32_t ADC_IT)</td></tr>
-<tr class="memdesc:gad320b1104b81eea4d97308a2861bbae2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the ADC interrupt pending bits.  <a href="#gad320b1104b81eea4d97308a2861bbae2">More...</a><br /></td></tr>
-<tr class="separator:gad320b1104b81eea4d97308a2861bbae2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga81a5a5bf5157fe6e167c217d81b193b8"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE <a class="el" href="group__x3d___r_t_l876x___exported__types.html#ga89136caac2e14c55151f527ac02daaff">FlagStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#ga81a5a5bf5157fe6e167c217d81b193b8">ADC_GetIntFlagStatus</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx, uint32_t ADC_INT_FLAG)</td></tr>
-<tr class="memdesc:ga81a5a5bf5157fe6e167c217d81b193b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether the specified ADC interrupt status flag is set or not.  <a href="#ga81a5a5bf5157fe6e167c217d81b193b8">More...</a><br /></td></tr>
-<tr class="separator:ga81a5a5bf5157fe6e167c217d81b193b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab4557a7b1950cabaacdd443d2304e7a6"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#gab4557a7b1950cabaacdd443d2304e7a6">ADC_SchTableSet</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx, uint16_t channelMap, <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gac9a7e9a35d2513ec15c3b537aaa4fba1">FunctionalState</a> NewState)</td></tr>
-<tr class="memdesc:gab4557a7b1950cabaacdd443d2304e7a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set adc schedule table.  <a href="#gab4557a7b1950cabaacdd443d2304e7a6">More...</a><br /></td></tr>
-<tr class="separator:gab4557a7b1950cabaacdd443d2304e7a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga19454b7c3d3a5c493b2d6f66c590eaff"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#ga19454b7c3d3a5c493b2d6f66c590eaff">ADC_ReadFifoData</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx)</td></tr>
-<tr class="memdesc:ga19454b7c3d3a5c493b2d6f66c590eaff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get one data from ADC fifo.  <a href="#ga19454b7c3d3a5c493b2d6f66c590eaff">More...</a><br /></td></tr>
-<tr class="separator:ga19454b7c3d3a5c493b2d6f66c590eaff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga68be7476d81621bd86bfa861fb03d391"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#ga68be7476d81621bd86bfa861fb03d391">ADC_GetFifoLen</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx)</td></tr>
-<tr class="memdesc:ga68be7476d81621bd86bfa861fb03d391"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get ADC fifo number.  <a href="#ga68be7476d81621bd86bfa861fb03d391">More...</a><br /></td></tr>
-<tr class="separator:ga68be7476d81621bd86bfa861fb03d391"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1728bd861e906c8c13ee1627a5223309"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#ga1728bd861e906c8c13ee1627a5223309">ADC_GetIntStatus</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx)</td></tr>
-<tr class="memdesc:ga1728bd861e906c8c13ee1627a5223309"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all adc interrupt status.  <a href="#ga1728bd861e906c8c13ee1627a5223309">More...</a><br /></td></tr>
-<tr class="separator:ga1728bd861e906c8c13ee1627a5223309"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga69f6c67334baea969673e46e2d530426"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#ga69f6c67334baea969673e46e2d530426">ADC_ClearFifo</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx)</td></tr>
-<tr class="memdesc:ga69f6c67334baea969673e46e2d530426"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear ADC fifo.  <a href="#ga69f6c67334baea969673e46e2d530426">More...</a><br /></td></tr>
-<tr class="separator:ga69f6c67334baea969673e46e2d530426"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga08e20f7b0747b8669968f823b8ee2952"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#ga08e20f7b0747b8669968f823b8ee2952">ADC_StopwriteFifoStatusClear</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx)</td></tr>
-<tr class="memdesc:ga08e20f7b0747b8669968f823b8ee2952"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear ADC_FIFO_STOP_WRITE status. For ADC_FIFO_STOP_WRITE bit will be asserted automatically as fifo overflow, need to be cleared in order to write data again.  <a href="#ga08e20f7b0747b8669968f823b8ee2952">More...</a><br /></td></tr>
-<tr class="separator:ga08e20f7b0747b8669968f823b8ee2952"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga04d9ccbbdb280569f8497d7d53d91dbe"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#ga04d9ccbbdb280569f8497d7d53d91dbe">ADC_OneshotFifoSet</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx, <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gac9a7e9a35d2513ec15c3b537aaa4fba1">FunctionalState</a> NewState)</td></tr>
-<tr class="memdesc:ga04d9ccbbdb280569f8497d7d53d91dbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">ENABLE or DISABLE ADC one shot mode data write into ADC FIFO.  <a href="#ga04d9ccbbdb280569f8497d7d53d91dbe">More...</a><br /></td></tr>
-<tr class="separator:ga04d9ccbbdb280569f8497d7d53d91dbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafb0e266be17ac6e98788e361ae33081d"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#gafb0e266be17ac6e98788e361ae33081d">ADC_PowerAlwaysOnCmd</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx, <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gac9a7e9a35d2513ec15c3b537aaa4fba1">FunctionalState</a> NewState)</td></tr>
-<tr class="memdesc:gafb0e266be17ac6e98788e361ae33081d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable ADC Power always on.  <a href="#gafb0e266be17ac6e98788e361ae33081d">More...</a><br /></td></tr>
-<tr class="separator:gafb0e266be17ac6e98788e361ae33081d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab6ac0fb0b5295cf6a68dbb2cbe73d95a"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#gab6ac0fb0b5295cf6a68dbb2cbe73d95a">ADC_HwEvgRead</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx)</td></tr>
+<tr class="memdesc:gab6ac0fb0b5295cf6a68dbb2cbe73d95a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the data after ADC turn on hardware average function.  <a href="#gab6ac0fb0b5295cf6a68dbb2cbe73d95a">More...</a><br /></td></tr>
+<tr class="separator:gab6ac0fb0b5295cf6a68dbb2cbe73d95a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga90efbc6f0ff0e7ef49ee8873740d2c90"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#ga90efbc6f0ff0e7ef49ee8873740d2c90">ADC_ClearINTPendingBit</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx, uint32_t ADC_IT)</td></tr>
+<tr class="memdesc:ga90efbc6f0ff0e7ef49ee8873740d2c90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the ADC interrupt pending bits.  <a href="#ga90efbc6f0ff0e7ef49ee8873740d2c90">More...</a><br /></td></tr>
+<tr class="separator:ga90efbc6f0ff0e7ef49ee8873740d2c90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga91231c66ace8cd387dacc2024e9b308a"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE <a class="el" href="group__x3d___r_t_l876x___exported__types.html#ga89136caac2e14c55151f527ac02daaff">FlagStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#ga91231c66ace8cd387dacc2024e9b308a">ADC_GetIntFlagStatus</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx, uint32_t ADC_INT_FLAG)</td></tr>
+<tr class="memdesc:ga91231c66ace8cd387dacc2024e9b308a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether the specified ADC interrupt status flag is set.  <a href="#ga91231c66ace8cd387dacc2024e9b308a">More...</a><br /></td></tr>
+<tr class="separator:ga91231c66ace8cd387dacc2024e9b308a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8b30a97414581c18b70f0e017854d8b2"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#ga8b30a97414581c18b70f0e017854d8b2">ADC_SchTableSet</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx, uint16_t channelMap, <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gac9a7e9a35d2513ec15c3b537aaa4fba1">FunctionalState</a> NewState)</td></tr>
+<tr class="memdesc:ga8b30a97414581c18b70f0e017854d8b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or Disable setting ADC schedule table.  <a href="#ga8b30a97414581c18b70f0e017854d8b2">More...</a><br /></td></tr>
+<tr class="separator:ga8b30a97414581c18b70f0e017854d8b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeb8d01360f310f577a7945586afde247"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#gaeb8d01360f310f577a7945586afde247">ADC_ReadFifoData</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx)</td></tr>
+<tr class="memdesc:gaeb8d01360f310f577a7945586afde247"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get one data from ADC FIFO.  <a href="#gaeb8d01360f310f577a7945586afde247">More...</a><br /></td></tr>
+<tr class="separator:gaeb8d01360f310f577a7945586afde247"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga66b1c1a1126b8adf269f6795db9d1186"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#ga66b1c1a1126b8adf269f6795db9d1186">ADC_GetFifoLen</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx)</td></tr>
+<tr class="memdesc:ga66b1c1a1126b8adf269f6795db9d1186"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the length of ADC fifo.  <a href="#ga66b1c1a1126b8adf269f6795db9d1186">More...</a><br /></td></tr>
+<tr class="separator:ga66b1c1a1126b8adf269f6795db9d1186"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad19cd9e60326c7af3bd14a630648ddc"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#gaad19cd9e60326c7af3bd14a630648ddc">ADC_GetIntStatus</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx)</td></tr>
+<tr class="memdesc:gaad19cd9e60326c7af3bd14a630648ddc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all ADC interrupt status.  <a href="#gaad19cd9e60326c7af3bd14a630648ddc">More...</a><br /></td></tr>
+<tr class="separator:gaad19cd9e60326c7af3bd14a630648ddc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga70020add6f3b6a702b3b60c055dec0a0"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#ga70020add6f3b6a702b3b60c055dec0a0">ADC_ClearFifo</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx)</td></tr>
+<tr class="memdesc:ga70020add6f3b6a702b3b60c055dec0a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear ADC fifo.  <a href="#ga70020add6f3b6a702b3b60c055dec0a0">More...</a><br /></td></tr>
+<tr class="separator:ga70020add6f3b6a702b3b60c055dec0a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9f2c8ef79a5a864f253ee8833977a154"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#ga9f2c8ef79a5a864f253ee8833977a154">ADC_StopwriteFifoStatusClear</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx)</td></tr>
+<tr class="memdesc:ga9f2c8ef79a5a864f253ee8833977a154"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear ADC_FIFO_STOP_WRITE status. For ADC_FIFO_STOP_WRITE bit will be asserted automatically as fifo overflow, need to be cleared in order to write data again.  <a href="#ga9f2c8ef79a5a864f253ee8833977a154">More...</a><br /></td></tr>
+<tr class="separator:ga9f2c8ef79a5a864f253ee8833977a154"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaca24410ebdf2c2b94c47fa12bdc4dab2"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#gaca24410ebdf2c2b94c47fa12bdc4dab2">ADC_OneshotFifoSet</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx, <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gac9a7e9a35d2513ec15c3b537aaa4fba1">FunctionalState</a> NewState)</td></tr>
+<tr class="memdesc:gaca24410ebdf2c2b94c47fa12bdc4dab2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable ADC one shot mode data write into ADC FIFO.  <a href="#gaca24410ebdf2c2b94c47fa12bdc4dab2">More...</a><br /></td></tr>
+<tr class="separator:gaca24410ebdf2c2b94c47fa12bdc4dab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaac2ddba1b5785921862b638e50e0742"><td class="memItemLeft" align="right" valign="top">__STATIC_ALWAYS_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_d_c___exported___functions.html#gaaac2ddba1b5785921862b638e50e0742">ADC_PowerAlwaysOnCmd</a> (<a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *ADCx, <a class="el" href="group__x3d___r_t_l876x___exported__types.html#gac9a7e9a35d2513ec15c3b537aaa4fba1">FunctionalState</a> NewState)</td></tr>
+<tr class="memdesc:gaaac2ddba1b5785921862b638e50e0742"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable ADC Power always on.  <a href="#gaaac2ddba1b5785921862b638e50e0742">More...</a><br /></td></tr>
+<tr class="separator:gaaac2ddba1b5785921862b638e50e0742"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
@@ -155,7 +155,16 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Initializes the ADC peripheral according to the specified parameters in the ADC_InitStruct. </p>
+<p>rtl876x_adc.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ADCx</td><td>Selected ADC peripheral, which can be ADC. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ADC_InitStruct</td><td>Pointer to a ADCInitTypeDef structure that contains the configuration information for the specified ADC peripheral.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_adc_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_c_c___exported___functions.html#ga883379580c235037d0c1ed70340fb680">RCC_PeriphClockCmd</a>(<a class="code" href="group___a_p_b___peripheral___define.html#gaca53641683b97825117c40065f54aa41">APBPeriph_ADC</a>, <a class="code" href="group___r_c_c___peripheral___clock.html#ga6098f8487730394fe549a7bc36742e9c">APBPeriph_ADC_CLOCK</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line"></div><div class="line">    <a class="code" href="struct_a_d_c___init_type_def.html">ADC_InitTypeDef</a> adc_init_struct;</div><div class="line">    <a class="code" href="group__x3e___a_d_c___exported___functions.html#gae11856cf4a6ae92766f91247c8811cd3">ADC_StructInit</a>(&amp;adc_init_struct);</div><div class="line">    adc_init_struct.<a class="code" href="struct_a_d_c___init_type_def.html#a3cae8c624cc26a05bbf63b2ea912f06c">adcClock</a> = <a class="code" href="group___a_d_c___clock___config.html#gac583321cd44741a818ebc94cf4306e71">ADC_CLK_39K</a>;</div><div class="line">    adc_init_struct.<a class="code" href="struct_a_d_c___init_type_def.html#a056154dd5de8b77c68387fdfcd339ae8">schIndex</a>[0] = <a class="code" href="group___a_d_c__schedule__table.html#ga056869deda8f3480fd27e806f2e7799a">EXT_SINGLE_ENDED</a>(1);</div><div class="line">    adc_init_struct.<a class="code" href="struct_a_d_c___init_type_def.html#a056154dd5de8b77c68387fdfcd339ae8">schIndex</a>[1] = <a class="code" href="group___a_d_c__schedule__table.html#gae774ea9d3cd4353fe3517c7caaa437c1">INTERNAL_VBAT_MODE</a>;</div><div class="line">    adc_init_struct.<a class="code" href="struct_a_d_c___init_type_def.html#a056154dd5de8b77c68387fdfcd339ae8">schIndex</a>[2] = <a class="code" href="group___a_d_c__schedule__table.html#ga85224f9bb1ff197023bdffa776ff92af">INTERNAL_VADPIN_MODE</a>;</div><div class="line">    adc_init_struct.<a class="code" href="struct_a_d_c___init_type_def.html#a02b2be7b8ce086893453d390c5fdcf1d">bitmap</a> = 0x07;</div><div class="line">    <a class="code" href="group__x3e___a_d_c___exported___functions.html#ga4b79b2802cf9788debd310ffa9bea0db">ADC_Init</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, &amp;adc_init_struct);</div><div class="line">}</div></div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ADCx</td><td>selected ADC peripheral. </td></tr>
     <tr><td class="paramname">ADC_InitStruct</td><td>pointer to a ADCInitTypeDef structure that contains the configuration information for the specified ADC peripheral </td></tr>
@@ -188,7 +197,15 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Deinitializes the ADC peripheral registers to their default reset values(turn off ADC clock). </p>
+<p>rtl876x_adc.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ADCx</td><td>Selected ADC peripheral, which can be ADC.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_adc_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___a_d_c___exported___functions.html#ga31fa6bc09de17125e9db2830ce77c09b">ADC_DeInit</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>);</div><div class="line">}</div></div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ADCx</td><td>selected ADC peripheral. </td></tr>
   </table>
@@ -220,7 +237,15 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Fills each ADC_InitStruct member with its default value. </p>
+<p>rtl876x_adc.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ADC_InitStruct</td><td>Pointer to an <a class="el" href="struct_a_d_c___init_type_def.html" title="ADC initialize parameters. ">ADC_InitTypeDef</a> structure which will be initialized.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_adc_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___r_c_c___exported___functions.html#ga883379580c235037d0c1ed70340fb680">RCC_PeriphClockCmd</a>(<a class="code" href="group___a_p_b___peripheral___define.html#gaca53641683b97825117c40065f54aa41">APBPeriph_ADC</a>, <a class="code" href="group___r_c_c___peripheral___clock.html#ga6098f8487730394fe549a7bc36742e9c">APBPeriph_ADC_CLOCK</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line"></div><div class="line">    <a class="code" href="struct_a_d_c___init_type_def.html">ADC_InitTypeDef</a> adcInitStruct;</div><div class="line">    <a class="code" href="group__x3e___a_d_c___exported___functions.html#gae11856cf4a6ae92766f91247c8811cd3">ADC_StructInit</a>(&amp;adcInitStruct);</div><div class="line">    adcInitStruct.<a class="code" href="struct_a_d_c___init_type_def.html#a056154dd5de8b77c68387fdfcd339ae8">schIndex</a>[0]         = <a class="code" href="group___a_d_c__schedule__table.html#ga056869deda8f3480fd27e806f2e7799a">EXT_SINGLE_ENDED</a>(0);;</div><div class="line">    adcInitStruct.<a class="code" href="struct_a_d_c___init_type_def.html#a056154dd5de8b77c68387fdfcd339ae8">schIndex</a>[1]         = <a class="code" href="group___a_d_c__schedule__table.html#ga056869deda8f3480fd27e806f2e7799a">EXT_SINGLE_ENDED</a>(1);</div><div class="line">    adcInitStruct.<a class="code" href="struct_a_d_c___init_type_def.html#a056154dd5de8b77c68387fdfcd339ae8">schIndex</a>[2]         = <a class="code" href="group___a_d_c__schedule__table.html#gae774ea9d3cd4353fe3517c7caaa437c1">INTERNAL_VBAT_MODE</a>;</div><div class="line">    adcInitStruct.<a class="code" href="struct_a_d_c___init_type_def.html#a056154dd5de8b77c68387fdfcd339ae8">schIndex</a>[3]         = <a class="code" href="group___a_d_c__schedule__table.html#ga85224f9bb1ff197023bdffa776ff92af">INTERNAL_VADPIN_MODE</a>;</div><div class="line">    adcInitStruct.<a class="code" href="struct_a_d_c___init_type_def.html#a02b2be7b8ce086893453d390c5fdcf1d">bitmap</a>              = 0x0f;</div><div class="line">    <a class="code" href="group__x3e___a_d_c___exported___functions.html#ga4b79b2802cf9788debd310ffa9bea0db">ADC_Init</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, &amp;adcInitStruct);</div><div class="line">}</div></div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ADC_InitStruct</td><td>pointer to an <a class="el" href="struct_a_d_c___init_type_def.html" title="ADC initialize parameters. ">ADC_InitTypeDef</a> structure which will be initialized. </td></tr>
   </table>
@@ -267,28 +292,29 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Enables or disables the specified ADC interrupts. </p>
+<p>Enable or disable the specified ADC interrupts. </p>
+<p>rtl876x_adc.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ADCx</td><td>selected ADC peripheral. </td></tr>
-    <tr><td class="paramname">ADC_IT</td><td>specifies the ADC interrupts sources to be enabled or disabled. This parameter can be any combination of the following values: <ul>
-<li>ADC_INT_FIFO_RD_REQ :FIFO read request </li>
-<li>ADC_INT_FIFO_RD_ERR :FIFO read error </li>
-<li>ADC_INT_FIFO_TH :ADC FIFO size&gt;thd </li>
-<li>ADC_INT_FIFO_FULL :ADC FIFO overflow </li>
-<li>ADC_INT_ONE_SHOT_DONE :ADC one shot mode done </li>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ADCx</td><td>Selected ADC peripheral, which can be ADC. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ADC_IT</td><td>Specifies the ADC interrupt sources to be enabled or disabled. This parameter can be one or any combination of the following values: <ul>
+<li>ADC_INT_ONE_SHOT_DONE: ADC one convert end interrupt. </li>
+<li>ADC_INT_FIFO_OVERFLOW: ADC FIFO overflow interrupt. </li>
+<li>ADC_INT_FIFO_RD_REQ: ADC read FIFO request interrupt. </li>
+<li>ADC_INT_FIFO_RD_ERR: ADC read FIFO error interrupt. </li>
+<li>ADC_INT_FIFO_TH: ADC FIFO size larger than threshold interrupt. </li>
 </ul>
 </td></tr>
-    <tr><td class="paramname">newState</td><td>new state of the specified ADC interrupts. This parameter can be: ENABLE or DISABLE. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">newState</td><td>New state of the specified ADC interrupts. This parameter can be one of the following values: <ul>
+<li>ENABLE: Enable the specified ADC interrupts. </li>
+<li>DISABLE: Disable the specified ADC interrupts.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_adc_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___a_d_c___exported___functions.html#ga2c6af6a81dc97f93e31fe3c95127bb69">ADC_INTConfig</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, <a class="code" href="group___a_d_c___interrupts___definition.html#gafceec649c4add8134490dfc4a775d94d">ADC_INT_ONE_SHOT_DONE</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line"></div><div class="line">    <a class="code" href="struct_n_v_i_c___init_type_def.html">NVIC_InitTypeDef</a> NVIC_InitStruct;</div><div class="line">    NVIC_InitStruct.<a class="code" href="struct_n_v_i_c___init_type_def.html#a921af0ab04e071d7d276c003e0048123">NVIC_IRQChannel</a> = <a class="code" href="group__x3e___r_t_l876x___exported__types.html#gga666eb0caeb12ec0e281415592ae89083a4d69175258ae261dd545001e810421b3">ADC_IRQn</a>;</div><div class="line">    NVIC_InitStruct.<a class="code" href="struct_n_v_i_c___init_type_def.html#acd582bc2edce30e9d7ab5e0ede400f36">NVIC_IRQChannelPriority</a> = 2;</div><div class="line">    NVIC_InitStruct.<a class="code" href="struct_n_v_i_c___init_type_def.html#a3c5567ef024a0489884083c88f17b4d5">NVIC_IRQChannelCmd</a> = <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>;</div><div class="line">    <a class="code" href="group__x3e___n_v_i_c___exported___functions.html#ga4e06b4f5c9109d6bc8990adf77e5f8d3">NVIC_Init</a>(&amp;NVIC_InitStruct);</div><div class="line"></div><div class="line">    <a class="code" href="group__x3e___a_d_c___exported___functions.html#ga866ea1f65d482f8d1846a79724caa7b0">ADC_Cmd</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, <a class="code" href="group___a_d_c__operation___mode.html#ga3cbe42ba0befbfa2511e0b3fb667632a">ADC_One_Shot_Mode</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line">}</div></div><!-- fragment --><p>Enable or disable the specified ADC interrupts.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ADCx</td><td>selected ADC peripheral. </td></tr>
@@ -339,7 +365,17 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>read ADC data according to specific channel. </p>
+<p>Read ADC data according to specific channel. </p>
+<p>rtl876x_adc.h</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ADCx</td><td>Selected ADC peripheral, which can be ADC. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ScheduleIndex</td><td>Schedule table index, the value can be 0 ~ 15.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The 12-bit converted ADC data.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> adc_polling_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint16_t data[3];</div><div class="line"></div><div class="line">    <span class="comment">//ADC one shot sampling mode, read data from schedule table.</span></div><div class="line">    data[0] = <a class="code" href="group__x3e___a_d_c___exported___functions.html#ga7c956aeecf00f7318272d4e0e2b0d8f6">ADC_Read</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, 0);</div><div class="line">    data[1] = <a class="code" href="group__x3e___a_d_c___exported___functions.html#ga7c956aeecf00f7318272d4e0e2b0d8f6">ADC_Read</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, 1);</div><div class="line">    data[2] = <a class="code" href="group__x3e___a_d_c___exported___functions.html#ga7c956aeecf00f7318272d4e0e2b0d8f6">ADC_Read</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, 2);</div><div class="line">    <a class="code" href="group__x3d___t_r_a_c_e.html#ga98e2dee240d2fde3119d3380b4d98762">APP_PRINT_INFO3</a>(<span class="stringliteral">&quot;ADC data[0] = %d, ADC data[1] =%d ADC data[2] =%d&quot;</span>,</div><div class="line">                    data[0], data[1], data[2]);</div><div class="line">}</div></div><!-- fragment --><p>Read ADC data according to specific channel.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ADCx</td><td>selected ADC peripheral. </td></tr>
@@ -388,7 +424,26 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Enables or disables the ADC peripheral. </p>
+<p>Enable or disable the specified ADC peripheral. </p>
+<p>rtl876x_adc.h</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ADCx</td><td>Selected ADC peripheral, which can be ADC. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">adcMode</td><td>The ADC work mode to select. This parameter can be one of the following values: <ul>
+<li>ADC_One_Shot_Mode: ADC one shot mode. </li>
+<li>ADC_Continuous_Mode: ADC continuous mode. </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">NewState</td><td>new state of the specified ADC peripheral. This parameter can be one of the following values: <ul>
+<li>ENABLE: Enable the specified ADC peripheral. </li>
+<li>DISABLE: Disable the specified ADC peripheral.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_adc_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group__x3e___a_d_c___exported___functions.html#ga866ea1f65d482f8d1846a79724caa7b0">ADC_Cmd</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, <a class="code" href="group___a_d_c__operation___mode.html#ga3cbe42ba0befbfa2511e0b3fb667632a">ADC_One_Shot_Mode</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line">}</div></div><!-- fragment --><p>Enable or disable the specified ADC peripheral.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ADCx</td><td>selected ADC peripheral. </td></tr>
@@ -443,12 +498,28 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Config ADC schedule table. </p>
+<p>rtl876x_adc.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ADCx</td><td>Selected ADC peripheral, which can be ADC. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">Index</td><td>The index of schedule table, the value can be 0 ~ 7. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">adcMode</td><td>The ADC channel and mode to select. This parameter can be one of the following values: <ul>
+<li><a class="el" href="group__x3e___a_d_c__schedule__table.html#ga056869deda8f3480fd27e806f2e7799a">EXT_SINGLE_ENDED(index)</a>: Single-ended mode, the input is external channel index. </li>
+<li><a class="el" href="group___a_d_c__schedule__table.html#ga6d7c94c3d18553a96f820486025327b4">EXT_DIFFERENTIAL(index)</a>: Differential mode, the positive input is external channel index, the negative input external channel index1. index and index1 are used in fixed pairs. For example, 0&amp;1, 2&amp;3, 4&amp;5, 6&amp;7. </li>
+<li>INTERNAL_VBAT_MODE: The input is internal battery voltage detection channel. </li>
+<li>INTERNAL_VADPIN_MODE: The input is internal adapter voltage detection channel.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_adc_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint16_t index = 0;</div><div class="line">    <a class="code" href="group___a_d_c___exported___functions.html#gaad43031284d3c872fedebd99107e0354">ADC_SchTableConfig</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, index, <a class="code" href="group___a_d_c__schedule__table.html#ga056869deda8f3480fd27e806f2e7799a">EXT_SINGLE_ENDED</a>(index));</div><div class="line">}</div></div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ADCx</td><td>selected ADC peripheral. </td></tr>
     <tr><td class="paramname">Index</td><td>Schedule table index. </td></tr>
     <tr><td class="paramname">adcMode</td><td>ADC mode. this parameter can be one of the following values: <ul>
-<li><a class="el" href="group___a_d_c__schedule__table.html#ga056869deda8f3480fd27e806f2e7799a">EXT_SINGLE_ENDED(index)</a> </li>
+<li><a class="el" href="group__x3e___a_d_c__schedule__table.html#ga056869deda8f3480fd27e806f2e7799a">EXT_SINGLE_ENDED(index)</a> </li>
 <li><a class="el" href="group___a_d_c__schedule__table.html#ga6d7c94c3d18553a96f820486025327b4">EXT_DIFFERENTIAL(index)</a> </li>
 <li>VREF_AT_CHANNEL7(index) </li>
 <li>INTERNAL_VBAT_MODE </li>
@@ -498,7 +569,18 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Data from ADC FIFO. </p>
+<p>Get data from ADC FIFO. </p>
+<p>rtl876x_adc.h</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ADCx</td><td>Selected ADC peripheral, which can be ADC. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">outBuf</td><td>Buffer to save data read from ADC FIFO. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">count</td><td>Number of data to be read.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_adc_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t fifo_count = 0;</div><div class="line">    uint16_t data[33] = {0, 0, 0};</div><div class="line"></div><div class="line">    fifo_count = <a class="code" href="group___a_d_c___exported___functions.html#ga66b1c1a1126b8adf269f6795db9d1186">ADC_GetFifoLen</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>);</div><div class="line">    <a class="code" href="group___a_d_c___exported___functions.html#gaa1cf1937bdc6a8a1c26f0886beb7b912">ADC_GetFifoData</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, data, fifo_count);</div><div class="line">}</div></div><!-- fragment --><p>Get data from ADC FIFO.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir"></td><td class="paramname">ADCx</td><td>selected ADC peripheral. </td></tr>
@@ -542,7 +624,21 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Config ADC bypass resistor.Attention!!!Channels using bypass mode cannot over 0.9V!!!! </p>
+<p>Config ADC high bypass resistance mode. Attention!!!Channels using bypass mode cannot over 0.9V!!!! </p>
+<p>rtl876x_adc.h</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">channelNum</td><td>The external channel number, which can be 0 ~ 7. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">NewState</td><td>New state of the ADC bypass resistor. This parameter can be one of the following values: <ul>
+<li>ENABLE: Enable the ADC high bypass resistance mode. </li>
+<li>DISABLE: Disable the ADC high bypass resistance mode.</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_adc_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group__x3e___a_d_c___exported___functions.html#ga37bbbda47672f70b64cea22c05a01150">ADC_HighBypassCmd</a>(1, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line">}</div></div><!-- fragment --><p>Config ADC high bypass resistance mode. Attention!!!Channels using bypass mode cannot over 0.9V!!!!</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">channelNum</td><td>external channel number, can be 0~7. </td></tr>
@@ -585,32 +681,23 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get ADC Result in high bypass resistor mode. </p>
+<p>Get ADC Result in high bypass resistance mode. </p>
+<p>rtl876x_adc.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">RawData</td><td>ADC raw data. </td></tr>
-    <tr><td class="paramname">adcMode</td><td>this parameter can be one of the following values: <ul>
-<li><a class="el" href="group___a_d_c__schedule__table.html#ga056869deda8f3480fd27e806f2e7799a">EXT_SINGLE_ENDED(index)</a> </li>
-<li><a class="el" href="group___a_d_c__schedule__table.html#ga6d7c94c3d18553a96f820486025327b4">EXT_DIFFERENTIAL(index)</a> </li>
-<li>VREF_AT_CHANNEL7(index) </li>
-<li>INTERNAL_VBAT_MODE </li>
-<li>INTERNAL_VADPIN_MODE </li>
-<li>INTERNAL_VDDCORE_MODE </li>
-<li>INTERNAL_VCORE_MODE </li>
-<li>INTERNAL_ICHARGE_MODE </li>
-<li>INTERNAL_IDISCHG_MODE </li>
+    <tr><td class="paramdir">[in]</td><td class="paramname">RawData</td><td>ADC raw data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">adcMode</td><td>The ADC channel and mode to select. This parameter can be one of the following values: <ul>
+<li><a class="el" href="group___a_d_c__schedule__table.html#ga056869deda8f3480fd27e806f2e7799a">EXT_SINGLE_ENDED(index)</a>: Single-ended mode, the input is external channel index. </li>
+<li><a class="el" href="group___a_d_c__schedule__table.html#ga6d7c94c3d18553a96f820486025327b4">EXT_DIFFERENTIAL(index)</a>: Differential mode, the positive input is external channel index, the negative input external channel index1. index and index1 are used in fixed pairs. For example, 0&amp;1, 2&amp;3, 4&amp;5, 6&amp;7. </li>
+<li>INTERNAL_VBAT_MODE: The input is internal battery voltage detection channel. </li>
+<li>INTERNAL_VADPIN_MODE: The input is internal adapter voltage detection channel.</li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">ADC</td><td>result </td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>ADC result.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> ADC_Handler(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    int32_t data[2];</div><div class="line">    int32_t res[2];</div><div class="line"></div><div class="line">    data[0] = <a class="code" href="group__x3e___a_d_c___exported___functions.html#ga7c956aeecf00f7318272d4e0e2b0d8f6">ADC_Read</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, 0);</div><div class="line">    data[1] = <a class="code" href="group__x3e___a_d_c___exported___functions.html#ga7c956aeecf00f7318272d4e0e2b0d8f6">ADC_Read</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, 1);</div><div class="line">    res[0] = <a class="code" href="group__x3e___a_d_c___exported___functions.html#gaf8ccd45223306ebcbbb314167fae5cfd">ADC_GetRes</a>(data[0], <a class="code" href="group___a_d_c__schedule__table.html#ga056869deda8f3480fd27e806f2e7799a">EXT_SINGLE_ENDED</a>(0));</div><div class="line">    res[1] = <a class="code" href="group__x3e___a_d_c___exported___functions.html#gaf80fe38291ff9c94eb5ffb552f164d4e">ADC_GetHighBypassRes</a>(data[1], <a class="code" href="group___a_d_c__schedule__table.html#ga056869deda8f3480fd27e806f2e7799a">EXT_SINGLE_ENDED</a>(1));</div><div class="line"></div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga2143c1e79b07a02ebbab9e70c889276d"></a>
@@ -639,32 +726,23 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get ADC Result. </p>
+<p>Get ADC conversion result. </p>
+<p>rtl876x_adc.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">RawData</td><td>ADC raw data. </td></tr>
-    <tr><td class="paramname">adcMode</td><td>this parameter can be one of the following values: <ul>
-<li><a class="el" href="group___a_d_c__schedule__table.html#ga056869deda8f3480fd27e806f2e7799a">EXT_SINGLE_ENDED(index)</a> </li>
-<li><a class="el" href="group___a_d_c__schedule__table.html#ga6d7c94c3d18553a96f820486025327b4">EXT_DIFFERENTIAL(index)</a> </li>
-<li>VREF_AT_CHANNEL7(index) </li>
-<li>INTERNAL_VBAT_MODE </li>
-<li>INTERNAL_VADPIN_MODE </li>
-<li>INTERNAL_VDDCORE_MODE </li>
-<li>INTERNAL_VCORE_MODE </li>
-<li>INTERNAL_ICHARGE_MODE </li>
-<li>INTERNAL_IDISCHG_MODE </li>
+    <tr><td class="paramdir">[in]</td><td class="paramname">RawData</td><td>ADC raw data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">adcMode</td><td>The ADC channel and mode to select. This parameter can be one of the following values: <ul>
+<li><a class="el" href="group___a_d_c__schedule__table.html#ga056869deda8f3480fd27e806f2e7799a">EXT_SINGLE_ENDED(index)</a>: Single-ended mode, the input is external channel index. </li>
+<li><a class="el" href="group___a_d_c__schedule__table.html#ga6d7c94c3d18553a96f820486025327b4">EXT_DIFFERENTIAL(index)</a>: Differential mode, the positive input is external channel index, the negative input external channel index1. index and index1 are used in fixed pairs. For example, 0&amp;1, 2&amp;3, 4&amp;5, 6&amp;7. </li>
+<li>INTERNAL_VBAT_MODE: The input is internal battery voltage detection channel. </li>
+<li>INTERNAL_VADPIN_MODE: The input is internal adapter voltage detection channel.</li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">ADC</td><td>result </td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>ADC result.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_adc_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint16_t data[3];</div><div class="line">    int32_t res[3];</div><div class="line"></div><div class="line">    data[0] = <a class="code" href="group__x3e___a_d_c___exported___functions.html#ga7c956aeecf00f7318272d4e0e2b0d8f6">ADC_Read</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, 0);</div><div class="line">    data[1] = <a class="code" href="group__x3e___a_d_c___exported___functions.html#ga7c956aeecf00f7318272d4e0e2b0d8f6">ADC_Read</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, 1);</div><div class="line">    data[2] = <a class="code" href="group__x3e___a_d_c___exported___functions.html#ga7c956aeecf00f7318272d4e0e2b0d8f6">ADC_Read</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, 2);</div><div class="line"></div><div class="line">    <span class="comment">//Get conversion results based on data. The unit of the result is mV.</span></div><div class="line">    res[0] = <a class="code" href="group__x3e___a_d_c___exported___functions.html#gaf8ccd45223306ebcbbb314167fae5cfd">ADC_GetRes</a>(data[0], <a class="code" href="group___a_d_c__schedule__table.html#ga056869deda8f3480fd27e806f2e7799a">EXT_SINGLE_ENDED</a>(1));</div><div class="line">    res[1] = <a class="code" href="group__x3e___a_d_c___exported___functions.html#gaf8ccd45223306ebcbbb314167fae5cfd">ADC_GetRes</a>(data[1], <a class="code" href="group___a_d_c__schedule__table.html#gae774ea9d3cd4353fe3517c7caaa437c1">INTERNAL_VBAT_MODE</a>);</div><div class="line">    res[2] = <a class="code" href="group__x3e___a_d_c___exported___functions.html#gaf8ccd45223306ebcbbb314167fae5cfd">ADC_GetRes</a>(data[2], <a class="code" href="group___a_d_c__schedule__table.html#ga85224f9bb1ff197023bdffa776ff92af">INTERNAL_VADPIN_MODE</a>);</div><div class="line">    <a class="code" href="group__x3d___t_r_a_c_e.html#ga98e2dee240d2fde3119d3380b4d98762">APP_PRINT_INFO3</a>(<span class="stringliteral">&quot;ADC Result[0] = %d, ADC Result[1] =%d Result[2] =%d&quot;</span>,</div><div class="line">                    res[0], res[1], res[2]);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga9d14031170dfd83ff0192be39d620a1a"></a>
@@ -683,21 +761,17 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Read the EXT_SINGLE_ENDED_DIVIDE mode resistance value,The value read out is the value of resistance, which needs to be added separately, and the unit is k ohm. </p>
+<p>Read the EXT_SINGLE_ENDED_DIVIDE mode resistance value, the value read out is the value of resistance, which needs to be added separately. </p>
+<p>rtl876x_adc.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">None.</td><td></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">Resistance</td><td>value,the unit is k ohm. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>If the return value is less than zero, the value read is invalid. </dd></dl>
-
+<dl class="section return"><dt>Returns</dt><dd>Resistance value, the unit is k ohm. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If the return value is less than zero, the value read is invalid.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> adc_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint16_t ADC_Resistance_Value;</div><div class="line">    ADC_Resistance_Value = <a class="code" href="group___a_d_c___exported___functions.html#ga9d14031170dfd83ff0192be39d620a1a">ADC_GetResistance</a>();</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="gac39fc029def1478f8e7198bce49b6d64"></a>
@@ -726,15 +800,21 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>adc hardware averaged en . </p>
+<p>Enable or disable the ADC hardware average mode. </p>
+<p>rtl876x_adc.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">NewState</td><td>new state of adc hardware averaged en. This parameter can be: ENABLE or DISABLE. If enable, ADC oneshoot mode hareware average will be enable. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ADCx</td><td>Selected ADC peripheral, which can be ADC. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">NewState</td><td>new state of the ADC hardware average mode. This parameter can be one of the following values: <ul>
+<li>ENABLE: Enable the ADC hardware average mode. </li>
+<li>DISABLE: Disable the ADC hardware average mode.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>none. </dd></dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_adc_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">//When hardware average function is enabled, ADC can only use schedule table 0.</span></div><div class="line">    adc_init_struct.schIndex[0] = <a class="code" href="group___a_d_c__schedule__table.html#ga056869deda8f3480fd27e806f2e7799a">EXT_SINGLE_ENDED</a>(1);</div><div class="line">    adc_init_struct.bitmap = 0x01;</div><div class="line"></div><div class="line">    <span class="comment">//ADC hardware average function can only be used in one-shot mode</span></div><div class="line">    <span class="comment">//and only one schedule can be used.</span></div><div class="line">    <a class="code" href="group___a_d_c___exported___functions.html#gac39fc029def1478f8e7198bce49b6d64">ADC_HwEvgEn</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line">    <a class="code" href="group___a_d_c___exported___functions.html#gae1f481c34030d7d285b5d3395e885858">ADC_HwEvgSel</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, <a class="code" href="group__x3e___a_d_c___a_v_g___select.html#gga638f033cfb55912d7726c0c4a8b4b4b0a2c2e69031320206185ad3905f09612af">ADC_DTAT_AVG_SEL_BY32</a>);</div><div class="line"></div><div class="line">    <a class="code" href="group___a_d_c___exported___functions.html#ga2c6af6a81dc97f93e31fe3c95127bb69">ADC_INTConfig</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, <a class="code" href="group___a_d_c___interrupts___definition.html#gafceec649c4add8134490dfc4a775d94d">ADC_INT_ONE_SHOT_DONE</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line">    <a class="code" href="group__x3e___a_d_c___exported___functions.html#ga866ea1f65d482f8d1846a79724caa7b0">ADC_Cmd</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, <a class="code" href="group___a_d_c__operation___mode.html#ga3cbe42ba0befbfa2511e0b3fb667632a">ADC_One_Shot_Mode</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="gae1f481c34030d7d285b5d3395e885858"></a>
@@ -752,7 +832,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="group___a_d_c___clock___config.html#gaa54a5ee0af3184503a3fbe340b291ec9">T_ADC_DTAT_AVG_SEL</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="group___a_d_c___a_v_g___select.html#gaa54a5ee0af3184503a3fbe340b291ec9">T_ADC_DTAT_AVG_SEL</a>&#160;</td>
           <td class="paramname"><em>data_sel_by</em>&#160;</td>
         </tr>
         <tr>
@@ -763,25 +843,30 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>adc hardware averaged sel. </p>
+<p>Set the hardware average number of times. </p>
+<p>rtl876x_adc.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">data_sel_by.</td><td>This parameter can be select in T_ADC_DTAT_AVG_SEL. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ADCx</td><td>Selected ADC peripheral, which can be ADC. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data_sel_by</td><td>The hardware average number of times, which can be select in T_ADC_DTAT_AVG_SEL. <ul>
+<li>ADC_DTAT_AVG_SEL_BYx: where x can be 2/4/8/16/32/64/128/256.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>none. </dd></dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_adc_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="comment">//Set the hardware average number of times.</span></div><div class="line">    <a class="code" href="group___a_d_c___exported___functions.html#gae1f481c34030d7d285b5d3395e885858">ADC_HwEvgSel</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, <a class="code" href="group__x3e___a_d_c___a_v_g___select.html#gga638f033cfb55912d7726c0c4a8b4b4b0a2c2e69031320206185ad3905f09612af">ADC_DTAT_AVG_SEL_BY32</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="ga77a2174cfb13b203b91f182d0fcd7707"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga77a2174cfb13b203b91f182d0fcd7707">&#9670;&nbsp;</a></span>ADC_HwEvgRead()</h2>
+<a id="gab6ac0fb0b5295cf6a68dbb2cbe73d95a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab6ac0fb0b5295cf6a68dbb2cbe73d95a">&#9670;&nbsp;</a></span>ADC_HwEvgRead()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE uint16_t ADC_HwEvgRead </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE uint16_t ADC_HwEvgRead </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *&#160;</td>
           <td class="paramname"><em>ADCx</em></td><td>)</td>
@@ -790,25 +875,26 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Read the data after ADC turn on hardware average. </p>
+<p>Read the data after ADC turn on hardware average function. </p>
+<p>rtl876x_adc.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ADCx</td><td>selected ADC peripheral. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ADCx</td><td>Selected ADC peripheral, which can be ADC.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The converted data after ADC turn on hardware average. </dd></dl>
-
+<dl class="section return"><dt>Returns</dt><dd>The converted data after ADC turn on hardware average.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> ADC_Handler(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint16_t data;</div><div class="line">    int32_t result;</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___a_d_c___exported___functions.html#ga91231c66ace8cd387dacc2024e9b308a">ADC_GetIntFlagStatus</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, <a class="code" href="group___a_d_c___interrupts___definition.html#gafceec649c4add8134490dfc4a775d94d">ADC_INT_ONE_SHOT_DONE</a>) == <a class="code" href="group__x3e___r_t_l876x___exported__types.html#gga89136caac2e14c55151f527ac02daaffab44c8101cc294c074709ec1b14211792">SET</a>)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___a_d_c___exported___functions.html#ga90efbc6f0ff0e7ef49ee8873740d2c90">ADC_ClearINTPendingBit</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, <a class="code" href="group___a_d_c___interrupts___definition.html#gafceec649c4add8134490dfc4a775d94d">ADC_INT_ONE_SHOT_DONE</a>);</div><div class="line">        data = <a class="code" href="group___a_d_c___exported___functions.html#gab6ac0fb0b5295cf6a68dbb2cbe73d95a">ADC_HwEvgRead</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>);</div><div class="line">        result = <a class="code" href="group__x3e___a_d_c___exported___functions.html#gaf8ccd45223306ebcbbb314167fae5cfd">ADC_GetRes</a>(data, <a class="code" href="group___a_d_c__schedule__table.html#ga056869deda8f3480fd27e806f2e7799a">EXT_SINGLE_ENDED</a>(1));</div><div class="line">        <a class="code" href="group__x3d___t_r_a_c_e.html#ga81687b044a4d8600c4be891734f4839a">APP_PRINT_INFO1</a>(<span class="stringliteral">&quot;ADC Result = %d&quot;</span>, result);</div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="gad320b1104b81eea4d97308a2861bbae2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gad320b1104b81eea4d97308a2861bbae2">&#9670;&nbsp;</a></span>ADC_ClearINTPendingBit()</h2>
+<a id="ga90efbc6f0ff0e7ef49ee8873740d2c90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga90efbc6f0ff0e7ef49ee8873740d2c90">&#9670;&nbsp;</a></span>ADC_ClearINTPendingBit()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE void ADC_ClearINTPendingBit </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE void ADC_ClearINTPendingBit </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *&#160;</td>
           <td class="paramname"><em>ADCx</em>, </td>
@@ -827,38 +913,34 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Clears the ADC interrupt pending bits. </p>
+<p>Clear the ADC interrupt pending bits. </p>
+<p>rtl876x_adc.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ADCx</td><td>selected ADC peripheral. </td></tr>
-    <tr><td class="paramname">ADC_IT</td><td>specifies the interrupt pending bit to clear. This parameter can be any combination of the following values: <ul>
-<li>ADC_INT_ONE_SHOT_DONE: ADC one convert end interrupt </li>
-<li>ADC_INT_FIFO_OVERFLOW: ADC FIFO overflow interrupt </li>
-<li>ADC_INT_FIFO_RD_REQ: ADC read FIFO request interrupt </li>
-<li>ADC_INT_FIFO_RD_ERR: ADC read FIFO error interrupt </li>
-<li>ADC_INT_FIFO_TH: fifo larger than threshold </li>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ADCx</td><td>Selected ADC peripheral, which can be ADC. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ADC_IT</td><td>Specifies the interrupt pending bit to clear. This parameter can be one of the following values: <ul>
+<li>ADC_INT_ONE_SHOT_DONE: ADC one convert end interrupt. </li>
+<li>ADC_INT_FIFO_OVERFLOW: ADC FIFO overflow interrupt. </li>
+<li>ADC_INT_FIFO_RD_REQ: ADC read FIFO request interrupt. </li>
+<li>ADC_INT_FIFO_RD_ERR: ADC read FIFO error interrupt. </li>
+<li>ADC_INT_FIFO_TH: ADC FIFO size larger than threshold interrupt.</li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> ADC_Handler(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (<a class="code" href="group___a_d_c___exported___functions.html#ga91231c66ace8cd387dacc2024e9b308a">ADC_GetIntFlagStatus</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, <a class="code" href="group___a_d_c___interrupts___definition.html#gafceec649c4add8134490dfc4a775d94d">ADC_INT_ONE_SHOT_DONE</a>) == <a class="code" href="group__x3e___r_t_l876x___exported__types.html#gga89136caac2e14c55151f527ac02daaffab44c8101cc294c074709ec1b14211792">SET</a>)</div><div class="line">    {</div><div class="line">        <a class="code" href="group___a_d_c___exported___functions.html#ga90efbc6f0ff0e7ef49ee8873740d2c90">ADC_ClearINTPendingBit</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, <a class="code" href="group___a_d_c___interrupts___definition.html#gafceec649c4add8134490dfc4a775d94d">ADC_INT_ONE_SHOT_DONE</a>);</div><div class="line">        <span class="comment">//add user code here.</span></div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="ga81a5a5bf5157fe6e167c217d81b193b8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga81a5a5bf5157fe6e167c217d81b193b8">&#9670;&nbsp;</a></span>ADC_GetIntFlagStatus()</h2>
+<a id="ga91231c66ace8cd387dacc2024e9b308a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga91231c66ace8cd387dacc2024e9b308a">&#9670;&nbsp;</a></span>ADC_GetIntFlagStatus()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE <a class="el" href="group__x3d___r_t_l876x___exported__types.html#ga89136caac2e14c55151f527ac02daaff">FlagStatus</a> ADC_GetIntFlagStatus </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE <a class="el" href="group__x3d___r_t_l876x___exported__types.html#ga89136caac2e14c55151f527ac02daaff">FlagStatus</a> ADC_GetIntFlagStatus </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *&#160;</td>
           <td class="paramname"><em>ADCx</em>, </td>
@@ -877,38 +959,41 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Checks whether the specified ADC interrupt status flag is set or not. </p>
+<p>Check whether the specified ADC interrupt status flag is set. </p>
+<p>rtl876x_adc.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ADCx</td><td>selected ADC peripheral. </td></tr>
-    <tr><td class="paramname">ADC_INT_FLAG</td><td>specifies the interrupt status flag to check. This parameter can be one of the following values: <ul>
-<li>ADC_INT_ONE_SHOT_DONE: ADC one convert end interrupt flag </li>
-<li>ADC_INT_FIFO_FULL: ADC FIFO full interrupt flag </li>
-<li>ADC_INT_FIFO_RD_REQ: ADC read FIFO request interrupt flag </li>
-<li>ADC_INT_FIFO_RD_ERR: ADC read FIFO error interrupt flag </li>
-<li>ADC_INT_FIFO_TH: ADC codec interrupt flag </li>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ADCx</td><td>Selected ADC peripheral, which can be ADC. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ADC_INT_FLAG</td><td>specifies the interrupt status flag to check. This parameter can be one of the following values: <ul>
+<li>ADC_INT_ONE_SHOT_DONE: ADC one convert end interrupt flag. </li>
+<li>ADC_INT_FIFO_OVERFLOW: ADC FIFO overflow interrupt flag. </li>
+<li>ADC_INT_FIFO_RD_REQ: ADC read FIFO request interrupt flag. </li>
+<li>ADC_INT_FIFO_RD_ERR: ADC read FIFO error interrupt flag. </li>
+<li>ADC_INT_FIFO_TH: ADC FIFO size larger than threshold interrupt flag.</li>
 </ul>
 </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The new state of ADC_CMP_FLAG. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">The</td><td>new state of ADC_CMP_FLAG (SET or RESET). </td></tr>
+    <tr><td class="paramname">SET</td><td>The specified ADC interrupt status flag is set. </td></tr>
+    <tr><td class="paramname">RESET</td><td>The specified ADC interrupt status flag is unset.</td></tr>
   </table>
   </dd>
 </dl>
-
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> adc_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keywordflow">while</span> (<a class="code" href="group___a_d_c___exported___functions.html#ga91231c66ace8cd387dacc2024e9b308a">ADC_GetIntFlagStatus</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, <a class="code" href="group___a_d_c___interrupts___definition.html#gafceec649c4add8134490dfc4a775d94d">ADC_INT_ONE_SHOT_DONE</a>) == <a class="code" href="group__x3e___r_t_l876x___exported__types.html#gga89136caac2e14c55151f527ac02daaffa589b7d94a3d91d145720e2fed0eb3a05">RESET</a>);</div><div class="line">    <a class="code" href="group___a_d_c___exported___functions.html#ga90efbc6f0ff0e7ef49ee8873740d2c90">ADC_ClearINTPendingBit</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, <a class="code" href="group___a_d_c___interrupts___definition.html#gafceec649c4add8134490dfc4a775d94d">ADC_INT_ONE_SHOT_DONE</a>);</div><div class="line">    <span class="comment">//add user code here.</span></div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="gab4557a7b1950cabaacdd443d2304e7a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab4557a7b1950cabaacdd443d2304e7a6">&#9670;&nbsp;</a></span>ADC_SchTableSet()</h2>
+<a id="ga8b30a97414581c18b70f0e017854d8b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8b30a97414581c18b70f0e017854d8b2">&#9670;&nbsp;</a></span>ADC_SchTableSet()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE void ADC_SchTableSet </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE void ADC_SchTableSet </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *&#160;</td>
           <td class="paramname"><em>ADCx</em>, </td>
@@ -933,27 +1018,32 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set adc schedule table. </p>
+<p>Enable or Disable setting ADC schedule table. </p>
+<p>rtl876x_adc.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ADCx</td><td>selected ADC peripheral. </td></tr>
-    <tr><td class="paramname">channelMap</td><td>ADC channel map. </td></tr>
-    <tr><td class="paramname">NewState</td><td>new state of the ADC peripheral. This parameter can be: ENABLE or DISABLE. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ADCx</td><td>Selected ADC peripheral, which can be ADC. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">channelMap</td><td>ADC channel map. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">NewState</td><td>New state of the ADC peripheral. This parameter can be one of the following values: <ul>
+<li>ENABLE: Enable setting the ADC schedule table. </li>
+<li>DISABLE: Disable setting the ADC schedule table.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>none. </dd></dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> adc_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___a_d_c___exported___functions.html#ga8b30a97414581c18b70f0e017854d8b2">ADC_SchTableSet</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, 0x1, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="ga19454b7c3d3a5c493b2d6f66c590eaff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga19454b7c3d3a5c493b2d6f66c590eaff">&#9670;&nbsp;</a></span>ADC_ReadFifoData()</h2>
+<a id="gaeb8d01360f310f577a7945586afde247"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaeb8d01360f310f577a7945586afde247">&#9670;&nbsp;</a></span>ADC_ReadFifoData()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE uint16_t ADC_ReadFifoData </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE uint16_t ADC_ReadFifoData </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *&#160;</td>
           <td class="paramname"><em>ADCx</em></td><td>)</td>
@@ -962,25 +1052,26 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get one data from ADC fifo. </p>
+<p>Get one data from ADC FIFO. </p>
+<p>rtl876x_adc.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ADCx</td><td>selected ADC peripheral. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ADCx</td><td>Selected ADC peripheral, which can be ADC.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>adc fifo data. </dd></dl>
-
+<dl class="section return"><dt>Returns</dt><dd>The data of ADC fifo.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> adc_handler(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint16_t data_fifo = 0;</div><div class="line">    data_fifo = <a class="code" href="group___a_d_c___exported___functions.html#gaeb8d01360f310f577a7945586afde247">ADC_ReadFifoData</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>);</div><div class="line">    result_fifo = <a class="code" href="group__x3e___a_d_c___exported___functions.html#gaf8ccd45223306ebcbbb314167fae5cfd">ADC_GetRes</a>(data_fifo, <a class="code" href="group___a_d_c__schedule__table.html#ga056869deda8f3480fd27e806f2e7799a">EXT_SINGLE_ENDED</a>(0));</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="ga68be7476d81621bd86bfa861fb03d391"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga68be7476d81621bd86bfa861fb03d391">&#9670;&nbsp;</a></span>ADC_GetFifoLen()</h2>
+<a id="ga66b1c1a1126b8adf269f6795db9d1186"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga66b1c1a1126b8adf269f6795db9d1186">&#9670;&nbsp;</a></span>ADC_GetFifoLen()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE uint8_t ADC_GetFifoLen </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE uint8_t ADC_GetFifoLen </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *&#160;</td>
           <td class="paramname"><em>ADCx</em></td><td>)</td>
@@ -989,25 +1080,26 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get ADC fifo number. </p>
+<p>Get the length of ADC fifo. </p>
+<p>rtl876x_adc.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ADCx</td><td>selected ADC peripheral. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ADCx</td><td>Selected ADC peripheral, which can be ADC.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>current data number in adc fifo. </dd></dl>
-
+<dl class="section return"><dt>Returns</dt><dd>Current data length of ADC fifo.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_adc_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t fifo_size = 0;</div><div class="line">    fifo_size = <a class="code" href="group___a_d_c___exported___functions.html#ga66b1c1a1126b8adf269f6795db9d1186">ADC_GetFifoLen</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>);</div><div class="line">    <a class="code" href="group__x3_e___t_r_a_c_e___e_x_p_o_r_t_e_d___m_a_c_r_o_s.html#gab66f2088ac6e8def124d7cc33a5c3b90">IO_PRINT_TRACE1</a>(<span class="stringliteral">&quot;fifo_size:%d&quot;</span>, fifo_size);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="ga1728bd861e906c8c13ee1627a5223309"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1728bd861e906c8c13ee1627a5223309">&#9670;&nbsp;</a></span>ADC_GetIntStatus()</h2>
+<a id="gaad19cd9e60326c7af3bd14a630648ddc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaad19cd9e60326c7af3bd14a630648ddc">&#9670;&nbsp;</a></span>ADC_GetIntStatus()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE uint8_t ADC_GetIntStatus </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE uint8_t ADC_GetIntStatus </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *&#160;</td>
           <td class="paramname"><em>ADCx</em></td><td>)</td>
@@ -1016,25 +1108,33 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get all adc interrupt status. </p>
+<p>Get all ADC interrupt status. </p>
+<p>rtl876x_adc.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ADCx</td><td>selected ADC peripheral. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ADCx</td><td>Selected ADC peripheral, which can be ADC.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>uint8_t interrupt status. </dd></dl>
-
+<dl class="section return"><dt>Returns</dt><dd>The new state of all ADC interrupt. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">SET</td><td>The ADC interrupt status is set. </td></tr>
+    <tr><td class="paramname">RESET</td><td>The ADC interrupt status is unset.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> oneshot_int_handler(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    uint8_t int_status = 0;</div><div class="line">    int_status = <a class="code" href="group___a_d_c___exported___functions.html#gaad19cd9e60326c7af3bd14a630648ddc">ADC_GetIntStatus</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="ga69f6c67334baea969673e46e2d530426"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga69f6c67334baea969673e46e2d530426">&#9670;&nbsp;</a></span>ADC_ClearFifo()</h2>
+<a id="ga70020add6f3b6a702b3b60c055dec0a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga70020add6f3b6a702b3b60c055dec0a0">&#9670;&nbsp;</a></span>ADC_ClearFifo()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE void ADC_ClearFifo </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE void ADC_ClearFifo </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *&#160;</td>
           <td class="paramname"><em>ADCx</em></td><td>)</td>
@@ -1044,24 +1144,25 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Clear ADC fifo. </p>
+<p>rtl876x_adc.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ADCx</td><td>selected ADC peripheral. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ADCx</td><td>Selected ADC peripheral, which can be ADC.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>none. </dd></dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> adc_handler(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___a_d_c___exported___functions.html#ga70020add6f3b6a702b3b60c055dec0a0">ADC_ClearFifo</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="ga08e20f7b0747b8669968f823b8ee2952"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga08e20f7b0747b8669968f823b8ee2952">&#9670;&nbsp;</a></span>ADC_StopwriteFifoStatusClear()</h2>
+<a id="ga9f2c8ef79a5a864f253ee8833977a154"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9f2c8ef79a5a864f253ee8833977a154">&#9670;&nbsp;</a></span>ADC_StopwriteFifoStatusClear()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE void ADC_StopwriteFifoStatusClear </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE void ADC_StopwriteFifoStatusClear </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *&#160;</td>
           <td class="paramname"><em>ADCx</em></td><td>)</td>
@@ -1071,24 +1172,25 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Clear ADC_FIFO_STOP_WRITE status. For ADC_FIFO_STOP_WRITE bit will be asserted automatically as fifo overflow, need to be cleared in order to write data again. </p>
+<p>rtl876x_adc.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ADCx</td><td>selected ADC peripheral. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ADCx</td><td>Selected ADC peripheral, which can be ADC.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>none. </dd></dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> adc_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___a_d_c___exported___functions.html#ga9f2c8ef79a5a864f253ee8833977a154">ADC_StopwriteFifoStatusClear</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="ga04d9ccbbdb280569f8497d7d53d91dbe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga04d9ccbbdb280569f8497d7d53d91dbe">&#9670;&nbsp;</a></span>ADC_OneshotFifoSet()</h2>
+<a id="gaca24410ebdf2c2b94c47fa12bdc4dab2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaca24410ebdf2c2b94c47fa12bdc4dab2">&#9670;&nbsp;</a></span>ADC_OneshotFifoSet()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE void ADC_OneshotFifoSet </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE void ADC_OneshotFifoSet </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *&#160;</td>
           <td class="paramname"><em>ADCx</em>, </td>
@@ -1107,26 +1209,31 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>ENABLE or DISABLE ADC one shot mode data write into ADC FIFO. </p>
+<p>Enable or disable ADC one shot mode data write into ADC FIFO. </p>
+<p>rtl876x_adc.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ADCx</td><td>selected ADC peripheral. </td></tr>
-    <tr><td class="paramname">NewState</td><td>new state of the ADC peripheral. This parameter can be: ENABLE or DISABLE. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ADCx</td><td>Selected ADC peripheral, which can be ADC. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">NewState</td><td>New state of the ADC peripheral. This parameter can be one of the following values: <ul>
+<li>ENABLE: Enable ADC one shot mode data write into ADC FIFO. </li>
+<li>DISABLE: Disable ADC one shot mode data write into ADC FIFO.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>none. </dd></dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> adc_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___a_d_c___exported___functions.html#gaca24410ebdf2c2b94c47fa12bdc4dab2">ADC_OneshotFifoSet</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="gafb0e266be17ac6e98788e361ae33081d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gafb0e266be17ac6e98788e361ae33081d">&#9670;&nbsp;</a></span>ADC_PowerAlwaysOnCmd()</h2>
+<a id="gaaac2ddba1b5785921862b638e50e0742"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaaac2ddba1b5785921862b638e50e0742">&#9670;&nbsp;</a></span>ADC_PowerAlwaysOnCmd()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE void ADC_PowerAlwaysOnCmd </td>
+          <td class="memname">__STATIC_ALWAYS_INLINE void ADC_PowerAlwaysOnCmd </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_a_d_c___type_def.html">ADC_TypeDef</a> *&#160;</td>
           <td class="paramname"><em>ADCx</em>, </td>
@@ -1146,15 +1253,20 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Enable or disable ADC Power always on. </p>
+<p>rtl876x_adc.h</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ADCx</td><td>selected ADC peripheral. </td></tr>
-    <tr><td class="paramname">NewState</td><td>new state of the ADC Power on mode. This parameter can be: ENABLE or DISABLE. If enable, ADC power will always on. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ADCx</td><td>Selected ADC peripheral, which can be ADC. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">NewState</td><td>new state of the ADC Power on mode. This parameter can be one of the following values: <ul>
+<li>ENABLE: Enable ADC power always on. </li>
+<li>DISABLE: Disable ADC power always on.</li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>none. </dd></dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> driver_adc_init(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___a_d_c___exported___functions.html#gaaac2ddba1b5785921862b638e50e0742">ADC_PowerAlwaysOnCmd</a>(<a class="code" href="group__x3d___r_t_l876_x___exported___macros.html#ga54d148b91f3d356713f7e367a2243bea">ADC</a>, <a class="code" href="group__x3e___r_t_l876x___exported__types.html#ggac9a7e9a35d2513ec15c3b537aaa4fba1a7d46875fa3ebd2c34d2756950eda83bf">ENABLE</a>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

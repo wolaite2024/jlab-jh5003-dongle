@@ -28,7 +28,7 @@ extern "C"
 #include "gap.h"
 #include "ble_isoch_def.h"
 
-/** @addtogroup GAP GAP Module
+/** @addtogroup BT_Host Bluetooth Host
   * @{
   */
 
@@ -37,6 +37,7 @@ extern "C"
   */
 
 /** @addtogroup GAP_LE_CIG_MGR GAP LE CIG Mgr Module
+  * @brief GAP LE CIG Mgr Module
   * @{
   */
 
@@ -71,35 +72,35 @@ extern "C"
   * @brief    Used to identify CIG Manager Callback Message.
   * @{
   */
-/** @brief Response type for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR. */
-#define MSG_CIG_MGR_SETUP_DATA_PATH       0x01 //!<Response msg type for cig_mgr_setup_data_path
-#define MSG_CIG_MGR_REMOVE_DATA_PATH      0x02 //!<Response msg type for cig_mgr_remove_data_path
-#define MSG_CIG_MGR_READ_ISO_TX_SYNC      0x03 //!<Response msg type for cig_mgr_read_iso_tx_sync
-#define MSG_CIG_MGR_READ_ISO_LINK_QUALITY 0x04 //!<Response msg type for cig_mgr_read_iso_link_quality
+/* Response type for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR. */
+#define MSG_CIG_MGR_SETUP_DATA_PATH       0x01 //!<Response msg type for cig_mgr_setup_data_path.
+#define MSG_CIG_MGR_REMOVE_DATA_PATH      0x02 //!<Response msg type for cig_mgr_remove_data_path.
+#define MSG_CIG_MGR_READ_ISO_TX_SYNC      0x03 //!<Response msg type for cig_mgr_read_iso_tx_sync.
+#define MSG_CIG_MGR_READ_ISO_LINK_QUALITY 0x04 //!<Response msg type for cig_mgr_read_iso_link_quality.
 
-/** @brief Test command response type for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR. */
-#define MSG_CIG_MGR_ISO_TEST_END          0x10 //!<Response msg type for cig_mgr_iso_test_end
-#define MSG_CIG_MGR_TRANSMIT_TEST         0x11 //!<Response msg type for cig_mgr_transmit_test
-#define MSG_CIG_MGR_RECEIVE_TEST          0x12 //!<Response msg type for cig_mgr_receive_test
-#define MSG_CIG_MGR_READ_TEST_COUNTERS    0x13 //!<Response msg type for cig_mgr_read_test_counters
+/* Test command response type for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR. */
+#define MSG_CIG_MGR_ISO_TEST_END          0x10 //!<Response msg type for cig_mgr_iso_test_end.
+#define MSG_CIG_MGR_TRANSMIT_TEST         0x11 //!<Response msg type for cig_mgr_transmit_test.
+#define MSG_CIG_MGR_RECEIVE_TEST          0x12 //!<Response msg type for cig_mgr_receive_test.
+#define MSG_CIG_MGR_READ_TEST_COUNTERS    0x13 //!<Response msg type for cig_mgr_read_test_counters.
 
-/** @brief Notification and response type for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR. */
-#define MSG_CIG_MGR_CIS_ESTABLISHED_INFO  0x20 //!<Notification msg type for LE CIS Established
-#define MSG_CIG_MGR_DISCONNECT            0x21 //!<Response msg type for cig_mgr_disconnect
-#define MSG_CIG_MGR_DISCONNECT_INFO       0x22 //!<Notification msg type for LE CIS Disconnection
+/* Notification and response type for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR. */
+#define MSG_CIG_MGR_CIS_ESTABLISHED_INFO  0x20 //!<Notification msg type for LE CIS Established.
+#define MSG_CIG_MGR_DISCONNECT            0x21 //!<Response msg type for cig_mgr_disconnect.
+#define MSG_CIG_MGR_DISCONNECT_INFO       0x22 //!<Notification msg type for LE CIS Disconnection.
 
-/** @brief Response type for @ref ISOCH_ROLE_INITIATOR. */
-#define MSG_CIG_MGR_START_SETTING         0x30 //!<Response msg type for cig_mgr_start_setting
-#define MSG_CIG_MGR_CREATE_CIS            0x31 //!<Response msg type for cig_mgr_create_cis_by_cig_id or cig_mgr_create_cis_by_cis_conn_handle
-#define MSG_CIG_MGR_REMOVE_CIG            0x32 //!<Response msg type for cig_mgr_remove_cig
+/* Response type for @ref ISOCH_ROLE_INITIATOR. */
+#define MSG_CIG_MGR_START_SETTING         0x30 //!<Response msg type for cig_mgr_start_setting.
+#define MSG_CIG_MGR_CREATE_CIS            0x31 //!<Response msg type for cig_mgr_create_cis_by_cig_id or cig_mgr_create_cis_by_cis_conn_handle.
+#define MSG_CIG_MGR_REMOVE_CIG            0x32 //!<Response msg type for cig_mgr_remove_cig.
 
-/** @brief Test command response type for @ref ISOCH_ROLE_INITIATOR. */
-#define MSG_CIG_MGR_START_SETTING_TEST    0x3A //!<Response msg type for cig_mgr_start_setting_test
+/* Test command response type for @ref ISOCH_ROLE_INITIATOR. */
+#define MSG_CIG_MGR_START_SETTING_TEST    0x3A //!<Response msg type for cig_mgr_start_setting_test.
 
-/** @brief Indication type for @ref ISOCH_ROLE_ACCEPTOR. */
-#define MSG_CIG_MGR_CIS_REQUEST_IND       0x40 //!<Indication msg type for LE CIS Request
-#define MSG_CIG_MGR_ACCEPT_CIS_INFO       0x41 //!<Response for cig_mgr_acceptor_accept_cis; Notification when return value of @ref MSG_CIG_MGR_CIS_REQUEST_IND is @ref APP_RESULT_ACCEPT
-#define MSG_CIG_MGR_REJECT_CIS_INFO       0x42 //!<Response for cig_mgr_acceptor_reject_cis; Notification when return value of @ref MSG_CIG_MGR_CIS_REQUEST_IND is neither @ref APP_RESULT_ACCEPT nor APP_RESULT_PENDING
+/* Indication type for @ref ISOCH_ROLE_ACCEPTOR. */
+#define MSG_CIG_MGR_CIS_REQUEST_IND       0x40 //!<Indication msg type for LE CIS Request.
+#define MSG_CIG_MGR_ACCEPT_CIS_INFO       0x41 //!<Response for cig_mgr_acceptor_accept_cis; Notification when return value of @ref MSG_CIG_MGR_CIS_REQUEST_IND is @ref APP_RESULT_ACCEPT.
+#define MSG_CIG_MGR_REJECT_CIS_INFO       0x42 //!<Response for cig_mgr_acceptor_reject_cis; Notification when return value of @ref MSG_CIG_MGR_CIS_REQUEST_IND is neither @ref APP_RESULT_ACCEPT nor APP_RESULT_PENDING.
 /** End of CIG_MGR_CALLBACK_MSG
   * @}
   */
@@ -242,10 +243,10 @@ typedef struct
     uint8_t phy_m_s;                  /**< The transmitter PHY of packets from the Central. @ref T_GAP_PHYS_TYPE. */
     uint8_t phy_s_m;                  /**< The transmitter PHY of packets from the Peripheral. @ref T_GAP_PHYS_TYPE. */
     uint8_t nse;                      /**< Maximum number of subevents in each isochronous event. */
-    uint8_t bn_m_s;                   /**< 0x00: No isochronous data from the Central to the Peripheral
-                                           0x01 to 0x0F: The burst number for Central to Peripheral transmission */
-    uint8_t bn_s_m;                   /**< 0x00: No isochronous data from the Peripheral to the Central
-                                           0x01 to 0x0F: The burst number for Peripheral to Central transmission */
+    uint8_t bn_m_s;                   /**< 0x00: No isochronous data from the Central to the Peripheral.
+                                           0x01 to 0x0F: The burst number for Central to Peripheral transmission. */
+    uint8_t bn_s_m;                   /**< 0x00: No isochronous data from the Peripheral to the Central.
+                                           0x01 to 0x0F: The burst number for Peripheral to Central transmission. */
     uint8_t ft_m_s;                   /**< The flush timeout, in multiples of the ISO_Interval for the CIS, for each payload sent
                                            from the Central to the Peripheral. */
     uint8_t ft_s_m;                   /**< The flush timeout, in multiples of the ISO_Interval for the CIS, for each payload sent
@@ -253,9 +254,9 @@ typedef struct
     uint16_t max_pdu_m_s;             /**< Maximum size, in octets, of the payload from Central to Peripheral. */
     uint16_t max_pdu_s_m;             /**< Maximum size, in octets, of the payload from Peripheral to Central. */
     uint16_t iso_interval;            /**< The time between two consecutive CIS anchor points.
-                                           Range: 0x0004 to 0x0C80
-                                           Time = N * 1.25 ms
-                                           Time Range: 5 ms to 4 s. */
+                                           @arg Range: 0x0004 to 0x0C80.
+                                           @arg Time = N * 1.25 ms.
+                                           @arg Time Range: 5 ms to 4 s. */
 } T_CIG_MGR_CIS_ESTABLISHED_INFO;
 
 typedef struct
@@ -382,32 +383,32 @@ typedef struct
 {
     uint32_t sdu_interval_m_s;  /**< The interval, in microseconds, of periodic SDUs from the Central's Host for all the CISes in the CIG.
                                      This parameter shall be ignored for all CISes that are unidirectional from Peripheral to Central.
-                                     Range: 0x0000FF to 0x0FFFFF */
+                                     @arg Range: 0x0000FF to 0x0FFFFF. */
     uint32_t sdu_interval_s_m;  /**< The interval, in microseconds, of periodic SDUs from the Peripheral's Host for all the CISes in the
                                      CIG.
                                      This parameter shall be ignored for all CISes that are unidirectional from Central to Peripheral.
-                                     Range: 0x0000FF to 0x0FFFFF */
+                                     @arg Range: 0x0000FF to 0x0FFFFF. */
     uint8_t  sca;               /**< The worst-case sleep clock accuracy of all the Peripherals that will participate in the CIG.
-                                     0x00: 251 ppm to 500 ppm
-                                     0x01: 151 ppm to 250 ppm
-                                     0x02: 101 ppm to 150 ppm
-                                     0x03: 76 ppm to 100 ppm
-                                     0x04: 51 ppm to 75 ppm
-                                     0x05: 31 ppm to 50 ppm
-                                     0x06: 21 ppm to 30 ppm
-                                     0x07: 0 ppm to 20 ppm */
+                                     @arg 0x00: 251 ppm to 500 ppm.
+                                     @arg 0x01: 151 ppm to 250 ppm.
+                                     @arg 0x02: 101 ppm to 150 ppm.
+                                     @arg 0x03: 76 ppm to 100 ppm.
+                                     @arg 0x04: 51 ppm to 75 ppm.
+                                     @arg 0x05: 31 ppm to 50 ppm.
+                                     @arg 0x06: 21 ppm to 30 ppm.
+                                     @arg 0x07: 0 ppm to 20 ppm. */
     uint8_t  packing;           /**< Indicate the preferred method of arranging subevents of multiple CISes.
-                                     0x00: Sequential
-                                     0x01: Interleaved */
+                                     @arg 0x00: Sequential.
+                                     @arg 0x01: Interleaved. */
     uint8_t  framing;           /**< Indicate the format of the CIS Data PDUs.
-                                     0x00: Unframed
-                                     0x01: Framed */
+                                     @arg 0x00: Unframed.
+                                     @arg 0x01: Framed. */
     uint16_t latency_m_s;       /**< Maximum transport latency, in milliseconds, from the Central's Controller
                                      to the Peripheral's Controller.
-                                     Range: 0x0005 to 0x0FA0 */
+                                     @arg Range: 0x0005 to 0x0FA0. */
     uint16_t latency_s_m;       /**< Maximum transport latency, in milliseconds, from the Peripheral's Controller
                                      to the Central's Controller.
-                                     Range: 0x0005 to 0x0FA0 */
+                                     @arg Range: 0x0005 to 0x0FA0. */
 } T_CIG_CFG_PARAM;
 
 typedef struct
@@ -417,13 +418,13 @@ typedef struct
     uint16_t max_sdu_s_m;  /**< Maximum size, in octets, of the payload from the Peripheral's Host.
                                 If the CIS is unidirectional from Central to Peripheral, this parameter shall be set to 0. */
     uint8_t  phy_m_s;      /**< Identify which PHY to use for transmission from the Central to the Peripheral.
-                                bit 0: The transmitter PHY of packets from the Peripheral is LE 1M
-                                bit 1: The transmitter PHY of packets from the Peripheral is LE 2M
-                                bit 2: The transmitter PHY of packets from the Peripheral is LE Coded */
+                                @arg bit 0: The transmitter PHY of packets from the Central is LE 1M.
+                                @arg bit 1: The transmitter PHY of packets from the Central is LE 2M.
+                                @arg bit 2: The transmitter PHY of packets from the Central is LE Coded. */
     uint8_t  phy_s_m;      /**< Identify which PHY to use for transmission from the Peripheral to the Central.
-                                bit 0: The transmitter PHY of packets from the Peripheral is LE 1M
-                                bit 1: The transmitter PHY of packets from the Peripheral is LE 2M
-                                bit 2: The transmitter PHY of packets from the Peripheral is LE Coded */
+                                @arg bit 0: The transmitter PHY of packets from the Peripheral is LE 1M.
+                                @arg bit 1: The transmitter PHY of packets from the Peripheral is LE 2M.
+                                @arg bit 2: The transmitter PHY of packets from the Peripheral is LE Coded. */
     uint8_t  rtn_m_s;      /**< Number of times every CIS Data PDU should be retransmitted from the Central to the Peripheral. */
     uint8_t  rtn_s_m;      /**< Number of times every CIS Data PDU should be retransmitted from the Peripheral to the Central. */
 } T_CIS_CFG_PARAM;
@@ -431,40 +432,40 @@ typedef struct
 typedef struct
 {
     uint32_t sdu_interval_m_s;  /**< The interval, in microseconds, of periodic SDUs from the Central's Host.
-                                     Range: 0x0000FF to 0x0FFFFF */
+                                     @arg Range: 0x0000FF to 0x0FFFFF. */
     uint32_t sdu_interval_s_m;  /**< The interval, in microseconds, of periodic SDUs from the Peripheral's Host.
-                                     Range: 0x0000FF to 0x0FFFFF */
+                                     @arg Range: 0x0000FF to 0x0FFFFF. */
     uint8_t  ft_m_s;            /**< The flush timeout in multiples of ISO_Interval for each payload sent
                                      from the Central to Peripheral.
-                                     Range: 0x01 to 0xFF */
+                                     @arg Range: 0x01 to 0xFF. */
     uint8_t  ft_s_m;            /**< The flush timeout in multiples of ISO_Interval for each payload sent
                                      from the Peripheral to Central.
-                                     Range: 0x01 to 0xFF */
+                                     @arg Range: 0x01 to 0xFF. */
     uint16_t iso_interval;      /**< Time between consecutive CIS anchor points.
-                                     Range: 0x0004 to 0x0C80
-                                     Time = N * 1.25 ms
-                                     Time Range: 5 ms to 4 s */
+                                     @arg Range: 0x0004 to 0x0C80.
+                                     @arg Time = N * 1.25 ms.
+                                     @arg Time Range: 5 ms to 4 s. */
     uint8_t sca;                /**< The worst-case sleep clock accuracy of all the Peripherals that will participate in the CIG.
-                                     0x00: 251 ppm to 500 ppm
-                                     0x01: 151 ppm to 250 ppm
-                                     0x02: 101 ppm to 150 ppm
-                                     0x03: 76 ppm to 100 ppm
-                                     0x04: 51 ppm to 75 ppm
-                                     0x05: 31 ppm to 50 ppm
-                                     0x06: 21 ppm to 30 ppm
-                                     0x07: 0 ppm to 20 ppm */
+                                     @arg 0x00: 251 ppm to 500 ppm.
+                                     @arg 0x01: 151 ppm to 250 ppm.
+                                     @arg 0x02: 101 ppm to 150 ppm.
+                                     @arg 0x03: 76 ppm to 100 ppm.
+                                     @arg 0x04: 51 ppm to 75 ppm.
+                                     @arg 0x05: 31 ppm to 50 ppm.
+                                     @arg 0x06: 21 ppm to 30 ppm.
+                                     @arg 0x07: 0 ppm to 20 ppm. */
     uint8_t  packing;           /**< Indicate the preferred method of arranging subevents of multiple CISes.
-                                     0x00: Sequential
-                                     0x01: Interleaved */
+                                     @arg 0x00: Sequential.
+                                     @arg 0x01: Interleaved. */
     uint8_t  framing;           /**< Indicate the format of the CIS Data PDUs.
-                                     0x00: Unframed
-                                     0x01: Framed */
+                                     @arg 0x00: Unframed.
+                                     @arg 0x01: Framed. */
 } T_CIG_CFG_PARAM_TEST;
 
 typedef struct
 {
     uint8_t             nse;          /**< Maximum number of subevents in each CIS event.
-                                           Range: 0x01 to 0x1F */
+                                           @arg Range: 0x01 to 0x1F. */
     uint16_t            max_sdu_m_s;  /**< Maximum size, in octets, of the payload from
                                            the Central's Host.
                                            If the CIS is unidirectional from Peripheral
@@ -476,27 +477,27 @@ typedef struct
     uint16_t            max_pdu_m_s;  /**< Maximum size, in octets, of the payload from
                                            the Central's Link Layer to the Peripheral's
                                            Link Layer.
-                                           Range: 0x0000 to 0x00FB */
+                                           @arg Range: 0x0000 to 0x00FB. */
     uint16_t            max_pdu_s_m;  /**< Maximum size, in octets, of the payload from
                                            the Peripheral's Link Layer to the Central's
                                            Link Layer.
-                                           Range: 0x0000 to 0x00FB */
+                                           @arg Range: 0x0000 to 0x00FB. */
     uint8_t             phy_m_s;      /**< Identify which PHY to use for transmission from
                                            the Central to the Peripheral.
-                                           bit 0: The transmitter PHY of packets from the Peripheral is LE 1M
-                                           bit 1: The transmitter PHY of packets from the Peripheral is LE 2M
-                                           bit 2: The transmitter PHY of packets from the Peripheral is LE Coded */
+                                           @arg bit 0: The transmitter PHY of packets from the Central is LE 1M.
+                                           @arg bit 1: The transmitter PHY of packets from the Central is LE 2M.
+                                           @arg bit 2: The transmitter PHY of packets from the Central is LE Coded. */
     uint8_t             phy_s_m;      /**< Identify which PHY to use for transmission from
                                            the Peripheral to the Central.
-                                           bit 0: The transmitter PHY of packets from the Peripheral is LE 1M
-                                           bit 1: The transmitter PHY of packets from the Peripheral is LE 2M
-                                           bit 2: The transmitter PHY of packets from the Peripheral is LE Coded */
+                                           @arg bit 0: The transmitter PHY of packets from the Peripheral is LE 1M.
+                                           @arg bit 1: The transmitter PHY of packets from the Peripheral is LE 2M.
+                                           @arg bit 2: The transmitter PHY of packets from the Peripheral is LE Coded. */
     uint8_t             bn_m_s;       /**< Identify the burst number for Central to Peripheral.
-                                           0x00: No isochronous data from the Central to the Peripheral
-                                           0x01 to 0x0F: The burst number for Central to Peripheral transmission */
+                                           @arg 0x00: No isochronous data from the Central to the Peripheral.
+                                           @arg 0x01 to 0x0F: The burst number for Central to Peripheral transmission. */
     uint8_t             bn_s_m;       /**< Identify the burst number for Peripheral to Central.
-                                           0x00: No isochronous data from the Peripheral to the Central
-                                           0x01 to 0x0F: The burst number for Peripheral to Central transmission */
+                                           @arg 0x00: No isochronous data from the Peripheral to the Central.
+                                           @arg 0x01 to 0x0F: The burst number for Peripheral to Central transmission. */
 } T_CIS_CFG_PARAM_TEST;
 /** End of GAP_LE_CIG_MGR_Exported_Types
   * @}
@@ -511,33 +512,33 @@ typedef struct
   */
 
 /**
-  * @brief     Callback for GAP CIG Mgr @ref ISOCH_ROLE_INITIATOR to notify app
+  * @brief     Callback for GAP CIG Mgr @ref ISOCH_ROLE_INITIATOR to notify APP.
   *
   * @param[in] cig_id    Identifier of a CIG.
-  * @param[in] cb_type   Callback msy type @ref ISOCH_ROLE_INITIATOR in @ref CIG_MGR_CALLBACK_MSG.
+  * @param[in] cb_type   Callback msg type @ref ISOCH_ROLE_INITIATOR in @ref CIG_MGR_CALLBACK_MSG.
   * @param[in] p_cb_data Point to callback data @ref T_CIG_MGR_CB_DATA.
-  * @retval    result    @ref T_APP_RESULT
+  * @return    Result.
+  * @retval    result @ref T_APP_RESULT.
   */
 typedef T_APP_RESULT(*P_FUN_LE_CIG_MGR_CB)(uint8_t cig_id, uint8_t cb_type, void *p_cb_data);
 
 /**
-  * @brief     Callback for GAP CIG Mgr @ref ISOCH_ROLE_ACCEPTOR to notify app
+  * @brief     Callback for GAP CIG Mgr @ref ISOCH_ROLE_ACCEPTOR to notify APP.
   *
-  * @param[in] cb_type   Callback msy type @ref ISOCH_ROLE_ACCEPTOR in @ref CIG_MGR_CALLBACK_MSG.
+  * @param[in] cb_type   Callback msg type @ref ISOCH_ROLE_ACCEPTOR in @ref CIG_MGR_CALLBACK_MSG.
   * @param[in] p_cb_data Point to callback data @ref T_CIG_MGR_CB_DATA.
-  * @retval    result    @ref T_APP_RESULT
+  * @return    Result.
+  * @retval    result @ref T_APP_RESULT.
   */
 typedef T_APP_RESULT(*P_FUN_LE_CIG_MGR_ACCEPTOR_CB)(uint8_t cb_type, void *p_cb_data);
 
 /**
  * @brief       Initialize the number of CIG and CIS.
  *
- *              NOTE: This function is used for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR.
- *
- *              NOTE: If CIS will be used, @ref GAP_PARAM_CIS_HOST_SUPPORT by calling @ref le_set_gap_param()
- *                    should be configured as True before @ref gap_start_bt_stack is invoked.
- *
- *              NOTE: @ref gap_register_direct_cb should be invoked to receive ISO Data
+ * @note This function is used for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR. \n
+ * If CIS will be used, @ref GAP_PARAM_CIS_HOST_SUPPORT by calling @ref le_set_gap_param()
+ *                    should be configured as True before @ref gap_start_bt_stack is invoked. \n
+ * @ref gap_register_direct_cb should be invoked to receive ISO Data
  *                    via cb_type @ref BT_DIRECT_MSG_ISO_DATA_IND.
  *
  *
@@ -565,48 +566,48 @@ T_GAP_CAUSE cig_mgr_init(uint8_t cig_num, uint8_t cis_num);
 /**
  * @brief       Get connection ID by CIS connection handle.
  *
- *              NOTE: This function is used for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR.
+ * @note This function is used for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR.
  *
  * @param[in]       cis_conn_handle  Connection handle of the CIS.
  * @param[in, out]  p_conn_id        Connection ID.
  * @return          Get result.
- * @retval          True             Success
- * @retval          False            Get failed
+ * @retval          True             Success.
+ * @retval          False            Get failed.
  */
 bool cig_mgr_get_conn_id(uint16_t cis_conn_handle, uint8_t *p_conn_id);
 
 /**
  * @brief       Get CIG ID and CIS ID by CIS connection handle.
  *
- *              NOTE: This function is used for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR.
+ * @note This function is used for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR.
  *
  * @param[in]       cis_conn_handle  Connection handle of the CIS.
  * @param[in, out]  p_info           CIG ID and CIS ID.
  * @return          Get result.
- * @retval          True             Success
- * @retval          False            Get failed
+ * @retval          True             Success.
+ * @retval          False            Get failed.
  */
 bool cig_mgr_get_cis_info(uint16_t cis_conn_handle, T_CIS_INFO *p_info);
 
 /**
  * @brief       Get information about specified CIS connection handle.
  *
- *              NOTE: This function is used for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR.
+ * @note This function is used for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR.
  *
  * @param[in]       cis_conn_handle  Connection handle of the CIS.
  * @param[in, out]  p_info           Information about specified CIS connection handle.
  * @return          Get result.
- * @retval          True             Success
- * @retval          False            Get failed
+ * @retval          True             Success.
+ * @retval          False            Get failed.
  */
 bool cig_mgr_get_isoch_info(uint16_t cis_conn_handle, T_ISOCH_INFO *p_info);
 
 /**
  * @brief       Identify and create the isochronous data path for CIS.
  *
- *              NOTE: This function is used for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR.
+ * @note This function is used for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR.
  *
- *              If sending request operation is success, the result of creating isochronous data path will be returned by
+ * If sending request operation is success, the result of creating isochronous data path will be returned by
  *              @ref app_isoc_cis_initiator_cig_cb for @ref ISOCH_ROLE_INITIATOR
  *              or @ref app_isoc_cis_acceptor_cb for @ref ISOCH_ROLE_ACCEPTOR
  *              with cb_type @ref MSG_CIG_MGR_SETUP_DATA_PATH.
@@ -614,15 +615,15 @@ bool cig_mgr_get_isoch_info(uint16_t cis_conn_handle, T_ISOCH_INFO *p_info);
  * @param[in]   cis_conn_handle   Connection handle of the CIS.
  * @param[in]   path_direction    Specify the direction for which the data path is being configured. @ref LE_ISOC_DEF_SETUP_DATA_PATH_DATA_PATH_DIRECTION.
  * @param[in]   path_id           Specify the data transport path used.
- *                                0x00: HCI. @ref DATA_PATH_ID_HCI.
- *                                0x01 to 0xFE: Logical_Channel_Number. The meaning of the logical channel is vendor-specific.
+ *                                @arg 0x00: HCI. @ref DATA_PATH_ID_HCI.
+ *                                @arg 0x01 to 0xFE: Logical_Channel_Number. The meaning of the logical channel is vendor-specific.
  * @param[in]   codec_id          Specify the coding format used over the air.
- *                                Octet 0: See Assigned Numbers for Coding Format
- *                                Octets 1 to 2: Company ID, see Assigned Numbers for Company Identifier. Shall be ignored if octet 0 is not 0xFF.
- *                                Octets 3 to 4: Vendor-defined codec ID. Shall be ignored if octet 0 is not 0xFF.
+ *                                @arg Octet 0: See Assigned Numbers for Coding Format.
+ *                                @arg Octets 1 to 2: Company ID, see Assigned Numbers for Company Identifier. Shall be ignored if octet 0 is not 0xFF.
+ *                                @arg Octets 3 to 4: Vendor-defined codec ID. Shall be ignored if octet 0 is not 0xFF.
  * @param[in]   controller_delay  Controller delay in microseconds.
- *                                Range: 0x000000 to 0x3D0900
- *                                Time range: 0 s to 4 s
+ *                                @arg Range: 0x000000 to 0x3D0900.
+ *                                @arg Time range: 0 s to 4 s.
  * @param[in]   codec_len         Length of codec configuration.
  * @param[in]   p_codec_data      Specify codec-specific configuration information for the specified direction.
  *
@@ -688,9 +689,9 @@ T_GAP_CAUSE cig_mgr_setup_data_path(uint16_t cis_conn_handle, uint8_t path_direc
 /**
  * @brief       Remove the input and/or output data path(s) associated with CIS.
  *
- *              NOTE: This function is used for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR.
+ * @note This function is used for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR.
  *
- *              If sending request operation is success, the result of removing data path will be returned by
+ * If sending request operation is success, the result of removing data path will be returned by
  *              @ref app_isoc_cis_initiator_cig_cb for @ref ISOCH_ROLE_INITIATOR
  *              or @ref app_isoc_cis_acceptor_cb for @ref ISOCH_ROLE_ACCEPTOR
  *              with cb_type @ref MSG_CIG_MGR_REMOVE_DATA_PATH.
@@ -757,9 +758,9 @@ T_GAP_CAUSE cig_mgr_remove_data_path(uint16_t cis_conn_handle, uint8_t path_dire
 /**
  * @brief       Read the TX_Time_Stamp and Time_Offset of a transmitted SDU identified by the Packet_Sequence_Number on a CIS.
  *
- *              NOTE: This function is used for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR.
+ * @note This function is used for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR.
  *
- *              If sending request operation is success, the reading result will be returned by
+ * If sending request operation is success, the reading result will be returned by
  *              @ref app_isoc_cis_initiator_cig_cb for @ref ISOCH_ROLE_INITIATOR
  *              or @ref app_isoc_cis_acceptor_cb for @ref ISOCH_ROLE_ACCEPTOR
  *              with cb_type @ref MSG_CIG_MGR_READ_ISO_TX_SYNC.
@@ -827,9 +828,9 @@ T_GAP_CAUSE cig_mgr_read_iso_tx_sync(uint16_t cis_conn_handle);
 /**
  * @brief       Read the values of various counters related to link quality.
  *
- *              NOTE: This function is used for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR.
+ * @note This function is used for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR.
  *
- *              If sending request operation is success, the reading result will be returned by
+ * If sending request operation is success, the reading result will be returned by
  *              @ref app_isoc_cis_initiator_cig_cb for @ref ISOCH_ROLE_INITIATOR
  *              or @ref app_isoc_cis_acceptor_cb for @ref ISOCH_ROLE_ACCEPTOR
  *              with cb_type @ref MSG_CIG_MGR_READ_ISO_LINK_QUALITY.
@@ -911,20 +912,19 @@ T_GAP_CAUSE cig_mgr_read_iso_link_quality(uint16_t cis_conn_handle);
 /**
  * @brief       Terminate a CIS connection.
  *
- *              NOTE: This function is used for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR.
- *
- *              If sending request operation is success, the response of request will be returned by
+ * If sending request operation is success, the response of request will be returned by
  *              @ref app_isoc_cis_initiator_cig_cb for @ref ISOCH_ROLE_INITIATOR
  *              or @ref app_isoc_cis_acceptor_cb for @ref ISOCH_ROLE_ACCEPTOR
- *              with cb_type @ref MSG_CIG_MGR_DISCONNECT.
+ *              with cb_type @ref MSG_CIG_MGR_DISCONNECT. \n
  *              The notification of disconnection will be returned by
  *              @ref app_isoc_cis_initiator_cig_cb for @ref ISOCH_ROLE_INITIATOR
  *              or @ref app_isoc_cis_acceptor_cb for @ref ISOCH_ROLE_ACCEPTOR
  *              with cb_type @ref MSG_CIG_MGR_DISCONNECT_INFO.
  *
- *              NOTE: When CIS connection is disconnected with cb_type @ref MSG_CIG_MGR_DISCONNECT_INFO:
+ * @note This function is used for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR. \n
+ * When CIS connection is disconnected with cb_type @ref MSG_CIG_MGR_DISCONNECT_INFO:
  *                    If role is @ref ISOCH_ROLE_INITIATOR for specified CIS, the handle and the associated data paths of that CIS
- *                    shall remain valid.
+ *                    shall remain valid. \n
  *                    If role is @ref ISOCH_ROLE_ACCEPTOR for specified CIS, the handle and the associated data path of
  *                    that CIS will be deleted.
  *
@@ -1005,9 +1005,9 @@ T_GAP_CAUSE cig_mgr_disconnect(uint16_t cis_conn_handle, uint8_t reason);
 /**
  * @brief       Terminate the ISO Transmit and/or Receive Test mode for a CIS.
  *
- *              NOTE: This function is used in ISO Test mode and only for testing purposes for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR.
+ * @note This function is used in ISO Test mode and only for testing purposes for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR.
  *
- *              If sending request operation is success, the result of termination will be returned by
+ * If sending request operation is success, the result of termination will be returned by
  *              @ref app_isoc_cis_initiator_cig_cb for @ref ISOCH_ROLE_INITIATOR
  *              or @ref app_isoc_cis_acceptor_cb for @ref ISOCH_ROLE_ACCEPTOR
  *              with cb_type @ref MSG_CIG_MGR_ISO_TEST_END.
@@ -1073,18 +1073,18 @@ T_GAP_CAUSE cig_mgr_iso_test_end(uint16_t cis_conn_handle);
 /**
  * @brief       Configure an established CIS, and transmit test payloads which are generated by the Controller.
  *
- *              NOTE: This function is used in ISO Test mode and only for testing purposes for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR.
+ * @note This function is used in ISO Test mode and only for testing purposes for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR.
  *
- *              If sending request operation is success, the result will be returned by
+ * If sending request operation is success, the result will be returned by
  *              @ref app_isoc_cis_initiator_cig_cb for @ref ISOCH_ROLE_INITIATOR
  *              or @ref app_isoc_cis_acceptor_cb for @ref ISOCH_ROLE_ACCEPTOR
  *              with cb_type @ref MSG_CIG_MGR_TRANSMIT_TEST.
  *
  * @param[in]   cis_conn_handle   Connection handle of the CIS.
  * @param[in]   payload_type      Define the configuration of SDUs in the payload.
- *                                0x00: Zero length payload
- *                                0x01: Variable length payload
- *                                0x02: Maximum length payload
+ *                                @arg 0x00: Zero length payload.
+ *                                @arg 0x01: Variable length payload.
+ *                                @arg 0x02: Maximum length payload.
  *
  * @return Send request operation.
  * @retval GAP_CAUSE_SUCCESS  Send request operation success.
@@ -1141,18 +1141,18 @@ T_GAP_CAUSE cig_mgr_transmit_test(uint16_t cis_conn_handle, uint8_t payload_type
 /**
  * @brief       Configure an established CIS to receive payloads.
  *
- *              NOTE: This function is used in ISO Test mode and only for testing purposes for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR.
+ * @note This function is used in ISO Test mode and only for testing purposes for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR.
  *
- *              If sending request operation is success, the result will be returned by
+ * If sending request operation is success, the result will be returned by
  *              @ref app_isoc_cis_initiator_cig_cb for @ref ISOCH_ROLE_INITIATOR
  *              or @ref app_isoc_cis_acceptor_cb for @ref ISOCH_ROLE_ACCEPTOR
  *              with cb_type @ref MSG_CIG_MGR_RECEIVE_TEST.
  *
  * @param[in]   cis_conn_handle   Connection handle of the CIS.
  * @param[in]   payload_type      Define the configuration of SDUs in the payload.
- *                                0x00: Zero length payload
- *                                0x01: Variable length payload
- *                                0x02: Maximum length payload
+ *                                @arg 0x00: Zero length payload.
+ *                                @arg 0x01: Variable length payload.
+ *                                @arg 0x02: Maximum length payload.
  *
  * @return Send request operation.
  * @retval GAP_CAUSE_SUCCESS  Send request operation success.
@@ -1211,9 +1211,9 @@ T_GAP_CAUSE cig_mgr_receive_test(uint16_t cis_conn_handle, uint8_t payload_type)
 /**
  * @brief       Read the test counters in the Controller which is configured in ISO Receive Test mode for a CIS.
  *
- *              NOTE: This function is used in ISO Test mode and only for testing purposes for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR.
+ * @note This function is used in ISO Test mode and only for testing purposes for @ref ISOCH_ROLE_INITIATOR and @ref ISOCH_ROLE_ACCEPTOR.
  *
- *              If sending request operation is success, the result will be returned by
+ * If sending request operation is success, the result will be returned by
  *              @ref app_isoc_cis_initiator_cig_cb for @ref ISOCH_ROLE_INITIATOR
  *              or @ref app_isoc_cis_acceptor_cb for @ref ISOCH_ROLE_ACCEPTOR
  *              with cb_type @ref MSG_CIG_MGR_READ_TEST_COUNTERS.
@@ -1285,7 +1285,7 @@ T_GAP_CAUSE cig_mgr_read_test_counters(uint16_t cis_conn_handle);
 /**
  * @brief       Register CIG and specified callback.
  *
- *              NOTE: This function is used for @ref ISOCH_ROLE_INITIATOR.
+ * @note This function is used for @ref ISOCH_ROLE_INITIATOR.
  *
  * @param[in]   cig_id   Identifier of a CIG.
  * @param[in]   cb_pfn   Callback.
@@ -1325,7 +1325,7 @@ T_GAP_CAUSE cig_mgr_reg_cig(uint8_t cig_id, P_FUN_LE_CIG_MGR_CB cb_pfn);
 /**
  * @brief       Add CIS for specified CIG.
  *
- *              NOTE: This function is used for @ref ISOCH_ROLE_INITIATOR.
+ * @note This function is used for @ref ISOCH_ROLE_INITIATOR.
  *
  * @param[in]   cig_id   Identifier of a CIG.
  * @param[in]   cis_id   Used to identify a CIS.
@@ -1348,7 +1348,7 @@ T_GAP_CAUSE cig_mgr_add_cis(uint8_t cig_id, uint8_t cis_id);
 /**
  * @brief       Set GAP CIG parameters.
  *
- *              NOTE: This function is used for @ref ISOCH_ROLE_INITIATOR.
+ * @note This function is used for @ref ISOCH_ROLE_INITIATOR.
  *
  * @param[in]   cig_id   Identifier of a CIG.
  * @param[in]   p_param  @ref T_CIG_CFG_PARAM.
@@ -1377,7 +1377,7 @@ T_GAP_CAUSE cig_mgr_set_cig_param(uint8_t cig_id, T_CIG_CFG_PARAM *p_param);
 /**
  * @brief       Set GAP CIS parameters.
  *
- *              NOTE: This function is used for @ref ISOCH_ROLE_INITIATOR.
+ * @note This function is used for @ref ISOCH_ROLE_INITIATOR.
  *
  * @param[in]   cis_id   Used to identify a CIS.
  * @param[in]   p_param  @ref T_CIS_CFG_PARAM.
@@ -1406,9 +1406,9 @@ T_GAP_CAUSE cig_mgr_set_cis_param(uint8_t cis_id, T_CIS_CFG_PARAM *p_param);
 /**
  * @brief       Request to create a CIG and to set the parameters of one or more CISes in the Controller.
  *
- *              NOTE: This function is used for @ref ISOCH_ROLE_INITIATOR.
+ * @note This function is used for @ref ISOCH_ROLE_INITIATOR.
  *
- *              If sending request operation is success, the result will be returned by
+ * If sending request operation is success, the result will be returned by
  *              @ref app_isoc_cis_initiator_cig_cb with cb_type @ref MSG_CIG_MGR_START_SETTING.
  *
  * @param[in]   cig_id   Identifier of a CIG.
@@ -1471,13 +1471,12 @@ T_GAP_CAUSE cig_mgr_start_setting(uint8_t cig_id);
 /**
  * @brief       Used by the Central's Host to remove the CIG.
  *
- *              NOTE: This function is used for @ref ISOCH_ROLE_INITIATOR.
- *
- *              NOTE: CIG ID and CIS Connection Handles will be deleted.
+ * @note This function is used for @ref ISOCH_ROLE_INITIATOR. \n
+ * CIG ID and CIS Connection Handles will be deleted. \n
  *                    Isochronous data paths that are associated with CIS Connection Handles are also removed, which is
  *                    equivalent to call @ref cig_mgr_remove_data_path.
  *
- *              If sending request operation is success, the result of removing CIG will be returned by
+ * If sending request operation is success, the result of removing CIG will be returned by
  *              @ref app_isoc_cis_initiator_cig_cb with cb_type @ref MSG_CIG_MGR_REMOVE_CIG.
  *
  * @param[in]   cig_id   Identifier of a CIG.
@@ -1517,9 +1516,8 @@ T_GAP_CAUSE cig_mgr_remove_cig(uint8_t cig_id);
  * @brief       Specify the connection handle of the ACL connection associated with
  *              each CIS to be created.
  *
- *              NOTE: This function is used for @ref ISOCH_ROLE_INITIATOR.
- *
- *              NOTE: This function should be invoked before creating CIS by
+ * @note This function is used for @ref ISOCH_ROLE_INITIATOR. \n
+ * This function should be invoked before creating CIS by
  *                    @ref cig_mgr_create_cis_by_cig_id or @ref cig_mgr_create_cis_by_cis_conn_handle.
  *
  * @param[in]   cis_id   Used to identify a CIS.
@@ -1542,9 +1540,9 @@ T_GAP_CAUSE cig_mgr_set_cis_acl_link(uint8_t cis_id, uint8_t conn_id);
 /**
  * @brief       Request to create all CISes in a CIG.
  *
- *              NOTE: This function is used for @ref ISOCH_ROLE_INITIATOR.
+ * @note This function is used for @ref ISOCH_ROLE_INITIATOR.
  *
- *              If sending request operation is success, the result will be returned by
+ * If sending request operation is success, the result will be returned by
  *              @ref app_isoc_cis_initiator_cig_cb with cb_type @ref MSG_CIG_MGR_CIS_ESTABLISHED_INFO
  *              and @ref MSG_CIG_MGR_CREATE_CIS.
  *
@@ -1629,9 +1627,9 @@ T_GAP_CAUSE cig_mgr_create_cis_by_cig_id(uint8_t cig_id);
 /**
  * @brief       Request to create one or more CISes in a CIG.
  *
- *              NOTE: This function is used for @ref ISOCH_ROLE_INITIATOR.
+ * @note This function is used for @ref ISOCH_ROLE_INITIATOR.
  *
- *              If sending request operation is success, the result will be returned by
+ * If sending request operation is success, the result will be returned by
  *              @ref app_isoc_cis_initiator_cig_cb with cb_type @ref MSG_CIG_MGR_CIS_ESTABLISHED_INFO
  *              and @ref MSG_CIG_MGR_CREATE_CIS.
  *
@@ -1719,7 +1717,7 @@ T_GAP_CAUSE cig_mgr_create_cis_by_cis_conn_handle(uint8_t cig_id, uint8_t cis_co
 /**
  * @brief       Get CIS connection handle.
  *
- *              NOTE: This function is used for @ref ISOCH_ROLE_INITIATOR.
+ * @note This function is used for @ref ISOCH_ROLE_INITIATOR.
  *
  * @param[in]      cis_id          Used to identify a CIS.
  * @param[in,out]  p_conn_handle   CIS connection handle.
@@ -1741,7 +1739,7 @@ bool cig_mgr_get_cis_handle(uint8_t cis_id, uint16_t *p_conn_handle);
 /**
  * @brief       Set GAP CIG Test parameters in ISO Test mode.
  *
- *              NOTE: This function is used in ISO Test mode and only for testing purposes for @ref ISOCH_ROLE_INITIATOR.
+ * @note This function is used in ISO Test mode and only for testing purposes for @ref ISOCH_ROLE_INITIATOR.
  *
  * @param[in]   cig_id   Identifier of a CIG.
  * @param[in]   p_param  @ref T_CIG_CFG_PARAM_TEST.
@@ -1759,7 +1757,7 @@ bool cig_mgr_get_cis_handle(uint8_t cis_id, uint16_t *p_conn_handle);
         T_CIG_CFG_PARAM_TEST cig_param_test;
 
         ......
-        // Initialization of cig_param_test is dependent on Application.
+        // Initialization of cig_param_test is dependent on the application.
 
         T_GAP_CAUSE cause = cig_mgr_set_cig_param_test(cig_id, &cig_param_test);
     }
@@ -1770,7 +1768,7 @@ T_GAP_CAUSE cig_mgr_set_cig_param_test(uint8_t cig_id, T_CIG_CFG_PARAM_TEST *p_p
 /**
  * @brief       Set GAP CIS Test parameters in ISO Test mode.
  *
- *              NOTE: This function is used in ISO Test mode and only for testing purposes for @ref ISOCH_ROLE_INITIATOR.
+ * @note This function is used in ISO Test mode and only for testing purposes for @ref ISOCH_ROLE_INITIATOR.
  *
  * @param[in]   cis_id   Used to identify a CIS.
  * @param[in]   p_param  @ref T_CIS_CFG_PARAM_TEST.
@@ -1788,7 +1786,7 @@ T_GAP_CAUSE cig_mgr_set_cig_param_test(uint8_t cig_id, T_CIG_CFG_PARAM_TEST *p_p
         T_CIS_CFG_PARAM_TEST cis_param_test;
 
         ......
-        // Initialization of cis_param_test is dependent on Application.
+        // Initialization of cis_param_test is dependent on the application.
 
         T_GAP_CAUSE cause = cig_mgr_set_cis_param_test(cis_id, &cis_param_test);
     }
@@ -1799,9 +1797,9 @@ T_GAP_CAUSE cig_mgr_set_cis_param_test(uint8_t cis_id, T_CIS_CFG_PARAM_TEST *p_p
 /**
  * @brief       Request to create a CIG and to set the parameters of one or more CISes in the Controller for ISO Test mode.
  *
- *              NOTE: This function is used in ISO Test mode and only for testing purposes for @ref ISOCH_ROLE_INITIATOR.
+ * @note This function is used in ISO Test mode and only for testing purposes for @ref ISOCH_ROLE_INITIATOR.
  *
- *              If sending request operation is success, the result will be returned by
+ * If the sending request operation is successful, the result will be returned by
  *              @ref app_isoc_cis_initiator_cig_cb with cb_type @ref MSG_CIG_MGR_START_SETTING_TEST.
  *
  * @param[in]   cig_id   Identifier of a CIG.
@@ -1817,7 +1815,7 @@ T_GAP_CAUSE cig_mgr_set_cis_param_test(uint8_t cis_id, T_CIS_CFG_PARAM_TEST *p_p
         T_GAP_CAUSE cause = GAP_CAUSE_SUCCESS;
 
         ......
-        // Initialization is dependent on Application.
+        // Initialization is dependent on the application.
         cause = cig_mgr_reg_cig(cig_id, app_isoc_cis_initiator_cig_cb);
         cause = cig_mgr_add_cis(cig_id, cis_id);
         cause = cig_mgr_set_cig_param_test(cig_id, &cig_param_test);
@@ -1864,18 +1862,17 @@ T_GAP_CAUSE cig_mgr_start_setting_test(uint8_t cig_id);
 /**
  * @brief       Register callback for GAP CIG Mgr @ref ISOCH_ROLE_ACCEPTOR.
  *
- *              NOTE: This function is used for @ref ISOCH_ROLE_ACCEPTOR.
- *
- *              NOTE: cb_type @ref MSG_CIG_MGR_CIS_REQUEST_IND indicates that Controller has received a request to establish a CIS.
- *                    Meaning for return value of @ref MSG_CIG_MGR_CIS_REQUEST_IND by Application:
+ * @note This function is used for @ref ISOCH_ROLE_ACCEPTOR. \n
+ * cb_type @ref MSG_CIG_MGR_CIS_REQUEST_IND indicates that the Controller has received a request to establish a CIS. \n
+ *                    Meaning for the return value of @ref MSG_CIG_MGR_CIS_REQUEST_IND by application:
  *                          @ref APP_RESULT_ACCEPT: Inform the Controller to accept the request for the CIS.
  *                                                  Result will be notified by cb_type @ref MSG_CIG_MGR_ACCEPT_CIS_INFO
- *                                                  and @ref MSG_CIG_MGR_CIS_ESTABLISHED_INFO.
+ *                                                  and @ref MSG_CIG_MGR_CIS_ESTABLISHED_INFO. \n
  *                          neither @ref APP_RESULT_ACCEPT nor @ref APP_RESULT_PENDING: e.g. @ref BT_HCI_ERROR (except @ref HCI_SUCCESS),
  *                                                                                      inform the Controller to reject the request for
  *                                                                                      the CIS. Result will be notified by cb_type
- *                                                                                      @ref MSG_CIG_MGR_REJECT_CIS_INFO.
- *                          @ref APP_RESULT_PENDING: Application should call @ref cig_mgr_acceptor_accept_cis to accept or
+ *                                                                                      @ref MSG_CIG_MGR_REJECT_CIS_INFO. \n
+ *                          @ref APP_RESULT_PENDING: Applications should call @ref cig_mgr_acceptor_accept_cis to accept or
  *                                                   @ref cig_mgr_acceptor_reject_cis to reject the request for the CIS.
  *
  * @param[in]   cb_pfn   Callback.
@@ -1938,10 +1935,10 @@ void cig_mgr_reg_acceptor_cb(P_FUN_LE_CIG_MGR_ACCEPTOR_CB cb_pfn);
 /**
  * @brief       Accept the request for the CIS.
  *
- *              NOTE: This function is only used after return value of @ref MSG_CIG_MGR_CIS_REQUEST_IND
- *                    by Application is @ref APP_RESULT_PENDING for @ref ISOCH_ROLE_ACCEPTOR.
+ * @note This function is only used after the return value of @ref MSG_CIG_MGR_CIS_REQUEST_IND
+ *                    by application is @ref APP_RESULT_PENDING for @ref ISOCH_ROLE_ACCEPTOR.
  *
- *              If sending request operation is success, the result of accepting request for the CIS will be returned by
+ * If sending request operation is successful, the result of accepting the request for the CIS will be returned by
  *              @ref app_isoc_cis_acceptor_cb for @ref ISOCH_ROLE_ACCEPTOR
  *              with cb_type @ref MSG_CIG_MGR_ACCEPT_CIS_INFO and @ref MSG_CIG_MGR_CIS_ESTABLISHED_INFO.
  *
@@ -2021,15 +2018,15 @@ T_GAP_CAUSE cig_mgr_acceptor_accept_cis(uint16_t cis_conn_handle);
 /**
  * @brief       Reject the request for the CIS.
  *
- *              NOTE: This function is only used after return value of @ref MSG_CIG_MGR_CIS_REQUEST_IND
- *                    by Application is @ref APP_RESULT_PENDING for @ref ISOCH_ROLE_ACCEPTOR.
+ * @note This function is only used after return value of @ref MSG_CIG_MGR_CIS_REQUEST_IND
+ *                    by application is @ref APP_RESULT_PENDING for @ref ISOCH_ROLE_ACCEPTOR.
  *
- *              If sending request operation is success, the result of rejecting request for the CIS will be returned by
+ * If sending request operation is successful, the result of rejecting request for the CIS will be returned by
  *              @ref app_isoc_cis_acceptor_cb for @ref ISOCH_ROLE_ACCEPTOR
  *              with cb_type @ref MSG_CIG_MGR_REJECT_CIS_INFO.
  *
  * @param[in]   cis_conn_handle   Connection handle of the CIS.
- * @param[in]   reason            Reason the CIS request was rejected. @ref BT_HCI_ERROR (except @ref HCI_SUCCESS)..
+ * @param[in]   reason            Reason the CIS request was rejected. @ref BT_HCI_ERROR (except @ref HCI_SUCCESS).
  *
  * @return void.
  *
@@ -2076,24 +2073,24 @@ T_GAP_CAUSE cig_mgr_acceptor_accept_cis(uint16_t cis_conn_handle);
 T_GAP_CAUSE cig_mgr_acceptor_reject_cis(uint16_t cis_conn_handle, uint8_t reason);
 
 /**
- * @brief       Whether to check sdu length when @ref ISOCH_ROLE_ACCEPTOR calls @ref gap_iso_send_data.
+ * @brief       Whether to check SDU length when @ref ISOCH_ROLE_ACCEPTOR calls @ref gap_iso_send_data.
  *
- *              NOTE: This function is used for @ref ISOCH_ROLE_ACCEPTOR.
+ * @note This function is used for @ref ISOCH_ROLE_ACCEPTOR.
  *
  * @param[in]       cis_conn_handle            Connection handle of the CIS.
- * @param[in]       acceptor_config_sdu_flag   Whether to check sdu length when @ref ISOCH_ROLE_ACCEPTOR calls @ref gap_iso_send_data.
- *                                             Whether to configure sdu parameters supplied by the relevant profile(s) for @ref ISOCH_ROLE_ACCEPTOR.
- *                                             True:  sdu parameters listed below are configured by Application.
- *                                                    check sdu length when @ref ISOCH_ROLE_ACCEPTOR calls @ref gap_iso_send_data.
- *                                             False: Default value.
- *                                                    sdu parameters listed below are not configrued by Application.
- *                                                    Not check sdu length when @ref ISOCH_ROLE_ACCEPTOR calls @ref gap_iso_send_data.
+ * @param[in]       acceptor_config_sdu_flag   Whether to check SDU length when @ref ISOCH_ROLE_ACCEPTOR calls @ref gap_iso_send_data.
+ *                                             Whether to configure SDU parameters supplied by the relevant profile(s) for @ref ISOCH_ROLE_ACCEPTOR.
+ *                                             @arg True:  SDU parameters listed below are configured by application.
+ *                                                         Check SDU length when @ref ISOCH_ROLE_ACCEPTOR calls @ref gap_iso_send_data.
+ *                                             @arg False: Default value.
+ *                                                         SDU parameters listed below are not configured by application.
+ *                                                         Do not check SDU length when @ref ISOCH_ROLE_ACCEPTOR calls @ref gap_iso_send_data.
  * @param[in]       sdu_interval_m_s           The interval, in microseconds, between the start of consecutive SDUs from
  *                                             the Central's Host for all the CISes in the CIG.
- *                                             Range: 0x0000FF to 0x0FFFFF
+ *                                             @arg Range: 0x0000FF to 0x0FFFFF.
  * @param[in]       sdu_interval_s_m           The interval, in microseconds, between the start of consecutive SDUs from
  *                                             the Peripheral's Host for all the CISes in the CIG.
- *                                             Range: 0x0000FF to 0x0FFFFF.
+ *                                             @arg Range: 0x0000FF to 0x0FFFFF.
  * @param[in]       max_sdu_m_s                Maximum size, in octets, of the payload from the Central's Host.
  * @param[in]       max_sdu_s_m                Maximum size, in octets, of the payload from the Peripheral's Host.
  *
@@ -2125,7 +2122,7 @@ T_GAP_CAUSE cig_mgr_acceptor_config_sdu_param(uint16_t cis_conn_handle,
   * @}
   */
 
-/** End of GAP
+/** End of BT_Host
   * @}
   */
 

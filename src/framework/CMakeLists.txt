@@ -1,6 +1,8 @@
+if(NOT ${IS_CHECK_FLOW})
 check_and_add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/audiohal)
 check_and_add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/audiomgr)
 check_and_add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/btm)
 check_and_add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/console)
 check_and_add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/remote)
 check_and_add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/sys)
+endif()

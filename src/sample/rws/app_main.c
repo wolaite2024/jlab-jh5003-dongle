@@ -91,6 +91,10 @@
 #endif
 #endif
 
+#if (F_APP_PERIODIC_WAKEUP == 1)
+#include "rtl876x_rtc.h"
+#endif
+
 #if F_APP_ERWS_SUPPORT
 #include "app_relay.h"
 #include "app_roleswap.h"
@@ -147,6 +151,10 @@
 
 #if F_APP_HID_SUPPORT
 #include "app_hid.h"
+#endif
+
+#if F_APP_GATT_OVER_BREDR_SUPPORT
+#include "app_att.h"
 #endif
 
 #if F_APP_APT_SUPPORT
@@ -245,10 +253,6 @@
 #include "app_audio_passthrough_brightness.h"
 #endif
 
-#if F_APP_ONE_WIRE_UART_SUPPORT
-#include "app_one_wire_uart.h"
-#endif
-
 #if F_APP_QDECODE_SUPPORT
 #include "app_qdec.h"
 #endif
@@ -292,6 +296,7 @@
 #endif
 
 #if F_APP_GAMING_DONGLE_SUPPORT
+#include "app_dongle_record.h"
 #include "app_dongle_audio.h"
 #include "app_dongle_dual_mode.h"
 #include "app_dongle_data_ctrl.h"
@@ -334,6 +339,12 @@
 #include "app_ext_mic_switch.h"
 #endif
 
+#if F_APP_CHATGPT_SUPPORT
+#include "app_chatgpt.h"
+#endif
+
+#include "app_bt_point.h"
+
 #define MAX_NUMBER_OF_GAP_MESSAGE       0x20    //!< indicate BT stack message queue size
 #define MAX_NUMBER_OF_IO_MESSAGE        0x20    //!< indicate io queue size
 #define MAX_NUMBER_OF_DSP_MSG           0x20    //!< number of dsp message reserved for DSP message handling.
@@ -341,7 +352,13 @@
 #define MAX_NUMBER_OF_ANC_MSG           0x10    //!< number of anc message reserved for ANC message handling.
 #define MAX_NUMBER_OF_SYS_MSG           0x20    //!< indicate SYS timer queue size
 #define MAX_NUMBER_OF_LOADER_MSG        0x20    //!< indicate Bin Loader queue size
+
+#if F_APP_GAMING_DONGLE_SUPPORT
+#define MAX_NUMBER_OF_APP_TIMER_MODULE  0x38    //!< indicate app timer module size
+#else
 #define MAX_NUMBER_OF_APP_TIMER_MODULE  0x30    //!< indicate app timer module size
+#endif
+
 /** indicate rx event queue size*/
 #define MAX_NUMBER_OF_RX_EVENT \
     (MAX_NUMBER_OF_GAP_MESSAGE + MAX_NUMBER_OF_IO_MESSAGE + MAX_NUMBER_OF_APP_TIMER_MODULE + \
@@ -386,6 +403,10 @@ static void board_init(void)
 {
     PAD_Pull_Mode pull_mode;
 
+#if (F_APP_PERIODIC_WAKEUP == 1)
+    app_dlps_system_wakeup_clear_rtc_int();
+#endif
+
     if (app_cfg_const.enable_data_uart)
     {
         //when select 4pogo download and uart tx shares the same pin with 3pin gpio, don't config uart tx pinmux in here
@@ -416,21 +437,9 @@ static void board_init(void)
         }
     }
 
-#if F_APP_ONE_WIRE_UART_SUPPORT
-    if (app_cfg_const.one_wire_uart_support)
-    {
-        if (app_cfg_const.one_wire_uart_gpio_support)
-        {
-            Pad_Config(app_cfg_const.one_wire_uart_gpio_pinmux,
-                       PAD_SW_MODE, PAD_IS_PWRON, ONE_WIRE_GPIO_5V_PULL, PAD_OUT_DISABLE, PAD_OUT_LOW);
-            Pad_PullConfigValue(app_cfg_const.one_wire_uart_gpio_pinmux, PAD_STRONG_PULL);
-        }
-    }
-#endif
-
     if (app_cfg_const.dsp_log_output_select == DSP_OUTPUT_LOG_BY_UART)
     {
-        Pinmux_Config(app_cfg_const.dsp_log_pin, UART1_TX);
+        Pinmux_Config(app_cfg_const.dsp_log_pin, UART2_TX);
         Pad_Config(app_cfg_const.dsp_log_pin,
                    PAD_PINMUX_MODE, PAD_IS_PWRON, PAD_PULL_NONE, PAD_OUT_ENABLE, PAD_OUT_HIGH);
     }
@@ -763,7 +772,6 @@ static void driver_init(void)
         else if (app_cfg_const.sensor_vendor == SENSOR_LD_VENDOR_IO)
         {
             app_sensor_ld_io_init();
-            app_dlps_pad_wake_up_polarity_invert(app_cfg_const.sensor_detect_pinmux);
         }
 #if F_APP_SENSOR_PX318J_SUPPORT
         else if (app_cfg_const.sensor_vendor == SENSOR_LD_VENDOR_PX)
@@ -796,7 +804,6 @@ static void driver_init(void)
         //P sensor and G sensor will not coexist
         //Re-use gsensor INT pinmux
         app_sensor_gsensor_init();
-        app_dlps_pad_wake_up_polarity_invert(app_cfg_const.gsensor_int_pinmux);
     }
 #endif
 
@@ -815,7 +822,6 @@ static void driver_init(void)
         if (app_cfg_const.psensor_vendor == PSENSOR_VENDOR_IO)
         {
             app_sensor_psensor_init();
-            app_dlps_pad_wake_up_polarity_invert(app_cfg_const.gsensor_int_pinmux);
         }
 #if F_APP_SENSOR_IQS773_873_SUPPORT
         else if (app_cfg_const.psensor_vendor == PSENSOR_VENDOR_IQS773)
@@ -829,7 +835,6 @@ static void driver_init(void)
             {
                 i2c_iqs773_setup();
                 app_sensor_int_gpio_init(app_cfg_const.gsensor_int_pinmux, app_psensor_iqs773_873_intr_cb);
-                app_dlps_pad_wake_up_polarity_invert(app_cfg_const.gsensor_int_pinmux);
                 i2c_iqs_initial();
             }
         }
@@ -844,7 +849,6 @@ static void driver_init(void)
             {
                 i2c_iqs873_setup();
                 app_sensor_int_gpio_init(app_cfg_const.gsensor_int_pinmux, app_psensor_iqs773_873_intr_cb);
-                app_dlps_pad_wake_up_polarity_invert(app_cfg_const.gsensor_int_pinmux);
                 i2c_iqs_initial();
             }
         }
@@ -881,7 +885,7 @@ static void driver_init(void)
     }
 #endif
 
-#if F_APP_PERIODIC_WAKEUP_RECHARGE
+#if F_APP_PERIODIC_WAKEUP
     app_dlps_system_wakeup_clear_rtc_int();
 #endif
 
@@ -933,7 +937,7 @@ static void app_bt_gap_init(void)
     uint8_t bt_mode = GAP_BT_MODE_21ENABLED;
     uint16_t auth_flags = GAP_AUTHEN_BIT_BONDING_FLAG | GAP_AUTHEN_BIT_SC_FLAG;
 
-#if F_APP_LEA_SUPPORT
+#if (F_APP_LEA_SUPPORT && F_APP_LE_AUDIO_RWS_EN_SC)
 #if CONFIG_REALTEK_GFPS_LE_DEVICE_SUPPORT || TARGET_LE_AUDIO_GAMING
     //BLE LTK CTKD BR Linkkey
 #else
@@ -1018,7 +1022,7 @@ static void framework_init(void)
     remote_peer_addr_set(app_cfg_nv.bud_peer_addr);
 
     /* Bluetooth Manager */
-    bt_mgr_init(MAX_BR_LINK_NUM);
+    bt_mgr_init();
 
     /* Audio Manager */
     if (app_cfg_nv.audio_latency == 0)
@@ -1057,6 +1061,13 @@ static void app_task(void *pvParameters)
     {
         if (os_msg_recv(audio_evt_queue_handle, &event, 0xFFFFFFFF) == true)
         {
+
+            if (app_cfg_const.open_dbg_log_for_system_busy == 1)
+            {
+                APP_PRINT_WARN2("app_task start event 0x%x waiting %d", event,
+                                *((uint32_t *)audio_evt_queue_handle + 14));
+            }
+
             if (EVENT_GROUP(event) == EVENT_GROUP_IO)
             {
                 T_IO_MSG io_msg;
@@ -1081,6 +1092,12 @@ static void app_task(void *pvParameters)
             {
                 app_timer_handle_msg(event);
             }
+
+            if (app_cfg_const.open_dbg_log_for_system_busy == 1)
+            {
+                APP_PRINT_WARN0("event end");
+            }
+
         }
     }
 }
@@ -1243,7 +1260,7 @@ int main(void)
     app_auto_power_off_init();
     app_in_out_box_init();
 
-#if F_APP_ADP_CMD_SUPPORT
+#if F_APP_ADP_5V_CMD_SUPPORT || F_APP_ONE_WIRE_UART_SUPPORT
     app_adp_cmd_init();
 #endif
 
@@ -1251,6 +1268,11 @@ int main(void)
 
     if (is_single_tone_test_mode()) //DUT test mode
     {
+        app_audio_init();
+
+#if F_APP_SLIDE_SWITCH_SUPPORT
+        app_slide_switch_init();
+#endif
         reset_single_tone_test_mode();
         mp_hci_test_init(MP_HCI_TEST_DUT_MODE);
     }
@@ -1266,6 +1288,8 @@ int main(void)
 
         //DO NOT change order: app_cfg_nv.bud_role will be affected
         app_bt_policy_init();
+
+        app_bt_point_init();
 
         //DO NOT change order: app_db.remote_session_state will be affected
 #if F_APP_ERWS_SUPPORT
@@ -1343,6 +1367,11 @@ int main(void)
 #if F_APP_ADC_SUPPORT || (F_APP_EXT_MIC_SWITCH_SUPPORT && F_APP_EXT_MIC_PLUG_IN_ADC_DETECT)
         app_adc_init();
 #endif
+
+#if F_APP_GATT_OVER_BREDR_SUPPORT
+        app_att_init();
+#endif
+
         app_device_init();
         app_ble_device_init();
         app_transfer_init();
@@ -1393,10 +1422,6 @@ int main(void)
         ble_bond_sync_init();
 #endif
 
-#if F_APP_TMAP_CT_SUPPORT || F_APP_TMAP_UMR_SUPPORT || F_APP_TMAP_BMR_SUPPORT
-        app_ble_audio_init();
-#endif
-
 #if F_APP_OTA_TOOLING_SUPPORT
         if (app_cfg_nv.ota_tooling_start)
         {
@@ -1429,6 +1454,8 @@ int main(void)
         {
             app_dongle_dual_mode_init();
         }
+
+        app_dongle_record_init();
 
         legacy_gaming_init(app_dongle_legacy_gaming_event_cback);
 #endif
@@ -1501,6 +1528,10 @@ int main(void)
         }
 #endif
 
+#if F_APP_TMAP_CT_SUPPORT || F_APP_TMAP_UMR_SUPPORT || F_APP_TMAP_BMR_SUPPORT
+        app_ble_audio_init();
+#endif
+
 #if F_APP_BRIGHTNESS_SUPPORT
         app_apt_brightness_init();
 #endif
@@ -1536,6 +1567,10 @@ int main(void)
 #if F_APP_BLE_HID_CONTROLLER_SUPPORT
         app_ble_controller_adv_init();
 #endif
+#endif
+
+#if F_APP_CHATGPT_SUPPORT
+        app_chatgpt_init();
 #endif
 
         //increase app task priority to 2 so that user could implement some background daemon task

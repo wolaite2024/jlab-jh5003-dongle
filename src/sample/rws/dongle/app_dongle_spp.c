@@ -21,11 +21,6 @@
 #include "app_dongle_source_ctrl.h"
 #include "app_cmd.h"
 #include "app_vendor.h"
-#include "app_usb_vol_control.h"
-
-#if F_APP_SLIDE_SWITCH_MIC_MUTE_TOGGLE
-#include "app_slide_switch.h"
-#endif
 
 #if F_APP_CFU_SPP_SUPPORT
 #include "app_cfu_transfer.h"
@@ -33,7 +28,7 @@
 
 #if F_APP_GAMING_DONGLE_SUPPORT
 #include "app_dongle_dual_mode.h"
-#include "gap_br.h"
+#include "app_usb_vol_control.h"
 #endif
 
 #if F_APP_CUSTOMIZED_SBC_VP_FLOW_SUPPORT
@@ -88,6 +83,7 @@ void app_dongle_update_is_mic_enable(bool mic_enable)
         headset_status.rtp_enable = false;
     }
     app_dongle_sync_headset_status();
+    app_dongle_adjust_gaming_latency();
 
 #if F_APP_ERWS_SUPPORT
     if ((app_db.remote_session_state == REMOTE_SESSION_STATE_CONNECTED) &&
@@ -193,7 +189,7 @@ static void app_dongle_spp_cmd_handle(uint8_t *addr, uint8_t *buf, uint16_t len)
                 if (start_recording)
                 {
                     app_dongle_update_is_mic_enable(true);
-                    app_dongle_start_recording(app_db.br_link[app_idx].bd_addr);
+                    app_dongle_start_recording();
                 }
             }
             else
@@ -202,7 +198,7 @@ static void app_dongle_spp_cmd_handle(uint8_t *addr, uint8_t *buf, uint16_t len)
                 app_dongle_updata_mic_data_idx(true);
 
                 app_dongle_update_is_mic_enable(false);
-                app_dongle_stop_recording(app_db.br_link[app_idx].bd_addr);
+                app_dongle_stop_recording();
                 app_bt_policy_b2s_tpoll_update(app_db.br_link[app_idx].bd_addr, BP_TPOLL_EVENT_DONGLE_SPP_STOP);
 #if F_APP_APT_SUPPORT
                 if (app_db.dongle_is_disable_apt &&
@@ -221,6 +217,7 @@ static void app_dongle_spp_cmd_handle(uint8_t *addr, uint8_t *buf, uint16_t len)
 
             app_dongle_save_dongle_addr(dongle_status.dongle_addr);
             app_dongle_streaming_handle(dongle_status.streaming_to_peer);
+            app_dongle_adjust_gaming_latency();
         }
         else if (hdr->cmd == DONGLE_CMD_PASS_THROUGH_DATA)
         {
@@ -502,8 +499,7 @@ static void app_dongle_spp_dm_cback(T_SYS_EVENT event_type, void *event_buf, uin
 
             if (app_db.dongle_is_enable_mic)
             {
-                app_dongle_stop_recording(app_db.br_link[app_idx].bd_addr);
-                app_mmi_handle_action(MMI_DEV_MIC_MUTE);
+                app_dongle_stop_recording();
             }
 #endif
         }

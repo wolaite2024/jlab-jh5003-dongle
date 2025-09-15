@@ -19,6 +19,7 @@
 #include "audio_volume.h"
 #include "board.h"
 #include "led_module.h"
+#include "ble_conn.h"
 #include "bt_hfp.h"
 #include "bt_iap.h"
 #include "btm.h"
@@ -35,6 +36,7 @@
 #include "test_mode.h"
 #include "rtl876x_pinmux.h"
 #include "log_api.h"
+#include "pm.h"
 #include "app_cmd.h"
 #include "app_main.h"
 #include "app_audio_policy.h"
@@ -63,8 +65,8 @@
 #include "app_key_process.h"
 #include "app_test.h"
 #include "app_device.h"
+#include "app_dsp_cfg.h"
 #include "wdg.h"
-#include "system_status_api.h"
 #include "feature_check.h"
 #include "app_ble_rand_addr_mgr.h"
 #include "app_ble_common_adv.h"
@@ -231,7 +233,7 @@ static uint16_t max_payload_len = 0;
 
 #if F_APP_CHARGER_CASE_SUPPORT
 static uint8_t charger_case_bt_address[6] = {0};
-static uint8_t charger_case_record_avrcp_vol = 0;
+static uint8_t charger_case_record_avrcp_level = 0;
 static uint8_t charger_case_record_avrcp_addr[6] = {0};
 #endif
 
@@ -295,8 +297,6 @@ typedef enum
     APK_STATE_BACKGROUND,
     APK_STATE_INVALID,
 } T_APK_STATE;
-
-static bool apk_init_state = false;
 #endif
 
 typedef enum
@@ -382,38 +382,58 @@ void app_cmd_charger_case_handle_ble_disconn(uint8_t link_id)
     }
 }
 
-void app_cmd_charger_case_record_volume(uint8_t vol, uint8_t *addr)
+void app_cmd_charger_case_record_level(uint8_t level, uint8_t *addr)
 {
-    charger_case_record_avrcp_vol = vol;
+    charger_case_record_avrcp_level = level;
     memcpy_s(charger_case_record_avrcp_addr, 6, addr, 6);
 }
 
-static bool app_cmd_charger_case_set_fast_pair_info(uint8_t *p_link_key, uint8_t *addr,
-                                                    uint8_t addr_type)
+uint8_t app_cmd_charger_case_get_level(void)
 {
-    APP_PRINT_INFO1("app_cmd_charger_case_set_fast_pair_info: link_key %b",
+    return charger_case_record_avrcp_level;
+}
+
+static bool app_cmd_charger_case_set_fast_pair_info(uint8_t *p_link_key, uint8_t local_addr_type,
+                                                    uint8_t remote_addr_type)
+{
+    APP_PRINT_INFO5("app_charging_case_set_fast_pair_info: local_addr_type %d local_addr %s remote_addr_type %d remote_addr %s link_key %b",
+                    local_addr_type, TRACE_BDADDR(app_cfg_nv.bud_local_addr),
+                    remote_addr_type, TRACE_BDADDR(charger_case_bt_address),
                     TRACE_BINARY(16, p_link_key));
     bool result = false;
-    T_LE_DEV_INFO dev_info;
 
-    memset(&dev_info, 0, sizeof(T_LE_DEV_INFO));
-    dev_info.local_bd_type = GAP_LOCAL_ADDR_LE_PUBLIC;
-    dev_info.flags = LE_KEY_STORE_LOCAL_LTK_BIT | LE_KEY_STORE_REMOTE_LTK_BIT;
-    memcpy(&dev_info.remote_bd.addr[0], addr, FP_MAC_ADDR_LEN);
-    dev_info.remote_bd.remote_bd_type = addr_type;
+    T_BT_LE_DEV_DATA *p_info = NULL;
+    T_BT_LE_DEV_INFO *p_dev_info = NULL;
+    p_info = calloc(1, sizeof(T_BT_LE_DEV_DATA));
 
-    dev_info.local_ltk[0] = 28;
-    memcpy(&dev_info.local_ltk[4], p_link_key, FP_LINK_KEY_LEN);
-    dev_info.local_ltk[30] = FP_LINK_KEY_LEN;
-    dev_info.local_ltk[31] = GAP_KEY_LE_LOCAL_LTK;
-    dev_info.remote_ltk[0] = 28;
-    memcpy(&dev_info.remote_ltk[4], p_link_key, FP_LINK_KEY_LEN);
-    dev_info.remote_ltk[30] = FP_LINK_KEY_LEN;
-    dev_info.remote_ltk[31] = GAP_KEY_LE_REMOTE_LTK;
-
-    if (le_set_dev_info(&dev_info))
+    if (p_info)
     {
-        result = true;
+        p_dev_info = &p_info->dev_info;
+
+        p_info->bond_info.local_bd_type = local_addr_type;
+        memcpy(p_info->bond_info.local_bd, app_cfg_nv.bud_local_addr, 6);
+
+        p_info->bond_info.remote_bd_type = remote_addr_type;
+        memcpy(p_info->bond_info.remote_bd, charger_case_bt_address, FP_MAC_ADDR_LEN);
+
+        p_dev_info->flags = LE_KEY_STORE_LOCAL_LTK_BIT | LE_KEY_STORE_REMOTE_LTK_BIT;
+
+        p_dev_info->local_ltk[0] = 28;
+        memcpy(&p_dev_info->local_ltk[4], p_link_key, FP_LINK_KEY_LEN);
+        p_dev_info->local_ltk[30] = FP_LINK_KEY_LEN;
+        p_dev_info->local_ltk[31] = GAP_KEY_LE_LOCAL_LTK;
+
+        p_dev_info->remote_ltk[0] = 28;
+        memcpy(&p_dev_info->remote_ltk[4], p_link_key, FP_LINK_KEY_LEN);
+        p_dev_info->remote_ltk[30] = FP_LINK_KEY_LEN;
+        p_dev_info->remote_ltk[31] = GAP_KEY_LE_REMOTE_LTK;
+
+        if (bt_le_dev_info_set(&p_info->bond_info, &p_info->dev_info))
+        {
+            result = true;
+        }
+
+        free(p_info);
     }
 
     return result;
@@ -812,7 +832,7 @@ void app_cmd_set_event_broadcast(uint16_t event_id, uint8_t *buf, uint16_t len)
     {
         br_link = &app_db.br_link[i];
 
-        if (br_link->cmd_set_enable == true)
+        if (br_link->cmd.enable == true)
         {
             if (br_link->connected_profile & SPP_PROFILE_MASK)
             {
@@ -823,6 +843,11 @@ void app_cmd_set_event_broadcast(uint16_t event_id, uint8_t *buf, uint16_t len)
             {
                 app_report_event(CMD_PATH_IAP, event_id, i, buf, len);
             }
+
+            if (br_link->connected_profile & GATT_PROFILE_MASK)
+            {
+                app_report_event(CMD_PATH_GATT_OVER_BREDR, event_id, i, buf, len);
+            }
         }
     }
 
@@ -832,7 +857,7 @@ void app_cmd_set_event_broadcast(uint16_t event_id, uint8_t *buf, uint16_t len)
 
         if (le_link->state == LE_LINK_STATE_CONNECTED)
         {
-            if (le_link->cmd_set_enable == true)
+            if (le_link->cmd.enable == true)
             {
                 app_report_event(CMD_PATH_LE, event_id, i, buf, len);
             }
@@ -870,9 +895,18 @@ static void app_cmd_read_flash(uint32_t start_addr, uint8_t cmd_path, uint8_t ap
         }
 #endif
     }
+    else if (cmd_path == CMD_PATH_GATT_OVER_BREDR)
+    {
+        APP_PRINT_TRACE1("app_read_flash: mtu_size %d, CMD_PATH_GATT_OVER_BREDR",
+                         app_db.br_link[app_idx].mtu_size);
+        if (app_db.br_link[app_idx].mtu_size - 15 < data_send_len)
+        {
+            data_send_len = app_db.br_link[app_idx].mtu_size - 15;
+        }
+    }
     else if (cmd_path == CMD_PATH_LE)
     {
-        APP_PRINT_TRACE1("app_read_flash: mtu_size %d", app_db.le_link[app_idx].mtu_size);
+        APP_PRINT_TRACE1("app_read_flash: mtu_size %d, CMD_PATH_LE", app_db.le_link[app_idx].mtu_size);
         if (app_db.le_link[app_idx].mtu_size - 15 < data_send_len)
         {
             data_send_len = app_db.le_link[app_idx].mtu_size - 15;
@@ -1166,14 +1200,14 @@ T_SNK_CAPABILITY app_cmd_get_system_capability(void)
     }
 #endif
 
-#if F_APP_AUDIO_VOCIE_SPK_EQ_INDEPENDENT_CFG
+#if F_APP_AUDIO_VOICE_SPK_EQ_INDEPENDENT_CFG
     if (app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SINGLE)
     {
         snk_capability.snk_support_spk_eq_independent_cfg = 1;
     }
 #endif
 
-#if F_APP_AUDIO_VOCIE_SPK_EQ_COMPENSATION_CFG
+#if F_APP_AUDIO_VOICE_SPK_EQ_COMPENSATION_CFG
     snk_capability.snk_support_spk_eq_compensation_cfg = 1;
 #endif
 
@@ -1187,6 +1221,10 @@ T_SNK_CAPABILITY app_cmd_get_system_capability(void)
 
 #if F_APP_LISTENING_MODE_SUPPORT
     snk_capability.snk_support_listening_mode_custom_cycle = 1;
+#endif
+
+#if F_APP_CHARGER_CASE_SUPPORT
+    snk_capability.snk_support_charger_case = 1;
 #endif
 
     return snk_capability;
@@ -1540,6 +1578,7 @@ void app_cmd_handle_mp_cmd_hci_evt(void *p_gap_vnd_cmd_cb_data)
             {
                 app_cfg_nv.xtal_k_times++;
                 app_cfg_store(&app_cfg_nv.xtal_k_times, 4);
+                app_vendor_get_xtak_k_result();
             }
 
             APP_PRINT_TRACE2("CMD_RF_XTAK_K: result %d times %d", app_cfg_nv.xtal_k_result,
@@ -1571,6 +1610,11 @@ void app_cmd_handle_mp_cmd_hci_evt(void *p_gap_vnd_cmd_cb_data)
             APP_PRINT_TRACE3("CMD_RF_XTAL_K_GET_RESULT: %02x %02x %02x", xtal_k_result[0], xtal_k_result[1],
                              xtal_k_result[2]);
 
+            if (xtal_k_result[0] == 0x00) //Success
+            {
+                app_vendor_write_xtak_k_result(xtal_val);
+            }
+
             app_report_event_broadcast(EVENT_RF_XTAL_K_GET_RESULT, xtal_k_result, sizeof(xtal_k_result));
 
             app_dlps_enable(APP_DLPS_ENTER_CHECK_RF_XTAL);
@@ -1597,7 +1641,7 @@ bool app_cmd_get_tool_connect_status(void)
 
         if (br_link->connected_profile & (SPP_PROFILE_MASK | IAP_PROFILE_MASK))
         {
-            if (br_link->cmd_set_enable == true)
+            if (br_link->cmd.enable == true)
             {
                 tool_connect_status = true;
             }
@@ -1609,7 +1653,7 @@ bool app_cmd_get_tool_connect_status(void)
         le_link = &app_db.le_link[i];
         if (le_link->state == LE_LINK_STATE_CONNECTED)
         {
-            if (le_link->cmd_set_enable == true)
+            if (le_link->cmd.enable == true)
             {
                 tool_connect_status = true;
             }
@@ -1627,6 +1671,10 @@ static void app_cmd_update_max_payload_len_ctrl(uint8_t path, uint8_t app_idx)
         if (path == CMD_PATH_SPP)
         {
             max_payload_len = app_db.br_link[app_idx].rfc_frame_size;
+        }
+        else if (path == CMD_PATH_GATT_OVER_BREDR)
+        {
+            max_payload_len = app_db.br_link[app_idx].mtu_size - ATT_HEADER_LEN;
         }
         else if (path == CMD_PATH_LE)
         {
@@ -1693,7 +1741,9 @@ T_SRC_SUPPORT_VER_FORMAT *app_cmd_get_src_version(uint8_t cmd_path, uint8_t app_
     {
         version = &src_support_version_le_link[app_idx];
     }
-    else if ((cmd_path == CMD_PATH_SPP) || (cmd_path == CMD_PATH_IAP))
+    else if ((cmd_path == CMD_PATH_SPP) ||
+             (cmd_path == CMD_PATH_IAP) ||
+             (cmd_path == CMD_PATH_GATT_OVER_BREDR))
     {
         version = &src_support_version_br_link[app_idx];
     }
@@ -1749,20 +1799,13 @@ bool app_cmd_check_src_eq_spec_version(uint8_t cmd_path, uint8_t app_idx)
 }
 
 #if F_APP_SLAVE_LATENCY_UPDATE_SUPPORT
-void app_cmd_set_apk_init_state(bool state)
-{
-    APP_PRINT_TRACE1("app_cmd_set_apk_init_state %x", state);
-    apk_init_state = state;
-}
-
-bool app_cmd_get_apk_init_state(void)
-{
-    return apk_init_state;
-}
-
-void app_cmd_check_slave_latency_update(uint8_t conn_id)
+void app_cmd_check_slave_latency_update(uint8_t conn_id, bool skip_common)
 {
     uint16_t slave_latency;
+    uint16_t conn_interval;
+    uint16_t conn_supervision_timeout;
+    bool disable_latency;
+    T_APP_LE_LINK *p_link = app_link_find_le_link_by_conn_id(conn_id);
 
 #if TARGET_LE_AUDIO_GAMING
     T_APP_LE_LINK *p_dongle_link = app_dongle_get_le_audio_dongle_link();
@@ -1773,11 +1816,33 @@ void app_cmd_check_slave_latency_update(uint8_t conn_id)
     }
 #endif
 
-    le_get_conn_param(GAP_PARAM_CONN_LATENCY, &slave_latency, conn_id);
-    if (slave_latency &&
-        (app_cmd_get_apk_init_state() == false))
+    if (p_link)
     {
-        le_disable_slave_latency(conn_id, true);
+        le_get_conn_param(GAP_PARAM_CONN_LATENCY, &slave_latency, conn_id);
+        if (p_link->is_common_link || skip_common)
+        {
+            if (slave_latency)
+            {
+                if (p_link->apk_state == APK_STATE_FOREGROUND)
+                {
+                    disable_latency = true;
+                }
+                else
+                {
+                    disable_latency = false;
+                }
+                le_disable_slave_latency(conn_id, disable_latency);
+            }
+            else
+            {
+                le_get_conn_param(GAP_PARAM_CONN_INTERVAL, &conn_interval, conn_id);
+                le_get_conn_param(GAP_PARAM_CONN_TIMEOUT, &conn_supervision_timeout, conn_id);
+                ble_set_prefer_conn_param(conn_id, conn_interval, conn_interval, RWS_LE_MAX_SLAVE_LATENCY,
+                                          conn_supervision_timeout);
+            }
+        }
+        APP_PRINT_INFO3("app_cmd_check_slave_latency_update: common_link 0x%02x, skip_common_link 0x%02x, apk_state 0x%02x",
+                        p_link->is_common_link, skip_common, p_link->apk_state);
     }
 }
 
@@ -1785,18 +1850,14 @@ static void app_cmd_apk_state_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t
                                      uint8_t app_idx, uint8_t *ack_pkt)
 {
     T_APK_STATE apk_state = (T_APK_STATE)cmd_ptr[0];
-    bool disable_latency;
+    T_APP_LE_LINK *p_link = app_link_find_le_link_by_conn_id(app_idx);
 
-    if (apk_state == APK_STATE_FOREGROUND)
+    if (p_link)
     {
-        disable_latency = true;
+        p_link->apk_state = apk_state;
+        app_cmd_check_slave_latency_update(app_idx, true);
     }
-    else
-    {
-        disable_latency = false;
-    }
-    app_cmd_set_apk_init_state(true);
-    le_disable_slave_latency(app_idx, disable_latency);
+
     app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
 }
 #endif
@@ -2022,7 +2083,9 @@ void app_cmd_bt_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path,
         {
             uint8_t rand_addr[6] = {0};
             app_ble_rand_addr_get(rand_addr);
-            if ((cmd_path == CMD_PATH_SPP) || (cmd_path == CMD_PATH_IAP))
+            if ((cmd_path == CMD_PATH_SPP) ||
+                (cmd_path == CMD_PATH_IAP) ||
+                (cmd_path == CMD_PATH_GATT_OVER_BREDR))
             {
                 app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
                 app_report_event(cmd_path, EVENT_LE_PUBLIC_ADDR, app_idx, rand_addr, 6);
@@ -2080,11 +2143,20 @@ void app_cmd_bt_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path,
 
     case CMD_GET_NUM_OF_CONNECTION:
         {
-            uint8_t event_data = app_link_get_cmd_set_link_num();
+            uint8_t conn_num = app_link_get_cmd_set_link_num();
+
+#if F_APP_CHARGER_CASE_SUPPORT
+            if (app_db.charger_case_connected)
+            {
+                if (conn_num >= 2)
+                {
+                    conn_num--;
+                }
+            }
+#endif
 
             app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
-            app_report_event(cmd_path, EVENT_REPORT_NUM_OF_CONNECTION, app_idx, &event_data,
-                             sizeof(event_data));
+            app_report_event_broadcast(EVENT_REPORT_NUM_OF_CONNECTION, &conn_num, sizeof(conn_num));
         }
         break;
 
@@ -2490,11 +2562,19 @@ static void app_cmd_general_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8
             uint8_t info_type = cmd_ptr[2];
             uint8_t report_to_phone_len = 6;
             uint8_t buf[report_to_phone_len];
+            T_EQ_ENABLE_INFO enable_info;
+
+            app_eq_enable_info_get(app_db.spk_eq_mode, &enable_info);
 
             if (!app_db.eq_ctrl_by_src &&
                 app_cmd_check_src_eq_spec_version(cmd_path, app_idx))
             {
                 app_cmd_update_eq_ctrl(true, true);
+            }
+
+            if (enable_info.instance != NULL)
+            {
+                app_report_eq_idx(EQ_INDEX_REPORT_BY_CHANGE_MODE);
             }
 
             if (info_type == CMD_SET_INFO_TYPE_VERSION)
@@ -2563,13 +2643,22 @@ static void app_cmd_general_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8
                 app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
             }
 
-            //the first cmd send by android ota tool to confirm is rtk link by headset
-            app_db.le_link[app_idx].is_rtk_link = true;
+            /*the first cmd send by android ota tool to confirm is common link by headset;
+            "Common link" means that this BLE link is established through common adv*/
+            app_db.le_link[app_idx].is_common_link = true;
 
-            if (app_cfg_const.enable_rtk_multilink)
+            if (app_cfg_const.enable_common_multilink)
             {
                 app_ble_common_adv_enable_multilink();
             }
+            else
+            {
+                app_ble_common_adv_stop(APP_STOP_ADV_CAUSE_COMMON_MULTILINK_NOT_SUPPORT);
+            }
+
+#if F_APP_SLAVE_LATENCY_UPDATE_SUPPORT
+            app_cmd_check_slave_latency_update(app_idx, false);
+#endif
         }
         break;
 
@@ -2579,8 +2668,11 @@ static void app_cmd_general_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8
 
             if ((cmd_ptr[2] == CFG_SET_LE_NAME) || (cmd_ptr[2] == CFG_SET_LEGACY_NAME))
             {
-                if ((cmd_path == CMD_PATH_SPP) || (cmd_path == CMD_PATH_IAP) ||
-                    (cmd_path == CMD_PATH_LE) || (cmd_path == CMD_PATH_UART))
+                if ((cmd_path == CMD_PATH_SPP) ||
+                    (cmd_path == CMD_PATH_IAP) ||
+                    (cmd_path == CMD_PATH_GATT_OVER_BREDR) ||
+                    (cmd_path == CMD_PATH_LE) ||
+                    (cmd_path == CMD_PATH_UART))
                 {
                     uint8_t name_len;
                     uint8_t device_name[40];
@@ -2739,13 +2831,22 @@ static void app_cmd_general_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8
             app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
             app_report_event(cmd_path, EVENT_LANGUAGE_REPORT, app_idx, buf, 2);
 
-            //the first cmd send by ios audio connect tool to confirm is rtk link by headset
-            app_db.le_link[app_idx].is_rtk_link = true;
+            /*the first cmd send by ios audio connect tool to confirm is common link by headset
+            "Common link" means that this BLE link is established through common adv*/
+            app_db.le_link[app_idx].is_common_link = true;
 
-            if (app_cfg_const.enable_rtk_multilink)
+            if (app_cfg_const.enable_common_multilink)
             {
                 app_ble_common_adv_enable_multilink();
             }
+            else
+            {
+                app_ble_common_adv_stop(APP_STOP_ADV_CAUSE_COMMON_MULTILINK_NOT_SUPPORT);
+            }
+
+#if F_APP_SLAVE_LATENCY_UPDATE_SUPPORT
+            app_cmd_check_slave_latency_update(app_idx, false);
+#endif
         }
         break;
 
@@ -2980,13 +3081,22 @@ static void app_cmd_general_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8
             app_report_get_bud_info(&buf[0]);
             app_report_event(cmd_path, EVENT_REPORT_BUD_INFO, app_idx, buf, sizeof(buf));
 
-            //the first cmd send by ios ota tool to confirm is rtk link by headset
-            app_db.le_link[app_idx].is_rtk_link = true;
+            /*the first cmd send by ios ota tool to confirm is common link by headset;
+            "Common link" means that this BLE link is established through common adv*/
+            app_db.le_link[app_idx].is_common_link = true;
 
-            if (app_cfg_const.enable_rtk_multilink)
+            if (app_cfg_const.enable_common_multilink)
             {
                 app_ble_common_adv_enable_multilink();
             }
+            else
+            {
+                app_ble_common_adv_stop(APP_STOP_ADV_CAUSE_COMMON_MULTILINK_NOT_SUPPORT);
+            }
+
+#if F_APP_SLAVE_LATENCY_UPDATE_SUPPORT
+            app_cmd_check_slave_latency_update(app_idx, false);
+#endif
         }
         break;
 
@@ -3017,8 +3127,7 @@ static void app_cmd_general_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8
 
                     if (app_cfg_const.bud_role == remote_bud_role ||
                         app_cfg_const.bud_role == REMOTE_SESSION_ROLE_SINGLE ||
-                        remote_bud_role == REMOTE_SESSION_ROLE_SINGLE ||
-                        app_db.device_state != APP_DEVICE_STATE_OFF)
+                        remote_bud_role == REMOTE_SESSION_ROLE_SINGLE)
                     {
                         // bud coupling needs one primary bud & one secondary bud
                         // need power-off state to update bud coupling info
@@ -3380,9 +3489,15 @@ static void app_cmd_general_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8
                 max_size = frame_size - 20;
 #endif
             }
+            else if (cmd_path == CMD_PATH_GATT_OVER_BREDR)
+            {
+                APP_PRINT_TRACE1("app_read_flash: mtu_size %d, CMD_PATH_GATT_OVER_BREDR",
+                                 app_db.br_link[app_idx].mtu_size);
+                max_size = app_db.br_link[app_idx].mtu_size - 20;
+            }
             else if (cmd_path == CMD_PATH_LE)
             {
-                APP_PRINT_TRACE1("app_read_flash: mtu_size %d", app_db.le_link[app_idx].mtu_size);
+                APP_PRINT_TRACE1("app_read_flash: mtu_size %d, CMD_PATH_LE", app_db.le_link[app_idx].mtu_size);
                 max_size = app_db.le_link[app_idx].mtu_size - 20;
             }
 
@@ -3466,7 +3581,6 @@ static void app_cmd_general_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8
             uint8_t bat_status[2] = {0};
             uint8_t bud_name[40] = {0};
             uint8_t conn_status = false;
-            uint8_t evt_buf[7] = {0};
             app_db.charger_case_connected = true;
             app_db.charger_case_link_id = app_idx;
             memcpy(charger_case_bt_address, &cmd_ptr[2], 6);
@@ -3498,16 +3612,29 @@ static void app_cmd_general_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8
             {
                 conn_status = true;
             }
-            app_report_status_to_charger_case(CHARGER_CASE_GET_CONNECT_STATUS, &conn_status);
 
-            memcpy_s(&evt_buf[0], 6, charger_case_record_avrcp_addr, 6);
-            evt_buf[6] = charger_case_record_avrcp_vol;
-            app_report_event(CMD_PATH_LE, EVENT_VOLUME_SYNC, app_db.charger_case_link_id, evt_buf,
-                             sizeof(evt_buf));
+            if (!conn_status)
+            {
+                charger_case_record_avrcp_level = (app_dsp_cfg_vol.playback_volume_default * 0x7F +
+                                                   app_dsp_cfg_vol.playback_volume_max / 2) /
+                                                  app_dsp_cfg_vol.playback_volume_max;
+            }
+
+            app_report_status_to_charger_case(CHARGER_CASE_GET_CONNECT_STATUS, &conn_status);
+            app_report_level_to_charger_case(charger_case_record_avrcp_level, charger_case_record_avrcp_addr);
 
 #if F_APP_ANC_SUPPORT
             app_listening_report_status_change(app_db.current_listening_state);
 #endif
+        }
+        break;
+
+    case CMD_CHARGER_CASE_INFO:
+        {
+            uint8_t buf[6] = {0};
+
+            app_cfg_nv.case_battery = cmd_ptr[2];
+            app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
         }
         break;
 
@@ -3518,22 +3645,33 @@ static void app_cmd_general_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8
                 uint8_t evt_buf[2];
 
                 evt_buf[0] = cmd_ptr[2];
-                evt_buf[1] = cmd_path;
+                evt_buf[1] = cmd_ptr[3];
 
+                app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
                 app_report_event(CMD_PATH_LE, EVENT_CHARGER_CASE_OTA_MODE, app_db.charger_case_link_id,
-                                 evt_buf,
-                                 sizeof(evt_buf));
+                                 evt_buf, sizeof(evt_buf));
+            }
+            else
+            {
+                ack_pkt[2] = CMD_SET_STATUS_DISALLOW;
+                app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
+            }
+        }
+        break;
 
-                //report charger_case bt address to phone
+    case CMD_CHARGER_CASE_GET_BT_ADDR:
+        {
+            if (app_db.charger_case_connected)
+            {
+                app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
                 app_report_event(cmd_path, EVENT_CHAGRER_CASE_REPORT_BT_ADDR, app_idx, charger_case_bt_address,
                                  sizeof(charger_case_bt_address));
             }
             else
             {
                 ack_pkt[2] = CMD_SET_STATUS_DISALLOW;
+                app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
             }
-
-            app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
         }
         break;
 
@@ -3543,15 +3681,15 @@ static void app_cmd_general_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8
             {
                 uint8_t find_status = cmd_ptr[2];
 
+                app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
                 app_report_event(CMD_PATH_LE, EVENT_CHARGER_CASE_FIND_CHARGER_CASE, app_db.charger_case_link_id,
                                  &find_status, sizeof(find_status));
             }
             else
             {
                 ack_pkt[2] = CMD_SET_STATUS_DISALLOW;
+                app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
             }
-
-            app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
         }
         break;
 
@@ -3561,13 +3699,12 @@ static void app_cmd_general_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8
             bool ret = false;
             uint8_t is_bonded = cmd_ptr[2];
             bool is_need_new_key = true;
-            uint8_t remote_addr[6];
             uint8_t remote_addr_type = cmd_ptr[3];
             uint8_t ltk_key[16];
             uint8_t local_addr[6];
             uint8_t local_addr_type;
 
-            memcpy_s(remote_addr, 6, &cmd_ptr[4], 6);
+            memcpy(charger_case_bt_address, &cmd_ptr[4], 6);
             memcpy_s(ltk_key, 16, &cmd_ptr[10], 16);
 
             memcpy_s(local_addr, 6, app_cfg_nv.bud_local_addr, 6);
@@ -3579,7 +3716,8 @@ static void app_cmd_general_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8
 
             if (is_bonded)
             {
-                p_entry = bt_le_find_key_entry(remote_addr, (T_GAP_REMOTE_ADDR_TYPE)remote_addr_type, local_addr,
+                p_entry = bt_le_find_key_entry(charger_case_bt_address, (T_GAP_REMOTE_ADDR_TYPE)remote_addr_type,
+                                               local_addr,
                                                local_addr_type);
                 if (p_entry)
                 {
@@ -3598,15 +3736,19 @@ static void app_cmd_general_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8
 
             if (is_need_new_key)
             {
-                ret = app_cmd_charger_case_set_fast_pair_info(ltk_key, remote_addr, remote_addr_type);
+                ret = app_cmd_charger_case_set_fast_pair_info(ltk_key, local_addr_type, remote_addr_type);
 
                 if (!ret)
                 {
                     ack_pkt[2] = CMD_SET_STATUS_PROCESS_FAIL;
+                    app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
+                }
+                else
+                {
+                    app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
+                    app_report_event(CMD_PATH_UART, EVENT_CHARGER_CASE_BUD_AUTO_PAIR_SUC, 0, NULL, 0);
                 }
             }
-
-            app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
 
             app_ble_common_adv_start(0);
         }
@@ -3615,6 +3757,14 @@ static void app_cmd_general_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8
     case CMD_CHARGER_CASE_PEER_ADDR_SET:
         {
             uint8_t peer_addr[6];
+
+            if (cmd_len < 8)
+            {
+                ack_pkt[2] = CMD_SET_STATUS_PARAMETER_ERROR;
+                app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
+
+                break;
+            }
 
             memcpy_s(peer_addr, 6, &cmd_ptr[2], 6);
 
@@ -3665,6 +3815,15 @@ static void app_cmd_general_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8
             {
                 ack_pkt[2] = CMD_SET_STATUS_PROCESS_FAIL;
             }
+
+            app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
+        }
+        break;
+
+    case CMD_ROLESWAP_ENABLE:
+        {
+            app_cfg_const.disable_link_monitor_roleswap = cmd_ptr[2];
+            app_cfg_const.disable_low_bat_role_swap = cmd_ptr[3];
 
             app_report_event(cmd_path, EVENT_ACK, app_idx, ack_pkt, 3);
         }
@@ -3907,8 +4066,33 @@ static void app_cmd_other_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t
             app_report_event(CMD_PATH_SPP, EVENT_ACK, app_idx, ack_pkt, 3);
             dlps_stay_mode = cmd_ptr[2];
 
-            app_relay_async_single_with_raw_msg(APP_MODULE_TYPE_DEVICE, APP_REMOTE_MSG_SET_LPS_SYNC,
-                                                &dlps_stay_mode, 1);
+            if (app_db.remote_session_state == REMOTE_SESSION_STATE_CONNECTED)
+            {
+                app_relay_async_single_with_raw_msg(APP_MODULE_TYPE_DEVICE, APP_REMOTE_MSG_SET_LPS_SYNC,
+                                                    &dlps_stay_mode, 1);
+            }
+            else
+            {
+                APP_PRINT_INFO1("CMD_OTA_TOOLING_PARKING %d", dlps_stay_mode);
+
+                app_cfg_nv.need_set_lps_mode = 1;
+
+                if (dlps_stay_mode)
+                {
+                    // shipping mode
+                    power_mode_set(POWER_SHIP_MODE);
+                    app_cfg_nv.ota_parking_lps_mode = dlps_stay_mode;
+                }
+                else
+                {
+                    // power down mode
+                    power_mode_set(POWER_POWERDOWN_MODE);
+                    app_cfg_nv.ota_parking_lps_mode = dlps_stay_mode;
+                }
+
+                app_cfg_store(&app_cfg_nv.eq_idx_anc_mode_record, 4);
+                app_cfg_store(&app_cfg_nv.offset_is_dut_test_mode, 1);
+            }
 
             // response to HOST
             app_report_event(cmd_path, EVENT_OTA_TOOLING_PARKING, app_idx, &report_status, 1);
@@ -4337,11 +4521,13 @@ void app_cmd_handler(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, uint8
         }
         else if (cmd_path == CMD_PATH_LE)
         {
-            check_rx_seqn = &app_db.le_link[app_idx].rx_cmd_seqn;
+            check_rx_seqn = &app_db.le_link[app_idx].cmd.rx_seqn;
         }
-        else if ((cmd_path == CMD_PATH_SPP) || (cmd_path == CMD_PATH_IAP))
+        else if ((cmd_path == CMD_PATH_SPP) ||
+                 (cmd_path == CMD_PATH_IAP) ||
+                 (cmd_path == CMD_PATH_GATT_OVER_BREDR))
         {
-            check_rx_seqn = &app_db.br_link[app_idx].rx_cmd_seqn;
+            check_rx_seqn = &app_db.br_link[app_idx].cmd.rx_seqn;
         }
 
         if (check_rx_seqn)
@@ -4356,15 +4542,18 @@ void app_cmd_handler(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, uint8
         }
     }
 
-    if ((cmd_path == CMD_PATH_SPP) || (cmd_path == CMD_PATH_IAP))
+    if ((cmd_path == CMD_PATH_SPP) ||
+        (cmd_path == CMD_PATH_IAP) ||
+        (cmd_path == CMD_PATH_GATT_OVER_BREDR))
     {
-        app_db.br_link[app_idx].cmd_set_enable = true;
+        app_db.br_link[app_idx].cmd.enable = true;
+        bt_sniff_mode_exit(app_db.br_link[app_idx].bd_addr, true);
     }
     else if (cmd_path == CMD_PATH_LE)
     {
         if (app_db.le_link[app_idx].state == LE_LINK_STATE_CONNECTED)
         {
-            app_db.le_link[app_idx].cmd_set_enable = true;
+            app_db.le_link[app_idx].cmd.enable = true;
         }
     }
 
@@ -4376,7 +4565,10 @@ void app_cmd_handler(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, uint8
             {
                 app_transfer_pop_data_queue(CMD_PATH_UART, true);
             }
-            else if ((cmd_path == CMD_PATH_LE) || (cmd_path == CMD_PATH_SPP) || (cmd_path == CMD_PATH_IAP))
+            else if ((cmd_path == CMD_PATH_LE) ||
+                     (cmd_path == CMD_PATH_SPP) ||
+                     (cmd_path == CMD_PATH_IAP) ||
+                     (cmd_path == CMD_PATH_GATT_OVER_BREDR))
             {
                 uint16_t event_id = (uint16_t)(cmd_ptr[2] | (cmd_ptr[3] << 8));
                 uint8_t status = cmd_ptr[4];
@@ -4385,7 +4577,7 @@ void app_cmd_handler(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, uint8
 
                 if (event_id == EVENT_AUDIO_EQ_PARAM_REPORT)
                 {
-                    if (cmd_path == CMD_PATH_LE)
+                    if (cmd_path == CMD_PATH_LE || (cmd_path == CMD_PATH_GATT_OVER_BREDR))
                     {
                         if (status != CMD_SET_STATUS_COMPLETE)
                         {
@@ -4479,9 +4671,12 @@ void app_cmd_handler(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, uint8
     case CMD_CHARGER_CASE_ENTER_OTA_MODE:
     case CMD_CHARGER_CASE_LINK_INFO_SET:
     case CMD_CHARGER_CASE_PEER_ADDR_SET:
+    case CMD_CHARGER_CASE_INFO:
+    case CMD_CHARGER_CASE_GET_BT_ADDR:
 #endif
     case CMD_LOG_MASK_SET:
     case CMD_LOG_MASK_GET:
+    case CMD_ROLESWAP_ENABLE:
         {
             app_cmd_general_cmd_handle(cmd_ptr, cmd_len, cmd_path, app_idx, ack_pkt);
         }

@@ -13,12 +13,12 @@
 #include "usb_msg.h"
 #include "app_io_msg.h"
 #include "section.h"
+#include "pm.h"
 #ifdef LEGACY_BT_GENERAL
 #include "app_general_policy.h"
 #endif
 
 #if TARGET_RTL8763EAU
-#include "pm.h"
 #include "app_device.h"
 #include "app_mmi.h"
 #include "btm.h"
@@ -38,6 +38,7 @@
 #include "hal_adp.h"
 #include "usb_audio_stream.h"
 #include "app_usb_uac.h"
+#include "app_timer.h"
 
 #define DONGLE_BC12_EN  0
 
@@ -55,6 +56,9 @@
 
 #if F_APP_LEA_DONGLE_BINDING
 #include "app_le_audio.h"
+#endif
+#if F_APP_USB_HID_SUPPORT && F_APP_USB_AUDIO_SUPPORT
+#include "app_ctrl_pkt_policy.h"
 #endif
 
 #include "app_downstream_encode.h"
@@ -77,8 +81,8 @@ void (*usb_start_enum_cb)(void) = NULL;
 void (*usb_suspend_cb)(void) = NULL;
 #endif
 
-const char *usb_uac_1st_str = "JLab Daybreak Wireless Dongle";
-const char *usb_uac_2nd_str = "JLab Daybreak Wireless Dongle";
+const char *usb_uac_1st_str = "RTL8763EAU - Chat";
+const char *usb_uac_2nd_str = "RTL8763EAU - Game";
 
 #if USBLIB_LEGACY
 
@@ -93,16 +97,39 @@ typedef enum
     USB_EVT_PWR_STATUS_CHG,
 } T_USB_EVT;
 
+typedef enum
+{
+    USB_SRC_STREAMING_DETECT,
+} T_APP_USB_TIMER;
 
 typedef struct _app_usb_db
 {
     T_USB_POWER_STATE usb_pwr_state;
-    bool is_switch_clk;
     bool usb_suspend;
     uint8_t app_usb_config_count;
 } T_APP_USB_DB;
 
 static T_APP_USB_DB app_usb_db;
+
+static uint8_t app_usb_timer_queue_id = 0;
+static uint8_t timer_idx_usb_src_streaming_detect;
+
+static void app_usb_timer_cback(uint8_t timer_id, uint16_t timer_chann)
+{
+    switch (timer_id)
+    {
+    case USB_SRC_STREAMING_DETECT:
+        {
+            app_stop_timer(&timer_idx_usb_src_streaming_detect);
+
+            app_usb_set_usb_src_streaming(false);
+        }
+        break;
+
+    default:
+        break;
+    }
+}
 
 #if F_APP_USB_GIP_SUPPORT
 void app_usb_gip_cfg_desc(uint16_t idProduct, uint16_t idVendor, char *serialNum)
@@ -308,7 +335,6 @@ static bool app_usb_dm_cb(T_USB_DM_EVT evt, T_USB_DM_EVT_PARAM *param)
             //resume interrupt handle to do
             if (app_device_is_power_on() == true)
             {
-                app_device_set_cpu_to_xtal();
                 app_usb_resume_clk();
             }
 #endif
@@ -444,7 +470,6 @@ static void app_usb_dm_evt_resume_handle(void)
     if (app_device_is_power_on() == true)
     {
         app_usb_resume_src();
-        app_usb_db.is_switch_clk = false;
     }
 }
 #endif
@@ -497,9 +522,6 @@ static void app_usb_dm_evt_handle(uint8_t evt, uint32_t data)
             {
             case USB_PDN:
                 {
-#if TARGET_RTL8763EAU
-                    app_usb_db.is_switch_clk = false;
-#endif
                 }
                 break;
             case USB_SUSPENDED:
@@ -561,16 +583,6 @@ static void app_usb_dm_evt_handle(uint8_t evt, uint32_t data)
             default:
                 break;
             }
-#if (TARGET_RTL8773DO == 1 || TARGET_RTL8773DFL == 1)
-            if (usb_pwr_state == USB_SUSPENDED)
-            {
-                app_dlps_enable(APP_DLPS_ENTER_CHECK_USB);
-            }
-            else if (usb_pwr_state > USB_PDN)
-            {
-                app_dlps_disable(APP_DLPS_ENTER_CHECK_USB);
-            }
-#endif
             app_usb_db.usb_pwr_state = usb_pwr_state;
         }
         break;
@@ -605,34 +617,28 @@ T_USB_POWER_STATE app_usb_power_state(void)
     return app_usb_db.usb_pwr_state;
 }
 
+#if F_APP_USB_HID_SUPPORT && F_APP_USB_AUDIO_SUPPORT
+static int app_usb_host_detect_cb(T_OS_TYPE type)
+{
+    dongle_status.usb_host_type = type;
+    app_gaming_sync_dongle_status();
+
+    return 0;
+}
+#endif
+
 static void app_usb_other_evt_handle(uint8_t evt, uint32_t data)
 {
     APP_PRINT_INFO2("app_usb_other_evt_handle evt 0x%x data 0x%x", evt, data);
     switch (evt)
     {
-    case USB_OTHER_EVT_AUDIO_USB_SRC_STREAM_STATE:
+    case USB_OTHER_EVT_USB_SRC_STREAMING:
         {
-            bool stream_start = data;
+            app_usb_set_usb_src_streaming(true);
 
-            if (stream_start)
-            {
-                app_usb_set_usb_src_streaming(true);
-
-#if F_APP_USB_AUDIO_FEEDBACK_SUPPORT
-                if (app_usb_audio_get_feedback_state() == USB_FEEDBACK_DETECT)
-                {
-                    app_usb_feedback_detect_start();
-                }
-#endif
-            }
-            else
-            {
-                app_usb_set_usb_src_streaming(false);
-
-#if F_APP_USB_AUDIO_FEEDBACK_SUPPORT
-                app_usb_feedback_detect_stop();
-#endif
-            }
+            app_start_timer(&timer_idx_usb_src_streaming_detect, "usb_src_streaming_detect",
+                            app_usb_timer_queue_id, USB_SRC_STREAMING_DETECT, 0, false,
+                            USB_SRC_STREAMING_DETECT_TIMEOUT);
         }
         break;
 
@@ -713,36 +719,22 @@ void app_usb_msg_handle(T_IO_MSG *msg)
     }
 }
 
-#if TARGET_RTL8763EAU
-static bool app_usb_suspend_clk_switch_check(void)
+#endif
+
+bool app_usb_dvfs_check(void)
 {
-    if (app_usb_db.is_switch_clk == false)
-    {
-        if (app_usb_db.usb_pwr_state == USB_SUSPENDED)
-        {
-            if (app_device_is_power_on() == true)
-            {
-                app_device_set_cpu_to_osc();
-                app_usb_db.is_switch_clk = true;
-                return false;
-            }
-        }
-    }
-    if (app_usb_db.usb_pwr_state == USB_PDN)
-    {
-        return true;
-    }
-    return false;
+    return (app_usb_db.usb_pwr_state == USB_PDN || app_usb_db.usb_pwr_state == USB_SUSPENDED);
 }
-#endif
-#endif
 
 void app_usb_init(void)
 {
     memset(&app_usb_db, 0, sizeof(T_APP_USB_DB));
 
+    app_timer_reg_cb(app_usb_timer_cback, &app_usb_timer_queue_id);
+
     app_usb_cfg_device_desc();
     app_usb_cfg_string();
+    pm_dvfs_register_check_func(app_usb_dvfs_check);
     adp_register_state_change_cb(ADP_DETECT_5V, (P_ADP_PLUG_CBACK)app_usb_adp_state_change_cb, NULL);
     T_USB_DM_EVT_MSK evt_msk = {0};
     evt_msk.b.status_ind = 1;
@@ -765,6 +757,12 @@ void app_usb_init(void)
     }
     usb_dm_core_init(config);
     usb_dev_init();
+
+#if F_APP_USB_HID_SUPPORT && F_APP_USB_AUDIO_SUPPORT && (USB_AUDIO_VERSION == USB_AUDIO_VERSION_1)
+    usb_host_detect_init();
+
+    usb_host_detect_cback_register(app_usb_host_detect_cb);
+#endif
     app_usb_vol_control_init();
 
     if (app_cfg_const.dongle_usb_audio_support)
@@ -788,9 +786,6 @@ void app_usb_init(void)
     app_usb_controller_init();
 #endif
 
-#if TARGET_RTL8763EAU
-    power_check_cb_register(app_usb_suspend_clk_switch_check);
-#endif
 #if (UAC_SILENCE_DETECT_SUPPORT == 1)
     app_silence_detect_init();
 #endif

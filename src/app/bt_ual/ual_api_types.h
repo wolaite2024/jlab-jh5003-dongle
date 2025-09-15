@@ -212,6 +212,7 @@
 #define BLE_CONN_FAST_CI_DEF    (0x0006)
 #define BLE_CONN_GAMING_CI_DEF  (0x0020)
 #define BLE_CONN_NORMAL_CI_DEF  (0x0020)
+#define BLE_CONN_IND_MIN_CI_DEF (0x0018)
 
 /* default connection interval min */
 /* recommended min: 30ms  = 24 * 1.25 */

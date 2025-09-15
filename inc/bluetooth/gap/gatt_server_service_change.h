@@ -3,7 +3,7 @@
 *     Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * @file    gatt_server_service_change.h
-  * @brief   This file contains all the functions prototypes for GATT Service service change
+  * @brief   This file contains all the function prototypes for GATT Service service change
   *          related functions.
   * @details
   * @author
@@ -34,6 +34,7 @@ extern "C"
   */
 
 /** @defgroup GATT_SERVER_SERVICE_CHANGE GATT Server Service Change
+  * @brief GATT Server Service Change
   * @{
   */
 
@@ -43,16 +44,16 @@ extern "C"
 /** @defgroup GATT_SERVER_SERVICE_CHANGE_Exported_Macros GATT Server Service Change Exported Macros
   * @{
   */
-/** @defgroup GATT_SERVER_SERVICE_CHANGE_STATE_BIT_Def GATT Server Service Change State Bit definitions
+/** @defgroup GATT_SERVER_SERVICE_CHANGE_STATE_BIT_Def GATT Server Service Change State Bit Definitions
   * @{
   */
-#define GATT_SERVER_SERVICE_CHANGE_STATE_BIT_SEND_INDICATION                         0 /**< Bit 0: Whether APP should send Service Changed Indication
-                                                                                            * \arg 0 : APP should not send Service Changed Indication
-                                                                                            * \arg 1 : APP should send Service Changed Indication */
+#define GATT_SERVER_SERVICE_CHANGE_STATE_BIT_SEND_INDICATION                         0 /**< Bit 0: Whether APP should send Service Changed Indication.
+                                                                                            * \arg 0 : APP should not send Service Changed Indication.
+                                                                                            * \arg 1 : APP should send Service Changed Indication. */
 #define GATT_SERVER_SERVICE_CHANGE_STATE_BIT_CHANGE_UNAWARE                          1 /**< Bit 1: Ignore if Server on local device does not support GATT Caching.
-                                                                                            *      From the perspective of Server, Client is either change-aware or change-unaware
-                                                                                            * \arg 0 : change-aware
-                                                                                            * \arg 1 : change-unaware */
+                                                                                            *      From the perspective of Server, Client is either change-aware or change-unaware.
+                                                                                            * \arg 0 : change-aware.
+                                                                                            * \arg 1 : change-unaware. */
 /** End of GATT_SERVER_SERVICE_CHANGE_STATE_BIT_Def
   * @}
   */
@@ -61,15 +62,15 @@ extern "C"
   * @{
   */
 #define GATT_SERVER_SERVICE_CHANGE_SET_SERVICE_CHANGE_STATE_IND               0x0001   /**< * Inform APP to handle and save service change state.
-                                                                                            * Usage refer to @ref service_change and @ref service_change_state in @ref T_GATT_SERVER_SERVICE_CHANGE_SET_SERVICE_CHANGE_STATE_IND */
+                                                                                            * Usage refer to @ref service_change and @ref service_change_state in @ref T_GATT_SERVER_SERVICE_CHANGE_SET_SERVICE_CHANGE_STATE_IND. */
 
 #define GATT_SERVER_SERVICE_CHANGE_SET_DATABASE_HASH_INFO                     0x0010   /**< * Inform APP to save database hash. */
 
-#define GATT_SERVER_SERVICE_CHANGE_GET_SERVICE_CHANGE_STATE_IND               0x0020   /**< * Inform APP to supply service change state by @ref gatt_server_service_change_update_service_change_state
+#define GATT_SERVER_SERVICE_CHANGE_GET_SERVICE_CHANGE_STATE_IND               0x0020   /**< * Inform APP to supply service change state by @ref gatt_server_service_change_update_service_change_state.
                                                                                             * If device is bonded, service change state is previous state that is saved by APP.
-                                                                                            * If device is not bonded, service change state is 0 . */
+                                                                                            * If device is not bonded, service change state is 0. */
 
-#define GATT_SERVER_SERVICE_CHANGE_GET_DATABASE_HASH_IND                      0x0030   /**< * Inform APP to supply database hash by @ref gatt_server_service_change_update_database_hash */
+#define GATT_SERVER_SERVICE_CHANGE_GET_DATABASE_HASH_IND                      0x0030   /**< * Inform APP to supply database hash by @ref gatt_server_service_change_update_database_hash. */
 /** End of GATT_SERVER_SERVICE_CHANGE_MSG_Opcodes
   * @}
   */
@@ -89,7 +90,7 @@ typedef struct
 {
     uint16_t                    conn_handle;
     uint8_t
-    service_change_state; /**< @ref GATT_SERVER_SERVICE_CHANGE_STATE_BIT_Def */
+    service_change_state; /**< @ref GATT_SERVER_SERVICE_CHANGE_STATE_BIT_Def. */
 } T_GATT_SERVER_SERVICE_CHANGE_UPDATE_SERVICE_CHANGE_STATE_PARAM;
 
 typedef struct
@@ -100,24 +101,24 @@ typedef struct
 /** @brief  Data for @ref GATT_SERVER_SERVICE_CHANGE_SET_SERVICE_CHANGE_STATE_IND */
 typedef struct
 {
-    uint8_t service_change;             /**< Whether service is changed
+    uint8_t service_change;             /**< Whether service is changed.
                                           * \arg 0 : Service is not changed.
-                                          *              If specific device is bonded, APP save @ref service_change_state .
-                                          *              If specific device is not bonded, APP update temporary service change state with @ref service_change_state .
+                                          *              If a specific device is bonded, APP saves @ref service_change_state.
+                                          *              If a specific device is not bonded, APP updates the temporary service change state with @ref service_change_state.
                                           * \arg 1 : Service is changed.
-                                          *             Step 1: For each bonded device, APP save "new service change state".
-                                          *             Step 2: For each connected device, APP update temporary service change state with "new service change state",
-                                          *                     call @ref gatt_server_service_change_update_service_change_state with "new service change state",
-                                          *                     and then send Service Changed Indication.
+                                          *             Step 1: For each bonded device, APP saves the "new service change state".
+                                          *             Step 2: For each connected device, APP updates the temporary service change state with the "new service change state",
+                                          *                     calls @ref gatt_server_service_change_update_service_change_state with the "new service change state",
+                                          *                     and then sends Service Changed Indication.
                                           *
-                                          *             If device support Robust Caching (Bit 0 of Octet 0 in the Client Supported Features characteristic value
-                                          *             is 1), "new service change state" is @ref service_change_state .
-                                          *             If device does not support Robust Caching (Bit 0 of Octet 0 in the Client Supported Features characteristic value
-                                          *             is 0), "new service change state" is (@ref service_change_state & (~(1 << GATT_SERVER_SERVICE_CHANGE_STATE_BIT_CHANGE_UNAWARE))). */
+                                          *             If the device supports Robust Caching (Bit 0 of Octet 0 in the Client Supported Features characteristic value
+                                          *             is 1), the "new service change state" is @ref service_change_state.
+                                          *             If the device does not support Robust Caching (Bit 0 of Octet 0 in the Client Supported Features characteristic value
+                                          *             is 0), the "new service change state" is (@ref service_change_state & (~(1 << GATT_SERVER_SERVICE_CHANGE_STATE_BIT_CHANGE_UNAWARE))). */
 
-    uint8_t service_change_state;                   /**< APP should not use @ref service_change_state as "new service change state".
-                                                         * Usage refer to @ref service_change .
-                                                         * @ref GATT_SERVER_SERVICE_CHANGE_STATE_BIT_Def . */
+    uint8_t service_change_state;                   /**< APP should not use @ref service_change_state as the "new service change state".
+                                                         * Usage refer to @ref service_change.
+                                                         * @ref GATT_SERVER_SERVICE_CHANGE_STATE_BIT_Def. */
 
     uint16_t svc_changed_char_cccd_handle;          /**< Ignore if @ref service_change is 0. 0x0000: Invalid handle. */
 
@@ -155,7 +156,7 @@ typedef union
 /** @brief  Data for @ref GAP_MSG_GATT_SERVER_SERVICE_CHANGE_INFO */
 typedef struct
 {
-    uint16_t                              opcode;   /**< @ref GATT_SERVER_SERVICE_CHANGE_MSG_Opcodes */
+    uint16_t                              opcode;   /**< @ref GATT_SERVER_SERVICE_CHANGE_MSG_Opcodes. */
     T_GATT_SERVER_SERVICE_CHANGE_CB_DATA  data;
 } T_GATT_SERVER_SERVICE_CHANGE_CB;
 /** End of GATT_SERVER_SERVICE_CHANGE_Exported_Types
@@ -172,19 +173,19 @@ typedef struct
 /**
  * @brief       Update service change state.
  *
- *              This API shall be used if any of the following conditions is true:
+ * This API shall be used if any of the following conditions is true:
  *                  \arg cb_type is @ref GAP_MSG_GATT_SERVER_SERVICE_CHANGE_INFO, opcode is
  *                       @ref GATT_SERVER_SERVICE_CHANGE_SET_SERVICE_CHANGE_STATE_IND and
  *                       @ref service_change is 1 :
  *                       APP shall call this API for each connected device with state refer
- *                       to @ref service_change in @ref T_GATT_SERVER_SERVICE_CHANGE_SET_SERVICE_CHANGE_STATE_IND
+ *                       to @ref service_change in @ref T_GATT_SERVER_SERVICE_CHANGE_SET_SERVICE_CHANGE_STATE_IND.
  *                  \arg cb_type is @ref GAP_MSG_GATT_SERVER_SERVICE_CHANGE_INFO and opcode is
  *                       @ref GATT_SERVER_SERVICE_CHANGE_GET_SERVICE_CHANGE_STATE_IND :
- *                       APP shall call this API for specific device with state refer to @ref GATT_SERVER_SERVICE_CHANGE_GET_SERVICE_CHANGE_STATE_IND
+ *                       APP shall call this API for specific device with state refer to @ref GATT_SERVER_SERVICE_CHANGE_GET_SERVICE_CHANGE_STATE_IND.
  *
  * @xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
  *
- * @param[in] p_param   Point to parameter: @ref T_GATT_SERVER_SERVICE_CHANGE_UPDATE_SERVICE_CHANGE_STATE_PARAM
+ * @param[in] p_param   Point to parameter: @ref T_GATT_SERVER_SERVICE_CHANGE_UPDATE_SERVICE_CHANGE_STATE_PARAM.
  *
  * @return The result of operation.
  * @retval GAP_CAUSE_SUCCESS  Operation is successful.
@@ -216,31 +217,31 @@ typedef struct
 
                             if // Check whether specific device is bonded
                             {
-                                // Specific device is bonded, APP save @ref service_change_state
+                                // Specific device is bonded, APP saves @ref service_change_state
                             }
                             else
                             {
-                                // Specific device is not bonded, APP update temporary service change state with @ref service_change_state
+                                // Specific device is not bonded, APP updates temporary service change state with @ref service_change_state
                             }
                         }
                         else if (p_gatt_server_service_change_info->data.p_gatt_server_service_change_set_service_change_state_ind->service_change == 1)
                         {
                             // Service is changed
 
-                            // Step 1: For each bonded device, APP save "new service change state".
+                            // Step 1: For each bonded device, APP saves "new service change state".
 
                             // For each bonded device
                             {
-                                if // Check whether device support Robust Caching (Bit 0 of Octet 0 in the Client Supported Features characteristic value is 1)
+                                if // Check whether device supports Robust Caching (Bit 0 of Octet 0 in the Client Supported Features characteristic value is 1)
                                 {
-                                    // Support Robust Caching: "new service change state" is @ref service_change_state .
+                                    // Supports Robust Caching: "new service change state" is @ref service_change_state.
                                 }
                                 else
                                 {
-                                    // Not support Robust Caching: "new service change state" is (@ref service_change_state & (~(1 << GATT_SERVER_SERVICE_CHANGE_STATE_BIT_CHANGE_UNAWARE))).
+                                    // Does not support Robust Caching: "new service change state" is (@ref service_change_state & (~(1 << GATT_SERVER_SERVICE_CHANGE_STATE_BIT_CHANGE_UNAWARE))).
                                 }
 
-                                // APP save "new service change state"
+                                // APP saves "new service change state"
                             }
                             ...
                             // Step 1: End
@@ -249,24 +250,24 @@ typedef struct
                             ...
                             // For each connected device
                             {
-                                if // Check whether device support Robust Caching (Bit 0 of Octet 0 in the Client Supported Features characteristic value is 1)
+                                if // Check whether device supports Robust Caching (Bit 0 of Octet 0 in the Client Supported Features characteristic value is 1)
                                 {
-                                    // Support Robust Caching: "new service change state" is @ref service_change_state .
+                                    // Supports Robust Caching: "new service change state" is @ref service_change_state .
                                 }
                                 else
                                 {
-                                    // Not support Robust Caching: "new service change state" is (@ref service_change_state & (~(1 << GATT_SERVER_SERVICE_CHANGE_STATE_BIT_CHANGE_UNAWARE))).
+                                    // Does not support Robust Caching: "new service change state" is (@ref service_change_state & (~(1 << GATT_SERVER_SERVICE_CHANGE_STATE_BIT_CHANGE_UNAWARE))).
                                 }
 
-                                // APP update temporary service change state with "new service change state"
+                                // APP updates temporary service change state with "new service change state"
                                 ...
 
-                                // APP call @ref gatt_server_service_change_update_service_change_state with "new service change state"
+                                // APP calls @ref gatt_server_service_change_update_service_change_state with "new service change state"
                                 gatt_server_service_change_update_service_change_state(p_param);
 
                                 if (p_param->service_change_state & (1 << GATT_SERVER_SERVICE_CHANGE_STATE_BIT_SEND_INDICATION))
                                 {
-                                    // APP send Service Changed Indication
+                                    // APP sends Service Changed Indication
                                 }
                             }
                             ...
@@ -278,8 +279,8 @@ typedef struct
                 case GATT_SERVER_SERVICE_CHANGE_GET_SERVICE_CHANGE_STATE_IND:
                     // p_gatt_server_service_change_info->data.p_gatt_server_service_change_get_service_change_state_ind->conn_handle
 
-                    // If device is bonded, service change state is previous state that is saved by APP.
-                    // If device is not bonded, service change state is 0 .
+                    // If device is bonded, service change state is the previous state that is saved by APP.
+                    // If device is not bonded, service change state is 0.
                     gatt_server_service_change_update_service_change_state(p_param);
 
                     if (p_param->service_change_state & (1 << GATT_SERVER_SERVICE_CHANGE_STATE_BIT_SEND_INDICATION))
@@ -302,13 +303,13 @@ T_GAP_CAUSE gatt_server_service_change_update_service_change_state(
 /**
  * @brief       Update database hash.
  *
- *              This API shall be used if following condition is true:
+ * This API shall be used if following condition is true:
  *                  \arg cb_type is @ref GAP_MSG_GATT_SERVER_SERVICE_CHANGE_INFO and
- *                       opcode is @ref GATT_SERVER_SERVICE_CHANGE_GET_DATABASE_HASH_IND .
+ *                       opcode is @ref GATT_SERVER_SERVICE_CHANGE_GET_DATABASE_HASH_IND.
  *
  * @xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Experimental Added API"
  *
- * @param[in] p_param   Point to parameter: @ref T_GATT_SERVER_SERVICE_CHANGE_UPDATE_DATABASE_HASH_PARAM
+ * @param[in] p_param   Point to parameter: @ref T_GATT_SERVER_SERVICE_CHANGE_UPDATE_DATABASE_HASH_PARAM.
  *
  * @return The result of operation.
  * @retval GAP_CAUSE_SUCCESS  Operation is successful.

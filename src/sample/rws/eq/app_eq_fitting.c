@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "stdlib_corecrt.h"
+#include "bt_types.h"
 #include "dfu_api.h"
 #include "fmc_api.h"
 #include "flash_map.h"
@@ -965,15 +966,21 @@ static void app_eq_fitting_cback(T_AUDIO_EVENT event_type, void *event_buf, uint
 #if F_APP_APT_SUPPORT
     case AUDIO_EVENT_PASSTHROUGH_ENABLED:
         {
-            if (is_test_mode)
+            T_AUDIO_EVENT_PARAM_PASSTHROUGH_STARTED *param = (T_AUDIO_EVENT_PARAM_PASSTHROUGH_STARTED *)
+                                                             event_buf;
+
+            if (param->mode == AUDIO_PASSTHROUGH_MODE_NORMAL)
             {
-                app_eq_fitting_hw_eq_clear();
-                app_eq_fitting_set_test_mode_tmp_eq();
-                app_eq_fitting_set_test_mode_tmp_eq_advanced();
-            }
-            else
-            {
-                app_eq_fitting_send_hw_eq(AUDIO_CATEGORY_APT);
+                if (is_test_mode)
+                {
+                    app_eq_fitting_hw_eq_clear();
+                    app_eq_fitting_set_test_mode_tmp_eq();
+                    app_eq_fitting_set_test_mode_tmp_eq_advanced();
+                }
+                else
+                {
+                    app_eq_fitting_send_hw_eq(AUDIO_CATEGORY_APT);
+                }
             }
         }
         break;

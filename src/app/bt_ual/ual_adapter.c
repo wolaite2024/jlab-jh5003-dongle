@@ -47,7 +47,6 @@
 #include "ble_bg_conn.h"
 
 #include "gatt_builtin_services.h"
-#include "ble_sc_key_derive.h"
 
 #if GATTC_TBL_STORAGE_SUPPORT
 #include "gattc_tbl_storage.h"
@@ -86,6 +85,9 @@ static uint8_t timer_idx_rpa = 0;
 static T_UAL_LE_GAP_CBACK app_le_gap_callback;
 static T_UAL_LE_GAP_CBACK app_le_gap_callback2;
 static T_UAL_LE_GAP_MSG_CBACK app_le_gap_msg_callback;
+static T_GAP_SCAN_MODE app_le_scan_mode = GAP_SCAN_MODE_ACTIVE;
+
+extern void gatt_client_handle_gap_common_cb(uint8_t cb_type, void *p_cb_data);
 
 #if BLE_LOCAL_PRIVACY_SPT
 static void change_rpa(T_BT_ADAPTER *p_adapter)
@@ -245,7 +247,7 @@ static T_APP_RESULT ual_le_gap_callback(uint8_t cb_type, void *p_cb_data)
         app_le_gap_callback(cb_type, p_cb_data);
     }
 
-    if (app_le_gap_callback2 && cb_type == GAP_MSG_LE_MODIFY_WHITE_LIST)
+    if (app_le_gap_callback2)
     {
         app_le_gap_callback2(cb_type, p_cb_data);
     }
@@ -506,6 +508,11 @@ bool bt_ual_set_param(uint16_t type, uint8_t len, void *p_value)
     return ret;
 }
 
+void ual_handle_gap_common_cb(uint8_t cb_type, void *p_cb_data)
+{
+    gatt_client_handle_gap_common_cb(cb_type, p_cb_data);
+}
+
 static T_BT_ADAPTER *bt_adapter_init(void)
 {
     T_BT_ADAPTER *adapter;
@@ -673,6 +680,16 @@ int bt_adap_init(T_ADAPTET_CBACK cb)
     return 0;
 }
 
+void bt_adap_set_scan_mdoe(T_GAP_SCAN_MODE scan_mode)
+{
+    app_le_scan_mode = scan_mode;
+}
+
+T_GAP_SCAN_MODE bt_adap_get_scan_mode(void)
+{
+    return app_le_scan_mode;
+}
+
 int bt_adap_start(void)
 {
     return 0;
@@ -791,7 +808,7 @@ int bt_adap_start_discovery(uint8_t disc_type, uint8_t filter_policy, T_SCAN_RES
     {
         if (!adapter->le_scanning)
         {
-            if (!bt_adap_start_le_scan(GAP_SCAN_MODE_ACTIVE, filter_policy))
+            if (!bt_adap_start_le_scan(app_le_scan_mode, filter_policy))
             {
                 APP_PRINT_ERROR0("bt_adap_start_discovery: start lescan err");
                 goto fail;

@@ -154,6 +154,42 @@ bool bqb_pbap(const char *cmd_str, char *buf, size_t buf_len);
 bool bqb_map(const char *cmd_str, char *buf, size_t buf_len);
 
 /**
+  * @brief  The callback function that is executed when "pbp broadcast_code" is entered. This is a bqb
+            subcommand that should be registered.
+  * @param  cmd_str    The start address of the command buffer.
+  * @param  buf        The start address of output_buffer.
+  * @param  buf_len    The length of output_buffer.
+  * @return The result of sending command.
+  * @retval true    The command needs to be executed again.
+  * @retval false   The command has been executed.
+  */
+bool bqb_pbp(const char *cmd_str, char *buf, size_t buf_len);
+
+/**
+  * @brief  The callback function that is executed when "tmap gaming_mode/originate" is entered. This is a bqb
+            subcommand that should be registered.
+  * @param  cmd_str    The start address of the command buffer.
+  * @param  buf        The start address of output_buffer.
+  * @param  buf_len    The length of output_buffer.
+  * @return The result of sending command.
+  * @retval true    The command needs to be executed again.
+  * @retval false   The command has been executed.
+  */
+bool bqb_tmap(const char *cmd_str, char *buf, size_t buf_len);
+
+/**
+  * @brief  The callback function that is executed when "hap " is entered. This is a bqb
+            subcommand that should be registered.
+  * @param  cmd_str    The start address of the command buffer.
+  * @param  buf        The start address of output_buffer.
+  * @param  buf_len    The length of output_buffer.
+  * @return The result of sending command.
+  * @retval true    The command needs to be executed again.
+  * @retval false   The command has been executed.
+  */
+bool bqb_hap(const char *cmd_str, char *buf, size_t buf_len);
+
+/**
  * End of APP_RWS_BQB
  * @}
  */

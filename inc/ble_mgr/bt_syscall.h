@@ -11,15 +11,15 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 
-/** @defgroup BT_SYSCALL BT Syscall
-  * @brief BT Syscall
+/** @defgroup BT_SYSCALL Bluetooth Syscall
+  * @brief Bluetooth Syscall
   * @{
   */
 
 /*============================================================================*
  *                              Types
  *============================================================================*/
-/** @defgroup BT_SYSCALL_Exported_Types BT Syscall Types
+/** @defgroup BT_SYSCALL_Exported_Types Bluetooth Syscall Types
     * @{
     */
 
@@ -28,24 +28,24 @@ extern "C" {
  */
 typedef struct
 {
-    uint32_t valid: 1;    /**< bit[0]: 1 is valid and 0 is invalid */
-    uint32_t type: 1;     /**< bit[1]: 1 is the ISO and 0 is the ACL (always 1) */
-    uint32_t role: 1;     /**< bit[2]: 1 is the master and 0 is the slave */
-    uint32_t dir: 1;      /**< bit[3]: 1 is Tx, 0 is Rx. Input parameter */
-    uint32_t cis: 1;      /**< bit[4]: 1 is the CIS, 0 is the BIS */
-    uint32_t rsvd0: 3;    /**< bit[7:5]: reserved */
-    uint32_t status: 8;   /**< bit[15:8]: status */
-    uint32_t rsvd1: 16;   /**< bit[31:16]: reserved */
+    uint32_t valid: 1;    /**< bit[0]: 1 is valid and 0 is invalid. */
+    uint32_t type: 1;     /**< bit[1]: 1 is the ISO and 0 is the ACL (always 1). */
+    uint32_t role: 1;     /**< bit[2]: 1 is the master and 0 is the slave. */
+    uint32_t dir: 1;      /**< bit[3]: 1 is Tx, 0 is Rx. Input parameter. */
+    uint32_t cis: 1;      /**< bit[4]: 1 is the CIS, 0 is the BIS. */
+    uint32_t rsvd0: 3;    /**< bit[7:5]: reserved. */
+    uint32_t status: 8;   /**< bit[15:8]: status. */
+    uint32_t rsvd1: 16;   /**< bit[31:16]: reserved. */
 
-    uint16_t conn_handle;         /**< iso (cis or bis) connection handle, Input parameter */
-    uint16_t sdu_seq_num;         /**< sdu sequence number */
-    uint32_t sdu_interval;        /**< sdu interval (us) */
-    uint32_t cur_sync_ref_point;  /**< current sdu sync ref point (us) */
-    uint32_t pre_sync_ref_point;  /**< previous sdu sync ref point (us) */
-    uint32_t accumulate_sw_timer; /**< accumulate sw timer (us) */
-    uint32_t iso_interval_us;     /**< iso interval (us)*/
-    uint32_t group_anchor_point;  /**< cig or big anchor point */
-    uint32_t cur_sdu_sync_ref_point; /* current sdu sync ref point (us) */
+    uint16_t conn_handle;         /**< ISO (CIS or BIS) connection handle, Input parameter. */
+    uint16_t sdu_seq_num;         /**< SDU sequence number. */
+    uint32_t sdu_interval;        /**< SDU interval (us). */
+    uint32_t cur_sync_ref_point;  /**< Current SDU sync ref point (us). */
+    uint32_t pre_sync_ref_point;  /**< Previous SDU sync ref point (us). */
+    uint32_t accumulate_sw_timer; /**< Accumulated SW timer (us). */
+    uint32_t iso_interval_us;     /**< ISO interval (us). */
+    uint32_t group_anchor_point;  /**< CIG or BIG anchor point. */
+    uint32_t cur_sdu_sync_ref_point; /* Current SDU sync ref point (us). */
 } T_BT_LE_ISO_SYNC_REF_AP_INFO;
 
 /** End of BT_SYSCALL_Exported_Types
@@ -55,19 +55,19 @@ typedef struct
 /*============================================================================*
  *                              Functions
  *============================================================================*/
-/** @defgroup BT_SYSCALL_Exported_Functions BT Syscall Functions
+/** @defgroup BT_SYSCALL_Exported_Functions Bluetooth Syscall Functions
     * @{
     */
 
 /**
-*@brief    Get the application information of the le isochronous synchronization reference.
-*@param[in]  p_info  The pointer of the data structure includes the SDU sync ref point information.
-*@return   bool
-*@retval   true  Success
-*@retval   false  Failed
-*
-* <b>Example usage</b>
-* \code{.c}
+ * @brief    Get the application information of the LE isochronous synchronization reference.
+ * @param[in]  p_info  The pointer of the data structure includes the SDU sync ref point information.
+ * @return   Operation result.
+ * @retval   true   Success.
+ * @retval   false  Failed.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
 
     void app_lea_probe_cback(T_AUDIO_PROBE_EVENT event, void *buf)
     {
@@ -123,9 +123,16 @@ typedef struct
         APP_PRINT_INFO1("conn_handle refclk %x", syncclk_set_anchor_point);
         app_lea_send_ref(&info, REF_GUARD_TIME_US);
     }
-* \endcode
-*/
+ * \endcode
+ */
 bool bt_get_le_iso_sync_ref_ap_info(T_BT_LE_ISO_SYNC_REF_AP_INFO *p_info);
+/** End of BT_SYSCALL_Exported_Functions
+    * @}
+    */
+
+/** End of BT_SYSCALL
+    * @}
+    */
 
 #ifdef __cplusplus
 }

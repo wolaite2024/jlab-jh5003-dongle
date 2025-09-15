@@ -189,7 +189,7 @@ static T_UAC1_AC_HDR_DESC(0, UAC1_STREAM_2_INTF_NUM) ac_hdr_desc =
     .baInterfaceNr[0]   = 4,
 };
 
-static const void  *uac1_descs_ctrl[] =
+static void *const uac1_descs_ctrl[] =
 {
     (void *) &ac_interface_desc,
     (void *) &ac_hdr_desc,
@@ -202,7 +202,7 @@ static const void  *uac1_descs_ctrl[] =
 };
 
 #if UAC_SPK_SUPPORT
-static const void  *uac1_descs_spk_hs[] =
+static void *const uac1_descs_spk_hs[] =
 {
     (void *) &interface_alt0_desc1,
     (void *) &interface_alt1_desc1,
@@ -213,7 +213,7 @@ static const void  *uac1_descs_spk_hs[] =
     NULL
 };
 
-static const void  *uac1_descs_spk_fs[] =
+static void *const uac1_descs_spk_fs[] =
 {
     (void *) &interface_alt0_desc1,
     (void *) &interface_alt1_desc1,

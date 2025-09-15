@@ -1,5 +1,3 @@
-#include <stdlib.h>
-#include <string.h>
 #include "os_mem.h"
 #include "os_timer.h"
 #include "os_sync.h"

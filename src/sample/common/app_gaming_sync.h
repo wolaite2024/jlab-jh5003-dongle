@@ -1,10 +1,13 @@
 #ifndef _APP_GAMING_SYNC_H_
 #define _APP_GAMING_SYNC_H_
 
+#include "app_cfg.h"
+
 #define DONGLE_FORMAT_START_BIT         0x52
 #define DONGLE_FORMAT_STOP_BIT          0x54
 
 #define FIX_CHANNEL_CID                 0x0008
+#define LE_FIX_CHANNEL_ID               0x0A
 
 #define LE_LINK_ID_INVALID              0xff
 
@@ -13,6 +16,7 @@
 #define GAMING_LC3_FRAME_NUM            1
 #define GAMING_LC3_MAX_FRAME_NUM        2
 #define GAMING_SBC_FRAME_SIZE           87
+#define GAMING_SBC_BITPOOL              37
 
 #define GAMING_SYNC_STREAMING_TIMEOUT       250
 #define GAMING_SYNC_STREAM_DETECT_INTERVAL  150
@@ -31,12 +35,15 @@ typedef enum
     PCM_96K_24BIT_STEREO_0_5MS,
     SBC_48K_16BIT_STEREO,
     LC3_16K_16BIT_MONO_7_5MS,
+    LC3_32K_16BIT_MONO_7_5MS,
     LC3_16K_16BIT_MONO_10MS,
     LC3_32K_16BIT_MONO_10MS,
     LC3_48K_16BIT_MONO_10MS,
     LC3_16K_16BIT_STEREO_7_5MS,
+    LC3_32K_16BIT_STEREO_7_5MS,
     LC3_48K_16BIT_STEREO_7_5MS,
     LC3_16K_16BIT_STEREO_10MS,
+    LC3_32K_16BIT_STEREO_10MS,
     LC3_48K_16BIT_STEREO_10MS,
 } T_GAMING_CODEC;
 
@@ -64,10 +71,8 @@ typedef enum
 
 typedef enum
 {
-    HEADSET_PHONE_STATUS_UNKOWN,
-    /* phone br or le acl exist */
-    HEADSET_PHONE_CONNECTED,
     HEADSET_PHONE_DISCONNECTED,
+    HEADSET_PHONE_CONNECTED,
 } T_HEADSET_CONN_STATUS;
 
 typedef struct
@@ -175,6 +180,13 @@ typedef enum
 
 typedef enum
 {
+    LEFT_BUD_LE_CONNECTED  = 0x01,
+    RIGHT_BUD_LE_CONNECTED = 0x02,
+    ALL_BUDS_LE_CONNECTED  = (LEFT_BUD_LE_CONNECTED | RIGHT_BUD_LE_CONNECTED),
+} T_APP_BUD_LE_CONN_STATUS;
+
+typedef enum
+{
     DONGLE_CMD_SET_GAMING_MOE           = 0x01,
     DONGLE_CMD_REQUEST_GAMING_MOE       = 0x02,
     DONGLE_CMD_REQ_OPEN_MIC             = 0x03,
@@ -183,13 +195,32 @@ typedef enum
     DONGLE_CMD_PASS_THROUGH_DATA        = 0x10,
     DONGLE_CMD_CFU_DATA                 = 0x11,
     DONGLE_CMD_FORCE_SUSPEND            = 0x14,
+    DONGLE_CMD_INTERNAL_USE             = 0x15, // rsv for internal use
+    DONGLE_CMD_MIC_MUTE_CTRL            = 0x16,
     DONGLE_CMD_ERASE_FLASH              = 0xA0,
     DONGLE_CMD_WRITE_CUSTOMIZED_VP      = 0xA1,
     DONGLE_CMD_WRITE_VP_FINISH          = 0xA2,
     DONGLE_CMD_TRANS_SPK_VOL_INFO       = 0xA3,
     DONGLE_CMD_SPK_VOL_CTRL             = 0xA4,
+    DONGLE_CMD_B2B_RELAY_ENGAGE_ADV     = 0xFC,
+    DONGLE_CMD_B2B_RELAY_DATA           = 0xFD,
     DONGLE_CMD_SYNC_STATUS              = 0xFE,
 } T_APP_DONGLE_CMD;
+
+typedef struct
+{
+    T_DEVICE_BUD_SIDE bud_side;
+    uint16_t len;
+    uint8_t  data[0];
+} T_DONGLE_RELAY_B2B_DATA;
+
+typedef struct
+{
+    T_DEVICE_BUD_SIDE bud_side;
+    uint8_t  addr[6];
+    uint16_t adv_len;
+    uint8_t  adv_data[0];
+} T_DONGLE_RELAY_B2B_ADV;
 
 typedef struct
 {
@@ -200,6 +231,8 @@ typedef struct
     uint8_t dongle_addr[6];
     uint8_t streaming_to_peer;
     uint8_t volume_sync_to_headset;
+    T_APP_BUD_LE_CONN_STATUS bud_le_conn_status;
+    uint8_t usb_host_type;
 } T_DONGLE_STATUS;
 
 typedef struct

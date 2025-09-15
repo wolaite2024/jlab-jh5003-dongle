@@ -169,6 +169,8 @@ int32_t app_cfu_get_report(T_HID_DRIVER_REPORT_REQ_VAL report_req, uint8_t *data
     * @return 0: success; others: fail
     */
 int32_t app_cfu_set_report(T_HID_DRIVER_REPORT_REQ_VAL report_req, uint8_t *data, uint16_t len);
+
+bool app_cfu_tpl_xmit(void *buf, uint32_t len);
 #endif /*F_APP_USB_HID_SUPPORT*/
 /** @} */ /* End of group APP_CFU_TRANSFER_Exported_Functions */
 /** @} */ /* End of group APP_CFU_TRANSFER */

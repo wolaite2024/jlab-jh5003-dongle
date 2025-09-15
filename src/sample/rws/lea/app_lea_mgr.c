@@ -13,6 +13,7 @@
 #include "ascs_mgr.h"
 #include "bas.h"
 #include "bass_mgr.h"
+#include "mics_mgr.h"
 #include "ble_conn.h"
 #include "bt_direct_msg.h"
 #include "bt_types.h"
@@ -28,7 +29,6 @@
 #include "app_cfg.h"
 #include "app_hfp.h"
 #include "app_a2dp.h"
-#include "app_io_msg.h"
 #include "app_lea_adv.h"
 #include "app_lea_ascs.h"
 #include "app_lea_mcp.h"
@@ -45,16 +45,16 @@
 #include "app_auto_power_off.h"
 #include "app_audio_policy.h"
 #include "app_ipc.h"
-#include "app_ota.h"
 #include "app_lea_pacs.h"
 #include "app_report.h"
 #include "app_lea_csis.h"
+#include "app_lea_mics.h"
 #include "app_lea_unicast_audio.h"
 #include "app_lea_vol_policy.h"
 #include "app_bud_loc.h"
 #include "app_sensor.h"
+#include "app_timer.h"
 #include "app_roleswap_control.h"
-#include "app_vendor.h"
 
 #if F_APP_QOL_MONITOR_SUPPORT
 #include "app_qol.h"
@@ -66,10 +66,6 @@
 
 #if F_APP_TUYA_SUPPORT
 #include "rtk_tuya_ble_ota.h"
-#endif
-
-#if F_APP_24G_BT_AUDIO_SOURCE_CTRL_SUPPORT
-#include "app_dongle_source_ctrl.h"
 #endif
 
 #if F_APP_LISTENING_MODE_SUPPORT
@@ -87,10 +83,16 @@
 #endif
 
 #if F_APP_GAMING_DONGLE_SUPPORT
+#include "app_usb_vol_control.h"
+#include "app_dongle_data_ctrl.h"
+#endif
+
+#if F_APP_GAMING_DONGLE_TRANS_UAC_VOL_TO_HEADSET
 #include "app_dongle_common.h"
 #include "app_usb_vol_control.h"
 #include "app_dongle_data_ctrl.h"
 #endif
+
 /*============================================================================*
  *                              Variables
  *============================================================================*/
@@ -105,11 +107,18 @@
 
 #define LEA_ISO_DATA_DELTA_TIMESTAMP 3000
 
+typedef enum
+{
+    APP_LEA_MGR_TIMER_IN_EAR_RESUME  = 0x00,
+} T_APP_LEA_MGR_TIMER;
+
 static T_ISOCH_DATA_PKT_STATUS app_lea_mgr_iso_data_status = ISOCH_DATA_PKT_STATUS_LOST_DATA;
 static uint8_t lea_mgr_current_mcp_state = MCS_MEDIA_STATE_INACTIVE;
 static bool lea_mgr_media_suspend_by_out_ear = false;
-static bool lea_mgr_gaming_streaming = false;
 uint8_t lea_bas_id = 0;
+
+static uint8_t lea_mgr_timer_id = 0;
+static uint8_t timer_idx_in_ear_resume = 0;
 
 static void app_lea_mgr_legacy_mode(bool *result);
 static bool app_lea_mgr_sniff_check(T_MTC_AUDIO_MODE mode);
@@ -160,14 +169,17 @@ bool app_lea_mgr_is_media_streaming(void)
     return ret;
 }
 
-bool app_lea_mgr_is_streaming(void)
+bool app_lea_mgr_is_downstreaming(void)
 {
     for (uint8_t idx = 0; idx < MAX_BLE_LINK_NUM; idx++)
     {
         if (app_db.le_link[idx].used &&
             app_db.le_link[idx].lea_link_state == LEA_LINK_STREAMING)
         {
-            return true;
+            if (app_lea_ascs_find_ase_entry_by_direction(&app_db.le_link[idx], DATA_PATH_OUTPUT_FLAG) != NULL)
+            {
+                return true;
+            }
         }
     }
 
@@ -200,8 +212,8 @@ void app_lea_mgr_update_current_mcp_state(void *p_link_info, uint8_t mcp_prev_st
 {
     T_APP_LE_LINK *p_link = (T_APP_LE_LINK *)p_link_info;
 
-    APP_PRINT_TRACE3("app_lea_mgr_update_current_mcp_state: media_state %d, mcp_prev_state %d, lea_mgr_media_suspend_by_out_ear %d",
-                     p_link->media_state, mcp_prev_state, lea_mgr_media_suspend_by_out_ear);
+    APP_PRINT_TRACE4("app_lea_mgr_update_current_mcp_state: handle 0x%02X, media_state 0x%02X, mcp_prev_state 0x%02X, lea_mgr_media_suspend_by_out_ear 0x%02X",
+                     p_link->conn_handle,  p_link->media_state, mcp_prev_state, lea_mgr_media_suspend_by_out_ear);
 
     if (((mcp_prev_state == MCS_MEDIA_STATE_PAUSED &&
           p_link->media_state == MCS_MEDIA_STATE_PLAYING)) &&
@@ -221,12 +233,6 @@ void app_lea_mgr_clear_iso_queue(T_OS_QUEUE *p_queue)
     }
 }
 
-void app_lea_mgr_set_gaming_state(bool state)
-{
-    lea_mgr_gaming_streaming = state;
-    APP_PRINT_INFO1("app_lea_mgr_set_gaming_state: 0x%x", lea_mgr_gaming_streaming);
-}
-
 void app_lea_mgr_enqueue_iso_data(T_OS_QUEUE *p_queue, T_BT_DIRECT_ISO_DATA_IND *p_iso_data,
                                   uint16_t output_handle)
 {
@@ -239,7 +245,7 @@ void app_lea_mgr_enqueue_iso_data(T_OS_QUEUE *p_queue, T_BT_DIRECT_ISO_DATA_IND 
         return;
     }
 
-    p_iso_buf = calloc(1, sizeof(T_ISO_DATA_IND) + p_iso_data->iso_sdu_len);
+    p_iso_buf = audio_probe_media_buffer_malloc(sizeof(T_ISO_DATA_IND) + p_iso_data->iso_sdu_len);
 
     if (p_iso_buf == NULL)
     {
@@ -268,7 +274,7 @@ void app_lea_mgr_enqueue_iso_data(T_OS_QUEUE *p_queue, T_BT_DIRECT_ISO_DATA_IND 
 
         if (p_iso_elem != NULL)
         {
-            free(p_iso_elem);
+            audio_probe_media_buffer_free(p_iso_elem);
         }
         APP_PRINT_TRACE0("app_lea_mgr_enqueue_iso_data: more than LEA_ISO_QUEUE_MAX");
     }
@@ -354,7 +360,7 @@ queue time 0x%02X, iso handle 0x%02X, queue handle 0x%02X, iso seq 0x%02X, queue
             if (p_direct_iso->time_stamp > p_iso_elem->time_stamp)
             {
                 os_queue_delete(p_queue, p_iso_elem);
-                free(p_iso_elem);
+                audio_probe_media_buffer_free(p_iso_elem);
             }
             else
             {
@@ -391,19 +397,33 @@ bool app_lea_mgr_dev_ctrl(uint8_t para, uint8_t *data)
         {
             T_BT_DEVICE_MODE device_mode = *((T_BT_DEVICE_MODE *)data);
 
-            if (app_cfg_const.legacy_enable ||
-                //For B2B legacy connection, primary needs to change to connectable mode
-                ((app_db.remote_session_state == REMOTE_SESSION_STATE_DISCONNECTED) &&
-                 (device_mode != BT_DEVICE_MODE_DISCOVERABLE_CONNECTABLE)))
-            {
-                result = bt_device_mode_set(device_mode);
-            }
-
             if (device_mode == BT_DEVICE_MODE_CONNECTABLE ||
                 device_mode == BT_DEVICE_MODE_DISCOVERABLE_CONNECTABLE)
             {
                 app_lea_adv_start();
             }
+            else if (device_mode == BT_DEVICE_MODE_IDLE)
+            {
+                app_lea_adv_stop();
+            }
+
+            if (!app_cfg_const.legacy_enable)
+            {
+                T_APP_BR_LINK *p_b2b_link = app_link_find_br_link(app_cfg_nv.bud_peer_addr);
+
+                if (p_b2b_link != NULL || app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_SINGLE)
+                {
+                    device_mode = BT_DEVICE_MODE_IDLE;
+                }
+                else
+                {
+                    if (device_mode == BT_DEVICE_MODE_DISCOVERABLE_CONNECTABLE)
+                    {
+                        break;
+                    }
+                }
+            }
+            result = bt_device_mode_set(device_mode);
         }
         break;
 
@@ -424,6 +444,31 @@ void app_lea_mgr_set_media_state(uint8_t para)
     app_lea_mgr_iso_data_status = (T_ISOCH_DATA_PKT_STATUS)para;
 }
 
+bool app_lea_mgr_find_call_device_by_priority(void)
+{
+    T_MTC_BT_MODE bt_mode = mtc_get_btmode();
+    bool lea_exec = false;
+
+    if (bt_mode == MULTI_PRO_BT_BIS)
+    {
+        T_APP_LE_LINK *p_link = app_link_find_le_link_by_conn_handle(app_lea_ccp_get_active_conn_handle());
+        if (p_link && p_link->active_call_uri)
+        {
+            lea_exec = true;
+        }
+    }
+    else if (bt_mode == MULTI_PRO_BT_CIS)
+    {
+        lea_exec = true;
+    }
+
+    APP_PRINT_INFO2("app_lea_mgr_find_call_device_by_priority: exec 0x%x, mode 0x%x,", lea_exec,
+                    bt_mode);
+
+    return lea_exec;
+}
+
+#if F_APP_GAMING_DONGLE_TRANS_UAC_VOL_TO_HEADSET
 bool app_lea_mgr_handle_vol_mmi(uint8_t action)
 {
     bool ret = false;
@@ -462,15 +507,18 @@ bool app_lea_mgr_handle_vol_mmi(uint8_t action)
 exit:
     return ret;
 }
+#endif
 
-void app_lea_mgr_tri_mmi_handle_action(uint8_t action, bool inter)
+static void app_lea_mgr_bca_mmi_handle(uint8_t action)
 {
     if (!app_cfg_const.iso_mode)
     {
         return;
     }
-    APP_PRINT_TRACE5("app_lea_mgr_tri_mmi_handle_action: action 0x%02X, b2s %d, b2b %d, local %d, lea_mode %d",
-                     action, mtc_get_b2s_sniff_status(), mtc_get_b2d_sniff_status(), inter, app_cfg_const.iso_mode);
+
+    APP_PRINT_TRACE4("app_lea_mgr_bca_mmi_handle: action 0x%02X, b2s %d, b2b %d, lea_mode %d",
+                     action, mtc_get_b2s_sniff_status(), mtc_get_b2d_sniff_status(), app_cfg_const.iso_mode);
+
     switch (action)
     {
 #if F_APP_TMAP_BMR_SUPPORT
@@ -488,7 +536,7 @@ void app_lea_mgr_tri_mmi_handle_action(uint8_t action, bool inter)
             }
 
             if (app_hfp_get_call_status() != APP_CALL_IDLE &&
-                (mtc_if_fm_lbis(LBIS_TO_MTC_CHECK_RESUME, NULL, &need_return) == MTC_RESULT_SUCCESS) &&
+                (mtc_if_fm_lbis_handle(LBIS_TO_MTC_CHECK_RESUME, NULL, &need_return) == MTC_RESULT_SUCCESS) &&
                 !need_return)
             {
                 break;
@@ -501,16 +549,12 @@ void app_lea_mgr_tri_mmi_handle_action(uint8_t action, bool inter)
             {
                 app_lea_bca_sm(LEA_BCA_MMI, NULL);
             }
-            else if (!inter)
-            {
-                app_auto_power_off_disable(AUTO_POWER_OFF_MASK_BLE_AUDIO);
-                break;
-            }
 
             if (app_lea_mgr_sniff_check(LE_AUDIO_BIS))
             {
                 break;
             }
+
             mtc_stream_switch(false);
             app_sniff_mode_b2s_disable_all(SNIFF_DISABLE_MASK_LEA);
             app_sniff_mode_b2b_disable(app_cfg_nv.bud_peer_addr, SNIFF_DISABLE_MASK_LEA);
@@ -547,6 +591,7 @@ void app_lea_mgr_tri_mmi_handle_action(uint8_t action, bool inter)
                     app_audio_tone_type_play(TONE_BIS_STOP, false, true);
                 }
             }
+
             app_lea_bca_bmr_terminate();
         }
         break;
@@ -555,7 +600,6 @@ void app_lea_mgr_tri_mmi_handle_action(uint8_t action, bool inter)
     default:
         break;
     }
-
 }
 
 static bool app_lea_mgr_check_pri_only_action(uint8_t action, T_MTC_BT_MODE bt_mode)
@@ -579,12 +623,24 @@ static bool app_lea_mgr_check_pri_only_action(uint8_t action, T_MTC_BT_MODE bt_m
         }
         break;
 
-    case MMI_DEV_GAMING_MODE_SWITCH:
     case MMI_DEV_MIC_MUTE_UNMUTE:
     case MMI_DEV_MIC_MUTE:
     case MMI_DEV_MIC_UNMUTE:
         {
             is_pri_only_action = false;
+#if F_APP_MICS_SUPPORT
+            if (app_lea_mics_find_mc_link())
+            {
+                is_pri_only_action = true;
+            }
+#endif
+        }
+        break;
+
+    case MMI_DEV_GAMING_MODE_SWITCH:
+        {
+            is_pri_only_action = false;
+
         }
         break;
 
@@ -599,6 +655,7 @@ void app_lea_mgr_mmi_handle(uint8_t action)
 {
     uint16_t conn_handle = 0;
     bool handle = true;
+    bool cmd_ret = true;
     T_APP_LE_LINK *p_link = NULL;
     T_MTC_BT_MODE bt_mode = mtc_get_btmode();
 #if F_APP_MCP_SUPPORT
@@ -611,17 +668,16 @@ void app_lea_mgr_mmi_handle(uint8_t action)
     if (action == MMI_BIG_START ||
         action == MMI_BIG_STOP)
     {
-        app_lea_mgr_tri_mmi_handle_action(action, false);
+        app_lea_mgr_bca_mmi_handle(action);
         return;
     }
 
     if (action == MMI_DEV_POWER_OFF)
     {
-        mtc_set_dev(2);
         if (bt_mode  == MULTI_PRO_BT_BIS)
         {
             mtc_set_beep(MTC_PRO_BEEP_NONE);
-            app_lea_mgr_tri_mmi_handle_action(MMI_BIG_STOP, false);
+            app_lea_mgr_bca_mmi_handle(MMI_BIG_STOP);
         }
         return;
     }
@@ -633,8 +689,7 @@ void app_lea_mgr_mmi_handle(uint8_t action)
         return;
     }
 
-    if (bt_mode == MULTI_PRO_BT_CIS &&
-        action != MMI_DEV_GAMING_MODE_SWITCH)
+    if (action != MMI_DEV_GAMING_MODE_SWITCH)
     {
         if (action <= MMI_HF_RELEASE_ACTIVE_CALL_ACCEPT_HELD_OR_WAITING_CALL)
         {
@@ -680,11 +735,12 @@ void app_lea_mgr_mmi_handle(uint8_t action)
             return;
         }
 
-        if (p_link == NULL)
+        if ((p_link == NULL) && (bt_mode == MULTI_PRO_BT_CIS))
         {
             if ((action == MMI_HF_LAST_NUMBER_REDIAL) || (action == MMI_AV_PLAY_PAUSE))
             {
                 //TODO: change to target and direct adv to linkback last device
+                APP_PRINT_TRACE0("app_lea_mgr_mmi_handle: doesn't find active link in cis mode");
             }
 
             return;
@@ -708,11 +764,11 @@ void app_lea_mgr_mmi_handle(uint8_t action)
                     param.opcode = MCS_MEDIA_CONTROL_POINT_CHAR_OPCODE_PLAY;
                 }
 
-                mcp_client_write_media_cp(conn_handle, 0, p_link->gmcs, &param, true);
+                cmd_ret = mcp_client_write_media_cp(conn_handle, 0, p_link->gmcs, &param, true);
             }
             else
             {
-                mtc_if_fm_lcis(LCIS_TO_MTC_TER_CIS, NULL, NULL);
+                mtc_if_fm_lcis_handle(LCIS_TO_MTC_TER_CIS, NULL, NULL);
             }
         }
         break;
@@ -724,7 +780,7 @@ void app_lea_mgr_mmi_handle(uint8_t action)
                 if (p_link->media_state == MCS_MEDIA_STATE_PLAYING)
                 {
                     param.opcode = MCS_MEDIA_CONTROL_POINT_CHAR_OPCODE_PAUSE;
-                    mcp_client_write_media_cp(conn_handle, 0, p_link->gmcs, &param, true);
+                    cmd_ret = mcp_client_write_media_cp(conn_handle, 0, p_link->gmcs, &param, true);
                 }
             }
         }
@@ -737,7 +793,7 @@ void app_lea_mgr_mmi_handle(uint8_t action)
                 if (p_link->media_state == MCS_MEDIA_STATE_PLAYING)
                 {
                     param.opcode = MCS_MEDIA_CONTROL_POINT_CHAR_OPCODE_STOP;
-                    mcp_client_write_media_cp(conn_handle, 0, p_link->gmcs, &param, true);
+                    cmd_ret = mcp_client_write_media_cp(conn_handle, 0, p_link->gmcs, &param, true);
                 }
             }
         }
@@ -748,7 +804,7 @@ void app_lea_mgr_mmi_handle(uint8_t action)
             if (bt_mode == MULTI_PRO_BT_CIS)
             {
                 param.opcode = MCS_MEDIA_CONTROL_POINT_CHAR_OPCODE_NEXT_TRACK;
-                mcp_client_write_media_cp(conn_handle, 0, p_link->gmcs, &param, true);
+                cmd_ret = mcp_client_write_media_cp(conn_handle, 0, p_link->gmcs, &param, true);
             }
         }
         break;
@@ -758,7 +814,7 @@ void app_lea_mgr_mmi_handle(uint8_t action)
             if (bt_mode == MULTI_PRO_BT_CIS)
             {
                 param.opcode = MCS_MEDIA_CONTROL_POINT_CHAR_OPCODE_PREVIOUS_TRACK;
-                mcp_client_write_media_cp(conn_handle, 0, p_link->gmcs, &param, true);
+                cmd_ret = mcp_client_write_media_cp(conn_handle, 0, p_link->gmcs, &param, true);
             }
         }
         break;
@@ -892,17 +948,14 @@ void app_lea_mgr_mmi_handle(uint8_t action)
 
     case MMI_HF_LAST_NUMBER_REDIAL:
         {
-            if (bt_mode == MULTI_PRO_BT_CIS)
+            if (p_link && p_link->active_call_uri != NULL)
             {
-                if (p_link->active_call_uri != NULL)
-                {
-                    write_call_cp_param.opcode = TBS_CALL_CONTROL_POINT_CHAR_OPCODE_ORIGINATE;
-                    write_call_cp_param.param.originate_opcode_param.p_uri = p_link->active_call_uri;
-                    write_call_cp_param.param.originate_opcode_param.uri_len = strlen((char *)p_link->active_call_uri);
+                write_call_cp_param.opcode = TBS_CALL_CONTROL_POINT_CHAR_OPCODE_ORIGINATE;
+                write_call_cp_param.param.originate_opcode_param.p_uri = p_link->active_call_uri;
+                write_call_cp_param.param.originate_opcode_param.uri_len = strlen((char *)p_link->active_call_uri);
 
-                    ccp_client_write_call_cp(p_link->conn_handle, 0, p_link->gtbs, false, &write_call_cp_param);
-                    app_audio_tone_type_play(TONE_HF_CALL_REDIAL, false, true);
-                }
+                ccp_client_write_call_cp(p_link->conn_handle, 0, p_link->gtbs, false, &write_call_cp_param);
+                app_audio_tone_type_play(TONE_HF_CALL_REDIAL, false, true);
             }
         }
         break;
@@ -1358,44 +1411,15 @@ fail_release_active_call_accept_held_or_waiting_call:
 #if F_APP_GAMING_DONGLE_SUPPORT && F_APP_LEA_SUPPORT
             APP_PRINT_ERROR0("app_lea_mgr_mmi_handle: MMI_DEV_GAMING_MODE_SWITCH: LE gaming dongle does not support switch gaming mode");
 #else
-            if (app_cfg_nv.bud_role != REMOTE_SESSION_ROLE_SECONDARY &&
-                app_link_get_lea_link_num() == 0)
-            {
-                break;
-            }
-
             APP_PRINT_TRACE1("app_lea_mgr_mmi_handle: MMI_DEV_GAMING_MODE_SWITCH mode %d",
                              app_db.gaming_mode);
 
-            if (app_link_get_b2s_link_num() == 0)
+            if (app_link_get_lea_link_num() != 0)
             {
-                app_db.gaming_mode ^= 1;
+                bool gaming_mode = app_db.gaming_mode ? false : true;
 
-                app_lea_pacs_update_low_latency(app_db.gaming_mode);
-                app_report_gaming_mode_info();
-
-                if (app_db.gaming_mode)
-                {
-                    if (app_db.remote_session_state == REMOTE_SESSION_STATE_DISCONNECTED)
-                    {
-                        app_audio_tone_type_play(TONE_ENTER_GAMING_MODE, false, false);
-                    }
-                    else if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY)
-                    {
-                        app_audio_tone_type_play(TONE_ENTER_GAMING_MODE, false, true);
-                    }
-                }
-                else
-                {
-                    if (app_db.remote_session_state == REMOTE_SESSION_STATE_DISCONNECTED)
-                    {
-                        app_audio_tone_type_play(TONE_EXIT_GAMING_MODE, false, false);
-                    }
-                    else if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY)
-                    {
-                        app_audio_tone_type_play(TONE_EXIT_GAMING_MODE, false, true);
-                    }
-                }
+                app_lea_pacs_update_low_latency(gaming_mode);
+                app_report_gaming_mode_info(gaming_mode);
             }
 #endif
         }
@@ -1425,7 +1449,14 @@ fail_release_active_call_accept_held_or_waiting_call:
         {
             if (bt_mode == MULTI_PRO_BT_CIS)
             {
-                app_lea_uca_set_mic_mute(p_link, action, true);
+                T_MICS_PARAM mics_param;
+
+                if (app_lea_uca_set_mic_mute(p_link, action, true, &mics_param.mic_mute))
+                {
+#if F_APP_MICS_SUPPORT
+                    mics_set_param(&mics_param);
+#endif
+                }
             }
         }
         break;
@@ -1437,6 +1468,11 @@ fail_release_active_call_accept_held_or_waiting_call:
         break;
     }
 
+    if (cmd_ret == false && p_link->gmcs == false)
+    {
+        p_link->pending_mcp_cmd = param.opcode;
+    }
+
     if (handle == true)
     {
         APP_PRINT_TRACE2("app_lea_mgr_mmi_handle: action 0x%02X, conn_handle 0x%02X", action,
@@ -1444,56 +1480,13 @@ fail_release_active_call_accept_held_or_waiting_call:
     }
 }
 
-bool app_lea_mgr_ase_exist_conn(uint16_t conn_handle)
-{
-    T_LEA_ASE_ENTRY *p_ase_entry = NULL;
-
-    p_ase_entry = app_lea_ascs_find_ase_entry(LEA_ASE_CONN, conn_handle, NULL);
-    if (p_ase_entry != NULL)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-
 void app_lea_mgr_update_sniff_mask(void)
 {
-    if (app_lea_mgr_is_streaming())
+    if (app_lea_mgr_is_downstreaming())
     {
         app_sniff_mode_b2s_disable_all(SNIFF_DISABLE_MASK_LEA);
         app_sniff_mode_b2b_disable(app_cfg_nv.bud_peer_addr, SNIFF_DISABLE_MASK_LEA);
     }
-}
-
-bool app_lea_mgr_get_link_info(uint8_t *sets, uint8_t *active_index, uint8_t *para)
-{
-    T_APP_LE_LINK *p_link = NULL;
-    uint8_t offset = 0;
-    bool ret = false;
-    uint16_t active_conn_handle = app_lea_mcp_get_active_conn_handle();
-
-    *sets = 0;
-
-    for (uint8_t i = 0; i < MAX_BLE_LINK_NUM; i++)
-    {
-        p_link = &app_db.le_link[i];
-
-        if (p_link->used)
-        {
-            (*sets) ++;
-            if (p_link->conn_handle == active_conn_handle)
-            {
-                *active_index = *sets;
-            }
-
-            memcpy(&para[offset], p_link->bd_addr, 6);
-            offset += 6;
-        }
-    }
-    return ret;
 }
 
 /*============================================================================*
@@ -1534,6 +1527,23 @@ static bool app_lea_mgr_sniff_check(T_MTC_AUDIO_MODE mode)
     return false;
 }
 
+static void app_lea_mgr_timeout_cb(uint8_t timer_evt, uint16_t param)
+{
+    APP_PRINT_TRACE2("app_lea_mgr_timeout_cb: timer_evt %d, param %d", timer_evt, param);
+
+    switch (timer_evt)
+    {
+    case APP_LEA_MGR_TIMER_IN_EAR_RESUME:
+        {
+            app_lea_mgr_update_media_suspend_by_out_ear(false);
+        }
+        break;
+
+    default:
+        break;
+    }
+}
+
 bool app_lea_mgr_get_media_suspend_by_out_ear(void)
 {
     return lea_mgr_media_suspend_by_out_ear;
@@ -1545,12 +1555,26 @@ void app_lea_mgr_update_media_suspend_by_out_ear(bool out_ear)
 
     APP_PRINT_TRACE1("app_lea_mgr_update_media_suspend_by_out_ear: out_ear 0x%02X", out_ear);
 
-    if ((app_db.remote_session_state == REMOTE_SESSION_STATE_CONNECTED) &&
-        (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY))
+    if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY)
     {
-        app_relay_async_single_with_raw_msg(APP_MODULE_TYPE_LEA,
-                                            LEA_REMOTE_MEDIA_SUSPEND_SYNC,
-                                            (uint8_t *)&lea_mgr_media_suspend_by_out_ear, 1);
+        if (app_db.remote_session_state == REMOTE_SESSION_STATE_CONNECTED)
+        {
+            app_relay_async_single_with_raw_msg(APP_MODULE_TYPE_LEA,
+                                                LEA_REMOTE_MEDIA_SUSPEND_SYNC,
+                                                (uint8_t *)&lea_mgr_media_suspend_by_out_ear, 1);
+        }
+
+        if (lea_mgr_media_suspend_by_out_ear && app_cfg_const.restore_a2dp_when_bud_in_ear_in_15s)
+        {
+            app_start_timer(&timer_idx_in_ear_resume, "lea_mgr_in_ear_resume",
+                            lea_mgr_timer_id, APP_LEA_MGR_TIMER_IN_EAR_RESUME, 0, false,
+                            15000);
+        }
+        else
+        {
+            app_stop_timer(&timer_idx_in_ear_resume);
+        }
+
     }
 }
 
@@ -1625,7 +1649,7 @@ static uint8_t app_lea_mgr_out_ear_action(bool from_remote, uint8_t cause_action
 
             if (!app_lea_uca_get_mic_mute_state() && !app_lea_uca_check_enable_mic())
             {
-                app_lea_uca_set_mic_mute(p_link, MMI_DEV_MIC_MUTE, false);
+                app_lea_uca_set_mic_mute(p_link, MMI_DEV_MIC_MUTE, false, NULL);
             }
         }
         else
@@ -1678,7 +1702,7 @@ static uint8_t app_lea_mgr_in_ear_action(bool from_remote, uint8_t cause_action)
 
             if (!app_lea_uca_get_mic_mute_state() && app_lea_uca_check_enable_mic())
             {
-                app_lea_uca_set_mic_mute(p_link, MMI_DEV_MIC_UNMUTE, false);
+                app_lea_uca_set_mic_mute(p_link, MMI_DEV_MIC_UNMUTE, false, NULL);
             }
         }
         else
@@ -1692,7 +1716,7 @@ static uint8_t app_lea_mgr_in_ear_action(bool from_remote, uint8_t cause_action)
             }
             else if ((p_link->media_state == MCS_MEDIA_STATE_INACTIVE ||
                       p_link->media_state == MCS_MEDIA_STATE_PAUSED) &&
-                     lea_mgr_media_suspend_by_out_ear)
+                     (lea_mgr_media_suspend_by_out_ear || app_cfg_const.in_ear_auto_playing))
             {
                 action = LEA_LOC_ACTION_AUDIO_RESUME;
             }
@@ -1727,7 +1751,7 @@ static uint8_t app_lea_mgr_audio_in_case_action(void)
                 goto RESULT;
             }
 
-            app_lea_uca_set_mic_mute(p_link, MMI_DEV_MIC_UNMUTE, false);
+            app_lea_uca_set_mic_mute(p_link, MMI_DEV_MIC_UNMUTE, false, NULL);
         }
     }
 
@@ -1740,11 +1764,16 @@ RESULT:
 
 static void app_lea_mgr_action_when_bud_loc_changed(uint8_t action)
 {
+    T_APP_LE_LINK *p_link = NULL;
+
     APP_PRINT_TRACE3("app_lea_mgr_action_when_bud_loc_changed: action 0x%02X, lea_mgr_current_mcp_state 0x%02X, roleswap status 0x%02X",
                      action, lea_mgr_current_mcp_state, app_roleswap_ctrl_get_status());
 
+    p_link = app_link_find_le_link_by_conn_handle(app_lea_mcp_get_active_conn_handle());
+
     if ((app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_SECONDARY) ||
-        (app_roleswap_ctrl_get_status() != APP_ROLESWAP_STATUS_IDLE))
+        (app_roleswap_ctrl_get_status() != APP_ROLESWAP_STATUS_IDLE) ||
+        (p_link == NULL) || (p_link->gmcs == false))
     {
         return;
     }
@@ -1945,73 +1974,29 @@ static void app_lea_mgr_direct_cback(uint8_t cb_type, void *p_cb_data)
 
             if (app_lea_mgr_iso_data_status != ISOCH_DATA_PKT_STATUS_VALID_DATA)
             {
-                goto iso_data_cfm;
+                gap_iso_data_cfm(p_data->p_bt_direct_iso->p_buf);
+                break;
             }
 
             app_lea_mgr_syncclk_latch_info = synclk_drv_time_get(LEA_SYNC_CLK_REF);
 
-            if (lea_mgr_gaming_streaming)
-            {
-                handle_data_in_stack = true;
-            }
-
-            APP_PRINT_TRACE6("app_lea_mgr_direct_cback: syncclk latch result \
-net_id 0x%02X, conn_type 0x%02X role 0x%02X exp_sync_clock 0x%02X status 0x%02x stack %d",
+            APP_PRINT_TRACE4("app_lea_mgr_direct_cback: syncclk latch result \
+net_id 0x%02X, conn_type 0x%02X role 0x%02X exp_sync_clock 0x%02X",
                              app_lea_mgr_syncclk_latch_info->net_id,
                              app_lea_mgr_syncclk_latch_info->conn_type,
                              app_lea_mgr_syncclk_latch_info->role,
-                             app_lea_mgr_syncclk_latch_info->exp_sync_clock,
-                             p_data->p_bt_direct_iso->pkt_status_flag,
-                             handle_data_in_stack);
+                             app_lea_mgr_syncclk_latch_info->exp_sync_clock);
 
-            if (handle_data_in_stack)
+            if (app_lea_uca_get_stream_link()) //TODO: Need to modify condition when support CIS+BIS mix
             {
-                if (app_lea_uca_get_stream_link()) //TODO: Need to modify condition when support CIS+BIS mix
-                {
-                    app_lea_uca_handle_iso_data(p_data);
-                }
-#if F_APP_TMAP_BMR_SUPPORT
-                else
-                {
-                    app_lea_bca_handle_iso_data(p_data);
-                }
-#endif
+                app_lea_uca_handle_iso_data(p_data);
             }
+#if F_APP_TMAP_BMR_SUPPORT
             else
             {
-                uint16_t len;
-                T_IO_MSG msg;
-                T_BT_DIRECT_ISO_DATA_IND *p_ind = malloc(sizeof(T_BT_DIRECT_ISO_DATA_IND));
-
-                if (p_ind == NULL)
-                {
-                    goto iso_data_cfm;
-                }
-
-                memcpy(p_ind, p_data->p_bt_direct_iso, sizeof(T_BT_DIRECT_ISO_DATA_IND));
-
-                len = p_data->p_bt_direct_iso->iso_sdu_len + p_data->p_bt_direct_iso->offset;
-                p_ind->p_buf = malloc(len);
-                if (p_ind->p_buf == NULL)
-                {
-                    free(p_ind);
-                    goto iso_data_cfm;
-                }
-
-                memcpy(p_ind->p_buf, p_data->p_bt_direct_iso->p_buf, len);
-
-                msg.type = IO_MSG_TYPE_LEA_SNK;
-                msg.subtype = IO_MSG_LEA_ISO_DATA_DOWNSTREAM;
-                msg.u.buf = p_ind;
-                if (app_io_msg_send(&msg) == false)
-                {
-                    free(p_ind->p_buf);
-                    free(p_ind);
-                    goto iso_data_cfm;
-                }
+                app_lea_bca_handle_iso_data(p_data);
             }
-
-iso_data_cfm:
+#endif
             gap_iso_data_cfm(p_data->p_bt_direct_iso->p_buf);
         }
         break;
@@ -2021,38 +2006,17 @@ iso_data_cfm:
     }
 }
 
-void app_lea_mgr_msg_handle(T_IO_MSG *io_msg)
+#if F_APP_ERWS_SUPPORT
+
+bool app_lea_mgr_sync_link_num(void)
 {
-    T_IO_MSG_LEA sub_type = (T_IO_MSG_LEA)io_msg->subtype;
+    uint8_t link_num = app_link_get_lea_link_num();
+    return app_relay_async_single_with_raw_msg(APP_MODULE_TYPE_LEA,
+                                               LEA_REMOTE_SYNC_LINK_NUM,
+                                               (uint8_t *)&link_num, 1);
 
-    switch (sub_type)
-    {
-    case IO_MSG_LEA_ISO_DATA_DOWNSTREAM:
-        {
-            T_BT_DIRECT_CB_DATA p_data;
-
-            p_data.p_bt_direct_iso = (T_BT_DIRECT_ISO_DATA_IND *)(io_msg->u.buf);
-            if (app_lea_uca_get_stream_link()) //TODO: Need to modify condition when support CIS+BIS mix
-            {
-                app_lea_uca_handle_iso_data(&p_data);
-            }
-#if F_APP_TMAP_BMR_SUPPORT
-            else
-            {
-                app_lea_bca_handle_iso_data(&p_data);
-            }
-#endif
-            free(p_data.p_bt_direct_iso->p_buf);
-            free(p_data.p_bt_direct_iso);
-        }
-        break;
-
-    default:
-        break;
-    }
 }
 
-#if F_APP_ERWS_SUPPORT
 uint16_t app_lea_mgr_relay_cback(uint8_t *buf, uint8_t msg_type, bool total)
 {
     uint16_t payload_len = 0;
@@ -2107,29 +2071,6 @@ static void app_lea_mgr_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t len
             }
         }
         break;
-
-#if F_APP_TMAP_BMR_SUPPORT
-    case LEA_REMOTE_PA_INFO_SYNC:
-        {
-            if (status == REMOTE_RELAY_STATUS_SYNC_TOUT ||
-                status == REMOTE_RELAY_STATUS_SYNC_EXPIRED ||
-                status == REMOTE_RELAY_STATUS_SYNC_REF_CHANGED ||
-                status == REMOTE_RELAY_STATUS_ASYNC_RCVD)
-            {
-                if ((app_db.remote_session_state == REMOTE_SESSION_STATE_CONNECTED) &&
-                    app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_SECONDARY)
-                {
-                    app_lea_bca_bs_update_device_info((T_LEA_BRS_INFO *)buf);
-                }
-                else
-                {
-                    app_lea_bca_tgt(APP_BIS_BS_FIND_RECORD_ALIGN);
-                }
-                app_lea_bca_bs_handle_pa_info_sync((T_LEA_BRS_INFO *)buf);
-            }
-        }
-        break;
-#endif
 
     case LEA_REMOTE_SEC_SYNC_CIS_STREAMING:
         {
@@ -2195,6 +2136,16 @@ static void app_lea_mgr_parse_cback(uint8_t msg_type, uint8_t *buf, uint16_t len
         }
         break;
 
+    case LEA_REMOTE_SYNC_LINK_NUM:
+        {
+            if (status == REMOTE_RELAY_STATUS_ASYNC_RCVD)
+            {
+                uint8_t link_num = *(uint8_t *)buf;
+                app_db.remote_lea_link_num = link_num;
+            }
+        }
+        break;
+
     default:
         break;
     }
@@ -2236,31 +2187,19 @@ T_MTC_RESULT app_lea_mgr_cis_mtc_if_handle(T_MTC_IF_MSG msg, void *inbuf, void *
 
     case LCIS_FM_MTC_LEA_PACS_CHANGE:
         {
-            uint8_t i, result = 0;
-            T_LEA_ASE_ENTRY *p_ase_entry = NULL;
+            uint8_t i;
             T_APP_LE_LINK *p_link = NULL;
+            bool enable = *((bool *)inbuf);
 
             for (i = 0; i < MAX_BLE_LINK_NUM; i++)
             {
                 p_link = &app_db.le_link[i];
 
                 if (p_link->used == true &&
-                    p_link->lea_link_state >= LEA_LINK_CONNECTED &&
-                    (p_link->conn_handle == app_lea_mcp_get_active_conn_handle()))
+                    p_link->lea_link_state >= LEA_LINK_CONNECTED)
                 {
-                    bool enable = *((bool *)inbuf);
-                    bool ret = false;
-
-                    ret = app_lea_pacs_set_sink_available_contexts(p_link->conn_handle,
-                                                                   app_lea_pacs_get_sink_available_contexts(), enable);
-#if F_APP_CCP_SUPPORT
-                    //hfp call switch to idle and sco disc will read ccp call, check it when mtc optimize
-                    if (enable == true && ret == true)
-                    {
-                        ccp_client_read_char_value(p_link->conn_handle, 0, TBS_UUID_CHAR_CALL_STATE, p_link->gtbs);
-                    }
-#endif
-                    break;
+                    app_lea_pacs_set_sink_available_contexts(p_link->conn_handle,
+                                                             app_lea_pacs_get_sink_available_contexts(), enable);
                 }
             }
         }
@@ -2365,10 +2304,10 @@ void app_lea_mgr_init(void)
 
     ble_audio_init(&ble_audio_param);
     app_lea_adv_init();
-    mtc_if_lcis_reg(app_lea_mgr_cis_mtc_if_handle);
-    mtc_if_lbis_reg(NULL);//just register mtc handle bis event
+    mtc_cback_register(app_lea_mgr_cis_mtc_if_handle);
     //LEA are going to combine uca and bca handle
     mtc_init();
     audio_probe_dsp_cback_register(app_lea_mgr_probe_cback);
+    app_timer_reg_cb(app_lea_mgr_timeout_cb, &lea_mgr_timer_id);
 }
 #endif

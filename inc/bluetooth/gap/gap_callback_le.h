@@ -3,7 +3,7 @@
 *     Copyright(c) 2016, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * @file    gap_callback_le.h
-  * @brief   This file contains function prototype for all GAP roles.
+  * @brief   This file contains function prototypes for all GAP roles.
   * @details
   * @author  ranhui
   * @date    2016-02-18
@@ -56,9 +56,9 @@ extern "C"
 #define GAP_MSG_LE_DISABLE_SLAVE_LATENCY            0x12 //!<Response msg type for le_disable_slave_latency
 #define GAP_MSG_LE_SET_DATA_LEN                     0x13 //!<Response msg type for le_set_data_len
 #define GAP_MSG_LE_DATA_LEN_CHANGE_INFO             0x14 //!<Notification msg type for data length changed
-#define GAP_MSG_LE_CONN_UPDATE_IND                  0x15 //!<Indication for le connection parameter update
-#define GAP_MSG_LE_CREATE_CONN_IND                  0x16 //!<Indication for create le connection
-#define GAP_MSG_LE_PHY_UPDATE_INFO                  0x17 //!<Indication for le phyical update information
+#define GAP_MSG_LE_CONN_UPDATE_IND                  0x15 //!<Indication for LE connection parameter update
+#define GAP_MSG_LE_CREATE_CONN_IND                  0x16 //!<Indication for create LE connection
+#define GAP_MSG_LE_PHY_UPDATE_INFO                  0x17 //!<Information for LE PHY update
 #define GAP_MSG_LE_UPDATE_PASSED_CHANN_MAP          0x18 //!<Response msg type for le_update_passed_chann_map
 #define GAP_MSG_LE_REMOTE_FEATS_INFO                0x19 //!<Information for remote device supported features
 #define GAP_MSG_LE_READ_REMOTE_VERSION              0x1B //!<Response msg type for le_read_remote_version
@@ -67,14 +67,14 @@ extern "C"
 #define GAP_MSG_LE_BOND_MODIFY_INFO                 0x20 //!<Notification msg type for bond modify
 #define GAP_MSG_LE_KEYPRESS_NOTIFY                  0x21 //!<Response msg type for le_bond_keypress_notify
 #define GAP_MSG_LE_KEYPRESS_NOTIFY_INFO             0x22 //!<Notification msg type for le_bond_keypress_notify
-#define GAP_MSG_LE_GATT_SIGNED_STATUS_INFO          0x23 //!<Notification msg type for le signed status information
+#define GAP_MSG_LE_GATT_SIGNED_STATUS_INFO          0x23 //!<Notification msg type for LE signed status information
 
-/* The type of callback will only be used when gap_param_key_manager equals 2 and no matching key entry is found*/
-#define GAP_MSG_LE_BOND_KEY_REQ                     0x24 //!<Notification msg type for le bond key request information
+/* The type of callback will only be used when gap_param_key_manager equals 2 and no matching key entry is found. */
+#define GAP_MSG_LE_BOND_KEY_REQ                     0x24 //!<Notification msg type for LE bond key request information
 
 //gap_scan.h
-#define GAP_MSG_LE_SCAN_INFO                        0x30 //!<Notification msg type for le scan
-#define GAP_MSG_LE_DIRECT_ADV_INFO                  0x31 //!<Notification msg type for le direct adv info
+#define GAP_MSG_LE_SCAN_INFO                        0x30 //!<Notification msg type for LE scan
+#define GAP_MSG_LE_DIRECT_ADV_INFO                  0x31 //!<Notification msg type for LE direct ADV info
 
 //gap_adv.h
 #define GAP_MSG_LE_ADV_UPDATE_PARAM                 0x40 //!<Response msg type for le_adv_update_param
@@ -90,7 +90,7 @@ extern "C"
 #define GAP_MSG_LE_DTM_TRANSMITTER_TEST_V3          0x76 //!<Response msg type for le_dtm_transmitter_test_v3
 
 //gap_ext_scan.h
-#define GAP_MSG_LE_EXT_ADV_REPORT_INFO                      0x50 //!<Notification msg type for le extended adv report
+#define GAP_MSG_LE_EXT_ADV_REPORT_INFO                      0x50 //!<Notification msg type for LE extended ADV report
 /* The type of callback will only be used after APP calls @ref le_ext_scan_gap_msg_info_way(false). */
 #define GAP_MSG_LE_EXT_SCAN_STATE_CHANGE_INFO               0x51 //!<Notification msg type for extended scanning state
 
@@ -115,7 +115,7 @@ extern "C"
 #define GAP_MSG_LE_EXT_ADV_CLEAR_SET                0x62 //!<Response msg type for le_ext_adv_clear_set
 #define GAP_MSG_LE_EXT_ADV_ENABLE                   0x63 //!<Response msg type for le_ext_adv_enable
 #define GAP_MSG_LE_EXT_ADV_DISABLE                  0x64 //!<Response msg type for le_ext_adv_disable
-#define GAP_MSG_LE_SCAN_REQ_RECEIVED_INFO           0x65 //!<Notification msg type for le scan received info
+#define GAP_MSG_LE_SCAN_REQ_RECEIVED_INFO           0x65 //!<Notification msg type for LE scan received info
 /* The type of callback will only be used after APP calls @ref le_ext_adv_gap_msg_info_way(false). */
 #define GAP_MSG_LE_EXT_ADV_STATE_CHANGE_INFO        0x66 //!<Notification msg type for extended advertising state
 
@@ -133,7 +133,7 @@ extern "C"
 #if F_BT_LE_FIX_CHANN_SUPPORT
 //gap_fix_chann_conn.h
 #define GAP_MSG_LE_FIXED_CHANN_DATA_SEND            0xC0 //!<Response msg type for le_fixed_chann_data_send
-#define GAP_MSG_LE_FIXED_CHANN_DATA_IND             0xC1 //!<Indication for le fixed channel data received
+#define GAP_MSG_LE_FIXED_CHANN_DATA_IND             0xC1 //!<Indication for LE fixed channel data received
 #define GAP_MSG_LE_FIXED_CHANN_REG                  0xC2 //!<Response msg type for le_fixed_chann_reg
 #endif
 
@@ -157,26 +157,26 @@ typedef struct
     uint16_t            cause;
 } T_LE_CAUSE;
 
-/** @brief  Response of le modify white list request.*/
+/** @brief  Response of LE modify white list request.*/
 typedef struct
 {
     T_GAP_WHITE_LIST_OP operation;
     uint16_t            cause;
 } T_LE_MODIFY_WHITE_LIST_RSP;
 
-/** @brief  Response of le set random address request. */
+/** @brief  Response of LE set random address request. */
 typedef struct
 {
     uint16_t        cause;
 } T_LE_SET_RAND_ADDR_RSP;
 
-/** @brief  Response of le set channel classification request. */
+/** @brief  Response of LE set channel classification request. */
 typedef struct
 {
     uint16_t        cause;
 } T_LE_SET_HOST_CHANN_CLASSIF_RSP;
 
-/** @brief  Response for read rssi.*/
+/** @brief  Response for read RSSI.*/
 typedef struct
 {
     uint8_t         conn_id;
@@ -184,7 +184,7 @@ typedef struct
     uint16_t        cause;
 } T_LE_READ_RSSI_RSP;
 
-/** @brief  Response for read chanel map.*/
+/** @brief  Response for read channel map.*/
 typedef struct
 {
     uint8_t         conn_id;
@@ -215,7 +215,7 @@ typedef struct
     uint16_t        max_rx_time;
 } T_LE_DATA_LEN_CHANGE_INFO;
 
-/** @brief  Indication for connection paramete update.*/
+/** @brief  Indication for connection parameter update.*/
 typedef struct
 {
     uint8_t         conn_id;
@@ -225,11 +225,11 @@ typedef struct
     uint16_t        supervision_timeout;
 } T_LE_CONN_UPDATE_IND;
 
-/** @brief  Indication of le connectiona. */
+/** @brief  Indication of LE connection. */
 typedef struct
 {
-    uint8_t                bd_addr[6];/**< Bluetooth address of remote device */
-    T_GAP_REMOTE_ADDR_TYPE remote_addr_type; /**< Address type of remote device */
+    uint8_t                bd_addr[6];/**< Bluetooth address of remote device. */
+    T_GAP_REMOTE_ADDR_TYPE remote_addr_type; /**< Address type of remote device. */
 }  T_LE_CREATE_CONN_IND;
 
 /** @brief  Notification information when phy changed.*/
@@ -271,11 +271,11 @@ typedef struct
 /** @brief  Bond information modify type*/
 typedef enum
 {
-    LE_BOND_DELETE,
-    LE_BOND_ADD,
-    LE_BOND_CLEAR,
-    LE_BOND_FULL,
-    LE_BOND_KEY_MISSING,
+    LE_BOND_DELETE,             //!< Delete bond information.
+    LE_BOND_ADD,                //!< Add bond information.
+    LE_BOND_CLEAR,              //!< Clear bond information.
+    LE_BOND_FULL,               //!< Key storage space is full.
+    LE_BOND_KEY_MISSING,        //!< Key missing.
 } T_LE_BOND_MODIFY_TYPE;
 
 /** @brief  Structure for modify bonding information.*/
@@ -309,6 +309,7 @@ typedef struct
     uint32_t        remote_sign_count;
 } T_LE_GATT_SIGNED_STATUS_INFO;
 
+/** @brief  Structure for bond key request information.*/
 typedef struct
 {
     uint8_t                     bd_addr[6];
@@ -318,14 +319,14 @@ typedef struct
     uint8_t                     link_key[28];       /**< Provided by APP. */
 } T_LE_BOND_KEY_REQ;
 
-/** @brief  Response of le receiver test request. */
+/** @brief  Response of LE receiver test request. */
 typedef struct
 {
     uint16_t        cause;
     uint16_t        num_pkts;
 } T_LE_DTM_TEST_END_RSP;
 //gap_scan.h
-/** @brief  Information of le scan information.  */
+/** @brief  Information of LE scan information.  */
 typedef struct
 {
     uint8_t                bd_addr[6];/**< Bluetooth address of remote device. */
@@ -336,7 +337,7 @@ typedef struct
     uint8_t                data[31];
 } T_LE_SCAN_INFO;
 
-/** @brief  Information of le direct advertising.   */
+/** @brief  Information of LE direct advertising.   */
 typedef struct
 {
     uint8_t                bd_addr[6];
@@ -348,20 +349,20 @@ typedef struct
 } T_LE_DIRECT_ADV_INFO;
 
 //gap_adv.h
-/** @brief  LE advertising paramter update result.*/
+/** @brief  LE advertising parameter update result.*/
 typedef struct
 {
     uint16_t        cause;
 } T_LE_ADV_UPDATE_PARAM_RSP;
 
-/** @brief  Response of le read advertising transmitter power request. */
+/** @brief  Response of LE read advertising transmitter power request. */
 typedef struct
 {
     uint16_t        cause;
     uint8_t         tx_power_level;
 } T_LE_ADV_READ_TX_POWER_RSP;
 
-/** @brief  Information of le extended advertising report. */
+/** @brief  Information of LE extended advertising report. */
 typedef struct
 {
     uint16_t                      event_type;
@@ -408,7 +409,7 @@ typedef struct
     uint16_t        cause;
 } T_LE_EXT_ADV_CLEAR_SET_RSP;
 
-/** @brief  Information of le scan request received. */
+/** @brief  Information of LE scan request received. */
 typedef struct
 {
     uint8_t         adv_handle;
@@ -454,7 +455,7 @@ typedef struct
     uint16_t            cause;
 } T_LE_PA_SYNC_MODIFY_PERIODIC_ADV_LIST_RSP;
 
-/** @brief  Information of le periodic advertising report. */
+/** @brief  Information of LE periodic advertising report. */
 typedef struct
 {
     uint8_t     sync_id;          /**< Identify the periodic advertising train. */
@@ -465,7 +466,7 @@ typedef struct
                                        0x7F: RSSI is not available. */
     T_GAP_PERIODIC_ADV_REPORT_CTE_TYPE     cte_type;
     T_GAP_PERIODIC_ADV_REPORT_DATA_STATUS  data_status;
-    uint8_t     data_len;/**< Length of the Data field. Range: 0 to 247. */
+    uint8_t     data_len;/**< Length of the Data field. */
     uint8_t    *p_data; /**< Data received from a Periodic Advertising packet. */
 } T_LE_PERIODIC_ADV_REPORT_INFO;
 
@@ -492,9 +493,9 @@ typedef struct
     uint16_t  sync_handle;            /**< Sync_Handle identifying the periodic advertising train. */
     uint8_t state;                    /**< @ref T_GAP_PA_SYNC_STATE. */
     bool sync_transfer_received_flag; /* sync_transfer_received_flag will be only used when state is GAP_PA_SYNC_STATE_SYNCHRONIZED.
-                                         True:  Periodic advertising synchroinzation is received through le_past_recipient_set_default_periodic_adv_sync_transfer_params
-                                                or le_past_recipient_set_periodic_adv_sync_transfer_params.
-                                         False: Periodic advertising packet is received through le_pa_sync_create_sync.*/
+                                         @arg True:  Periodic advertising synchronization is received through le_past_recipient_set_default_periodic_adv_sync_transfer_params
+                                                     or le_past_recipient_set_periodic_adv_sync_transfer_params.
+                                         @arg False: Periodic advertising packet is received through le_pa_sync_create_sync.*/
     uint16_t cause;
 } T_LE_PA_SYNC_STATE_CHANGE_INFO;
 
@@ -510,15 +511,15 @@ typedef struct
 {
     uint16_t        cause;
     uint8_t         conn_id;
-    uint8_t         adv_handle;    /* Not used */
+    uint8_t         adv_handle;    /* Not used. */
 } T_LE_PAST_SENDER_PERIODIC_ADV_SET_INFO_TRANSFER_RSP;
 
 typedef struct
 {
     uint16_t        cause;
     uint8_t         conn_id;
-    uint8_t         sync_id;       /* Not used */
-    uint16_t        sync_handle;   /* Not used */
+    uint8_t         sync_id;       /* Not used. */
+    uint16_t        sync_handle;   /* Not used. */
 } T_LE_PAST_SENDER_PERIODIC_ADV_SYNC_TRANSFER_RSP;
 
 typedef struct
@@ -549,19 +550,19 @@ typedef struct
     T_GAP_PHYS_TYPE     adv_phy;                    /**< Advertiser_PHY specifies the PHY used for the
                                                          periodic advertising. */
     uint16_t            periodic_adv_interval;      /**< Periodic advertising interval.
-                                                         Range: 0x0006 to 0xFFFF
-                                                         Time = N * 1.25 ms
-                                                         Time Range: 7.5 ms to 81.91875 s */
+                                                         @arg Range: 0x0006 to 0xFFFF.
+                                                         @arg Time = N * 1.25 ms.
+                                                         @arg Time Range: 7.5 ms to 81.91875 s. */
     uint8_t             adv_clock_accuracy;         /**< Advertiser_Clock_Accuracy specifies the
                                                          accuracy of the periodic advertiser's clock.
-                                                         0x00: 500 ppm
-                                                         0x01: 250 ppm
-                                                         0x02: 150 ppm
-                                                         0x03: 100 ppm
-                                                         0x04: 75  ppm
-                                                         0x05: 50  ppm
-                                                         0x06: 30  ppm
-                                                         0x07: 20  ppm */
+                                                         @arg 0x00: 500 ppm.
+                                                         @arg 0x01: 250 ppm.
+                                                         @arg 0x02: 150 ppm.
+                                                         @arg 0x03: 100 ppm.
+                                                         @arg 0x04: 75  ppm.
+                                                         @arg 0x05: 50  ppm.
+                                                         @arg 0x06: 30  ppm.
+                                                         @arg 0x07: 20  ppm. */
 } T_LE_PAST_RECIPIENT_PERIODIC_ADV_SYNC_TRANSFER_RECEIVED_INFO;
 
 typedef struct
@@ -588,11 +589,11 @@ typedef struct
     uint16_t max_sdu;        /**< The maximum size, in octets, of an SDU. */
     T_GAP_PHYS_TYPE phy;     /**< Indicate the PHY used by the BIG. @ref T_GAP_PHYS_TYPE. */
     uint8_t framing;         /**< Indicate whether the BIG carries framed or unframed data.
-                                  0x00: Unframed
-                                  0x01: Framed */
+                                  @arg 0x00: Unframed.
+                                  @arg 0x01: Framed. */
     uint8_t encryption;      /**< Indicate whether the BIG is encrypted or not.
-                                  0x00: BIG carries unencrypted data
-                                  0x01: BIG carries encrypted data */
+                                  @arg 0x00: BIG carries unencrypted data.
+                                  @arg 0x01: BIG carries encrypted data. */
 } T_LE_BIGINFO_ADV_REPORT_INFO;
 
 #if F_BT_LE_FIX_CHANN_SUPPORT
@@ -605,10 +606,10 @@ typedef struct
 
 typedef struct
 {
-    uint8_t         conn_id;        /**<  local link ID.  */
-    uint16_t        cid;            /**<  channel ID  */
-    uint16_t        value_len;      /**<  value length  */
-    uint8_t         *p_data;        /**<  value.  */
+    uint8_t         conn_id;        /**<  Connection ID.  */
+    uint16_t        cid;            /**<  Channel Identifier.  */
+    uint16_t        value_len;      /**<  Value length.  */
+    uint8_t         *p_data;        /**<  Value.  */
 } T_LE_FIXED_CHANN_DATA_IND;
 
 typedef struct

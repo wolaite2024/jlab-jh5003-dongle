@@ -3,7 +3,7 @@
 *     Copyright(c) 2017, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
 * @file     pmu_api.c
-* @brief    This file provides pmu api wrapper for sdk customer.
+* @brief    This file provides pmu API wrapper for sdk customer.
 * @details
 * @author   mj_mengjie_han
 * @date     2021-04-07

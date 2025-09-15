@@ -44,7 +44,7 @@ $(function() {
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">PWM Exported Functions<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___h_a_l.html">Hal</a> &raquo; <a class="el" href="group___h_a_l___i_o.html">IO</a> &raquo; <a class="el" href="group__x3___p_w_m.html">PWM</a></div></div>  </div>
+<div class="title">PWM Exported Functions<div class="ingroups"><a class="el" href="group___p_w_m.html">PWM</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -69,13 +69,13 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga1697a990f252cb26d787489e628f6a13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether the specified PWM has been enabled or disabled.  <a href="#ga1697a990f252cb26d787489e628f6a13">More...</a><br /></td></tr>
 <tr class="separator:ga1697a990f252cb26d787489e628f6a13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1bd5ae17a7494167d226999fa9ba27ac"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_w_m___exported___functions.html#ga1bd5ae17a7494167d226999fa9ba27ac">pwm_config</a> (<a class="el" href="group___p_w_m___exported___types.html#ga81cda71f1c6fbcf93d11a0a9b4002845">T_PWM_HANDLE</a> handle, <a class="el" href="group___p_w_m___exported___types.html#gaa1577c6072fa8fd6545b8a58ea0fbda1">T_PWM_CONFIG</a> *config_struct)</td></tr>
-<tr class="memdesc:ga1bd5ae17a7494167d226999fa9ba27ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the specified PWM according to the specified parameters in the T_PWM_CONFIG structure.  <a href="#ga1bd5ae17a7494167d226999fa9ba27ac">More...</a><br /></td></tr>
+<tr class="memdesc:ga1bd5ae17a7494167d226999fa9ba27ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the specified PWM according to the specified parameters in the <a class="el" href="group___p_w_m___exported___types.html#gaa1577c6072fa8fd6545b8a58ea0fbda1">T_PWM_CONFIG</a> structure.  <a href="#ga1bd5ae17a7494167d226999fa9ba27ac">More...</a><br /></td></tr>
 <tr class="separator:ga1bd5ae17a7494167d226999fa9ba27ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaf148e129133994010db44f8b3a5df41"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_w_m___exported___functions.html#gaaf148e129133994010db44f8b3a5df41">pwm_pin_config</a> (<a class="el" href="group___p_w_m___exported___types.html#ga81cda71f1c6fbcf93d11a0a9b4002845">T_PWM_HANDLE</a> handle, uint8_t pin_index, <a class="el" href="group___p_w_m___exported__constants.html#gab297bdd225e23d95f99b841a2ac08f8e">T_PWM_PIN_FUNC</a> func)</td></tr>
+<tr class="memitem:gaaf148e129133994010db44f8b3a5df41"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_w_m___exported___functions.html#gaaf148e129133994010db44f8b3a5df41">pwm_pin_config</a> (<a class="el" href="group___p_w_m___exported___types.html#ga81cda71f1c6fbcf93d11a0a9b4002845">T_PWM_HANDLE</a> handle, uint8_t pin_index, <a class="el" href="group___p_w_m___exported___constants.html#gab297bdd225e23d95f99b841a2ac08f8e">T_PWM_PIN_FUNC</a> func)</td></tr>
 <tr class="memdesc:gaaf148e129133994010db44f8b3a5df41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure PWM output pin.  <a href="#gaaf148e129133994010db44f8b3a5df41">More...</a><br /></td></tr>
 <tr class="separator:gaaf148e129133994010db44f8b3a5df41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2d2743b88ac65e885515bc16bc548eec"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___p_w_m___exported___functions.html#ga2d2743b88ac65e885515bc16bc548eec">pwm_change_duty_and_frequency</a> (<a class="el" href="group___p_w_m___exported___types.html#ga81cda71f1c6fbcf93d11a0a9b4002845">T_PWM_HANDLE</a> handle, uint32_t high_count, uint32_t low_count)</td></tr>
-<tr class="memdesc:ga2d2743b88ac65e885515bc16bc548eec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change PWM freq and duty according high_count and low_count.  <a href="#ga2d2743b88ac65e885515bc16bc548eec">More...</a><br /></td></tr>
+<tr class="memdesc:ga2d2743b88ac65e885515bc16bc548eec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the PWM frequency and duty cycle according high_count and low_count.  <a href="#ga2d2743b88ac65e885515bc16bc548eec">More...</a><br /></td></tr>
 <tr class="separator:ga2d2743b88ac65e885515bc16bc548eec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -124,16 +124,15 @@ Functions</h2></td></tr>
     <tr><td class="paramname">name</td><td>Specifies the PWM name. </td></tr>
     <tr><td class="paramname">high_period_us</td><td>Specifies the PWM high count. </td></tr>
     <tr><td class="paramname">low_period_us</td><td>Specifies the PWM low count. </td></tr>
-    <tr><td class="paramname">deadzone_enable</td><td>Specifies whether PWM deadzone is enabled. true PWM deadzone is enabled. false PWM deadzone is disabled. </td></tr>
+    <tr><td class="paramname">deadzone_enable</td><td>Specifies whether PWM deadzone is enabled.<ul>
+<li>true: PWM deadzone is enabled.</li>
+<li>false: PWM deadzone is disabled. </li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">A</td><td>handle by which the created PWM can be referenced. </td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>A handle by which the created PWM can be referenced. </dd></dl>
 
 </div>
 </div>
@@ -160,9 +159,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of the PWM deletion. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">The</td><td>status of the PWM deletion. true PWM was deleted successfully. false PWM was failed to delete. </td></tr>
+    <tr><td class="paramname">true</td><td>PWM was deleted successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>PWM was failed to delete. </td></tr>
   </table>
   </dd>
 </dl>
@@ -192,9 +193,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of the PWM start. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">The</td><td>status of the PWM start. true PWM was started successfully. false PWM was failed to start. </td></tr>
+    <tr><td class="paramname">true</td><td>PWM was started successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>PWM was failed to start. </td></tr>
   </table>
   </dd>
 </dl>
@@ -224,9 +227,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of the PWM stop. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">The</td><td>status of the PWM stop. true PWM was stopped successfully. false PWM was failed to stop. </td></tr>
+    <tr><td class="paramname">true</td><td>PWM was stopped successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>PWM was failed to stop. </td></tr>
   </table>
   </dd>
 </dl>
@@ -267,9 +272,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of the PWM timeout callback creation. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">The</td><td>status of the PWM timeout callback creation. true PWM timeout callback was created successfully. false PWM timeout callback was failed to create. </td></tr>
+    <tr><td class="paramname">true</td><td>PWM timeout callback was created successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>PWM timeout callback was failed to create. </td></tr>
   </table>
   </dd>
 </dl>
@@ -310,9 +317,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of the PWM state check. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">The</td><td>result of the PWM state check. true PWM state was checked successfully. false PWM state was failed to check. </td></tr>
+    <tr><td class="paramname">true</td><td>PWM state was checked successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>PWM state was failed to check. </td></tr>
   </table>
   </dd>
 </dl>
@@ -345,17 +354,19 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Configure the specified PWM according to the specified parameters in the T_PWM_CONFIG structure. </p>
+<p>Configure the specified PWM according to the specified parameters in the <a class="el" href="group___p_w_m___exported___types.html#gaa1577c6072fa8fd6545b8a58ea0fbda1">T_PWM_CONFIG</a> structure. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">handle</td><td>The handle of the PWM to be configured. </td></tr>
-    <tr><td class="paramname">config_struct</td><td>pointer to a T_PWM_CONFIG structure that contains the configuration information for the specified PWM. </td></tr>
+    <tr><td class="paramname">config_struct</td><td>Pointer to a <a class="el" href="group___p_w_m___exported___types.html#gaa1577c6072fa8fd6545b8a58ea0fbda1">T_PWM_CONFIG</a> structure that contains the configuration information for the specified PWM. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of the PWM configuration. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">The</td><td>status of the PWM configuration. true PWM was configured successfully. false PWM was failed to configure. </td></tr>
+    <tr><td class="paramname">true</td><td>PWM was configured successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>PWM was failed to configure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -383,7 +394,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="group___p_w_m___exported__constants.html#gab297bdd225e23d95f99b841a2ac08f8e">T_PWM_PIN_FUNC</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="group___p_w_m___exported___constants.html#gab297bdd225e23d95f99b841a2ac08f8e">T_PWM_PIN_FUNC</a>&#160;</td>
           <td class="paramname"><em>func</em>&#160;</td>
         </tr>
         <tr>
@@ -398,14 +409,16 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">handle</td><td>The handle of the PWM to be configured. </td></tr>
-    <tr><td class="paramname">pin_index</td><td>pin number. </td></tr>
-    <tr><td class="paramname">func</td><td>pin function, can be a value of <a class="el" href="group___p_w_m___exported__constants.html#gab297bdd225e23d95f99b841a2ac08f8e">T_PWM_PIN_FUNC</a>. </td></tr>
+    <tr><td class="paramname">pin_index</td><td>Pin number. </td></tr>
+    <tr><td class="paramname">func</td><td>Pin function, can be a value of <a class="el" href="group___p_w_m___exported___constants.html#gab297bdd225e23d95f99b841a2ac08f8e">T_PWM_PIN_FUNC</a>. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of the PWM pin configuration. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">The</td><td>status of the PWM pin configuration. true PWM pin was configured successfully. false PWM pin was failed to configure. </td></tr>
+    <tr><td class="paramname">true</td><td>PWM pin was configured successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>PWM pin was failed to configure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -444,7 +457,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Change PWM freq and duty according high_count and low_count. </p>
+<p>Change the PWM frequency and duty cycle according high_count and low_count. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">handle</td><td>The handle of the PWM to be configured. </td></tr>
@@ -453,9 +466,11 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of the PWM configuration. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">The</td><td>status of the PWM configuration. true PWM was configured successfully. false PWM was failed to configure. </td></tr>
+    <tr><td class="paramname">true</td><td>PWM was configured successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>PWM was failed to configure. </td></tr>
   </table>
   </dd>
 </dl>

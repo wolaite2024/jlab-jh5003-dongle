@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>BT AUDIO SDK: RX Start Mode</title>
+<title>BT AUDIO SDK: IR RX Start Mode</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -44,17 +44,20 @@ $(function() {
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">RX Start Mode<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___i_r.html">IR</a> &raquo; <a class="el" href="group__x3e___i_r___exported___constants.html">IR Exported Constants</a></div></div>  </div>
+<div class="title">IR RX Start Mode<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___i_r.html">IR</a> &raquo; <a class="el" href="group__x3e___i_r___exported___constants.html">IR Exported Constants</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga69aceeb62d279fa0fa88f95818c58700"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i_r___rx___start___mode.html#ga69aceeb62d279fa0fa88f95818c58700">IR_RX_AUTO_MODE</a>&#160;&#160;&#160;((uint32_t)((0x1) &lt;&lt; IR_RX_START_MODE_Pos))</td></tr>
+<tr class="memdesc:ga69aceeb62d279fa0fa88f95818c58700"><td class="mdescLeft">&#160;</td><td class="mdescRight">IR RX is started automatically, and starts when the RX trigger mode is met.  <a href="#ga69aceeb62d279fa0fa88f95818c58700">More...</a><br /></td></tr>
 <tr class="separator:ga69aceeb62d279fa0fa88f95818c58700"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga352954d8b76e606f5107019f4fa40687"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i_r___rx___start___mode.html#ga352954d8b76e606f5107019f4fa40687">IR_RX_MANUAL_MODE</a>&#160;&#160;&#160;((uint32_t)((0x0) &lt;&lt; IR_RX_START_MODE_Pos))</td></tr>
+<tr class="memdesc:ga352954d8b76e606f5107019f4fa40687"><td class="mdescLeft">&#160;</td><td class="mdescRight">IR RX is started by calling API <a class="el" href="group___i_r___exported___functions.html#gac85f2ea12288362118b78040ecb5ffd8">IR_StartManualRxTrigger</a>.  <a href="#ga352954d8b76e606f5107019f4fa40687">More...</a><br /></td></tr>
 <tr class="separator:ga352954d8b76e606f5107019f4fa40687"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga74214816b4d2c92d3abff06230fd3cbf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___i_r___rx___start___mode.html#ga74214816b4d2c92d3abff06230fd3cbf">IS_RX_START_MODE</a>(MODE)&#160;&#160;&#160;(((MODE) == <a class="el" href="group__x3e___i_r___rx___start___mode.html#ga69aceeb62d279fa0fa88f95818c58700">IR_RX_AUTO_MODE</a>) || ((MODE) == <a class="el" href="group__x3e___i_r___rx___start___mode.html#ga352954d8b76e606f5107019f4fa40687">IR_RX_MANUAL_MODE</a>))</td></tr>
+<tr class="memdesc:ga74214816b4d2c92d3abff06230fd3cbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the input parameter is valid.  <a href="#ga74214816b4d2c92d3abff06230fd3cbf">More...</a><br /></td></tr>
 <tr class="separator:ga74214816b4d2c92d3abff06230fd3cbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -71,6 +74,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>IR RX is started automatically, and starts when the RX trigger mode is met. </p>
+
 </div>
 </div>
 <a id="ga352954d8b76e606f5107019f4fa40687"></a>
@@ -84,6 +89,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>IR RX is started by calling API <a class="el" href="group___i_r___exported___functions.html#gac85f2ea12288362118b78040ecb5ffd8">IR_StartManualRxTrigger</a>. </p>
 
 </div>
 </div>
@@ -102,6 +109,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Check if the input parameter is valid. </p>
 
 </div>
 </div>

@@ -13,17 +13,15 @@ extern "C" {
 #endif
 
 /**
- * \defgroup    CLI Command Line Interface
+ * \defgroup    CLI   Command Line Interface
  *
  * \brief   Provide the functionalities of command line interface.
  * \details Command line interface provides a prompt where the user types a command, which is expressed
- *          as a sequence of characters - typically a command name followed by some parameters, and
- *          presses the \b Return key to execute that command.
+ *          as a sequence of characters - typically a command name followed by some parameters, ending
+ *          with a carriage return and line feed character.
  */
 
 /**
- * cli.h
- *
  * \brief Define the prototype of command line callback function.
  *
  * \param[in] cmd_str   The entire string (including params) as input by the user.
@@ -40,8 +38,6 @@ extern "C" {
 typedef bool (*P_CLI_CALLBACK)(const char *cmd_str, char *p_buf, size_t buf_len);
 
 /**
- * cli.h
- *
  * \brief Define the prototype of command line pattern matching.
  *
  * \param[in] cmd_str   The entire string (including params) as input by the user.
@@ -57,8 +53,6 @@ typedef bool (*P_CLI_CALLBACK)(const char *cmd_str, char *p_buf, size_t buf_len)
 typedef bool (*P_CLI_MATCH)(const char *cmd_str, const char *p_cmd, size_t cmd_len);
 
 /**
- * cli.h
- *
  * \brief  Define the structure of command line interface.
  *
  * \ingroup CLI
@@ -76,8 +70,6 @@ typedef struct t_cli_cmd
 } T_CLI_CMD;
 
 /**
- * cli.h
- *
  * \brief   Register the command passed in using the cli_cmd parameter.
  * \details Registering a command adds the command to the list of commands that are
  *          handled by the command interpreter. Once a command has been registered it
@@ -94,8 +86,6 @@ typedef struct t_cli_cmd
 bool cli_cmd_register(T_CLI_CMD *const cli_cmd);
 
 /**
- * cli.h
- *
  * \brief  Get the pointer to the param_idx'th word in the command string.
  *
  * \param[in]  cmd_str      The start address of the command string.
@@ -109,8 +99,6 @@ bool cli_cmd_register(T_CLI_CMD *const cli_cmd);
 const char *cli_param_get(const char *cmd_str, uint32_t param_idx, uint32_t *param_len);
 
 /**
- * cli.h
- *
  * \brief  Get the number of parameters that follow the command name.
  *
  * \param[in] cmd_str   The start address of the command string.
@@ -122,8 +110,6 @@ const char *cli_param_get(const char *cmd_str, uint32_t param_idx, uint32_t *par
 int32_t cli_param_num_get(const char *cmd_str);
 
 /**
- * cli.h
- *
  * \brief   Traverse and echo the help prompts of the specified command list.
  *
  * \param[in] cmd_list   The command of which the subcommand list will be traversed.

@@ -3,8 +3,8 @@
 *     Copyright(c) 2016, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * @file     simple_ble_client.h
-  * @brief    Head file for using Simple BLE Client.
-  * @details  Simple BLE data structs and external functions declaration.
+  * @brief    Header file for using Simple Bluetooth LE Client.
+  * @details  Simple Bluetooth LE data structs and external functions declaration.
   * @author   jane
   * @date     2016-02-18
   * @version  v0.1
@@ -21,12 +21,13 @@ extern "C" {
 
 /* Add Includes here */
 #include <profile_client.h>
+#include <simple_ble_config.h>
 
 
-/** @defgroup SIMP_Client Simple BLE Service Client
-  * @brief Simple BLE service client
+/** @defgroup SIMP_Client Simple Bluetooth LE Service Client
+  * @brief SIMP client
   * @details
-     Simple BLE Profile is a customized BLE-based Profile. Simple ble service please refer to @ref SIMP_Service .
+     Simple Bluetooth LE Profile is a customized LE-based Profile. Simple Bluetooth LE service please refer to @ref SIMP_Service.
   * @{
   */
 /*============================================================================*
@@ -36,18 +37,8 @@ extern "C" {
   * @brief
   * @{
   */
-/** @defgroup SIMP_UUIDs SIMP UUIDs
-  * @brief Simple BLE Profile UUID definitions
-  * @{
-  */
-#define GATT_UUID_SIMPLE_PROFILE                    0xA00A
-#define GATT_UUID_CHAR_SIMPLE_V1_READ               0xB001
-#define GATT_UUID_CHAR_SIMPLE_V2_WRITE              0xB002
-#define GATT_UUID_CHAR_SIMPLE_V3_NOTIFY             0xB003
-#define GATT_UUID_CHAR_SIMPLE_V4_INDICATE           0xB004
-/** @} End of SIMP_UUIDs */
 
-/** @brief  Define links number. range: 0-4 */
+/** @brief  Define links number. */
 #define SIMP_MAX_LINKS  4
 /** End of SIMP_Client_Exported_Macros
   * @}
@@ -65,15 +56,15 @@ extern "C" {
 /** @brief SIMP client handle type*/
 typedef enum
 {
-    HDL_SIMBLE_SRV_START,           //!< start handle of simple ble service
-    HDL_SIMBLE_SRV_END,             //!< end handle of simple ble service
-    HDL_SIMBLE_V1_READ,             //!< V1 read characteristic value handle
-    HDL_SIMBLE_V2_WRITE,            //!< V2 write characteristic value handle
-    HDL_SIMBLE_V3_NOTIFY,           //!< V3 notify characteristic value handle
-    HDL_SIMBLE_V3_NOTIFY_CCCD,      //!< V3 notify characteristic CCCD handle
-    HDL_SIMBLE_V4_INDICATE,         //!< V4 indicate characteristic value handle
-    HDL_SIMBLE_V4_INDICATE_CCCD,    //!< V4 indicate characteristic CCCD handle
-    HDL_SIMBLE_CACHE_LEN            //!< handle cache length
+    HDL_SIMBLE_SRV_START,           //!< Start handle of Simple Bluetooth LE service.
+    HDL_SIMBLE_SRV_END,             //!< End handle of Simple Bluetooth LE service.
+    HDL_SIMBLE_V1_READ,             //!< V1 read characteristic value handle.
+    HDL_SIMBLE_V2_WRITE,            //!< V2 write characteristic value handle.
+    HDL_SIMBLE_V3_NOTIFY,           //!< V3 notify characteristic value handle.
+    HDL_SIMBLE_V3_NOTIFY_CCCD,      //!< V3 notify characteristic CCCD handle.
+    HDL_SIMBLE_V4_INDICATE,         //!< V4 indicate characteristic value handle.
+    HDL_SIMBLE_V4_INDICATE_CCCD,    //!< V4 indicate characteristic CCCD handle.
+    HDL_SIMBLE_CACHE_LEN            //!< Handle cache length.
 } T_SIMP_HANDLE_TYPE;
 
 /** @brief SIMP client discovery state*/
@@ -132,21 +123,21 @@ typedef struct
     uint16_t cause;
 } T_SIMP_WRITE_RESULT;
 
-/** @brief SIMP client notif/ind receive type*/
+/** @brief SIMP client notification/indication receive type*/
 typedef enum
 {
     SIMP_V3_NOTIFY,
     SIMP_V4_INDICATE,
 } T_SIMP_NOTIF_IND_TYPE;
 
-/** @brief SIMP client notif/ind receive data*/
+/** @brief SIMP client notification/indication receive data*/
 typedef struct
 {
     uint16_t value_size;
     uint8_t *p_value;
 } T_SIMP_NOTIF_IND_VALUE;
 
-/** @brief SIMP client notif/ind receive content*/
+/** @brief SIMP client notification/indication receive content*/
 typedef struct
 {
     T_SIMP_NOTIF_IND_TYPE type;
@@ -157,8 +148,8 @@ typedef struct
 typedef enum
 {
     SIMP_CLIENT_CB_TYPE_DISC_STATE,          //!< Discovery procedure state, done or pending.
-    SIMP_CLIENT_CB_TYPE_READ_RESULT,         //!< Read request's result data, responsed from server.
-    SIMP_CLIENT_CB_TYPE_WRITE_RESULT,        //!< Write request result, success or fail.
+    SIMP_CLIENT_CB_TYPE_READ_RESULT,         //!< Read request's result data, responded from server.
+    SIMP_CLIENT_CB_TYPE_WRITE_RESULT,        //!< Write result, success or fail.
     SIMP_CLIENT_CB_TYPE_NOTIF_IND_RESULT,    //!< Notification or indication data received from server.
     SIMP_CLIENT_CB_TYPE_INVALID              //!< Invalid callback type, no practical usage.
 } T_SIMP_CLIENT_CB_TYPE;
@@ -186,18 +177,18 @@ typedef struct
   */
 
 /**
-  * @brief      Add simple ble service client to application.
-  * @param[in]  app_cb pointer of app callback function to handle specific client module data.
-  * @param[in]  link_num initialize link num.
+  * @brief      Add Simple Bluetooth LE service client to application.
+  * @param[in]  app_cb Pointer of APP callback function to handle specific client module data.
+  * @param[in]  link_num Initialize link num.
   * @return Client ID of the specific client module.
-  * @retval 0xff failed.
-  * @retval other success.
+  * @retval 0xff Failed.
+  * @retval other Success.
   *
   * <b>Example usage</b>
   * \code{.c}
     void app_le_profile_init(void)
     {
-        client_init(1);
+        client_init(client_num);
         simple_ble_client_id = simp_ble_add_client(app_client_callback, APP_MAX_LINKS);
     }
   * \endcode
@@ -205,78 +196,80 @@ typedef struct
 T_CLIENT_ID simp_ble_add_client(P_FUN_GENERAL_APP_CB app_cb, uint8_t link_num);
 
 /**
-  * @brief  Used by application, to start the discovery procedure of Simple BLE server.
-  * @param[in]  conn_id connection ID.
-  * @retval true send request to upper stack success.
-  * @retval false send request to upper stack failed.
+  * @brief  Used by application, to start the discovery procedure of Simple Bluetooth LE server.
+  * @param[in]  conn_id Connection ID.
+  * @retval true Send request to Bluetooth Host success.
+  * @retval false Send request to Bluetooth Host failed.
   */
 bool simp_ble_client_start_discovery(uint8_t conn_id);
 
 /**
   * @brief  Used by application, to read data from server by using handles.
-  * @param[in]  conn_id connection ID.
-  * @param[in]  read_type one of characteristic that has the readable property.
-  * @retval true send request to upper stack success.
-  * @retval false send request to upper stack failed.
+  * @param[in]  conn_id Connection ID.
+  * @param[in]  read_type One of characteristic that has the readable property.
+  * @retval true Send request to Bluetooth Host success.
+  * @retval false Send request to Bluetooth Host failed.
   */
 bool simp_ble_client_read_by_handle(uint8_t conn_id, T_SIMP_READ_TYPE read_type);
 
 /**
   * @brief  Used by application, to read data from server by using UUIDs.
-  * @param[in]  conn_id connection ID.
-  * @param[in]  read_type one of characteristic that has the readable property.
-  * @retval true send request to upper stack success.
-  * @retval false send request to upper stack failed.
+  * @param[in]  conn_id Connection ID.
+  * @param[in]  read_type One of characteristic that has the readable property.
+  * @retval true Send request to Bluetooth Host success.
+  * @retval false Send request to Bluetooth Host failed.
   */
 bool simp_ble_client_read_by_uuid(uint8_t conn_id, T_SIMP_READ_TYPE read_type);
 
 /**
   * @brief  Used by application, to write data of V2 write Characteristic.
-  * @param[in]  conn_id connection ID.
-  * @param[in]  length  write data length
-  * @param[in]  p_value point the value to write
-  * @param[in]  type    write type.
-  * @retval true send request to upper stack success.
-  * @retval false send request to upper stack failed.
+  * @param[in]  conn_id Connection ID.
+  * @param[in]  length  Write data length.
+  * @param[in]  p_value Point the value to write.
+  * @param[in]  type    Write type.
+  * @retval true Send request to Bluetooth Host success.
+  * @retval false Send request to Bluetooth Host failed.
   */
 bool simp_ble_client_write_v2_char(uint8_t conn_id, uint16_t length, uint8_t *p_value,
                                    T_GATT_WRITE_TYPE type);
 
 /**
   * @brief  Used by application, to enable or disable the notification of peer server's V3 Notify Characteristic.
-  * @param[in]  conn_id connection ID.
-  * @param[in]  notify 0--disable the notification, 1--enable the notification.
-  * @retval true send request to upper stack success.
-  * @retval false send request to upper stack failed.
+  * @param[in]  conn_id Connection ID.
+  * @param[in]  notify @arg 0 Disable the notification.
+                       @arg 1 Enable the notification.
+  * @retval true Send request to Bluetooth Host success.
+  * @retval false Send request to Bluetooth Host failed.
   */
 bool simp_ble_client_set_v3_notify(uint8_t conn_id, bool notify);
 
 /**
   * @brief  Used by application, to enable or disable the indication of peer server's V4 Indicate Characteristic.
-  * @param[in]  conn_id connection ID.
-  * @param[in]  ind 0--disable the indication, 1--enable the indication.
-  * @retval true send request to upper stack success.
-  * @retval false send request to upper stack failed.
+  * @param[in]  conn_id Connection ID.
+  * @param[in]  ind @arg 0 Disable the indication.
+                    @arg 1 Enable the indication.
+  * @retval true Send request to Bluetooth Host success.
+  * @retval false Send request to Bluetooth Host failed.
   */
 bool simp_ble_client_set_v4_ind(uint8_t conn_id, bool ind);
 
 /**
-  * @brief  Used by application, to get handle cache.
-  * @param[in]  conn_id connection ID.
-  * @param[in]  p_hdl_cache pointer of the handle cache table
-  * @param[in]  len the length of handle cache table
-  * @retval true success.
-  * @retval false failed.
+  * @brief  Used by the application to get the handle cache.
+  * @param[in]  conn_id Connection ID.
+  * @param[in,out]  p_hdl_cache Pointer to the handle cache table.
+  * @param[in]  len The length of the handle cache table.
+  * @retval true Success.
+  * @retval false Failed.
   */
 bool simp_ble_client_get_hdl_cache(uint8_t conn_id, uint16_t *p_hdl_cache, uint8_t len);
 
 /**
-  * @brief  Used by application, to set handle cache.
-  * @param[in]  conn_id connection ID.
-  * @param[in]  p_hdl_cache pointer of the handle cache table
-  * @param[in]  len the length of handle cache table
-  * @retval true success.
-  * @retval false failed.
+  * @brief  Used by the application to set the handle cache.
+  * @param[in]  conn_id Connection ID.
+  * @param[in]  p_hdl_cache Pointer to the handle cache table.
+  * @param[in]  len The length of the handle cache table.
+  * @retval true Success.
+  * @retval false Failed.
   */
 bool simp_ble_client_set_hdl_cache(uint8_t conn_id, uint16_t *p_hdl_cache, uint8_t len);
 

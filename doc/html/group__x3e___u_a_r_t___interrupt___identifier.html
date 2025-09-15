@@ -51,16 +51,22 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga490330e24f68658dccc7b1acda69ac83"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___u_a_r_t___interrupt___identifier.html#ga490330e24f68658dccc7b1acda69ac83">UART_INT_ID_LINE_STATUS</a>&#160;&#160;&#160;((uint16_t)(0x03 &lt;&lt; 1))</td></tr>
+<tr class="memdesc:ga490330e24f68658dccc7b1acda69ac83"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX line status interrupt identification.  <a href="#ga490330e24f68658dccc7b1acda69ac83">More...</a><br /></td></tr>
 <tr class="separator:ga490330e24f68658dccc7b1acda69ac83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad208fb8d7648a2572e7188a65ac983b8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___u_a_r_t___interrupt___identifier.html#gad208fb8d7648a2572e7188a65ac983b8">UART_INT_ID_RX_LEVEL_REACH</a>&#160;&#160;&#160;((uint16_t)(0x02 &lt;&lt; 1))</td></tr>
+<tr class="memdesc:gad208fb8d7648a2572e7188a65ac983b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX trigger level reached interrupt identification.  <a href="#gad208fb8d7648a2572e7188a65ac983b8">More...</a><br /></td></tr>
 <tr class="separator:gad208fb8d7648a2572e7188a65ac983b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac2f2821e07a04d862f26efb3ec8d221f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___u_a_r_t___interrupt___identifier.html#gac2f2821e07a04d862f26efb3ec8d221f">UART_INT_ID_RX_TMEOUT</a>&#160;&#160;&#160;((uint16_t)(0x06 &lt;&lt; 1))</td></tr>
+<tr class="memdesc:gac2f2821e07a04d862f26efb3ec8d221f"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX FIFO data timeout interrupt identification.  <a href="#gac2f2821e07a04d862f26efb3ec8d221f">More...</a><br /></td></tr>
 <tr class="separator:gac2f2821e07a04d862f26efb3ec8d221f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga90b526d152aa9fd65b059d52d5610770"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___u_a_r_t___interrupt___identifier.html#ga90b526d152aa9fd65b059d52d5610770">UART_INT_ID_TX_EMPTY</a>&#160;&#160;&#160;((uint16_t)(0x01 &lt;&lt; 1))</td></tr>
+<tr class="memdesc:ga90b526d152aa9fd65b059d52d5610770"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX FIFO empty interrupt identification.  <a href="#ga90b526d152aa9fd65b059d52d5610770">More...</a><br /></td></tr>
 <tr class="separator:ga90b526d152aa9fd65b059d52d5610770"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaff196a2a096ef567b9c1bd1485b9de89"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___u_a_r_t___interrupt___identifier.html#gaff196a2a096ef567b9c1bd1485b9de89">UART_INT_ID_MODEM_STATUS</a>&#160;&#160;&#160;((uint16_t)(0x00 &lt;&lt; 1))</td></tr>
+<tr class="memdesc:gaff196a2a096ef567b9c1bd1485b9de89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modem status interrupt identification.  <a href="#gaff196a2a096ef567b9c1bd1485b9de89">More...</a><br /></td></tr>
 <tr class="separator:gaff196a2a096ef567b9c1bd1485b9de89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2b9230c4306921487883a3c7d8b8f12b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___u_a_r_t___interrupt___identifier.html#ga2b9230c4306921487883a3c7d8b8f12b">IS_UART_IT_ID</a>(ID)</td></tr>
+<tr class="memdesc:ga2b9230c4306921487883a3c7d8b8f12b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the input parameter is valid.  <a href="#ga2b9230c4306921487883a3c7d8b8f12b">More...</a><br /></td></tr>
 <tr class="separator:ga2b9230c4306921487883a3c7d8b8f12b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -77,6 +83,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>RX line status interrupt identification. </p>
+
 </div>
 </div>
 <a id="gad208fb8d7648a2572e7188a65ac983b8"></a>
@@ -90,6 +98,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>RX trigger level reached interrupt identification. </p>
 
 </div>
 </div>
@@ -105,6 +115,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>RX FIFO data timeout interrupt identification. </p>
+
 </div>
 </div>
 <a id="ga90b526d152aa9fd65b059d52d5610770"></a>
@@ -119,6 +131,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>TX FIFO empty interrupt identification. </p>
+
 </div>
 </div>
 <a id="gaff196a2a096ef567b9c1bd1485b9de89"></a>
@@ -132,6 +146,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Modem status interrupt identification. </p>
 
 </div>
 </div>
@@ -150,12 +166,14 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">(((ID) == <a class="code" href="group__x3e___u_a_r_t___interrupt___identifier.html#ga490330e24f68658dccc7b1acda69ac83">UART_INT_ID_LINE_STATUS</a>) || ((ID) == <a class="code" href="group__x3e___u_a_r_t___interrupt___identifier.html#gad208fb8d7648a2572e7188a65ac983b8">UART_INT_ID_RX_LEVEL_REACH</a>)\</div><div class="line">                           || ((ID) == <a class="code" href="group__x3e___u_a_r_t___interrupt___identifier.html#gac2f2821e07a04d862f26efb3ec8d221f">UART_INT_ID_RX_TMEOUT</a>) || ((ID) == <a class="code" href="group__x3e___u_a_r_t___interrupt___identifier.html#ga90b526d152aa9fd65b059d52d5610770">UART_INT_ID_TX_EMPTY</a>)\</div><div class="line">                           || ((ID) == <a class="code" href="group__x3e___u_a_r_t___interrupt___identifier.html#gaff196a2a096ef567b9c1bd1485b9de89">UART_INT_ID_MODEM_STATUS</a>))</div><div class="ttc" id="group__x3e___u_a_r_t___interrupt___identifier_html_gac2f2821e07a04d862f26efb3ec8d221f"><div class="ttname"><a href="group__x3e___u_a_r_t___interrupt___identifier.html#gac2f2821e07a04d862f26efb3ec8d221f">UART_INT_ID_RX_TMEOUT</a></div><div class="ttdeci">#define UART_INT_ID_RX_TMEOUT</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:142</div></div>
-<div class="ttc" id="group__x3e___u_a_r_t___interrupt___identifier_html_ga90b526d152aa9fd65b059d52d5610770"><div class="ttname"><a href="group__x3e___u_a_r_t___interrupt___identifier.html#ga90b526d152aa9fd65b059d52d5610770">UART_INT_ID_TX_EMPTY</a></div><div class="ttdeci">#define UART_INT_ID_TX_EMPTY</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:143</div></div>
-<div class="ttc" id="group__x3e___u_a_r_t___interrupt___identifier_html_ga490330e24f68658dccc7b1acda69ac83"><div class="ttname"><a href="group__x3e___u_a_r_t___interrupt___identifier.html#ga490330e24f68658dccc7b1acda69ac83">UART_INT_ID_LINE_STATUS</a></div><div class="ttdeci">#define UART_INT_ID_LINE_STATUS</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:140</div></div>
-<div class="ttc" id="group__x3e___u_a_r_t___interrupt___identifier_html_gaff196a2a096ef567b9c1bd1485b9de89"><div class="ttname"><a href="group__x3e___u_a_r_t___interrupt___identifier.html#gaff196a2a096ef567b9c1bd1485b9de89">UART_INT_ID_MODEM_STATUS</a></div><div class="ttdeci">#define UART_INT_ID_MODEM_STATUS</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:144</div></div>
-<div class="ttc" id="group__x3e___u_a_r_t___interrupt___identifier_html_gad208fb8d7648a2572e7188a65ac983b8"><div class="ttname"><a href="group__x3e___u_a_r_t___interrupt___identifier.html#gad208fb8d7648a2572e7188a65ac983b8">UART_INT_ID_RX_LEVEL_REACH</a></div><div class="ttdeci">#define UART_INT_ID_RX_LEVEL_REACH</div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:141</div></div>
+<b>Value:</b><div class="fragment"><div class="line">(((ID) == <a class="code" href="group__x3e___u_a_r_t___interrupt___identifier.html#ga490330e24f68658dccc7b1acda69ac83">UART_INT_ID_LINE_STATUS</a>) || ((ID) == <a class="code" href="group__x3e___u_a_r_t___interrupt___identifier.html#gad208fb8d7648a2572e7188a65ac983b8">UART_INT_ID_RX_LEVEL_REACH</a>)\</div><div class="line">                           || ((ID) == <a class="code" href="group__x3e___u_a_r_t___interrupt___identifier.html#gac2f2821e07a04d862f26efb3ec8d221f">UART_INT_ID_RX_TMEOUT</a>) || ((ID) == <a class="code" href="group__x3e___u_a_r_t___interrupt___identifier.html#ga90b526d152aa9fd65b059d52d5610770">UART_INT_ID_TX_EMPTY</a>)\</div><div class="line">                           || ((ID) == <a class="code" href="group__x3e___u_a_r_t___interrupt___identifier.html#gaff196a2a096ef567b9c1bd1485b9de89">UART_INT_ID_MODEM_STATUS</a>))</div><div class="ttc" id="group__x3e___u_a_r_t___interrupt___identifier_html_gac2f2821e07a04d862f26efb3ec8d221f"><div class="ttname"><a href="group__x3e___u_a_r_t___interrupt___identifier.html#gac2f2821e07a04d862f26efb3ec8d221f">UART_INT_ID_RX_TMEOUT</a></div><div class="ttdeci">#define UART_INT_ID_RX_TMEOUT</div><div class="ttdoc">RX FIFO data timeout interrupt identification. </div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:137</div></div>
+<div class="ttc" id="group__x3e___u_a_r_t___interrupt___identifier_html_ga90b526d152aa9fd65b059d52d5610770"><div class="ttname"><a href="group__x3e___u_a_r_t___interrupt___identifier.html#ga90b526d152aa9fd65b059d52d5610770">UART_INT_ID_TX_EMPTY</a></div><div class="ttdeci">#define UART_INT_ID_TX_EMPTY</div><div class="ttdoc">TX FIFO empty interrupt identification. </div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:138</div></div>
+<div class="ttc" id="group__x3e___u_a_r_t___interrupt___identifier_html_ga490330e24f68658dccc7b1acda69ac83"><div class="ttname"><a href="group__x3e___u_a_r_t___interrupt___identifier.html#ga490330e24f68658dccc7b1acda69ac83">UART_INT_ID_LINE_STATUS</a></div><div class="ttdeci">#define UART_INT_ID_LINE_STATUS</div><div class="ttdoc">RX line status interrupt identification. </div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:135</div></div>
+<div class="ttc" id="group__x3e___u_a_r_t___interrupt___identifier_html_gaff196a2a096ef567b9c1bd1485b9de89"><div class="ttname"><a href="group__x3e___u_a_r_t___interrupt___identifier.html#gaff196a2a096ef567b9c1bd1485b9de89">UART_INT_ID_MODEM_STATUS</a></div><div class="ttdeci">#define UART_INT_ID_MODEM_STATUS</div><div class="ttdoc">Modem status interrupt identification. </div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:139</div></div>
+<div class="ttc" id="group__x3e___u_a_r_t___interrupt___identifier_html_gad208fb8d7648a2572e7188a65ac983b8"><div class="ttname"><a href="group__x3e___u_a_r_t___interrupt___identifier.html#gad208fb8d7648a2572e7188a65ac983b8">UART_INT_ID_RX_LEVEL_REACH</a></div><div class="ttdeci">#define UART_INT_ID_RX_LEVEL_REACH</div><div class="ttdoc">RX trigger level reached interrupt identification. </div><div class="ttdef"><b>Definition:</b> rtl876x_uart.h:136</div></div>
 </div><!-- fragment -->
+<p>Check if the input parameter is valid. </p>
+
 </div>
 </div>
 </div><!-- contents -->

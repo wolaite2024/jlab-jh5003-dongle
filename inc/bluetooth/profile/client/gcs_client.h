@@ -3,7 +3,7 @@
 *     Copyright(c) 2016, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * @file     gcs_client.h
-  * @brief    Head file for using General Common Services client.
+  * @brief    Header file for using General Common Services client.
   * @details  General common services client data structs and external functions declaration.
   * @author   jane
   * @date     2018-12-13
@@ -25,7 +25,9 @@ extern "C" {
 /** @defgroup GCS_Client General Common Services Client
   * @brief GCS service client
   * @details
-     Application shall register gcs client when initialization through @ref gcs_add_client function.
+     Applications shall register GCS client during initialization through @ref gcs_add_client function.
+
+     Applications shall handle callback function registered by @ref gcs_add_client.
   * \code{.c}
     T_APP_RESULT gcs_client_callback(T_CLIENT_ID client_id, uint8_t conn_id, void *p_data)
     {
@@ -49,7 +51,7 @@ extern "C" {
   * @brief
   * @{
   */
-/** @brief  Define maximum links number. range: 0-4 */
+/** @brief  Define maximum links number. */
 #define GCS_MAX_LINKS  4
 
 /** End of GCS_Client_Exported_Macros * @} */
@@ -62,13 +64,13 @@ extern "C" {
 /** @brief  Discovery result type.*/
 typedef enum
 {
-    GCS_ALL_PRIMARY_SRV_DISCOV, //!<Response type for gcs_all_primary_srv_discovery
-    GCS_BY_UUID128_SRV_DISCOV,  //!<Response type for gcs_by_uuid128_srv_discovery
-    GCS_BY_UUID_SRV_DISCOV,     //!<Response type for gcs_by_uuid_srv_discovery
-    GCS_ALL_CHAR_DISCOV,        //!<Response type for gcs_all_char_discovery
-    GCS_BY_UUID_CHAR_DISCOV,    //!<Response type for gcs_by_uuid_char_discovery
-    GCS_BY_UUID128_CHAR_DISCOV, //!<Response type for gcs_by_uuid128_char_discovery
-    GCS_ALL_CHAR_DESC_DISCOV,   //!<Response type for gcs_all_char_descriptor_discovery
+    GCS_ALL_PRIMARY_SRV_DISCOV, //!<Response type for gcs_all_primary_srv_discovery.
+    GCS_BY_UUID128_SRV_DISCOV,  //!<Response type for gcs_by_uuid128_srv_discovery.
+    GCS_BY_UUID_SRV_DISCOV,     //!<Response type for gcs_by_uuid_srv_discovery.
+    GCS_ALL_CHAR_DISCOV,        //!<Response type for gcs_all_char_discovery.
+    GCS_BY_UUID_CHAR_DISCOV,    //!<Response type for gcs_by_uuid_char_discovery.
+    GCS_BY_UUID128_CHAR_DISCOV, //!<Response type for gcs_by_uuid128_char_discovery.
+    GCS_ALL_CHAR_DESC_DISCOV,   //!<Response type for gcs_all_char_descriptor_discovery.
 } T_GCS_DISCOV_TYPE;
 
 /** @brief  Discovery result element.*/
@@ -99,7 +101,7 @@ typedef struct
     T_GCS_DISCOV_RESULT *p_result_table;
 } T_GCS_DISCOVERY_RESULT;
 
-/** @brief GCS client read data, used to inform app read response data */
+/** @brief GCS client read data, used to inform APP read response data */
 typedef struct
 {
     uint16_t cause;
@@ -108,7 +110,7 @@ typedef struct
     uint8_t *p_value;
 } T_GCS_READ_RESULT;
 
-/** @brief GCS client write result, used to inform app write response data */
+/** @brief GCS client write result, used to inform APP write response data */
 typedef struct
 {
     uint16_t cause;
@@ -129,10 +131,10 @@ typedef struct
 typedef enum
 {
     GCS_CLIENT_CB_TYPE_DISC_RESULT,          //!< Discovery procedure state, done or pending.
-    GCS_CLIENT_CB_TYPE_READ_RESULT,         //!< Read request's result data, responsed from server.
-    GCS_CLIENT_CB_TYPE_WRITE_RESULT,
-    GCS_CLIENT_CB_TYPE_NOTIF_IND,
-    GCS_CLIENT_CB_TYPE_INVALID              //!< Invalid callback type, no practical usage.
+    GCS_CLIENT_CB_TYPE_READ_RESULT,          //!< Read request's result data, responded from server.
+    GCS_CLIENT_CB_TYPE_WRITE_RESULT,         //!< Write result, success or fail.
+    GCS_CLIENT_CB_TYPE_NOTIF_IND,            //!< Notification or indication.
+    GCS_CLIENT_CB_TYPE_INVALID               //!< Invalid callback type, no practical usage.
 } T_GCS_CLIENT_CB_TYPE;
 
 /** @brief GCS client callback content */
@@ -159,20 +161,18 @@ typedef struct
   */
 
 /**
-  * @brief  Send discovery all primary services request.
-  * @param[in]  conn_id        Connection ID
+  * @brief  Send discovery of all primary services request.
+  * @param[in]  conn_id        Connection ID.
   * @retval GAP_CAUSE_SUCCESS  Discovery request success.
   * @retval other              Discovery request failed.
   *
   * <b>Example usage</b>
   * \code{.c}
-    T_USER_CMD_PARSE_RESULT cmd_gsrvdis(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        uint8_t conn_id = p_parse_value->dw_param[0];
         T_GAP_CAUSE cause = gcs_all_primary_srv_discovery(conn_id);
-
-        return (T_USER_CMD_PARSE_RESULT)cause;
     }
+
     void gcs_handle_discovery_result(uint8_t conn_id, T_GCS_DISCOVERY_RESULT discov_result)
     {
         uint16_t i;
@@ -183,26 +183,42 @@ typedef struct
         case GCS_ALL_PRIMARY_SRV_DISCOV:
         ......
         }
-     }
+    }
+
+    // Callback registered by @ref gcs_add_client
+    T_APP_RESULT gcs_client_callback(T_CLIENT_ID client_id, uint8_t conn_id, void *p_data)
+    {
+      ...
+      if (client_id == gcs_client_id)
+      {
+          T_GCS_CLIENT_CB_DATA *p_gcs_cb_data = (T_GCS_CLIENT_CB_DATA *)p_data;
+          switch (p_gcs_cb_data->cb_type)
+          {
+          case GCS_CLIENT_CB_TYPE_DISC_RESULT:
+              gcs_handle_discovery_result(conn_id, p_gcs_cb_data->cb_content.discov_result);
+              break;
+          ...
+      }
+      return result;
+    }
   * \endcode
   */
 T_GAP_CAUSE gcs_all_primary_srv_discovery(uint8_t conn_id);
 
 /**
-  * @brief  Send discovery services by 128 bit UUID request.
-  * @param[in]  conn_id        Connection ID
-  * @param[in]  p_uuid128      128 bit UUID.
+  * @brief  Send discovery services by 128-bit UUID request.
+  * @param[in]  conn_id        Connection ID.
+  * @param[in]  p_uuid128      128-bit UUID.
   * @retval GAP_CAUSE_SUCCESS  Discovery request success.
   * @retval other              Discovery request failed.
   *
   * <b>Example usage</b>
   * \code{.c}
-    T_USER_CMD_PARSE_RESULT cmd_srvuuid(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        ......
-        cause = gcs_by_uuid128_srv_discovery(conn_id, uuid128);
-        return (T_USER_CMD_PARSE_RESULT)cause;
+        T_GAP_CAUSE cause = gcs_by_uuid128_srv_discovery(conn_id, p_uuid128);
     }
+
     void gcs_handle_discovery_result(uint8_t conn_id, T_GCS_DISCOVERY_RESULT discov_result)
     {
         uint16_t i;
@@ -213,26 +229,42 @@ T_GAP_CAUSE gcs_all_primary_srv_discovery(uint8_t conn_id);
         case GCS_BY_UUID128_SRV_DISCOV:
         ......
         }
-     }
+    }
+
+    // Callback registered by @ref gcs_add_client
+    T_APP_RESULT gcs_client_callback(T_CLIENT_ID client_id, uint8_t conn_id, void *p_data)
+    {
+      ...
+      if (client_id == gcs_client_id)
+      {
+          T_GCS_CLIENT_CB_DATA *p_gcs_cb_data = (T_GCS_CLIENT_CB_DATA *)p_data;
+          switch (p_gcs_cb_data->cb_type)
+          {
+          case GCS_CLIENT_CB_TYPE_DISC_RESULT:
+              gcs_handle_discovery_result(conn_id, p_gcs_cb_data->cb_content.discov_result);
+              break;
+          ...
+      }
+      return result;
+    }
   * \endcode
   */
 T_GAP_CAUSE gcs_by_uuid128_srv_discovery(uint8_t conn_id, uint8_t *p_uuid128);
 
 /**
-  * @brief  Send discovery services by 16 bit UUID request.
-  * @param[in]  conn_id        Connection ID
-  * @param[in]  uuid16         16 bit UUID.
+  * @brief  Send discovery services by 16-bit UUID request.
+  * @param[in]  conn_id        Connection ID.
+  * @param[in]  uuid16         16-bit UUID.
   * @retval GAP_CAUSE_SUCCESS  Discovery request success.
   * @retval other              Discovery request failed.
   *
   * <b>Example usage</b>
   * \code{.c}
-    T_USER_CMD_PARSE_RESULT cmd_srvuuid(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        ......
-        cause = gcs_by_uuid_srv_discovery(conn_id, uuid16);
-        return (T_USER_CMD_PARSE_RESULT)cause;
+        T_GAP_CAUSE cause = gcs_by_uuid_srv_discovery(conn_id, uuid16);
     }
+
     void gcs_handle_discovery_result(uint8_t conn_id, T_GCS_DISCOVERY_RESULT discov_result)
     {
         uint16_t i;
@@ -243,31 +275,43 @@ T_GAP_CAUSE gcs_by_uuid128_srv_discovery(uint8_t conn_id, uint8_t *p_uuid128);
         case GCS_BY_UUID_SRV_DISCOV:
         ......
         }
-     }
+    }
+
+    // Callback registered by @ref gcs_add_client
+    T_APP_RESULT gcs_client_callback(T_CLIENT_ID client_id, uint8_t conn_id, void *p_data)
+    {
+      ...
+      if (client_id == gcs_client_id)
+      {
+          T_GCS_CLIENT_CB_DATA *p_gcs_cb_data = (T_GCS_CLIENT_CB_DATA *)p_data;
+          switch (p_gcs_cb_data->cb_type)
+          {
+          case GCS_CLIENT_CB_TYPE_DISC_RESULT:
+              gcs_handle_discovery_result(conn_id, p_gcs_cb_data->cb_content.discov_result);
+              break;
+          ...
+      }
+      return result;
+    }
   * \endcode
   */
 T_GAP_CAUSE gcs_by_uuid_srv_discovery(uint8_t conn_id, uint16_t uuid16);
 
 /**
   * @brief  Send discovery characteristics request.
-  * @param[in]  conn_id        Connection ID
-  * @param[in]  start_handle   Start handle of range to be searched.
-  * @param[in]  end_handle     End handle of range to be searched.
+  * @param[in]  conn_id        Connection ID.
+  * @param[in]  start_handle   Start handle of the range to be searched.
+  * @param[in]  end_handle     End handle of the range to be searched.
   * @retval GAP_CAUSE_SUCCESS  Discovery request success.
   * @retval other              Discovery request failed.
   *
   * <b>Example usage</b>
   * \code{.c}
-    T_USER_CMD_PARSE_RESULT cmd_chardis(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        uint8_t conn_id = p_parse_value->dw_param[0];
-        uint16_t start_handle = p_parse_value->dw_param[1];
-        uint16_t end_handle = p_parse_value->dw_param[2];
-
         T_GAP_CAUSE cause = gcs_all_char_discovery(conn_id, start_handle, end_handle);
-
-        return (T_USER_CMD_PARSE_RESULT)cause;
     }
+
     void gcs_handle_discovery_result(uint8_t conn_id, T_GCS_DISCOVERY_RESULT discov_result)
     {
         uint16_t i;
@@ -278,14 +322,31 @@ T_GAP_CAUSE gcs_by_uuid_srv_discovery(uint8_t conn_id, uint16_t uuid16);
         case GCS_ALL_CHAR_DISCOV:
         ......
         }
-     }
+    }
+
+    // Callback registered by @ref gcs_add_client
+    T_APP_RESULT gcs_client_callback(T_CLIENT_ID client_id, uint8_t conn_id, void *p_data)
+    {
+      ...
+      if (client_id == gcs_client_id)
+      {
+          T_GCS_CLIENT_CB_DATA *p_gcs_cb_data = (T_GCS_CLIENT_CB_DATA *)p_data;
+          switch (p_gcs_cb_data->cb_type)
+          {
+          case GCS_CLIENT_CB_TYPE_DISC_RESULT:
+              gcs_handle_discovery_result(conn_id, p_gcs_cb_data->cb_content.discov_result);
+              break;
+          ...
+      }
+      return result;
+    }
   * \endcode
   */
 T_GAP_CAUSE gcs_all_char_discovery(uint8_t conn_id, uint16_t start_handle, uint16_t end_handle);
 
 /**
-  * @brief  Send discovery characteristics request by caracteristic uuid.
-  * @param[in]  conn_id        Connection ID
+  * @brief  Send discovery characteristics request by characteristic uuid.
+  * @param[in]  conn_id        Connection ID.
   * @param[in]  start_handle   Start handle of range to be searched.
   * @param[in]  end_handle     End handle of range to be searched.
   * @param[in]  uuid16         16bit characteristic uuid to be searched.
@@ -294,13 +355,12 @@ T_GAP_CAUSE gcs_all_char_discovery(uint8_t conn_id, uint16_t start_handle, uint1
   *
   * <b>Example usage</b>
   * \code{.c}
-    T_USER_CMD_PARSE_RESULT cmd_charuuid(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        ......
         T_GAP_CAUSE cause = gcs_by_uuid_char_discovery(conn_id, start_handle, end_handle,
                                                        uuid16);
-        return (T_USER_CMD_PARSE_RESULT)cause;
     }
+
     void gcs_handle_discovery_result(uint8_t conn_id, T_GCS_DISCOVERY_RESULT discov_result)
     {
         uint16_t i;
@@ -311,14 +371,31 @@ T_GAP_CAUSE gcs_all_char_discovery(uint8_t conn_id, uint16_t start_handle, uint1
         case GCS_BY_UUID_CHAR_DISCOV:
         ......
         }
-     }
+    }
+
+    // Callback registered by @ref gcs_add_client
+    T_APP_RESULT gcs_client_callback(T_CLIENT_ID client_id, uint8_t conn_id, void *p_data)
+    {
+      ...
+      if (client_id == gcs_client_id)
+      {
+          T_GCS_CLIENT_CB_DATA *p_gcs_cb_data = (T_GCS_CLIENT_CB_DATA *)p_data;
+          switch (p_gcs_cb_data->cb_type)
+          {
+          case GCS_CLIENT_CB_TYPE_DISC_RESULT:
+              gcs_handle_discovery_result(conn_id, p_gcs_cb_data->cb_content.discov_result);
+              break;
+          ...
+      }
+      return result;
+    }
   * \endcode
   */
 T_GAP_CAUSE gcs_by_uuid_char_discovery(uint8_t conn_id, uint16_t start_handle,
                                        uint16_t end_handle, uint16_t uuid16);
 /**
-  * @brief  Send discovery characteristics request by caracteristic uuid.
-  * @param[in]  conn_id        Connection ID
+  * @brief  Send discovery characteristics request by characteristic uuid.
+  * @param[in]  conn_id        Connection ID.
   * @param[in]  start_handle   Start handle of range to be searched.
   * @param[in]  end_handle     End handle of range to be searched.
   * @param[in]  p_uuid128      128bit characteristic uuid to be searched.
@@ -327,14 +404,12 @@ T_GAP_CAUSE gcs_by_uuid_char_discovery(uint8_t conn_id, uint16_t start_handle,
   *
   * <b>Example usage</b>
   * \code{.c}
-    T_USER_CMD_PARSE_RESULT cmd_charuuid(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        ......
         T_GAP_CAUSE cause = gcs_by_uuid128_char_discovery(conn_id, start_handle,
-                                                          end_handle,
-                                                          uuid128);
-        return (T_USER_CMD_PARSE_RESULT)cause;
+                                                          end_handle, p_uuid128);
     }
+
     void gcs_handle_discovery_result(uint8_t conn_id, T_GCS_DISCOVERY_RESULT discov_result)
     {
         uint16_t i;
@@ -345,14 +420,30 @@ T_GAP_CAUSE gcs_by_uuid_char_discovery(uint8_t conn_id, uint16_t start_handle,
         case GCS_BY_UUID128_CHAR_DISCOV:
         ......
         }
-     }
+    }
+
+    // Callback registered by @ref gcs_add_client
+    T_APP_RESULT gcs_client_callback(T_CLIENT_ID client_id, uint8_t conn_id, void *p_data)
+    {
+      ...
+      if (client_id == gcs_client_id)
+      {
+          T_GCS_CLIENT_CB_DATA *p_gcs_cb_data = (T_GCS_CLIENT_CB_DATA *)p_data;
+          switch (p_gcs_cb_data->cb_type)
+          {
+          case GCS_CLIENT_CB_TYPE_DISC_RESULT:
+              gcs_handle_discovery_result(conn_id, p_gcs_cb_data->cb_content.discov_result);
+              break;
+          ...
+      }
+      return result;
   * \endcode
   */
 T_GAP_CAUSE gcs_by_uuid128_char_discovery(uint8_t conn_id, uint16_t start_handle,
                                           uint16_t end_handle, uint8_t *p_uuid128);
 /**
   * @brief  Send discovery characteristics descriptor request.
-  * @param[in]  conn_id        Connection ID
+  * @param[in]  conn_id        Connection ID.
   * @param[in]  start_handle   Start handle of range to be searched.
   * @param[in]  end_handle     End handle of range to be searched.
   * @retval GAP_CAUSE_SUCCESS  Discovery request success.
@@ -360,16 +451,12 @@ T_GAP_CAUSE gcs_by_uuid128_char_discovery(uint8_t conn_id, uint16_t start_handle
   *
   * <b>Example usage</b>
   * \code{.c}
-    T_USER_CMD_PARSE_RESULT cmd_charddis(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        uint8_t conn_id = p_parse_value->dw_param[0];
-        uint16_t start_handle = p_parse_value->dw_param[1];
-        uint16_t end_handle = p_parse_value->dw_param[2];
-
         T_GAP_CAUSE cause = gcs_all_char_descriptor_discovery(conn_id, start_handle,
                                                               end_handle);
-        return (T_USER_CMD_PARSE_RESULT)cause;
     }
+
     void gcs_handle_discovery_result(uint8_t conn_id, T_GCS_DISCOVERY_RESULT discov_result)
     {
         uint16_t i;
@@ -380,33 +467,42 @@ T_GAP_CAUSE gcs_by_uuid128_char_discovery(uint8_t conn_id, uint16_t start_handle
         case GCS_ALL_CHAR_DESC_DISCOV:
         ......
         }
-     }
+    }
+
+    // Callback registered by @ref gcs_add_client
+    T_APP_RESULT gcs_client_callback(T_CLIENT_ID client_id, uint8_t conn_id, void *p_data)
+    {
+      ...
+      if (client_id == gcs_client_id)
+      {
+          T_GCS_CLIENT_CB_DATA *p_gcs_cb_data = (T_GCS_CLIENT_CB_DATA *)p_data;
+          switch (p_gcs_cb_data->cb_type)
+          {
+          case GCS_CLIENT_CB_TYPE_DISC_RESULT:
+              gcs_handle_discovery_result(conn_id, p_gcs_cb_data->cb_content.discov_result);
+              break;
+          ...
+      }
+      return result;
   * \endcode
   */
 T_GAP_CAUSE gcs_all_char_descriptor_discovery(uint8_t conn_id, uint16_t start_handle,
                                               uint16_t end_handle);
 /**
   * @brief  Read characteristic by handle request.
-  * @param[in]  conn_id        Connection ID
+  * @param[in]  conn_id        Connection ID.
   * @param[in]  handle         Request handle.
   * @retval GAP_CAUSE_SUCCESS  Read request success.
   * @retval other              Read request failed.
   *
   * <b>Example usage</b>
   * \code{.c}
-    T_USER_CMD_PARSE_RESULT cmd_read(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        uint8_t conn_id = p_parse_value->dw_param[0];
-        uint16_t handle = p_parse_value->dw_param[1];
-        T_GAP_CAUSE cause = GAP_CAUSE_SUCCESS;
-
-        if (p_parse_value->param_count <= 2)
-        {
-            cause = gcs_attr_read(conn_id, handle);
-        }
-
-        return (T_USER_CMD_PARSE_RESULT)cause;
+        T_GAP_CAUSE cause = gcs_attr_read(conn_id, handle);
     }
+
+    // Callback registered by @ref gcs_add_client
     T_APP_RESULT gcs_client_callback(T_CLIENT_ID client_id, uint8_t conn_id, void *p_data)
     {
         T_APP_RESULT  result = APP_RESULT_SUCCESS;
@@ -437,7 +533,7 @@ T_GAP_CAUSE gcs_attr_read(uint8_t conn_id, uint16_t  handle);
 
 /**
   * @brief  Read characteristic by 16 bit UUID request.
-  * @param[in]  conn_id       Connection ID
+  * @param[in]  conn_id       Connection ID.
   * @param[in]  start_handle  Start handle of range to be searched.
   * @param[in]  end_handle    End handle of range to be searched.
   * @param[in]  uuid16        Request 16 bit UUID.
@@ -446,12 +542,13 @@ T_GAP_CAUSE gcs_attr_read(uint8_t conn_id, uint16_t  handle);
   *
   * <b>Example usage</b>
   * \code{.c}
-    T_USER_CMD_PARSE_RESULT cmd_readu(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        ......
-        cause = gcs_attr_read_using_uuid16(conn_id, start_handle, end_handle, uuid16);
-        return (T_USER_CMD_PARSE_RESULT)cause;
+        T_GAP_CAUSE cause = gcs_attr_read_using_uuid16(conn_id, start_handle,
+                                                       end_handle, uuid16);
     }
+
+    // Callback registered by @ref gcs_add_client
     T_APP_RESULT gcs_client_callback(T_CLIENT_ID client_id, uint8_t conn_id, void *p_data)
     {
         T_APP_RESULT  result = APP_RESULT_SUCCESS;
@@ -482,7 +579,7 @@ T_GAP_CAUSE gcs_attr_read_using_uuid16(uint8_t conn_id, uint16_t start_handle, u
                                        uint16_t uuid16);
 /**
   * @brief  Read characteristic by 128 bit UUID request.
-  * @param[in]  conn_id       Connection ID
+  * @param[in]  conn_id       Connection ID.
   * @param[in]  start_handle  Start handle of range to be searched.
   * @param[in]  end_handle    End handle of range to be searched.
   * @param[in]  p_uuid128     Request 128 bit UUID.
@@ -491,12 +588,12 @@ T_GAP_CAUSE gcs_attr_read_using_uuid16(uint8_t conn_id, uint16_t start_handle, u
   *
   * <b>Example usage</b>
   * \code{.c}
-    T_USER_CMD_PARSE_RESULT cmd_readu(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        ......
-        cause = gcs_attr_read_using_uuid128(conn_id, start_handle, end_handle, uuid128);
-        return (T_USER_CMD_PARSE_RESULT)cause;
+        T_GAP_CAUSE cause = gcs_attr_read_using_uuid128(conn_id, start_handle, end_handle, p_uuid128);
     }
+
+    // Callback registered by @ref gcs_add_client
     T_APP_RESULT gcs_client_callback(T_CLIENT_ID client_id, uint8_t conn_id, void *p_data)
     {
         T_APP_RESULT  result = APP_RESULT_SUCCESS;
@@ -527,18 +624,15 @@ T_GAP_CAUSE gcs_attr_read_using_uuid128(uint8_t conn_id, uint16_t start_handle, 
                                         uint8_t *p_uuid128);
 /**
   * @brief  Confirm from application when receive indication from server.
-  * @param[in]  conn_id       Connection ID indicate which link is.
+  * @param[in]  conn_id       Connection ID indicates which link it is.
   * @retval GAP_CAUSE_SUCCESS: Success.
   * @retval other: Failed.
   *
   * <b>Example usage</b>
   * \code{.c}
-    T_USER_CMD_PARSE_RESULT cmd_indconf(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        T_GAP_CAUSE ret;
-        uint8_t conn_id = p_parse_value->dw_param[0];
-        ret = gcs_attr_ind_confirm(conn_id);
-        return (T_USER_CMD_PARSE_RESULT)ret;
+        T_GAP_CAUSE cause = gcs_attr_ind_confirm(conn_id);
     }
   * \endcode
   */
@@ -546,7 +640,7 @@ T_GAP_CAUSE gcs_attr_ind_confirm(uint8_t conn_id);
 
 /**
   * @brief  Write characteristic request.
-  * @param[in]  conn_id    Connection ID
+  * @param[in]  conn_id    Connection ID.
   * @param[in]  write_type Type of write.
   * @param[in]  handle     Attribute handle.
   * @param[in]  length     Length of data to be written.
@@ -559,14 +653,12 @@ T_GAP_CAUSE gcs_attr_ind_confirm(uint8_t conn_id);
   *
   * <b>Example usage</b>
   * \code{.c}
-    T_USER_CMD_PARSE_RESULT cmd_write(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        ......
-
-        T_GAP_CAUSE ret = gcs_attr_write(conn_id, (T_GATT_WRITE_TYPE)write_type, handle,
-                                         length, data);
-        return (T_USER_CMD_PARSE_RESULT)ret;
+        T_GAP_CAUSE cause = gcs_attr_write(conn_id, write_type, handle, length, p_data);
     }
+
+    // Callback registered by @ref gcs_add_client
     T_APP_RESULT gcs_client_callback(T_CLIENT_ID client_id, uint8_t conn_id, void *p_data)
     {
         T_APP_RESULT  result = APP_RESULT_SUCCESS;
@@ -596,18 +688,18 @@ T_GAP_CAUSE gcs_attr_write(uint8_t conn_id, T_GATT_WRITE_TYPE write_type, uint16
 
 /**
   * @brief  Add general services client to application.
-  * @param[in]  app_cb pointer of app callback function to handle specific client module data.
-  * @param[in]  link_num initialize link num.
-  * @param[in]  config the discovery table number per link.
+  * @param[in]  app_cb Pointer of APP callback function to handle specific client module data.
+  * @param[in]  link_num Initialize link num.
+  * @param[in]  max_discov_table_size The max discovery table number per link.
   * @return Client ID of the specific client module.
-  * @retval 0xff failed.
-  * @retval other success.
+  * @retval 0xff Failed.
+  * @retval other Success.
   *
   * <b>Example usage</b>
   * \code{.c}
     void app_le_profile_init(void)
     {
-        client_init(1);
+        client_init(client_num);
         gcs_client_id = gcs_add_client(gcs_client_callback, APP_MAX_LINKS, APP_MAX_DISCOV_TABLE_NUM);
     }
   * \endcode

@@ -4,6 +4,7 @@
 **********************************************************************************************************
 * @file     sdio_demo.c
 * @brief    This file provides SDcard demo code.
+            Note: Please confirm whether SDIO pins are supported for the package before using SDIO.
 * @details
 * @author   justin kang
 * @date     2022-03-24
@@ -36,7 +37,7 @@ static const T_SD_CONFIG    sd_card_cfg =
 {
     .sd_if_type = SD_IF_SD_CARD,
     .sdh_group = GROUP_0,
-    .sdh_bus_width = SD_BUS_WIDTH_4B,
+    .sdh_bus_width = SD_BUS_WIDTH_1B,
     .sd_bus_clk_sel = SD_BUS_CLK_20M,
 #if defined (TARGET_RTL87X3E)
     .sd_power_en = 1,

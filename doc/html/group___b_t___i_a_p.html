@@ -170,6 +170,8 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<a class="el" href="group___b_t___i_a_p.html#gga0a73490d0ce0aac5b77ab568b35f9068a8cf36e5e16184aa1a5ccee98a6b3b7d5">BT_IAP_PARAM_ACC_MAX_CULUMATIVE_ACK</a> = 0x05, 
 <br />
+&#160;&#160;<a class="el" href="group___b_t___i_a_p.html#gga0a73490d0ce0aac5b77ab568b35f9068a4ae51ba81145738e8fe15532955ca3c5">BT_IAP_PARAM_ACC_START_SEQ_NUM</a> = 0x06, 
+<br />
 &#160;&#160;<a class="el" href="group___b_t___i_a_p.html#gga0a73490d0ce0aac5b77ab568b35f9068a174ab0a3e7c4b50072b7469b57db9229">BT_IAP_PARAM_TX_Q_ELEM_NUM</a> = 0x80
 <br />
  }</td></tr>
@@ -178,17 +180,17 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gab835e597ddcd010ece05e968d48ec746"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___i_a_p.html#gab835e597ddcd010ece05e968d48ec746">bt_iap_init</a> (uint8_t link_num, uint8_t rfc_iap_chann_num, <a class="el" href="group__x3d___a_c_p.html#gad23ba53d88076fa478608dd240340229">P_CP_WRITE_FUNC</a> p_cp_write, <a class="el" href="group__x3d___a_c_p.html#gaea0b1f5358cb2f615bf0a4039729958a">P_CP_READ_FUNC</a> p_cp_read)</td></tr>
-<tr class="memdesc:gab835e597ddcd010ece05e968d48ec746"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize iAP profile.  <a href="#gab835e597ddcd010ece05e968d48ec746">More...</a><br /></td></tr>
-<tr class="separator:gab835e597ddcd010ece05e968d48ec746"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga701f48030980d890276763781a598f83"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___i_a_p.html#ga701f48030980d890276763781a598f83">bt_iap_data_send</a> (uint8_t bd_addr[6], uint16_t session_id, uint8_t *p_data, uint16_t data_len)</td></tr>
-<tr class="memdesc:ga701f48030980d890276763781a598f83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send iAP data to remote device.  <a href="#ga701f48030980d890276763781a598f83">More...</a><br /></td></tr>
-<tr class="separator:ga701f48030980d890276763781a598f83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac18c2c64c9b8bde9297f2fc95b756029"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___i_a_p.html#gac18c2c64c9b8bde9297f2fc95b756029">bt_iap_init</a> (uint8_t rfc_chann_num, <a class="el" href="group___a_c_p___exported___types.html#gad23ba53d88076fa478608dd240340229">P_CP_WRITE_FUNC</a> cp_write, <a class="el" href="group___a_c_p___exported___types.html#gaea0b1f5358cb2f615bf0a4039729958a">P_CP_READ_FUNC</a> cp_read)</td></tr>
+<tr class="memdesc:gac18c2c64c9b8bde9297f2fc95b756029"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize iAP profile.  <a href="#gac18c2c64c9b8bde9297f2fc95b756029">More...</a><br /></td></tr>
+<tr class="separator:gac18c2c64c9b8bde9297f2fc95b756029"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac9beceb98b6e6576a4479eb2a78d33da"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___i_a_p.html#gac9beceb98b6e6576a4479eb2a78d33da">bt_iap_data_send</a> (uint8_t bd_addr[6], uint16_t session_id, uint8_t *data, uint16_t data_len)</td></tr>
+<tr class="memdesc:gac9beceb98b6e6576a4479eb2a78d33da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send iAP data to remote device.  <a href="#gac9beceb98b6e6576a4479eb2a78d33da">More...</a><br /></td></tr>
+<tr class="separator:gac9beceb98b6e6576a4479eb2a78d33da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafc3efc6b291aa77a0caa5baa7d7bacff"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___i_a_p.html#gafc3efc6b291aa77a0caa5baa7d7bacff">bt_iap_eap_session_status_send</a> (uint8_t bd_addr[6], uint16_t session_id, <a class="el" href="group___b_t___i_a_p.html#ga5167a3fe1065e0fe2d5992efb2a31fc8">T_BT_IAP_EAP_SESSION_STATUS</a> status)</td></tr>
 <tr class="memdesc:gafc3efc6b291aa77a0caa5baa7d7bacff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send External Accessory Protocol session status.  <a href="#gafc3efc6b291aa77a0caa5baa7d7bacff">More...</a><br /></td></tr>
 <tr class="separator:gafc3efc6b291aa77a0caa5baa7d7bacff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9d5c0d5ace5395fe9891f7d939197ab1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___i_a_p.html#ga9d5c0d5ace5395fe9891f7d939197ab1">bt_iap_app_launch</a> (uint8_t bd_addr[6], char *boundle_id, uint8_t len_boundle_id, <a class="el" href="group___b_t___i_a_p.html#gafc405d3a3e646d71c3ce46622e63be25">T_BT_IAP_APP_LAUNCH_METHOD</a> method)</td></tr>
-<tr class="memdesc:ga9d5c0d5ace5395fe9891f7d939197ab1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a request to launch specific app which has been installed on the apple device.  <a href="#ga9d5c0d5ace5395fe9891f7d939197ab1">More...</a><br /></td></tr>
+<tr class="memdesc:ga9d5c0d5ace5395fe9891f7d939197ab1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a request to launch specific app which has been installed on the Apple device.  <a href="#ga9d5c0d5ace5395fe9891f7d939197ab1">More...</a><br /></td></tr>
 <tr class="separator:ga9d5c0d5ace5395fe9891f7d939197ab1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7edd67be8e9d487fb45d032e3dc049e9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___i_a_p.html#ga7edd67be8e9d487fb45d032e3dc049e9">bt_iap_connect_req</a> (uint8_t bd_addr[6], uint8_t server_chann, uint16_t frame_size, uint8_t init_credits)</td></tr>
 <tr class="memdesc:ga7edd67be8e9d487fb45d032e3dc049e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send an iAP connection request.  <a href="#ga7edd67be8e9d487fb45d032e3dc049e9">More...</a><br /></td></tr>
@@ -199,20 +201,20 @@ Functions</h2></td></tr>
 <tr class="memitem:ga05d02b7bccdd7c796a43212858d2b257"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___i_a_p.html#ga05d02b7bccdd7c796a43212858d2b257">bt_iap_disconnect_req</a> (uint8_t bd_addr[6])</td></tr>
 <tr class="memdesc:ga05d02b7bccdd7c796a43212858d2b257"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send an iAP disconnection request.  <a href="#ga05d02b7bccdd7c796a43212858d2b257">More...</a><br /></td></tr>
 <tr class="separator:ga05d02b7bccdd7c796a43212858d2b257"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadff02f2ef8bee32cc39d5b94715b2127"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___i_a_p.html#gadff02f2ef8bee32cc39d5b94715b2127">bt_iap2_prep_param</a> (uint8_t *p_param, uint16_t param_id, void *p_data, uint16_t data_len)</td></tr>
-<tr class="memdesc:gadff02f2ef8bee32cc39d5b94715b2127"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format the parameter and store in the buffer to be send later.  <a href="#gadff02f2ef8bee32cc39d5b94715b2127">More...</a><br /></td></tr>
-<tr class="separator:gadff02f2ef8bee32cc39d5b94715b2127"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf5f5998b41db0b2e1df5a7c9ab5a784f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___i_a_p.html#gaf5f5998b41db0b2e1df5a7c9ab5a784f">bt_iap_ident_info_send</a> (uint8_t bd_addr[6], uint8_t *p_ident, uint16_t ident_len)</td></tr>
-<tr class="memdesc:gaf5f5998b41db0b2e1df5a7c9ab5a784f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send identification information.  <a href="#gaf5f5998b41db0b2e1df5a7c9ab5a784f">More...</a><br /></td></tr>
-<tr class="separator:gaf5f5998b41db0b2e1df5a7c9ab5a784f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga06db38fa6767d6b84e0b0e6dfe0cb74d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___i_a_p.html#ga06db38fa6767d6b84e0b0e6dfe0cb74d">bt_iap_param_set</a> (<a class="el" href="group___b_t___i_a_p.html#gae747d6a935cfee48dcf05f950b59b712">T_BT_IAP_PARAM_TYPE</a> type, uint8_t len, void *p_value)</td></tr>
-<tr class="memdesc:ga06db38fa6767d6b84e0b0e6dfe0cb74d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set local iAP parameter.  <a href="#ga06db38fa6767d6b84e0b0e6dfe0cb74d">More...</a><br /></td></tr>
-<tr class="separator:ga06db38fa6767d6b84e0b0e6dfe0cb74d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga724b539d7729945cb21201013497ecb4"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___i_a_p.html#ga724b539d7729945cb21201013497ecb4">bt_iap2_prep_param</a> (uint8_t *param, uint16_t param_id, void *data, uint16_t data_len)</td></tr>
+<tr class="memdesc:ga724b539d7729945cb21201013497ecb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format the parameter and store in the buffer to be send later.  <a href="#ga724b539d7729945cb21201013497ecb4">More...</a><br /></td></tr>
+<tr class="separator:ga724b539d7729945cb21201013497ecb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa1457a822c35c4ae60bd4fd56ae6f5b4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___i_a_p.html#gaa1457a822c35c4ae60bd4fd56ae6f5b4">bt_iap_ident_info_send</a> (uint8_t bd_addr[6], uint8_t *ident, uint16_t ident_len)</td></tr>
+<tr class="memdesc:gaa1457a822c35c4ae60bd4fd56ae6f5b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send identification information.  <a href="#gaa1457a822c35c4ae60bd4fd56ae6f5b4">More...</a><br /></td></tr>
+<tr class="separator:gaa1457a822c35c4ae60bd4fd56ae6f5b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga89dd0d569d9f5c432758ac5bd46a272a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___i_a_p.html#ga89dd0d569d9f5c432758ac5bd46a272a">bt_iap_param_set</a> (<a class="el" href="group___b_t___i_a_p.html#gae747d6a935cfee48dcf05f950b59b712">T_BT_IAP_PARAM_TYPE</a> type, uint8_t len, void *value)</td></tr>
+<tr class="memdesc:ga89dd0d569d9f5c432758ac5bd46a272a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set local iAP parameter.  <a href="#ga89dd0d569d9f5c432758ac5bd46a272a">More...</a><br /></td></tr>
+<tr class="separator:ga89dd0d569d9f5c432758ac5bd46a272a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab751f94970c7c3ef82ad354c7b23a7d0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___i_a_p.html#gab751f94970c7c3ef82ad354c7b23a7d0">bt_iap_ack_send</a> (uint8_t bd_addr[6], uint8_t ack_seq)</td></tr>
 <tr class="memdesc:gab751f94970c7c3ef82ad354c7b23a7d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send an acknowledge for a specific received packet.  <a href="#gab751f94970c7c3ef82ad354c7b23a7d0">More...</a><br /></td></tr>
 <tr class="separator:gab751f94970c7c3ef82ad354c7b23a7d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaef0b71743d1089a5d5ccd33486cb19f6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___i_a_p.html#gaef0b71743d1089a5d5ccd33486cb19f6">bt_iap_comp_info_send</a> (uint8_t bd_addr[6], uint16_t comp_id, bool enable)</td></tr>
-<tr class="memdesc:gaef0b71743d1089a5d5ccd33486cb19f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send bluetooth component information to remote device.  <a href="#gaef0b71743d1089a5d5ccd33486cb19f6">More...</a><br /></td></tr>
+<tr class="memdesc:gaef0b71743d1089a5d5ccd33486cb19f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send Bluetooth component information to remote device.  <a href="#gaef0b71743d1089a5d5ccd33486cb19f6">More...</a><br /></td></tr>
 <tr class="separator:gaef0b71743d1089a5d5ccd33486cb19f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa95dc4b496bce681522beda04c03e9b4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___i_a_p.html#gaa95dc4b496bce681522beda04c03e9b4">bt_iap_conn_update_start</a> (uint8_t bd_addr[6], uint16_t comp_id)</td></tr>
 <tr class="memdesc:gaa95dc4b496bce681522beda04c03e9b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send bluetooth connection update start message to remote device.  <a href="#gaa95dc4b496bce681522beda04c03e9b4">More...</a><br /></td></tr>
@@ -223,9 +225,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gae8e0e832125b663e5cbee2e804f73732"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___i_a_p.html#gae8e0e832125b663e5cbee2e804f73732">bt_iap_mute_status_update</a> (uint8_t bd_addr[6], bool status)</td></tr>
 <tr class="memdesc:gae8e0e832125b663e5cbee2e804f73732"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send mute status message to remote device.  <a href="#gae8e0e832125b663e5cbee2e804f73732">More...</a><br /></td></tr>
 <tr class="separator:gae8e0e832125b663e5cbee2e804f73732"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga24cf8b3321c7d910ea1db0b97b0a1334"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___i_a_p.html#ga24cf8b3321c7d910ea1db0b97b0a1334">bt_iap_send_cmd</a> (uint8_t bd_addr[6], uint16_t msg_type, uint8_t *p_param, uint16_t param_len)</td></tr>
-<tr class="memdesc:ga24cf8b3321c7d910ea1db0b97b0a1334"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send iAP message to remote device.  <a href="#ga24cf8b3321c7d910ea1db0b97b0a1334">More...</a><br /></td></tr>
-<tr class="separator:ga24cf8b3321c7d910ea1db0b97b0a1334"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga364834ccd706828b6f3250ca8ce918bd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___i_a_p.html#ga364834ccd706828b6f3250ca8ce918bd">bt_iap_send_cmd</a> (uint8_t bd_addr[6], uint16_t msg_type, uint8_t *param, uint16_t param_len)</td></tr>
+<tr class="memdesc:ga364834ccd706828b6f3250ca8ce918bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send iAP message to remote device.  <a href="#ga364834ccd706828b6f3250ca8ce918bd">More...</a><br /></td></tr>
+<tr class="separator:ga364834ccd706828b6f3250ca8ce918bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7ae5fd7ff2e47c5e934470143b5ae9f7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_t___i_a_p.html#ga7ae5fd7ff2e47c5e934470143b5ae9f7">bt_iap_hid_start</a> (uint8_t bd_addr[6], uint16_t hid_component_id, uint16_t vid, uint16_t pid, uint8_t *hid_report_desc, uint16_t hid_report_desc_len)</td></tr>
 <tr class="memdesc:ga7ae5fd7ff2e47c5e934470143b5ae9f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a request to start using a HID report descriptor over iAP control session.  <a href="#ga7ae5fd7ff2e47c5e934470143b5ae9f7">More...</a><br /></td></tr>
 <tr class="separator:ga7ae5fd7ff2e47c5e934470143b5ae9f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -252,7 +254,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Define BT iAP identification information id. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a> </p>
 
 </div>
 </div>
@@ -269,7 +270,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Define BT iAP transport. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a> </p>
 
 </div>
 </div>
@@ -286,7 +286,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Define BT iAP External Accessory Protocol session status. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a> </p>
 
 </div>
 </div>
@@ -303,7 +302,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Define BT iAP app launch method. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a> </p>
 
 </div>
 </div>
@@ -320,7 +318,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Define BT iAP parameter type. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a> </p>
 
 </div>
 </div>
@@ -338,7 +335,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Define BT iAP identification information id. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a> </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga3f7b2d1ced2ea1e930502d2d0dcb94a6a7aeedbe554fd6e63cc831902fc45993a"></a>BT_IAP_ID_NAME&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga3f7b2d1ced2ea1e930502d2d0dcb94a6af3a8a6e02ccd4f0e96f8931806905d15"></a>BT_IAP_ID_MODEL_IDENTIFIER&#160;</td><td class="fielddoc"></td></tr>
@@ -378,7 +374,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Define BT iAP transport. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a> </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga87f1fcbede2e725d2af474c5c7d0ab3fad4b4c33b792867ca287b0e809b0a8952"></a>BT_IAP_TRANSPORT_COMPONENT_IDENTIFIER&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga87f1fcbede2e725d2af474c5c7d0ab3fa29dde20fcecbe370e7e55ef1315c72a1"></a>BT_IAP_TRANSPORT_COMPONENT_NAME&#160;</td><td class="fielddoc"></td></tr>
@@ -401,7 +396,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Define BT iAP External Accessory Protocol session status. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a> </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga789d6aadc64622ddd13c2268824ec299a4c8d721e26fa7c3d169f9ad1592d326e"></a>BT_IAP_EAP_SESSION_STATUS_OK&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga789d6aadc64622ddd13c2268824ec299a5b8a6565fa9aeb86d949a9bbf0ea0d92"></a>BT_IAP_EAP_SESSION_STATUS_CLOSED&#160;</td><td class="fielddoc"></td></tr>
@@ -422,7 +416,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Define BT iAP app launch method. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a> </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggae97c7cdf95133528cb899d63e238fda0ac7351d8da85bd06a0e6e75c964014d2b"></a>BT_IAP_APP_LAUNCH_WITH_USER_ALERT&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ggae97c7cdf95133528cb899d63e238fda0a23154af2a46d45819aed34bb7563c700"></a>BT_IAP_APP_LAUNCH_WITHOUT_USER_ALERT&#160;</td><td class="fielddoc"></td></tr>
@@ -443,7 +436,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Define BT iAP parameter type. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a> </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga0a73490d0ce0aac5b77ab568b35f9068a417b71f8f1a63e202bdf32c4362dd1fa"></a>BT_IAP_PARAM_ACC_MAX_PKT_LEN&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga0a73490d0ce0aac5b77ab568b35f9068aabbb0094fdd6f402cac77b1506ad17f0"></a>BT_IAP_PARAM_ACC_RETRANS_TOUT&#160;</td><td class="fielddoc"></td></tr>
@@ -451,14 +443,15 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="gga0a73490d0ce0aac5b77ab568b35f9068af26f388ebfe8a1e4091df6c29b4c8dbe"></a>BT_IAP_PARAM_ACC_MAX_OUT_PKT_NUM&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga0a73490d0ce0aac5b77ab568b35f9068ad7589d70ab550c1618a2402d8c2d355b"></a>BT_IAP_PARAM_ACC_MAX_RETRANS_NUM&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga0a73490d0ce0aac5b77ab568b35f9068a8cf36e5e16184aa1a5ccee98a6b3b7d5"></a>BT_IAP_PARAM_ACC_MAX_CULUMATIVE_ACK&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga0a73490d0ce0aac5b77ab568b35f9068a4ae51ba81145738e8fe15532955ca3c5"></a>BT_IAP_PARAM_ACC_START_SEQ_NUM&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="gga0a73490d0ce0aac5b77ab568b35f9068a174ab0a3e7c4b50072b7469b57db9229"></a>BT_IAP_PARAM_TX_Q_ELEM_NUM&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="gab835e597ddcd010ece05e968d48ec746"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab835e597ddcd010ece05e968d48ec746">&#9670;&nbsp;</a></span>bt_iap_init()</h2>
+<a id="gac18c2c64c9b8bde9297f2fc95b756029"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac18c2c64c9b8bde9297f2fc95b756029">&#9670;&nbsp;</a></span>bt_iap_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -467,25 +460,19 @@ Functions</h2></td></tr>
           <td class="memname">bool bt_iap_init </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>link_num</em>, </td>
+          <td class="paramname"><em>rfc_chann_num</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>rfc_iap_chann_num</em>, </td>
+          <td class="paramtype"><a class="el" href="group___a_c_p___exported___types.html#gad23ba53d88076fa478608dd240340229">P_CP_WRITE_FUNC</a>&#160;</td>
+          <td class="paramname"><em>cp_write</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="group__x3d___a_c_p.html#gad23ba53d88076fa478608dd240340229">P_CP_WRITE_FUNC</a>&#160;</td>
-          <td class="paramname"><em>p_cp_write</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__x3d___a_c_p.html#gaea0b1f5358cb2f615bf0a4039729958a">P_CP_READ_FUNC</a>&#160;</td>
-          <td class="paramname"><em>p_cp_read</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="group___a_c_p___exported___types.html#gaea0b1f5358cb2f615bf0a4039729958a">P_CP_READ_FUNC</a>&#160;</td>
+          <td class="paramname"><em>cp_read</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -496,13 +483,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Initialize iAP profile. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">link_num</td><td>iAP maximum connected link number. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">rfc_iap_chann_num</td><td>RFCOMM channel num used for iAP. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_cp_write</td><td>The cp write func. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_cp_read</td><td>The cp burst read func.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rfc_chann_num</td><td>RFCOMM channel number used for iAP. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cp_write</td><td>The cp write func. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cp_read</td><td>The cp burst read func.</td></tr>
   </table>
   </dd>
 </dl>
@@ -517,8 +502,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ga701f48030980d890276763781a598f83"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga701f48030980d890276763781a598f83">&#9670;&nbsp;</a></span>bt_iap_data_send()</h2>
+<a id="gac9beceb98b6e6576a4479eb2a78d33da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac9beceb98b6e6576a4479eb2a78d33da">&#9670;&nbsp;</a></span>bt_iap_data_send()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -539,7 +524,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_data</em>, </td>
+          <td class="paramname"><em>data</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -556,12 +541,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send iAP data to remote device. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">session_id</td><td>The session identifier used for sending data. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>The start address of the data buffer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>The start address of the data buffer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">data_len</td><td>The length of the data.</td></tr>
   </table>
   </dd>
@@ -610,7 +594,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send External Accessory Protocol session status. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
@@ -668,8 +651,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Send a request to launch specific app which has been installed on the apple device. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a></p>
+<p>Send a request to launch specific app which has been installed on the Apple device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
@@ -729,13 +711,12 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send an iAP connection request. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">server_chann</td><td>The remote server_channel which can be found from the sdp info. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">frame_size</td><td>The max frame_size supported by local device. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">init_credits</td><td>The number of packet that remote can be send. This para is used for flow control.A sending entity may send as many frames on an iAP connection as it has credits;if the credit count reaches zero,the sender will stop and wait for further credits from peer.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">server_chann</td><td>The remote server_channel which can be found from the SDP info. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">frame_size</td><td>The maximum frame_size supported by local device. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">init_credits</td><td>The number of packet that remote can be send. This parameter is used for flow control. A sending entity may send as many frames on an iAP connection as it has credits; if the credit count reaches zero, the sender will stop and wait for further credits from peer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -789,7 +770,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send an iAP connection confirmation. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
@@ -798,8 +778,8 @@ Functions</h2></td></tr>
 <li>false Reject the received iAP connection request. </li>
 </ul>
 </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">frame_size</td><td>The max frame_size supported by local device. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">init_credits</td><td>The number of packet that remote can be send. This para is used for flow control.A sending entity may send as many frames on an iAP connection as it has credits;if the credit count reaches zero,the sender will stop and wait for further credits from peer.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">frame_size</td><td>The maximum frame_size supported by local device. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">init_credits</td><td>The number of packet that remote can be send. This parameter is used for flow control. A sending entity may send as many frames on an iAP connection as it has credits; if the credit count reaches zero, the sender will stop and wait for further credits from peer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -831,7 +811,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send an iAP disconnection request. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address.</td></tr>
@@ -849,8 +828,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="gadff02f2ef8bee32cc39d5b94715b2127"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gadff02f2ef8bee32cc39d5b94715b2127">&#9670;&nbsp;</a></span>bt_iap2_prep_param()</h2>
+<a id="ga724b539d7729945cb21201013497ecb4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga724b539d7729945cb21201013497ecb4">&#9670;&nbsp;</a></span>bt_iap2_prep_param()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -859,7 +838,7 @@ Functions</h2></td></tr>
           <td class="memname">uint8_t* bt_iap2_prep_param </td>
           <td>(</td>
           <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_param</em>, </td>
+          <td class="paramname"><em>param</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -871,7 +850,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>p_data</em>, </td>
+          <td class="paramname"><em>data</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -888,12 +867,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Format the parameter and store in the buffer to be send later. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_param</td><td>The start address to store the formatted parameter. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">param_id</td><td>The parameter id <a class="el" href="group___b_t___i_a_p___e_x_t_e_r_n_a_l___p_r_o_t_o_c_o_l.html">BT iAP External Protocol</a>, <a class="el" href="group___b_t___i_a_p.html#gad18e76e27a4abc203fff4dd7f0895a0e">T_BT_IAP_IDENTIFICATION_INFO_ID</a>, <a class="el" href="group___b_t___i_a_p.html#ga1ab8fb2c618c49ac7d925880cc749c5c">T_BT_IAP_TRANSPORT</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>The parameter data to be formatted. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">param</td><td>The start address to store the formatted parameter. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">param_id</td><td>The parameter ID <a class="el" href="group___b_t___i_a_p___e_x_t_e_r_n_a_l___p_r_o_t_o_c_o_l.html">BT iAP External Protocol</a>, <a class="el" href="group___b_t___i_a_p.html#gad18e76e27a4abc203fff4dd7f0895a0e">T_BT_IAP_IDENTIFICATION_INFO_ID</a>, <a class="el" href="group___b_t___i_a_p.html#ga1ab8fb2c618c49ac7d925880cc749c5c">T_BT_IAP_TRANSPORT</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>The parameter data to be formatted. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">data_len</td><td>Length of the parameter data.</td></tr>
   </table>
   </dd>
@@ -902,8 +880,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="gaf5f5998b41db0b2e1df5a7c9ab5a784f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf5f5998b41db0b2e1df5a7c9ab5a784f">&#9670;&nbsp;</a></span>bt_iap_ident_info_send()</h2>
+<a id="gaa1457a822c35c4ae60bd4fd56ae6f5b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa1457a822c35c4ae60bd4fd56ae6f5b4">&#9670;&nbsp;</a></span>bt_iap_ident_info_send()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -918,7 +896,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_ident</em>, </td>
+          <td class="paramname"><em>ident</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -935,11 +913,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send identification information. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ident</td><td>The start address of the identification information buffer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ident</td><td>The start address of the identification information buffer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ident_len</td><td>The length of the identification information.</td></tr>
   </table>
   </dd>
@@ -955,8 +932,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ga06db38fa6767d6b84e0b0e6dfe0cb74d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga06db38fa6767d6b84e0b0e6dfe0cb74d">&#9670;&nbsp;</a></span>bt_iap_param_set()</h2>
+<a id="ga89dd0d569d9f5c432758ac5bd46a272a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga89dd0d569d9f5c432758ac5bd46a272a">&#9670;&nbsp;</a></span>bt_iap_param_set()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -977,7 +954,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>p_value</em>&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -988,12 +965,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Set local iAP parameter. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Parameter type. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>The length of parameter value. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_value</td><td>The start address of the parameter value buffer.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The start address of the parameter value buffer.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1035,7 +1011,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send an acknowledge for a specific received packet. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
@@ -1086,12 +1061,11 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Send bluetooth component information to remote device. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a></p>
+<p>Send Bluetooth component information to remote device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">comp_id</td><td>The Component identifier. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">comp_id</td><td>The component identifier. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">enable</td><td>True if the Bluetooth component is ready for connections to the device.</td></tr>
   </table>
   </dd>
@@ -1134,11 +1108,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send bluetooth connection update start message to remote device. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">comp_id</td><td>The Component identifier.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">comp_id</td><td>The component identifier.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1180,7 +1153,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send communications updates start message to remote device. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
@@ -1226,7 +1198,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send mute status message to remote device. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
@@ -1245,8 +1216,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ga24cf8b3321c7d910ea1db0b97b0a1334"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga24cf8b3321c7d910ea1db0b97b0a1334">&#9670;&nbsp;</a></span>bt_iap_send_cmd()</h2>
+<a id="ga364834ccd706828b6f3250ca8ce918bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga364834ccd706828b6f3250ca8ce918bd">&#9670;&nbsp;</a></span>bt_iap_send_cmd()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1267,7 +1238,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_param</em>, </td>
+          <td class="paramname"><em>param</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1284,12 +1255,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send iAP message to remote device. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">msg_type</td><td>The message type. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_param</td><td>The start address of the param buffer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">param</td><td>The start address of the parameter buffer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">param_len</td><td>The param length.</td></tr>
   </table>
   </dd>
@@ -1356,7 +1326,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send a request to start using a HID report descriptor over iAP control session. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
@@ -1418,7 +1387,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send an HID report message. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>
@@ -1466,7 +1434,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Send a request to stop using a HID. </p>
-<p><a class="el" href="bt__iap_8h_source.html">bt_iap.h</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote BT address. </td></tr>

@@ -51,16 +51,16 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga9fdb74245b73e61bc4d2c9c267d29cf5"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_n_s___exported___functions.html#ga9fdb74245b73e61bc4d2c9c267d29cf5">lns_add_service</a> (void *p_func)</td></tr>
-<tr class="memdesc:ga9fdb74245b73e61bc4d2c9c267d29cf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add location and navigation service to the BLE stack database.  <a href="#ga9fdb74245b73e61bc4d2c9c267d29cf5">More...</a><br /></td></tr>
+<tr class="memdesc:ga9fdb74245b73e61bc4d2c9c267d29cf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add location and navigation service to the Bluetooth Host.  <a href="#ga9fdb74245b73e61bc4d2c9c267d29cf5">More...</a><br /></td></tr>
 <tr class="separator:ga9fdb74245b73e61bc4d2c9c267d29cf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa4aa7c8c2b0a663757d2d9a60ada1bd2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_n_s___exported___functions.html#gaa4aa7c8c2b0a663757d2d9a60ada1bd2">lns_set_parameter</a> (<a class="el" href="group___l_n_s___exported___types.html#gad413883f0f02b00e6757b26e6a50fc85">T_LNS_PARAM_TYPE</a> param_type, uint8_t len, void *p_value)</td></tr>
-<tr class="memdesc:gaa4aa7c8c2b0a663757d2d9a60ada1bd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a Location And Navigation service parameter.  <a href="#gaa4aa7c8c2b0a663757d2d9a60ada1bd2">More...</a><br /></td></tr>
+<tr class="memdesc:gaa4aa7c8c2b0a663757d2d9a60ada1bd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a Location and Navigation service parameter.  <a href="#gaa4aa7c8c2b0a663757d2d9a60ada1bd2">More...</a><br /></td></tr>
 <tr class="separator:gaa4aa7c8c2b0a663757d2d9a60ada1bd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad32c414f8315de37d9b9a492b6517c02"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_n_s___exported___functions.html#gad32c414f8315de37d9b9a492b6517c02">lns_location_and_speed_value_notify</a> (uint8_t conn_id, <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a> service_id)</td></tr>
-<tr class="memdesc:gad32c414f8315de37d9b9a492b6517c02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send location and speed value notification data. Application shall call <a class="el" href="group___l_n_s___exported___functions.html#gaa4aa7c8c2b0a663757d2d9a60ada1bd2">lns_set_parameter</a> to set location and speed value first, and the call this api to send the notication value.  <a href="#gad32c414f8315de37d9b9a492b6517c02">More...</a><br /></td></tr>
+<tr class="memdesc:gad32c414f8315de37d9b9a492b6517c02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send location and speed value notification data. Applications shall call <a class="el" href="group___l_n_s___exported___functions.html#gaa4aa7c8c2b0a663757d2d9a60ada1bd2">lns_set_parameter</a> with param_type <a class="el" href="group___l_n_s___exported___types.html#ggad413883f0f02b00e6757b26e6a50fc85adfada1f5f53eba93b84429e66a37d33a">LNS_LAS_PARAM_INC_FLAG</a> to set location and speed value first, and then call this API to send the notification value.  <a href="#gad32c414f8315de37d9b9a492b6517c02">More...</a><br /></td></tr>
 <tr class="separator:gad32c414f8315de37d9b9a492b6517c02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5197a6f6775763295d875bc99d959058"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l_n_s___exported___functions.html#ga5197a6f6775763295d875bc99d959058">lns_navigation_value_notify</a> (uint8_t conn_id, <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a> service_id)</td></tr>
-<tr class="memdesc:ga5197a6f6775763295d875bc99d959058"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send navigation value notification data. Application shall call <a class="el" href="group___l_n_s___exported___functions.html#gaa4aa7c8c2b0a663757d2d9a60ada1bd2">lns_set_parameter</a> to set navigation value first, and the call this api to send the notication value.  <a href="#ga5197a6f6775763295d875bc99d959058">More...</a><br /></td></tr>
+<tr class="memdesc:ga5197a6f6775763295d875bc99d959058"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send navigation value notification data. Applications shall call <a class="el" href="group___l_n_s___exported___functions.html#gaa4aa7c8c2b0a663757d2d9a60ada1bd2">lns_set_parameter</a> with param_type <a class="el" href="group___l_n_s___exported___types.html#ggad413883f0f02b00e6757b26e6a50fc85a7ce7d6d3db69e0c2237b47cfda93f0f0">LNS_NAVIGATION_PARAM_INC_FLAG</a> to set navigation value first, and then call this API to send the notification value.  <a href="#ga5197a6f6775763295d875bc99d959058">More...</a><br /></td></tr>
 <tr class="separator:ga5197a6f6775763295d875bc99d959058"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -81,22 +81,22 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Add location and navigation service to the BLE stack database. </p>
+<p>Add location and navigation service to the Bluetooth Host. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_func</td><td>Callback when service attribute was read, write or cccd update. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_func</td><td>Callback when service attribute was read, write or CCCD update. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Service id generated by the BLE stack: <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Service ID generated by the Bluetooth Host: <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a>. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">0xFF</td><td>Operation failure. </td></tr>
-    <tr><td class="paramname">others</td><td>Service id assigned by stack.</td></tr>
+    <tr><td class="paramname">others</td><td>Service ID assigned by Bluetooth Host.</td></tr>
   </table>
   </dd>
 </dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> profile_init()</div><div class="line">{</div><div class="line"> <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga69f3a8c88a1c2d5255f87e69e135311b">server_init</a>(1);</div><div class="line"> lns_id = <a class="code" href="group___l_n_s___exported___functions.html#ga9fdb74245b73e61bc4d2c9c267d29cf5">lns_add_service</a>(app_handle_profile_message);</div><div class="line">}</div></div><!-- fragment --> 
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> profile_init()</div><div class="line">{</div><div class="line"> <a class="code" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___functions.html#ga69f3a8c88a1c2d5255f87e69e135311b">server_init</a>(service_num);</div><div class="line"> lns_id = <a class="code" href="group___l_n_s___exported___functions.html#ga9fdb74245b73e61bc4d2c9c267d29cf5">lns_add_service</a>(app_handle_profile_message);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="gaa4aa7c8c2b0a663757d2d9a60ada1bd2"></a>
@@ -131,12 +131,12 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set a Location And Navigation service parameter. </p>
-<p>NOTE: You can call this function with a Location And Navigation service parameter type and it will set the Location And Navigation service parameter. Location And Navigation service parameters are defined in <a class="el" href="group___l_n_s___exported___types.html#gad413883f0f02b00e6757b26e6a50fc85">T_LNS_PARAM_TYPE</a>. If the "len" field sets to the size of a "uint16_t" ,the "p_value" field must point to a data with type of "uint16_t".</p>
+<p>Set a Location and Navigation service parameter. </p>
+<p>This function can be called with a Location and Navigation service parameter type and it will set the Location and Navigation service parameter. Location and Navigation service parameters are defined in <a class="el" href="group___l_n_s___exported___types.html#gad413883f0f02b00e6757b26e6a50fc85">T_LNS_PARAM_TYPE</a>. If the "len" field sets to the size of a "uint16_t", the "p_value" field must point to a data with type of "uint16_t".</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">param_type</td><td>Location And Navigation service parameter type: <a class="el" href="group___l_n_s___exported___types.html#gad413883f0f02b00e6757b26e6a50fc85">T_LNS_PARAM_TYPE</a> </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of data to write </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">param_type</td><td>Location and Navigation service parameter type: <a class="el" href="group___l_n_s___exported___types.html#gad413883f0f02b00e6757b26e6a50fc85">T_LNS_PARAM_TYPE</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of data to write. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_value</td><td>Pointer to data to write. This is dependent on the parameter type and WILL be cast to the appropriate data type (For example: if data type of param is uint16_t, p_value will be cast to pointer of uint16_t).</td></tr>
   </table>
   </dd>
@@ -149,7 +149,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="struct_t___l_o_c_a_t_i_o_n___a_n_d___s_p_e_e_d___v_a_l_u_e___f_l_a_g.html">T_LOCATION_AND_SPEED_VALUE_FLAG</a> flag;</div><div class="line">    flag.instantaneous_speed_present = 1;</div><div class="line">    flag.total_distance_present = 1;</div><div class="line">    flag.location_present = 1;</div><div class="line">    flag.elevation_present = 1;</div><div class="line">    flag.heading_present = 1;</div><div class="line">    flag.rolling_time_present = 1;</div><div class="line">    flag.utc_time_present = 1;</div><div class="line">    flag.position_status = 1;</div><div class="line">    flag.speed_and_distance_format = 1;</div><div class="line">    flag.elevation_source = 1;</div><div class="line">    flag.heading_source = 1;</div><div class="line">    flag.rfu = 0;</div><div class="line"></div><div class="line">    <a class="code" href="group___l_n_s___exported___functions.html#gaa4aa7c8c2b0a663757d2d9a60ada1bd2">lns_set_parameter</a>(<a class="code" href="group___l_n_s___exported___types.html#ggad413883f0f02b00e6757b26e6a50fc85adfada1f5f53eba93b84429e66a37d33a">LNS_LAS_PARAM_INC_FLAG</a>, 2, &amp;flag);</div><div class="line">}</div></div><!-- fragment --> 
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="struct_t___l_o_c_a_t_i_o_n___a_n_d___s_p_e_e_d___v_a_l_u_e___f_l_a_g.html">T_LOCATION_AND_SPEED_VALUE_FLAG</a> flag;</div><div class="line">    flag.instantaneous_speed_present = 1;</div><div class="line">    flag.total_distance_present = 1;</div><div class="line">    flag.location_present = 1;</div><div class="line">    flag.elevation_present = 1;</div><div class="line">    flag.heading_present = 1;</div><div class="line">    flag.rolling_time_present = 1;</div><div class="line">    flag.utc_time_present = 1;</div><div class="line">    flag.position_status = 1;</div><div class="line">    flag.speed_and_distance_format = 1;</div><div class="line">    flag.elevation_source = 1;</div><div class="line">    flag.heading_source = 1;</div><div class="line">    flag.rfu = 0;</div><div class="line"></div><div class="line">    <span class="keywordtype">bool</span> ret = <a class="code" href="group___l_n_s___exported___functions.html#gaa4aa7c8c2b0a663757d2d9a60ada1bd2">lns_set_parameter</a>(<a class="code" href="group___l_n_s___exported___types.html#ggad413883f0f02b00e6757b26e6a50fc85adfada1f5f53eba93b84429e66a37d33a">LNS_LAS_PARAM_INC_FLAG</a>, 2, &amp;flag);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="gad32c414f8315de37d9b9a492b6517c02"></a>
@@ -178,16 +178,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Send location and speed value notification data. Application shall call <a class="el" href="group___l_n_s___exported___functions.html#gaa4aa7c8c2b0a663757d2d9a60ada1bd2">lns_set_parameter</a> to set location and speed value first, and the call this api to send the notication value. </p>
+<p>Send location and speed value notification data. Applications shall call <a class="el" href="group___l_n_s___exported___functions.html#gaa4aa7c8c2b0a663757d2d9a60ada1bd2">lns_set_parameter</a> with param_type <a class="el" href="group___l_n_s___exported___types.html#ggad413883f0f02b00e6757b26e6a50fc85adfada1f5f53eba93b84429e66a37d33a">LNS_LAS_PARAM_INC_FLAG</a> to set location and speed value first, and then call this API to send the notification value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection id. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service id.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection ID. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service ID.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>service id <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a>.</dd></dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keywordtype">bool</span> op_result;</div><div class="line">    <a class="code" href="struct_t___l_o_c_a_t_i_o_n___a_n_d___s_p_e_e_d___v_a_l_u_e___f_l_a_g.html">T_LOCATION_AND_SPEED_VALUE_FLAG</a> flag;</div><div class="line">    flag.instantaneous_speed_present = 1;</div><div class="line">    flag.total_distance_present = 1;</div><div class="line">    flag.location_present = 1;</div><div class="line">    flag.elevation_present = 1;</div><div class="line">    flag.heading_present = 1;</div><div class="line">    flag.rolling_time_present = 1;</div><div class="line">    flag.utc_time_present = 1;</div><div class="line">    flag.position_status = 1;</div><div class="line">    flag.speed_and_distance_format = 1;</div><div class="line">    flag.elevation_source = 1;</div><div class="line">    flag.heading_source = 1;</div><div class="line">    flag.rfu = 0;</div><div class="line"></div><div class="line">    <a class="code" href="group___l_n_s___exported___functions.html#gaa4aa7c8c2b0a663757d2d9a60ada1bd2">lns_set_parameter</a>(<a class="code" href="group___l_n_s___exported___types.html#ggad413883f0f02b00e6757b26e6a50fc85adfada1f5f53eba93b84429e66a37d33a">LNS_LAS_PARAM_INC_FLAG</a>, 2, &amp;flag);</div><div class="line"></div><div class="line">    op_result = <a class="code" href="group___l_n_s___exported___functions.html#gad32c414f8315de37d9b9a492b6517c02">lns_location_and_speed_value_notify</a>(p_parse_value-&gt;dw_param[0], lns_id);</div><div class="line">}</div></div><!-- fragment --> 
+<dl class="section return"><dt>Returns</dt><dd>Service ID <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a>.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keywordtype">bool</span> op_result = <a class="code" href="group___l_n_s___exported___functions.html#gad32c414f8315de37d9b9a492b6517c02">lns_location_and_speed_value_notify</a>(conn_id, lns_id);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga5197a6f6775763295d875bc99d959058"></a>
@@ -216,16 +216,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Send navigation value notification data. Application shall call <a class="el" href="group___l_n_s___exported___functions.html#gaa4aa7c8c2b0a663757d2d9a60ada1bd2">lns_set_parameter</a> to set navigation value first, and the call this api to send the notication value. </p>
+<p>Send navigation value notification data. Applications shall call <a class="el" href="group___l_n_s___exported___functions.html#gaa4aa7c8c2b0a663757d2d9a60ada1bd2">lns_set_parameter</a> with param_type <a class="el" href="group___l_n_s___exported___types.html#ggad413883f0f02b00e6757b26e6a50fc85a7ce7d6d3db69e0c2237b47cfda93f0f0">LNS_NAVIGATION_PARAM_INC_FLAG</a> to set navigation value first, and then call this API to send the notification value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection id. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service id.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_id</td><td>Connection ID. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">service_id</td><td>Service ID.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>service id <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a>.</dd></dl>
-<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keywordtype">bool</span> op_result;</div><div class="line"></div><div class="line">    <a class="code" href="struct_t___n_a_v_i_g_a_t_i_o_n___v_a_l_u_e___f_l_a_g.html">T_NAVIGATION_VALUE_FLAG</a> flag;</div><div class="line">    flag.remaining_distance_present = 1;</div><div class="line">    flag.remaining_vertical_distance_present = 1;</div><div class="line">    flag.estimated_time_of_arrival_present = 1;</div><div class="line">    flag.position_status = 1;</div><div class="line">    flag.heading_source = 1;</div><div class="line">    flag.navigation_indicator_type = 1;</div><div class="line">    flag.waypoint_reached = 1;</div><div class="line">    flag.destination_reached = 1;</div><div class="line">    flag.rfus = 0;</div><div class="line"></div><div class="line">    <a class="code" href="group___l_n_s___exported___functions.html#gaa4aa7c8c2b0a663757d2d9a60ada1bd2">lns_set_parameter</a>(<a class="code" href="group___l_n_s___exported___types.html#ggad413883f0f02b00e6757b26e6a50fc85a7ce7d6d3db69e0c2237b47cfda93f0f0">LNS_NAVIGATION_PARAM_INC_FLAG</a>, 2, &amp;flag);</div><div class="line"></div><div class="line">    op_result = <a class="code" href="group___l_n_s___exported___functions.html#ga5197a6f6775763295d875bc99d959058">lns_navigation_value_notify</a>(p_parse_value-&gt;dw_param[0], lns_id);</div><div class="line"></div><div class="line">}</div></div><!-- fragment --> 
+<dl class="section return"><dt>Returns</dt><dd>Service ID <a class="el" href="group___g_a_t_t___s_e_r_v_e_r___c_o_m_m_o_n___exported___types.html#gada7cb21908790f5a0751f80b733f5287">T_SERVER_ID</a>.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> test(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keywordtype">bool</span> op_result = <a class="code" href="group___l_n_s___exported___functions.html#ga5197a6f6775763295d875bc99d959058">lns_navigation_value_notify</a>(conn_id, lns_id);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

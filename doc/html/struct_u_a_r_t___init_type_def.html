@@ -86,7 +86,6 @@ Data Fields</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>UART initialize parameters. </p>
-<p>UART initialize parameters </p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a id="aa2913e2c8f90dafb0b0954eea14be183"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa2913e2c8f90dafb0b0954eea14be183">&#9670;&nbsp;</a></span>ovsr_adj</h2>
@@ -99,7 +98,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the Baudrate setting, ovsr_adj, please refer to baudrate setting table. </p>
+<p>Specifies the Baudrate setting, ovsr_adj, please refer to baudrate setting table.</p>
+<p>Specifies the baudrate setting of ovsr_adj, please refer to UART_BaudRate_Table in API <a class="el" href="group___u_a_r_t___exported___functions.html#gab8a2368c971181115c1940ec8b602b62">UART_ComputeDiv</a>. </p>
 
 </div>
 </div>
@@ -114,7 +114,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the Baudrate setting, div, please refer to baudrate setting table. </p>
+<p>Specifies the Baudrate setting, div, please refer to baudrate setting table.</p>
+<p>Specifies the baudrate setting of div, please refer to UART_BaudRate_Table in API <a class="el" href="group___u_a_r_t___exported___functions.html#gab8a2368c971181115c1940ec8b602b62">UART_ComputeDiv</a> . </p>
 
 </div>
 </div>
@@ -129,7 +130,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the Baudrate setting, ovsr, please refer to baudrate setting table. </p>
+<p>Specifies the Baudrate setting, ovsr, please refer to baudrate setting table.</p>
+<p>Specifies the baudrate setting of ovsr, please refer to UART_BaudRate_Table in API <a class="el" href="group___u_a_r_t___exported___functions.html#gab8a2368c971181115c1940ec8b602b62">UART_ComputeDiv</a> . </p>
 
 </div>
 </div>
@@ -144,7 +146,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the UART Wordlength This parameter can be a value of <a class="el" href="group___u_a_r_t___wrod___length.html">UART Wrod Length</a>. </p>
+<p>Specifies the UART word length. This parameter can be a value of <a class="el" href="group___u_a_r_t___word___length.html">UART Word Length</a>.</p>
+<p>Specifies the UART word length. This parameter can be a value of <a class="el" href="group__x3e___u_a_r_t___word___length.html">UART Word Length</a>. </p>
 
 </div>
 </div>
@@ -159,7 +162,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the Rx dma mode. This parameter can be a value of <a class="el" href="group___u_a_r_t___parity.html">UART Parity</a>. </p>
+<p>Specifies the UART parity. This parameter can be a value of <a class="el" href="group___u_a_r_t___parity.html">UART Parity</a>.</p>
+<p>Specifies the UART parity. This parameter can be a value of <a class="el" href="group__x3e___u_a_r_t___parity.html">UART Parity</a>. </p>
 
 </div>
 </div>
@@ -174,7 +178,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the Rx dma mode. This parameter can be a value of <a class="el" href="group___u_a_r_t___stop___bits.html">UART Stop Bits</a>. </p>
+<p>Specifies the UART stop bits. This parameter can be a value of <a class="el" href="group___u_a_r_t___stop___bits.html">UART Stop Bits</a>.</p>
+<p>Specifies the UART stop bits. This parameter can be a value of <a class="el" href="group__x3e___u_a_r_t___stop___bits.html">UART Stop Bits</a>. </p>
 
 </div>
 </div>
@@ -189,7 +194,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the Rx dma mode. This parameter can be a value of <a class="el" href="_u_m012__i_o__d_e_m_o.html#UART_Hardware_Flow_Control">7.6 Hardware Flow Control</a>. </p>
+<p>Specifies the UART hardware auto flow control. This parameter can be a value of <a class="el" href="_u_m012__i_o__d_e_m_o.html#UART_Hardware_Flow_Control">7.6 Hardware Flow Control</a>.</p>
+<p>Specifies the UART hardware auto flow control. This parameter can be a value of <a class="el" href="group__x3e___u_a_r_t___hardware___flow___control.html">UART Hardware Flow Control</a>. </p>
 
 </div>
 </div>
@@ -204,7 +210,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the Rx dma mode. This parameter must range from 1 to 29. </p>
+<p>Specifies the UART rx trigger Level. This parameter must range from 1 to 29.</p>
+<p>Specifies the UART RX trigger Level. This parameter must range from 1 to 29. </p>
 
 </div>
 </div>
@@ -219,7 +226,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the Rx dma mode. This parameter must be a value of DISABLE and ENABLE </p>
+<p>Specifies the dma mode. This parameter must be a value of DISABLE and ENABLE.</p>
+<p>Specifies the DMA mode. This parameter must be a value of DISABLE and ENABLE. </p>
 
 </div>
 </div>
@@ -234,7 +242,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the Rx dma mode. This parameter can be a value of <a class="el" href="group___u_a_r_t___rx__idle__time.html">UART Rx idle time</a>. </p>
+<p>Specifies the UART rx idle time. This parameter can be a value of <a class="el" href="group___u_a_r_t___rx__idle__time.html">UART RX Idle Time</a>.</p>
+<p>Specifies the UART RX idle time. This parameter can be a value of <a class="el" href="group__x3e___u_a_r_t___rx__idle__time.html">UART RX Idle Time</a>. </p>
 
 </div>
 </div>
@@ -249,7 +258,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the DMA tx water level. This parameter must range from 1 to 16. </p>
+<p>Specifies the DMA tx water level. This parameter must range from 1 to 16.</p>
+<p>Specifies the DMA TX water level. This parameter must range from 1 to 15. </p>
 
 </div>
 </div>
@@ -264,7 +274,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the DMA rx water level. This parameter must range from 1 to 31. </p>
+<p>Specifies the DMA rx water level. This parameter must range from 1 to 31.</p>
+<p>Specifies the DMA RX water level. This parameter must range from 1 to 31. </p>
 
 </div>
 </div>
@@ -279,7 +290,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the Tx dma mode. This parameter must be a value of DISABLE and ENABLE </p>
+<p>Specifies the Tx dma mode. This parameter must be a value of DISABLE and ENABLE.</p>
+<p>Specifies the TX DMA mode. This parameter must be a value of DISABLE and ENABLE. </p>
 
 </div>
 </div>
@@ -294,7 +306,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the Rx dma mode. This parameter must be a value of DISABLE and ENABLE </p>
+<p>Specifies the Rx dma mode. This parameter must be a value of DISABLE and ENABLE.</p>
+<p>Specifies the RX DMA mode. This parameter must be a value of DISABLE and ENABLE. </p>
 
 </div>
 </div>

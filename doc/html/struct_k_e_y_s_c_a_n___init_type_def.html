@@ -44,11 +44,11 @@ $(function() {
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">KEYSCAN_InitTypeDef Struct Reference<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3d.html">rtl87x3d</a> &raquo; <a class="el" href="group__x3d___key_scan.html">KeyScan</a> &raquo; <a class="el" href="group___key_scan___exported___types.html">KeyScan Exported Types</a><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___key_scan.html">KeyScan</a> &raquo;  &#124; <a class="el" href="group__x3e___key_scan___exported___types.html">KeyScan Exported Types</a></div></div>  </div>
+<div class="title">KEYSCAN_InitTypeDef Struct Reference<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3d.html">rtl87x3d</a> &raquo; <a class="el" href="group__x3d___key_scan.html">KeyScan</a> &raquo; <a class="el" href="group___key_scan___exported___types.html">Keyscan Exported Types</a><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___key_scan.html">KeyScan</a> &raquo;  &#124; <a class="el" href="group__x3e___key_scan___exported___types.html">KeyScan Exported Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>keyscan initialize parameters  
+<p>Keyscan initialize parameters.  
  <a href="struct_k_e_y_s_c_a_n___init_type_def.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="rtl87x3d_2io_2rtl876x__keyscan_8h_source.html">rtl876x_keyscan.h</a>&gt;</code></p>
@@ -99,8 +99,8 @@ Data Fields</h2></td></tr>
 <tr class="separator:a95492f8110d72f05fe1f4d69dcaff361"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>keyscan initialize parameters </p>
-<p>keyscan initialize parameters </p>
+<div class="textblock"><p>Keyscan initialize parameters. </p>
+<p>KeyScan initialize parameters. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a id="a66d5b195ca6c227bb1744ef5c49087de"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a66d5b195ca6c227bb1744ef5c49087de">&#9670;&nbsp;</a></span>rowSize</h2>
@@ -113,7 +113,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies Keyscan Row Size. This parameter can be a value of <a class="el" href="group___keyscan___row___number.html">Keyscan Row Number</a> </p>
+<p>Specifies Keyscan Row Size. This parameter can be a value of <a class="el" href="group___keyscan___row___number.html">Keyscan Row Number</a>.</p>
+<p>Specifies KeyScan row size. This parameter can be set to a value of 12 or less. </p>
 
 </div>
 </div>
@@ -128,7 +129,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies Keyscan Column Size. This parameter can be a value of <a class="el" href="group___keyscan___column___number.html">Keyscan Column Number</a> </p>
+<p>Specifies Keyscan Column Size. This parameter can be a value of <a class="el" href="group___keyscan___column___number.html">Keyscan Column Number</a>.</p>
+<p>Specifies KeyScan column size. This parameter can be set to a value of 20 or less. </p>
 
 </div>
 </div>
@@ -143,6 +145,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This is a deprecated parameter. </p>
 
 </div>
 </div>
@@ -157,6 +160,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This is a deprecated parameter. </p>
 
 </div>
 </div>
@@ -171,6 +175,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Specifies Keyscan detection period (ms).</p>
+<p>This is a deprecated parameter. </p>
 
 </div>
 </div>
@@ -185,6 +191,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Specifies the sw interrupt timeout (s).</p>
+<p>This is a deprecated parameter. </p>
 
 </div>
 </div>
@@ -199,7 +207,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies Keyscan release time. ReleaseTime = </p>
+<p>Specifies Keyscan interval counter.</p>
+<p>Specifies KeyScan scan interval. Scan interval time = delay clock * scanInterval. This parameter can be a value of 0 ~ 0x1FF. </p>
 
 </div>
 </div>
@@ -214,6 +223,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Specifies Keyscan debounce enable or disable.</p>
+<p>Enable or disable debounce function. This parameter can be a value of <a class="el" href="group__x3e___keyscan___debounce___config.html">KeyScan Debounce Config</a>. </p>
 
 </div>
 </div>
@@ -228,6 +239,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Enable or disable scan interval timer. This parameter can be a value of <a class="el" href="group__x3e___keyscan__scan__interval__en.html">KeyScan Scan Interval Timer Enable</a>. </p>
 
 </div>
 </div>
@@ -242,6 +254,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Enable or disable release detect timer. This parameter can be a value of <a class="el" href="group__x3e___keyscan__release__detect__timer__en.html">KeyScan Release Detect Timer Enable</a>. </p>
 
 </div>
 </div>
@@ -256,7 +269,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>useful when KeyScan_Debounce_Enable. debounce time = 31.25us * debounceTime. </p>
+<p>Specifies the debounce time, useful when KeyScan_Debounce_Enable. debounce time = 31.25us * debounceTime.</p>
+<p>This is a deprecated parameter. </p>
 
 </div>
 </div>
@@ -271,7 +285,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies Key Detect mode. This parameter can be a value of <a class="el" href="group___keyscan___press___detect___mode.html">Keyscan Press Detect Mode</a> </p>
+<p>Specifies Key Detect mode. This parameter can be a value of <a class="el" href="group___keyscan___press___detect___mode.html">Keyscan Press Detect Mode</a>.</p>
+<p>Specify key detection mode of KeyScan. This parameter can be a value of <a class="el" href="group__x3e___keyscan___press___detect___mode.html">KeyScan Press Detect Mode</a>. </p>
 
 </div>
 </div>
@@ -286,7 +301,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies Keyscan fifo over flow control. This parameter can be a value of <a class="el" href="group___keyscan___fifo___overflow___control.html">Keyscan Fifo Overflow Control</a> </p>
+<p>Specifies Keyscan fifo over flow control. This parameter can be a value of <a class="el" href="group___keyscan___fifo___overflow___control.html">Keyscan FIFO Overflow Control</a>.</p>
+<p>Specifies KeyScan FIFO over flow control. This parameter can be a value of <a class="el" href="group__x3e___keyscan___fifo___overflow___control.html">KeyScan FIFO Overflow Control</a>. </p>
 
 </div>
 </div>
@@ -301,6 +317,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Specifies max scan data allowable in each scan.</p>
+<p>This is a deprecated parameter. </p>
 
 </div>
 </div>
@@ -315,7 +333,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies Keyscan mode. This parameter can be a value of <a class="el" href="group___keyscan__scan__mode.html">Keyscan scan mode</a> </p>
+<p>Specifies Keyscan mode. This parameter can be a value of <a class="el" href="group___keyscan__scan__mode.html">Keyscan Scan Mode</a>.</p>
+<p>Specifies KeyScan scan mode. This parameter can be a value of <a class="el" href="group__x3e___keyscan__scan__mode.html">KeyScan Scan Mode</a>. </p>
 
 </div>
 </div>
@@ -330,7 +349,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies Keyscan clock divider.system clock/(SCAN_DIV+1)=scan clock </p>
+<p>Specifies Keyscan clock divider.system clock/(SCAN_DIV+1)=scan clock.</p>
+<p>Specifies KeyScan clock divider. Scan clock = system clock/(clockdiv+1). </p>
 
 </div>
 </div>
@@ -345,7 +365,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies Keyscan delay clock divider.delay clock= scan clock/(DELAY_DIV+1) </p>
+<p>Specifies Keyscan delay clock divider.delay clock= scan clock/(DELAY_DIV+1).</p>
+<p>Specifies KeyScan delay clock divider. Delay clock = scan clock/(delayclk+1). </p>
 
 </div>
 </div>
@@ -360,7 +381,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies Keyscan fifo threshold to trigger interrupt KEYSCAN_INT_THRESHOLD. </p>
+<p>Specifies Keyscan fifo threshold to trigger interrupt KEYSCAN_INT_THRESHOLD.</p>
+<p>Specifies KeyScan FIFO threshold to trigger interrupt <a class="el" href="group__x3e___keyscan___interrupt___definition.html#ga60337557bf14ca8de15e436aa72183e3">KEYSCAN_INT_THRESHOLD</a>. This parameter can be a value of 0 ~ 26. </p>
 
 </div>
 </div>
@@ -375,7 +397,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies Keyscan Debounce time. DebounceTime = </p>
+<p>Specifies Keyscan debounce count.</p>
+<p>Specifies KeyScan debounce count. Debounce time = delay clock * debouncecnt. This parameter can be a value of 0 ~ 0x1FF. </p>
 
 </div>
 </div>
@@ -390,7 +413,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies Keyscan release time. ReleaseTime = </p>
+<p>Specifies Keyscan release count.</p>
+<p>Specifies KeyScan release count. Release time = delay clock * releasecnt. This parameter can be a value of 0 ~ 0x1FF. </p>
 
 </div>
 </div>
@@ -405,7 +429,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies max scan data allowable in each scan </p>
+<p>Specifies the limitation of keyscan fifo, allowable key data in one scan.</p>
+<p>Specify the maximum allowable scan data for each scan. This parameter can be a value of 0 ~ 26. </p>
 
 </div>
 </div>

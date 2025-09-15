@@ -23,13 +23,7 @@ extern "C" {
 /*============================================================================*
  *                              Header Files
  *============================================================================*/
-#include <profile_client.h>
-#if F_APP_BLE_ANCS_CLIENT_SUPPORT
-#include <ancs.h>
-#endif
-#if F_APP_BLE_AMS_CLIENT_SUPPORT
-#include <ams.h>
-#endif
+
 
 /** @defgroup PERIPH_APP Peripheral Application
   * @brief Peripheral Application

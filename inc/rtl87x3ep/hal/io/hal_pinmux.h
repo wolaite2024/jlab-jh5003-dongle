@@ -16,7 +16,7 @@ extern "C" {
 #include <stdbool.h>
 #include "hal_def.h"
 
-/** @addtogroup HAL_PINMUX HAL PINMUX
+/** @addtogroup 87x3ep_HAL_PINMUX HAL PINMUX
   * @brief hal pinmux driver module
   * @{
   */
@@ -38,7 +38,7 @@ typedef enum
  *                         Functions
  *============================================================================*/
 
-/** @defgroup HAL_PINMUX_Exported_Functions Hal Pinmux Exported Functions
+/** @defgroup 87x3ep_HAL_PINMUX_Exported_Functions Hal Pinmux Exported Functions
   * @{
   */
 
@@ -130,8 +130,8 @@ void hal_pad_register_pin_wake_callback(uint8_t pin_index, P_PIN_WAKEUP_CALLBACK
  */
 void hal_pad_unregister_wake_callback(uint8_t pin_index);
 
-/** @} */ /* End of group HAL_PINMUX_Exported_Functions */
-/** @} */ /* End of group HAL_PINMUX */
+/** @} */ /* End of group 87x3ep_HAL_PINMUX_Exported_Functions */
+/** @} */ /* End of group 87x3ep_HAL_PINMUX */
 
 #ifdef __cplusplus
 }

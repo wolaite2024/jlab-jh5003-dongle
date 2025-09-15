@@ -161,8 +161,6 @@ static void hid_pt_send_ack(uint8_t *data, uint16_t length)
 
 void app_usb_hid_handle_passthrough(uint8_t *data, uint8_t length)
 {
-	APP_PRINT_INFO2("----> data %b length %x", TRACE_BINARY(length, data), length);
-	
     if ((!data) || (!length))
     {
         return;
@@ -175,10 +173,6 @@ void app_usb_hid_handle_passthrough(uint8_t *data, uint8_t length)
         return;
     }
 
-    if ((data[5] == 0) && (data[6] == 0))
-    {
-        //return;
-    }
     APP_PRINT_INFO2("app_usb_hid_handle_passthrough data %b length %x", TRACE_BINARY(5, data), length);
 #if USB_PT_REPACK_BY_DONGLE
     /* new pkg */

@@ -51,14 +51,19 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:gab1e4811a05bf0ffc711882743cf6c7a7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___g_d_m_a__data__transfer__direction.html#gab1e4811a05bf0ffc711882743cf6c7a7">GDMA_DIR_MemoryToMemory</a>&#160;&#160;&#160;((uint32_t)0x00000000)</td></tr>
+<tr class="memdesc:gab1e4811a05bf0ffc711882743cf6c7a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the direction of GDMA as memory to memory.  <a href="#gab1e4811a05bf0ffc711882743cf6c7a7">More...</a><br /></td></tr>
 <tr class="separator:gab1e4811a05bf0ffc711882743cf6c7a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga257d48aeb412e7914a71e44625467575"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___g_d_m_a__data__transfer__direction.html#ga257d48aeb412e7914a71e44625467575">GDMA_DIR_MemoryToPeripheral</a>&#160;&#160;&#160;((uint32_t)0x00000001)</td></tr>
+<tr class="memdesc:ga257d48aeb412e7914a71e44625467575"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the direction of GDMA as memory to peripheral.  <a href="#ga257d48aeb412e7914a71e44625467575">More...</a><br /></td></tr>
 <tr class="separator:ga257d48aeb412e7914a71e44625467575"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga98ab5e79de5534ff2f41f3773ce060a1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___g_d_m_a__data__transfer__direction.html#ga98ab5e79de5534ff2f41f3773ce060a1">GDMA_DIR_PeripheralToMemory</a>&#160;&#160;&#160;((uint32_t)0x00000002)</td></tr>
+<tr class="memdesc:ga98ab5e79de5534ff2f41f3773ce060a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the direction of GDMA as peripheral to memory.  <a href="#ga98ab5e79de5534ff2f41f3773ce060a1">More...</a><br /></td></tr>
 <tr class="separator:ga98ab5e79de5534ff2f41f3773ce060a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga35690e3f946e5879b80237c8b2517438"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___g_d_m_a__data__transfer__direction.html#ga35690e3f946e5879b80237c8b2517438">GDMA_DIR_PeripheralToPeripheral</a>&#160;&#160;&#160;((uint32_t)0x00000003)</td></tr>
+<tr class="memdesc:ga35690e3f946e5879b80237c8b2517438"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the direction of GDMA as peripheral to peripheral.  <a href="#ga35690e3f946e5879b80237c8b2517438">More...</a><br /></td></tr>
 <tr class="separator:ga35690e3f946e5879b80237c8b2517438"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga58b791a2493ff15bc264fa665a4e92e9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__x3e___g_d_m_a__data__transfer__direction.html#ga58b791a2493ff15bc264fa665a4e92e9">IS_GDMA_DIR</a>(<a class="el" href="struct_d_i_r.html">DIR</a>)</td></tr>
+<tr class="memdesc:ga58b791a2493ff15bc264fa665a4e92e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether is the direction of GDMA.  <a href="#ga58b791a2493ff15bc264fa665a4e92e9">More...</a><br /></td></tr>
 <tr class="separator:ga58b791a2493ff15bc264fa665a4e92e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -75,6 +80,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Configure the direction of GDMA as memory to memory. </p>
+
 </div>
 </div>
 <a id="ga257d48aeb412e7914a71e44625467575"></a>
@@ -88,6 +95,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Configure the direction of GDMA as memory to peripheral. </p>
 
 </div>
 </div>
@@ -103,6 +112,8 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Configure the direction of GDMA as peripheral to memory. </p>
+
 </div>
 </div>
 <a id="ga35690e3f946e5879b80237c8b2517438"></a>
@@ -116,6 +127,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Configure the direction of GDMA as peripheral to peripheral. </p>
 
 </div>
 </div>
@@ -135,11 +148,13 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">(((<a class="code" href="struct_d_i_r.html">DIR</a>) == <a class="code" href="group__x3e___g_d_m_a__data__transfer__direction.html#gab1e4811a05bf0ffc711882743cf6c7a7">GDMA_DIR_MemoryToMemory</a>) || \</div><div class="line">                          ((<a class="code" href="struct_d_i_r.html">DIR</a>) == <a class="code" href="group__x3e___g_d_m_a__data__transfer__direction.html#ga257d48aeb412e7914a71e44625467575">GDMA_DIR_MemoryToPeripheral</a>) || \</div><div class="line">                          ((<a class="code" href="struct_d_i_r.html">DIR</a>) == <a class="code" href="group__x3e___g_d_m_a__data__transfer__direction.html#ga98ab5e79de5534ff2f41f3773ce060a1">GDMA_DIR_PeripheralToMemory</a>) ||\</div><div class="line">                          ((<a class="code" href="struct_d_i_r.html">DIR</a>) == <a class="code" href="group__x3e___g_d_m_a__data__transfer__direction.html#ga35690e3f946e5879b80237c8b2517438">GDMA_DIR_PeripheralToPeripheral</a>))</div><div class="ttc" id="struct_d_i_r_html"><div class="ttname"><a href="struct_d_i_r.html">DIR</a></div><div class="ttdef"><b>Definition:</b> ff.h:232</div></div>
-<div class="ttc" id="group__x3e___g_d_m_a__data__transfer__direction_html_ga35690e3f946e5879b80237c8b2517438"><div class="ttname"><a href="group__x3e___g_d_m_a__data__transfer__direction.html#ga35690e3f946e5879b80237c8b2517438">GDMA_DIR_PeripheralToPeripheral</a></div><div class="ttdeci">#define GDMA_DIR_PeripheralToPeripheral</div><div class="ttdef"><b>Definition:</b> rtl876x_gdma.h:303</div></div>
-<div class="ttc" id="group__x3e___g_d_m_a__data__transfer__direction_html_ga257d48aeb412e7914a71e44625467575"><div class="ttname"><a href="group__x3e___g_d_m_a__data__transfer__direction.html#ga257d48aeb412e7914a71e44625467575">GDMA_DIR_MemoryToPeripheral</a></div><div class="ttdeci">#define GDMA_DIR_MemoryToPeripheral</div><div class="ttdef"><b>Definition:</b> rtl876x_gdma.h:301</div></div>
-<div class="ttc" id="group__x3e___g_d_m_a__data__transfer__direction_html_ga98ab5e79de5534ff2f41f3773ce060a1"><div class="ttname"><a href="group__x3e___g_d_m_a__data__transfer__direction.html#ga98ab5e79de5534ff2f41f3773ce060a1">GDMA_DIR_PeripheralToMemory</a></div><div class="ttdeci">#define GDMA_DIR_PeripheralToMemory</div><div class="ttdef"><b>Definition:</b> rtl876x_gdma.h:302</div></div>
-<div class="ttc" id="group__x3e___g_d_m_a__data__transfer__direction_html_gab1e4811a05bf0ffc711882743cf6c7a7"><div class="ttname"><a href="group__x3e___g_d_m_a__data__transfer__direction.html#gab1e4811a05bf0ffc711882743cf6c7a7">GDMA_DIR_MemoryToMemory</a></div><div class="ttdeci">#define GDMA_DIR_MemoryToMemory</div><div class="ttdef"><b>Definition:</b> rtl876x_gdma.h:300</div></div>
+<div class="ttc" id="group__x3e___g_d_m_a__data__transfer__direction_html_ga35690e3f946e5879b80237c8b2517438"><div class="ttname"><a href="group__x3e___g_d_m_a__data__transfer__direction.html#ga35690e3f946e5879b80237c8b2517438">GDMA_DIR_PeripheralToPeripheral</a></div><div class="ttdeci">#define GDMA_DIR_PeripheralToPeripheral</div><div class="ttdoc">Configure the direction of GDMA as peripheral to peripheral. </div><div class="ttdef"><b>Definition:</b> rtl876x_gdma.h:344</div></div>
+<div class="ttc" id="group__x3e___g_d_m_a__data__transfer__direction_html_ga257d48aeb412e7914a71e44625467575"><div class="ttname"><a href="group__x3e___g_d_m_a__data__transfer__direction.html#ga257d48aeb412e7914a71e44625467575">GDMA_DIR_MemoryToPeripheral</a></div><div class="ttdeci">#define GDMA_DIR_MemoryToPeripheral</div><div class="ttdoc">Configure the direction of GDMA as memory to peripheral. </div><div class="ttdef"><b>Definition:</b> rtl876x_gdma.h:342</div></div>
+<div class="ttc" id="group__x3e___g_d_m_a__data__transfer__direction_html_ga98ab5e79de5534ff2f41f3773ce060a1"><div class="ttname"><a href="group__x3e___g_d_m_a__data__transfer__direction.html#ga98ab5e79de5534ff2f41f3773ce060a1">GDMA_DIR_PeripheralToMemory</a></div><div class="ttdeci">#define GDMA_DIR_PeripheralToMemory</div><div class="ttdoc">Configure the direction of GDMA as peripheral to memory. </div><div class="ttdef"><b>Definition:</b> rtl876x_gdma.h:343</div></div>
+<div class="ttc" id="group__x3e___g_d_m_a__data__transfer__direction_html_gab1e4811a05bf0ffc711882743cf6c7a7"><div class="ttname"><a href="group__x3e___g_d_m_a__data__transfer__direction.html#gab1e4811a05bf0ffc711882743cf6c7a7">GDMA_DIR_MemoryToMemory</a></div><div class="ttdeci">#define GDMA_DIR_MemoryToMemory</div><div class="ttdoc">Configure the direction of GDMA as memory to memory. </div><div class="ttdef"><b>Definition:</b> rtl876x_gdma.h:341</div></div>
 </div><!-- fragment -->
+<p>Check whether is the direction of GDMA. </p>
+
 </div>
 </div>
 </div><!-- contents -->

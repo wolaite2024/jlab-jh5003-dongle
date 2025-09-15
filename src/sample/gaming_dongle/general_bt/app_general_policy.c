@@ -8,7 +8,6 @@
 #include "bt_rfc.h"
 #include "mem_types.h"
 #include "os_mem.h"
-#include "app_cfg.h"
 #include "ftl.h"
 //#include "dm.h"
 #include "app_timer.h"
@@ -36,6 +35,7 @@
 #include "app_usb_uac.h"
 #include "app_usb_hid.h"
 #include "app_device.h"
+#include "app_cfg.h"
 
 #define MS_SURFACE                  (1)
 #define MS_RF_SCHEDULER_ENABLE      (0)
@@ -2563,7 +2563,8 @@ static void src_handle_sdp_attr_info(uint8_t *bd_addr, T_BT_SDP_ATTR_INFO sdp_at
                     sink_dev->sdp_info.server_channel = sdp_attr.server_channel;
                 }
             }
-            else if (HFP_PROFILE_MASK == sink_dev->profile_mask_doing)
+            else if (HFP_PROFILE_MASK == sink_dev->profile_mask_doing &&
+                     sdp_attr.srv_class_uuid_data.uuid_16 == UUID_HANDSFREE)
             {
                 sink_dev->sdp_info.is_found = true;
                 APP_PRINT_INFO1("src_handle_sdp_attr_info handle %x", sdp_attr.server_channel);
@@ -4324,7 +4325,7 @@ static bool src_profile_conn(uint8_t *bd_addr, uint32_t profile_mask, T_APP_SRC_
     switch (profile_mask)
     {
     case A2DP_PROFILE_MASK:
-        ret = bt_a2dp_connect_req(bd_addr, sdp_info.protocol_version, BT_A2DP_ROLE_SNK);
+        ret = bt_a2dp_connect_req(bd_addr, sdp_info.protocol_version, BT_A2DP_ROLE_SNK, 0);
         break;
 
     case AVRCP_PROFILE_MASK:

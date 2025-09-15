@@ -5,21 +5,36 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <string.h>
-
+#include <stdlib.h>
 #include "os_mem.h"
 #include "trace.h"
 #include "gap_br.h"
 #include "sys_ipc.h"
 #include "bt_mgr.h"
 #include "bt_mgr_int.h"
+#include "bt_hfp_ag_int.h"
 #include "bt_roleswap.h"
 #include "bt_gap.h"
+#include "bt_avrcp_int.h"
 #include "bt_avrcp.h"
+#include "bt_a2dp_int.h"
 #include "bt_a2dp.h"
 #include "bt_map.h"
-#include "bt_hfp_ag.h"
+#include "bt_hfp.h"
+#include "bt_hfp_int.h"
+#include "bt_hfp_ag_int.h"
 #include "bt_iap.h"
+#include "bt_spp_int.h"
+#include "bt_iap_int.h"
+#include "bt_pbap_int.h"
+#include "bt_hid_int.h"
+#include "bt_map_int.h"
 #include "bt_opp.h"
+
+#define BT_VND_NEGOTIATE_TRAFFIC_QOS_CMD     0x1C
+#define BT_VND_NON_NEGOTIATE_TRAFFIC_QOS_CMD 0x1D
+#define BT_VND_NEGOTIATE_TRAFFIC_QOS_EVT     0x59
+#define BT_VND_NON_NEGOTIATE_TRAFFIC_QOS_EVT 0x61
 
 static const uint8_t sco_h2_header[4] = {0x08, 0x38, 0xc8, 0xf8};
 typedef enum
@@ -66,7 +81,7 @@ bool bt_mgr_cback_register(P_BT_MGR_CBACK cback)
 bool bt_mgr_cback_unregister(P_BT_MGR_CBACK cback)
 {
     T_BT_MGR_CBACK_ITEM *p_item;
-    bool              ret = false;
+    bool                 ret = false;
 
     p_item = (T_BT_MGR_CBACK_ITEM *)btm_db.cback_list.p_first;
     while (p_item != NULL)
@@ -103,88 +118,109 @@ bool bt_mgr_event_post(T_BT_EVENT  event_type,
     return true;
 }
 
-T_BT_BR_LINK *bt_find_br_link(uint8_t bd_addr[6])
+T_BT_LINK *bt_link_alloc(uint8_t bd_addr[6])
 {
-    uint8_t       i;
-    T_BT_BR_LINK *p_link = NULL;
+    T_BT_LINK *link;
 
-    if (bd_addr != NULL)
+    link = calloc(1, sizeof(T_BT_LINK));
+    if (link != NULL)
     {
-        for (i = 0; i < btm_db.br_link_num; i++)
+        uint8_t index;
+
+        for (index = 0; index < btm_db.link_list.count; index++)
         {
-            if (btm_db.br_link[i].acl_link_state != BT_LINK_STATE_IDLE &&
-                !memcmp(btm_db.br_link[i].bd_addr, bd_addr, 6))
+            T_BT_LINK *prev_link;
+            bool       index_used = false;
+
+            prev_link = os_queue_peek(&btm_db.link_list, 0);
+            while (prev_link != NULL)
             {
-                p_link = &btm_db.br_link[i];
+                if (prev_link->index == index)
+                {
+                    index_used = true;
+                    break;
+                }
+
+                prev_link = prev_link->next;
+            }
+
+            if (index_used == false)
+            {
                 break;
             }
         }
+
+        link->index = index;
+
+        link->acl_link_state = BT_LINK_STATE_DISCONNECTED;
+        link->acl_link_policy = GAP_LINK_POLICY_ROLE_SWITCH | GAP_LINK_POLICY_SNIFF_MODE;
+        os_queue_init(&link->pm_cback_list);
+        memcpy(link->bd_addr, bd_addr, 6);
+        os_queue_in(&btm_db.link_list, link);
     }
 
-    return p_link;
+    return link;
 }
 
-T_BT_BR_LINK *bt_find_br_link_by_handle(uint16_t handle)
-{
-    uint8_t       i;
-    T_BT_BR_LINK *p_link = NULL;
-
-    for (i = 0; i < btm_db.br_link_num; i++)
-    {
-        if (btm_db.br_link[i].acl_link_state != BT_LINK_STATE_IDLE &&
-            btm_db.br_link[i].acl_handle == handle)
-        {
-            p_link = &btm_db.br_link[i];
-            break;
-        }
-    }
-
-    return p_link;
-}
-
-T_BT_BR_LINK *bt_alloc_br_link(uint8_t bd_addr[6])
-{
-    uint8_t       i;
-    T_BT_BR_LINK *p_link = NULL;
-
-    if (bd_addr != NULL)
-    {
-        for (i = 0; i < btm_db.br_link_num; i++)
-        {
-            if (btm_db.br_link[i].acl_link_state == BT_LINK_STATE_IDLE)
-            {
-                p_link = &btm_db.br_link[i];
-                p_link->link_id = i;
-                p_link->acl_link_state = BT_LINK_STATE_DISCONNECTED;
-                p_link->acl_link_policy = GAP_LINK_POLICY_ROLE_SWITCH | GAP_LINK_POLICY_SNIFF_MODE;
-                memcpy(p_link->bd_addr, bd_addr, 6);
-                break;
-            }
-        }
-    }
-
-    return p_link;
-}
-
-void bt_free_br_link(T_BT_BR_LINK *p_link)
+void bt_link_free(T_BT_LINK *link)
 {
     T_BT_PM_CBACK_ITEM *item;
 
-    p_link->acl_link_state = BT_LINK_STATE_IDLE;
-
-    if (p_link->timer_enter_sniff != NULL)
+    if (link->timer_sniff != NULL)
     {
-        sys_timer_delete(p_link->timer_enter_sniff);
+        sys_timer_delete(link->timer_sniff);
     }
 
-    item = os_queue_out(&p_link->pm_cback_list);
+    if (link->sco_buf != NULL)
+    {
+        free(link->sco_buf);
+    }
+
+    item = os_queue_out(&link->pm_cback_list);
     while (item != NULL)
     {
-        os_mem_free(item);
-        item = os_queue_out(&p_link->pm_cback_list);
+        free(item);
+        item = os_queue_out(&link->pm_cback_list);
     }
 
-    memset(p_link, 0, sizeof(T_BT_BR_LINK));
+    os_queue_delete(&btm_db.link_list, link);
+    free(link);
+}
+
+T_BT_LINK *bt_link_find(uint8_t bd_addr[6])
+{
+    T_BT_LINK *link;
+
+    link = os_queue_peek(&btm_db.link_list, 0);
+    while (link != NULL)
+    {
+        if (!memcmp(link->bd_addr, bd_addr, 6))
+        {
+            break;
+        }
+
+        link = link->next;
+    }
+
+    return link;
+}
+
+T_BT_LINK *bt_link_find_by_handle(uint16_t handle)
+{
+    T_BT_LINK *link;
+
+    link = os_queue_peek(&btm_db.link_list, 0);
+    while (link != NULL)
+    {
+        if (link->acl_handle == handle)
+        {
+            break;
+        }
+
+        link = link->next;
+    }
+
+    return link;
 }
 
 bool bt_local_name_set(uint8_t *p_name,
@@ -256,14 +292,14 @@ bool bt_periodic_inquiry_stop(void)
 bool bt_link_policy_set(uint8_t  bd_addr[6],
                         uint16_t link_policy)
 {
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link != NULL)
+    link = bt_link_find(bd_addr);
+    if (link != NULL)
     {
-        if (gap_br_cfg_acl_link_policy(p_link->bd_addr, link_policy) == GAP_CAUSE_SUCCESS)
+        if (gap_br_cfg_acl_link_policy(link->bd_addr, link_policy) == GAP_CAUSE_SUCCESS)
         {
-            p_link->acl_link_policy = link_policy;
+            link->acl_link_policy = link_policy;
             return true;
         }
     }
@@ -273,12 +309,12 @@ bool bt_link_policy_set(uint8_t  bd_addr[6],
 
 bool bt_role_switch_enable(uint8_t bd_addr[6])
 {
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link != NULL)
+    link = bt_link_find(bd_addr);
+    if (link != NULL)
     {
-        return bt_link_policy_set(bd_addr, p_link->acl_link_policy | GAP_LINK_POLICY_ROLE_SWITCH);
+        return bt_link_policy_set(bd_addr, link->acl_link_policy | GAP_LINK_POLICY_ROLE_SWITCH);
     }
 
     return false;
@@ -286,12 +322,12 @@ bool bt_role_switch_enable(uint8_t bd_addr[6])
 
 bool bt_role_switch_disable(uint8_t bd_addr[6])
 {
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link != NULL)
+    link = bt_link_find(bd_addr);
+    if (link != NULL)
     {
-        return bt_link_policy_set(bd_addr, p_link->acl_link_policy & (~GAP_LINK_POLICY_ROLE_SWITCH));
+        return bt_link_policy_set(bd_addr, link->acl_link_policy & (~GAP_LINK_POLICY_ROLE_SWITCH));
     }
 
     return false;
@@ -300,12 +336,12 @@ bool bt_role_switch_disable(uint8_t bd_addr[6])
 bool bt_link_policy_get(uint8_t   bd_addr[6],
                         uint16_t *link_policy)
 {
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link != NULL)
+    link = bt_link_find(bd_addr);
+    if (link != NULL)
     {
-        *link_policy = p_link->acl_link_policy;
+        *link_policy = link->acl_link_policy;
         return true;
     }
 
@@ -315,78 +351,78 @@ bool bt_link_policy_get(uint8_t   bd_addr[6],
 bool bt_link_role_switch(uint8_t bd_addr[6],
                          bool    set_master)
 {
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link == NULL)
+    link = bt_link_find(bd_addr);
+    if (link == NULL)
     {
         BTM_PRINT_ERROR1("bt_link_role_switch: invalid bd_addr %s", TRACE_BDADDR(bd_addr));
         return false;
     }
 
-    if (p_link->acl_link_state != BT_LINK_STATE_CONNECTED)
+    if (link->acl_link_state != BT_LINK_STATE_CONNECTED)
     {
         BTM_PRINT_ERROR1("bt_link_role_switch: bd_addr %s link not created", TRACE_BDADDR(bd_addr));
         return false;
     }
 
-    if (p_link->acl_link_role_master == set_master)
+    if (link->acl_link_role_master == set_master)
     {
         BTM_PRINT_INFO2("bt_link_role_switch: bd_addr %s, set_master %u already",
                         TRACE_BDADDR(bd_addr), set_master);
         return true;
     }
 
-    if (p_link->role_switch_status == BT_ROLE_SWITCH_MASTER_RUNNING ||
-        p_link->role_switch_status == BT_ROLE_SWITCH_SLAVE_RUNNING)
+    if (link->role_switch_status == BT_ROLE_SWITCH_MASTER_RUNNING ||
+        link->role_switch_status == BT_ROLE_SWITCH_SLAVE_RUNNING)
     {
         BTM_PRINT_INFO2("bt_link_role_switch: bd_addr %s, set_master %u, switch running",
                         TRACE_BDADDR(bd_addr), set_master);
         return true;
     }
 
-    if (p_link->role_switch_status == BT_ROLE_SWITCH_IDLE)
+    if (link->role_switch_status == BT_ROLE_SWITCH_IDLE)
     {
         if (set_master == true)
         {
-            p_link->role_switch_status = BT_ROLE_SWITCH_MASTER_PENDING;
+            link->role_switch_status = BT_ROLE_SWITCH_MASTER_PENDING;
         }
         else
         {
-            p_link->role_switch_status = BT_ROLE_SWITCH_SLAVE_PENDING;
+            link->role_switch_status = BT_ROLE_SWITCH_SLAVE_PENDING;
         }
     }
 
-    if (p_link->sco_handle != 0)
+    if (link->sco_state != BT_LINK_SCO_STATE_DISCONNECTED)
     {
         BTM_PRINT_INFO2("bt_link_role_switch: bd_addr %s, set_master %u, SCO link existed",
                         TRACE_BDADDR(bd_addr), set_master);
         return true;
     }
 
-    if (p_link->acl_link_sc_ongoing == true)
+    if (link->acl_link_sc_ongoing == true)
     {
         BTM_PRINT_INFO2("bt_link_role_switch: bd_addr %s, set_master %u, secure connection ongoing",
                         TRACE_BDADDR(bd_addr), set_master);
         return true;
     }
 
-    if (bt_sniff_mode_exit(p_link, false) == false)
+    if (bt_sniff_mode_exit(link->bd_addr, false) == false)
     {
         BTM_PRINT_INFO3("bt_link_role_switch: bd_addr %s, set_master %u, pm_state %u",
-                        TRACE_BDADDR(bd_addr), set_master, p_link->pm_state);
+                        TRACE_BDADDR(bd_addr), set_master, link->pm_state);
         return true;
     }
 
     if (set_master == true)
     {
-        p_link->role_switch_status = BT_ROLE_SWITCH_MASTER_RUNNING;
-        gap_br_cfg_acl_link_role(p_link->bd_addr, GAP_BR_LINK_ROLE_MASTER);
+        link->role_switch_status = BT_ROLE_SWITCH_MASTER_RUNNING;
+        gap_br_cfg_acl_link_role(link->bd_addr, GAP_BR_LINK_ROLE_MASTER);
     }
     else
     {
-        p_link->role_switch_status = BT_ROLE_SWITCH_SLAVE_RUNNING;
-        gap_br_cfg_acl_link_role(p_link->bd_addr, GAP_BR_LINK_ROLE_SLAVE);
+        link->role_switch_status = BT_ROLE_SWITCH_SLAVE_RUNNING;
+        gap_br_cfg_acl_link_role(link->bd_addr, GAP_BR_LINK_ROLE_SLAVE);
     }
 
     return true;
@@ -562,17 +598,18 @@ bool bt_piconet_id_get(T_BT_CLK_REF  clk_ref,
 bool bt_acl_conn_accept(uint8_t        bd_addr[6],
                         T_BT_LINK_ROLE role)
 {
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link == NULL)
+    link = bt_link_find(bd_addr);
+    if (link != NULL)
     {
-        return false;
-    }
-
-    if (gap_br_accept_acl_conn(bd_addr, (T_GAP_BR_LINK_ROLE)role) == GAP_CAUSE_SUCCESS)
-    {
-        return true;
+        if (link->acl_link_state == BT_LINK_STATE_CONNECTING)
+        {
+            if (gap_br_accept_acl_conn(bd_addr, (T_GAP_BR_LINK_ROLE)role) == GAP_CAUSE_SUCCESS)
+            {
+                return true;
+            }
+        }
     }
 
     return false;
@@ -581,17 +618,18 @@ bool bt_acl_conn_accept(uint8_t        bd_addr[6],
 bool bt_acl_conn_reject(uint8_t                bd_addr[6],
                         T_BT_ACL_REJECT_REASON reason)
 {
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link == NULL)
+    link = bt_link_find(bd_addr);
+    if (link != NULL)
     {
-        return false;
-    }
-
-    if (gap_br_reject_acl_conn(bd_addr, (T_GAP_ACL_REJECT_CONN_REASON)reason) == GAP_CAUSE_SUCCESS)
-    {
-        return true;
+        if (link->acl_link_state == BT_LINK_STATE_CONNECTING)
+        {
+            if (gap_br_reject_acl_conn(bd_addr, (T_GAP_ACL_REJECT_CONN_REASON)reason) == GAP_CAUSE_SUCCESS)
+            {
+                return true;
+            }
+        }
     }
 
     return false;
@@ -606,10 +644,10 @@ bool bt_sco_conn_cfm(uint8_t  bd_addr[6],
                      uint16_t packet_type,
                      bool     accept)
 {
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link != NULL)
+    link = bt_link_find(bd_addr);
+    if (link != NULL)
     {
         if (accept == true)
         {
@@ -649,25 +687,25 @@ bool bt_sco_data_send(uint8_t  bd_addr[6],
                       uint8_t *buf,
                       uint8_t  len)
 {
-    T_BT_BR_LINK *p_link;
-    uint8_t      *sco_buf;
-    uint8_t       sco_buf_len;
-    int32_t       ret = 0;
+    T_BT_LINK *link;
+    uint8_t   *sco_buf;
+    uint8_t    sco_buf_len;
+    int32_t    ret = 0;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link == NULL)
+    link = bt_link_find(bd_addr);
+    if (link == NULL)
     {
         ret = 1;
         goto fail_invalid_addr;
     }
 
-    if (p_link->sco_handle == 0)
+    if (link->sco_state != BT_LINK_SCO_STATE_CONNECTED)
     {
         ret = 2;
         goto fail_invalid_handle;
     }
 
-    if (p_link->sco_air_mode == GAP_AIR_MODE_TRANSPARENT)
+    if (link->sco_air_mode == GAP_AIR_MODE_TRANSPARENT)
     {
         sco_buf = gap_br_get_sco_buffer(len + 3);
         if (sco_buf == NULL)
@@ -747,12 +785,12 @@ bool bt_link_pin_code_cfm(uint8_t  bd_addr[6],
 bool bt_link_encryption_set(uint8_t bd_addr[6],
                             bool    enable)
 {
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link != NULL)
+    link = bt_link_find(bd_addr);
+    if (link != NULL)
     {
-        if (gap_br_set_conn_encryption(p_link->acl_handle, enable) == GAP_CAUSE_SUCCESS)
+        if (gap_br_set_conn_encryption(link->acl_handle, enable) == GAP_CAUSE_SUCCESS)
         {
             return true;
         }
@@ -763,21 +801,21 @@ bool bt_link_encryption_set(uint8_t bd_addr[6],
 
 bool bt_sco_link_switch(uint8_t bd_addr[6])
 {
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link != NULL)
+    link = bt_link_find(bd_addr);
+    if (link != NULL)
     {
-        if (p_link->sco_handle)
+        if (link->sco_state == BT_LINK_SCO_STATE_CONNECTED)
         {
             BTM_PRINT_TRACE2("bt_sco_link_switch: active_addr %s, active_index %d",
-                             TRACE_BDADDR(bd_addr), p_link->link_id);
+                             TRACE_BDADDR(bd_addr), link->index);
 
-            gap_br_vendor_set_active_sco(p_link->sco_handle, 1, 1);
+            gap_br_vendor_set_active_sco(link->sco_handle, 1, 1);
 
             T_BT_EVENT_PARAM param;
             memcpy(param.sco_link_switch.bd_addr, bd_addr, 6);
-            param.sco_link_switch.handle = p_link->sco_handle;
+            param.sco_link_switch.handle = link->sco_handle;
             bt_mgr_event_post(BT_EVENT_SCO_LINK_SWITCH, &param, sizeof(param));
             return true;
         }
@@ -789,14 +827,14 @@ bool bt_sco_link_switch(uint8_t bd_addr[6])
 bool bt_sco_link_retrans_window_set(uint8_t bd_addr[6],
                                     uint8_t retrans_window)
 {
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link)
+    link = bt_link_find(bd_addr);
+    if (link)
     {
-        if (p_link->sco_handle)
+        if (link->sco_state == BT_LINK_SCO_STATE_CONNECTED)
         {
-            if (gap_br_set_sco_retrans_window(p_link->sco_handle, retrans_window) == GAP_CAUSE_SUCCESS)
+            if (gap_br_set_sco_retrans_window(link->sco_handle, retrans_window) == GAP_CAUSE_SUCCESS)
             {
                 return true;
             }
@@ -808,36 +846,31 @@ bool bt_sco_link_retrans_window_set(uint8_t bd_addr[6],
 
 void bt_handle_sco_disconnect(uint8_t bd_addr[6])
 {
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link)
+    link = bt_link_find(bd_addr);
+    if (link)
     {
-        uint8_t sco_idx;
+        link->sco_handle = 0;
+        link->sco_air_mode = 0;
+        link->is_esco = 0;
+        link->sco_packet_length = 0;
+        link->curr_sco_len = 0;
+        link->sco_state = BT_LINK_SCO_STATE_DISCONNECTED;
 
-        p_link->sco_handle = 0;
-        p_link->curr_sco_len = 0;
-        memset(p_link->sco_buf, 0, 60);
-
-        for (sco_idx = 0; sco_idx < btm_db.br_link_num; sco_idx++)
+        if (link->sco_buf != NULL)
         {
-            if (btm_db.br_link[sco_idx].sco_handle != 0)
-            {
-                break;
-            }
+            free(link->sco_buf);
+            link->sco_buf = NULL;
         }
 
-        //multi-link hpf and a2dp
-        if (sco_idx >= btm_db.br_link_num) //all SCO were removed
+        if (link->role_switch_status == BT_ROLE_SWITCH_MASTER_PENDING)
         {
-            if (p_link->role_switch_status == BT_ROLE_SWITCH_MASTER_PENDING)
-            {
-                bt_link_role_switch(bd_addr, true);
-            }
-            else if (p_link->role_switch_status == BT_ROLE_SWITCH_SLAVE_PENDING)
-            {
-                bt_link_role_switch(bd_addr, false);
-            }
+            bt_link_role_switch(bd_addr, true);
+        }
+        else if (link->role_switch_status == BT_ROLE_SWITCH_SLAVE_PENDING)
+        {
+            bt_link_role_switch(bd_addr, false);
         }
     }
 }
@@ -845,12 +878,13 @@ void bt_handle_sco_disconnect(uint8_t bd_addr[6])
 bool bt_acl_pkt_type_set(uint8_t           bd_addr[6],
                          T_BT_ACL_PKT_TYPE link_pkt_type)
 {
-    T_BT_BR_LINK         *p_link;
-    uint16_t              pkt_type = 0x0;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link != NULL)
+    link = bt_link_find(bd_addr);
+    if (link != NULL)
     {
+        uint16_t pkt_type = 0;
+
         if (link_pkt_type == BT_ACL_PKT_TYPE_1M)
         {
             pkt_type = GAP_PKT_TYPE_DM1 | GAP_PKT_TYPE_DH1 | \
@@ -886,10 +920,10 @@ bool bt_link_preferred_data_rate_set(uint8_t             bd_addr[6],
                                      T_BT_LINK_DATA_RATE basic_data_rate,
                                      T_BT_LINK_DATA_RATE enhanced_data_rate)
 {
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link != NULL)
+    link = bt_link_find(bd_addr);
+    if (link != NULL)
     {
         if (gap_br_link_preferred_data_rate_set(bd_addr,
                                                 basic_data_rate,
@@ -906,19 +940,20 @@ bool bt_link_qos_set(uint8_t       bd_addr[6],
                      T_BT_QOS_TYPE type,
                      uint16_t      tpoll)
 {
-    T_BT_BR_LINK *p_link;
-    uint32_t      latency;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link != NULL)
+    link = bt_link_find(bd_addr);
+    if (link != NULL)
     {
+        uint32_t latency;
+
         /* Tpoll = min(180000 / token_rate, latency / 1250), where the Spec limits
          * Tpoll between 0x06 and 0x1000.
          * We fix Tpoll calculated by token rate at the maximum value 0x1000, and
          * thus Tpoll depends on latency only. That is token_rate = 180000 / 0x1000.
          */
         latency = tpoll * 1250;
-        if (gap_br_send_setup_qos_req(p_link->acl_handle,
+        if (gap_br_send_setup_qos_req(link->acl_handle,
                                       2,
                                       type,
                                       44,
@@ -937,42 +972,42 @@ bool bt_link_per_report(uint8_t  bd_addr[6],
                         bool     enable,
                         uint16_t period)
 {
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-
-    if (p_link == NULL || p_link->acl_link_state != BT_LINK_STATE_CONNECTED)
+    link = bt_link_find(bd_addr);
+    if (link != NULL)
     {
-        return false;
+        if (link->acl_link_state == BT_LINK_STATE_CONNECTED)
+        {
+            if (gap_br_vendor_set_monitor(link->acl_handle, 0, enable, period) == GAP_CAUSE_SUCCESS)
+            {
+                return true;
+            }
+        }
     }
 
-    if (gap_br_vendor_set_monitor(p_link->acl_handle, 0, enable, period) != GAP_CAUSE_SUCCESS)
-    {
-        return false;
-    }
-
-    return true;
+    return false;
 }
 
 bool bt_link_rssi_report(uint8_t  bd_addr[6],
                          bool     enable,
                          uint16_t period)
 {
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-
-    if (p_link == NULL || p_link->acl_link_state != BT_LINK_STATE_CONNECTED)
+    link = bt_link_find(bd_addr);
+    if (link != NULL)
     {
-        return false;
+        if (link->acl_link_state == BT_LINK_STATE_CONNECTED)
+        {
+            if (gap_br_vendor_set_monitor(link->acl_handle, 1, enable, period) == GAP_CAUSE_SUCCESS)
+            {
+                return true;
+            }
+        }
     }
 
-    if (gap_br_vendor_set_monitor(p_link->acl_handle, 1, enable, period) != GAP_CAUSE_SUCCESS)
-    {
-        return false;
-    }
-
-    return true;
+    return false;
 }
 
 bool bt_pairing_tx_power_set(int8_t offset_level)
@@ -988,12 +1023,12 @@ bool bt_pairing_tx_power_set(int8_t offset_level)
 bool bt_link_tx_power_set(uint8_t bd_addr[6],
                           int8_t  offset_level)
 {
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link)
+    link = bt_link_find(bd_addr);
+    if (link)
     {
-        if (gap_br_vendor_tx_power_set(p_link->acl_handle, offset_level) == GAP_CAUSE_SUCCESS)
+        if (gap_br_vendor_tx_power_set(link->acl_handle, offset_level) == GAP_CAUSE_SUCCESS)
         {
             return true;
         }
@@ -1006,12 +1041,12 @@ bool bt_link_rssi_golden_range_set(uint8_t bd_addr[6],
                                    int16_t max_rssi,
                                    int16_t min_rssi)
 {
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link)
+    link = bt_link_find(bd_addr);
+    if (link)
     {
-        if (gap_br_vendor_rssi_golden_range_set(p_link->acl_handle, max_rssi,
+        if (gap_br_vendor_rssi_golden_range_set(link->acl_handle, max_rssi,
                                                 min_rssi) == GAP_CAUSE_SUCCESS)
         {
             return true;
@@ -1070,27 +1105,40 @@ bool bt_sco_conn_req(uint8_t  bd_addr[6],
                      uint8_t  retrans_effort,
                      uint16_t packet_type)
 {
-    if (gap_br_send_sco_conn_req(bd_addr, tx_bandwidth, rx_bandwidth, max_latency, voice_setting,
-                                 retrans_effort, packet_type) == GAP_CAUSE_SUCCESS)
+    T_BT_LINK *link;
+
+    link = bt_link_find(bd_addr);
+    if (link != NULL)
     {
-        return true;
+        if (gap_br_send_sco_conn_req(bd_addr, tx_bandwidth, rx_bandwidth, max_latency, voice_setting,
+                                     retrans_effort, packet_type) == GAP_CAUSE_SUCCESS)
+        {
+            link->sco_state = BT_LINK_SCO_STATE_CONNECTING;
+            return true;
+        }
     }
-    else
-    {
-        return false;
-    }
+
+    return false;
 }
 
 bool bt_sco_disconn_req(uint8_t bd_addr[6])
 {
-    if (gap_br_send_sco_disconn_req(bd_addr) == GAP_CAUSE_SUCCESS)
+    T_BT_LINK *link;
+
+    link = bt_link_find(bd_addr);
+    if (link != NULL)
     {
-        return true;
+        if (link->sco_state == BT_LINK_SCO_STATE_CONNECTED)
+        {
+            if (gap_br_send_sco_disconn_req(bd_addr) == GAP_CAUSE_SUCCESS)
+            {
+                link->sco_state = BT_LINK_SCO_STATE_DISCONNECTING;
+                return true;
+            }
+        }
     }
-    else
-    {
-        return false;
-    }
+
+    return false;
 }
 
 bool bt_link_inquiry_scan_param_set(uint8_t  type,
@@ -1164,14 +1212,19 @@ bool bt_link_default_policy_set(uint16_t link_policy)
 
 bool bt_link_disconn_req(uint8_t bd_addr[6])
 {
-    if (gap_br_send_acl_disconn_req(bd_addr) == GAP_CAUSE_SUCCESS)
+    T_BT_LINK *link;
+
+    link = bt_link_find(bd_addr);
+    if (link)
     {
-        return true;
+        if (gap_br_send_acl_disconn_req(bd_addr) == GAP_CAUSE_SUCCESS)
+        {
+            link->acl_link_state = BT_LINK_STATE_DISCONNECTING;
+            return true;
+        }
     }
-    else
-    {
-        return false;
-    }
+
+    return false;
 }
 
 bool bt_link_flush_tout_set(uint8_t  bd_addr[6],
@@ -1215,12 +1268,13 @@ bool bt_link_tpoll_range_set(uint8_t  bd_addr[6],
                              uint16_t min_tpoll,
                              uint16_t max_tpoll)
 {
-    T_BT_BR_LINK  *p_link;
-    bool          enable;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link != NULL)
+    link = bt_link_find(bd_addr);
+    if (link != NULL)
     {
+        bool enable;
+
         if (min_tpoll == 0x06 && max_tpoll == 0x1000)
         {
             enable = false;
@@ -1230,7 +1284,7 @@ bool bt_link_tpoll_range_set(uint8_t  bd_addr[6],
             enable = true;
         }
 
-        if (gap_br_vendor_remote_tpoll_set(p_link->acl_handle, enable) == GAP_CAUSE_SUCCESS)
+        if (gap_br_vendor_remote_tpoll_set(link->acl_handle, enable) == GAP_CAUSE_SUCCESS)
         {
             return true;
         }
@@ -1239,91 +1293,79 @@ bool bt_link_tpoll_range_set(uint8_t  bd_addr[6],
     return false;
 }
 
-bool bt_link_random_traffic_qos_set(uint8_t  bd_addr[6],
-                                    uint8_t  rsvd_slots,
-                                    uint16_t traffic_mask)
+bool bt_link_traffic_qos_set(uint8_t                bd_addr[6],
+                             T_BT_TRAFFIC_QOS_TYPE  type,
+                             T_BT_TRAFFIC_QOS_PARAM param)
 {
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link)
+    link = bt_link_find(bd_addr);
+    if (link)
     {
-        if (gap_br_vendor_htpoll_set(0x00,
-                                     true,
-                                     p_link->acl_handle,
-                                     0,
-                                     0,
-                                     rsvd_slots,
-                                     traffic_mask) == GAP_CAUSE_SUCCESS)
+        switch (type)
         {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-bool bt_link_periodic_traffic_qos_set(uint8_t  bd_addr[6],
-                                      uint16_t interval,
-                                      uint8_t  rsvd_slots,
-                                      uint16_t traffic_mask,
-                                      bool     negotiate)
-{
-    T_BT_BR_LINK *p_link;
-
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link)
-    {
-        if (negotiate == false)
-        {
-            if (gap_br_vendor_htpoll_set(2,
-                                         true,
-                                         p_link->acl_handle,
-                                         0,
-                                         interval,
-                                         rsvd_slots,
-                                         traffic_mask) == GAP_CAUSE_SUCCESS)
+        case BT_RANDOM_TRAFFIC_QOS:
             {
-                return true;
+                if (gap_br_vendor_htpoll_set(0x00,
+                                             true,
+                                             link->acl_handle,
+                                             0,
+                                             0,
+                                             param.u.random_param.rsvd_slots,
+                                             param.u.random_param.traffic_mask) == GAP_CAUSE_SUCCESS)
+                {
+                    return true;
+                }
             }
-        }
-        else
-        {
-            if (gap_br_vendor_htpoll_set(0xff,
-                                         true,
-                                         p_link->acl_handle,
-                                         0,
-                                         interval,
-                                         rsvd_slots,
-                                         traffic_mask) == GAP_CAUSE_SUCCESS)
+            break;
+
+        case BT_PERIODIC_SYNC_TRAFFIC_QOS:
             {
-                return true;
+                if (gap_br_vendor_htpoll_set(0x01,
+                                             true,
+                                             link->acl_handle,
+                                             param.u.periodic_sync_param.sync_weighting,
+                                             0,
+                                             param.u.periodic_sync_param.rsvd_slots,
+                                             param.u.periodic_sync_param.traffic_mask) == GAP_CAUSE_SUCCESS)
+                {
+                    return true;
+                }
             }
-        }
-    }
+            break;
 
-    return false;
-}
+        case BT_NON_NEGOTIATE_PERIODIC_TRAFFIC_QOS:
+            {
+                if (gap_br_vendor_htpoll_set(2,
+                                             true,
+                                             link->acl_handle,
+                                             0,
+                                             param.u.none_negotiate_periodic_param.interval,
+                                             param.u.none_negotiate_periodic_param.rsvd_slots,
+                                             param.u.none_negotiate_periodic_param.traffic_mask) == GAP_CAUSE_SUCCESS)
+                {
+                    return true;
+                }
+            }
+            break;
 
-bool bt_link_periodic_sync_traffic_qos_set(uint8_t  bd_addr[6],
-                                           uint8_t  sync_weighting,
-                                           uint8_t  rsvd_slots,
-                                           uint16_t traffic_mask)
-{
-    T_BT_BR_LINK *p_link;
+        case BT_NEGOTIATE_PERIODIC_TRAFFIC_QOS:
+            {
+                if (gap_br_vendor_htpoll_set(0xff,
+                                             true,
+                                             link->acl_handle,
+                                             0,
+                                             param.u.negotiate_periodic_param.interval,
+                                             param.u.negotiate_periodic_param.rsvd_slots,
+                                             0xffff) == GAP_CAUSE_SUCCESS)
+                {
+                    return true;
+                }
+            }
+            break;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link)
-    {
-        if (gap_br_vendor_htpoll_set(0x01,
-                                     true,
-                                     p_link->acl_handle,
-                                     sync_weighting,
-                                     0,
-                                     rsvd_slots,
-                                     traffic_mask) == GAP_CAUSE_SUCCESS)
-        {
-            return true;
+        default:
+            break;
         }
     }
 
@@ -1335,12 +1377,12 @@ bool bt_link_idle_zone_set(uint8_t bd_addr[6],
                            uint8_t idle_slot,
                            uint8_t idle_skip)
 {
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link)
+    link = bt_link_find(bd_addr);
+    if (link)
     {
-        if (gap_br_set_idle_zone(p_link->acl_handle, interval,
+        if (gap_br_set_idle_zone(link->acl_handle, interval,
                                  idle_slot, idle_skip) == GAP_CAUSE_SUCCESS)
         {
             return true;
@@ -1350,28 +1392,28 @@ bool bt_link_idle_zone_set(uint8_t bd_addr[6],
     return false;
 }
 
-bool bt_link_traffic_qos_clear(uint8_t bd_addr[6])
+bool bt_link_traffic_qos_clear(uint8_t               bd_addr[6],
+                               T_BT_TRAFFIC_QOS_TYPE type)
 {
-    T_BT_BR_LINK *p_link;
-    uint8_t peer_addr[6];
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link)
+    link = bt_link_find(bd_addr);
+    if (link)
     {
-        remote_peer_addr_get(peer_addr);
-        if (memcmp(peer_addr, bd_addr, 6))
+        uint8_t htpoll_type;
+
+        if (type == BT_NEGOTIATE_PERIODIC_TRAFFIC_QOS)
         {
-            if (gap_br_vendor_htpoll_set(2, false, p_link->acl_handle, 0, 0, 0, 0) == GAP_CAUSE_SUCCESS)
-            {
-                return true;
-            }
+            htpoll_type = 0xff;
         }
         else
         {
-            if (gap_br_vendor_htpoll_set(0xff, false, p_link->acl_handle, 0, 0, 0, 0) == GAP_CAUSE_SUCCESS)
-            {
-                return true;
-            }
+            htpoll_type = type;
+        }
+
+        if (gap_br_vendor_htpoll_set(htpoll_type, false, link->acl_handle, 0, 0, 0, 0) == GAP_CAUSE_SUCCESS)
+        {
+            return true;
         }
     }
 
@@ -1380,21 +1422,21 @@ bool bt_link_traffic_qos_clear(uint8_t bd_addr[6])
 
 bool bt_link_periodic_traffic_set(uint8_t bd_addr[6])
 {
-    T_BT_BR_LINK         *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link)
+    link = bt_link_find(bd_addr);
+    if (link)
     {
-        if (p_link->sco_handle)
+        if (link->sco_state == BT_LINK_SCO_STATE_CONNECTED)
         {
-            if (gap_br_periodic_traffic_set(p_link->sco_handle) == GAP_CAUSE_SUCCESS)
+            if (gap_br_periodic_traffic_set(link->sco_handle) == GAP_CAUSE_SUCCESS)
             {
                 return true;
             }
         }
         else
         {
-            if (gap_br_periodic_traffic_set(p_link->acl_handle) == GAP_CAUSE_SUCCESS)
+            if (gap_br_periodic_traffic_set(link->acl_handle) == GAP_CAUSE_SUCCESS)
             {
                 return true;
             }
@@ -1407,11 +1449,11 @@ bool bt_link_periodic_traffic_set(uint8_t bd_addr[6])
 bool bt_mgr_pm_cback(uint8_t       bd_addr[6],
                      T_BT_PM_EVENT event)
 {
-    T_BT_BR_LINK         *p_link;
-    bool                  ret = true;
+    T_BT_LINK *link;
+    bool       ret = true;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link)
+    link = bt_link_find(bd_addr);
+    if (link)
     {
         switch (event)
         {
@@ -1428,7 +1470,7 @@ bool bt_mgr_pm_cback(uint8_t       bd_addr[6],
             break;
 
         case BT_PM_EVENT_SNIFF_ENTER_REQ:
-            if ((p_link->pm_enable == false) || (p_link->acl_link_authenticated == false))
+            if ((link->pm_enable == false) || (link->acl_link_authenticated == false))
             {
                 /* sniff mode disallowed */
                 ret = false;
@@ -1451,28 +1493,28 @@ bool bt_mgr_pm_cback(uint8_t       bd_addr[6],
 
 bool bt_sniffing_link_connect(uint8_t bd_addr[6])
 {
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link == NULL)
+    link = bt_link_find(bd_addr);
+    if (link != NULL)
     {
-        return false;
+        return bt_roleswap_conn_sniffing_link(bd_addr);
     }
 
-    return bt_roleswap_conn_sniffing_link(bd_addr);
+    return false;
 }
 
 bool bt_sniffing_link_disconnect(uint8_t bd_addr[6])
 {
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link == NULL)
+    link = bt_link_find(bd_addr);
+    if (link != NULL)
     {
-        return false;
+        return bt_roleswap_disconn_sniffing_link(bd_addr);
     }
 
-    return bt_roleswap_disconn_sniffing_link(bd_addr);
+    return false;
 }
 
 bool bt_sniffing_link_audio_start(uint8_t  bd_addr[6],
@@ -1482,36 +1524,31 @@ bool bt_sniffing_link_audio_start(uint8_t  bd_addr[6],
                                   uint8_t  idle_slot,
                                   uint8_t  idle_skip)
 {
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link == NULL)
+    link = bt_link_find(bd_addr);
+    if (link != NULL)
     {
-        return false;
+        return bt_roleswap_conn_audio_recovery(bd_addr, interval, flush_tout,
+                                               rsvd_slot, idle_slot, idle_skip);
     }
 
-    if ((A2DP_PROFILE_MASK & p_link->connected_profile) == 0)
-    {
-        return false;
-    }
-
-    return bt_roleswap_conn_audio_recovery(bd_addr, interval, flush_tout,
-                                           rsvd_slot, idle_slot, idle_skip);
+    return false;
 }
 
 
 bool bt_sniffing_link_audio_stop(uint8_t bd_addr[6],
                                  uint8_t reason)
 {
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link == NULL)
+    link = bt_link_find(bd_addr);
+    if (link != NULL)
     {
-        return false;
+        return bt_roleswap_disconn_audio_recovery(bd_addr, reason);
     }
 
-    return bt_roleswap_disconn_audio_recovery(bd_addr, reason);
+    return false;
 }
 
 bool bt_sniffing_link_audio_cfg(uint8_t  bd_addr[6],
@@ -1527,132 +1564,32 @@ bool bt_sniffing_link_audio_cfg(uint8_t  bd_addr[6],
 
 bool bt_sniffing_link_voice_start(uint8_t bd_addr[6])
 {
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link == NULL)
+    link = bt_link_find(bd_addr);
+    if (link != NULL)
     {
-        return false;
+        if (link->sco_state == BT_LINK_SCO_STATE_CONNECTED)
+        {
+            return bt_roleswap_conn_voice_recovery(bd_addr);
+        }
     }
 
-    if (p_link->sco_handle == 0)
-    {
-        return false;
-    }
-
-    return bt_roleswap_conn_voice_recovery(bd_addr);
+    return false;
 }
 
 bool bt_sniffing_link_voice_stop(uint8_t bd_addr[6],
                                  uint8_t reason)
 {
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link == NULL)
+    link = bt_link_find(bd_addr);
+    if (link != NULL)
     {
-        return false;
+        return bt_roleswap_disconn_voice_recovery(bd_addr, reason);
     }
 
-    return bt_roleswap_disconn_voice_recovery(bd_addr, reason);
-}
-
-bool bt_a2dp_pm_cback(uint8_t       bd_addr[6],
-                      T_BT_PM_EVENT event)
-{
-    T_BT_BR_LINK          *p_link;
-    T_REMOTE_SESSION_ROLE  session_role;
-    bool                   ret = true;
-
-    session_role = remote_session_role_get();
-
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link != NULL)
-    {
-        switch (event)
-        {
-        case BT_PM_EVENT_LINK_CONNECTED:
-            break;
-
-        case BT_PM_EVENT_LINK_DISCONNECTED:
-            break;
-
-        case BT_PM_EVENT_SNIFF_ENTER_SUCCESS:
-            break;
-
-        case BT_PM_EVENT_SNIFF_ENTER_FAIL:
-            break;
-
-        case BT_PM_EVENT_SNIFF_ENTER_REQ:
-            if (p_link->a2dp_data.streaming_fg == true ||
-                session_role == REMOTE_SESSION_ROLE_SECONDARY)
-            {
-                /* sniff mode disallowed */
-                ret = false;
-            }
-            break;
-
-        case BT_PM_EVENT_SNIFF_EXIT_SUCCESS:
-            break;
-
-        case BT_PM_EVENT_SNIFF_EXIT_FAIL:
-            break;
-
-        case BT_PM_EVENT_SNIFF_EXIT_REQ:
-            break;
-        }
-    }
-
-    return ret;
-}
-
-bool bt_hfp_pm_cback(uint8_t       bd_addr[6],
-                     T_BT_PM_EVENT event)
-{
-    T_BT_BR_LINK          *p_link;
-    T_REMOTE_SESSION_ROLE  session_role;
-    bool                   ret = true;
-
-    session_role = remote_session_role_get();
-
-    p_link = bt_find_br_link(bd_addr);
-    if (p_link != NULL)
-    {
-        switch (event)
-        {
-        case BT_PM_EVENT_LINK_CONNECTED:
-            break;
-
-        case BT_PM_EVENT_LINK_DISCONNECTED:
-            break;
-
-        case BT_PM_EVENT_SNIFF_ENTER_SUCCESS:
-            break;
-
-        case BT_PM_EVENT_SNIFF_ENTER_FAIL:
-            break;
-
-        case BT_PM_EVENT_SNIFF_ENTER_REQ:
-            if (p_link->hfp_data.call_status != BT_HFP_CALL_IDLE ||
-                session_role == REMOTE_SESSION_ROLE_SECONDARY)
-            {
-                /* sniff mode disallowed */
-                ret = false;
-            }
-            break;
-
-        case BT_PM_EVENT_SNIFF_EXIT_SUCCESS:
-            break;
-
-        case BT_PM_EVENT_SNIFF_EXIT_FAIL:
-            break;
-
-        case BT_PM_EVENT_SNIFF_EXIT_REQ:
-            break;
-        }
-    }
-
-    return ret;
+    return false;
 }
 
 void bt_mgr_handle_gap_msg(T_BT_MSG          msg,
@@ -1879,24 +1816,24 @@ void bt_mgr_handle_acl_msg(T_BT_MSG          msg,
 
     case BT_MSG_ACL_SNIFF_ENTER_FAIL:
         {
-            T_BT_BR_LINK *p_link;
+            T_BT_LINK *link;
 
-            p_link = bt_find_br_link(payload->bd_addr);
-            if (p_link != NULL)
+            link = bt_link_find(payload->bd_addr);
+            if (link != NULL)
             {
-                bt_pm_sm(p_link, BT_PM_EVENT_SNIFF_ENTER_FAIL);
+                bt_pm_sm(link->bd_addr, BT_PM_EVENT_SNIFF_ENTER_FAIL);
             }
         }
         break;
 
     case BT_MSG_ACL_SNIFF_EXIT_FAIL:
         {
-            T_BT_BR_LINK *p_link;
+            T_BT_LINK *link;
 
-            p_link = bt_find_br_link(payload->bd_addr);
-            if (p_link != NULL)
+            link = bt_link_find(payload->bd_addr);
+            if (link != NULL)
             {
-                bt_pm_sm(p_link, BT_PM_EVENT_SNIFF_EXIT_FAIL);
+                bt_pm_sm(link->bd_addr, BT_PM_EVENT_SNIFF_EXIT_FAIL);
             }
         }
         break;
@@ -1978,12 +1915,12 @@ void bt_mgr_handle_acl_msg(T_BT_MSG          msg,
 
     case BT_MSG_ACL_CONN_SUCCESS:
         {
-            T_BT_BR_LINK *p_link;
-            p_link = bt_find_br_link(payload->bd_addr);
+            T_BT_LINK *link;
 
-            if (p_link != NULL)
+            link = bt_link_find(payload->bd_addr);
+            if (link != NULL)
             {
-                bt_pm_cback_register(p_link->bd_addr, bt_mgr_pm_cback);
+                bt_pm_cback_register(link->bd_addr, bt_mgr_pm_cback);
             }
 
             memcpy(param.acl_conn_success.bd_addr, payload->bd_addr, 6);
@@ -2134,16 +2071,13 @@ void bt_mgr_handle_sco_msg(T_BT_MSG          msg,
 
     case BT_MSG_SCO_CONN_RSP:
         {
-            T_BT_BR_LINK *p_link;
+            T_BT_LINK *link;
             T_GAP_SCO_CONN_RSP *p_info = (T_GAP_SCO_CONN_RSP *)payload->msg_buf;
 
-            p_link = bt_find_br_link(p_info->bd_addr);
-            if (p_link != NULL)
+            link = bt_link_find(p_info->bd_addr);
+            if (link != NULL)
             {
-                if (p_info->cause)
-                {
-                    p_link->hfp_data.sco_setting = HFP_AG_SCO_SETTING_ANY;
-                }
+                bt_hfp_ag_handle_audio_conn_rsp(p_info->bd_addr, p_info->cause);
 
                 param.sco_conn_rsp.cause = p_info->cause;
                 memcpy(param.sco_conn_rsp.bd_addr, p_info->bd_addr, 6);
@@ -2154,11 +2088,11 @@ void bt_mgr_handle_sco_msg(T_BT_MSG          msg,
 
     case BT_MSG_SCO_CONN_CMPL:
         {
-            T_BT_BR_LINK *p_link;
+            T_BT_LINK *link;
             T_GAP_SCO_CONN_CMPL_INFO *p_info = (T_GAP_SCO_CONN_CMPL_INFO *)payload->msg_buf;
 
-            p_link = bt_find_br_link(p_info->bd_addr);
-            if (p_link != NULL)
+            link = bt_link_find(p_info->bd_addr);
+            if (link != NULL)
             {
                 if (p_info->cause == 0)
                 {
@@ -2168,75 +2102,8 @@ void bt_mgr_handle_sco_msg(T_BT_MSG          msg,
                     }
                 }
 
-                if (p_link->connected_profile & (HFP_PROFILE_MASK | HSP_PROFILE_MASK))
-                {
-                    if (p_link->hfp_data.hfp_role == HFP_ROLE_HF)
-                    {
-                        memcpy(param.hfp_codec_type_selected.bd_addr, p_link->bd_addr, 6);
-                        param.hfp_codec_type_selected.codec_type = (T_BT_HFP_CODEC_TYPE)p_link->hfp_data.codec_type;
-                        bt_mgr_event_post(BT_EVENT_HFP_CODEC_TYPE_SELECTED, &param, sizeof(param));
-
-                        if (p_link->hfp_data.hfp_state == HS_STATE_CONNECTED)
-                        {
-                            p_link->hfp_data.call_status = BT_HFP_CALL_ACTIVE;
-                            if (p_link->hfp_data.prev_call_status != p_link->hfp_data.call_status)
-                            {
-                                memcpy(param.hfp_call_status.bd_addr, p_link->bd_addr, 6);
-                                param.hfp_call_status.prev_status = p_link->hfp_data.prev_call_status;
-                                param.hfp_call_status.curr_status = p_link->hfp_data.call_status;
-                                p_link->hfp_data.prev_call_status = p_link->hfp_data.call_status;
-
-                                bt_mgr_event_post(BT_EVENT_HFP_CALL_STATUS, &param, sizeof(param));
-                            }
-                        }
-                    }
-                    else if (p_link->hfp_data.hfp_role == HFP_ROLE_AG)
-                    {
-                        if ((p_info->cause) && (p_link->hfp_data.sco_setting != HFP_AG_SCO_SETTING_D1))
-                        {
-                            if (p_link->hfp_data.sco_int_flag)
-                            {
-                                bt_hfp_ag_codec_negotiate(p_link->bd_addr);
-                            }
-
-                            return;
-                        }
-
-                        p_link->hfp_data.sco_int_flag = false;
-
-                        p_link->hfp_data.sco_setting = HFP_AG_SCO_SETTING_ANY;
-
-                        memcpy(param.hfp_ag_codec_type_selected.bd_addr, p_link->bd_addr, 6);
-                        param.hfp_ag_codec_type_selected.codec_type = (T_BT_HFP_CODEC_TYPE)p_link->hfp_data.codec_type;
-                        bt_mgr_event_post(BT_EVENT_HFP_AG_CODEC_TYPE_SELECTED, &param, sizeof(param));
-
-                        if (p_link->hfp_data.call_status == BT_HFP_AG_CALL_INCOMING)
-                        {
-                            if (p_link->hfp_data.supported_features & HFP_INBAND_RINGTONE_ENABLE)
-                            {
-                                bt_hfp_ag_ringing_start(p_link->bd_addr);
-                                memcpy(param.hfp_ag_inband_ringing_req.bd_addr, p_link->bd_addr, 6);
-                                bt_mgr_event_post(BT_EVENT_HFP_AG_INBAND_RINGING_REQ, &param, sizeof(param));
-                            }
-                        }
-
-                        if (p_link->hfp_data.hfp_state == HS_STATE_CONNECTED)
-                        {
-                            if (p_link->hfp_data.call_status == BT_HFP_AG_CALL_IDLE)
-                            {
-                                p_link->hfp_data.call_status = BT_HFP_AG_CALL_ACTIVE;
-                                if (p_link->hfp_data.prev_call_status != p_link->hfp_data.call_status)
-                                {
-                                    memcpy(param.hfp_ag_call_status_changed.bd_addr, p_link->bd_addr, 6);
-                                    param.hfp_ag_call_status_changed.prev_status = p_link->hfp_data.prev_call_status;
-                                    param.hfp_ag_call_status_changed.curr_status = p_link->hfp_data.call_status;
-                                    p_link->hfp_data.prev_call_status = p_link->hfp_data.call_status;
-                                    bt_mgr_event_post(BT_EVENT_HFP_AG_CALL_STATUS_CHANGED, &param, sizeof(param));
-                                }
-                            }
-                        }
-                    }
-                }
+                bt_hfp_handle_audio_conn_cmpl(p_info->bd_addr);
+                bt_hfp_ag_handle_audio_conn_cmpl(p_info->bd_addr, p_info->cause);
 
                 memcpy(param.sco_conn_cmpl.bd_addr, p_info->bd_addr, 6);
                 param.sco_conn_cmpl.handle = p_info->handle;
@@ -2262,32 +2129,13 @@ void bt_mgr_handle_sco_msg(T_BT_MSG          msg,
 
     case BT_MSG_SCO_DISCONN_CMPL:
         {
-            T_BT_BR_LINK *p_link;
+            T_BT_LINK *link;
 
-            p_link = bt_find_br_link(payload->bd_addr);
-            if (p_link != NULL)
+            link = bt_link_find(payload->bd_addr);
+            if (link != NULL)
             {
-                if (p_link->connected_profile & HSP_PROFILE_MASK)
-                {
-                    if (p_link->hfp_data.hfp_role == HFP_ROLE_HF)
-                    {
-                        p_link->hfp_data.call_status = BT_HFP_CALL_IDLE;
-                    }
-                    else if (p_link->hfp_data.hfp_role == HFP_ROLE_AG)
-                    {
-                        p_link->hfp_data.call_status = BT_HFP_AG_CALL_IDLE;
-                    }
-
-                    if (p_link->hfp_data.prev_call_status != p_link->hfp_data.call_status)
-                    {
-                        memcpy(param.hfp_call_status.bd_addr, p_link->bd_addr, 6);
-                        param.hfp_call_status.prev_status = p_link->hfp_data.prev_call_status;
-                        param.hfp_call_status.curr_status = p_link->hfp_data.call_status;
-                        p_link->hfp_data.prev_call_status = p_link->hfp_data.call_status;
-
-                        bt_mgr_event_post(BT_EVENT_HFP_CALL_STATUS, &param, sizeof(param));
-                    }
-                }
+                bt_hfp_handle_audio_disconn(payload->bd_addr);
+                bt_hfp_ag_handle_audio_disconn(payload->bd_addr);
             }
 
             bt_handle_sco_disconnect(payload->bd_addr);
@@ -2311,19 +2159,20 @@ void bt_mgr_handle_sco_msg(T_BT_MSG          msg,
 
     case BT_MSG_SCO_DATA_IND:
         {
-            T_BT_BR_LINK *p_link;
-            T_BT_SCO_DATA_IND *p_ind;
+            T_BT_LINK *link;
 
-            p_link = bt_find_br_link(payload->bd_addr);
-            if (p_link != NULL)
+            link = bt_link_find(payload->bd_addr);
+            if (link != NULL)
             {
-                p_ind = (T_BT_SCO_DATA_IND *)payload->msg_buf;
-                memcpy(param.sco_data_ind.bd_addr, p_link->bd_addr, 6);
-                param.sco_data_ind.handle = p_ind->handle;
-                param.sco_data_ind.length = p_ind->length;
-                param.sco_data_ind.status = (T_BT_SCO_PKT_STATUS)p_ind->status;
-                param.sco_data_ind.p_data = p_ind->p_data;
-                param.sco_data_ind.bt_clk = p_ind->bt_clk;
+                T_BT_SCO_DATA_IND *sco_data;
+
+                sco_data = (T_BT_SCO_DATA_IND *)payload->msg_buf;
+                memcpy(param.sco_data_ind.bd_addr, link->bd_addr, 6);
+                param.sco_data_ind.handle = sco_data->handle;
+                param.sco_data_ind.length = sco_data->length;
+                param.sco_data_ind.status = (T_BT_SCO_PKT_STATUS)sco_data->status;
+                param.sco_data_ind.p_data = sco_data->p_data;
+                param.sco_data_ind.bt_clk = sco_data->bt_clk;
                 bt_mgr_event_post(BT_EVENT_SCO_DATA_IND, &param, sizeof(param));
             }
         }
@@ -2337,11 +2186,11 @@ void bt_mgr_handle_sco_msg(T_BT_MSG          msg,
 void bt_mgr_handle_a2dp_msg(T_BT_MSG          msg,
                             T_BT_MSG_PAYLOAD *payload)
 {
-    T_BT_EVENT_PARAM param;
-    T_BT_BR_LINK *p_link;
+    T_BT_EVENT_PARAM  param;
+    T_BT_LINK        *link;
 
-    p_link = bt_find_br_link(payload->bd_addr);
-    if (p_link != NULL)
+    link = bt_link_find(payload->bd_addr);
+    if (link != NULL)
     {
         switch (msg)
         {
@@ -2355,12 +2204,9 @@ void bt_mgr_handle_a2dp_msg(T_BT_MSG          msg,
         case BT_MSG_A2DP_CONN_CMPL:
             {
                 memcpy(param.a2dp_conn_cmpl.bd_addr, payload->bd_addr, 6);
-                bt_mgr_event_post(BT_EVENT_A2DP_CONN_CMPL, &param, sizeof(param));
-
-                bt_pm_cback_register(p_link->bd_addr, bt_a2dp_pm_cback);
-
-                bt_roleswap_handle_profile_conn(p_link->bd_addr, A2DP_PROFILE_MASK,
+                bt_roleswap_handle_profile_conn(link->bd_addr, A2DP_PROFILE_MASK,
                                                 ROLESWAP_A2DP_PARAM_SINGAL);
+                bt_mgr_event_post(BT_EVENT_A2DP_CONN_CMPL, &param, sizeof(param));
             }
             break;
 
@@ -2377,10 +2223,9 @@ void bt_mgr_handle_a2dp_msg(T_BT_MSG          msg,
             {
                 memcpy(param.a2dp_stream_open.bd_addr, payload->bd_addr, 6);
                 param.a2dp_stream_open.max_pkt_len = *((uint16_t *)payload->msg_buf);
-                bt_mgr_event_post(BT_EVENT_A2DP_STREAM_OPEN, &param, sizeof(param));
-
-                bt_roleswap_handle_profile_conn(p_link->bd_addr, A2DP_PROFILE_MASK,
+                bt_roleswap_handle_profile_conn(link->bd_addr, A2DP_PROFILE_MASK,
                                                 ROLESWAP_A2DP_PARAM_STREAM);
+                bt_mgr_event_post(BT_EVENT_A2DP_STREAM_OPEN, &param, sizeof(param));
             }
             break;
 
@@ -2398,6 +2243,12 @@ void bt_mgr_handle_a2dp_msg(T_BT_MSG          msg,
                 T_ROLESWAP_PROFILE_DISCONN_PARAM disconn_param;
                 uint16_t cause = *(uint16_t *)(payload->msg_buf);
 
+                disconn_param.profile_mask = A2DP_PROFILE_MASK;
+                disconn_param.cause = cause;
+                disconn_param.param = ROLESWAP_A2DP_PARAM_SINGAL;
+                bt_roleswap_handle_profile_disconn(link->bd_addr,
+                                                   &disconn_param);
+
                 if (remote_session_role_get() != REMOTE_SESSION_ROLE_SECONDARY)
                 {
                     memcpy(param.a2dp_disconn_cmpl.bd_addr, payload->bd_addr, 6);
@@ -2413,20 +2264,12 @@ void bt_mgr_handle_a2dp_msg(T_BT_MSG          msg,
                     bt_mgr_event_post(BT_EVENT_A2DP_SNIFFING_DISCONN_CMPL,
                                       &param, sizeof(param));
                 }
-
-                bt_pm_cback_unregister(p_link->bd_addr, bt_a2dp_pm_cback);
-
-                disconn_param.profile_mask = A2DP_PROFILE_MASK;
-                disconn_param.cause = cause;
-                disconn_param.param = ROLESWAP_A2DP_PARAM_SINGAL;
-                bt_roleswap_handle_profile_disconn(p_link->bd_addr,
-                                                   &disconn_param);
             }
             break;
 
         case BT_MSG_A2DP_CONFIG_CMPL:
             {
-                T_A2DP_LINK_DATA *data = (T_A2DP_LINK_DATA *)payload->msg_buf;
+                T_BT_A2DP_CFG_INFO *data = (T_BT_A2DP_CFG_INFO *)payload->msg_buf;
                 T_BT_EVENT_PARAM_A2DP_CONFIG_CMPL *cfg;
 
                 memcpy(param.a2dp_config_cmpl.bd_addr, payload->bd_addr, 6);
@@ -2485,9 +2328,17 @@ void bt_mgr_handle_a2dp_msg(T_BT_MSG          msg,
             }
             break;
 
+        case BT_MSG_A2DP_DELAY_REPORT:
+            {
+                memcpy(param.a2dp_delay_report.bd_addr, payload->bd_addr, 6);
+                param.a2dp_delay_report.delay = *(uint16_t *)payload->msg_buf;
+                bt_mgr_event_post(BT_EVENT_A2DP_DELAY_REPORT, &param, sizeof(param));
+            }
+            break;
+
         case BT_MSG_A2DP_STREAM_START_IND:
             {
-                T_A2DP_LINK_DATA *data = (T_A2DP_LINK_DATA *)payload->msg_buf;
+                T_BT_A2DP_CFG_INFO *data = (T_BT_A2DP_CFG_INFO *)payload->msg_buf;
                 T_BT_EVENT_PARAM_A2DP_STREAM_START_IND *cfg;
 
                 cfg = &param.a2dp_stream_start_ind;
@@ -2512,6 +2363,30 @@ void bt_mgr_handle_a2dp_msg(T_BT_MSG          msg,
                     cfg->codec_info.aac.vbr_supported = data->codec_info.aac.vbr_supported;
                     cfg->codec_info.aac.bit_rate = data->codec_info.aac.bit_rate;
                 }
+                else if (param.a2dp_stream_start_ind.codec_type == BT_A2DP_CODEC_TYPE_LDAC)
+                {
+                    cfg->codec_info.ldac.sampling_frequency = data->codec_info.ldac.sampling_frequency;
+                    cfg->codec_info.ldac.channel_mode = data->codec_info.ldac.channel_mode;
+                }
+                else if (param.a2dp_stream_start_ind.codec_type == BT_A2DP_CODEC_TYPE_LC3)
+                {
+                    cfg->codec_info.lc3.sampling_frequency = data->codec_info.lc3.sampling_frequency;
+                    cfg->codec_info.lc3.channel_number = data->codec_info.lc3.channel_number;
+                    cfg->codec_info.lc3.frame_duration = data->codec_info.lc3.frame_duration;
+                    cfg->codec_info.lc3.frame_length = data->codec_info.lc3.frame_length;
+                }
+                else if (param.a2dp_stream_start_ind.codec_type == BT_A2DP_CODEC_TYPE_LHDC)
+                {
+                    cfg->codec_info.lhdc.sampling_frequency = data->codec_info.lhdc.sampling_frequency;
+                    cfg->codec_info.lhdc.min_bitrate = data->codec_info.lhdc.min_bitrate;
+                    cfg->codec_info.lhdc.max_bitrate = data->codec_info.lhdc.max_bitrate;
+                    cfg->codec_info.lhdc.bit_depth = data->codec_info.lhdc.bit_depth;
+                    cfg->codec_info.lhdc.version_number = data->codec_info.lhdc.version_number;
+                    cfg->codec_info.lhdc.low_latency = data->codec_info.lhdc.low_latency;
+                    cfg->codec_info.lhdc.meta = data->codec_info.lhdc.meta;
+                    cfg->codec_info.lhdc.jas = data->codec_info.lhdc.jas;
+                    cfg->codec_info.lhdc.ar = data->codec_info.lhdc.ar;
+                }
                 else
                 {
                     memcpy(cfg->codec_info.vendor.info, data->codec_info.vendor.info, 12);
@@ -2531,13 +2406,13 @@ void bt_mgr_handle_a2dp_msg(T_BT_MSG          msg,
         case BT_MSG_A2DP_STREAM_DATA_IND:
             {
                 T_BT_A2DP_STREAM_DATA_IND *data = (T_BT_A2DP_STREAM_DATA_IND *)payload->msg_buf;
+
                 param.a2dp_stream_data_ind.payload = data->payload;
                 param.a2dp_stream_data_ind.len = data->len;
                 param.a2dp_stream_data_ind.seq_num = data->seq_num;
                 param.a2dp_stream_data_ind.bt_clock = data->bt_clock;
                 param.a2dp_stream_data_ind.frame_num = data->frame_num;
                 param.a2dp_stream_data_ind.timestamp = data->timestamp;
-
                 memcpy(param.a2dp_stream_data_ind.bd_addr, payload->bd_addr, 6);
                 bt_mgr_event_post(BT_EVENT_A2DP_STREAM_DATA_IND, &param, sizeof(param));
             }
@@ -2565,7 +2440,7 @@ void bt_mgr_handle_a2dp_msg(T_BT_MSG          msg,
                 disconn_param.profile_mask = A2DP_PROFILE_MASK;
                 disconn_param.cause = cause;
                 disconn_param.param = ROLESWAP_A2DP_PARAM_STREAM;
-                bt_roleswap_handle_profile_disconn(p_link->bd_addr, &disconn_param);
+                bt_roleswap_handle_profile_disconn(link->bd_addr, &disconn_param);
 
                 memcpy(param.a2dp_stream_close.bd_addr, payload->bd_addr, 6);
                 param.a2dp_stream_close.cause = cause;
@@ -2582,12 +2457,13 @@ void bt_mgr_handle_a2dp_msg(T_BT_MSG          msg,
 void bt_mgr_handle_avrcp_msg(T_BT_MSG          msg,
                              T_BT_MSG_PAYLOAD *payload)
 {
-    T_BT_EVENT_PARAM param;
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(payload->bd_addr);
-    if (p_link != NULL)
+    link = bt_link_find(payload->bd_addr);
+    if (link != NULL)
     {
+        T_BT_EVENT_PARAM param;
+
         switch (msg)
         {
         case BT_MSG_AVRCP_CONN_IND:
@@ -2602,7 +2478,7 @@ void bt_mgr_handle_avrcp_msg(T_BT_MSG          msg,
                 memcpy(param.avrcp_conn_cmpl.bd_addr, payload->bd_addr, 6);
                 bt_mgr_event_post(BT_EVENT_AVRCP_CONN_CMPL, &param, sizeof(param));
 
-                bt_roleswap_handle_profile_conn(p_link->bd_addr, AVRCP_PROFILE_MASK, 0);
+                bt_roleswap_handle_profile_conn(link->bd_addr, AVRCP_PROFILE_MASK, 0);
             }
             break;
 
@@ -2637,7 +2513,19 @@ void bt_mgr_handle_avrcp_msg(T_BT_MSG          msg,
 
                 disconn_param.profile_mask = AVRCP_PROFILE_MASK;
                 disconn_param.cause = cause;
-                bt_roleswap_handle_profile_disconn(p_link->bd_addr, &disconn_param);
+                bt_roleswap_handle_profile_disconn(link->bd_addr, &disconn_param);
+            }
+            break;
+
+        case BT_MSG_AVRCP_GET_CAPABILITIES_RSP:
+            {
+                T_BT_AVRCP_RSP_GET_CAPABILITIES *capabilities = (T_BT_AVRCP_RSP_GET_CAPABILITIES *)payload->msg_buf;
+
+                memcpy(param.avrcp_get_capabilities_rsp.bd_addr, link->bd_addr, 6);
+                param.avrcp_get_capabilities_rsp.state = capabilities->state;
+                param.avrcp_get_capabilities_rsp.capability_count = capabilities->capability_count;
+                param.avrcp_get_capabilities_rsp.capabilities = capabilities->capabilities;
+                bt_mgr_event_post(BT_EVENT_AVRCP_GET_CAPABILITIES_RSP, &param, sizeof(param));
             }
             break;
 
@@ -2772,7 +2660,7 @@ void bt_mgr_handle_avrcp_msg(T_BT_MSG          msg,
         case BT_MSG_AVRCP_PLAY_STATUS_RSP:
             {
                 memcpy(param.avrcp_play_status_rsp.bd_addr, payload->bd_addr, 6);
-                param.avrcp_play_status_rsp.play_status = p_link->avrcp_data.play_status;
+                param.avrcp_play_status_rsp.play_status = *(uint8_t *)(payload->msg_buf);
                 bt_mgr_event_post(BT_EVENT_AVRCP_PLAY_STATUS_RSP, &param, sizeof(param));
             }
             break;
@@ -2780,7 +2668,7 @@ void bt_mgr_handle_avrcp_msg(T_BT_MSG          msg,
         case BT_MSG_AVRCP_PLAY_STATUS_CHANGED:
             {
                 memcpy(param.avrcp_play_status_changed.bd_addr, payload->bd_addr, 6);
-                param.avrcp_play_status_changed.play_status = p_link->avrcp_data.play_status;
+                param.avrcp_play_status_changed.play_status = *(uint8_t *)(payload->msg_buf);
                 bt_mgr_event_post(BT_EVENT_AVRCP_PLAY_STATUS_CHANGED, &param, sizeof(param));
             }
             break;
@@ -2790,6 +2678,44 @@ void bt_mgr_handle_avrcp_msg(T_BT_MSG          msg,
                 memcpy(param.avrcp_track_changed.bd_addr, payload->bd_addr, 6);
                 param.avrcp_track_changed.track_id = *(uint64_t *)(payload->msg_buf);
                 bt_mgr_event_post(BT_EVENT_AVRCP_TRACK_CHANGED, &param, sizeof(param));
+            }
+            break;
+
+        case BT_MSG_AVRCP_TRACK_REACHED_END:
+            {
+                memcpy(param.avrcp_track_reached_end.bd_addr, payload->bd_addr, 6);
+                bt_mgr_event_post(BT_EVENT_AVRCP_TRACK_REACHED_END, &param, sizeof(param));
+            }
+            break;
+
+        case BT_MSG_AVRCP_TRACK_REACHED_START:
+            {
+                memcpy(param.avrcp_track_reached_start.bd_addr, payload->bd_addr, 6);
+                bt_mgr_event_post(BT_EVENT_AVRCP_TRACK_REACHED_START, &param, sizeof(param));
+            }
+            break;
+
+        case BT_MSG_AVRCP_PLAYBACK_POS_CHANGED:
+            {
+                memcpy(param.avrcp_playback_pos_changed.bd_addr, payload->bd_addr, 6);
+                param.avrcp_playback_pos_changed.playback_pos = *(uint16_t *)(payload->msg_buf);
+                bt_mgr_event_post(BT_EVENT_AVRCP_PLAYBACK_POS_CHANGED, &param, sizeof(param));
+            }
+            break;
+
+        case BT_MSG_AVRCP_BATT_STATUS_CHANGED:
+            {
+                memcpy(param.avrcp_batt_status_changed.bd_addr, payload->bd_addr, 6);
+                param.avrcp_batt_status_changed.batt_status = *(uint8_t *)(payload->msg_buf);
+                bt_mgr_event_post(BT_EVENT_AVRCP_BATT_STATUS_CHANGED, &param, sizeof(param));
+            }
+            break;
+
+        case BT_MSG_AVRCP_SYSTEM_STATUS_CHANGED:
+            {
+                memcpy(param.avrcp_system_status_changed.bd_addr, payload->bd_addr, 6);
+                param.avrcp_system_status_changed.system_status = *(uint8_t *)(payload->msg_buf);
+                bt_mgr_event_post(BT_EVENT_AVRCP_SYSTEM_STATUS_CHANGED, &param, sizeof(param));
             }
             break;
 
@@ -2810,7 +2736,7 @@ void bt_mgr_handle_avrcp_msg(T_BT_MSG          msg,
             {
                 T_BT_AVRCP_RSP_GET_ELEMENT_ATTR *attr = (T_BT_AVRCP_RSP_GET_ELEMENT_ATTR *)payload->msg_buf;
 
-                memcpy(param.avrcp_elem_attr.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.avrcp_elem_attr.bd_addr, link->bd_addr, 6);
                 param.avrcp_elem_attr.state = attr->state;
                 param.avrcp_elem_attr.num_of_attr = attr->num_of_attr;
                 param.avrcp_elem_attr.attr = (T_BT_AVRCP_ELEMENT_ATTR *)attr->attr;
@@ -2823,7 +2749,7 @@ void bt_mgr_handle_avrcp_msg(T_BT_MSG          msg,
                 T_BT_AVRCP_RSP_APP_SETTING_CHANGED *rsp;
 
                 rsp = (T_BT_AVRCP_RSP_APP_SETTING_CHANGED *)payload->msg_buf;
-                memcpy(param.avrcp_app_setting_changed.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.avrcp_app_setting_changed.bd_addr, link->bd_addr, 6);
                 param.avrcp_app_setting_changed.num_of_attr = rsp->num_of_attr;
                 param.avrcp_app_setting_changed.p_app_setting = rsp->p_app_setting;
                 bt_mgr_event_post(BT_EVENT_AVRCP_APP_SETTING_CHANGED, &param, sizeof(param));
@@ -2851,8 +2777,8 @@ void bt_mgr_handle_avrcp_msg(T_BT_MSG          msg,
 
                 req = (T_BT_AVRCP_REQ_GET_ELEMENT_ATTR *)payload->msg_buf;
                 memcpy(param.avrcp_elem_attrs_get.bd_addr, payload->bd_addr, 6);
-                param.avrcp_elem_attrs_get.attr_num = req->num_of_attr;
-                for (i = 0; i < req->num_of_attr; i++)
+                param.avrcp_elem_attrs_get.attr_num = req->attr_num;
+                for (i = 0; i < req->attr_num; i++)
                 {
                     param.avrcp_elem_attrs_get.attr_id[i] = req->attr_id[i];
                 }
@@ -2889,7 +2815,7 @@ void bt_mgr_handle_avrcp_msg(T_BT_MSG          msg,
 
                 req = (T_BT_AVRCP_REQ_GET_FOLDER_ITEMS *)payload->msg_buf;
                 memcpy(param.avrcp_folder_items_get.bd_addr, payload->bd_addr, 6);
-                param.avrcp_folder_items_get.scope_id = req->scope_id;
+                param.avrcp_folder_items_get.scope_id = req->scope;
                 param.avrcp_folder_items_get.start_item = req->start_item;
                 param.avrcp_folder_items_get.end_item = req->end_item;
                 param.avrcp_folder_items_get.attr_count = req->attr_count;
@@ -2996,15 +2922,15 @@ void bt_mgr_handle_avrcp_msg(T_BT_MSG          msg,
                 param.avrcp_folder_items_get_rsp.item_type = rsp->item_type;
                 switch (rsp->item_type)
                 {
-                case AVRCP_ITEM_TYPE_MEDIA_PLAYER:
+                case BT_AVRCP_ITEM_TYPE_MEDIA_PLAYER:
                     param.avrcp_folder_items_get_rsp.u.p_media_player_items = rsp->u.p_media_player_items;
                     break;
 
-                case AVRCP_ITEM_TYPE_FOLDER:
+                case BT_AVRCP_ITEM_TYPE_FOLDER:
                     param.avrcp_folder_items_get_rsp.u.p_folder_items = rsp->u.p_folder_items;
                     break;
 
-                case AVRCP_ITEM_TYPE_MEDIA_ELEMENT:
+                case BT_AVRCP_ITEM_TYPE_MEDIA_ELEMENT:
                     param.avrcp_folder_items_get_rsp.u.p_media_element_items = rsp->u.p_media_element_items;
                     break;
 
@@ -3169,11 +3095,11 @@ void bt_mgr_handle_avrcp_msg(T_BT_MSG          msg,
 void bt_mgr_handle_hfp_msg(T_BT_MSG          msg,
                            T_BT_MSG_PAYLOAD *payload)
 {
-    T_BT_EVENT_PARAM param;
-    T_BT_BR_LINK *p_link;
+    T_BT_EVENT_PARAM  param;
+    T_BT_LINK        *link;
 
-    p_link = bt_find_br_link(payload->bd_addr);
-    if (p_link != NULL)
+    link = bt_link_find(payload->bd_addr);
+    if (link != NULL)
     {
         switch (msg)
         {
@@ -3186,13 +3112,11 @@ void bt_mgr_handle_hfp_msg(T_BT_MSG          msg,
 
         case BT_MSG_HFP_CONN_CMPL:
             {
+                bt_roleswap_handle_profile_conn(link->bd_addr, HFP_PROFILE_MASK, 0);
+
                 memcpy(param.hfp_conn_cmpl.bd_addr, payload->bd_addr, 6);
                 param.hfp_conn_cmpl.is_hfp = true;
                 bt_mgr_event_post(BT_EVENT_HFP_CONN_CMPL, &param, sizeof(param));
-
-                bt_pm_cback_register(p_link->bd_addr, bt_hfp_pm_cback);
-
-                bt_roleswap_handle_profile_conn(p_link->bd_addr, HFP_PROFILE_MASK, 0);
             }
             break;
 
@@ -3208,13 +3132,18 @@ void bt_mgr_handle_hfp_msg(T_BT_MSG          msg,
         case BT_MSG_HFP_DISCONN_CMPL:
             {
                 T_ROLESWAP_PROFILE_DISCONN_PARAM disconn_param;
-                T_BT_HFP_DISCONN_INFO *p_info = (T_BT_HFP_DISCONN_INFO *)payload->msg_buf;
+                uint16_t cause = *(uint16_t *)(payload->msg_buf);
 
                 if (remote_session_role_get() != REMOTE_SESSION_ROLE_SECONDARY)
                 {
+                    if (link->sco_state == BT_LINK_SCO_STATE_CONNECTED)
+                    {
+                        gap_br_send_sco_disconn_req(link->bd_addr);
+                    }
+
                     memcpy(param.hfp_disconn_cmpl.bd_addr, payload->bd_addr, 6);
                     param.hfp_disconn_cmpl.is_hfp = true;
-                    param.hfp_disconn_cmpl.cause = p_info->cause;
+                    param.hfp_disconn_cmpl.cause = cause;
                     bt_mgr_event_post(BT_EVENT_HFP_DISCONN_CMPL,
                                       &param, sizeof(param));
                 }
@@ -3222,36 +3151,34 @@ void bt_mgr_handle_hfp_msg(T_BT_MSG          msg,
                 {
                     memcpy(param.hfp_sniffing_disconn_cmpl.bd_addr, payload->bd_addr, 6);
                     param.hfp_sniffing_disconn_cmpl.is_hfp = true;
-                    param.hfp_sniffing_disconn_cmpl.cause = p_info->cause;
+                    param.hfp_sniffing_disconn_cmpl.cause = cause;
                     bt_mgr_event_post(BT_EVENT_HFP_SNIFFING_DISCONN_CMPL,
                                       &param, sizeof(param));
                 }
 
-                bt_pm_cback_unregister(p_link->bd_addr, bt_hfp_pm_cback);
-
                 disconn_param.profile_mask = HFP_PROFILE_MASK;
-                disconn_param.cause = p_info->cause;
-                bt_roleswap_handle_profile_disconn(p_link->bd_addr, &disconn_param);
+                disconn_param.cause = cause;
+                bt_roleswap_handle_profile_disconn(link->bd_addr, &disconn_param);
             }
             break;
 
         case BT_MSG_HFP_CALL_STATUS_CHANGED:
             {
-                if (p_link->hfp_data.prev_call_status != p_link->hfp_data.call_status)
-                {
-                    memcpy(param.hfp_call_status.bd_addr, p_link->bd_addr, 6);
-                    param.hfp_call_status.prev_status = p_link->hfp_data.prev_call_status;
-                    param.hfp_call_status.curr_status = p_link->hfp_data.call_status;
-                    p_link->hfp_data.prev_call_status = p_link->hfp_data.call_status;
-                    bt_mgr_event_post(BT_EVENT_HFP_CALL_STATUS, &param, sizeof(param));
-                }
+                T_BT_HFP_CALL_STATUS_INFO *info = (T_BT_HFP_CALL_STATUS_INFO *)payload->msg_buf;
+
+                memcpy(param.hfp_call_status.bd_addr, link->bd_addr, 6);
+                param.hfp_call_status.prev_status = info->prev_call_status;
+                param.hfp_call_status.curr_status = info->curr_call_status;
+                bt_mgr_event_post(BT_EVENT_HFP_CALL_STATUS, &param, sizeof(param));
             }
             break;
 
         case BT_MSG_HFP_SERVICE_STATUS_CHANGED:
             {
+                uint8_t status = *(uint8_t *)(payload->msg_buf);
+
                 memcpy(param.hfp_service_status.bd_addr, payload->bd_addr, 6);
-                param.hfp_service_status.status = p_link->hfp_data.ag_status_ind.service_status;
+                param.hfp_service_status.status = status;
                 bt_mgr_event_post(BT_EVENT_HFP_SERVICE_STATUS, &param, sizeof(param));
             }
             break;
@@ -3277,17 +3204,10 @@ void bt_mgr_handle_hfp_msg(T_BT_MSG          msg,
 
         case BT_MSG_HFP_RING_ALERT:
             {
+                bool is_inband = *(bool *)(payload->msg_buf);
+
                 memcpy(param.hfp_ring_alert.bd_addr, payload->bd_addr, 6);
-
-                if (p_link->hfp_data.supported_features & HFP_INBAND_RINGTONE_ENABLE)
-                {
-                    param.hfp_ring_alert.is_inband = true;
-                }
-                else
-                {
-                    param.hfp_ring_alert.is_inband = false;
-                }
-
+                param.hfp_ring_alert.is_inband = is_inband;
                 bt_mgr_event_post(BT_EVENT_HFP_RING_ALERT, &param, sizeof(param));
             }
             break;
@@ -3313,7 +3233,7 @@ void bt_mgr_handle_hfp_msg(T_BT_MSG          msg,
                 T_BT_HFP_NETWORK_OPERATOR_IND *network_operator;
 
                 network_operator = (T_BT_HFP_NETWORK_OPERATOR_IND *)payload->msg_buf;
-                memcpy(param.hfp_network_operator_ind.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.hfp_network_operator_ind.bd_addr, link->bd_addr, 6);
                 param.hfp_network_operator_ind.format = network_operator->format;
                 param.hfp_network_operator_ind.mode = network_operator->mode;
                 memcpy(param.hfp_network_operator_ind.name, network_operator->name, 17);
@@ -3326,7 +3246,7 @@ void bt_mgr_handle_hfp_msg(T_BT_MSG          msg,
                 T_BT_HFP_SUBSCRIBER_NUMBER_IND *subscriber_num;
 
                 subscriber_num = (T_BT_HFP_SUBSCRIBER_NUMBER_IND *)payload->msg_buf;
-                memcpy(param.hfp_subscriber_number_ind.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.hfp_subscriber_number_ind.bd_addr, link->bd_addr, 6);
                 memcpy(param.hfp_subscriber_number_ind.number, subscriber_num->number, 20);
                 param.hfp_subscriber_number_ind.type = subscriber_num->type;
                 param.hfp_subscriber_number_ind.service = subscriber_num->service;
@@ -3336,9 +3256,9 @@ void bt_mgr_handle_hfp_msg(T_BT_MSG          msg,
 
         case BT_MSG_HFP_CURRENT_CALL_LIST_IND:
             {
-                T_HFP_MSG_CLCC *clcc_rsp = (T_HFP_MSG_CLCC *)payload->msg_buf;
+                T_BT_HFP_CLCC_IND *clcc_rsp = (T_BT_HFP_CLCC_IND *)payload->msg_buf;
 
-                memcpy(param.hfp_current_call_list_ind.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.hfp_current_call_list_ind.bd_addr, link->bd_addr, 6);
                 param.hfp_current_call_list_ind.call_idx = clcc_rsp->call_idx;
                 param.hfp_current_call_list_ind.dir_incoming = clcc_rsp->dir_incoming;
                 param.hfp_current_call_list_ind.status = clcc_rsp->status;
@@ -3355,7 +3275,7 @@ void bt_mgr_handle_hfp_msg(T_BT_MSG          msg,
                 T_BT_HFP_CALL_WAITING_IND *call_waiting;
 
                 call_waiting = (T_BT_HFP_CALL_WAITING_IND *)payload->msg_buf;
-                memcpy(param.hfp_call_waiting_ind.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.hfp_call_waiting_ind.bd_addr, link->bd_addr, 6);
                 memcpy(param.hfp_call_waiting_ind.number, call_waiting->number, 20);
                 param.hfp_call_waiting_ind.type = call_waiting->type;
                 bt_mgr_event_post(BT_EVENT_HFP_CALL_WAITING_IND, &param, sizeof(param));
@@ -3364,32 +3284,40 @@ void bt_mgr_handle_hfp_msg(T_BT_MSG          msg,
 
         case BT_MSG_HFP_SIGNAL_IND:
             {
-                memcpy(param.hfp_signal_ind.bd_addr, p_link->bd_addr, 6);
-                param.hfp_signal_ind.state = p_link->hfp_data.ag_status_ind.signal_status;
+                uint8_t signal_status = *(uint8_t *)(payload->msg_buf);
+
+                memcpy(param.hfp_signal_ind.bd_addr, link->bd_addr, 6);
+                param.hfp_signal_ind.state = signal_status;
                 bt_mgr_event_post(BT_EVENT_HFP_SIGNAL_IND, &param, sizeof(param));
             }
             break;
 
         case BT_MSG_HFP_ROAM_IND:
             {
-                memcpy(param.hfp_roam_ind.bd_addr, p_link->bd_addr, 6);
-                param.hfp_roam_ind.state = p_link->hfp_data.ag_status_ind.roam_status;
+                uint8_t roam_status = *(uint8_t *)(payload->msg_buf);
+
+                memcpy(param.hfp_roam_ind.bd_addr, link->bd_addr, 6);
+                param.hfp_roam_ind.state = roam_status;
                 bt_mgr_event_post(BT_EVENT_HFP_ROAM_IND, &param, sizeof(param));
             }
             break;
 
         case BT_MSG_HFP_BATTERY_IND:
             {
-                memcpy(param.hfp_battery_ind.bd_addr, p_link->bd_addr, 6);
-                param.hfp_battery_ind.state = p_link->hfp_data.ag_status_ind.batt_chg_status;
+                uint8_t batt_chg_status = *(uint8_t *)(payload->msg_buf);
+
+                memcpy(param.hfp_battery_ind.bd_addr, link->bd_addr, 6);
+                param.hfp_battery_ind.state = batt_chg_status;
                 bt_mgr_event_post(BT_EVENT_HFP_BATTERY_IND, &param, sizeof(param));
             }
             break;
 
         case BT_MSG_HFP_SUPPORTED_FEATURES_IND:
             {
-                memcpy(param.hfp_supported_features_ind.bd_addr, p_link->bd_addr, 6);
-                param.hfp_supported_features_ind.ag_bitmap = p_link->hfp_data.capabilities;
+                uint16_t cpbs = *(uint16_t *)(payload->msg_buf);
+
+                memcpy(param.hfp_supported_features_ind.bd_addr, link->bd_addr, 6);
+                param.hfp_supported_features_ind.ag_bitmap = cpbs;
                 bt_mgr_event_post(BT_EVENT_HFP_SUPPORTED_FEATURES_IND, &param, sizeof(param));
             }
             break;
@@ -3402,12 +3330,12 @@ void bt_mgr_handle_hfp_msg(T_BT_MSG          msg,
             }
             break;
 
-        case BT_MSG_HFP_UNKNOWN_CMD:
+        case BT_MSG_HFP_VENDOR_CMD:
             {
-                memcpy(param.hfp_unknown_cmd.bd_addr, payload->bd_addr, 6);
-                param.hfp_unknown_cmd.cmd = (uint8_t *)payload->msg_buf;
-                param.hfp_unknown_cmd.len = strlen((const char *)payload->msg_buf);
-                bt_mgr_event_post(BT_EVENT_HFP_UNKNOWN_CMD, &param, sizeof(param));
+                memcpy(param.hfp_vendor_cmd.bd_addr, payload->bd_addr, 6);
+                param.hfp_vendor_cmd.cmd = (uint8_t *)payload->msg_buf;
+                param.hfp_vendor_cmd.len = strlen((const char *)payload->msg_buf);
+                bt_mgr_event_post(BT_EVENT_HFP_VENDOR_CMD, &param, sizeof(param));
             }
             break;
 
@@ -3427,6 +3355,14 @@ void bt_mgr_handle_hfp_msg(T_BT_MSG          msg,
             }
             break;
 
+        case BT_MSG_HFP_CODEC_TYPE_SELECTED:
+            {
+                memcpy(param.hfp_codec_type_selected.bd_addr, link->bd_addr, 6);
+                param.hfp_codec_type_selected.codec_type = *(T_BT_HFP_CODEC_TYPE *)(payload->msg_buf);
+                bt_mgr_event_post(BT_EVENT_HFP_CODEC_TYPE_SELECTED, &param, sizeof(param));
+            }
+            break;
+
         case BT_MSG_HFP_AG_CONN_IND:
             {
                 memcpy(param.hfp_ag_conn_ind.bd_addr, payload->bd_addr, 6);
@@ -3439,8 +3375,6 @@ void bt_mgr_handle_hfp_msg(T_BT_MSG          msg,
                 memcpy(param.hfp_ag_conn_cmpl.bd_addr, payload->bd_addr, 6);
                 param.hfp_ag_conn_cmpl.is_hfp = true;
                 bt_mgr_event_post(BT_EVENT_HFP_AG_CONN_CMPL, &param, sizeof(param));
-
-                bt_pm_cback_register(p_link->bd_addr, bt_hfp_pm_cback);
             }
             break;
 
@@ -3448,31 +3382,31 @@ void bt_mgr_handle_hfp_msg(T_BT_MSG          msg,
             {
                 T_BT_HFP_AG_DISCONN_INFO *p_info = (T_BT_HFP_AG_DISCONN_INFO *)payload->msg_buf;
 
+                if (link->sco_state == BT_LINK_SCO_STATE_CONNECTED)
+                {
+                    gap_br_send_sco_disconn_req(link->bd_addr);
+                }
                 memcpy(param.hfp_ag_disconn_cmpl.bd_addr, payload->bd_addr, 6);
                 param.hfp_ag_disconn_cmpl.is_hfp = true;
                 param.hfp_ag_disconn_cmpl.cause = p_info->cause;
                 bt_mgr_event_post(BT_EVENT_HFP_AG_DISCONN_CMPL, &param, sizeof(param));
-
-                bt_pm_cback_unregister(p_link->bd_addr, bt_hfp_pm_cback);
             }
             break;
 
         case BT_MSG_HFP_AG_CALL_STATUS_CHANGED:
             {
-                if (p_link->hfp_data.prev_call_status != p_link->hfp_data.call_status)
-                {
-                    memcpy(param.hfp_ag_call_status_changed.bd_addr, p_link->bd_addr, 6);
-                    param.hfp_ag_call_status_changed.prev_status = p_link->hfp_data.prev_call_status;
-                    param.hfp_ag_call_status_changed.curr_status = p_link->hfp_data.call_status;
-                    p_link->hfp_data.prev_call_status = p_link->hfp_data.call_status;
-                    bt_mgr_event_post(BT_EVENT_HFP_AG_CALL_STATUS_CHANGED, &param, sizeof(param));
-                }
+                T_BT_HFP_AG_CALL_STATUS_INFO *info = (T_BT_HFP_AG_CALL_STATUS_INFO *)payload->msg_buf;
+
+                memcpy(param.hfp_ag_call_status_changed.bd_addr, link->bd_addr, 6);
+                param.hfp_ag_call_status_changed.prev_status = info->prev_call_status;
+                param.hfp_ag_call_status_changed.curr_status = info->curr_call_status;
+                bt_mgr_event_post(BT_EVENT_HFP_AG_CALL_STATUS_CHANGED, &param, sizeof(param));
             }
             break;
 
         case BT_MSG_HFP_AG_MIC_VOLUME_CHANGED:
             {
-                memcpy(param.hfp_ag_mic_volume_changed.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.hfp_ag_mic_volume_changed.bd_addr, link->bd_addr, 6);
                 param.hfp_ag_mic_volume_changed.volume = *(uint8_t *)payload->msg_buf;
                 bt_mgr_event_post(BT_EVENT_HFP_AG_MIC_VOLUME_CHANGED, &param, sizeof(param));
             }
@@ -3480,7 +3414,7 @@ void bt_mgr_handle_hfp_msg(T_BT_MSG          msg,
 
         case BT_MSG_HFP_AG_SPK_VOLUME_CHANGED:
             {
-                memcpy(param.hfp_ag_spk_volume_changed.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.hfp_ag_spk_volume_changed.bd_addr, link->bd_addr, 6);
                 param.hfp_ag_spk_volume_changed.volume = *(uint8_t *)payload->msg_buf;
                 bt_mgr_event_post(BT_EVENT_HFP_AG_SPK_VOLUME_CHANGED, &param, sizeof(param));
             }
@@ -3488,14 +3422,14 @@ void bt_mgr_handle_hfp_msg(T_BT_MSG          msg,
 
         case BT_MSG_HFP_AG_INDICATORS_STATUS_REQ:
             {
-                memcpy(param.hfp_ag_indicators_status_req.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.hfp_ag_indicators_status_req.bd_addr, link->bd_addr, 6);
                 bt_mgr_event_post(BT_EVENT_HFP_AG_INDICATORS_STATUS_REQ, &param, sizeof(param));
             }
             break;
 
         case BT_MSG_HFP_AG_BATTERY_LEVEL:
             {
-                memcpy(param.hfp_ag_battery_level.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.hfp_ag_battery_level.bd_addr, link->bd_addr, 6);
                 param.hfp_ag_battery_level.battery_level = *(uint8_t *)payload->msg_buf;
                 bt_mgr_event_post(BT_EVENT_HFP_AG_BATTERY_LEVEL, &param, sizeof(param));
             }
@@ -3503,36 +3437,38 @@ void bt_mgr_handle_hfp_msg(T_BT_MSG          msg,
 
         case BT_MSG_HFP_AG_SUPPORTED_FEATURES:
             {
-                memcpy(param.hfp_ag_supported_features.bd_addr, p_link->bd_addr, 6);
-                param.hfp_ag_supported_features.hf_bitmap = p_link->hfp_data.capabilities;
+                uint16_t cpbs = *(uint16_t *)(payload->msg_buf);
+
+                memcpy(param.hfp_ag_supported_features.bd_addr, link->bd_addr, 6);
+                param.hfp_ag_supported_features.hf_bitmap = cpbs;
                 bt_mgr_event_post(BT_EVENT_HFP_AG_SUPPORTED_FEATURES, &param, sizeof(param));
             }
             break;
 
         case BT_MSG_HFP_AG_INBAND_RINGING_REQ:
             {
-                memcpy(param.hfp_ag_inband_ringing_req.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.hfp_ag_inband_ringing_req.bd_addr, link->bd_addr, 6);
                 bt_mgr_event_post(BT_EVENT_HFP_AG_INBAND_RINGING_REQ, &param, sizeof(param));
             }
             break;
 
         case BT_MSG_HFP_AG_CALL_ANSWER_REQ:
             {
-                memcpy(param.hfp_ag_call_answer_req.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.hfp_ag_call_answer_req.bd_addr, link->bd_addr, 6);
                 bt_mgr_event_post(BT_EVENT_HFP_AG_CALL_ANSWER_REQ, &param, sizeof(param));
             }
             break;
 
         case BT_MSG_HFP_AG_CALL_TERMINATE_REQ:
             {
-                memcpy(param.hfp_ag_call_terminate_req.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.hfp_ag_call_terminate_req.bd_addr, link->bd_addr, 6);
                 bt_mgr_event_post(BT_EVENT_HFP_AG_CALL_TERMINATE_REQ, &param, sizeof(param));
             }
             break;
 
         case BT_MSG_HFP_AG_CURR_CALLS_LIST_QUERY:
             {
-                memcpy(param.hfp_ag_curr_calls_list_query.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.hfp_ag_curr_calls_list_query.bd_addr, link->bd_addr, 6);
                 bt_mgr_event_post(BT_EVENT_HFP_AG_CURR_CALLS_LIST_QUERY, &param, sizeof(param));
             }
             break;
@@ -3576,56 +3512,56 @@ void bt_mgr_handle_hfp_msg(T_BT_MSG          msg,
 
         case BT_MSG_HFP_AG_3WAY_HELD_CALL_RELEASED:
             {
-                memcpy(param.hfp_ag_3way_held_call_released.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.hfp_ag_3way_held_call_released.bd_addr, link->bd_addr, 6);
                 bt_mgr_event_post(BT_EVENT_HFP_AG_3WAY_HELD_CALL_RELEASED, &param, sizeof(param));
             }
             break;
 
         case BT_MSG_HFP_AG_3WAY_ACTIVE_CALL_RELEASED:
             {
-                memcpy(param.hfp_ag_3way_active_call_released.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.hfp_ag_3way_active_call_released.bd_addr, link->bd_addr, 6);
                 bt_mgr_event_post(BT_EVENT_HFP_AG_3WAY_ACTIVE_CALL_RELEASED, &param, sizeof(param));
             }
             break;
 
         case BT_MSG_HFP_AG_3WAY_SWITCHED:
             {
-                memcpy(param.hfp_ag_3way_switched.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.hfp_ag_3way_switched.bd_addr, link->bd_addr, 6);
                 bt_mgr_event_post(BT_EVENT_HFP_AG_3WAY_SWITCHED, &param, sizeof(param));
             }
             break;
 
         case BT_MSG_HFP_AG_3WAY_MERGED:
             {
-                memcpy(param.hfp_ag_3way_merged.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.hfp_ag_3way_merged.bd_addr, link->bd_addr, 6);
                 bt_mgr_event_post(BT_EVENT_HFP_AG_3WAY_MERGED, &param, sizeof(param));
             }
             break;
 
         case BT_MSG_HFP_AG_SUBSCRIBER_NUMBER_QUERY:
             {
-                memcpy(param.hfp_ag_subscriber_number_query.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.hfp_ag_subscriber_number_query.bd_addr, link->bd_addr, 6);
                 bt_mgr_event_post(BT_EVENT_HFP_AG_SUBSCRIBER_NUMBER_QUERY, &param, sizeof(param));
             }
             break;
 
         case BT_MSG_HFP_AG_NETWORK_NAME_FORMAT_SET:
             {
-                memcpy(param.hfp_ag_network_name_format_set.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.hfp_ag_network_name_format_set.bd_addr, link->bd_addr, 6);
                 bt_mgr_event_post(BT_EVENT_HFP_AG_NETWORK_NAME_FORMAT_SET, &param, sizeof(param));
             }
             break;
 
         case BT_MSG_HFP_AG_CURR_OPERATOR_QUERY:
             {
-                memcpy(param.hfp_ag_curr_operator_query.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.hfp_ag_curr_operator_query.bd_addr, link->bd_addr, 6);
                 bt_mgr_event_post(BT_EVENT_HFP_AG_CURR_OPERATOR_QUERY, &param, sizeof(param));
             }
             break;
 
         case BT_MSG_HFP_AG_ENHANCED_SAFETY_STATUS:
             {
-                memcpy(param.hfp_ag_enhanced_safety_status.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.hfp_ag_enhanced_safety_status.bd_addr, link->bd_addr, 6);
                 param.hfp_ag_enhanced_safety_status.status = *(uint8_t *)payload->msg_buf;
                 bt_mgr_event_post(BT_EVENT_HFP_AG_ENHANCED_SAFETY_STATUS, &param, sizeof(param));
             }
@@ -3633,7 +3569,7 @@ void bt_mgr_handle_hfp_msg(T_BT_MSG          msg,
 
         case BT_MSG_HFP_AG_NREC_STATUS:
             {
-                memcpy(param.hfp_ag_nrec_status.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.hfp_ag_nrec_status.bd_addr, link->bd_addr, 6);
                 param.hfp_ag_nrec_status.status = *(uint8_t *)payload->msg_buf;
                 bt_mgr_event_post(BT_EVENT_HFP_AG_NREC_STATUS, &param, sizeof(param));
             }
@@ -3641,24 +3577,34 @@ void bt_mgr_handle_hfp_msg(T_BT_MSG          msg,
 
         case BT_MSG_HFP_AG_VOICE_RECOGNITION_ACTIVATION:
             {
-                memcpy(param.hfp_ag_voice_recognition_activation.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.hfp_ag_voice_recognition_activation.bd_addr, link->bd_addr, 6);
                 bt_mgr_event_post(BT_EVENT_HFP_AG_VOICE_RECOGNITION_ACTIVATION, &param, sizeof(param));
             }
             break;
 
         case BT_MSG_HFP_AG_VOICE_RECOGNITION_DEACTIVATION:
             {
-                memcpy(param.hfp_ag_voice_recognition_deactivation.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.hfp_ag_voice_recognition_deactivation.bd_addr, link->bd_addr, 6);
                 bt_mgr_event_post(BT_EVENT_HFP_AG_VOICE_RECOGNITION_DEACTIVATION, &param, sizeof(param));
             }
             break;
 
-        case BT_MSG_HFP_AG_UNKNOWN_CMD:
+        case BT_MSG_HFP_AG_VENDOR_CMD:
             {
-                memcpy(param.hfp_ag_unknown_cmd.bd_addr, p_link->bd_addr, 6);
-                param.hfp_ag_unknown_cmd.cmd = (uint8_t *)payload->msg_buf;
-                param.hfp_ag_unknown_cmd.len = strlen((const char *)payload->msg_buf);
-                bt_mgr_event_post(BT_EVENT_HFP_AG_UNKNOWN_CMD, &param, sizeof(param));
+                memcpy(param.hfp_ag_vendor_cmd.bd_addr, link->bd_addr, 6);
+                param.hfp_ag_vendor_cmd.cmd = (uint8_t *)payload->msg_buf;
+                param.hfp_ag_vendor_cmd.len = strlen((const char *)payload->msg_buf);
+                bt_mgr_event_post(BT_EVENT_HFP_AG_VENDOR_CMD, &param, sizeof(param));
+            }
+            break;
+
+        case BT_MSG_HFP_AG_CODEC_TYPE_SELECTED:
+            {
+                T_BT_HFP_CODEC_TYPE codec_type = *(T_BT_HFP_CODEC_TYPE *)(payload->msg_buf);
+
+                memcpy(param.hfp_ag_codec_type_selected.bd_addr, link->bd_addr, 6);
+                param.hfp_ag_codec_type_selected.codec_type = codec_type;
+                bt_mgr_event_post(BT_EVENT_HFP_AG_CODEC_TYPE_SELECTED, &param, sizeof(param));
             }
             break;
 
@@ -3671,136 +3617,125 @@ void bt_mgr_handle_hfp_msg(T_BT_MSG          msg,
 void bt_mgr_handle_hsp_msg(T_BT_MSG          msg,
                            T_BT_MSG_PAYLOAD *payload)
 {
-    T_BT_EVENT_PARAM param;
-    T_BT_BR_LINK *p_link;
+    T_BT_EVENT_PARAM  param;
+    T_BT_LINK        *link;
 
-    p_link = bt_find_br_link(payload->bd_addr);
-
-    switch (msg)
+    link = bt_link_find(payload->bd_addr);
+    if (link != NULL)
     {
-    case BT_MSG_HSP_CONN_CMPL:
+        switch (msg)
         {
-            memcpy(param.hfp_conn_cmpl.bd_addr, payload->bd_addr, 6);
-            param.hfp_conn_cmpl.is_hfp = false;
-            bt_mgr_event_post(BT_EVENT_HFP_CONN_CMPL, &param, sizeof(param));
-
-            if (p_link != NULL)
+        case BT_MSG_HSP_CONN_CMPL:
             {
-                bt_pm_cback_register(p_link->bd_addr, bt_hfp_pm_cback);
+                bt_roleswap_handle_profile_conn(link->bd_addr, HSP_PROFILE_MASK, 0);
 
-                bt_roleswap_handle_profile_conn(p_link->bd_addr, HSP_PROFILE_MASK, 0);
+                memcpy(param.hfp_conn_cmpl.bd_addr, payload->bd_addr, 6);
+                param.hfp_conn_cmpl.is_hfp = false;
+                bt_mgr_event_post(BT_EVENT_HFP_CONN_CMPL, &param, sizeof(param));
             }
-        }
-        break;
+            break;
 
-    case BT_MSG_HSP_CONN_FAIL:
-        {
-            memcpy(param.hfp_conn_fail.bd_addr, payload->bd_addr, 6);
-            param.hfp_conn_fail.is_hfp = false;
-            param.hfp_conn_fail.cause = *(uint16_t *)(payload->msg_buf);
-            bt_mgr_event_post(BT_EVENT_HFP_CONN_FAIL, &param, sizeof(param));
-        }
-        break;
-
-    case BT_MSG_HSP_DISCONN_CMPL:
-        {
-            T_BT_HFP_DISCONN_INFO *p_info = (T_BT_HFP_DISCONN_INFO *)payload->msg_buf;
-
-            if (remote_session_role_get() != REMOTE_SESSION_ROLE_SECONDARY)
+        case BT_MSG_HSP_CONN_FAIL:
             {
-                memcpy(param.hfp_disconn_cmpl.bd_addr, payload->bd_addr, 6);
-                param.hfp_disconn_cmpl.is_hfp = false;
-                param.hfp_disconn_cmpl.cause = p_info->cause;
-                bt_mgr_event_post(BT_EVENT_HFP_DISCONN_CMPL,
-                                  &param, sizeof(param));
+                memcpy(param.hfp_conn_fail.bd_addr, payload->bd_addr, 6);
+                param.hfp_conn_fail.is_hfp = false;
+                param.hfp_conn_fail.cause = *(uint16_t *)(payload->msg_buf);
+                bt_mgr_event_post(BT_EVENT_HFP_CONN_FAIL, &param, sizeof(param));
             }
-            else
-            {
-                memcpy(param.hfp_sniffing_disconn_cmpl.bd_addr, payload->bd_addr, 6);
-                param.hfp_sniffing_disconn_cmpl.is_hfp = false;
-                param.hfp_sniffing_disconn_cmpl.cause = p_info->cause;
-                bt_mgr_event_post(BT_EVENT_HFP_SNIFFING_DISCONN_CMPL,
-                                  &param, sizeof(param));
-            }
+            break;
 
-            if (p_link != NULL)
+        case BT_MSG_HSP_DISCONN_CMPL:
             {
+                uint16_t cause = *(uint16_t *)(payload->msg_buf);
                 T_ROLESWAP_PROFILE_DISCONN_PARAM disconn_param;
 
-                bt_pm_cback_unregister(p_link->bd_addr, bt_hfp_pm_cback);
+                if (remote_session_role_get() != REMOTE_SESSION_ROLE_SECONDARY)
+                {
+                    if (link->sco_state == BT_LINK_SCO_STATE_CONNECTED)
+                    {
+                        gap_br_send_sco_disconn_req(link->bd_addr);
+                    }
+                    memcpy(param.hfp_disconn_cmpl.bd_addr, payload->bd_addr, 6);
+                    param.hfp_disconn_cmpl.is_hfp = false;
+                    param.hfp_disconn_cmpl.cause = cause;
+                    bt_mgr_event_post(BT_EVENT_HFP_DISCONN_CMPL,
+                                      &param, sizeof(param));
+                }
+                else
+                {
+                    memcpy(param.hfp_sniffing_disconn_cmpl.bd_addr, payload->bd_addr, 6);
+                    param.hfp_sniffing_disconn_cmpl.is_hfp = false;
+                    param.hfp_sniffing_disconn_cmpl.cause = cause;
+                    bt_mgr_event_post(BT_EVENT_HFP_SNIFFING_DISCONN_CMPL,
+                                      &param, sizeof(param));
+                }
 
                 disconn_param.profile_mask = HSP_PROFILE_MASK;
-                disconn_param.cause = p_info->cause;
-                bt_roleswap_handle_profile_disconn(p_link->bd_addr, &disconn_param);
+                disconn_param.cause = cause;
+                bt_roleswap_handle_profile_disconn(link->bd_addr, &disconn_param);
             }
-        }
-        break;
+            break;
 
-    case BT_MSG_HSP_AG_CONN_CMPL:
-        {
-            memcpy(param.hfp_ag_conn_cmpl.bd_addr, payload->bd_addr, 6);
-            param.hfp_ag_conn_cmpl.is_hfp = false;
-            bt_mgr_event_post(BT_EVENT_HFP_AG_CONN_CMPL, &param, sizeof(param));
-
-            if (p_link != NULL)
+        case BT_MSG_HSP_AG_CONN_CMPL:
             {
-                bt_pm_cback_register(p_link->bd_addr, bt_hfp_pm_cback);
+                memcpy(param.hfp_ag_conn_cmpl.bd_addr, payload->bd_addr, 6);
+                param.hfp_ag_conn_cmpl.is_hfp = false;
+                bt_mgr_event_post(BT_EVENT_HFP_AG_CONN_CMPL, &param, sizeof(param));
             }
-        }
-        break;
+            break;
 
-    case BT_MSG_HSP_AG_DISCONN_CMPL:
-        {
-            T_BT_HFP_AG_DISCONN_INFO *p_info = (T_BT_HFP_AG_DISCONN_INFO *)payload->msg_buf;
-
-            memcpy(param.hfp_ag_disconn_cmpl.bd_addr, payload->bd_addr, 6);
-            param.hfp_ag_disconn_cmpl.is_hfp = false;
-            param.hfp_ag_disconn_cmpl.cause = p_info->cause;
-            bt_mgr_event_post(BT_EVENT_HFP_AG_DISCONN_CMPL,
-                              &param, sizeof(param));
-
-            if (p_link != NULL)
+        case BT_MSG_HSP_AG_DISCONN_CMPL:
             {
-                bt_pm_cback_unregister(p_link->bd_addr, bt_hfp_pm_cback);
+                T_BT_HFP_AG_DISCONN_INFO *p_info = (T_BT_HFP_AG_DISCONN_INFO *)payload->msg_buf;
+
+                if (link->sco_state == BT_LINK_SCO_STATE_CONNECTED)
+                {
+                    gap_br_send_sco_disconn_req(link->bd_addr);
+                }
+                memcpy(param.hfp_ag_disconn_cmpl.bd_addr, payload->bd_addr, 6);
+                param.hfp_ag_disconn_cmpl.is_hfp = false;
+                param.hfp_ag_disconn_cmpl.cause = p_info->cause;
+                bt_mgr_event_post(BT_EVENT_HFP_AG_DISCONN_CMPL, &param, sizeof(param));
             }
-        }
-        break;
+            break;
 
-    case BT_MSG_HSP_AG_INBAND_RINGING_REQ:
-        {
-            memcpy(param.hfp_ag_inband_ringing_req.bd_addr, payload->bd_addr, 6);
-            bt_mgr_event_post(BT_EVENT_HFP_AG_INBAND_RINGING_REQ, &param, sizeof(param));
-        }
-        break;
+        case BT_MSG_HSP_AG_INBAND_RINGING_REQ:
+            {
+                memcpy(param.hfp_ag_inband_ringing_req.bd_addr, payload->bd_addr, 6);
+                bt_mgr_event_post(BT_EVENT_HFP_AG_INBAND_RINGING_REQ, &param, sizeof(param));
+            }
+            break;
 
-    case BT_MSG_HSP_AG_CALL_ANSWER_REQ:
-        {
-            memcpy(param.hfp_ag_call_answer_req.bd_addr, payload->bd_addr, 6);
-            bt_mgr_event_post(BT_EVENT_HFP_AG_CALL_ANSWER_REQ, &param, sizeof(param));
-        }
-        break;
+        case BT_MSG_HSP_AG_BUTTON_PRESS:
+            {
+                if (link->sco_state == BT_LINK_SCO_STATE_DISCONNECTED)
+                {
+                    memcpy(param.hfp_ag_call_answer_req.bd_addr, payload->bd_addr, 6);
+                    bt_mgr_event_post(BT_EVENT_HFP_AG_CALL_ANSWER_REQ, &param, sizeof(param));
+                }
+                else
+                {
+                    memcpy(param.hfp_ag_call_terminate_req.bd_addr, payload->bd_addr, 6);
+                    bt_mgr_event_post(BT_EVENT_HFP_AG_CALL_TERMINATE_REQ, &param, sizeof(param));
+                }
+            }
+            break;
 
-    case BT_MSG_HSP_AG_CALL_TERMINATE_REQ:
-        {
-            memcpy(param.hfp_ag_call_terminate_req.bd_addr, payload->bd_addr, 6);
-            bt_mgr_event_post(BT_EVENT_HFP_AG_CALL_TERMINATE_REQ, &param, sizeof(param));
+        default:
+            break;
         }
-        break;
-
-    default:
-        break;
     }
 }
 
 void bt_mgr_handle_spp_msg(T_BT_MSG          msg,
                            T_BT_MSG_PAYLOAD *payload)
 {
-    T_BT_EVENT_PARAM param;
-    T_BT_BR_LINK *p_link;
-    uint8_t profile_param;
+    T_BT_EVENT_PARAM  param;
+    T_BT_LINK        *link;
+    uint8_t           profile_param;
 
-    p_link = bt_find_br_link(payload->bd_addr);
-    if (p_link != NULL)
+    link = bt_link_find(payload->bd_addr);
+    if (link != NULL)
     {
         switch (msg)
         {
@@ -3829,7 +3764,7 @@ void bt_mgr_handle_spp_msg(T_BT_MSG          msg,
                 param.spp_conn_cmpl.frame_size = p_cmpl->frame_size;
                 bt_mgr_event_post(BT_EVENT_SPP_CONN_CMPL, &param, sizeof(param));
 
-                bt_roleswap_handle_profile_conn(p_link->bd_addr, SPP_PROFILE_MASK, profile_param);
+                bt_roleswap_handle_profile_conn(link->bd_addr, SPP_PROFILE_MASK, profile_param);
             }
             break;
 
@@ -3871,7 +3806,7 @@ void bt_mgr_handle_spp_msg(T_BT_MSG          msg,
                 disconn_param.profile_mask = SPP_PROFILE_MASK;
                 disconn_param.cause = p_info->cause;
                 disconn_param.param = profile_param;
-                bt_roleswap_handle_profile_disconn(p_link->bd_addr, &disconn_param);
+                bt_roleswap_handle_profile_disconn(link->bd_addr, &disconn_param);
             }
             break;
 
@@ -3920,11 +3855,11 @@ void bt_mgr_handle_spp_msg(T_BT_MSG          msg,
 void bt_mgr_handle_iap_msg(T_BT_MSG          msg,
                            T_BT_MSG_PAYLOAD *payload)
 {
-    T_BT_EVENT_PARAM param;
-    T_BT_BR_LINK *p_link;
+    T_BT_EVENT_PARAM  param;
+    T_BT_LINK        *link;
 
-    p_link = bt_find_br_link(payload->bd_addr);
-    if (p_link != NULL)
+    link = bt_link_find(payload->bd_addr);
+    if (link != NULL)
     {
         switch (msg)
         {
@@ -3946,7 +3881,7 @@ void bt_mgr_handle_iap_msg(T_BT_MSG          msg,
                 param.iap_conn_cmpl.frame_size = p_info->max_data_len;
                 bt_mgr_event_post(BT_EVENT_IAP_CONN_CMPL, &param, sizeof(param));
 
-                bt_roleswap_handle_profile_conn(p_link->bd_addr, IAP_PROFILE_MASK, 0);
+                bt_roleswap_handle_profile_conn(link->bd_addr, IAP_PROFILE_MASK, 0);
             }
             break;
 
@@ -3981,7 +3916,7 @@ void bt_mgr_handle_iap_msg(T_BT_MSG          msg,
 
                 disconn_param.profile_mask = IAP_PROFILE_MASK;
                 disconn_param.cause = p_info->cause;
-                bt_roleswap_handle_profile_disconn(p_link->bd_addr, &disconn_param);
+                bt_roleswap_handle_profile_disconn(link->bd_addr, &disconn_param);
             }
             break;
 
@@ -4044,14 +3979,8 @@ void bt_mgr_handle_iap_msg(T_BT_MSG          msg,
                 T_BT_IAP_EAP_SESSION_STATUS_INFO *p_info = (T_BT_IAP_EAP_SESSION_STATUS_INFO *)payload->msg_buf;
                 memcpy(param.iap_data_session_status.bd_addr, payload->bd_addr, 6);
                 param.iap_data_session_status.session_id = p_info->eap_session_id;
-                if (p_info->eap_session_status == IAP_EAP_SESSION_STATUS_OK)
-                {
-                    param.iap_data_session_status.session_status = BT_IAP_EAP_SESSION_STATUS_OK;
-                }
-                else if (p_info->eap_session_status == IAP_EAP_SESSION_STATUS_CLOSED)
-                {
-                    param.iap_data_session_status.session_status = BT_IAP_EAP_SESSION_STATUS_CLOSED;
-                }
+                param.iap_data_session_status.session_status = (T_BT_IAP_EAP_SESSION_STATUS)
+                                                               p_info->eap_session_status;
                 bt_mgr_event_post(BT_EVENT_IAP_DATA_SESSION_STATUS, &param, sizeof(param));
             }
             break;
@@ -4093,21 +4022,20 @@ void bt_mgr_handle_iap_msg(T_BT_MSG          msg,
 void bt_mgr_handle_pbap_msg(T_BT_MSG          msg,
                             T_BT_MSG_PAYLOAD *payload)
 {
-    T_BT_EVENT_PARAM param;
-    T_BT_BR_LINK *p_link;
+    T_BT_EVENT_PARAM  param;
+    T_BT_LINK        *link;
 
-    p_link = bt_find_br_link(payload->bd_addr);
+    link = bt_link_find(payload->bd_addr);
 
     switch (msg)
     {
     case BT_MSG_PBAP_CONN_CMPL:
         {
-            memcpy(param.pbap_conn_cmpl.bd_addr, payload->bd_addr, 6);
-            bt_mgr_event_post(BT_EVENT_PBAP_CONN_CMPL, &param, sizeof(param));
-
-            if (p_link != NULL)
+            if (link != NULL)
             {
-                bt_roleswap_handle_profile_conn(p_link->bd_addr, PBAP_PROFILE_MASK, 0);
+                bt_roleswap_handle_profile_conn(link->bd_addr, PBAP_PROFILE_MASK, 0);
+                memcpy(param.pbap_conn_cmpl.bd_addr, payload->bd_addr, 6);
+                bt_mgr_event_post(BT_EVENT_PBAP_CONN_CMPL, &param, sizeof(param));
             }
         }
         break;
@@ -4122,7 +4050,16 @@ void bt_mgr_handle_pbap_msg(T_BT_MSG          msg,
 
     case BT_MSG_PBAP_DISCONN_CMPL:
         {
-            T_PBAP_DISCONN_INFO *p_info = (T_PBAP_DISCONN_INFO *)payload->msg_buf;
+            T_BT_PBAP_DISCONN_INFO *p_info = (T_BT_PBAP_DISCONN_INFO *)payload->msg_buf;
+
+            if (link != NULL)
+            {
+                T_ROLESWAP_PROFILE_DISCONN_PARAM disconn_param;
+
+                disconn_param.profile_mask = PBAP_PROFILE_MASK;
+                disconn_param.cause = p_info->cause;
+                bt_roleswap_handle_profile_disconn(link->bd_addr, &disconn_param);
+            }
 
             if (remote_session_role_get() != REMOTE_SESSION_ROLE_SECONDARY)
             {
@@ -4139,24 +4076,15 @@ void bt_mgr_handle_pbap_msg(T_BT_MSG          msg,
                 bt_mgr_event_post(BT_EVENT_PBAP_SNIFFING_DISCONN_CMPL,
                                   &param, sizeof(param));
             }
-
-            if (p_link != NULL)
-            {
-                T_ROLESWAP_PROFILE_DISCONN_PARAM disconn_param;
-
-                disconn_param.profile_mask = PBAP_PROFILE_MASK;
-                disconn_param.cause = p_info->cause;
-                bt_roleswap_handle_profile_disconn(p_link->bd_addr, &disconn_param);
-            }
         }
         break;
 
     case BT_MSG_PBAP_GET_PHONE_BOOK_CMPL:
         {
-            T_PBAP_GET_PHONE_BOOK_MSG_DATA *p_info = (T_PBAP_GET_PHONE_BOOK_MSG_DATA *)payload->msg_buf;
+            T_BT_PBAP_GET_PHONE_BOOK_MSG_DATA *p_info = (T_BT_PBAP_GET_PHONE_BOOK_MSG_DATA *)payload->msg_buf;
 
             memcpy(param.pbap_get_phone_book_cmpl.bd_addr, payload->bd_addr, 6);
-            param.pbap_get_phone_book_cmpl.p_data = p_info->p_data;
+            param.pbap_get_phone_book_cmpl.p_data = p_info->data;
             param.pbap_get_phone_book_cmpl.data_len = p_info->data_len;
             param.pbap_get_phone_book_cmpl.pb_size = p_info->pb_size;
             param.pbap_get_phone_book_cmpl.new_missed_calls = p_info->new_missed_calls;
@@ -4167,7 +4095,7 @@ void bt_mgr_handle_pbap_msg(T_BT_MSG          msg,
 
     case BT_MSG_PBAP_GET_PHONE_BOOK_SIZE_CMPL:
         {
-            T_PBAP_GET_PHONE_BOOK_MSG_DATA *p_info = (T_PBAP_GET_PHONE_BOOK_MSG_DATA *)payload->msg_buf;
+            T_BT_PBAP_GET_PHONE_BOOK_MSG_DATA *p_info = (T_BT_PBAP_GET_PHONE_BOOK_MSG_DATA *)payload->msg_buf;
 
             memcpy(param.pbap_get_phone_book_size_cmpl.bd_addr, payload->bd_addr, 6);
             param.pbap_get_phone_book_size_cmpl.pb_size = p_info->pb_size;
@@ -4206,278 +4134,290 @@ void bt_mgr_handle_pbap_msg(T_BT_MSG          msg,
 void bt_mgr_handle_hid_msg(T_BT_MSG          msg,
                            T_BT_MSG_PAYLOAD *payload)
 {
-    T_BT_EVENT_PARAM param;
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(payload->bd_addr);
-
-    switch (msg)
+    link = bt_link_find(payload->bd_addr);
+    if (link != NULL)
     {
-    case BT_MSG_HID_DEVICE_CONN_IND:
-        {
-            memcpy(param.hid_device_conn_ind.bd_addr, payload->bd_addr, 6);
-            bt_mgr_event_post(BT_EVENT_HID_DEVICE_CONN_IND, &param, sizeof(param));
-        }
-        break;
+        T_BT_EVENT_PARAM param;
 
-    case BT_MSG_HID_DEVICE_CONN_CMPL:
+        switch (msg)
         {
-            if (p_link != NULL)
+        case BT_MSG_HID_DEVICE_CONN_IND:
             {
-                bt_roleswap_handle_profile_conn(p_link->bd_addr, HID_DEVICE_PROFILE_MASK, 0);
+                memcpy(param.hid_device_conn_ind.bd_addr, payload->bd_addr, 6);
+                bt_mgr_event_post(BT_EVENT_HID_DEVICE_CONN_IND, &param, sizeof(param));
             }
+            break;
 
-            memcpy(param.hid_device_conn_cmpl.bd_addr, payload->bd_addr, 6);
-            bt_mgr_event_post(BT_EVENT_HID_DEVICE_CONN_CMPL, &param, sizeof(param));
-        }
-        break;
-
-    case BT_MSG_HID_DEVICE_CONN_FAIL:
-        {
-            memcpy(param.hid_device_conn_fail.bd_addr, payload->bd_addr, 6);
-            param.hid_device_conn_fail.cause = *(uint16_t *)(payload->msg_buf);
-            bt_mgr_event_post(BT_EVENT_HID_DEVICE_CONN_FAIL, &param, sizeof(param));
-        }
-        break;
-
-    case BT_MSG_HID_DEVICE_DISCONN_CMPL:
-        {
-            uint16_t cause = *(uint16_t *)(payload->msg_buf);
-
-            if (p_link != NULL)
+        case BT_MSG_HID_DEVICE_CONN_CMPL:
             {
+                memcpy(param.hid_device_conn_cmpl.bd_addr, payload->bd_addr, 6);
+
+                bt_roleswap_handle_profile_conn(link->bd_addr, HID_DEVICE_PROFILE_MASK, 0);
+
+                bt_mgr_event_post(BT_EVENT_HID_DEVICE_CONN_CMPL, &param, sizeof(param));
+            }
+            break;
+
+        case BT_MSG_HID_DEVICE_CONN_FAIL:
+            {
+                memcpy(param.hid_device_conn_fail.bd_addr, payload->bd_addr, 6);
+                param.hid_device_conn_fail.cause = *(uint16_t *)(payload->msg_buf);
+                bt_mgr_event_post(BT_EVENT_HID_DEVICE_CONN_FAIL, &param, sizeof(param));
+            }
+            break;
+
+        case BT_MSG_HID_DEVICE_DISCONN_CMPL:
+            {
+                uint16_t cause = *(uint16_t *)(payload->msg_buf);
+
                 T_ROLESWAP_PROFILE_DISCONN_PARAM disconn_param;
 
                 disconn_param.profile_mask = HID_DEVICE_PROFILE_MASK;
                 disconn_param.cause = cause;
-                bt_roleswap_handle_profile_disconn(p_link->bd_addr, &disconn_param);
+                bt_roleswap_handle_profile_disconn(link->bd_addr, &disconn_param);
+
+                if (remote_session_role_get() != REMOTE_SESSION_ROLE_SECONDARY)
+                {
+                    memcpy(param.hid_device_disconn_cmpl.bd_addr, payload->bd_addr, 6);
+                    param.hid_device_disconn_cmpl.cause = cause;
+                    bt_mgr_event_post(BT_EVENT_HID_DEVICE_DISCONN_CMPL,
+                                      &param, sizeof(param));
+                }
+                else
+                {
+                    memcpy(param.hid_device_sniffing_disconn_cmpl.bd_addr,
+                           payload->bd_addr, 6);
+                    param.hid_device_sniffing_disconn_cmpl.cause = cause;
+                    bt_mgr_event_post(BT_EVENT_HID_DEVICE_SNIFFING_DISCONN_CMPL,
+                                      &param, sizeof(param));
+                }
             }
+            break;
 
-            if (remote_session_role_get() != REMOTE_SESSION_ROLE_SECONDARY)
+        case BT_MSG_HID_DEVICE_CONTROL_DATA_IND:
             {
-                memcpy(param.hid_device_disconn_cmpl.bd_addr, payload->bd_addr, 6);
-                param.hid_device_disconn_cmpl.cause = cause;
-                bt_mgr_event_post(BT_EVENT_HID_DEVICE_DISCONN_CMPL,
-                                  &param, sizeof(param));
+                T_BT_HID_DEVICE_DATA_IND *rsp;
+
+                rsp = (T_BT_HID_DEVICE_DATA_IND *)payload->msg_buf;
+                memcpy(param.hid_device_control_data_ind.bd_addr, payload->bd_addr, 6);
+                param.hid_device_control_data_ind.p_data = rsp->p_data;
+                param.hid_device_control_data_ind.report_type = rsp->report_type;
+                param.hid_device_control_data_ind.report_size = rsp->report_size;
+                param.hid_device_control_data_ind.report_id = rsp->report_id;
+                bt_mgr_event_post(BT_EVENT_HID_DEVICE_CONTROL_DATA_IND, &param, sizeof(param));
             }
-            else
+            break;
+
+        case BT_MSG_HID_DEVICE_GET_REPORT_IND:
             {
-                memcpy(param.hid_device_sniffing_disconn_cmpl.bd_addr,
-                       payload->bd_addr, 6);
-                param.hid_device_sniffing_disconn_cmpl.cause = cause;
-                bt_mgr_event_post(BT_EVENT_HID_DEVICE_SNIFFING_DISCONN_CMPL,
-                                  &param, sizeof(param));
+                T_BT_HID_DEVICE_GET_REPORT_IND *rsp;
+
+                rsp = (T_BT_HID_DEVICE_GET_REPORT_IND *)payload->msg_buf;
+                memcpy(param.hid_device_get_report_ind.bd_addr, payload->bd_addr, 6);
+                param.hid_device_get_report_ind.report_type = rsp->report_type;
+                param.hid_device_get_report_ind.report_id = rsp->report_id;
+                param.hid_device_get_report_ind.report_size = rsp->report_size;
+                bt_mgr_event_post(BT_EVENT_HID_DEVICE_GET_REPORT_IND, &param, sizeof(param));
             }
-        }
-        break;
+            break;
 
-    case BT_MSG_HID_DEVICE_CONTROL_DATA_IND:
-        {
-            T_BT_HID_DEVICE_DATA_IND *rsp;
-
-            rsp = (T_BT_HID_DEVICE_DATA_IND *)payload->msg_buf;
-            memcpy(param.hid_device_control_data_ind.bd_addr, payload->bd_addr, 6);
-            param.hid_device_control_data_ind.p_data = rsp->p_data;
-            param.hid_device_control_data_ind.report_type = rsp->report_type;
-            param.hid_device_control_data_ind.report_size = rsp->report_size;
-            param.hid_device_control_data_ind.report_id = rsp->report_id;
-            bt_mgr_event_post(BT_EVENT_HID_DEVICE_CONTROL_DATA_IND, &param, sizeof(param));
-        }
-        break;
-
-    case BT_MSG_HID_DEVICE_GET_REPORT_IND:
-        {
-            T_BT_HID_DEVICE_GET_REPORT_IND *rsp;
-
-            rsp = (T_BT_HID_DEVICE_GET_REPORT_IND *)payload->msg_buf;
-            memcpy(param.hid_device_get_report_ind.bd_addr, payload->bd_addr, 6);
-            param.hid_device_get_report_ind.report_type = rsp->report_type;
-            param.hid_device_get_report_ind.report_id = rsp->report_id;
-            param.hid_device_get_report_ind.report_size = rsp->report_size;
-            bt_mgr_event_post(BT_EVENT_HID_DEVICE_GET_REPORT_IND, &param, sizeof(param));
-        }
-        break;
-
-    case BT_MSG_HID_DEVICE_SET_REPORT_IND:
-        {
-            T_BT_HID_DEVICE_SET_REPORT_IND *rsp;
-
-            rsp = (T_BT_HID_DEVICE_SET_REPORT_IND *)payload->msg_buf;
-            memcpy(param.hid_device_set_report_ind.bd_addr, payload->bd_addr, 6);
-            param.hid_device_set_report_ind.p_data = rsp->p_data;
-            param.hid_device_set_report_ind.report_type = rsp->report_type;
-            param.hid_device_set_report_ind.report_id = rsp->report_id;
-            param.hid_device_set_report_ind.report_size = rsp->report_size;
-            bt_mgr_event_post(BT_EVENT_HID_DEVICE_SET_REPORT_IND, &param, sizeof(param));
-        }
-        break;
-
-    case BT_MSG_HID_DEVICE_GET_PROTOCOL_IND:
-        {
-            T_BT_HID_DEVICE_GET_PROTOCOL_IND *rsp;
-
-            rsp = (T_BT_HID_DEVICE_GET_PROTOCOL_IND *)payload->msg_buf;
-            memcpy(param.hid_device_get_protocol_ind.bd_addr, payload->bd_addr, 6);
-            param.hid_device_get_protocol_ind.proto_mode = rsp->proto_mode;
-            bt_mgr_event_post(BT_EVENT_HID_DEVICE_GET_PROTOCOL_IND, &param, sizeof(param));
-        }
-        break;
-
-    case BT_MSG_HID_DEVICE_SET_PROTOCOL_IND:
-        {
-            T_BT_HID_DEVICE_SET_PROTOCOL_IND *rsp;
-
-            rsp = (T_BT_HID_DEVICE_SET_PROTOCOL_IND *)payload->msg_buf;
-            memcpy(param.hid_device_set_protocol_ind.bd_addr, payload->bd_addr, 6);
-            param.hid_device_set_protocol_ind.proto_mode = rsp->proto_mode;
-            bt_mgr_event_post(BT_EVENT_HID_DEVICE_SET_PROTOCOL_IND, &param, sizeof(param));
-        }
-        break;
-
-    case BT_MSG_HID_DEVICE_SET_IDLE_IND:
-        {
-            T_BT_HID_DEVICE_SET_IDLE_IND *rsp;
-
-            rsp = (T_BT_HID_DEVICE_SET_IDLE_IND *)payload->msg_buf;
-            memcpy(param.hid_device_set_idle_ind.bd_addr, payload->bd_addr, 6);
-            param.hid_device_set_idle_ind.report_status = rsp->report_status;
-            bt_mgr_event_post(BT_EVENT_HID_DEVICE_SET_IDLE_IND, &param, sizeof(param));
-        }
-        break;
-
-    case BT_MSG_HID_DEVICE_INTERRUPT_DATA_IND:
-        {
-            T_BT_HID_DEVICE_DATA_IND *rsp;
-
-            rsp = (T_BT_HID_DEVICE_DATA_IND *)payload->msg_buf;
-            memcpy(param.hid_device_interrupt_data_ind.bd_addr, payload->bd_addr, 6);
-            param.hid_device_interrupt_data_ind.p_data = rsp->p_data;
-            param.hid_device_interrupt_data_ind.report_type = rsp->report_type;
-            param.hid_device_interrupt_data_ind.report_size = rsp->report_size;
-            param.hid_device_interrupt_data_ind.report_id = rsp->report_id;
-            bt_mgr_event_post(BT_EVENT_HID_DEVICE_INTERRUPT_DATA_IND, &param, sizeof(param));
-        }
-        break;
-
-    case BT_MSG_HID_HOST_CONN_IND:
-        {
-            memcpy(param.hid_host_conn_ind.bd_addr, payload->bd_addr, 6);
-            bt_mgr_event_post(BT_EVENT_HID_HOST_CONN_IND, &param, sizeof(param));
-        }
-        break;
-
-    case BT_MSG_HID_HOST_CONN_CMPL:
-        {
-            if (p_link != NULL)
+        case BT_MSG_HID_DEVICE_SET_REPORT_IND:
             {
-                bt_roleswap_handle_profile_conn(p_link->bd_addr, HID_HOST_PROFILE_MASK, 0);
+                T_BT_HID_DEVICE_SET_REPORT_IND *rsp;
+
+                rsp = (T_BT_HID_DEVICE_SET_REPORT_IND *)payload->msg_buf;
+                memcpy(param.hid_device_set_report_ind.bd_addr, payload->bd_addr, 6);
+                param.hid_device_set_report_ind.p_data = rsp->p_data;
+                param.hid_device_set_report_ind.report_type = rsp->report_type;
+                param.hid_device_set_report_ind.report_id = rsp->report_id;
+                param.hid_device_set_report_ind.report_size = rsp->report_size;
+                bt_mgr_event_post(BT_EVENT_HID_DEVICE_SET_REPORT_IND, &param, sizeof(param));
             }
+            break;
 
-            memcpy(param.hid_host_conn_cmpl.bd_addr, payload->bd_addr, 6);
-            bt_mgr_event_post(BT_EVENT_HID_HOST_CONN_CMPL, &param, sizeof(param));
-        }
-        break;
-
-    case BT_MSG_HID_HOST_CONN_FAIL:
-        {
-            memcpy(param.hid_host_conn_fail.bd_addr, payload->bd_addr, 6);
-            param.hid_host_conn_fail.cause = *(uint16_t *)(payload->msg_buf);
-            bt_mgr_event_post(BT_EVENT_HID_HOST_CONN_FAIL, &param, sizeof(param));
-        }
-        break;
-
-    case BT_MSG_HID_HOST_DISCONN_CMPL:
-        {
-            uint16_t cause = *(uint16_t *)(payload->msg_buf);
-
-            if (p_link != NULL)
+        case BT_MSG_HID_DEVICE_GET_PROTOCOL_IND:
             {
+                T_BT_HID_DEVICE_GET_PROTOCOL_IND *rsp;
+
+                rsp = (T_BT_HID_DEVICE_GET_PROTOCOL_IND *)payload->msg_buf;
+                memcpy(param.hid_device_get_protocol_ind.bd_addr, payload->bd_addr, 6);
+                param.hid_device_get_protocol_ind.proto_mode = rsp->proto_mode;
+                bt_mgr_event_post(BT_EVENT_HID_DEVICE_GET_PROTOCOL_IND, &param, sizeof(param));
+            }
+            break;
+
+        case BT_MSG_HID_DEVICE_SET_PROTOCOL_IND:
+            {
+                T_BT_HID_DEVICE_SET_PROTOCOL_IND *rsp;
+
+                rsp = (T_BT_HID_DEVICE_SET_PROTOCOL_IND *)payload->msg_buf;
+                memcpy(param.hid_device_set_protocol_ind.bd_addr, payload->bd_addr, 6);
+                param.hid_device_set_protocol_ind.proto_mode = rsp->proto_mode;
+                bt_mgr_event_post(BT_EVENT_HID_DEVICE_SET_PROTOCOL_IND, &param, sizeof(param));
+            }
+            break;
+
+        case BT_MSG_HID_DEVICE_SET_IDLE_IND:
+            {
+                T_BT_HID_DEVICE_SET_IDLE_IND *rsp;
+
+                rsp = (T_BT_HID_DEVICE_SET_IDLE_IND *)payload->msg_buf;
+                memcpy(param.hid_device_set_idle_ind.bd_addr, payload->bd_addr, 6);
+                param.hid_device_set_idle_ind.report_status = rsp->report_status;
+                bt_mgr_event_post(BT_EVENT_HID_DEVICE_SET_IDLE_IND, &param, sizeof(param));
+            }
+            break;
+
+        case BT_MSG_HID_DEVICE_INTERRUPT_DATA_IND:
+            {
+                T_BT_HID_DEVICE_DATA_IND *rsp;
+
+                rsp = (T_BT_HID_DEVICE_DATA_IND *)payload->msg_buf;
+                memcpy(param.hid_device_interrupt_data_ind.bd_addr, payload->bd_addr, 6);
+                param.hid_device_interrupt_data_ind.p_data = rsp->p_data;
+                param.hid_device_interrupt_data_ind.report_type = rsp->report_type;
+                param.hid_device_interrupt_data_ind.report_size = rsp->report_size;
+                param.hid_device_interrupt_data_ind.report_id = rsp->report_id;
+                bt_mgr_event_post(BT_EVENT_HID_DEVICE_INTERRUPT_DATA_IND, &param, sizeof(param));
+            }
+            break;
+
+        case BT_MSG_HID_HOST_CONN_IND:
+            {
+                memcpy(param.hid_host_conn_ind.bd_addr, payload->bd_addr, 6);
+                bt_mgr_event_post(BT_EVENT_HID_HOST_CONN_IND, &param, sizeof(param));
+            }
+            break;
+
+        case BT_MSG_HID_HOST_CONN_CMPL:
+            {
+                memcpy(param.hid_host_conn_cmpl.bd_addr, payload->bd_addr, 6);
+
+                bt_roleswap_handle_profile_conn(link->bd_addr, HID_HOST_PROFILE_MASK, 0);
+
+                bt_mgr_event_post(BT_EVENT_HID_HOST_CONN_CMPL, &param, sizeof(param));
+            }
+            break;
+
+        case BT_MSG_HID_HOST_CONN_FAIL:
+            {
+                memcpy(param.hid_host_conn_fail.bd_addr, payload->bd_addr, 6);
+                param.hid_host_conn_fail.cause = *(uint16_t *)(payload->msg_buf);
+                bt_mgr_event_post(BT_EVENT_HID_HOST_CONN_FAIL, &param, sizeof(param));
+            }
+            break;
+
+        case BT_MSG_HID_HOST_DISCONN_CMPL:
+            {
+                T_BT_HID_HOST_DISCONN_CMPL *rsp;
+                rsp = (T_BT_HID_HOST_DISCONN_CMPL *)payload->msg_buf;
+
                 T_ROLESWAP_PROFILE_DISCONN_PARAM disconn_param;
 
                 disconn_param.profile_mask = HID_HOST_PROFILE_MASK;
-                disconn_param.cause = cause;
-                bt_roleswap_handle_profile_disconn(p_link->bd_addr, &disconn_param);
-            }
+                disconn_param.cause = rsp->cause;
+                disconn_param.param = rsp->virtual_unplug;
+                bt_roleswap_handle_profile_disconn(link->bd_addr, &disconn_param);
 
-            if (remote_session_role_get() != REMOTE_SESSION_ROLE_SECONDARY)
+                if (remote_session_role_get() != REMOTE_SESSION_ROLE_SECONDARY)
+                {
+                    memcpy(param.hid_host_disconn_cmpl.bd_addr, payload->bd_addr, 6);
+                    param.hid_host_disconn_cmpl.cause = rsp->cause;
+                    param.hid_host_disconn_cmpl.virtual_unplug = rsp->virtual_unplug;
+                    bt_mgr_event_post(BT_EVENT_HID_HOST_DISCONN_CMPL,
+                                      &param, sizeof(param));
+                }
+                else
+                {
+                    memcpy(param.hid_host_sniffing_disconn_cmpl.bd_addr,
+                           payload->bd_addr, 6);
+                    param.hid_host_sniffing_disconn_cmpl.cause = rsp->cause;
+                    param.hid_host_sniffing_disconn_cmpl.virtual_unplug = rsp->virtual_unplug;
+                    bt_mgr_event_post(BT_EVENT_HID_HOST_SNIFFING_DISCONN_CMPL,
+                                      &param, sizeof(param));
+                }
+            }
+            break;
+
+        case BT_MSG_HID_HOST_GET_REPORT_RSP:
             {
-                memcpy(param.hid_host_disconn_cmpl.bd_addr, payload->bd_addr, 6);
-                param.hid_host_disconn_cmpl.cause = cause;
-                bt_mgr_event_post(BT_EVENT_HID_HOST_DISCONN_CMPL,
-                                  &param, sizeof(param));
+                T_BT_HID_HOST_GET_REPORT_RSP *rsp;
+
+                rsp = (T_BT_HID_HOST_GET_REPORT_RSP *)payload->msg_buf;
+                memcpy(param.hid_host_get_report_rsp.bd_addr, payload->bd_addr, 6);
+                param.hid_host_get_report_rsp.report_type = rsp->report_type;
+                param.hid_host_get_report_rsp.report_id = rsp->report_id;
+                param.hid_host_get_report_rsp.report_size = rsp->report_size;
+                param.hid_host_get_report_rsp.p_data = rsp->p_data;
+                bt_mgr_event_post(BT_EVENT_HID_HOST_GET_REPORT_RSP, &param, sizeof(param));
             }
-            else
+            break;
+
+        case BT_MSG_HID_HOST_SET_REPORT_RSP:
             {
-                memcpy(param.hid_host_sniffing_disconn_cmpl.bd_addr,
-                       payload->bd_addr, 6);
-                param.hid_host_sniffing_disconn_cmpl.cause = cause;
-                bt_mgr_event_post(BT_EVENT_HID_HOST_SNIFFING_DISCONN_CMPL,
-                                  &param, sizeof(param));
+                T_BT_HID_HOST_SET_REPORT_RSP *rsp;
+
+                rsp = (T_BT_HID_HOST_SET_REPORT_RSP *)payload->msg_buf;
+                memcpy(param.hid_host_set_report_rsp.bd_addr, payload->bd_addr, 6);
+                param.hid_host_set_report_rsp.result_code = rsp->result_code;
+                bt_mgr_event_post(BT_EVENT_HID_HOST_SET_REPORT_RSP, &param, sizeof(param));
             }
+            break;
+
+        case BT_MSG_HID_HOST_GET_PROTOCOL_RSP:
+            {
+                T_BT_HID_HOST_GET_PROTOCOL_RSP *rsp;
+
+                rsp = (T_BT_HID_HOST_GET_PROTOCOL_RSP *)payload->msg_buf;
+                memcpy(param.hid_host_get_protocol_rsp.bd_addr, payload->bd_addr, 6);
+                param.hid_host_get_protocol_rsp.proto_mode = rsp->proto_mode;
+                bt_mgr_event_post(BT_EVENT_HID_HOST_GET_PROTOCOL_RSP, &param, sizeof(param));
+            }
+            break;
+
+        case BT_MSG_HID_HOST_SET_PROTOCOL_RSP:
+            {
+                T_BT_HID_HOST_SET_PROTOCOL_RSP *rsp;
+
+                rsp = (T_BT_HID_HOST_SET_PROTOCOL_RSP *)payload->msg_buf;
+                memcpy(param.hid_host_set_protocol_rsp.bd_addr, payload->bd_addr, 6);
+                param.hid_host_set_protocol_rsp.result_code = rsp->result_code;
+                bt_mgr_event_post(BT_EVENT_HID_HOST_SET_PROTOCOL_RSP, &param, sizeof(param));
+            }
+            break;
+
+        case BT_MSG_HID_HOST_INTERRUPT_DATA_IND:
+            {
+                T_BT_HID_HOST_DATA_IND *rsp;
+
+                rsp = (T_BT_HID_HOST_DATA_IND *)payload->msg_buf;
+                memcpy(param.hid_host_interrupt_data_ind.bd_addr, payload->bd_addr, 6);
+                param.hid_host_interrupt_data_ind.p_data = rsp->p_data;
+                param.hid_host_interrupt_data_ind.report_type = rsp->report_type;
+                param.hid_host_interrupt_data_ind.report_size = rsp->report_size;
+                param.hid_host_interrupt_data_ind.report_id = rsp->report_id;
+                bt_mgr_event_post(BT_EVENT_HID_HOST_INTERRUPT_DATA_IND, &param, sizeof(param));
+            }
+            break;
+
+        default:
+            break;
         }
-        break;
-
-    case BT_MSG_HID_HOST_GET_REPORT_RSP:
-        {
-            T_BT_HID_HOST_GET_REPORT_RSP *rsp;
-
-            rsp = (T_BT_HID_HOST_GET_REPORT_RSP *)payload->msg_buf;
-            memcpy(param.hid_host_get_report_rsp.bd_addr, payload->bd_addr, 6);
-            param.hid_host_get_report_rsp.report_type = rsp->report_type;
-            param.hid_host_get_report_rsp.report_id = rsp->report_id;
-            param.hid_host_get_report_rsp.report_size = rsp->report_size;
-            param.hid_host_get_report_rsp.p_data = rsp->p_data;
-            bt_mgr_event_post(BT_EVENT_HID_HOST_GET_REPORT_RSP, &param, sizeof(param));
-        }
-        break;
-
-    case BT_MSG_HID_HOST_SET_REPORT_RSP:
-        {
-            T_BT_HID_HOST_SET_REPORT_RSP *rsp;
-
-            rsp = (T_BT_HID_HOST_SET_REPORT_RSP *)payload->msg_buf;
-            memcpy(param.hid_host_set_report_rsp.bd_addr, payload->bd_addr, 6);
-            param.hid_host_set_report_rsp.result_code = rsp->result_code;
-            bt_mgr_event_post(BT_EVENT_HID_HOST_SET_REPORT_RSP, &param, sizeof(param));
-        }
-        break;
-
-    case BT_MSG_HID_HOST_GET_PROTOCOL_RSP:
-        {
-            T_BT_HID_HOST_GET_PROTOCOL_RSP *rsp;
-
-            rsp = (T_BT_HID_HOST_GET_PROTOCOL_RSP *)payload->msg_buf;
-            memcpy(param.hid_host_get_protocol_rsp.bd_addr, payload->bd_addr, 6);
-            param.hid_host_get_protocol_rsp.proto_mode = rsp->proto_mode;
-            bt_mgr_event_post(BT_EVENT_HID_HOST_GET_PROTOCOL_RSP, &param, sizeof(param));
-        }
-        break;
-
-    case BT_MSG_HID_HOST_SET_PROTOCOL_RSP:
-        {
-            T_BT_HID_HOST_SET_PROTOCOL_RSP *rsp;
-
-            rsp = (T_BT_HID_HOST_SET_PROTOCOL_RSP *)payload->msg_buf;
-            memcpy(param.hid_host_set_protocol_rsp.bd_addr, payload->bd_addr, 6);
-            param.hid_host_set_protocol_rsp.result_code = rsp->result_code;
-            bt_mgr_event_post(BT_EVENT_HID_HOST_SET_PROTOCOL_RSP, &param, sizeof(param));
-        }
-        break;
-
-    default:
-        break;
     }
 }
 
 void bt_mgr_handle_map_msg(T_BT_MSG          msg,
                            T_BT_MSG_PAYLOAD *payload)
 {
-    T_BT_EVENT_PARAM param;
-    T_BT_BR_LINK *p_link;
+    T_BT_LINK *link;
 
-    p_link = bt_find_br_link(payload->bd_addr);
-    if (p_link != NULL)
+    link = bt_link_find(payload->bd_addr);
+    if (link != NULL)
     {
+        T_BT_EVENT_PARAM param;
+
         switch (msg)
         {
         case BT_MSG_MAP_MNS_CONN_IND:
@@ -4565,8 +4505,8 @@ void bt_mgr_handle_map_msg(T_BT_MSG          msg,
                 T_BT_MAP_FOLDER_LISTING_DATA_IND *p_info = (T_BT_MAP_FOLDER_LISTING_DATA_IND *)payload->msg_buf;
 
                 memcpy(param.map_get_folder_listing_cmpl.bd_addr, payload->bd_addr, 6);
-                param.map_get_folder_listing_cmpl.p_data = p_info->p_data;
-                param.map_get_folder_listing_cmpl.data_len = p_info->data_len;
+                param.map_get_folder_listing_cmpl.p_data = p_info->buf;
+                param.map_get_folder_listing_cmpl.data_len = p_info->len;
                 param.map_get_folder_listing_cmpl.folder_listing_size = p_info->folder_listing_size;
                 param.map_get_folder_listing_cmpl.data_end = p_info->data_end;
                 bt_mgr_event_post(BT_EVENT_MAP_GET_FOLDER_LISTING_CMPL, &param, sizeof(param));
@@ -4578,8 +4518,8 @@ void bt_mgr_handle_map_msg(T_BT_MSG          msg,
                 T_BT_MAP_MSG_LISTING_DATA_IND *p_info = (T_BT_MAP_MSG_LISTING_DATA_IND *)payload->msg_buf;
 
                 memcpy(param.map_get_msg_listing_cmpl.bd_addr, payload->bd_addr, 6);
-                param.map_get_msg_listing_cmpl.p_data = p_info->p_data;
-                param.map_get_msg_listing_cmpl.data_len = p_info->data_len;
+                param.map_get_msg_listing_cmpl.p_data = p_info->buf;
+                param.map_get_msg_listing_cmpl.data_len = p_info->len;
                 param.map_get_msg_listing_cmpl.new_msg = p_info->new_msg;
                 param.map_get_msg_listing_cmpl.msg_listing_size = p_info->msg_listing_size;
                 param.map_get_msg_listing_cmpl.data_end = p_info->data_end;
@@ -4592,8 +4532,8 @@ void bt_mgr_handle_map_msg(T_BT_MSG          msg,
                 T_BT_MAP_MSG_DATA_IND *p_info = (T_BT_MAP_MSG_DATA_IND *)payload->msg_buf;
 
                 memcpy(param.map_get_msg_cmpl.bd_addr, payload->bd_addr, 6);
-                param.map_get_msg_cmpl.p_data = p_info->p_data;
-                param.map_get_msg_cmpl.data_len = p_info->data_len;
+                param.map_get_msg_cmpl.p_data = p_info->buf;
+                param.map_get_msg_cmpl.data_len = p_info->len;
                 param.map_get_msg_cmpl.data_end = p_info->data_end;
                 bt_mgr_event_post(BT_EVENT_MAP_GET_MSG_CMPL, &param, sizeof(param));
             }
@@ -4606,7 +4546,7 @@ void bt_mgr_handle_map_msg(T_BT_MSG          msg,
                 memcpy(param.map_push_msg_cmpl.bd_addr, payload->bd_addr, 6);
                 param.map_push_msg_cmpl.action = p_info->action;
                 param.map_push_msg_cmpl.rsp_code = p_info->rsp_code;
-                param.map_push_msg_cmpl.p_msg_handle = p_info->p_msg_handle;
+                param.map_push_msg_cmpl.p_msg_handle = p_info->msg_handle;
                 param.map_push_msg_cmpl.msg_handle_len = p_info->msg_handle_len;
                 bt_mgr_event_post(BT_EVENT_MAP_PUSH_MSG_CMPL, &param, sizeof(param));
             }
@@ -4617,8 +4557,8 @@ void bt_mgr_handle_map_msg(T_BT_MSG          msg,
                 T_BT_MAP_MSG_REPORT_NOTIF *p_info = (T_BT_MAP_MSG_REPORT_NOTIF *)payload->msg_buf;
 
                 memcpy(param.map_msg_notification.bd_addr, payload->bd_addr, 6);
-                param.map_msg_notification.p_data = p_info->p_data;
-                param.map_msg_notification.data_len = p_info->data_len;
+                param.map_msg_notification.p_data = p_info->buf;
+                param.map_msg_notification.data_len = p_info->len;
                 param.map_msg_notification.data_end = p_info->data_end;
                 bt_mgr_event_post(BT_EVENT_MAP_MSG_NOTIFICATION, &param, sizeof(param));
             }
@@ -4633,11 +4573,11 @@ void bt_mgr_handle_map_msg(T_BT_MSG          msg,
 void bt_mgr_handle_opp_msg(T_BT_MSG          msg,
                            T_BT_MSG_PAYLOAD *payload)
 {
-    T_BT_BR_LINK    *p_link;
-    T_BT_EVENT_PARAM param;
+    T_BT_LINK        *link;
+    T_BT_EVENT_PARAM  param;
 
-    p_link = bt_find_br_link(payload->bd_addr);
-    if (p_link != NULL)
+    link = bt_link_find(payload->bd_addr);
+    if (link != NULL)
     {
         switch (msg)
         {
@@ -4714,15 +4654,15 @@ void bt_mgr_handle_opp_msg(T_BT_MSG          msg,
 void bt_mgr_handle_rdtp_msg(T_BT_MSG          msg,
                             T_BT_MSG_PAYLOAD *payload)
 {
-    T_BT_EVENT_PARAM param;
-    T_BT_BR_LINK *p_link;
+    T_BT_EVENT_PARAM  param;
+    T_BT_LINK        *link;
 
-    p_link = bt_find_br_link(payload->bd_addr);
+    link = bt_link_find(payload->bd_addr);
 
     switch (msg)
     {
     case BT_MSG_RDTP_CONN_CMPL:
-        if (p_link != NULL)
+        if (link != NULL)
         {
             sys_ipc_publish(BT_IPC_TOPIC, BT_IPC_REMOTE_CONNECTED, NULL);
 
@@ -4735,7 +4675,7 @@ void bt_mgr_handle_rdtp_msg(T_BT_MSG          msg,
         break;
 
     case BT_MSG_RDTP_CONN_FAIL:
-        if (p_link != NULL)
+        if (link != NULL)
         {
             memcpy(param.remote_conn_fail.bd_addr, payload->bd_addr, 6);
             param.remote_conn_fail.cause = *(uint16_t *)(payload->msg_buf);
@@ -4744,7 +4684,7 @@ void bt_mgr_handle_rdtp_msg(T_BT_MSG          msg,
         break;
 
     case BT_MSG_RDTP_DISCONN_CMPL:
-        if (p_link != NULL)
+        if (link != NULL)
         {
             uint16_t cause = *(uint16_t *)(payload->msg_buf);
 
@@ -4757,7 +4697,7 @@ void bt_mgr_handle_rdtp_msg(T_BT_MSG          msg,
         break;
 
     case BT_MSG_RDTP_DATA_IND:
-        if (p_link != NULL)
+        if (link != NULL)
         {
             T_BT_IPC_MSG msg;
 
@@ -4788,7 +4728,7 @@ void bt_mgr_handle_roleswap_msg(T_BT_MSG          msg,
     {
     case BT_MSG_ROLESWAP_ACL_STATUS:
         {
-            T_BT_BR_LINK *p_link;
+            T_BT_LINK *link;
             T_ROLESWAP_ACL_INFO *p_info = (T_ROLESWAP_ACL_INFO *)payload->msg_buf;
 
             param.remote_roleswap_status.status = BT_ROLESWAP_STATUS_ACL_INFO;
@@ -4804,14 +4744,14 @@ void bt_mgr_handle_roleswap_msg(T_BT_MSG          msg,
                 param.remote_roleswap_status.u.acl.encrypted = false;
             }
 
-            p_link = bt_find_br_link(p_info->bd_addr);
-            if (p_link)
+            link = bt_link_find(p_info->bd_addr);
+            if (link)
             {
-                bt_pm_cback_register(p_link->bd_addr, bt_mgr_pm_cback);
+                bt_pm_cback_register(link->bd_addr, bt_mgr_pm_cback);
 
-                if (p_link->pm_state == BT_LINK_PM_STATE_ACTIVE)
+                if (link->pm_state == BT_LINK_PM_STATE_ACTIVE)
                 {
-                    sys_timer_start(p_link->timer_enter_sniff);
+                    sys_timer_start(link->timer_sniff);
                 }
             }
 
@@ -4821,18 +4761,11 @@ void bt_mgr_handle_roleswap_msg(T_BT_MSG          msg,
 
     case BT_MSG_ROLESWAP_A2DP_STATUS:
         {
-            T_BT_BR_LINK *p_link;
             T_ROLESWAP_A2DP_INFO *p_info = (T_ROLESWAP_A2DP_INFO *)payload->msg_buf;
-
-            p_link = bt_find_br_link(payload->bd_addr);
-            if (p_link)
-            {
-                bt_pm_cback_register(p_link->bd_addr, bt_a2dp_pm_cback);
-            }
 
             param.remote_roleswap_status.status = BT_ROLESWAP_STATUS_A2DP_INFO;
             memcpy(param.remote_roleswap_status.u.a2dp.bd_addr, payload->bd_addr, 6);
-            if (p_info->state == A2DP_STATE_STREAMING)
+            if (p_info->state == BT_A2DP_STATE_STREAMING)
             {
                 param.remote_roleswap_status.u.a2dp.streaming_fg = true;
             }
@@ -4858,18 +4791,11 @@ void bt_mgr_handle_roleswap_msg(T_BT_MSG          msg,
 
     case BT_MSG_ROLESWAP_HFP_STATUS:
         {
-            T_BT_BR_LINK *p_link;
             T_ROLESWAP_HFP_INFO *p_info = (T_ROLESWAP_HFP_INFO *)payload->msg_buf;
-
-            p_link = bt_find_br_link(payload->bd_addr);
-            if (p_link)
-            {
-                bt_pm_cback_register(p_link->bd_addr, bt_hfp_pm_cback);
-            }
 
             param.remote_roleswap_status.status = BT_ROLESWAP_STATUS_HFP_INFO;
             memcpy(param.remote_roleswap_status.u.hfp.bd_addr, payload->bd_addr, 6);
-            param.remote_roleswap_status.u.hfp.call_status = p_info->call_status;
+            param.remote_roleswap_status.u.hfp.call_status = p_info->curr_call_status;
             param.remote_roleswap_status.u.hfp.service_status = p_info->service_status;
 
             if (p_info->uuid == UUID_HANDSFREE)
@@ -5064,10 +4990,10 @@ void bt_mgr_handle_roleswap_msg(T_BT_MSG          msg,
 void bt_mgr_handle_sniffing_msg(T_BT_MSG          msg,
                                 T_BT_MSG_PAYLOAD *payload)
 {
-    T_BT_BR_LINK *p_link;
-    T_BT_EVENT_PARAM param;
+    T_BT_LINK        *link;
+    T_BT_EVENT_PARAM  param;
 
-    p_link = bt_find_br_link(payload->bd_addr);
+    link = bt_link_find(payload->bd_addr);
 
     switch (msg)
     {
@@ -5088,7 +5014,7 @@ void bt_mgr_handle_sniffing_msg(T_BT_MSG          msg,
         break;
 
     case BT_MSG_SNIFFING_A2DP_CONN_CMPL:
-        if (p_link != NULL)
+        if (link != NULL)
         {
             T_BT_EVENT_PARAM_A2DP_SNIFFING_CONN_CMPL *cfg;
             T_ROLESWAP_A2DP_INFO *data = (T_ROLESWAP_A2DP_INFO *)payload->msg_buf;
@@ -5116,20 +5042,43 @@ void bt_mgr_handle_sniffing_msg(T_BT_MSG          msg,
                 cfg->codec_info.aac.vbr_supported = data->codec_info.aac.vbr_supported;
                 cfg->codec_info.aac.bit_rate = data->codec_info.aac.bit_rate;
             }
+            else if (param.a2dp_sniffing_conn_cmpl.codec_type == BT_A2DP_CODEC_TYPE_LDAC)
+            {
+                cfg->codec_info.ldac.sampling_frequency = data->codec_info.ldac.sampling_frequency;
+                cfg->codec_info.ldac.channel_mode = data->codec_info.ldac.channel_mode;
+            }
+            else if (param.a2dp_sniffing_conn_cmpl.codec_type == BT_A2DP_CODEC_TYPE_LC3)
+            {
+                cfg->codec_info.lc3.sampling_frequency = data->codec_info.lc3.sampling_frequency;
+                cfg->codec_info.lc3.channel_number = data->codec_info.lc3.channel_number;
+                cfg->codec_info.lc3.frame_duration = data->codec_info.lc3.frame_duration;
+                cfg->codec_info.lc3.frame_length = data->codec_info.lc3.frame_length;
+            }
+            else if (param.a2dp_sniffing_conn_cmpl.codec_type == BT_A2DP_CODEC_TYPE_LHDC)
+            {
+                cfg->codec_info.lhdc.sampling_frequency = data->codec_info.lhdc.sampling_frequency;
+                cfg->codec_info.lhdc.min_bitrate = data->codec_info.lhdc.min_bitrate;
+                cfg->codec_info.lhdc.max_bitrate = data->codec_info.lhdc.max_bitrate;
+                cfg->codec_info.lhdc.bit_depth = data->codec_info.lhdc.bit_depth;
+                cfg->codec_info.lhdc.version_number = data->codec_info.lhdc.version_number;
+                cfg->codec_info.lhdc.low_latency = data->codec_info.lhdc.low_latency;
+                cfg->codec_info.lhdc.meta = data->codec_info.lhdc.meta;
+                cfg->codec_info.lhdc.jas = data->codec_info.lhdc.jas;
+                cfg->codec_info.lhdc.ar = data->codec_info.lhdc.ar;
+            }
             else
             {
                 memcpy(cfg->codec_info.vendor.info, data->codec_info.vendor.info, 12);
             }
 
             bt_a2dp_active_link_set(payload->bd_addr);
-            bt_pm_cback_register(p_link->bd_addr, bt_a2dp_pm_cback);
 
             bt_mgr_event_post(BT_EVENT_A2DP_SNIFFING_CONN_CMPL, &param, sizeof(param));
         }
         break;
 
     case BT_MSG_SNIFFING_AVRCP_CONN_CMPL:
-        if (p_link != NULL)
+        if (link != NULL)
         {
             memcpy(param.avrcp_sniffing_conn_cmpl.bd_addr, payload->bd_addr, 6);
             bt_mgr_event_post(BT_EVENT_AVRCP_SNIFFING_CONN_CMPL, &param, sizeof(param));
@@ -5137,11 +5086,9 @@ void bt_mgr_handle_sniffing_msg(T_BT_MSG          msg,
         break;
 
     case BT_MSG_SNIFFING_HFP_CONN_CMPL:
-        if (p_link != NULL)
+        if (link != NULL)
         {
             T_ROLESWAP_HFP_INFO *p_info = (T_ROLESWAP_HFP_INFO *)(payload->msg_buf);
-
-            bt_pm_cback_register(p_link->bd_addr, bt_hfp_pm_cback);
 
             if (p_info->uuid == UUID_HANDSFREE)
             {
@@ -5157,7 +5104,7 @@ void bt_mgr_handle_sniffing_msg(T_BT_MSG          msg,
         break;
 
     case BT_MSG_SNIFFING_PBAP_CONN_CMPL:
-        if (p_link != NULL)
+        if (link != NULL)
         {
             memcpy(param.pbap_sniffing_conn_cmpl.bd_addr, payload->bd_addr, 6);
             bt_mgr_event_post(BT_EVENT_PBAP_SNIFFING_CONN_CMPL, &param, sizeof(param));
@@ -5165,7 +5112,7 @@ void bt_mgr_handle_sniffing_msg(T_BT_MSG          msg,
         break;
 
     case BT_MSG_SNIFFING_HID_DEVICE_CONN_CMPL:
-        if (p_link != NULL)
+        if (link != NULL)
         {
             memcpy(param.hid_device_sniffing_conn_cmpl.bd_addr, payload->bd_addr, 6);
             bt_mgr_event_post(BT_EVENT_HID_DEVICE_SNIFFING_CONN_CMPL, &param, sizeof(param));
@@ -5173,7 +5120,7 @@ void bt_mgr_handle_sniffing_msg(T_BT_MSG          msg,
         break;
 
     case BT_MSG_SNIFFING_HID_HOST_CONN_CMPL:
-        if (p_link != NULL)
+        if (link != NULL)
         {
             memcpy(param.hid_host_sniffing_conn_cmpl.bd_addr, payload->bd_addr, 6);
             bt_mgr_event_post(BT_EVENT_HID_HOST_SNIFFING_CONN_CMPL, &param, sizeof(param));
@@ -5181,7 +5128,7 @@ void bt_mgr_handle_sniffing_msg(T_BT_MSG          msg,
         break;
 
     case BT_MSG_SNIFFING_SPP_CONN_CMPL:
-        if (p_link != NULL)
+        if (link != NULL)
         {
             T_ROLESWAP_SPP_INFO *p_info = (T_ROLESWAP_SPP_INFO *)(payload->msg_buf);
 
@@ -5192,7 +5139,7 @@ void bt_mgr_handle_sniffing_msg(T_BT_MSG          msg,
         break;
 
     case BT_MSG_SNIFFING_IAP_CONN_CMPL:
-        if (p_link != NULL)
+        if (link != NULL)
         {
             memcpy(param.iap_sniffing_conn_cmpl.bd_addr, payload->bd_addr, 6);
             bt_mgr_event_post(BT_EVENT_IAP_SNIFFING_CONN_CMPL, &param, sizeof(param));
@@ -5200,7 +5147,7 @@ void bt_mgr_handle_sniffing_msg(T_BT_MSG          msg,
         break;
 
     case BT_MSG_SNIFFING_SCO_CONN_CMPL:
-        if (p_link != NULL)
+        if (link != NULL)
         {
             T_ROLESWAP_SCO_INFO *p_info = (T_ROLESWAP_SCO_INFO *)(payload->msg_buf);
 
@@ -5224,7 +5171,7 @@ void bt_mgr_handle_sniffing_msg(T_BT_MSG          msg,
         break;
 
     case BT_MSG_SNIFFING_A2DP_START_IND:
-        if (p_link != NULL)
+        if (link != NULL)
         {
             T_BT_EVENT_PARAM_A2DP_SNIFFING_START_IND *cfg;
             T_ROLESWAP_A2DP_INFO *data = (T_ROLESWAP_A2DP_INFO *)payload->msg_buf;
@@ -5252,6 +5199,30 @@ void bt_mgr_handle_sniffing_msg(T_BT_MSG          msg,
                 cfg->codec_info.aac.vbr_supported = data->codec_info.aac.vbr_supported;
                 cfg->codec_info.aac.bit_rate = data->codec_info.aac.bit_rate;
             }
+            else if (param.a2dp_sniffing_start_ind.codec_type == BT_A2DP_CODEC_TYPE_LDAC)
+            {
+                cfg->codec_info.ldac.sampling_frequency = data->codec_info.ldac.sampling_frequency;
+                cfg->codec_info.ldac.channel_mode = data->codec_info.ldac.channel_mode;
+            }
+            else if (param.a2dp_sniffing_start_ind.codec_type == BT_A2DP_CODEC_TYPE_LC3)
+            {
+                cfg->codec_info.lc3.sampling_frequency = data->codec_info.lc3.sampling_frequency;
+                cfg->codec_info.lc3.channel_number = data->codec_info.lc3.channel_number;
+                cfg->codec_info.lc3.frame_duration = data->codec_info.lc3.frame_duration;
+                cfg->codec_info.lc3.frame_length = data->codec_info.lc3.frame_length;
+            }
+            else if (param.a2dp_sniffing_start_ind.codec_type == BT_A2DP_CODEC_TYPE_LHDC)
+            {
+                cfg->codec_info.lhdc.sampling_frequency = data->codec_info.lhdc.sampling_frequency;
+                cfg->codec_info.lhdc.min_bitrate = data->codec_info.lhdc.min_bitrate;
+                cfg->codec_info.lhdc.max_bitrate = data->codec_info.lhdc.max_bitrate;
+                cfg->codec_info.lhdc.bit_depth = data->codec_info.lhdc.bit_depth;
+                cfg->codec_info.lhdc.version_number = data->codec_info.lhdc.version_number;
+                cfg->codec_info.lhdc.low_latency = data->codec_info.lhdc.low_latency;
+                cfg->codec_info.lhdc.meta = data->codec_info.lhdc.meta;
+                cfg->codec_info.lhdc.jas = data->codec_info.lhdc.jas;
+                cfg->codec_info.lhdc.ar = data->codec_info.lhdc.ar;
+            }
             else
             {
                 memcpy(cfg->codec_info.vendor.info, data->codec_info.vendor.info, 12);
@@ -5263,52 +5234,19 @@ void bt_mgr_handle_sniffing_msg(T_BT_MSG          msg,
         break;
 
     case BT_MSG_SNIFFING_A2DP_START:
-        if (p_link != NULL)
+        if (link != NULL)
         {
-            T_ROLESWAP_RECOVERY_CONN_PARAM *p_param;
-            T_ROLESWAP_A2DP_INFO *data;
-            T_BT_EVENT_PARAM_A2DP_SNIFFING_STARTED *cfg;
+            T_ROLESWAP_RECOVERY_CONN_PARAM *conn_param;
 
-            p_param = (T_ROLESWAP_RECOVERY_CONN_PARAM *)(payload->msg_buf);
-            data = (T_ROLESWAP_A2DP_INFO *)(p_param->p_param);
-
-            param.a2dp_sniffing_started.cause = p_param->cause;
+            conn_param = (T_ROLESWAP_RECOVERY_CONN_PARAM *)(payload->msg_buf);
+            param.a2dp_sniffing_started.cause = conn_param->cause;
             memcpy(param.a2dp_sniffing_started.bd_addr, payload->bd_addr, 6);
-            cfg = &param.a2dp_sniffing_started;
-
-            if (data)
-            {
-                param.a2dp_sniffing_started.codec_type = data->codec_type;
-                if (param.a2dp_sniffing_started.codec_type == BT_A2DP_CODEC_TYPE_SBC)
-                {
-                    cfg->codec_info.sbc.sampling_frequency = data->codec_info.sbc.sampling_frequency;
-                    cfg->codec_info.sbc.channel_mode = data->codec_info.sbc.channel_mode;
-                    cfg->codec_info.sbc.block_length = data->codec_info.sbc.block_length;
-                    cfg->codec_info.sbc.subbands = data->codec_info.sbc.subbands;
-                    cfg->codec_info.sbc.allocation_method = data->codec_info.sbc.allocation_method;
-                    cfg->codec_info.sbc.min_bitpool = data->codec_info.sbc.min_bitpool;
-                    cfg->codec_info.sbc.max_bitpool = data->codec_info.sbc.max_bitpool;
-                }
-                else if (param.a2dp_sniffing_started.codec_type == BT_A2DP_CODEC_TYPE_AAC)
-                {
-                    cfg->codec_info.aac.object_type = data->codec_info.aac.object_type;
-                    cfg->codec_info.aac.sampling_frequency = data->codec_info.aac.sampling_frequency;
-                    cfg->codec_info.aac.channel_number = data->codec_info.aac.channel_number;
-                    cfg->codec_info.aac.vbr_supported = data->codec_info.aac.vbr_supported;
-                    cfg->codec_info.aac.bit_rate = data->codec_info.aac.bit_rate;
-                }
-                else
-                {
-                    memcpy(cfg->codec_info.vendor.info, data->codec_info.vendor.info, 12);
-                }
-            }
-
             bt_mgr_event_post(BT_EVENT_A2DP_SNIFFING_STARTED, &param, sizeof(param));
         }
         break;
 
     case BT_MSG_SNIFFING_A2DP_CONFIG_CMPL:
-        if (p_link != NULL)
+        if (link != NULL)
         {
             memcpy(param.a2dp_sniffing_config_cmpl.bd_addr, payload->bd_addr, 6);
             param.a2dp_sniffing_config_cmpl.cause = *(uint16_t *)(payload->msg_buf);
@@ -5318,7 +5256,7 @@ void bt_mgr_handle_sniffing_msg(T_BT_MSG          msg,
         break;
 
     case BT_MSG_SNIFFING_A2DP_STOP:
-        if (p_link != NULL)
+        if (link != NULL)
         {
             memcpy(param.a2dp_sniffing_stopped.bd_addr, payload->bd_addr, 6);
             param.a2dp_sniffing_stopped.cause = *(uint16_t *)(payload->msg_buf);
@@ -5328,15 +5266,15 @@ void bt_mgr_handle_sniffing_msg(T_BT_MSG          msg,
         break;
 
     case BT_MSG_SNIFFING_SCO_START:
-        if (p_link != NULL)
+        if (link != NULL)
         {
-            T_ROLESWAP_RECOVERY_CONN_PARAM *p_param;
+            T_ROLESWAP_RECOVERY_CONN_PARAM *conn_param;
             T_ROLESWAP_SCO_INFO *p_info;
 
-            p_param = (T_ROLESWAP_RECOVERY_CONN_PARAM *)(payload->msg_buf);
-            p_info = (T_ROLESWAP_SCO_INFO *)(p_param->p_param);
+            conn_param = (T_ROLESWAP_RECOVERY_CONN_PARAM *)(payload->msg_buf);
+            p_info = (T_ROLESWAP_SCO_INFO *)(conn_param->param);
 
-            param.sco_sniffing_started.cause = p_param->cause;
+            param.sco_sniffing_started.cause = conn_param->cause;
             memcpy(param.sco_sniffing_started.bd_addr, payload->bd_addr, 6);
 
             if (p_info)
@@ -5352,7 +5290,7 @@ void bt_mgr_handle_sniffing_msg(T_BT_MSG          msg,
         break;
 
     case BT_MSG_SNIFFING_SCO_STOP:
-        if (p_link != NULL)
+        if (link != NULL)
         {
             memcpy(param.sco_sniffing_stopped.bd_addr, payload->bd_addr, 6);
             param.sco_sniffing_stopped.cause = *(uint16_t *)(payload->msg_buf);
@@ -5397,7 +5335,7 @@ void bt_mgr_handle_vnd_msg(T_BT_MSG          msg,
     case BT_MSG_VND_SET_TX_POWER_RSP:
         {
             T_GAP_SET_TX_POWER_RSP *p_info;
-            T_BT_BR_LINK *p_link;
+            T_BT_LINK *link;
 
             p_info = (T_GAP_SET_TX_POWER_RSP *)(payload->msg_buf);
 
@@ -5411,13 +5349,13 @@ void bt_mgr_handle_vnd_msg(T_BT_MSG          msg,
             }
             else
             {
-                p_link = bt_find_br_link_by_handle(p_info->handle);
-                if (p_link)
+                link = bt_link_find_by_handle(p_info->handle);
+                if (link)
                 {
                     param.link_tx_power_set_rsp.cause = p_info->cause;
                     param.link_tx_power_set_rsp.expected_tx_power_offset = p_info->expected_tx_power_offset;
                     param.link_tx_power_set_rsp.actual_tx_power_offset = p_info->actual_tx_power_offset;
-                    memcpy(param.link_tx_power_set_rsp.bd_addr, p_link->bd_addr, 6);
+                    memcpy(param.link_tx_power_set_rsp.bd_addr, link->bd_addr, 6);
                     bt_mgr_event_post(BT_EVENT_LINK_TX_POWER_SET_RSP, &param,
                                       sizeof(T_BT_EVENT_PARAM_LINK_TX_POWER_SET_RSP));
                 }
@@ -5429,17 +5367,17 @@ void bt_mgr_handle_vnd_msg(T_BT_MSG          msg,
         {
             T_BT_EVENT_PARAM param;
             T_GAP_SET_RSSI_GOLDEN_RANGE_RSP *p_info;
-            T_BT_BR_LINK *p_link;
+            T_BT_LINK *link;
 
             p_info = (T_GAP_SET_RSSI_GOLDEN_RANGE_RSP *)(payload->msg_buf);
 
-            p_link = bt_find_br_link_by_handle(p_info->handle);
-            if (p_link)
+            link = bt_link_find_by_handle(p_info->handle);
+            if (link)
             {
                 param.link_rssi_golden_range_set_rsp.cause = p_info->cause;
                 param.link_rssi_golden_range_set_rsp.max_rssi = p_info->max_rssi;
                 param.link_rssi_golden_range_set_rsp.min_rssi = p_info->min_rssi;
-                memcpy(param.link_rssi_golden_range_set_rsp.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.link_rssi_golden_range_set_rsp.bd_addr, link->bd_addr, 6);
                 bt_mgr_event_post(BT_EVENT_LINK_RSSI_GOLDEN_RANGE_SET_RSP, &param,
                                   sizeof(T_BT_EVENT_PARAM_LINK_RSSI_GOLDEN_RANGE_SET_RSP));
             }
@@ -5450,18 +5388,18 @@ void bt_mgr_handle_vnd_msg(T_BT_MSG          msg,
         {
             T_BT_EVENT_PARAM param;
             T_GAP_SET_IDLE_ZONE_RSP *p_info;
-            T_BT_BR_LINK *p_link;
+            T_BT_LINK *link;
 
             p_info = (T_GAP_SET_IDLE_ZONE_RSP *)(payload->msg_buf);
 
-            p_link = bt_find_br_link_by_handle(p_info->handle);
-            if (p_link)
+            link = bt_link_find_by_handle(p_info->handle);
+            if (link)
             {
                 param.link_idle_zone_set_rsp.cause = p_info->cause;
                 param.link_idle_zone_set_rsp.interval = p_info->interval;
                 param.link_idle_zone_set_rsp.idle_slot = p_info->idle_slot;
                 param.link_idle_zone_set_rsp.idle_skip = p_info->idle_skip;
-                memcpy(param.link_idle_zone_set_rsp.bd_addr, p_link->bd_addr, 6);
+                memcpy(param.link_idle_zone_set_rsp.bd_addr, link->bd_addr, 6);
                 bt_mgr_event_post(BT_EVENT_LINK_IDLE_ZONE_SET_RSP, &param,
                                   sizeof(T_BT_EVENT_PARAM_LINK_IDLE_ZONE_SET_RSP));
             }
@@ -5470,13 +5408,71 @@ void bt_mgr_handle_vnd_msg(T_BT_MSG          msg,
 
     case BT_MSG_VND_TRAFFIC_QOS_RSP:
         {
-            T_BT_EVENT_PARAM param;
-            T_GAP_VND_SET_TRAFFIC_QOS_RSP *p_info;
+            T_BT_EVENT_PARAM               param;
+            T_GAP_VND_SET_TRAFFIC_QOS_RSP *info;
+            uint8_t                        sub_cmd;
 
-            p_info = (T_GAP_VND_SET_TRAFFIC_QOS_RSP *)(payload->msg_buf);
-            param.traffic_qos_rsp.cause = p_info->cause;
+            info = (T_GAP_VND_SET_TRAFFIC_QOS_RSP *)(payload->msg_buf);
+            param.traffic_qos_rsp.cause = info->cause;
+            sub_cmd = info->param[0];
+            if (sub_cmd == BT_VND_NEGOTIATE_TRAFFIC_QOS_CMD)
+            {
+                param.traffic_qos_rsp.negotiate = 1;
+            }
+            else if (sub_cmd == BT_VND_NON_NEGOTIATE_TRAFFIC_QOS_CMD)
+            {
+                param.traffic_qos_rsp.negotiate = 0;
+            }
             bt_mgr_event_post(BT_EVENT_TRAFFIC_QOS_RSP, &param,
                               sizeof(T_BT_EVENT_PARAM_TRAFFIC_QOS_RSP));
+        }
+        break;
+
+    case BT_MSG_VND_TRAFFIC_QOS_CMPL:
+        {
+            T_BT_EVENT_PARAM                param;
+            T_GAP_VND_SET_TRAFFIC_QOS_CMPL *info;
+            T_BT_LINK                      *link;
+            uint16_t                        handle;
+            uint8_t                        *p;
+
+            info = (T_GAP_VND_SET_TRAFFIC_QOS_CMPL *)(payload->msg_buf);
+            p = info->param;
+            LE_STREAM_TO_UINT16(handle, p);
+            link = bt_link_find_by_handle(handle);
+            if (link != NULL)
+            {
+                memcpy(param.traffic_qos_cmpl.bd_addr, link->bd_addr, 6);
+                param.traffic_qos_cmpl.cause = info->cause;
+                if (info->subevt == BT_VND_NEGOTIATE_TRAFFIC_QOS_EVT)
+                {
+                    param.traffic_qos_cmpl.type = BT_NEGOTIATE_PERIODIC_TRAFFIC_QOS;
+                    LE_STREAM_TO_UINT16(param.traffic_qos_cmpl.u.negotiate_periodic_param.interval, p);
+                    LE_STREAM_TO_UINT8(param.traffic_qos_cmpl.u.negotiate_periodic_param.rsvd_slots, p);
+                    LE_STREAM_TO_UINT8(param.traffic_qos_cmpl.enable, p);
+                }
+                else if (info->subevt == BT_VND_NON_NEGOTIATE_TRAFFIC_QOS_EVT)
+                {
+                    uint8_t type;
+
+                    LE_STREAM_TO_UINT8(type, p);
+                    if (type == 0)
+                    {
+                        param.traffic_qos_cmpl.type = BT_RANDOM_TRAFFIC_QOS;
+                    }
+                    if (type == 1)
+                    {
+                        param.traffic_qos_cmpl.type = BT_PERIODIC_SYNC_TRAFFIC_QOS;
+                    }
+                    else if (type == 2)
+                    {
+                        param.traffic_qos_cmpl.type = BT_NON_NEGOTIATE_PERIODIC_TRAFFIC_QOS;
+                    }
+                    LE_STREAM_TO_UINT8(param.traffic_qos_cmpl.enable, p);
+                }
+                bt_mgr_event_post(BT_EVENT_TRAFFIC_QOS_CMPL, &param,
+                                  sizeof(T_BT_EVENT_PARAM_TRAFFIC_QOS_CMPL));
+            }
         }
         break;
 
@@ -5488,7 +5484,7 @@ void bt_mgr_handle_vnd_msg(T_BT_MSG          msg,
 bool bt_mgr_dispatch(T_BT_MSG  msg,
                      void     *buf)
 {
-    uint16_t msg_group;
+    uint16_t          msg_group;
     T_BT_MSG_PAYLOAD *payload = buf;
 
     BTM_PRINT_TRACE1("bt_mgr_dispatch: msg 0x%04x", msg);
@@ -5655,28 +5651,24 @@ void bt_mgr_relay_cback(uint16_t               event,
     }
 }
 
-bool bt_mgr_init(uint8_t link_num)
+bool bt_mgr_init(void)
 {
     int32_t ret = 0;
-
-    btm_db.br_link_num = link_num;
-    btm_db.br_link = os_mem_zalloc2(sizeof(T_BT_BR_LINK) * btm_db.br_link_num);
-    if (btm_db.br_link == NULL)
-    {
-        ret = 1;
-        goto fail_alloc_link;
-    }
 
 #if CONFIG_REALTEK_REMOTE_CONTROL_SUPPORT
     btm_db.relay_handle = remote_relay_register(bt_mgr_relay_cback);
     if (btm_db.relay_handle == NULL)
     {
-        ret = 2;
+        ret = 1;
         goto fail_register_remote_relay;
     }
 #endif
 
-    bt_gap_init();
+    if (bt_gap_init() == false)
+    {
+        ret = 2;
+        goto fail_init_gap;
+    }
 
     if (bt_sdp_init() == false)
     {
@@ -5690,19 +5682,18 @@ bool bt_mgr_init(uint8_t link_num)
         goto fail_init_roleswap;
     }
 
+    os_queue_init(&btm_db.link_list);
     os_queue_init(&btm_db.cback_list);
 
     return true;
 
 fail_init_roleswap:
 fail_init_sdp:
+fail_init_gap:
 #if CONFIG_REALTEK_REMOTE_CONTROL_SUPPORT
     remote_relay_unregister(btm_db.relay_handle);
 fail_register_remote_relay:
 #endif
-    os_mem_free(btm_db.br_link);
-fail_alloc_link:
     BTM_PRINT_ERROR1("bt_mgr_init: failed %d", -ret);
     return false;
 }
-

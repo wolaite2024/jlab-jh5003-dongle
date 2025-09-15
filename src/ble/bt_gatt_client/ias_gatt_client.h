@@ -32,7 +32,7 @@ extern "C" {
 /*============================================================================*
  *                         Macros
  *============================================================================*/
-/** @defgroup IAS_Client_Exported_Macros IAS Client Exported Macros
+/** @defgroup IAS_GATT_CLIENT_Exported_Macros IAS GATT Client Exported Macros
   * @brief
   * @{
   */
@@ -52,14 +52,14 @@ extern "C" {
 #define GATT_MSG_IAS_CLIENT_WRITE_ALERT_LEVEL_RESULT  0x01
 /** @} End of IAS_CLT_CB_MSG */
 
-/** End of IAS_Client_Exported_Macros
+/** End of IAS_GATT_CLIENT_Exported_Macros
   * @}
   */
 
 /*============================================================================*
  *                         Types
  *============================================================================*/
-/** @defgroup IAS_Client_Exported_Types IAS Client Exported Types
+/** @defgroup IAS_GATT_CLIENT_Exported_Types IAS GATT Client Exported Types
   * @brief
   * @{
   */
@@ -94,12 +94,12 @@ typedef struct
 {
     uint16_t cause;
 } T_IAS_CLIENT_WRITE_ALERT_LEVEL_RESULT;
-/** End of IAS_Client_Exported_Types * @} */
+/** End of IAS_GATT_CLIENT_Exported_Types * @} */
 
 /*============================================================================*
  *                              Functions
  *============================================================================*/
-/** @defgroup IAS_Client_Exported_Functions IAS Client Exported Functions
+/** @defgroup IAS_GATT_CLIENT_Exported_Functions IAS GATT Client Exported Functions
   * @{
   */
 
@@ -143,7 +143,7 @@ bool ias_client_init(P_FUN_IAS_CLIENT_APP_CB app_cb);
   */
 bool ias_client_write_alert_level(uint16_t conn_handle, T_IAS_ALERT_LEVEL alert_level);
 
-/** @} End of IAS_Client_Exported_Functions */
+/** @} End of IAS_GATT_CLIENT_Exported_Functions */
 
 /** @} End of IAS_GATT_CLIENT */
 

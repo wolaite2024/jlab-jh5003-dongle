@@ -3,7 +3,7 @@
 *     Copyright(c) 2016, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * @file    gap_msg.h
-  * @brief   This file contains function prototype for all GAP roles.
+  * @brief   This file contains function prototypes for all GAP roles.
   * @details
   * @author  ranhui
   * @date    2016-02-18
@@ -39,7 +39,7 @@ extern "C"
   * @{
   */
 
-/** @defgroup GAP_MSG_TYPE GAP BT Message Type Definitions
+/** @defgroup GAP_MSG_TYPE GAP Bluetooth Message Type Definitions
   * @brief Define the subtype of Message IO_MSG_TYPE_BT_STATUS.
   * @{
   */
@@ -51,7 +51,7 @@ extern "C"
 #define GAP_MSG_LE_AUTHEN_STATE_CHANGE     0x05 //!< Authentication state change msg type.
 #define GAP_MSG_LE_BOND_PASSKEY_DISPLAY    0x06 //!< Bond passkey display msg type.
 #define GAP_MSG_LE_BOND_PASSKEY_INPUT      0x07 //!< Bond passkey input msg type.
-#define GAP_MSG_LE_BOND_OOB_INPUT          0x08 //!< Bond passkey oob input msg type.
+#define GAP_MSG_LE_BOND_OOB_INPUT          0x08 //!< Bond passkey OOB input msg type.
 #define GAP_MSG_LE_BOND_USER_CONFIRMATION  0x09 //!< Bond user confirmation msg type.
 #define GAP_MSG_LE_BOND_JUST_WORK          0x0A //!< Bond user confirmation msg type.
 
@@ -68,7 +68,7 @@ extern "C"
   * @{
   */
 #define GAP_INIT_STATE_INIT          0   //!< Waiting to be started
-#define GAP_INIT_STATE_STACK_READY   1   //!< Stack is ready
+#define GAP_INIT_STATE_STACK_READY   1   //!< Bluetooth Host is ready
 /** @} End GAP_INIT_STATE */
 
 /** @defgroup GAP_ADV_STATE GAP Advertising State
@@ -115,21 +115,12 @@ extern "C"
 /** @defgroup GAP_CONN_PARAM_UPDATE_STATUS Connection Parameter Update Status
  * @{
  */
-#define GAP_CONN_PARAM_UPDATE_STATUS_SUCCESS      0 //!< Connection paramter update status success.
-#define GAP_CONN_PARAM_UPDATE_STATUS_FAIL         1 //!< Connection paramter update status failed.
-#define GAP_CONN_PARAM_UPDATE_STATUS_PENDING      2 //!< Connection paramter update status pending.
+#define GAP_CONN_PARAM_UPDATE_STATUS_SUCCESS      0 //!< Connection parameter update status success.
+#define GAP_CONN_PARAM_UPDATE_STATUS_FAIL         1 //!< Connection parameter update status failed.
+#define GAP_CONN_PARAM_UPDATE_STATUS_PENDING      2 //!< Connection parameter update status pending.
 /** End of GAP_CONN_PARAM_UPDATE_STATUS
   * @}
   */
-
-/** @brief GAP connection states*/
-typedef enum
-{
-    GAP_CONN_STATE_DISCONNECTED, //!< Disconnected.
-    GAP_CONN_STATE_CONNECTING,   //!< Connecting.
-    GAP_CONN_STATE_CONNECTED,    //!< Connected.
-    GAP_CONN_STATE_DISCONNECTING //!< Disconnecting.
-} T_GAP_CONN_STATE;
 
 /** End of Gap_Msg_Exported_Macros
 * @}
@@ -142,14 +133,24 @@ typedef enum
 /** @defgroup Gap_Msg_Exported_Types GAP Msg Exported Types
   * @{
   */
+
+/** @brief GAP connection states*/
+typedef enum
+{
+    GAP_CONN_STATE_DISCONNECTED, //!< Disconnected.
+    GAP_CONN_STATE_CONNECTING,   //!< Connecting.
+    GAP_CONN_STATE_CONNECTED,    //!< Connected.
+    GAP_CONN_STATE_DISCONNECTING //!< Disconnecting.
+} T_GAP_CONN_STATE;
+
 /** @brief  Device State.*/
 typedef struct
 {
-    uint8_t gap_init_state: 1;  //!< @ref GAP_INIT_STATE
-    uint8_t gap_adv_sub_state: 1;  //!< @ref GAP_ADV_SUB_STATE
-    uint8_t gap_adv_state: 2;   //!< @ref GAP_ADV_STATE
-    uint8_t gap_scan_state: 2;  //!< @ref GAP_SCAN_STATE
-    uint8_t gap_conn_state: 2;  //!< @ref GAP_CONN_STATE
+    uint8_t gap_init_state: 1;  //!< @ref GAP_INIT_STATE.
+    uint8_t gap_adv_sub_state: 1;  //!< @ref GAP_ADV_SUB_STATE.
+    uint8_t gap_adv_state: 2;   //!< @ref GAP_ADV_STATE.
+    uint8_t gap_scan_state: 2;  //!< @ref GAP_SCAN_STATE.
+    uint8_t gap_conn_state: 2;  //!< @ref GAP_CONN_STATE.
 } T_GAP_DEV_STATE;
 
 /** @brief  The msg_data of GAP_MSG_LE_DEV_STATE_CHANGE.*/

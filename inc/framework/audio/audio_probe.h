@@ -15,25 +15,22 @@ extern "C" {
 /**
  * \defgroup    AUDIO_PROBE Audio Probe
  *
- * \brief   Test, analyze and make profilings on the Audio subsystem.
+ * \brief   Test, analyze and make profiling on the Audio Subsystem.
  *
- * \details Audio Probe provides the testing or profiling interfaces, which applications can analyze
- *          the Audio subsystem.
+ * \details Audio Probe provides the testing or profiling interfaces, which application can analyze
+ *          the Audio Subsystem.
  *
- * \note    Probe interfaces are used only for testing and profiling. Applications shall not use Probe
- *          interfaces in any formal product scenarios.
+ * \note    Audio Probe interfaces are used only for testing and profiling. Application shall not
+ *          use Audio Probe interfaces in any formal product scenarios.
  */
 
 /**
- * audio_probe.h
+ * \brief   Define Audio Probe event from DSP.
  *
- * \brief   Define probe event from DSP.
- *
- * \note    Only provide PROBE event for APP using.
+ * \note    Only provide Audio Probe event for application using.
  *
  * \ingroup AUDIO_PROBE
  */
-
 typedef enum
 {
     PROBE_SCENARIO_STATE             = 0x00,
@@ -46,6 +43,13 @@ typedef enum
     PROBE_SYNC_REF_REQUEST           = 0x07,
 } T_AUDIO_PROBE_EVENT;
 
+/**
+ * \brief   Define Audio Probe event from DSP.
+ *
+ * \note    Only provide Audio Probe event for application using.
+ *
+ * \ingroup AUDIO_PROBE
+ */
 typedef enum
 {
     AUDIO_PROBE_DSP_EVT_INIT_FINISH                     = 0x00,
@@ -110,9 +114,7 @@ typedef enum t_audio_probe_codec_mgr_bias_mode
 } T_AUDIO_PROBE_CODEC_MGR_BIAS_MODE;
 
 /**
- * audio_probe.h
- *
- * \brief   Define probe cmd id to DSP.
+ * \brief   Define Audio Probe command id for DSP.
  *
  * \note    Should be referenced to h2d_cmd.
  *
@@ -127,13 +129,11 @@ typedef enum
 } T_AUDIO_PROBE_DSP_CMD;
 
 /**
- * audio_probe.h
+ * \brief Define Audio Probe callback prototype.
  *
- * \brief Define DSP probe callback prototype.
+ * \note    Do <b>not</b> touch this interface in any product scenarios.
  *
- * \note    Do <b>NOT</b> touch this interface in any product scenarios.
- *
- * \param[in]   event   event for dsp \ref T_AUDIO_PROBE_EVENT.
+ * \param[in]   event   The event for DSP \ref T_AUDIO_PROBE_EVENT.
  * \param[in]   buf     The buffer that holds the DSP probe data.
  *
  * \ingroup AUDIO_PROBE
@@ -141,14 +141,12 @@ typedef enum
 typedef void (*P_AUDIO_PROBE_DSP_CABCK)(T_AUDIO_PROBE_EVENT event, void *buf);
 
 /**
- * audio_probe.h
+ * \brief Define Audio Probe callback prototype of DSP status.
  *
- * \brief Define DSP ststus probe callback prototype.
+ * \note    Do <b>not</b> touch this interface in any product scenarios.
  *
- * \note    Do <b>NOT</b> touch this interface in any product scenarios.
- *
- * \param[in]   event   event for dsp \ref T_AUDIO_PROBE_DSP_EVENT_MSG.
- * \param[in]   msg     The msg that holds the DSP status.
+ * \param[in]   event   The event for DSP \ref T_AUDIO_PROBE_DSP_EVENT.
+ * \param[in]   msg     The message that holds the DSP status.
  *
  * \ingroup AUDIO_PROBE
  */
@@ -159,70 +157,62 @@ typedef bool (*P_SYS_IPC_CBACK)(uint32_t id, void *msg);
 typedef void *T_SYS_IPC_HANDLE;
 
 /**
- * audio_probe.h
+ * \brief   Register Audio Probe DSP callback.
  *
- * \brief   Register DSP probe callback.
+ * \note    Do <b>not</b> touch this interface in any product scenarios.
  *
- * \note    Do <b>NOT</b> touch this interface in any product scenarios.
+ * \param[in] cback The Audio Probe DSP callback \ref P_AUDIO_PROBE_DSP_CABCK.
  *
- * \param[in] cback The DSP probe callback \ref P_AUDIO_PROBE_DSP_CABCK.
- *
- * \return          The status of registering DSP probe callback.
- * \retval true     DSP probe data was registered successfully.
- * \retval false    DSP probe data was failed to register.
+ * \return          The status of registering Audio Probe DSP callback.
+ * \retval true     Audio Probe DSP callback was registered successfully.
+ * \retval false    Audio Probe DSP callback was failed to register.
  *
  * \ingroup AUDIO_PROBE
  */
 bool audio_probe_dsp_cback_register(P_AUDIO_PROBE_DSP_CABCK cback);
 
 /**
- * audio_probe.h
+ * \brief   Unregister Audio Probe DSP callback.
  *
- * \brief   Unregister DSP probe callback.
+ * \note    Do <b>not</b> touch this interface in any product scenarios.
  *
- * \note    Do <b>NOT</b> touch this interface in any product scenarios.
+ * \param[in] cback The Audio Probe DSP callback \ref P_AUDIO_PROBE_DSP_CABCK.
  *
- * \param[in] cback The DSP probe callback \ref P_AUDIO_PROBE_DSP_CABCK.
- *
- * \return          The status of unregistering DSP probe callback.
- * \retval true     DSP probe data was unregistered successfully.
- * \retval false    DSP probe data was failed to unregister.
+ * \return          The status of unregistering Audio Probe DSP callback.
+ * \retval true     Audio Probe DSP callback was unregistered successfully.
+ * \retval false    Audio Probe DSP callback was failed to unregister.
  *
  * \ingroup AUDIO_PROBE
  */
 bool audio_probe_dsp_cback_unregister(P_AUDIO_PROBE_DSP_CABCK cback);
 
 /**
- * audio_probe.h
+ * \brief   Send Audio Probe data to DSP.
  *
- * \brief   Send probe data to DSP.
+ * \note    Do <b>not</b> touch this interface in any product scenarios.
  *
- * \note    Do <b>NOT</b> touch this interface in any product scenarios.
+ * \param[in] buf   The probe data buffer address.
+ * \param[in] len   The probe data buffer length.
  *
- * \param[in] buf   The probing data buffer address.
- * \param[in] len   The probing data buffer length.
- *
- * \return          The status of sending DSP probe data.
- * \retval true     DSP probe data was sent successfully.
- * \retval false    DSP probe data was failed to send.
+ * \return          The status of sending Audio Probe DSP data.
+ * \retval true     Audio Probe DSP data was sent successfully.
+ * \retval false    Audio Probe DSP data was failed to send.
  *
  * \ingroup AUDIO_PROBE
  */
 bool audio_probe_dsp_send(uint8_t *buf, uint16_t len);
 
 /**
- * audio_probe.h
+ * \brief   Set Codec hardware Equalizer (EQ).
  *
- * \brief   Set codec hardware EQ.
- *
- * \note    Do <b>NOT</b> touch this interface in any product scenarios.
+ * \note    Do <b>not</b> touch this interface in any product scenarios.
  *
  * \param[in] eq_type   Hardware EQ type.
  * \param[in] eq_chann  Hardware EQ channel.
  * \param[in] buf       Hardware EQ band parameter buffer.
  * \param[in] len       Hardware EQ band parameter length.
  *
- * \return          The status of setting codec hardware EQ.
+ * \return          The status of setting Codec hardware EQ.
  * \retval true     Codec hardware EQ was setting successfully.
  * \retval false    Codec hardware EQ was failed to set.
  *
@@ -235,130 +225,112 @@ bool audio_probe_send_lhdc_license(uint8_t *p_data, uint16_t data_len);
 bool audio_probe_send_malleus_license(uint8_t *p_data, uint16_t data_len);
 
 /**
- * audio_probe.h
+ * \brief   Set Voice Primary MIC.
  *
- * \brief   Set voice primary mic.
+ * \note    Do <b>not</b> touch this interface in any product scenarios.
  *
- * \note    Do <b>NOT</b> touch this interface in any product scenarios.
- *
- * \param[in] mic_sel   mic selection(0: Dmic 1, 1: Dmic 2, 2: Amic 1, 3: Amic 2, 4: Amic 3, 5: Amic 4, 6: Dmic 3, 7: Mic sel disable).
- * \param[in] mic_type  mic type(0: single-end AMIC/falling DMIC, 1: differential AMIC/raising DMIC).
+ * \param[in] mic_sel   MIC selection (0: DMIC1, 1: DMIC2, 2: AMIC1, 3: AMIC2, 4: AMIC3, 5: AMIC4, 6: DMIC3, 7: MIC sel disable).
+ * \param[in] mic_type  MIC type (0: single-end AMIC/falling DMIC, 1: differential AMIC/raising DMIC).
  *
  * \ingroup AUDIO_PROBE
  */
 void audio_probe_set_voice_primary_mic(uint8_t mic_sel, uint8_t mic_type);
 
 /**
- * audio_probe.h
+ * \brief   Set Voice Secondary MIC.
  *
- * \brief   Set voice secondary mic.
+ * \note    Do <b>not</b> touch this interface in any product scenarios.
  *
- * \note    Do <b>NOT</b> touch this interface in any product scenarios.
- *
- * \param[in] mic_sel   mic selection(0: Dmic 1, 1: Dmic 2, 2: Amic 1, 3: Amic 2, 4: Amic 3, 5: Amic 4, 6: Dmic 3, 7: Mic sel disable).
- * \param[in] mic_type  mic type(0: single-end AMIC/falling DMIC, 1: differential AMIC/raising DMIC).
+ * \param[in] mic_sel   MIC selection (0: DMIC1, 1: DMIC2, 2: AMIC1, 3: AMIC2, 4: AMIC3, 5: AMIC4, 6: DMIC3, 7: MIC sel disable).
+ * \param[in] mic_type  MIC type (0: single-end AMIC/falling DMIC, 1: differential AMIC/raising DMIC).
  *
  * \ingroup AUDIO_PROBE
  */
 void auido_probe_set_voice_secondary_mic(uint8_t mic_sel, uint8_t mic_type);
 
 /**
- * audio_probe.h
+ * \brief   Get Voice Primary MIC selection.
  *
- * \brief   Get voice primary mic selection.
- *
- * \note    Do <b>NOT</b> touch this interface in any product scenarios.
+ * \note    Do <b>not</b> touch this interface in any product scenarios.
  *
  * \ingroup AUDIO_PROBE
  */
 uint8_t audio_probe_get_voice_primary_mic_sel(void);
 
 /**
- * audio_probe.h
+ * \brief   Get Voice Primary MIC type.
  *
- * \brief   Get voice primary mic type.
- *
- * \note    Do <b>NOT</b> touch this interface in any product scenarios.
+ * \note    Do <b>not</b> touch this interface in any product scenarios.
  *
  * \ingroup AUDIO_PROBE
  */
 uint8_t audio_probe_get_voice_primary_mic_type(void);
 
 /**
- * audio_probe.h
+ * \brief   Get Voice Secondary MIC selection.
  *
- * \brief   Get voice secondary mic selection.
- *
- * \note    Do <b>NOT</b> touch this interface in any product scenarios.
+ * \note    Do <b>not</b> touch this interface in any product scenarios.
  *
  * \ingroup AUDIO_PROBE
  */
 uint8_t audio_probe_get_voice_secondary_mic_sel(void);
 
 /**
- * audio_probe.h
+ * \brief   Get Voice Secondary MIC type.
  *
- * \brief   Get voice secondary mic type.
- *
- * \note    Do <b>NOT</b> touch this interface in any product scenarios.
+ * \note    Do <b>not</b> touch this interface in any product scenarios.
  *
  * \ingroup AUDIO_PROBE
  */
 uint8_t audio_probe_get_voice_secondary_mic_type(void);
 
 /**
- * audio_probe.h
+ * \brief   Register Audio Probe DSP status callback.
  *
- * \brief   Register DSP status probe callback.
- *
- * \note    Do <b>NOT</b> touch this interface in any product scenarios.
+ * \note    Do <b>not</b> touch this interface in any product scenarios.
  *
  * \param[in] cback The DSP probe callback \ref P_AUDIO_PROBE_DSP_EVENT_CABCK.
  *
- * \return          The status of registering DSP probe callback.
- * \retval true     DSP probe data was registered successfully.
- * \retval false    DSP probe data was failed to register.
+ * \return          The status of registering Audio Probe DSP status callback.
+ * \retval true     Audio Probe DSP status callback was registered successfully.
+ * \retval false    Audio Probe DSP status callback was failed to register.
  *
  * \ingroup AUDIO_PROBE
  */
 bool audio_probe_dsp_evt_cback_register(P_AUDIO_PROBE_DSP_EVENT_CABCK cback);
 
-
 /**
- * audio_probe.h
+ * \brief   Unregister Audio Probe DSP status callback.
  *
- * \brief   Unregister DSP status callback.
- *
- * \note    Do <b>NOT</b> touch this interface in any product scenarios.
+ * \note    Do <b>not</b> touch this interface in any product scenarios.
  *
  * \param[in] cback The DSP probe callback \ref P_AUDIO_PROBE_DSP_EVENT_CABCK.
  *
- * \return          The status of unregistering DSP probe callback.
- * \retval true     DSP probe data was unregistered successfully.
- * \retval false    DSP probe data was failed to unregister.
+ * \return          The status of unregistering Audio Probe DSP status callback.
+ * \retval true     Audio Probe DSP status callback was unregistered successfully.
+ * \retval false    Audio Probe DSP status callback was failed to unregister.
  *
  * \ingroup AUDIO_PROBE
  */
 bool audio_probe_dsp_evt_cback_unregister(P_AUDIO_PROBE_DSP_EVENT_CABCK cback);
 
 bool audio_probe_dsp_ipc_send_ha_param(uint8_t *payload_data, uint16_t payload_len);
+
 /**
- * audio_probe.h
+ * \brief   Malloc RAM from playback buffer.
  *
- * \brief   malloc ram from playback buffer.
- *
- * \note
+ * \param[in] buf_size The buffer size need to malloc from playback buffer.
  *
  * \ingroup AUDIO_PROBE
  */
 void *audio_probe_media_buffer_malloc(uint16_t buf_size);
 
 /**
- * audio_probe.h
+ * \brief   Free RAM to playback buffer.
  *
- * \brief   free ram to playback buffer.
- *
- * \note
+ * \return          The status of freeing playback buffer.
+ * \retval true     The playback buffer was freed successfully.
+ * \retval false    The playback buffer was failed to free.
  *
  * \ingroup AUDIO_PROBE
  */
@@ -371,8 +343,6 @@ bool audio_probe_send_sepc_info(uint8_t parameter, bool action, uint8_t para_cha
 void audio_probe_set_sepc_info(void);
 
 /**
- * audio_probe.h
- *
  * \brief   Control loading DSP test bin.
  *
  * \xrefitem Added_API_2_13_0_0 "Added Since 2.13.0.0" "Added API"
@@ -384,22 +354,14 @@ void audio_probe_set_sepc_info(void);
 void audio_probe_dsp_test_bin_set(bool enable);
 
 /**
- * audio_probe.h
- *
- * \brief   disable dsp power down.
- *
- * \note
- *
- * \return
- * \retval  zero
- * \retval  non-zero
+ * \brief   Power down DSP.
  *
  * \ingroup AUDIO_PROBE
  */
 void audio_probe_disable_dsp_powerdown(void);
 
 /**
- * audio_probe.h
+ * \brief   Start the engine communication with DSP2.
  *
  * \brief   set codec bias mode.
  * \param[in] mode bias_mode(0:normal mode 1: always on mode 2:user mode)
@@ -450,24 +412,20 @@ void audio_probe_codec_adda_loopback_set(uint8_t mic_sel);
  *
  * \note
  *
- * \return              engine instance ID
- * \retval  zero        engine start fail
- * \retval  non-zero    engine start success
+ * \return              The engine instance id.
+ * \retval  zero        The engine was failed to start.
+ * \retval  non-zero    The engine was started successfully.
  *
  * \ingroup AUDIO_PROBE
  */
 uint32_t engine_start(void);
 
 /**
- * audio_probe.h
- *
- * \brief   stop the engine communication w/ DSP2.
- *
- * \note
+ * \brief   Stop the engine communication with DSP2.
  *
  * \return
- * \retval  zero        engine stop success
- * \retval  non-zero    engine stop fail, the retval is error code
+ * \retval  zero        The engine was stopped successfully.
+ * \retval  non-zero    The engine was failed to stop.
  *
  * \ingroup AUDIO_PROBE
  */

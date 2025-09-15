@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, Realsil Semiconductor Corporation. All rights reserved.
+ * Copyright (c) 2024, Realsil Semiconductor Corporation. All rights reserved.
  */
 
 #ifndef _HAL_ADP_
@@ -12,11 +12,17 @@
 extern "C" {
 #endif /* __cplusplus */
 
-/** @defgroup 87x3e_HAL_ADP HAL ADP
- * @{
- */
 
-/** @defgroup T_ADP_DETECT adp detect type
+/** @addtogroup HAL_ADP HAL ADP
+  * @brief HAL ADP function module.
+  * @{
+  */
+
+/** @defgroup HAL_ADP_Exported_Types HAL ADP Exported Types
+  * @{
+  */
+
+/** @defgroup T_ADP_DETECT ADP Detect Type
  * @{
  */
 
@@ -31,7 +37,7 @@ typedef enum
   * @}
   */
 
-/** @defgroup T_ADP_PLUG_EVENT adp plug event
+/** @defgroup T_ADP_PLUG_EVENT ADP Plug Event
  * @{
  */
 
@@ -46,7 +52,7 @@ typedef enum
   * @}
   */
 
-/** @defgroup T_ADP_LEVEL adp level
+/** @defgroup T_ADP_LEVEL ADP Level
  * @{
  */
 
@@ -61,7 +67,7 @@ typedef enum
   * @}
   */
 
-/** @defgroup T_ADP_STATE adp state
+/** @defgroup T_ADP_STATE ADP State
  * @{
  */
 
@@ -78,7 +84,7 @@ typedef enum
   */
 
 
-/** @defgroup T_ADP_IO_GPIO_STATE adp state
+/** @defgroup T_ADP_IO_GPIO_STATE ADP IO GPIO State
  * @{
  */
 
@@ -92,7 +98,7 @@ typedef enum
   * @}
   */
 
-/** @defgroup T_ADP_IO_DEBOUNCE_TIME adp io debounce time
+/** @defgroup T_ADP_IO_DEBOUNCE_TIME ADP IO Debounce Time
  * @{
  */
 typedef enum
@@ -120,170 +126,181 @@ typedef enum
   * @}
   */
 
-/** @defgroup T_ADP_WAKE_UP_MODE adp wake up mode
+/** @defgroup T_ADP_WAKE_UP_MODE ADP Wake Up Mode
  * @{
  */
 typedef enum
 {
-    ADP_WAKE_UP_POWER_OFF,     /*!< Config adp power off wake up. */
-    ADP_WAKE_UP_GENERAL,       /*!< Config adp dlps or power down wake up. */
+    ADP_WAKE_UP_POWER_OFF,     /*!< Config ADP power off wake up. */
+    ADP_WAKE_UP_GENERAL,       /*!< Config ADP DLPS or power down wake up. */
 } T_ADP_WAKE_UP_MODE;
 
 /** End of group T_ADP_WAKE_UP_MODE
   * @}
   */
 
-/** @defgroup T_ADP_WAKE_UP_POL adp wake up polarity
+/** @defgroup T_ADP_WAKE_UP_POL ADP Wake Up Polarity
  * @{
  */
 typedef enum
 {
-    ADP_WAKE_UP_POL_HIGH,     /*!< Config adp wake up high polarity. */
-    ADP_WAKE_UP_POL_LOW,      /*!< Config adp wake up low polarity. */
+    ADP_WAKE_UP_POL_HIGH,     /*!< Config ADP wake up high polarity. */
+    ADP_WAKE_UP_POL_LOW,      /*!< Config ADP wake up low polarity. */
 } T_ADP_WAKE_UP_POL;
 
 /** End of group T_ADP_WAKE_UP_POL
   * @}
   */
 
+/** End of Group HAL_ADP_Exported_Types
+  * @}
+  */
+
+/*============================================================================*
+ *                         Functions
+ *============================================================================*/
+
+/** @defgroup HAL_ADP_Exported_Functions HAL ADP Exported Functions
+  * @{
+  */
+
 /**
-  * @brief  Adp interrupt callback function type
-  * @param  None
-  * @retval None
+  * @brief  ADP interrupt callback function type.
+  * @param  None.
+  * @return None.
   */
 typedef void (*P_ADP_ISR_CBACK)(void);
 
 /**
-  * @brief  Adp plug callback function type
-  * @param  event: adp plug event
+  * @brief  ADP plug callback function type.
+  * @param  event: ADP plug event.
   *     This parameter can be one of the following values:
-  *     @arg ADP_EVENT_PLUG_IN: adp plug in.
-  *     @arg ADP_EVENT_PLUG_OUT: adp plug out.
-  * @param  user_data: user data
-  * @retval None
+  *     @arg ADP_EVENT_PLUG_IN: ADP plug in.
+  *     @arg ADP_EVENT_PLUG_OUT: ADP plug out.
+  * @param  user_data: user data.
+  * @return None.
   */
 typedef void (*P_ADP_PLUG_CBACK)(T_ADP_PLUG_EVENT event, void *user_data);
 
 /**
-  * @brief  Update adp io/5V interrupt callback
-  * @param  adp_type: use adp 5v or adp io
+  * @brief  Update ADP IO/5V interrupt callback.
+  * @param  adp_type: use ADP 5V or ADP IO.
   *     This parameter can be one of the following values:
-  *     @arg ADP_DETECT_5V: use adp 5v.
-  *     @arg ADP_DETECT_IO: use adp io.
-  * @param  cback: adp interrupt callback function
-  * @retval true: Update adp interrupt callback success
-  * @retval false: Update adp interrupt callback failed
+  *     @arg ADP_DETECT_5V: use ADP 5V.
+  *     @arg ADP_DETECT_IO: use ADP IO.
+  * @param  cback: ADP interrupt callback function.
+  * @retval true: Update ADP interrupt callback success.
+  * @retval false: Update ADP interrupt callback failed.
   */
 bool adp_update_isr_cb(T_ADP_DETECT adp_type, P_ADP_ISR_CBACK cback);
 
 /**
-  * @brief  Get adp io/5V current level
-  * @param  adp_type: use adp 5v or adp io
+  * @brief  Get ADP IO/5V current level.
+  * @param  adp_type: use ADP 5V or ADP IO.
   *     This parameter can be one of the following values:
-  *     @arg ADP_DETECT_5V: use adp 5v.
-  *     @arg ADP_DETECT_IO: use adp io.
-  * @retval return adp current level
+  *     @arg ADP_DETECT_5V: use ADP 5V.
+  *     @arg ADP_DETECT_IO: use ADP IO.
+  * @return The ADP current level.
   */
 T_ADP_LEVEL adp_get_level(T_ADP_DETECT adp_type);
 
 /**
-  * @brief  Register adp io/5V callback
-  * @param  adp_type: use adp 5v or adp io
+  * @brief  Register ADP IO/5V callback.
+  * @param  adp_type: use ADP 5V or ADP IO.
   *     This parameter can be one of the following values:
-  *     @arg ADP_DETECT_5V: use adp 5v.
-  *     @arg ADP_DETECT_IO: use adp io.
-  * @param  cback: adp callback function
-  * @param  user_data: user data
-  * @retval true: Register adp callback success
-  * @retval false: Register adp callback failed
+  *     @arg ADP_DETECT_5V: use ADP 5V.
+  *     @arg ADP_DETECT_IO: use ADP IO.
+  * @param  cback: ADP callback function.
+  * @param  user_data: user data.
+  * @retval true: Register ADP callback success.
+  * @retval false: Register ADP callback failed.
   */
 bool adp_register_state_change_cb(T_ADP_DETECT adp_type, P_ADP_PLUG_CBACK cback, void *user_data);
 
 /**
-  * @brief  Unregister adp io/5V callback
-  * @param  adp_type: use adp 5v or adp io
+  * @brief  Unregister ADP IO/5V callback.
+  * @param  adp_type: use ADP 5V or ADP IO.
   *     This parameter can be one of the following values:
-  *     @arg ADP_DETECT_5V: use adp 5v.
-  *     @arg ADP_DETECT_IO: use adp io.
-  * @param  cback: adp callback function
-  * @retval true: Unregister adp callback success
-  * @retval false: Unregister adp callback failed
+  *     @arg ADP_DETECT_5V: use ADP 5V.
+  *     @arg ADP_DETECT_IO: use ADP IO.
+  * @param  cback: ADP callback function.
+  * @retval true: Unregister ADP callback success.
+  * @retval false: Unregister ADP callback failed.
   */
 bool adp_unregister_state_change_cb(T_ADP_DETECT adp_type, P_ADP_PLUG_CBACK cback);
 
 /**
-  * @brief  Get adp io/5V current state
-  * @param  adp_type: use adp 5v or adp io
+  * @brief  Get ADP IO/5V current state.
+  * @param  adp_type: use ADP 5V or ADP IO.
   *     This parameter can be one of the following values:
-  *     @arg ADP_DETECT_5V: use adp 5v.
-  *     @arg ADP_DETECT_IO: use adp io.
-  * @retval return adp current state
+  *     @arg ADP_DETECT_5V: use ADP 5V.
+  *     @arg ADP_DETECT_IO: use ADP IO.
+  * @return ADP current state.
   */
 T_ADP_STATE adp_get_current_state(T_ADP_DETECT adp_type);
 
 /**
-  * @brief  Get adp io/5V function debounce time
-  * @param  adp_type: use adp 5v or adp io
+  * @brief  Get ADP IO/5V function debounce time.
+  * @param  adp_type: use ADP 5V or ADP IO.
   *     This parameter can be one of the following values:
-  *     @arg ADP_DETECT_5V: use adp 5v.
-  *     @arg ADP_DETECT_IO: use adp io.
-  * @param  io_in_debounce_time: adp in debounce time
-  * @param  io_out_debounce_time: adp out debounce time
-  * @retval true: get adp io debounce time success
-  * @retval false: get adp io debounce time failed
+  *     @arg ADP_DETECT_5V: use ADP 5V.
+  *     @arg ADP_DETECT_IO: use ADP IO.
+  * @param  io_in_debounce_time: ADP in debounce time.
+  * @param  io_out_debounce_time: ADP out debounce time.
+  * @retval true: get ADP IO debounce time success.
+  * @retval false: get ADP IO debounce time failed.
   */
 bool adp_get_debounce_time(T_ADP_DETECT adp_type, uint32_t *p_in_debounce_ms,
                            uint32_t *p_out_debounce_ms);
 
 /**
-  * @brief  Only can set adp io function debounce time
-  * @param  adp_type: only can be set ADP_DETECT_IO
-  * @param  io_in_debounce_time: adp io in debounce time
-  * @param  io_out_debounce_time: adp io out debounce time
-  * @retval true: set adp io debounce success
-  * @retval false: adp type error or debounce time overflow
+  * @brief  Only can set ADP IO function debounce time.
+  * @param  adp_type: only can be set @ref ADP_DETECT_IO.
+  * @param  io_in_debounce_time: ADP IO in debounce time.
+  * @param  io_out_debounce_time: ADP IO out debounce time.
+  * @retval true: set ADP IO debounce success.
+  * @retval false: ADP type error or debounce time overflow.
   */
 bool adp_set_debounce_time(T_ADP_DETECT adp_type, T_ADP_IO_DEBOUNCE_TIME io_in_debounce_time,
                            T_ADP_IO_DEBOUNCE_TIME io_out_debounce_time);
 
 /**
- * @brief  Close adp function
- * @param  adp_type: only can be set ADP_DETECT_IO
- * @retval true: close adp io function success
- * @retval false: adp type error
+ * @brief  Close ADP function.
+ * @param  adp_type: only can be set @ref ADP_DETECT_IO.
+ * @retval true: close ADP IO function success.
+ * @retval false: ADP type error.
  */
 bool adp_close(T_ADP_DETECT adp_type);
 
 /**
-  * @brief  Open adp function
-  * @param  adp_type: only can be set ADP_DETECT_IO
-  * @retval true: open adp io function success
-  * @retval false: adp type error
+  * @brief  Open ADP function.
+  * @param  adp_type: only can be set @ref ADP_DETECT_IO.
+  * @retval true: open ADP IO function success.
+  * @retval false: ADP type error.
   */
 bool adp_open(T_ADP_DETECT adp_type);
 
 /**
-  * @brief  adapter wake up function enable
-  * @param  mode: config power off or none power off
-  *     This parameter value is ADP_WAKE_UP_POWER_OFF or ADP_WAKE_UP_GENERAL.
-  * @param  pol: polarity to wake up
+  * @brief  Adapter wake up function enable.
+  * @param  mode: config power off or none power off.
+  *     This parameter value is @ref ADP_WAKE_UP_POWER_OFF or @ref ADP_WAKE_UP_GENERAL.
+  * @param  pol: polarity to wake up.
   *     This parameter ADP_WAKE_UP_POL_HIGH means high level to wakeup, ADP_WAKE_UP_POL_LOW means low level to wakeup.
-  * @retval true: enable success
-  * @retval false: enable failed
+  * @retval true: enable success.
+  * @retval false: enable failed.
   */
 bool adp_wake_up_enable(T_ADP_WAKE_UP_MODE mode, T_ADP_WAKE_UP_POL pol);
 
 /**
-  * @brief  adapter wake up function disable
-  * @param  mode: config power off or none power off
-  *     This parameter value is ADP_WAKE_UP_POWER_OFF or ADP_WAKE_UP_GENERAL.
-  * @retval none
+  * @brief  Adapter wake up function disable.
+  * @param  mode: config power off or none power off.
+  *     This parameter value is @ref ADP_WAKE_UP_POWER_OFF or @ref ADP_WAKE_UP_GENERAL.
+  * @return None.
   */
 void adp_wake_up_disable(T_ADP_WAKE_UP_MODE mode);
 
-/** End of group 87x3e_HAL_ADP
-  * @}
-  */
+/** @} */ /* End of group HAL_ADP_Exported_Functions */
+/** @} */ /* End of group HAL_ADP */
 
 #ifdef __cplusplus
 }

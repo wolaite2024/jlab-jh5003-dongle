@@ -14,12 +14,12 @@ extern "C" {
 #endif
 
 /**
- * \defgroup    OS_87x3e_Memory  Memory Management
+ * \addtogroup    OS_87x3e_Memory  Memory Management
  *
  * \brief   Allocate, free, and peek memory functions.
  * \details The Memory Management function group allows to allocate, free, and peek heap
  *          memory in the system.\n
- *
+ * @{
  */
 
 
@@ -31,6 +31,14 @@ extern void *(*os_mem_zalloc_intern)(RAM_TYPE ram_type, size_t size,
 
 extern void *(*os_mem_aligned_alloc_intern)(RAM_TYPE ram_type, size_t size, uint8_t alignment,
                                             const char *p_func, uint32_t file_line);
+
+/*============================================================================*
+ *                         Functions
+ *============================================================================*/
+
+/** @defgroup OS_87x3e_Memory_Exported_functions Memory Management Exported Functions
+ * @{
+ */
 
 /**
  * os_mem.h
@@ -71,7 +79,7 @@ extern void *(*os_mem_aligned_alloc_intern)(RAM_TYPE ram_type, size_t size, uint
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Memory
+ *
  */
 #define os_mem_alloc(ram_type, size)    \
     os_mem_alloc_intern(ram_type, size, __func__, __LINE__)
@@ -115,7 +123,7 @@ extern void *(*os_mem_aligned_alloc_intern)(RAM_TYPE ram_type, size_t size, uint
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Memory
+ *
  */
 #define os_mem_zalloc(ram_type, size)   \
     os_mem_zalloc_intern(ram_type, size, __func__, __LINE__)
@@ -167,7 +175,7 @@ extern void *(*os_mem_aligned_alloc_intern)(RAM_TYPE ram_type, size_t size, uint
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Memory
+ *
  */
 #define os_mem_aligned_alloc(ram_type, size, alignment) \
     os_mem_aligned_alloc_intern(ram_type, size, alignment, __func__, __LINE__)
@@ -204,7 +212,7 @@ extern void *(*os_mem_aligned_alloc_intern)(RAM_TYPE ram_type, size_t size, uint
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Memory
+ *
  */
 
 #define os_mem_alloc2(size)    \
@@ -217,7 +225,7 @@ extern void (*os_mem_free)(void *p_block);
  *
  * \brief    Free an aligned memory block that had been allocated.
  *
- * \param[in]   p_block     The address of memory block being freed.
+ * \param   p_block     The address of memory block being freed.
  *
  * \return     None.
  *
@@ -245,7 +253,7 @@ extern void (*os_mem_free)(void *p_block);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Memory
+ *
  */
 extern void (*os_mem_aligned_free)(void *p_block);
 
@@ -279,7 +287,7 @@ extern void (*os_mem_aligned_free)(void *p_block);
  * }
  * \endcode
  *
- * \ingroup  OS_87x3e_Memory
+ *
  */
 #define mem_peek()   \
     os_mem_peek(RAM_TYPE_ITCM1)
@@ -295,6 +303,10 @@ void *os_mem_aligned_alloc_intern_rom(RAM_TYPE ram_type, size_t size, uint8_t al
 void os_mem_free_rom(void *p_block);
 void os_mem_aligned_free_rom(void *p_block);
 size_t os_mem_peek_rom(RAM_TYPE ram_type);
+
+/** @} */ /* End of group OS_87x3e_Memory_Exported_Functions */
+/** @} */ /* End of group OS_87x3e_Memory */
+
 #ifdef __cplusplus
 }
 #endif

@@ -8,10 +8,20 @@
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
+
+#define HA_PROG_NAME_SIZE 12 //same as HA_PROG_OBJ_NAME_SIZE
+
 /** @defgroup APP_HEARABLE param report
   * @brief App HEARABLE param report
   * @{
   */
+typedef struct
+{
+    uint8_t index;
+    uint16_t name_len;
+    char    p_name[HA_PROG_NAME_SIZE];
+} T_HA_HAP_INFO;
+
 void app_ha_listening_delay_start(void);
 void app_ha_switch_hearable_prog(void);
 void app_ha_adjust_volume_level(bool is_vol_up);
@@ -25,6 +35,10 @@ void app_ha_cmd_handle(uint8_t *cmd_ptr, uint16_t cmd_len, uint8_t cmd_path, uin
                        uint8_t *ack_pkt);
 void app_ha_clear_param(void);
 void app_ha_init(void);
+T_HA_HAP_INFO app_ha_hearing_get_prog_info(uint8_t id);
+bool app_ha_hearing_set_prog_id(uint8_t id);
+uint8_t app_ha_hearing_get_prog_num(void);
+uint8_t app_ha_hearing_get_active_prog_id(void);
 
 /** End of APP_HEARABLE
 * @}

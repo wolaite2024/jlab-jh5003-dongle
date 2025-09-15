@@ -9,7 +9,7 @@
 #include "app_cfg.h"
 #include "app_audio_path.h"
 #include "app_usb_uac.h"
-//#include "app_usb.h"
+#include "app_ble_gap.h"
 
 #if LOCAL_PLAYBACK_FEATURE_SUPPORT
 #include "app_playback_update_file.h"
@@ -44,9 +44,8 @@
 #include "app_gip.h"
 #include "app_gip_security.h"
 #endif
-
+#include "app_usb_hid_report.h"
 #include "app_upstream_decode.h"
-
 #include "app_downstream_encode.h"
 
 #if F_APP_GAMING_CONTROLLER_SUPPORT
@@ -211,6 +210,7 @@ void app_io_handle_msg(T_IO_MSG io_driver_msg_recv)
     case IO_MSG_TYPE_BT_STATUS:
         {
             ual_handle_ble_gap_msg(&io_driver_msg_recv);
+            app_ble_gap_handle_gap_msg(&io_driver_msg_recv);
             le_unicast_handle_gap_msg(&io_driver_msg_recv);
         }
         break;

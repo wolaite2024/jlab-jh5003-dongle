@@ -351,11 +351,11 @@ static int usb_composite_dev_set_vendor_request_done(T_HAL_USB_REQUEST_BLOCK *ur
                     urb->actual, ctrl_urb->priv, ctrl_urb->status);
     if (ctrl_urb->priv)
     {
-        uint16_t request_cmd = *(uint16_t *)ctrl_urb->priv;
+        T_USB_DEVICE_REQUEST *ctrl_request = ctrl_urb->priv;
 
         if (g_usb_composite_dev->vendor_cb.set)
         {
-            g_usb_composite_dev->vendor_cb.set(request_cmd, ctrl_urb->buf, ctrl_urb->actual);
+            g_usb_composite_dev->vendor_cb.set(ctrl_request, ctrl_urb->buf);
         }
 
         ctrl_urb->priv = NULL;
@@ -368,11 +368,9 @@ static int usb_composite_dev_set_vendor_request_proc(T_USB_DEVICE_REQUEST *ctrl_
                                                      T_HAL_USB_REQUEST_BLOCK *ctrl_urb)
 {
     uint16_t len = (ctrl_request->wLength);
-    static uint8_t cur_cmd = 0;
     int ret = len;
 
-    cur_cmd = ctrl_request->bRequest;
-    ctrl_urb->priv = &cur_cmd;
+    ctrl_urb->priv = ctrl_request;
     ctrl_urb->complete = usb_composite_dev_set_vendor_request_done;
 
     return ret;
@@ -381,20 +379,15 @@ static int usb_composite_dev_set_vendor_request_proc(T_USB_DEVICE_REQUEST *ctrl_
 static int usb_composite_dev_get_vendor_request_proc(T_USB_DEVICE_REQUEST *ctrl_request,
                                                      T_HAL_USB_REQUEST_BLOCK *ctrl_urb)
 {
-    uint16_t len = (ctrl_request->wLength);
-    uint8_t cmd = ctrl_request->bRequest;
+    int ret = -ENOTSUPP;
 
     if (g_usb_composite_dev->vendor_cb.get)
     {
-        g_usb_composite_dev->vendor_cb.get(cmd, ctrl_urb->buf, len);
+        ret = g_usb_composite_dev->vendor_cb.get(ctrl_request, ctrl_urb->buf);
         ctrl_urb->priv = NULL;
     }
-    else
-    {
-        return -ENOTSUPP;
-    }
 
-    return len;
+    return ret;
 }
 
 static int usb_composite_dev_vendor_request_proc(T_USB_DEVICE_REQUEST *ctrl_request,

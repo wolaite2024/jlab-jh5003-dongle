@@ -15,17 +15,15 @@ extern "C" {
 /**
  * \defgroup    AUDIO_ANC Active Noise Cancellation
  *
- * \brief   Enable and disable active noise cancellation.
- * \details Active noise cancellation (ANC), or active noise reduction (ANR), uses noise-cancelling
+ * \brief   Enable and disable Active Noise Cancellation (ANC).
+ * \details Active Noise Cancellation (ANC), or Active Noise Reduction (ANR), uses noise-cancelling
  *          speakers to reduce unwanted background noise. ANC will help you get away from the noise
  *          world when enjoying music or just quiet your mind. While enabling ANC will consume more
  *          battery power.
  */
 
 /**
- * anc.h
- *
- * \brief   Enable active noise cancellation (ANC).
+ * \brief   Enable Active Noise Cancellation (ANC).
  *
  * \param[in] scenario_id   ANC scenario ID to set.
  *
@@ -38,9 +36,7 @@ extern "C" {
 bool anc_enable(uint8_t scenario_id);
 
 /**
- * anc.h
- *
- * \brief   Disable active noise cancellation (ANC).
+ * \brief   Disable Active Noise Cancellation (ANC).
  *
  * \return  The result of disabling ANC.
  * \retval  true    ANC was disabled successfully.
@@ -51,9 +47,7 @@ bool anc_enable(uint8_t scenario_id);
 bool anc_disable(void);
 
 /**
- * anc.h
- *
- * \brief   Start active noise cancellation (ANC) adaptive filter.
+ * \brief   Start Active Noise Cancellation (ANC) adaptive filter.
  *
  * \return  The result of starting ANC adaptive filter.
  * \retval  true    ANC adaptive filter was started successfully.
@@ -64,9 +58,7 @@ bool anc_disable(void);
 bool anc_adaptive_filter_start(void);
 
 /**
- * anc.h
- *
- * \brief   Pause active noise cancellation (ANC) adaptive filter.
+ * \brief   Pause Active Noise Cancellation (ANC) adaptive filter.
  *
  * \return  The result of pausing ANC adaptive filter.
  * \retval  true    ANC adaptive filter was pauseed successfully.
@@ -77,9 +69,7 @@ bool anc_adaptive_filter_start(void);
 bool anc_adaptive_filter_pause(void);
 
 /**
- * anc.h
- *
- * \brief   Stop active noise cancellation (ANC) adaptive filter.
+ * \brief   Stop Active Noise Cancellation (ANC) adaptive filter.
  *
  * \return  The result of stopping ANC adaptive filter.
  * \retval  true    ANC adaptive filter was stopped successfully.

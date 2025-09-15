@@ -85,8 +85,8 @@ typedef struct t_audio_pipe
     uint32_t                  src_transport_size;
     uint32_t                  snk_transport_address;
     uint32_t                  snk_transport_size;
-    uint16_t                  gain_left;
-    uint16_t                  gain_right;
+    int16_t                   gain_left;
+    int16_t                   gain_right;
     T_AUDIO_PIPE_STATE        state;
     T_AUDIO_PIPE_ACTION       action;
     uint8_t                   mixed_pipe_num;
@@ -529,7 +529,7 @@ void audio_pipe_dsp_session_cb(void *handle, T_DSP_MGR_EVENT event, uint32_t par
 T_AUDIO_PIPE_HANDLE audio_pipe_create(T_AUDIO_STREAM_MODE mode,
                                       T_AUDIO_FORMAT_INFO src_info,
                                       T_AUDIO_FORMAT_INFO snk_info,
-                                      uint16_t            gain,
+                                      int16_t             gain,
                                       P_AUDIO_PIPE_CBACK  cback)
 {
     T_AUDIO_PIPE *audio_pipe;
@@ -710,7 +710,7 @@ fail_check_handle:
     return false;
 }
 
-bool audio_pipe_gain_get(T_AUDIO_PIPE_HANDLE handle, uint16_t *gain_left, uint16_t *gain_right)
+bool audio_pipe_gain_get(T_AUDIO_PIPE_HANDLE handle, int16_t *gain_left, int16_t *gain_right)
 {
     T_AUDIO_PIPE *audio_pipe = (T_AUDIO_PIPE *)handle;
 
@@ -725,7 +725,7 @@ bool audio_pipe_gain_get(T_AUDIO_PIPE_HANDLE handle, uint16_t *gain_left, uint16
     return true;
 }
 
-bool audio_pipe_gain_set(T_AUDIO_PIPE_HANDLE handle, uint16_t gain_left, uint16_t gain_right)
+bool audio_pipe_gain_set(T_AUDIO_PIPE_HANDLE handle, int16_t gain_left, int16_t gain_right)
 {
     T_AUDIO_PIPE *audio_pipe = (T_AUDIO_PIPE *)handle;
     int32_t       ret = 0;
@@ -1456,7 +1456,7 @@ void audio_pipe_deinit(void)
 T_AUDIO_PIPE_HANDLE audio_pipe_create(T_AUDIO_STREAM_MODE mode,
                                       T_AUDIO_FORMAT_INFO src_info,
                                       T_AUDIO_FORMAT_INFO snk_info,
-                                      uint16_t            gain,
+                                      int16_t             gain,
                                       P_AUDIO_PIPE_CBACK  cback)
 {
     return NULL;
@@ -1477,12 +1477,12 @@ bool audio_pipe_stop(T_AUDIO_PIPE_HANDLE handle)
     return false;
 }
 
-bool audio_pipe_gain_get(T_AUDIO_PIPE_HANDLE handle, uint16_t *gain_left, uint16_t *gain_right)
+bool audio_pipe_gain_get(T_AUDIO_PIPE_HANDLE handle, int16_t *gain_left, int16_t *gain_right)
 {
     return false;
 }
 
-bool audio_pipe_gain_set(T_AUDIO_PIPE_HANDLE handle, uint16_t gain_left, uint16_t gain_right)
+bool audio_pipe_gain_set(T_AUDIO_PIPE_HANDLE handle, int16_t gain_left, int16_t gain_right)
 {
     return false;
 }

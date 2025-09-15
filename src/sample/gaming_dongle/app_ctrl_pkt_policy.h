@@ -15,6 +15,8 @@ typedef enum
     EARBUD_SIDE_RIGHT = 2,
 } T_EARBUD_SIDE;
 
+bool app_cmd_send_by_le_fix_channel(T_APP_DONGLE_CMD cmd, uint8_t *data, uint16_t len,
+                                    T_EARBUD_SIDE side);
 void app_gaming_ctrl_data_rcv(uint8_t *data, uint16_t len);
 bool app_gaming_ctrl_check_timer_need_to_restart(uint32_t curr_time, uint32_t last_start_time,
                                                  uint32_t detect_time);

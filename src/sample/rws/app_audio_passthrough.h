@@ -146,6 +146,7 @@ bool app_apt_is_normal_apt_on_state(T_ANC_APT_STATE state);
 void app_apt_play_apt_volume_tone(void);
 void app_apt_init(void);
 uint8_t app_apt_llapt_get_coeff_idx(uint8_t scenario_id);
+void app_apt_volume_out_set(uint8_t level);
 bool app_apt_volume_relay(bool first_time_sync, bool primary_report_phone);
 void app_apt_volume_relay_report_handle(void);
 void app_apt_volume_sync_handle(T_APT_VOLUME_RELAY_MSG *rev_msg);

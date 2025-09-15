@@ -151,11 +151,53 @@ const static T_CLI_CMD bqb_cmd_avdtp =
 };
 
 /*
+ * The definition of the "pbp" subcommand of bqb.
+ */
+const static T_CLI_CMD bqb_cmd_pbp =
+{
+    &bqb_cmd_avdtp,   /* Next command pointed to NULL. */
+    NULL,           /* Next subcommand. */
+    "pbp",        /* The command string to type. */
+    "\r\npbp:\r\n pbp start from BQB mode\r\n\r\n",
+    bqb_pbp,      /* The function to run. */
+    -1,             /* Zero or more parameters are expected. */
+    NULL            /* Default command match pattern. */
+};
+
+/*
+ * The definition of the "tmap" subcommand of bqb.
+ */
+const static T_CLI_CMD bqb_cmd_tmap =
+{
+    &bqb_cmd_pbp,   /* Next command pointed to NULL. */
+    NULL,           /* Next subcommand. */
+    "tmap",        /* The command string to type. */
+    "\r\ntmap:\r\n tmap start from BQB mode\r\n\r\n",
+    bqb_tmap,      /* The function to run. */
+    -1,             /* Zero or more parameters are expected. */
+    NULL            /* Default command match pattern. */
+};
+
+/*
+ * The definition of the "hap" subcommand of bqb.
+ */
+const static T_CLI_CMD bqb_cmd_hap =
+{
+    &bqb_cmd_tmap,   /* Next command pointed to NULL. */
+    NULL,           /* Next subcommand. */
+    "hap",        /* The command string to type. */
+    "\r\nhap:\r\n hap start from BQB mode\r\n\r\n",
+    bqb_hap,      /* The function to run. */
+    -1,             /* Zero or more parameters are expected. */
+    NULL            /* Default command match pattern. */
+};
+
+/*
  * The definition of the "sdp" subcommand of bqb.
  */
 const static T_CLI_CMD bqb_cmd_sdp =
 {
-    &bqb_cmd_avdtp, /* Next command pointed to NULL. */
+    &bqb_cmd_hap, /* Next command pointed to NULL. */
     NULL,           /* Next subcommand. */
     "sdp",          /* The command string to type. */
     "\r\nsdp:\r\n SDP search from BQB mode\r\n\r\n",

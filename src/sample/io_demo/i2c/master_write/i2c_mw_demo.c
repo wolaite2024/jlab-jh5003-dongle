@@ -15,10 +15,8 @@
  *                              Header Files
  *============================================================================*/
 #include "rtl876x_pinmux.h"
-#include "rtl876x_nvic.h"
 #include "rtl876x_rcc.h"
 #include "rtl876x_i2c.h"
-#include "string.h"
 #include "trace.h"
 
 /** @defgroup  I2C_MW_DEMO  I2C MASTER WRITE DEMO
@@ -116,7 +114,10 @@ void i2c_mw_demo(void)
         I2C_SendCmd(I2C1, I2C_WRITE_CMD, 0, I2C_STOP_ENABLE);
         I2C_Cmd(I2C1, DISABLE);
         I2C_Cmd(I2C1, ENABLE);
-        I2C_MasterWrite(I2C1, I2C_WriteBuf, 6);
+        if (I2C_Success != I2C_MasterWrite(I2C1, I2C_WriteBuf, 6))
+        {
+            IO_PRINT_ERROR0("i2c_mw_demo: Send failed again");
+        }
     }
 }
 /** @} */ /* End of group I2C_MasterWrite_Exported_Functions */

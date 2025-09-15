@@ -3,7 +3,7 @@
 *     Copyright(c) 2017, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * @file     sps.h
-  * @brief    Head file for using scan parameters service.
+  * @brief    Header file for using scan parameters service.
   * @details  SPS data structs and external functions declaration.
   * @author
   * @date
@@ -29,7 +29,7 @@ extern "C" {
 
     The Scan Parameters Service enables a GATT Server device to expose a characteristic for the GATT Client
     to write its scan interval and scan window on the GATT Server device, and enables a GATT Server to
-    request a refresh of the GATT Client scan interval and scan window.Scan Parameter Service makes up the
+    request a refresh of the GATT Client scan interval and scan window. The Scan Parameter Service makes up the
     services of HID Device, together with HID Service. Its role is to implement the interaction of data
     information when needing to change Scan parameters.
 
@@ -39,11 +39,11 @@ extern "C" {
 
     The specific configuration can be achieved by modifying @ref sps_config.h.
 
-    Application shall register scan parameter service when initialization through @ref sps_add_service function.
+    Applications shall register scan parameter service during initialization through @ref sps_add_service function.
 
-    Application can set the scan refresh value through @ref sps_set_parameter function.
+    Applications can set the scan refresh value through @ref sps_set_parameter function.
 
-    Application can notify refresh value to client through @ref sps_scan_interval_window_value_notify function.
+    Applications can notify refreshed value to the client through the @ref sps_scan_interval_window_value_notify function.
 
   * @{
   */
@@ -63,7 +63,7 @@ extern "C" {
 /** @} */
 
 /** @defgroup SPS_Notify_Indicate_Info SPS Notify Indicate Info
-  * @brief  Parameter for enable or disable notification or indication.
+  * @brief  Parameter for enabling or disabling notification or indication.
   * @{
   */
 #define SPS_NOTIFY_INDICATE_SCAN_REFRESH_ENABLE     1
@@ -91,7 +91,7 @@ typedef enum
 
 /** @} */
 
-/** SPS scan interval window structure*/
+/** SPS scan interval window structure.*/
 typedef struct
 {
     uint16_t    scan_interval;
@@ -99,27 +99,27 @@ typedef struct
 } T_SPS_SCAN_INTERVAL_WINDOW;
 
 
-/** SPS write parameter*/
+/** SPS write parameter.*/
 typedef union
 {
     T_SPS_SCAN_INTERVAL_WINDOW scan;
 } T_SPS_WRITE_PARAMETER;
 
-/** SPS write message*/
+/** SPS write message.*/
 typedef struct
 {
     uint8_t write_type;
     T_SPS_WRITE_PARAMETER write_parameter;
 } T_SPS_WRITE_MSG;
 
-/** SPS upstream message data*/
+/** SPS upstream message data.*/
 typedef union
 {
     uint8_t notification_indification_index;
     T_SPS_WRITE_MSG write;
 } T_SPS_UPSTREAM_MSG_DATA;
 
-/** SPS callback data*/
+/** SPS callback data.*/
 typedef struct
 {
     uint8_t                 conn_id;
@@ -138,19 +138,19 @@ typedef struct
   */
 
 /**
- * @brief       Set a scan paramter service parameter.
+ * @brief       Set a scan parameter service parameter.
  *
- *              NOTE: You can call this function with a scan paramter service parameter type and it will set the
- *                      scan paramter service parameter.  Scan paramter service parameters are defined in @ref T_SPS_PARAM_TYPE.
- *                      If the "len" field sets to the size of a "uint16_t" ,the
- *                      "p_value" field must point to a data with type of "uint16_t".
+ * This function can be called with a scan parameter service parameter type and it will set the
+ *                      scan parameter service parameter. Scan parameter service parameters are defined in @ref T_SPS_PARAM_TYPE.
+ *                      If the "len" field is set to the size of a "uint16_t", the
+ *                      "p_value" field must point to data of type "uint16_t".
  *
- * @param[in]   param_type   Scan paramter service parameter type: @ref T_SPS_PARAM_TYPE
- * @param[in]   len       Length of data to write
- * @param[in]   p_value Pointer to data to write.  This is dependent on
+ * @param[in]   param_type   Scan parameter service parameter type: @ref T_SPS_PARAM_TYPE.
+ * @param[in]   len       Length of data to write.
+ * @param[in]   p_value Pointer to data to write. This is dependent on
  *                      the parameter type and WILL be cast to the appropriate
  *                      data type (For example: if data type of param is uint16_t, p_value will be cast to
- *                      pointer of uint16_t).
+ *                      a pointer of uint16_t).
  *
  * @return Operation result.
  * @retval true Operation success.
@@ -160,26 +160,25 @@ typedef struct
  * \code{.c}
     void test(void)
     {
-        uint8_t refresh_value = 10;
-        sps_set_parameter(SPS_PARAM_SCAN_REFRESH, 1, &refresh_value);
+        bool ret = sps_set_parameter(SPS_PARAM_SCAN_REFRESH, 1, &refresh_value);
     }
  * \endcode
  */
 bool sps_set_parameter(T_SPS_PARAM_TYPE param_type, uint8_t len, void *p_value);
 
 /**
-  * @brief Add scan parameters service to the BLE stack database.
+  * @brief Add scan parameters service to the Bluetooth Host.
   *
-  * @param[in]   p_func  Callback when service attribute was read, write or cccd update.
-  * @return Service id generated by the BLE stack: @ref T_SERVER_ID.
+  * @param[in]   p_func  Callback when service attribute was read, write or CCCD update.
+  * @return Service ID generated by the Bluetooth Host: @ref T_SERVER_ID.
   * @retval 0xFF Operation failure.
-  * @retval others Service id assigned by stack.
+  * @retval others Service ID assigned by Bluetooth Host.
   *
   * <b>Example usage</b>
   * \code{.c}
     void profile_init()
     {
-        server_init(1);
+        server_init(service_num);
         sps_id = sps_add_service(app_handle_profile_message);
     }
   * \endcode
@@ -187,21 +186,20 @@ bool sps_set_parameter(T_SPS_PARAM_TYPE param_type, uint8_t len, void *p_value);
 T_SERVER_ID sps_add_service(void *p_func);
 
 /**
-  * @brief send notification.
+  * @brief Send notification.
   *
-  * @param[in] conn_id   Connection id.
+  * @param[in] conn_id   Connection ID.
   * @param[in] service_id   Service ID of service.
-  * @param[in] sps_refresh_value   characteristic value to notify
-  * @return notification action result
-  * @retval 1 TRUE
-  * @retval 0 FALSE
+  * @param[in] sps_refresh_value   Characteristic value to notify.
+  * @return Notification action result.
+  * @retval true Operation success.
+  * @retval false Operation failed.
   *
   * <b>Example usage</b>
   * \code{.c}
      void test(void)
      {
-         uint8_t sps_refresh_value = 10;
-         sps_scan_interval_window_value_notify(conn_id, sps_id, sps_refresh_value);
+          bool ret = sps_scan_interval_window_value_notify(conn_id, sps_id, sps_refresh_value);
      }
   * \endcode
   */

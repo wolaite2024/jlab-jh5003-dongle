@@ -3,7 +3,7 @@
 *     Copyright(c) 2016, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * @file    gap_le.h
-  * @brief   This file contains all the constants and functions prototypes for GAP protocol.
+  * @brief   This file contains all the constants and function prototypes for the GAP protocol.
   * @details
   * @author  jane
   * @date    2016-02-18
@@ -45,38 +45,31 @@ extern "C"
 typedef enum
 {
     GAP_PARAM_DEV_STATE                = 0x220, //!< Device's current GAP device state. Read/Write. Size is sizeof(TGapDevState).
-    GAP_PARAM_APPEARANCE               = 0x221, //!< Local Device's Appearance. Read/Write. size is uint16. Appearance value please refer to GAP Appearance Values.(@ref GAP_LE_APPEARANCE_VALUES)
+    GAP_PARAM_APPEARANCE               = 0x221, //!< Local Device's Appearance. Read/Write. size is uint16. Appearance value please refer to GAP Appearance Values.(@ref GAP_LE_APPEARANCE_VALUES).
     GAP_PARAM_DEVICE_NAME              = 0x222, //!< Local Device's Name. Write Only. Name string length is GAP_DEVICE_NAME_LEN.
-    GAP_PARAM_SLAVE_INIT_GATT_MTU_REQ  = 0x223, //!< Slave initiate the GATT exchange MTU procedure. Write Only.
+    GAP_PARAM_SLAVE_INIT_GATT_MTU_REQ  = 0x223, //!< Slave initiates the GATT exchange MTU procedure. Write Only.
     GAP_PARAM_RANDOM_ADDR              = 0x224, //!< Random address. Write Only.
-    GAP_PARAM_LATEST_CONN_BD_ADDR      = 0x226, //!< Latest connected bluetooth devive address. Read Only.
-    GAP_PARAM_LATEST_CONN_BD_ADDR_TYPE = 0x227, //!< Latest connected bluetooth devive address type. Read Only.
-    GAP_PARAM_HANDLE_CREATE_CONN_IND   = 0x228, //!< App handle the create connection indication message.
+    GAP_PARAM_LATEST_CONN_BD_ADDR      = 0x226, //!< Latest connected Bluetooth device address. Read Only.
+    GAP_PARAM_LATEST_CONN_BD_ADDR_TYPE = 0x227, //!< Latest connected Bluetooth device address type. Read Only.
+    GAP_PARAM_HANDLE_CREATE_CONN_IND   = 0x228, //!< APP handles the create connection indication message.
     GAP_PARAM_DEFAULT_PHYS_PREFER      = 0x229, //!< Preferred values for the transmitter PHY and receiver PHY to be used for all subsequent connections over the LE transport.
     GAP_PARAM_DEFAULT_TX_PHYS_PREFER   = 0x22a, //!< The transmitter PHYs that the Host prefers the Controller to use.
     GAP_PARAM_DEFAULT_RX_PHYS_PREFER   = 0x22b, //!< The receiver PHYs that the Host prefers the Controller to use.
     GAP_PARAM_USE_EXTENDED_ADV         = 0x22c, //!< Use LE Advertising Extensions.
-    GAP_PARAM_DEFAULT_DATA_LEN_MAX_TX_OCTETS = 0x22e,
-    GAP_PARAM_DEFAULT_DATA_LEN_MAX_TX_TIME   = 0x22f,
+    GAP_PARAM_DEFAULT_DATA_LEN_MAX_TX_OCTETS = 0x22e, //!< The Host's suggested value for the Controller's maximum transmitted number of payload octets in LL Data PDUs to be used for new connections. Range: 0x001B to 0x00FB.
+    GAP_PARAM_DEFAULT_DATA_LEN_MAX_TX_TIME   = 0x22f, //!< The Host's suggested value for the Controller's maximum packet transmission time in microseconds for packets containing LL Data PDUs to be used for new connections. Range: 0x0148 to 0x4290.
 
     GAP_PARAM_LOCAL_FEATURES           = 0x230, //!< Local supported features.
     GAP_PARAM_DS_POOL_ID               = 0x231, //!< Downstream PoolID.  Read only.  size is uint16.
     GAP_PARAM_DS_DATA_OFFSET           = 0x232, //!< Downstream pool buffer data offset.  Read only.  size is uint16.
-    GAP_PARAM_LE_REMAIN_CREDITS        = 0x233, //!< Remain credits avaiable for TX.  Read only.  size is uint16.
+    GAP_PARAM_LE_REMAIN_CREDITS        = 0x233, //!< Remaining credits available for TX.  Read only.  size is uint16.
     GAP_PARAM_MAX_WL_SIZE              = 0x234, //!< Max white list size.  Read only.  size is uint16.
     GAP_PARAM_MIN_TX_POWER             = 0x235, //!< The minimum transmit powers supported by the Controller.
     GAP_PARAM_MAX_TX_POWER             = 0x236, //!< The maximum transmit powers supported by the Controller.
     GAP_PARAM_CIS_HOST_SUPPORT         = 0x237, //!< Host supports creating CISes.
-    GAP_PARAM_MASTER_INIT_GATT_MTU_REQ = 0x238, //!< Master initiate the GATT exchange MTU procedure. Write Only. Size is uint8. Default value is true.
+    GAP_PARAM_MASTER_INIT_GATT_MTU_REQ = 0x238, //!< Master initiates the GATT exchange MTU procedure. Write Only. Size is uint8. Default value is true.
 } T_GAP_LE_PARAM_TYPE;
 
-/**
-  * @brief Callback for gap le to notify app
-  * @param[in] cb_type callback msy type @ref GAP_LE_MSG_Types.
-  * @param[in] p_cb_data point to callback data @ref T_LE_CB_DATA.
-  * @retval result @ref T_APP_RESULT
-  */
-typedef T_APP_RESULT(*P_FUN_LE_APP_CB)(uint8_t cb_type, void *p_cb_data);
 /** End of GAP_LE_Exported_Types
   * @}
   */
@@ -90,6 +83,15 @@ typedef T_APP_RESULT(*P_FUN_LE_APP_CB)(uint8_t cb_type, void *p_cb_data);
  *
  * @{
  */
+
+/**
+  * @brief Callback for GAP LE to notify APP.
+  * @param[in] cb_type Callback msg type @ref GAP_LE_MSG_Types.
+  * @param[in] p_cb_data Point to callback data @ref T_LE_CB_DATA.
+  * @return    Result.
+  * @retval    result @ref T_APP_RESULT.
+  */
+typedef T_APP_RESULT(*P_FUN_LE_APP_CB)(uint8_t cb_type, void *p_cb_data);
 
 /**
   * @brief  Initialize parameters of GAP.
@@ -117,16 +119,16 @@ typedef T_APP_RESULT(*P_FUN_LE_APP_CB)(uint8_t cb_type, void *p_cb_data);
 bool        le_gap_init(uint8_t link_num);
 
 /**
-  * @brief  Set gap message inform way.
+  * @brief  Set GAP message inform way.
   *
   * Default value is true.
-  * 1. When use_msg is true, gap will send the gap message to io_queue registered by gap_start_bt_stack.
+  * 1. When use_msg is true, GAP will send the GAP message to io_queue registered by gap_start_bt_stack.
   *    Message type is @ref GAP_MSG_TYPE.
-  * 2. When use_msg is false, gap will send the gap message using callback function registered by le_register_app_cb.
+  * 2. When use_msg is false, GAP will send the GAP message using callback function registered by le_register_app_cb.
   *    Message type is @ref GAP_MSG_LE_GAP_STATE_MSG.
   *
   * @param[in] use_msg Whether to use message.
-  * @retval void
+  * @return void.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -139,7 +141,7 @@ bool        le_gap_init(uint8_t link_num);
         T_APP_RESULT result = APP_RESULT_SUCCESS;
         T_LE_CB_DATA cb_data;
         memcpy(&cb_data, p_cb_data, sizeof(T_LE_CB_DATA));
-        APP_PRINT_TRACE1("app_gap_callback: msgType = %d", cb_type);
+        APP_PRINT_TRACE1("app_gap_callback: msgType %d", cb_type);
         switch (cb_type)
         {
         ...
@@ -156,8 +158,8 @@ bool        le_gap_init(uint8_t link_num);
 void        le_gap_msg_info_way(bool use_msg);
 
 /**
-  * @brief  Get max supported le link count.
-  * @retval max_link_num Max supported le link count.
+  * @brief  Get max supported LE link count.
+  * @retval max_link_num Max supported LE link count.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -171,16 +173,16 @@ void        le_gap_msg_info_way(bool use_msg);
 uint8_t     le_get_max_link_num(void);
 
 /**
-  * @brief  Register app callback from gap le.
-  * @param[in]  app_callback callback
-  * @return void
+  * @brief  Register APP callback from GAP LE.
+  * @param[in]  app_callback Callback.
+  * @return void.
  *
  * <b>Example usage</b>
  * \code{.c}
     void app_le_profile_init(void)
     {
         le_register_app_cb(app_gap_callback);
-        client_init(1);
+        client_init(client_num);
         simple_ble_client_id = simp_ble_add_client(app_client_callback);
         client_register_general_client_cb(app_client_callback);
     }
@@ -191,18 +193,18 @@ void        le_register_app_cb(P_FUN_LE_APP_CB app_callback);
 /**
   * @brief  Set a GAP Common parameter.
   *
-  *         NOTE: You can call this function with a GAP Common Parameter ID and it will set the
+  * This function can be called with a GAP Common Parameter ID and it will set the
   *         GAP Parameter.  GAP Peripheral Parameters are defined in (gap.h).
-  *         If the "len" field sets to the size of a "uint16_t" ,the
+  *         If the "len" field sets to the size of a "uint16_t", the
   *         "p_value" field must point to a data with type of "uint16_t".
   *
-  * @param[in]  param Profile parameter ID: @ref T_GAP_LE_PARAM_TYPE
-  * @param[in]  len Length of data to write
+  * @param[in]  param Profile parameter ID: @ref T_GAP_LE_PARAM_TYPE.
+  * @param[in]  len Length of data to write.
   * @param[in]  p_value Pointer to data to write.  This is dependent on
   *                  the parameter ID and WILL be cast to the appropriate
   *                  data type (For example: if data type param is uint16, p_value will be cast to
   *                  pointer of uint16_t).
-  * @return Set result
+  * @return Set result.
   * @retval GAP_CAUSE_SUCCESS Set parameter success.
   * @retval other Set parameter failed.
   *
@@ -227,17 +229,17 @@ T_GAP_CAUSE le_set_gap_param(T_GAP_LE_PARAM_TYPE param, uint8_t len, void *p_val
 /**
   * @brief  Get a GAP Common parameter.
   *
-  *         NOTE: You can call this function with a GAP Common Parameter ID and it will get a
+  * This function can be called with a GAP Common Parameter ID and it will get a
   *         GAP Common Parameter.  GAP Common Parameters are defined in (gap.h).  Also, the
   *         "p_value" field must point to a "uint16".
   *
-  * @param[in]  param Profile parameter ID: @ref T_GAP_LE_PARAM_TYPE
+  * @param[in]  param Profile parameter ID: @ref T_GAP_LE_PARAM_TYPE.
   * @param[in,out] p_value Pointer to location to get the parameter value.  This is dependent on
   *                  the parameter ID and will be cast to the appropriate
   *                  data type (For example: if data type of param is uint16_t, p_value will be cast to
  *                   pointer of uint16_t).
   *
-  * @return Get result
+  * @return Get result.
   * @retval GAP_CAUSE_SUCCESS Get parameter success.
   * @retval other Get parameter failed.
   *
@@ -258,10 +260,14 @@ T_GAP_CAUSE le_get_gap_param(T_GAP_LE_PARAM_TYPE param, void *p_value);
 
 /**
   * @brief  Modify local white list.
-  *         NOTE: You can call this function to add, remove or clear white list.
-  *               This function can be called after @ref gap_start_bt_stack is invoked.
   *
-  * @param[in] operation Add, remove or clear white list, @ref T_GAP_WHITE_LIST_OP.
+  * @note This function can be called to add, remove, or clear the white list.
+  *
+  * Applications can only call this API after the Bluetooth Host is ready. \n
+  *                Explanation: If the Bluetooth Host is ready, the application will be notified by message @ref GAP_MSG_LE_DEV_STATE_CHANGE
+  *                             with new_state about gap_init_state, which is configured as @ref GAP_INIT_STATE_STACK_READY.
+  *
+  * @param[in] operation add, remove, or clear the white list, @ref T_GAP_WHITE_LIST_OP.
   * @param[in] bd_addr Bluetooth Device Address.
   * @param[in] bd_type Bluetooth Device Address type.
   * @retval GAP_CAUSE_SUCCESS Operation success.
@@ -269,10 +275,10 @@ T_GAP_CAUSE le_get_gap_param(T_GAP_LE_PARAM_TYPE param, void *p_value);
   *
   * <b>Example usage</b>
   * \code{.c}
-    void test()
+    void test(void)
     {
         T_GAP_WHITE_LIST_OP operation = GAP_WHITE_LIST_OP_ADD;
-        uint8_t *bd_addr = {0};
+        uint8_t bd_addr[BD_ADDR_SIZE] = {0};
         T_GAP_REMOTE_ADDR_TYPE bd_type = GAP_REMOTE_ADDR_LE_PUBLIC;
         le_modify_white_list(operation, bd_addr, bd_type);
     }
@@ -281,7 +287,7 @@ T_GAP_CAUSE le_get_gap_param(T_GAP_LE_PARAM_TYPE param, void *p_value);
         T_APP_RESULT result = APP_RESULT_SUCCESS;
         T_LE_CB_DATA cb_data;
         memcpy(&cb_data, p_cb_data, sizeof(T_LE_CB_DATA));
-        APP_PRINT_TRACE1("app_gap_callback: cb_type = %d", cb_type);
+        APP_PRINT_TRACE1("app_gap_callback: cb_type %d", cb_type);
         switch (cb_type)
         {
         ...
@@ -299,15 +305,15 @@ T_GAP_CAUSE le_modify_white_list(T_GAP_WHITE_LIST_OP operation, uint8_t *bd_addr
                                  T_GAP_REMOTE_ADDR_TYPE bd_type);
 
 /**
-  * @brief    Generate local random address.
+  * @brief    Generate a local random address.
   * @param[in] rand_addr_type Bluetooth Device Random Address type, @ref T_GAP_RAND_ADDR_TYPE.
-  * @param[in,out] random_bd pointer to Bluetooth Device Address.
+  * @param[in,out] random_bd Pointer to Bluetooth Device Address.
   * @retval GAP_CAUSE_SUCCESS Operation success.
   * @retval GAP_CAUSE_SEND_REQ_FAILED Operation failure.
   *
   * <b>Example usage</b>
   * \code{.c}
-    void test()
+    void test(void)
     {
         T_GAP_RAND_ADDR_TYPE rand_addr_type = GAP_RAND_ADDR_RESOLVABLE;
         uint8_t random_bd[BD_ADDR_SIZE] = {0};
@@ -321,7 +327,9 @@ T_GAP_CAUSE le_gen_rand_addr(T_GAP_RAND_ADDR_TYPE rand_addr_type, uint8_t *rando
 /**
   * @brief    Set local random address.
   *
-  *           NOTE: This function can be called after @ref gap_start_bt_stack is invoked.
+  * Applications can only call this API after the Bluetooth Host is ready. \n
+  *                  Explanation: If the Bluetooth Host is ready, the application will be notified by message @ref GAP_MSG_LE_DEV_STATE_CHANGE
+  *                               with new_state about gap_init_state, which is configured as @ref GAP_INIT_STATE_STACK_READY.
   *
   * @param[in] random_bd Bluetooth Device Address.
   * @retval GAP_CAUSE_SUCCESS Operation success.
@@ -329,7 +337,7 @@ T_GAP_CAUSE le_gen_rand_addr(T_GAP_RAND_ADDR_TYPE rand_addr_type, uint8_t *rando
   *
   * <b>Example usage</b>
   * \code{.c}
-    void test()
+    void test(void)
     {
         uint8_t random_bd[BD_ADDR_SIZE] = {0};
         le_set_rand_addr(random_bd);
@@ -339,7 +347,7 @@ T_GAP_CAUSE le_gen_rand_addr(T_GAP_RAND_ADDR_TYPE rand_addr_type, uint8_t *rando
         T_APP_RESULT result = APP_RESULT_SUCCESS;
         T_LE_CB_DATA cb_data;
         memcpy(&cb_data, p_cb_data, sizeof(T_LE_CB_DATA));
-        APP_PRINT_TRACE1("app_gap_callback: cb_type = %d", cb_type);
+        APP_PRINT_TRACE1("app_gap_callback: cb_type %d", cb_type);
         switch (cb_type)
         {
         ...
@@ -357,7 +365,7 @@ T_GAP_CAUSE le_set_rand_addr(uint8_t *random_bd);
 /**
   * @brief    Configure local identity address.
   *
-  *           NOTE: This function can be called before @ref gap_start_bt_stack is invoked.
+  * This function can be called before @ref gap_start_bt_stack is invoked.
   *
   * @param[in] addr Bluetooth Device Address.
   * @param[in] type Bluetooth Device Address type.
@@ -366,7 +374,7 @@ T_GAP_CAUSE le_set_rand_addr(uint8_t *random_bd);
   *
   * <b>Example usage</b>
   * \code{.c}
-    void test()
+    void test(void)
     {
         T_GAP_IDENT_ADDR_TYPE type = GAP_IDENT_ADDR_PUBLIC;
         uint8_t addr[BD_ADDR_SIZE] = {0};
@@ -377,28 +385,40 @@ T_GAP_CAUSE le_set_rand_addr(uint8_t *random_bd);
 T_GAP_CAUSE le_cfg_local_identity_address(uint8_t *addr, T_GAP_IDENT_ADDR_TYPE type);
 
 /**
-* @brief   Set the Host Channel Classification for master role.
-*
-*          NOTE: This function can be called after @ref gap_start_bt_stack is invoked.
-*
-* @param[in]   p_channel_map Channel bit map, the most 3 significant bits are reserved.
-*
-* @retval GAP_CAUSE_SUCCESS: Operation success.
-* @retval GAP_CAUSE_SEND_REQ_FAILED: Operation fail.
+  * @brief   Set Host channel classification.
+  *
+  * If the request to send the operation is successful, the setting result will be returned by the callback
+  *          registered by @ref le_register_app_cb with cb_type @ref GAP_MSG_LE_SET_HOST_CHANN_CLASSIF.
+  *
+  * Applications can only call this API after the Bluetooth Host is ready. \n
+  *                 Explanation: If the Bluetooth Host is ready, the application will be notified by message @ref GAP_MSG_LE_DEV_STATE_CHANGE
+  *                              with new_state about gap_init_state, which is configured as @ref GAP_INIT_STATE_STACK_READY.
+  *
+  * @param[in]   p_channel_map Size: 5 octets (37 bits meaningful).
+  *                            This parameter contains 37 1-bit fields.
+  *                            The nth such field (in the range 0 to 36) contains the value for the
+  *                            Link Layer channel index n.
+  *                            Channel n is bad = 0.
+  *                            Channel n is unknown = 1.
+  *                            The most significant bits are reserved for future use.
+  *                            At least one channel shall be marked as unknown.
+  *
+  * @return The result of sending request.
+  * @retval GAP_CAUSE_SUCCESS Sending request operation is successful.
+  * @retval Others Sending request operation is failed.
   *
   * <b>Example usage</b>
   * \code{.c}
-    void test()
+    void test(void)
     {
-        uint8_t channel_map = 0;
-        le_set_host_chann_classif(channel_map);
+        T_GAP_CAUSE cause = le_set_host_chann_classif(p_channel_map);
     }
     T_APP_RESULT app_gap_callback(uint8_t cb_type, void *p_cb_data)
     {
         T_APP_RESULT result = APP_RESULT_SUCCESS;
         T_LE_CB_DATA cb_data;
         memcpy(&cb_data, p_cb_data, sizeof(T_LE_CB_DATA));
-        APP_PRINT_TRACE1("app_gap_callback: cb_type = %d", cb_type);
+        APP_PRINT_TRACE1("app_gap_callback: cb_type %d", cb_type);
         switch (cb_type)
         {
         ...
@@ -414,20 +434,22 @@ T_GAP_CAUSE le_cfg_local_identity_address(uint8_t *addr, T_GAP_IDENT_ADDR_TYPE t
 T_GAP_CAUSE le_set_host_chann_classif(uint8_t *p_channel_map);
 
 /**
-* @brief   Specify suggested values for maximum transmission number of payload
-           octets and maximum packet transmission time for new connections.
-*
-*          NOTE: This function can be called after @ref gap_start_bt_stack is invoked.
-*
-* @param[in]   tx_octets maximum transmission number of payload octets, range: 0x001B-0x00FB
-* @param[in]   tx_time   maximum packet transmission time, range: 0x0148-0x4290
-*
-* @retval GAP_CAUSE_SUCCESS: Operation success.
-* @retval GAP_CAUSE_SEND_REQ_FAILED: Operation fail.
+  * @brief   Specify suggested values for the maximum transmission number of payload
+             octets and maximum packet transmission time for new connections.
+  *
+  * Applications can only call this API after the Bluetooth Host is ready. \n
+  *                 Explanation: If the Bluetooth Host is ready, the application will be notified by message @ref GAP_MSG_LE_DEV_STATE_CHANGE
+  *                              with new_state about gap_init_state, which is configured as @ref GAP_INIT_STATE_STACK_READY.
+  *
+  * @param[in]   tx_octets Maximum transmission number of payload octets, range: 0x001B-0x00FB.
+  * @param[in]   tx_time   Maximum packet transmission time, range: 0x0148-0x4290.
+  *
+  * @retval GAP_CAUSE_SUCCESS: Operation success.
+  * @retval GAP_CAUSE_SEND_REQ_FAILED: Operation failure.
   *
   * <b>Example usage</b>
   * \code{.c}
-    void test()
+    void test(void)
     {
         uint16_t tx_octets = 0x00FB;
         uint16_t tx_time = 0x0848;
@@ -438,7 +460,7 @@ T_GAP_CAUSE le_set_host_chann_classif(uint8_t *p_channel_map);
         T_APP_RESULT result = APP_RESULT_SUCCESS;
         T_LE_CB_DATA cb_data;
         memcpy(&cb_data, p_cb_data, sizeof(T_LE_CB_DATA));
-        APP_PRINT_TRACE1("app_gap_callback: cb_type = %d", cb_type);
+        APP_PRINT_TRACE1("app_gap_callback: cb_type %d", cb_type);
         switch (cb_type)
         {
         ...
@@ -454,17 +476,17 @@ T_GAP_CAUSE le_set_host_chann_classif(uint8_t *p_channel_map);
 T_GAP_CAUSE le_write_default_data_len(uint16_t tx_octets, uint16_t tx_time);
 
 /**
-* @brief   Check local supported featrue
-*
-* @param[in]   array_index supported features mask array index
-* @param[in]   feature_mask   supported features mask
-*
-* @retval true: Operation success.
-* @retval false: Operation fail.
+  * @brief   Check local supported features.
+  *
+  * @param[in]   array_index supported features mask array index.
+  * @param[in]   feature_mask   supported features mask.
+  *
+  * @retval true: Operation success.
+  * @retval false: Operation failure.
   *
   * <b>Example usage</b>
   * \code{.c}
-    void test()
+    void test(void)
     {
          bool supported = le_check_supported_features(LE_SUPPORT_FEATURES_MASK_ARRAY_INDEX3, LE_SUPPORT_FEATURES_PAST_RECIPIENT_MASK_BIT);
     }

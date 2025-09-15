@@ -208,6 +208,7 @@ static void spi_slave_tx_dma_handler(void)
 
     GDMA_INTConfig(SPI_SLAVE_TX_DMA_CHANNEL_NUM, GDMA_INT_Transfer, DISABLE);
     GDMA_ClearINTPendingBit(SPI_SLAVE_TX_DMA_CHANNEL_NUM, GDMA_INT_Transfer);
+    /* It is recommended to post the os msg to the task thread for data processing. */
 }
 
 static void spi_slave_handler(void)
@@ -216,14 +217,23 @@ static void spi_slave_handler(void)
 
     if (SPI_GetINTStatus(SPI_SLAVE, SPI_INT_TUF) == SET)
     {
-        SPI_INTConfig(SPI_SLAVE, SPI_INT_TUF, DISABLE);
         IO_PRINT_INFO0("spi_slave_handler: spi tx fifo underflow!");
+        SPI_INTConfig(SPI_SLAVE, SPI_INT_TUF, DISABLE);
+        SPI_ClearINTPendingBit(SPI_SLAVE, SPI_INT_TUF);
+        /* It is recommended to post the os msg to the task thread for data processing. */
+
+        //reset spi slave can recover if trigger tx underflow.
+        SPI_Cmd(SPI_SLAVE, DISABLE);
+        SPI_Cmd(SPI_SLAVE, ENABLE);
     }
 
     if (SPI_GetINTStatus(SPI_SLAVE, SPI_INT_TXO) == SET)
     {
-        SPI_INTConfig(SPI_SLAVE, SPI_INT_TXO, DISABLE);
         IO_PRINT_INFO0("spi_slave_handler: spi tx fifo overflow!");
+        SPI_INTConfig(SPI_SLAVE, SPI_INT_TXO, DISABLE);
+        SPI_ClearINTPendingBit(SPI_SLAVE, SPI_INT_TXO);
+        /* It is recommended to post the os msg to the task thread for data processing. */
+
     }
 }
 

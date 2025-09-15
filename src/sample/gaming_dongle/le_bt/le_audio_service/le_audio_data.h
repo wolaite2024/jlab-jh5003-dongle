@@ -9,6 +9,7 @@ extern "C" {
 #include "codec_def.h"
 #include "app_msg.h"
 #include "bt_direct_msg.h"
+#include "ble_isoch_def.h"
 
 #define LE_AUDIO_USB_PATH       0x00
 #define LE_AUDIO_AUX_PATH       0x01
@@ -81,6 +82,7 @@ typedef struct t_iso_chnl_info_db
     uint16_t                    packet_seq_num;
     uint16_t                    last_packet_seq_num;
     T_CODEC_CFG                 codec_data;
+    T_ISOCH_INFO                isoch_info;
 } T_ISO_CHNL_INFO_DB;
 
 
@@ -123,6 +125,7 @@ void le_audio_data_init(void);
 void le_audio_uac_handle(T_IO_MSG *msg);
 void le_audio_set_audio_path(uint8_t audio_path);
 uint8_t le_audio_get_audio_path(void);
+bool le_audio_check_cis_exist(void);
 void le_audio_data_direct_callback(uint8_t cb_type, void *p_cb_data);
 
 #ifdef  __cplusplus

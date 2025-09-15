@@ -25,7 +25,7 @@ extern "C"
  *============================================================================*/
 #include "gap_le.h"
 
-/** @addtogroup GAP GAP Module
+/** @addtogroup BT_Host Bluetooth Host
   * @{
   */
 
@@ -33,7 +33,8 @@ extern "C"
   * @{
   */
 
-/** @addtogroup GAP_LE_PAST_RECIPIENT GAP LE PAST Recipient Module
+/** @addtogroup GAP_LE_PAST_RECIPIENT GAP LE PAST Recipient
+  * @brief GAP LE PAST Recipient Module
   * @{
   */
 
@@ -88,11 +89,11 @@ typedef struct
     T_GAP_PAST_RECIPIENT_PERIODIC_ADV_SYNC_TRANSFER_MODE mode;
     uint8_t cte_type;                                           /**< @ref PAST_RECIPIENT_PERIODIC_ADV_SYNC_TRANSFER_CTE_TYPE. */
     uint16_t skip;                                              /**< The maximum number of periodic advertising events that can be skipped after a successful receive.
-                                                                     Range: 0x0000 to 0x01F3 */
+                                                                     @arg Range: 0x0000 to 0x01F3. */
     uint16_t sync_timeout;                                      /**< Synchronization timeout for the periodic advertising train.
-                                                                     Range: 0x000A to 0x4000
-                                                                     Time = N*10 ms
-                                                                     Time Range: 100 ms to 163.84 s */
+                                                                     @arg Range: 0x000A to 0x4000.
+                                                                     @arg Time = N*10 ms.
+                                                                     @arg Time Range: 100 ms to 163.84 s. */
 } T_GAP_PAST_RECIPIENT_PERIODIC_ADV_SYNC_TRANSFER_PARAM;
 /** End of GAP_LE_PAST_RECIPIENT_Exported_Types
   * @}
@@ -108,16 +109,16 @@ typedef struct
 /**
  * @brief       Specify the initial value for PAST recipient periodic advertising sync transfer parameter to be used
  *              for all subsequent connections.
- *              NOTE: This function does not affect any existing connection.
+ *              @note This function does not affect any existing connection.
  *
- *              NOTE: This function can be called after stack is ready.
- *              Explanation: If stack is ready, Application will be notified by message @ref GAP_MSG_LE_DEV_STATE_CHANGE
+ * This function can be called after Bluetooth Host is ready. \n
+ *              Explanation: If Bluetooth Host is ready, the application will be notified by message @ref GAP_MSG_LE_DEV_STATE_CHANGE
  *                           with new_state about gap_init_state which is configured as @ref GAP_INIT_STATE_STACK_READY.
  *
- *              If sending request operation is success, the result of setting parameters will be returned by
+ * If sending request operation is successful, the result of setting parameters will be returned by
  *              @ref app_gap_callback with cb_type @ref GAP_MSG_LE_PAST_RECIPIENT_SET_DEFAULT_PERIODIC_ADV_SYNC_TRANSFER_PARAMS.
  *
- *              Reception of periodic advertising synchronization information will be returned by @ref app_gap_callback with
+ * Reception of periodic advertising synchronization information will be returned by @ref app_gap_callback with
  *              cb_type @ref GAP_MSG_LE_PAST_RECIPIENT_PERIODIC_ADV_SYNC_TRANSFER_RECEIVED_INFO.
  *              GAP PA synchronization states will be returned by @ref app_gap_callback with cb_type @ref GAP_MSG_LE_PA_SYNC_STATE_CHANGE_INFO.
  *              Periodic advertisement will be returned by @ref app_gap_callback with cb_type @ref GAP_MSG_LE_PERIODIC_ADV_REPORT_INFO.
@@ -232,10 +233,10 @@ T_GAP_CAUSE le_past_recipient_set_default_periodic_adv_sync_transfer_params(
  * @brief       Specify how the Controller will process periodic advertising synchronization information received
  *              from the device identified by conn_id.
  *
- *              If sending request operation is success, the result of setting parameters will be returned by
+ * If sending request operation is success, the result of setting parameters will be returned by
  *              @ref app_gap_callback with cb_type @ref GAP_MSG_LE_PAST_RECIPIENT_SET_PERIODIC_ADV_SYNC_TRANSFER_PARAMS.
  *
- *              Reception of periodic advertising synchronization information will be returned by @ref app_gap_callback with
+ * Reception of periodic advertising synchronization information will be returned by @ref app_gap_callback with
  *              cb_type @ref GAP_MSG_LE_PAST_RECIPIENT_PERIODIC_ADV_SYNC_TRANSFER_RECEIVED_INFO.
  *              GAP PA synchronization states will be returned by @ref app_gap_callback with cb_type @ref GAP_MSG_LE_PA_SYNC_STATE_CHANGE_INFO.
  *              Periodic advertisement will be returned by @ref app_gap_callback with cb_type @ref GAP_MSG_LE_PERIODIC_ADV_REPORT_INFO.
@@ -360,7 +361,7 @@ T_GAP_CAUSE le_past_recipient_set_periodic_adv_sync_transfer_params(uint8_t conn
   * @}
   */
 
-/** End of GAP
+/** End of BT_Host
   * @}
   */
 

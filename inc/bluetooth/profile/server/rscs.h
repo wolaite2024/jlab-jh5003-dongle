@@ -2,8 +2,8 @@
 *****************************************************************************************
 *     Copyright(c) 2017, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
-  * @file     rsc_service.h
-  * @brief    Head file for using Running Speed and Cadence Service.
+  * @file     rscs.h
+  * @brief    Header file for using Running Speed and Cadence Service.
   * @details  RSC data structs and external functions declaration.
   * @author   ethan_su
   * @date     2017-10-10
@@ -31,7 +31,7 @@ extern "C" {
     The Running Speed and Cadence (RSC) Service exposes speed, cadence and other data related to fitness applications
     such as the stride length and the total distance the user has traveled while using the Running Speed and Cadence sensor (Server).
 
-    Application shall register Running Speed and Cadence service when initialization through @ref rscs_add_service function.
+    Applications shall register Running Speed and Cadence service during initialization through @ref rscs_add_service function.
 
     The RSC Measurement characteristic is used to send speed and cadence measurements. Included in the characteristic value are
     a Flags field (for showing the presence of optional fields and, if supported by the Server, whether the user is walking or running),
@@ -40,16 +40,16 @@ extern "C" {
 
     The Server measures the instantaneous speed at which the user is moving. The cadence represents the number of times per minute
     the foot with the sensor hits the ground. The stride length represents the distance between two successive contacts of the same foot
-    to the ground and the total distance represents the distance the user has travelled with the sensor since the last reset of the total
+    to the ground and the total distance represents the distance the user has traveled with the sensor since the last reset of the total
     distance.
 
-    Application can set a running speed and cadence service parameter through @ref rscs_set_parameter function.
+    Applications can set a running speed and cadence service parameter through @ref rscs_set_parameter function.
 
-    Application can get a running speed and cadence service parameter through @ref rscs_get_parameter function.
+    Applications can get a running speed and cadence service parameter through @ref rscs_get_parameter function.
 
-    After set service parameter, running speed and cadence service can send notification data to client through @ref rscs_meas_value_notify function.
+    After setting the service parameter, the running speed and cadence service can send notification data to the client through @ref rscs_meas_value_notify function.
 
-    Running speed and cadence service can indicate result of calibration to client through @ref rscs_calib_resutl_indicate function.
+    The running speed and cadence service can indicate the result of calibration to the client through @ref rscs_calib_resutl_indicate function.
 
   * @{
   */
@@ -156,7 +156,7 @@ extern "C" {
 /** @} */
 
 /** @defgroup RSCS_Notify_Indicate_Info RSCS Notify Indicate Info
-  * @brief  Parameter for enable or disable notification or indication.
+  * @brief  Parameter for enabling or disabling notification or indication.
   * @{
   */
 #define RSCS_NOTIFY_INDICATE_MEASUREMENT_ENABLE          1
@@ -225,8 +225,8 @@ typedef enum
   */
 typedef struct
 {
-    uint8_t    cur_length; /**<  length of current RSC measurement data. */
-    uint8_t    value[RSCS_MAX_MEASUREMENT_VALUE]; /**<  value of current RSC measurement data. */
+    uint8_t    cur_length; /**<  Length of current RSC measurement data. */
+    uint8_t    value[RSCS_MAX_MEASUREMENT_VALUE]; /**<  Value of current RSC measurement data. */
 } T_RSCS_MEASUREMENT;
 /** @} */
 
@@ -236,8 +236,8 @@ typedef struct
   */
 typedef struct
 {
-    uint8_t    cur_length; /**<  length of current RSC Control Point data, . */
-    uint8_t    value[RSCS_MAX_CTL_PNT_VALUE]; /**<  value of current RSC Control Point data, . */
+    uint8_t    cur_length; /**<  Length of current RSC Control Point data. */
+    uint8_t    value[RSCS_MAX_CTL_PNT_VALUE]; /**<  Value of current RSC Control Point data. */
 } T_RSCS_CONTROL_POINT;
 /** @} */
 
@@ -254,18 +254,18 @@ typedef union
 
 typedef struct
 {
-    uint8_t opcode; //!< ref: @ref RSCS_Control_Point_OpCodes
+    uint8_t opcode; //!<  @ref RSCS_Control_Point_OpCodes.
     T_RSCS_CP_PARAMETER cp_parameter;
 } T_RSCS_WRITE_MSG;
 
 typedef union
 {
-    uint8_t notification_indification_index; //!< ref: @ref RSCS_Notify_Indicate_Info
-    uint8_t read_value_index; //!< ref: @ref RSCS_Read_Info
+    uint8_t notification_indification_index; //!<  @ref RSCS_Notify_Indicate_Info.
+    uint8_t read_value_index; //!<  @ref RSCS_Read_Info.
     T_RSCS_WRITE_MSG write;
 } T_RSCS_UPSTREAM_MSG_DATA;
 
-/** RSC service data to inform application */
+/** RSC service data to inform application. */
 typedef struct
 {
     T_SERVICE_CALLBACK_TYPE     msg_type;
@@ -291,15 +291,15 @@ typedef struct
  *
  * @param[in]   p_func  Callback when service attribute was read/write.
  *
- * @return service id @ref T_SERVER_ID.
+ * @return Service ID @ref T_SERVER_ID.
  * @retval 0xFF Operation failure.
- * @retval others Service id assigned by stack.
+ * @retval others Service ID assigned by Bluetooth Host.
  *
  * <b>Example usage</b>
  * \code{.c}
    void profile_init()
    {
-        server_init(1);
+        server_init(service_num);
         rscs_id = rscs_add_service(app_handle_profile_message);
   }
  * \endcode
@@ -310,17 +310,17 @@ T_SERVER_ID rscs_add_service(void *p_func);
 /**
  * @brief       Set a Running Speed and Cadence Service parameter.
  *
- *              NOTE: You can call this function with a Running Speed and Cadence Service parameter type and it will set the
- *                      Running Speed and Cadence Service parameter.  Running Speed and Cadence Service parameters are defined
+ * This function can be called with a Running Speed and Cadence Service parameter type and it will set the
+ *                      Running Speed and Cadence Service parameter. Running Speed and Cadence Service parameters are defined
  *                      in @ref T_RSCS_PARAM_TYPE.
- *                      If the "len" field sets to the size of a "uint16_t" ,the
- *                      "p_value" field must point to a data with type of "uint16_t".
+ *                      If the "len" field is set to the size of a "uint16_t", the
+ *                      "p_value" field must point to data with the type of "uint16_t".
  *
- * @param[in]   param_type   Running Speed and Cadence Service parameter type: @ref T_RSCS_PARAM_TYPE
- * @param[in]   len       Length of data to write
- * @param[in]   p_value Pointer to data to write.  This is dependent on
- *                      the parameter type and WILL be cast to the appropriate
- *                      data type (For example: if data type of param is uint16_t, p_value will be cast to
+ * @param[in]   param_type   Running Speed and Cadence Service parameter type: @ref T_RSCS_PARAM_TYPE.
+ * @param[in]   len       Length of data to write.
+ * @param[in]   p_value Pointer to data to write. This is dependent on
+ *                      the parameter type and will be cast to the appropriate
+ *                      data type (for example: if data type of param is uint16_t, p_value will be cast to
  *                      pointer of uint16_t).
  *
  * @return Operation result.
@@ -331,20 +331,7 @@ T_SERVER_ID rscs_add_service(void *p_func);
  * \code{.c}
     void test(void)
     {
-        uint32_t total_distance = p_parse_value->dw_param[0];
-        bool op_result;
-
-        op_result = rscs_set_parameter(RSCS_PARAM_TOTALDISTANCE, 4, (uint8_t*)&total_distance);
-
-        if ( op_result )
-        {
-            rscs_get_parameter( RSCS_PARAM_TOTALDISTANCE, &total_distance );
-            data_uart_print("set total_distance = %d\r\n", total_distance);
-        }
-        else
-        {
-            data_uart_print("rscs_set_parameter total_distance failed\r\n");
-        }
+        bool op_result = rscs_set_parameter(RSCS_PARAM_TOTALDISTANCE, 4, (uint8_t*)&total_distance);
     }
  * \endcode
  */
@@ -353,8 +340,8 @@ bool rscs_set_parameter(T_RSCS_PARAM_TYPE param_type, uint8_t len, void *p_value
 /**
  * @brief       Get a Running Speed and Cadence Service parameter.
  *
- *              NOTE: You can call this function with a Running Speed and Cadence Service parameter type and it will get the
- *                      parameter.  Running Speed and Cadence Service parameters are defined in @ref T_RSCS_PARAM_TYPE.
+ * This function can be called with a Running Speed and Cadence Service parameter type and it will get the
+ *                      parameter. Running Speed and Cadence Service parameters are defined in @ref T_RSCS_PARAM_TYPE.
  *
  * @param[in]   param_type   Running Speed and Cadence Service parameter type: @ref T_RSCS_PARAM_TYPE
  * @param[in]   p_value Pointer to data to read.
@@ -367,9 +354,7 @@ bool rscs_set_parameter(T_RSCS_PARAM_TYPE param_type, uint8_t len, void *p_value
  * \code{.c}
     void test(void)
     {
-        uint8_t bFlag;
-
-        rscs_get_parameter(RSCS_PARAM_INC_FLAG, &bFlag);
+        bool ret = rscs_get_parameter(RSCS_PARAM_INC_FLAG, &bFlag);
     }
  * \endcode
  */
@@ -377,34 +362,20 @@ bool rscs_get_parameter(T_RSCS_PARAM_TYPE param_type, void *p_value);
 
 /**
  * @brief       Send Running Speed and Cadence Service value notification data.
- *              Application shall call @ref rscs_set_parameter to set value first,
- *              and then call this api to send the notication value.
+ *              Applications shall call @ref rscs_set_parameter with param_type
+ *              @ref RSCS_PARAM_INC_FLAG to set value first,
+ *              and then call this API to send the notification value.
  *
- * @param[in]   conn_id  Connection id.
- * @param[in]   service_id  Service id.
+ * @param[in]   conn_id  Connection ID.
+ * @param[in]   service_id  Service ID.
  *
- * @return service id @ref T_SERVER_ID.
+ * @return Service ID @ref T_SERVER_ID.
  *
  * <b>Example usage</b>
  * \code{.c}
     void test(void)
     {
-        bool op_result;
-        uint8_t flag = RSCS_INC_ALL_PRESENTS;
-
-        rscs_set_parameter(RSCS_PARAM_INC_FLAG, 1, &flag);
-
-        op_result = rscs_meas_value_notify(p_parse_value->dw_param[0], rscs_id);
-
-        if ( op_result )
-        {
-            data_uart_print("Notify RSC measurement value succeed\r\n");
-        }
-        else
-        {
-            data_uart_print("Notify RSC measurement value failed\r\n");
-        }
-
+        bool op_result = rscs_meas_value_notify(conn_id, rscs_id);
     }
  * \endcode
  */
@@ -414,20 +385,17 @@ bool rscs_meas_value_notify(uint8_t conn_id, T_SERVER_ID service_id);
  * @brief       Send Running Speed and Cadence Service value indication data,
  *              send indication of result of calibration to client.
  *
- * @param[in]   conn_id  Connection id.
- * @param[in]   service_id  Service id.
+ * @param[in]   conn_id  Connection ID.
+ * @param[in]   service_id  Service ID.
  * @param[in]   result calibration result.
  *
- * @return none;
+ * @return void.
  *
  * <b>Example usage</b>
  * \code{.c}
     void test(void)
     {
-        uint8_t conn_id = p_parse_value->dw_param[0];
-        uint8_t result = p_parse_value->dw_param[1];
         rscs_calib_resutl_indicate(conn_id, rscs_id, result);
-        data_uart_print("cmd_rscs_calib_result_indicate result= %d\r\n", result);
     }
  * \endcode
  */

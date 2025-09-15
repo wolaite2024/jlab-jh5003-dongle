@@ -3,7 +3,7 @@
 *     Copyright(c) 2017, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * @file    system_status_api.h
-  * @brief   This file provides api wrapper for bbpro compatibility..
+  * @brief   This file provides API wrapper for bbpro compatibility..
   * @author  sandy_jiang
   * @date    2018-11-29
   * @version v1.0
@@ -31,88 +31,132 @@
 extern "C" {
 #endif
 
-/** @addtogroup HAL_87x3e_SYSTEM_STATUS_API System Status Api
+/** @addtogroup HAL_87x3E_SYSTEM_STATUS_API System Status API
   * @{
   */
 
 /*============================================================================*
  *                              Variables
 *============================================================================*/
-/** @defgroup HAL_87x3e_SYSTEM_STATUS_API_Exported_Variables HAL SYSTEM STATUS Exported Variables
+/** @defgroup HAL_87x3E_SYSTEM_STATUS_API_EXPORTED_VARIABLES HAL System Status Exported Variables
   * @{
   */
 
 
-/** @} */ /* End of group HAL_87x3e_SYSTEM_STATUS_API_Exported_Variables */
+/** @} */ /* End of group HAL_87x3E_SYSTEM_STATUS_API_EXPORTED_VARIABLES */
 
 /*============================================================================*
  *                              Functions
 *============================================================================*/
 
-/** @defgroup HAL_87x3e_SYSTEM_STATUS_API_Exported_Functions HAL SYSTEM STATUS Exported Variables
+/** @defgroup HAL_87x3E_SYSTEM_STATUS_API_EXPORTED_FUNCTIONS HAL System Status API
   * @{
   */
 /**
-    * @brief  get reset status to tell apart whether the mcu reboot from software reset or hardware reset
-    * @param  none
-    * @return true: reboot from software reset
-    * @return false: reboot from hardware reset
+    * @brief  Get the reset status to tell apart whether the mcu reboot from software reset or hardware reset.
+    * @param  void
+    * @return Whether reboot from software reset.
+    * @retval  true   Reboot from software reset.
+    * @retval  false  Reboot from hardware reset.
     */
 bool sys_hall_get_reset_status(void);
+/**
+    * @brief  Print wake up reason after mcu power down.
+    * @param  void
+    * @return void
+    */
 void sys_hall_get_power_down_info(void);
+/**
+    * @brief  Get adpater level
+    * @param  void
+    * @return The result to get adpater level.
+    * @retval true  Fail to get adpater level.
+    * @retval false Success to get adpater level.
+    */
 bool sys_hall_adp_read_adp_level(void);
+
+/**
+    * @brief  Share 80k ram from dsp to mcu.
+    * @note   Temporarily unavailable.
+    * @param is_off_ram  Whether the memory shared from dsp is off ram or not.
+    * @return void
+    */
 void sys_hall_set_dsp_share_memory_80k(bool is_off_ram);
+/**
+    * @brief  Read register value of aon register safely.
+    * @param  input_info Offerset of aon register.
+    * @param  output_info The read value to aon register.
+    * @return void
+    */
 void sys_hall_btaon_fast_read_safe(uint16_t *input_info, uint16_t *output_info);
 
 
 /**
-    * @brief  store register value of aon register safely
-    * @param  offset: offerset of aon register
-    * @param  input_info: the value store to aon register
-    * @return none
+    * @brief  Store register value of aon register safely.
+    * @param  offset Offerset of aon register.
+    * @param  input_info The value store to aon register.
+    * @return void
     */
 void sys_hall_btaon_fast_write_safe(uint16_t offset, uint16_t *input_info);
 
 /**
-    * @brief  get package id of ic
-    * @note   temporarily unavailable
-    * @param  enable: enable or disable charger
-    * @return none
+    * @brief  Get package id of IC.
+    * @note   Temporarily unavailable.
+    * @param  enable Eable or disable charger.
+    * @return void
     */
 void sys_hall_charger_auto_enable(bool enable);
+/**
+    * @brief  Get package id of IC.
+    * @param  void
+    * @return Chip id of IC.
+    */
 uint8_t sys_hall_read_package_id(void);
+/**
+    * @brief  Get chip id of IC.
+    * @param  void
+    * @return Chip id of IC
+    */
 uint8_t sys_hall_read_chip_id(void);
+/**
+    * @brief  Get rom version of IC.
+    * @param  void
+    * @return Rom version of IC.
+    */
 uint8_t sys_hall_read_rom_version(void);
+/**
+    * @brief  Get 14 bytes euid of IC.
+    * @param  void
+    * @return Euid of IC.
+    */
 uint8_t *sys_hall_get_ic_euid(void);
 
 /**
-    * @brief  set rglx level of auxadc
-    * @note   temporarily unavailable
-    * @param  input_pin: the pin of auxadc to set rglx
-    * @return none
+    * @brief  Init upperstack
+    * @note   Temporarily unavailable.
+    * @param  upperstack_compile_stamp  The time compile upperstack.
+    * @return void
     */
-void sys_hall_set_rglx_auxadc(uint8_t input_pin);
-
 void sys_hall_upperstack_ini(uint8_t *upperstack_compile_stamp);
 
 /**
-    * @brief  enable or disable auto sleep in idle task
-    * @note   temporarily unavailable
-    * @param  flag: true or false to enable or disable
-    * @return none
+    * @brief  Enable or disable auto sleep in idle task
+    * @note   Temporarily unavailable.
+    * @param  flag  Specify the flag as true or false to enable or disable auto sleep in idle.
+    * @return void
     */
 void sys_hall_auto_sleep_in_idle(bool flag);
 
 /**
-    * @brief  read efuse data on ram
+    * @brief  Read efuse data on ram.
     * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Added API"
-    * @note   prepare enough data space to read the efuse on ram,
-    *         and the reading space should be valid in the efuse space.
-    * @param  offset  specify the efuse offset to read
-    * @param  length  specify the length to read
-    * @param  data    specify the data buffer to store the efuse data
-    * @return ture   read efuse successfully, refer the efuse data by the data parameter
-    *         false  check the parameter fail before reading efuse data
+    * @note   Prepare enough data space to read the efuse on ram, and the reading space should be valid in the efuse space.
+    * @param  offset  Specify the efuse offset to read.
+    * @param  length  Specify the length to read.
+    * @param  data    Specify the data buffer to store the efuse data.
+    * @return The result to read efuse.
+    * @retval  true  Read efuse successfully, refer the efuse data by the data parameter.
+    * @retval  false Check the parameter fail before reading efuse data.
     */
 bool  read_efuse_on_ram(uint16_t offset, uint16_t length, uint8_t *data);
 
@@ -120,11 +164,13 @@ bool  read_efuse_on_ram(uint16_t offset, uint16_t length, uint8_t *data);
     * @brief  get IC secure state
     * \xrefitem Experimental_Added_API_2_13_0_0 "Experimental Added Since 2.13.0.0" "Added API"
     * @param  void
-    * @return true: secure enabled; false: secure disabled
+    * @return Whether secure is enabled.
+    * @retval true  Secure is enabled.
+    * @retval false Secure is disabled.
     */
 bool sys_hall_get_secure_state(void);
-/** @} */ /* End of group HAL_87x3e_SYSTEM_STATUS_API_Exported_Functions */
-/** End of HAL_87x3e_SYSTEM_STATUS_API
+/** @} */ /* End of group HAL_87x3E_SYSTEM_STATUS_API_EXPORTED_FUNCTIONS */
+/** End of HAL_87x3E_SYSTEM_STATUS_API
   * @}
   */
 

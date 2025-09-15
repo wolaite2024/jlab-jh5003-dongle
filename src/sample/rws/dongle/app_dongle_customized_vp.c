@@ -7,6 +7,7 @@
 #include "app_timer.h"
 #include "app_dongle_data_ctrl.h"
 #include "app_dongle_customized_vp.h"
+#include "bt_types.h"
 
 typedef enum
 {

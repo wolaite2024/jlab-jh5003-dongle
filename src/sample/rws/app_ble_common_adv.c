@@ -7,12 +7,12 @@
 #include "os_queue.h"
 #include "trace.h"
 #include "gap_le_types.h"
+#include "app_ble_timer.h"
 #include "app_ble_common_adv.h"
 #include "ble_ext_adv.h"
 #include "app_cfg.h"
 #include "app_main.h"
 #include "app_ble_gap.h"
-#include "app_ble_service.h"
 #include "app_tts.h"
 #include "app_relay.h"
 #include "app_ble_device.h"
@@ -25,6 +25,11 @@
 #if F_APP_GAMING_DONGLE_SUPPORT
 #include "app_dongle_dual_mode.h"
 #endif
+
+#if F_APP_CHATGPT_SUPPORT
+#include "app_chatgpt.h"
+#endif
+
 typedef enum
 {
     SYNC_BLE_ADV_START_FLAG     = 0x00,
@@ -121,6 +126,11 @@ static void app_ble_common_adv_callback(uint8_t cb_type, void *p_cb_data)
                     break;
 
                 case BLE_EXT_ADV_STOP_CAUSE_CONN:
+                    {
+#if F_APP_CHARGER_CASE_SUPPORT
+                        app_ble_common_adv_start_rws(0);
+#endif
+                    }
                     break;
 
                 case BLE_EXT_ADV_STOP_CAUSE_TIMEOUT:
@@ -149,6 +159,17 @@ static void app_ble_common_adv_callback(uint8_t cb_type, void *p_cb_data)
                          cb_data.p_ble_conn_info->adv_handle,
                          cb_data.p_ble_conn_info->local_addr_type,
                          TRACE_BDADDR(cb_data.p_ble_conn_info->local_addr));
+
+        if (cb_data.p_ble_conn_info->adv_handle == le_common_adv.adv_handle)
+        {
+            /*both lea adv and common adv use public address.
+             When phone tries to connect to lea adv, it mistakenly connects to the common adv,
+             This causes common adv to be forced to stop, In this case, we need to reopen common adv.
+            */
+            app_ble_timer_set_current_link_conn_id(cb_data.p_ble_conn_info->conn_id);
+            app_ble_timer_start_check_common_link();
+        }
+
         break;
 
     default:
@@ -248,7 +269,7 @@ void app_ble_common_adv_sec_stop_adv_and_link()
     //ble link disconnect
     for (uint8_t i = 0; i < MAX_BLE_LINK_NUM; i++)
     {
-        if (app_db.le_link[i].is_rtk_link)
+        if (app_db.le_link[i].is_common_link)
         {
             app_ble_gap_disconnect(&app_db.le_link[i], LE_LOCAL_DISC_CAUSE_SECONDARY);
         }
@@ -258,13 +279,13 @@ void app_ble_common_adv_sec_stop_adv_and_link()
 void app_ble_common_adv_handle_roleswap(T_REMOTE_SESSION_ROLE role)
 {
     /*app_ble_common_adv_data update bud role*/
-    bool rtk_link_exist = false;
+    bool common_link_exist = false;
 
     app_ble_common_adv_bud_role_update(role);
-    rtk_link_exist = app_link_le_check_rtk_link_exist();
-    APP_PRINT_INFO3("app_ble_common_adv_handle_roleswap: app_ble_common_adv_data %b,rtk_link_exist %d %d",
+    common_link_exist = app_link_le_check_common_link_exist();
+    APP_PRINT_INFO3("app_ble_common_adv_handle_roleswap: app_ble_common_adv_data %b, common_link_exist %d %d",
                     TRACE_BINARY(sizeof(app_ble_common_adv_data), app_ble_common_adv_data),
-                    rtk_link_exist, app_db.ble_common_adv_after_roleswap);
+                    common_link_exist, app_db.ble_common_adv_after_roleswap);
 
     if (role == REMOTE_SESSION_ROLE_PRIMARY && app_db.ble_common_adv_after_roleswap)
     {
@@ -288,12 +309,12 @@ void app_ble_common_adv_handle_role_swap_fail(T_REMOTE_SESSION_ROLE device_role)
 void app_ble_common_adv_handle_engage_role_decided(void)
 {
     /*app_ble_common_adv_data update bud role*/
-    bool rtk_link_exist = false;
+    bool common_link_exist = false;
 
     app_ble_common_adv_bud_role_update((T_REMOTE_SESSION_ROLE)app_cfg_nv.bud_role);
-    rtk_link_exist = app_link_le_check_rtk_link_exist();
-    APP_PRINT_INFO2("app_ble_common_adv_handle_engage_role_decided: app_ble_common_adv_data %b,rtk_link_exist %d",
-                    TRACE_BINARY(sizeof(app_ble_common_adv_data), app_ble_common_adv_data), rtk_link_exist);
+    common_link_exist = app_link_le_check_common_link_exist();
+    APP_PRINT_INFO2("app_ble_common_adv_handle_engage_role_decided: app_ble_common_adv_data %b, common_link_exist %d",
+                    TRACE_BINARY(sizeof(app_ble_common_adv_data), app_ble_common_adv_data), common_link_exist);
 
     if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY)
     {
@@ -433,7 +454,8 @@ void app_ble_common_adv_handle_ble_disconnected(uint8_t conn_id, uint8_t local_d
 {
     if (app_cfg_const.rtk_app_adv_support)
     {
-        if (app_roleswap_ctrl_get_status() == APP_ROLESWAP_STATUS_IDLE)
+        if (app_roleswap_ctrl_get_status() == APP_ROLESWAP_STATUS_IDLE &&
+            local_disc_cause != LE_LOCAL_DISC_CAUSE_ROLESWAP)
         {
             app_cmd_update_eq_ctrl(false, true);
         }
@@ -473,23 +495,23 @@ void app_ble_common_adv_cb_reg(LE_COMMON_ADV_CB cb)
 
 void app_ble_common_adv_enable_multilink(void)
 {
-    uint8_t rtk_link_num = 0;
+    uint8_t common_link_num = 0;
 
     for (uint8_t i = 0; i < MAX_BLE_LINK_NUM; i++)
     {
-        if (app_db.le_link[i].is_rtk_link == true)
+        if (app_db.le_link[i].is_common_link == true)
         {
-            rtk_link_num++;
+            common_link_num++;
         }
     }
 
-    if (rtk_link_num < app_cfg_const.supported_rtk_link_number)
+    if (common_link_num < app_cfg_const.supported_common_link_number)
     {
         app_ble_device_handle_power_on_rtk_adv();
     }
 
-    APP_PRINT_TRACE2("app_ble_common_adv_enable_multilink: existed rtk link num %d, supported max rtk link num",
-                     rtk_link_num, app_cfg_const.supported_rtk_link_number);
+    APP_PRINT_TRACE2("app_ble_common_adv_enable_multilink: existed common link num %d, supported max common link num",
+                     common_link_num, app_cfg_const.supported_common_link_number);
 }
 
 static void app_ble_common_adv_rand_addr_cb(RANDOM_ADDR_MGR_EVT_DATA *evt_data)
@@ -532,6 +554,25 @@ bool app_ble_common_adv_update_scan_rsp_data(void)
     }
 }
 
+void app_ble_common_adv_update_peer_addr(void)
+{
+    for (int i = 0; i < 6; i++)
+    {
+        app_ble_common_adv_data[25 + i] = app_cfg_nv.bud_peer_addr[5 - i];
+    }
+
+    ble_ext_adv_mgr_set_adv_data(le_common_adv.adv_handle, sizeof(app_ble_common_adv_data),
+                                 app_ble_common_adv_data);
+}
+
+#if F_APP_GATT_OVER_BREDR_SUPPORT
+extern uint8_t GATT_UUID128_RVDIS[16];
+static void app_ble_common_adv_load_rvdis_uuid(uint8_t *data)
+{
+    memcpy(data, GATT_UUID128_RVDIS, sizeof(GATT_UUID128_RVDIS));
+}
+#endif
+
 void app_ble_common_adv_init(void)
 {
     T_LE_EXT_ADV_LEGACY_ADV_PROPERTY adv_event_prop = LE_EXT_ADV_LEGACY_ADV_CONN_SCAN_UNDIRECTED;
@@ -552,13 +593,6 @@ void app_ble_common_adv_init(void)
     uint8_t  peer_address[6] = {0, 0, 0, 0, 0, 0};
     T_GAP_ADV_FILTER_POLICY filter_policy = GAP_ADV_FILTER_ANY;
     uint8_t data_len = 0;
-
-#if F_APP_SPECIFIC_UUID_SUPPORT
-    if (app_cfg_const.enable_specific_service_uuid)
-    {
-        memcpy(&app_ble_common_adv_data[5], app_cfg_const.specific_service_uuid, 15);
-    }
-#endif
 
     /* company id */
     app_ble_common_adv_data[20] = app_cfg_nv.bud_role;
@@ -587,10 +621,19 @@ void app_ble_common_adv_init(void)
     {
         app_ble_common_adv_data[25 + i] = spk1_mac[5 - i];
     }
+
+#if F_APP_GATT_OVER_BREDR_SUPPORT
+    app_ble_common_adv_load_rvdis_uuid(&app_ble_common_adv_data[5]);
+#endif
+
 #if F_APP_DURIAN_SUPPORT
     data_len = sizeof(app_cfg_nv.bud_local_addr) + 2;//2:sizeof(app_cfg_const.company_id)
 #else
     data_len = sizeof(app_cfg_nv.bud_local_addr) + sizeof(app_cfg_const.company_id);
+#endif
+
+#if F_APP_CHATGPT_SUPPORT
+    app_chatgpt_load_uuid(&app_ble_common_adv_data[5]);
 #endif
 
     app_ble_gap_gen_scan_rsp_data(&scan_rsp_data_len, scan_rsp_data);
@@ -617,6 +660,5 @@ void app_ble_common_adv_init(void)
     os_queue_init(&le_common_adv.cb_queue);
 
     app_ble_rand_addr_cb_reg(app_ble_common_adv_rand_addr_cb);
+    app_ble_timer_init();
 }
-
-

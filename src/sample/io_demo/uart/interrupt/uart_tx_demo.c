@@ -19,7 +19,6 @@
 #include "rtl876x_uart.h"
 #include "rtl876x_rcc.h"
 #include "vector_table.h"
-#include "trace.h"
 #include "rtl876x_pinmux.h"
 
 /** @defgroup  UART_DEMO  UART DEMO

@@ -52,6 +52,7 @@ typedef enum
 extern T_ONE_WIRE_UART_STATE one_wire_state;
 
 void app_one_wire_data_uart_handler(void);
+void app_one_wire_uart_switch_pinmux(T_ONE_WIRE_UART_TYPE type);
 
 /**
     * @brief  One-wire UART deinitialization.

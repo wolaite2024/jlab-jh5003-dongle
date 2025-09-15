@@ -20,15 +20,15 @@
 #define SECTION_H
 
 
-/** @defgroup 87x3e_SECTION
-  * @brief memory section definition for user application.
+/** @defgroup 87x3E_SECTION   Section
+  * @brief Memory section definition for user application.
   * @{
   */
 
 /*============================================================================*
  *                              Macro
 *============================================================================*/
-/** @defgroup 87x3e_SECTION_Exported_Macros Section Sets Exported Macros
+/** @defgroup 87x3E_SECTION_EXPORTED_MACROS Section Exported Macros
     * @{
     */
 #define FLASH_HEADER     __attribute__((section(".flash.header")))     __attribute__((used))
@@ -39,8 +39,8 @@
 #define BUFFER_RAM_DATA_SECTION __attribute__((section(".buffer_ram_data")))
 
 #define RAM_DATAON_RANDOM_SECTION     __attribute__((section(".ram.dataon.random")))
-/** @} */
-/** @} */ /* End of group 87x3e_SECTION */
+/** @} */ /*End of group 87x3E_SECTION_EXPORTED_MACROS*/
+/** @} */ /* End of group 87x3E_SECTION */
 
 
 

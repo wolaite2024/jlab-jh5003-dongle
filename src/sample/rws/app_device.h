@@ -65,6 +65,7 @@ typedef enum
     APP_DEVICE_IPC_EVT_DONGLE_DUAL_MODE     = 0x0C,
     APP_DEVICE_IPC_EVT_CHARGING_STATE       = 0x0D,
     APP_DEVICE_IPC_EVT_REMOTE_CONNECTED     = 0x0E,
+    APP_DEVICE_IPC_EVT_BT_MODE_STATE        = 0x0F,
 } T_APP_DEVICE_IPC_EVT;
 
 typedef enum
@@ -152,6 +153,13 @@ void app_device_init(void);
 void app_device_reboot(uint32_t timeout_ms, T_WDG_MODE wdg_mode);
 
 void app_device_factory_reset(void);
+
+/**
+    * @brief  get facotry addr
+    * @param  void
+    * @return point of factory addr
+    */
+uint8_t *app_device_get_factory_addr(void);
 
 /* @brief  check device inside/outside box state
 *

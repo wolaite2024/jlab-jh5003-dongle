@@ -23,7 +23,9 @@
 #include "section.h"
 #include "rom_uuid.h"
 #include "trace.h"
+#if !(defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
 #include "core_cmFunc.h"
+#endif
 #include "version.h"
 #include "patch_header_check.h"
 #include "mem_config.h"
@@ -66,7 +68,7 @@
 /** @defgroup SYSTEM_INIT_Exported_Variables System Init Exported Variables
     * @{
     */
-#if defined ( __CC_ARM   )
+#if defined ( __CC_ARM   ) || (defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
 #if (ENCRYPT_RAM_CODE == 1)
 extern char Image$$RAM_TEXT$$RO$$Base[];
 extern char Load$$RAM_TEXT$$RO$$Base[];
@@ -84,8 +86,11 @@ extern unsigned int *__image_base__;
 
 #endif
 
+
+#if !(defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
 #pragma push
 #pragma diag_suppress 1296 /* disable warning 1296(extened constant initialiser used)*/
+#endif
 /**
 * @brief: application header.
 * @note: items in ENCRYPT_RAM_CODE macro is for encrytion solution only
@@ -126,7 +131,7 @@ FLASH_HEADER const T_IMG_HEADER_FORMAT img_header =
     },
     .uuid = DEFINE_symboltable_uuid,
 
-#if defined ( __CC_ARM   )
+#if defined ( __CC_ARM   ) || (defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
 #if (ENCRYPT_RAM_CODE == 1)
     /* to be modified based on different user scenario */
     .load_src = (uint32_t)Load$$RAM_TEXT$$RO$$Base,
@@ -177,7 +182,9 @@ FLASH_HEADER const T_IMG_HEADER_FORMAT img_header =
 #endif
 };
 
+#if !(defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
 #pragma pop
+#endif
 
 /**
  *@brief header extension for each user application
@@ -209,7 +216,6 @@ void ota_task_init(void)
 
 static const T_STORAGE_PARTITION_INFO default_partitions[] =
 {
-#ifdef FTL_IN_HAL
     {
         .name = FTL_PARTITION_NAME,
         .address = FTL_ADDR,
@@ -225,7 +231,6 @@ static const T_STORAGE_PARTITION_INFO default_partitions[] =
         .async_write = NULL,
         .async_erase = NULL,
     },
-#endif
 #ifdef UPPERSTACK_ADDR
     {
         .name = UPPERSTACK_PARTITION_NAME,
@@ -273,6 +278,33 @@ static const T_STORAGE_PARTITION_INFO default_partitions[] =
  * @param  none
  * @return none
  */
+#if defined(CXX_support)
+void *operator new (std::size_t size)
+{
+    void *ptr = malloc(size);
+
+    return ptr;
+}
+
+void *operator new[](std::size_t size)
+{
+    void *ptr = malloc(size);
+    return ptr;
+}
+
+void operator delete (void *ptr)
+{
+    free(ptr);
+    return;
+}
+
+void operator delete[](void *ptr)
+{
+    free(ptr);
+    return;
+}
+#endif
+
 void system_init(void)
 {
 #if (SUPPORT_DFU_TASK == 1)
@@ -281,7 +313,7 @@ void system_init(void)
     __disable_irq();
     setlocale(LC_ALL, "C");
 
-#if defined (__CC_ARM)
+#if defined (__CC_ARM) || (defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
     extern uint32_t Load$$RAM_VECTOR_TABLE$$RO$$Base;
     extern uint32_t Load$$RAM_VECTOR_TABLE$$RO$$Length;
     extern void Default_Handler(void);
@@ -303,9 +335,9 @@ void system_init(void)
 #if (FTL_POOL_ENABLE == 1)
 
 #ifdef TARGET_RTL8753GFE
-    ftl_set_rom_mudule_size(0x1000);
+    ftl_set_rom_module_size(0x1000);
 #else
-    ftl_set_rom_mudule_size(0x2000);
+    ftl_set_rom_module_size(0x2000);
 #endif
 
     ftl_cache_init(128);
@@ -321,7 +353,7 @@ void system_init(void)
     uint32_t random_seed = platform_random(0xFFFFFFFF);
     srand(random_seed);
 
-#if defined(IC_TYPE_RTL87X3E)
+#if defined(IC_TYPE_RTL87x3E)
     extern void Pad_GetMic2AuxCoPadCfg(void);
     Pad_GetMic2AuxCoPadCfg();
 #endif
@@ -329,6 +361,33 @@ void system_init(void)
     //debug_monitor_enable();
     //debug_monitor_point_set(WATCH_POINT_INDEX0, 0x200000, WATCH_POINT_BYTE, WATCH_POINT_FUNCTION_DADDR_W);
 
+
+#if defined(CXX_support)
+#if defined (__GNUC__)
+    typedef void (*init_fn_t)(void);
+    extern uint32_t _init_array;
+    extern uint32_t _einit_array;
+    init_fn_t *fp;
+    // cppcheck-suppress comparePointers
+    for (fp = (init_fn_t *)&_init_array; fp < (init_fn_t *)&_einit_array; fp++)
+    {
+        (*fp)();
+    }
+#elif defined (__ARMCC_VERSION)
+    typedef void PROC();
+    extern const unsigned long SHT$$INIT_ARRAY$$Base[];
+    extern const unsigned long SHT$$INIT_ARRAY$$Limit[];
+
+    const unsigned long *base = SHT$$INIT_ARRAY$$Base;
+    const unsigned long *lim  = SHT$$INIT_ARRAY$$Limit;
+
+    for (; base != lim; base++)
+    {
+        PROC *proc = (PROC *)((const char *)base + *base);
+        (*proc)();
+    }
+#endif
+#endif
 
     return;
 }

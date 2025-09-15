@@ -19,8 +19,9 @@
 #include "app_eq.h"
 #include "app_main.h"
 #include "app_audio_policy.h"
-#include "low_stack.h"
+#include "bt_mac.h"
 #include "pm.h"
+#include "nrec.h"
 #include "app_usb_vol_control.h"
 #include "usb_host_detect.h"
 #include "app_nrec.h"
@@ -95,7 +96,10 @@ T_AUDIO_TRACK_STATE app_usb_audio_get_ds_track_state(void)
 {
     T_AUDIO_TRACK_STATE track_state = AUDIO_TRACK_STATE_RELEASED;
 
-    audio_track_state_get(app_usb_audio_db.playback->handle, &track_state);
+    if (app_usb_audio_db.playback->handle)
+    {
+        audio_track_state_get(app_usb_audio_db.playback->handle, &track_state);
+    }
     return track_state;
 }
 
@@ -155,6 +159,9 @@ static void app_usb_audio_ual_spk_mute_ctrl(void *handle, bool mute)
     else
     {
         audio_track_volume_out_unmute(handle);
+#if F_APP_GAMING_DONGLE_TRANS_UAC_VOL_TO_HEADSET
+        app_usb_volume_db_set(handle, usb_spk_vol.uac_spk_vol_gain, CTRL_FROM_HOST);
+#endif
     }
 }
 
@@ -565,7 +572,12 @@ static void *app_usb_audio_ual_mic_create(T_STREAM_ATTR attr, void *ctrl)
         app_usb_audio_ual_mic_vol_ctrl(track, &(mic_ctrl->vol));
         app_usb_audio_ual_mic_mute_ctrl(track, mic_ctrl->mute);
         app_usb_audio_ual_state_set(audio, USB_AUDIO_UAL_STATE_INITED);
-        audio->nrec_instance = app_nrec_attach(track, true);
+        audio->nrec_instance = nrec_create(NREC_CONTENT_TYPE_RECORD, NREC_MODE_HIGH_SOUND_QUALITY, 0);
+        if (audio->nrec_instance)
+        {
+            nrec_enable(audio->nrec_instance);
+            audio_track_effect_attach(track, audio->nrec_instance);
+        }
 
         audio->eq_instance = app_eq_create(EQ_CONTENT_TYPE_RECORD, EQ_STREAM_TYPE_RECORD, MIC_SW_EQ,
                                            VOICE_MIC_MODE, 0);
@@ -649,8 +661,14 @@ static bool app_usb_audio_ual_mic_release(void *handle)
 
     if (audio->eq_instance)
     {
-        eq_release(audio->nrec_instance);
+        eq_release(audio->eq_instance);
         audio->eq_instance = NULL;
+    }
+
+    if (audio->nrec_instance)
+    {
+        nrec_release(audio->nrec_instance);
+        audio->nrec_instance = NULL;
     }
 
     return ret;
@@ -926,22 +944,44 @@ static const T_UAS_FUNC app_usb_audio_ual_funcs_mic =
     .ctrl = app_usb_audio_ual_mic_ctrl,
 };
 
+#if F_APP_USB_HID_SUPPORT && F_APP_USB_AUDIO_SUPPORT && (USB_AUDIO_VERSION == USB_AUDIO_VERSION_1)
+static int app_usb_audio_host_type_cb(T_OS_TYPE type)
+{
+    APP_PRINT_TRACE1("app_usb_audio_host_type_cb: type %d", type);
+    return 0;
+}
+#endif
+
 void app_usb_audio_init(void)
 {
     app_usb_audio_db.playback = malloc(sizeof(T_USB_AUDIO));
+    memset(app_usb_audio_db.playback, 0, sizeof(T_USB_AUDIO));
     app_usb_audio_db.playback->id = usb_audio_stream_ual_bind(USB_AUDIO_STREAM_TYPE_OUT,
                                                               USB_AUDIO_STREAM_LABEL_1,
                                                               (T_UAS_FUNC *)&app_usb_audio_ual_funcs_spk);
     app_usb_audio_db.playback->misc = malloc(sizeof(T_SPK_FLOW_CTL));
+    memset(app_usb_audio_db.playback->misc, 0, sizeof(T_SPK_FLOW_CTL));
     app_usb_audio_ual_state_set(app_usb_audio_db.playback, USB_AUDIO_UAL_STATE_IDLE);
 
     app_usb_audio_db.capture = malloc(sizeof(T_USB_AUDIO));
+    memset(app_usb_audio_db.capture, 0, sizeof(T_USB_AUDIO));
     app_usb_audio_db.capture->id = usb_audio_stream_ual_bind(USB_AUDIO_STREAM_TYPE_IN,
                                                              USB_AUDIO_STREAM_LABEL_1,
                                                              (T_UAS_FUNC *)&app_usb_audio_ual_funcs_mic);
     app_usb_audio_ual_state_set(app_usb_audio_db.capture, USB_AUDIO_UAL_STATE_IDLE);
+#if F_APP_GAMING_DONGLE_TRANS_UAC_VOL_TO_HEADSET
     app_usb_vol_host_type_sync_register(app_usb_host_type_sync_cback);
+#endif
+
+#if F_APP_USB_HID_SUPPORT && F_APP_USB_AUDIO_SUPPORT && (USB_AUDIO_VERSION == USB_AUDIO_VERSION_1)
+    usb_host_detect_init();
+
+    usb_host_detect_cback_register(app_usb_audio_host_type_cb);
+#endif
+
+#if F_APP_GAMING_DONGLE_SUPPORT
     app_usb_vol_control_init();
+#endif
     audio_mgr_cback_register(app_usb_audio_policy_cback);
 }
 #endif

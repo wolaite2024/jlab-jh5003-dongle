@@ -10,7 +10,7 @@
 #include "trace.h"
 #include "app_ipc.h"
 
-#define TOPIC_CHANN_NUM     10
+#define TOPIC_CHANN_NUM     8
 
 typedef struct t_app_ipc_topic_item
 {

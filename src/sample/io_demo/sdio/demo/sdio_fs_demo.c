@@ -13,6 +13,7 @@
 
 /* Includes -----------------------------------------------------------------*/
 #include <string.h>
+#include <wchar.h>
 #include "sd.h"
 #include "ff.h"
 #include "trace.h"
@@ -46,7 +47,6 @@ FATFS fs;
 FIL fsrc, fdst;
 /* file copy buffer */
 char buffer[1024];
-uint16_t objectname[50] = _T("0:/BBPro/");
 DIR dir;
 FILINFO fileinfo;
 
@@ -62,7 +62,7 @@ void Board_SD_Init(void)
 }
 
 /**
-  * @brief  demo code of FATFS file system.
+  * @brief  The function is to write and read file.
   * @param   No parameter.
   * @return  void
   */
@@ -77,16 +77,31 @@ void FatFS_Demo(void)
     if (res != 0)
     {
         IO_PRINT_ERROR1("FatFS_Demo: f_mount fail, res %d", res);
+        return;
     }
 
     /* Open file */
-    res = f_open(&fdst, (const TCHAR *)_T("Test.txt"), FA_CREATE_ALWAYS | FA_WRITE);
+    res = f_open(&fdst, (const TCHAR *)_T("Data.txt"), FA_CREATE_ALWAYS | FA_WRITE);
     if (res != FR_OK)
     {
         //Open file failure, add error handle code here
         f_close(&fdst);
         return ;
     }
+
+    /* File operation */
+    for (uint32_t i = 0; i < 1024; i++)
+    {
+        buffer[i] = i % 0x09 + 0x30;
+    }
+    buffer[1021] = 0x65; //e
+    buffer[1022] = 0x6E; //n
+    buffer[1023] = 0x64; //d
+    f_write(&fdst, buffer, 1024, &a);
+
+    /* Close file */
+    f_close(&fdst);
+
 
     res = f_open(&fsrc, (const TCHAR *)_T("Data.txt"), FA_OPEN_EXISTING | FA_READ);
     if (res != FR_OK)
@@ -96,16 +111,6 @@ void FatFS_Demo(void)
         return ;
     }
 
-    /* File operation */
-    for (uint32_t i = 0; i < 1024; i++)
-    {
-        buffer[i] = i % 0x09 + 0x30;
-    }
-    buffer[1021] = 69;
-    buffer[1022] = 69;
-    buffer[1023] = 69;
-    f_write(&fdst, buffer, 1024, &a);
-
     memset(buffer, 0, 1024);
     f_read(&fsrc, buffer, 1024, &a);
 
@@ -114,11 +119,10 @@ void FatFS_Demo(void)
 
     /* Close file */
     f_close(&fsrc);
-    f_close(&fdst);
 }
 
 /**
-  * @brief  demo code of FATFS file system.
+  * @brief  The function is to write all files in the BBPro directory.
   * @param   No parameter.
   * @return  void
   */
@@ -126,17 +130,60 @@ void FatFS_DirectoyDemo(void)
 {
     uint32_t a = 1;
     const TCHAR *driver_num = (const TCHAR *)_T("0:");
-    uint16_t *pname = objectname;
+    wchar_t path[50] = _T("0:/BBPro/");
+    uint16_t *pname = path;
     FRESULT res;
 
     /* Create workspace */
     res = f_mount(&fs, driver_num, 1);
+    if (res != 0)
+    {
+        IO_PRINT_ERROR1("FatFS_DirectoyDemo: f_mount fail, res %d", res);
+        return;
+    }
+
+    /* change directory */
+    res = f_chdir(path);
+    if ((res != FR_OK) && (res != FR_NO_PATH))
+    {
+        IO_PRINT_ERROR1("FatFS_DirectoyDemo: f_chdir fail, res %d", res);
+        return;
+    }
+    else if (res == FR_NO_PATH)
+    {
+        /* create directory based on path */
+        res = f_mkdir(path);
+        if (res == FR_OK)
+        {
+            res = f_chdir(path);
+            if (res != FR_OK)
+            {
+                IO_PRINT_ERROR1("FatFS_DirectoyDemo: f_chdir fail after mkdir, res %d", res);
+                return;
+            }
+        }
+        else
+        {
+            IO_PRINT_ERROR1("FatFS_DirectoyDemo: f_mkdir fail, res %d", res);
+            return;
+        }
+    }
+
+    res = f_open(&fdst, (const TCHAR *)_T("0:/BBPro/test.txt"), FA_CREATE_ALWAYS | FA_WRITE);
+    if (res != 0)
+    {
+        IO_PRINT_ERROR1("FatFS_DirectoyDemo: f_open fail, res %d", res);
+        f_close(&fdst);
+        return;
+    }
+    f_close(&fdst);
 
     /* Open directory */
-    res = f_opendir(&dir, (const TCHAR *)_T("0:/BBPro"));
+    res = f_opendir(&dir, path);
     if (res != FR_OK)
     {
         IO_PRINT_ERROR1("FatFS_DirectoyDemo: f_opendir fail, res %d", res);
+        return;
         //Open directory failure, add error handle code here
     }
 
@@ -147,16 +194,18 @@ void FatFS_DirectoyDemo(void)
         /* Traverse all files */
         if ((res != FR_OK) || (fileinfo.fname[0] == 0))
         {
+            IO_PRINT_INFO1("FatFS_DirectoyDemo: exit, res %d", res);
             break;
         }
 
         for (uint32_t i = 0; i < 13; i++)
         {
+            //IO_PRINT_INFO2("fileinfo.fname[%d] = 0x%x ", i, fileinfo.fname[i]);
             *(pname + i + 9) = fileinfo.fname[i];
         }
 
         /* Open file */
-        res = f_open(&fdst, (const TCHAR *)pname, FA_CREATE_ALWAYS | FA_WRITE);
+        res = f_open(&fdst, (const TCHAR *)pname, FA_OPEN_EXISTING | FA_WRITE);
         if (res != FR_OK)
         {
             //Open file failure, add error handle code here
@@ -173,11 +222,14 @@ void FatFS_DirectoyDemo(void)
         buffer[1021] = 'e';
         buffer[1022] = 'n';
         buffer[1023] = 'd';
-        f_write(&fdst, buffer, 1024, &a);
+        res = f_write(&fdst, buffer, 1024, &a);
+        if (res == FR_OK)
+        {
+            IO_PRINT_INFO0("FatFS_DirectoyDemo: write OK");
+        }
 
         /* Close file */
         f_close(&fdst);
-        IO_PRINT_INFO0("FatFS_DirectoyDemo: write OK!");
     }
 }
 
@@ -193,7 +245,7 @@ void SD_DemoCode(void)
 
     /* Demo code */
     FatFS_DirectoyDemo();
-//  FatFS_Demo();
+    //FatFS_Demo();
 }
 
 /** @} */ /* End of group SDIO_FS_DEMO */

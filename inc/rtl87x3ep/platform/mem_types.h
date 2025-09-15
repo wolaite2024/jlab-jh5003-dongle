@@ -23,14 +23,14 @@ extern "C" {
 #endif
 
 
-/** @defgroup 87x3e_MEM_CONFIG Memory Configure
+/** @defgroup 87x3ep_MEM_CONFIG Memory Configure
   * @{
   */
 
 /*============================================================================*
  *                               Types
 *============================================================================*/
-/** @defgroup 87x3e_MEM_CONFIG_Exported_Types Memory Configure Exported Types
+/** @defgroup 87x3ep_MEM_CONFIG_Exported_Types Memory Configure Exported Types
   * @{
   */
 
@@ -46,9 +46,9 @@ typedef enum
     RAM_TYPE_NUM
 } RAM_TYPE;
 
-/** @} */ /* End of group 87x3e_MEM_TYPES_Exported_Types */
+/** @} */ /* End of group 87x3ep_MEM_TYPES_Exported_Types */
 
-/** @} */ /* End of group 87x3e_MEM_CONFIG */
+/** @} */ /* End of group 87x3ep_MEM_CONFIG */
 
 
 #ifdef __cplusplus

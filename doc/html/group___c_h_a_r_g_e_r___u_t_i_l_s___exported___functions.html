@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>BT AUDIO SDK: Charger Exported Functions</title>
+<title>BT AUDIO SDK: Charger Utils Exported Functions</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -44,7 +44,7 @@ $(function() {
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Charger Exported Functions<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___h_a_l.html">Hal</a> &raquo; <a class="el" href="group___h_a_l___p_o_w_e_r.html">power</a> &raquo; <a class="el" href="group___c_h_a_r_g_e_r___u_t_i_l_s.html">Charger</a></div></div>  </div>
+<div class="title">Charger Utils Exported Functions<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___h_a_l.html">Hal</a> &raquo; <a class="el" href="group___h_a_l___p_o_w_e_r.html">power</a> &raquo; <a class="el" href="group___c_h_a_r_g_e_r___u_t_i_l_s.html">Charger</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -97,24 +97,24 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get charging voltage. </p>
-<p><a class="el" href="charger__utils_8h_source.html">charger_utils.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000099">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<p><a class="el" href="charger__utils_8h_source.html" title="Charger utils API head file. ">charger_utils.h</a></p>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000114">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">battery</td><td>voltage, unit: mV</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">volt</td><td>Battery voltage, unit: mV.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The status of getting voltage. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">CHARGER_UTILS_SUCCESS</td><td>current charging info is getting successfully. </td></tr>
-    <tr><td class="paramname">CHARGER_UTILS_NOT_SUPPROTED</td><td>charging info getting failed. </td></tr>
-    <tr><td class="paramname">CHARGER_UTILS_NOT_ENABLED</td><td>charger is not enabled. could not get battery information from charger module </td></tr>
+    <tr><td class="paramname">CHARGER_UTILS_SUCCESS</td><td>Current charging info is getting successfully. </td></tr>
+    <tr><td class="paramname">CHARGER_UTILS_NOT_SUPPROTED</td><td>Charging info getting failed. </td></tr>
+    <tr><td class="paramname">CHARGER_UTILS_NOT_ENABLED</td><td>Charger is not enabled. could not get battery information from charger module.</td></tr>
   </table>
   </dd>
 </dl>
-
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> charger_utils_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___c_h_a_r_g_e_r___u_t_i_l_s___exported___constants.html#ga3797c2f2f29a5b807923a50a9f740342">T_CHARGER_UTILS_ERROR</a> status;</div><div class="line">    uint16_t voltage;</div><div class="line"></div><div class="line">    status = <a class="code" href="group___c_h_a_r_g_e_r___u_t_i_l_s___exported___functions.html#gad0baacf601a712e760f8105f782dd7c8">charger_utils_get_batt_volt</a>(&amp;voltage);</div><div class="line">    <span class="keywordflow">if</span>(status == <a class="code" href="group___c_h_a_r_g_e_r___u_t_i_l_s___exported___constants.html#gga3797c2f2f29a5b807923a50a9f740342ae9c76cb00762a8d9c83a53d85404e725">CHARGER_UTILS_SUCCESS</a>)</div><div class="line">    {</div><div class="line">         <a class="code" href="group__x3d___t_r_a_c_e.html#ga81687b044a4d8600c4be891734f4839a">APP_PRINT_INFO1</a>(<span class="stringliteral">&quot;charger_utils_demo: voltage %d&quot;</span>, voltage);</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">         <a class="code" href="group__x3d___t_r_a_c_e.html#ga57c6954e0ebb68c0ca06a0052659be48">APP_PRINT_ERROR1</a>(<span class="stringliteral">&quot;charger_utils_demo: error code %d&quot;</span>, status);</div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga972c7174af30e76a9605f81d3bfa1e74"></a>
@@ -134,24 +134,24 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get charging current, unit: mA. </p>
-<p><a class="el" href="charger__utils_8h_source.html">charger_utils.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000100">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<p><a class="el" href="charger__utils_8h_source.html" title="Charger utils API head file. ">charger_utils.h</a></p>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000115">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">charging</td><td>current, positive in charging mode, negative in discharging mode</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">current</td><td>Charging current, positive in charging mode, negative in discharging mode.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The status of getting current. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">CHARGER_UTILS_SUCCESS</td><td>current charging info is getting successfully. </td></tr>
-    <tr><td class="paramname">CHARGER_UTILS_NOT_SUPPROTED</td><td>charging info getting failed. </td></tr>
-    <tr><td class="paramname">CHARGER_UTILS_NOT_ENABLED</td><td>charger is not enabled. could not get battery information from charger module </td></tr>
+    <tr><td class="paramname">CHARGER_UTILS_SUCCESS</td><td>Current charging info is getting successfully. </td></tr>
+    <tr><td class="paramname">CHARGER_UTILS_NOT_SUPPROTED</td><td>Charging info getting failed. </td></tr>
+    <tr><td class="paramname">CHARGER_UTILS_NOT_ENABLED</td><td>Charger is not enabled. could not get battery information from charger module.</td></tr>
   </table>
   </dd>
 </dl>
-
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> charger_utils_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___c_h_a_r_g_e_r___u_t_i_l_s___exported___constants.html#ga3797c2f2f29a5b807923a50a9f740342">T_CHARGER_UTILS_ERROR</a> status;</div><div class="line">    int16_t current;</div><div class="line"></div><div class="line">    status = <a class="code" href="group___c_h_a_r_g_e_r___u_t_i_l_s___exported___functions.html#ga972c7174af30e76a9605f81d3bfa1e74">charger_utils_get_batt_curr</a>(&amp;current);</div><div class="line">    <span class="keywordflow">if</span>(status == <a class="code" href="group___c_h_a_r_g_e_r___u_t_i_l_s___exported___constants.html#gga3797c2f2f29a5b807923a50a9f740342ae9c76cb00762a8d9c83a53d85404e725">CHARGER_UTILS_SUCCESS</a>)</div><div class="line">    {</div><div class="line">         <a class="code" href="group__x3d___t_r_a_c_e.html#ga81687b044a4d8600c4be891734f4839a">APP_PRINT_INFO1</a>(<span class="stringliteral">&quot;charger_utils_demo: current %d&quot;</span>, current);</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">         <a class="code" href="group__x3d___t_r_a_c_e.html#ga57c6954e0ebb68c0ca06a0052659be48">APP_PRINT_ERROR1</a>(<span class="stringliteral">&quot;charger_utils_demo: error code %d&quot;</span>, status);</div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga16120d49142503a8d512425bdc3d0c85"></a>
@@ -181,11 +181,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get charging temperature1 and temperature2. </p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000101">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000116">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">temperature1,unit</td><td>mV </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">temperature2,unit</td><td>mV</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">temperature1</td><td>Temperature1, unit: mV. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">temperature2</td><td>Temperature2, unit: mV.</td></tr>
   </table>
   </dd>
 </dl>
@@ -194,11 +194,11 @@ Functions</h2></td></tr>
   <table class="retval">
     <tr><td class="paramname">CHARGER_UTILS_SUCCESS</td><td>Temperature obtained successfully. </td></tr>
     <tr><td class="paramname">CHARGER_UTILS_NOT_SUPPROTED</td><td>Getting temperature is not supported. </td></tr>
-    <tr><td class="paramname">CHARGER_UTILS_NOT_ENABLED</td><td>Charger is not enabled. Could not get temperature information from charger module </td></tr>
+    <tr><td class="paramname">CHARGER_UTILS_NOT_ENABLED</td><td>Charger is not enabled. Could not get temperature information from charger module.</td></tr>
   </table>
   </dd>
 </dl>
-
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> charger_utils_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___c_h_a_r_g_e_r___u_t_i_l_s___exported___constants.html#ga3797c2f2f29a5b807923a50a9f740342">T_CHARGER_UTILS_ERROR</a> status;</div><div class="line">    uint16_t temperature1, temperature2;</div><div class="line"></div><div class="line">    status = <a class="code" href="group___c_h_a_r_g_e_r___u_t_i_l_s___exported___functions.html#ga16120d49142503a8d512425bdc3d0c85">charger_utils_get_batt_temp</a>(&amp;temperature1, &amp;temperature2);</div><div class="line">    <span class="keywordflow">if</span>(status == <a class="code" href="group___c_h_a_r_g_e_r___u_t_i_l_s___exported___constants.html#gga3797c2f2f29a5b807923a50a9f740342ae9c76cb00762a8d9c83a53d85404e725">CHARGER_UTILS_SUCCESS</a>)</div><div class="line">    {</div><div class="line">         <a class="code" href="group__x3d___t_r_a_c_e.html#gacede19f539147e375272a511869b7a77">APP_PRINT_INFO2</a>(<span class="stringliteral">&quot;charger_utils_demo: temperature1 %d, temperature2 %d&quot;</span>, temperature1, temperature2);</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">         <a class="code" href="group__x3d___t_r_a_c_e.html#ga57c6954e0ebb68c0ca06a0052659be48">APP_PRINT_ERROR1</a>(<span class="stringliteral">&quot;charger_utils_demo: error code %d&quot;</span>, status);</div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga0b775623f620e91955655af5129101bb"></a>
@@ -218,11 +218,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get charging adapter voltage, unit: mV. </p>
-<p><a class="el" href="charger__utils_8h_source.html">charger_utils.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000102">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<p><a class="el" href="charger__utils_8h_source.html" title="Charger utils API head file. ">charger_utils.h</a></p>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000117">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">adapter</td><td>voltage</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">volt</td><td>Adapter voltage.</td></tr>
   </table>
   </dd>
 </dl>
@@ -231,11 +231,11 @@ Functions</h2></td></tr>
   <table class="retval">
     <tr><td class="paramname">CHARGER_UTILS_SUCCESS</td><td>Adapter voltage obtained successfully. </td></tr>
     <tr><td class="paramname">CHARGER_UTILS_NOT_SUPPROTED</td><td>Getting adapter voltage is not supported. </td></tr>
-    <tr><td class="paramname">CHARGER_UTILS_NOT_ENABLED</td><td>Charger is not enabled. Could not get adapter voltage information from charger module. </td></tr>
+    <tr><td class="paramname">CHARGER_UTILS_NOT_ENABLED</td><td>Charger is not enabled. Could not get adapter voltage information from charger module.</td></tr>
   </table>
   </dd>
 </dl>
-
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> charger_utils_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___c_h_a_r_g_e_r___u_t_i_l_s___exported___constants.html#ga3797c2f2f29a5b807923a50a9f740342">T_CHARGER_UTILS_ERROR</a> status;</div><div class="line">    uint16_t voltage;</div><div class="line"></div><div class="line">    status = <a class="code" href="group___c_h_a_r_g_e_r___u_t_i_l_s___exported___functions.html#ga0b775623f620e91955655af5129101bb">charger_utils_get_adapter_volt</a>(&amp;voltage);</div><div class="line">    <span class="keywordflow">if</span>(status == <a class="code" href="group___c_h_a_r_g_e_r___u_t_i_l_s___exported___constants.html#gga3797c2f2f29a5b807923a50a9f740342ae9c76cb00762a8d9c83a53d85404e725">CHARGER_UTILS_SUCCESS</a>)</div><div class="line">    {</div><div class="line">         <a class="code" href="group__x3d___t_r_a_c_e.html#ga81687b044a4d8600c4be891734f4839a">APP_PRINT_INFO1</a>(<span class="stringliteral">&quot;charger_utils_demo: voltage %d&quot;</span>, voltage);</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">         <a class="code" href="group__x3d___t_r_a_c_e.html#ga57c6954e0ebb68c0ca06a0052659be48">APP_PRINT_ERROR1</a>(<span class="stringliteral">&quot;charger_utils_demo: error code %d&quot;</span>, status);</div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="gab31ba96f058d5622f2b3c451597960aa"></a>
@@ -255,16 +255,20 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Enable or disable charger. </p>
-<p><a class="el" href="charger__utils_8h_source.html">charger_utils.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000103">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<p><a class="el" href="charger__utils_8h_source.html" title="Charger utils API head file. ">charger_utils.h</a></p>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000118">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">enable</td><td>Enable or disable charger. true: enable charger. false: disable charger. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">enable</td><td>Enable or disable charger. This parameter can be one of the following values: <ul>
+<li>true: Enable charger. </li>
+<li>false: Disable charger. </li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>None. </dd></dl>
-
+<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> charger_utils_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___c_h_a_r_g_e_r___u_t_i_l_s___exported___functions.html#gab31ba96f058d5622f2b3c451597960aa">charger_utils_charger_auto_enable</a>(<span class="keyword">true</span>);</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga0da12c33ad72ff6a2878f656e8722466"></a>
@@ -284,11 +288,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get charger thermistor detection enable status. </p>
-<p><a class="el" href="charger__utils_8h_source.html">charger_utils.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000104">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<p><a class="el" href="charger__utils_8h_source.html" title="Charger utils API head file. ">charger_utils.h</a></p>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000119">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">void</td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">None.</td><td></td></tr>
   </table>
   </dd>
 </dl>
@@ -296,11 +300,11 @@ Functions</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">true</td><td>Charger thermistor detection is supported. </td></tr>
-    <tr><td class="paramname">false</td><td>Charger thermistor detection is not supported. </td></tr>
+    <tr><td class="paramname">false</td><td>Charger thermistor detection is not supported.</td></tr>
   </table>
   </dd>
 </dl>
-
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> charger_utils_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <span class="keywordtype">bool</span> status = <a class="code" href="group___c_h_a_r_g_e_r___u_t_i_l_s___exported___functions.html#ga0da12c33ad72ff6a2878f656e8722466">charger_utils_get_thermistor_enable_state</a>();</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga7ddbde880931e55d3cc149960fedd2ad"></a>
@@ -320,11 +324,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Set charging current and full voltage, restart charger fsm if charger is running. </p>
-<p><a class="el" href="charger__utils_8h_source.html">charger_utils.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000105">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<p><a class="el" href="charger__utils_8h_source.html" title="Charger utils API head file. ">charger_utils.h</a></p>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000120">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_charger_config</td><td>The configuration structure of charging current and full voltage. pre_charge_current: Charge current of pre-charge state. Unit: mA. Range: 5 ~ 50 (mA) pre_charge_timeout: The timeout time of pre-charge stage. Unit: minutes. Range: 1 ~ 65535(minutes) fast_charge_current: Charge current of fast-charge state. Unit: mA. For RTL87X3E, range: 20 ~ 400 (mA) For RTL87X3D, range of internal charger: 30 ~ 400 (mA), range of external BJT charger: 405 ~ 1000 (mA) fast_charge_timeout: The timeout time of fast-charge stage. Unit: minutes. Range: 3 ~ 65535(minutes) full_voltage: Voltage Limit of Battery. Unit: mV. Range: 4000 ~ 4400(mV)</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_charger_config</td><td>The configuration structure of charging current and full voltage.</td></tr>
   </table>
   </dd>
 </dl>
@@ -332,11 +336,11 @@ Functions</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">CHARGER_UTILS_SUCCESS</td><td>The charging current and full voltage are set successfully. </td></tr>
-    <tr><td class="paramname">CHARGER_UTILS_INVALID_PARAM</td><td>Invalid charging current and full voltage parameters. </td></tr>
+    <tr><td class="paramname">CHARGER_UTILS_INVALID_PARAM</td><td>Invalid charging current and full voltage parameters.</td></tr>
   </table>
   </dd>
 </dl>
-
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> charger_utils_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="struct__charger__utils__config.html">T_CHARGER_UTILS_CONFIG</a> charger_config;</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span>(<a class="code" href="group___c_h_a_r_g_e_r___u_t_i_l_s___exported___functions.html#gae62dc6f9efb30495c2d748c0033ea2d6">charger_utils_get_all_param</a>(&amp;charger_config) == <a class="code" href="group___c_h_a_r_g_e_r___u_t_i_l_s___exported___constants.html#gga3797c2f2f29a5b807923a50a9f740342ae9c76cb00762a8d9c83a53d85404e725">CHARGER_UTILS_SUCCESS</a>)</div><div class="line">    {</div><div class="line">         charger_config.<a class="code" href="struct__charger__utils__config.html#ac2b2f0860071311d4d34f2fa61480141">fast_charge_current</a> = 50;</div><div class="line">         <span class="keywordflow">if</span>(<a class="code" href="group___c_h_a_r_g_e_r___u_t_i_l_s___exported___functions.html#ga7ddbde880931e55d3cc149960fedd2ad">charger_utils_set_all_param</a>(&amp;charger_config) != <a class="code" href="group___c_h_a_r_g_e_r___u_t_i_l_s___exported___constants.html#gga3797c2f2f29a5b807923a50a9f740342ae9c76cb00762a8d9c83a53d85404e725">CHARGER_UTILS_SUCCESS</a>)</div><div class="line">         {</div><div class="line">             <a class="code" href="group__x3d___t_r_a_c_e.html#gaf20aac2fd019420214bcab2eadd15156">APP_PRINT_ERROR0</a>(<span class="stringliteral">&quot;charger_utils_demo: set param fail!&quot;</span>);</div><div class="line">         }</div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="gae62dc6f9efb30495c2d748c0033ea2d6"></a>
@@ -356,11 +360,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get charging current and full voltage configurations. </p>
-<p><a class="el" href="charger__utils_8h_source.html">charger_utils.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000106">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<p><a class="el" href="charger__utils_8h_source.html" title="Charger utils API head file. ">charger_utils.h</a></p>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000121">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_charger_config</td><td>The configuration structure of charging current and full voltage. pre_charge_current: Charge current of pre-charge state. Unit: mA. Range: 5 ~ 50 (mA) pre_charge_timeout: The timeout time of pre-charge stage. Unit: minutes. Range: 1 ~ 65535(minutes) fast_charge_current: Charge current of fast-charge state. Unit: mA. For RTL87X3E, range: 20 ~ 400 (mA) For RTL87X3D, range of internal charger: 30 ~ 400 (mA), range of external BJT charger: 405 ~ 1000 (mA) fast_charge_timeout: The timeout time of fast-charge stage. Unit: minutes. Range: 3 ~ 65535(minutes) full_voltage: Voltage Limit of Battery. Unit: mV. Range: 4000 ~ 4400(mV)</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_charger_config</td><td>The configuration structure of charging current and full voltage.</td></tr>
   </table>
   </dd>
 </dl>
@@ -368,11 +372,11 @@ Functions</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">CHARGER_UTILS_SUCCESS</td><td>The charging current and full voltage configurations are obtained successfully. </td></tr>
-    <tr><td class="paramname">CHARGER_UTILS_INVALID_PARAM</td><td>Invalid parameter. </td></tr>
+    <tr><td class="paramname">CHARGER_UTILS_INVALID_PARAM</td><td>Invalid parameter.</td></tr>
   </table>
   </dd>
 </dl>
-
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> charger_utils_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="struct__charger__utils__config.html">T_CHARGER_UTILS_CONFIG</a> charger_config;</div><div class="line"></div><div class="line">    <span class="keywordflow">if</span>(<a class="code" href="group___c_h_a_r_g_e_r___u_t_i_l_s___exported___functions.html#gae62dc6f9efb30495c2d748c0033ea2d6">charger_utils_get_all_param</a>(&amp;charger_config) == <a class="code" href="group___c_h_a_r_g_e_r___u_t_i_l_s___exported___constants.html#gga3797c2f2f29a5b807923a50a9f740342ae9c76cb00762a8d9c83a53d85404e725">CHARGER_UTILS_SUCCESS</a>)</div><div class="line">    {</div><div class="line">         charger_config.<a class="code" href="struct__charger__utils__config.html#ac2b2f0860071311d4d34f2fa61480141">fast_charge_current</a> = 50;</div><div class="line">         <span class="keywordflow">if</span>(<a class="code" href="group___c_h_a_r_g_e_r___u_t_i_l_s___exported___functions.html#ga7ddbde880931e55d3cc149960fedd2ad">charger_utils_set_all_param</a>(&amp;charger_config) != <a class="code" href="group___c_h_a_r_g_e_r___u_t_i_l_s___exported___constants.html#gga3797c2f2f29a5b807923a50a9f740342ae9c76cb00762a8d9c83a53d85404e725">CHARGER_UTILS_SUCCESS</a>)</div><div class="line">         {</div><div class="line">             <a class="code" href="group__x3d___t_r_a_c_e.html#gaf20aac2fd019420214bcab2eadd15156">APP_PRINT_ERROR0</a>(<span class="stringliteral">&quot;charger_utils_demo: set param fail!&quot;</span>);</div><div class="line">         }</div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="ga74a7e98773b75355dc2c1f92880ace61"></a>
@@ -392,11 +396,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get charging thermistor1 adc channel configurations. </p>
-<p><a class="el" href="charger__utils_8h_source.html">charger_utils.h</a></p>
-<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000107">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
+<p><a class="el" href="charger__utils_8h_source.html" title="Charger utils API head file. ">charger_utils.h</a></p>
+<dl class="Experimental_Added_API_2_13_0_0"><dt><b><a class="el" href="_experimental__added__a_p_i_2_13_0_0.html#_Experimental_Added_API_2_13_0_0000122">Experimental Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_thermistor_adc_channel</td><td>charging thermistor1 adc channel configurations.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_thermistor_adc_channel</td><td>Charging thermistor1 adc channel configurations.</td></tr>
   </table>
   </dd>
 </dl>
@@ -404,11 +408,11 @@ Functions</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">CHARGER_UTILS_SUCCESS</td><td>The charging thermistor1 adc channel configurations are obtained successfully. </td></tr>
-    <tr><td class="paramname">CHARGER_UTILS_INVALID_PARAM</td><td>Invalid parameter. </td></tr>
+    <tr><td class="paramname">CHARGER_UTILS_INVALID_PARAM</td><td>Invalid parameter.</td></tr>
   </table>
   </dd>
 </dl>
-
+<p><b>Example usage</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> charger_utils_demo(<span class="keywordtype">void</span>)</div><div class="line">{</div><div class="line">    <a class="code" href="group___c_h_a_r_g_e_r___u_t_i_l_s___exported___constants.html#ga3797c2f2f29a5b807923a50a9f740342">T_CHARGER_UTILS_ERROR</a> status;</div><div class="line">    uint8_t thermistor_adc_channel;</div><div class="line"></div><div class="line">    status = <a class="code" href="group___c_h_a_r_g_e_r___u_t_i_l_s___exported___functions.html#ga74a7e98773b75355dc2c1f92880ace61">charger_utils_get_thermistor_1_pin</a>(&amp;thermistor_adc_channel);</div><div class="line">    <span class="keywordflow">if</span>(status == <a class="code" href="group___c_h_a_r_g_e_r___u_t_i_l_s___exported___constants.html#gga3797c2f2f29a5b807923a50a9f740342ae9c76cb00762a8d9c83a53d85404e725">CHARGER_UTILS_SUCCESS</a>)</div><div class="line">    {</div><div class="line">         <a class="code" href="group__x3d___t_r_a_c_e.html#ga81687b044a4d8600c4be891734f4839a">APP_PRINT_INFO1</a>(<span class="stringliteral">&quot;charger_utils_demo: thermistor_adc_channel %d&quot;</span>, thermistor_adc_channel);</div><div class="line">    }</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">    {</div><div class="line">         <a class="code" href="group__x3d___t_r_a_c_e.html#ga57c6954e0ebb68c0ca06a0052659be48">APP_PRINT_ERROR1</a>(<span class="stringliteral">&quot;charger_utils_demo: error code %d&quot;</span>, status);</div><div class="line">    }</div><div class="line">}</div></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

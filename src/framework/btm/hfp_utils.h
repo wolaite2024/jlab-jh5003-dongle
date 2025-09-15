@@ -11,13 +11,8 @@
 extern "C" {
 #endif /* __cplusplus */
 
-typedef struct t_hfp_cmd_item
-{
-    struct t_hfp_cmd_item *p_next;
-    uint8_t                cmd_id;
-    uint8_t                cmd_len;
-    const char             at_cmd[0];
-} T_HFP_CMD_ITEM;
+/*The Hands Free Profile specification limits the number of indicators returned by the AG to a maximum of 20.*/
+#define MAX_AG_INDICATOR_COUNT 20
 
 #define AG_CAPABILITY_3WAY                              (1 << 0)
 #define AG_CAPABILITY_EC_NR                             (1 << 1)
@@ -108,14 +103,15 @@ typedef enum t_hfp_codec_type
     CODEC_TYPE_LC3  = 0x03,
 } T_HFP_CODEC_TYPE;
 
-typedef enum t_hfp_state
+typedef enum t_bt_hfp_state
 {
-    HFP_STATE_DISCONNECTED         = 0x00,
-    HFP_STATE_ALLOCATED            = 0x01,
-    HFP_STATE_RFC_CONN_NO_CREDITS  = 0x02,
-    HFP_STATE_SRV_LEVEL_CONNECTING = 0x03,
-    HFP_STATE_SRV_LEVEL_CONNECTED  = 0x04,
-} T_HFP_STATE;
+    HFP_STATE_DISCONNECTED          = 0x00,
+    HFP_STATE_CONNECTING            = 0x01,
+    HFP_STATE_RFC_CONN_NO_CREDITS   = 0x02,
+    HFP_STATE_SRV_LEVEL_CONNECTING  = 0x03,
+    HFP_STATE_CONNECTED             = 0x04,
+    HSP_STATE_CONNECTED             = 0x05,
+} T_BT_HFP_STATE;
 
 typedef enum t_hfp_srv_level_step
 {
@@ -131,6 +127,26 @@ typedef enum t_hfp_srv_level_step
     HFP_SRV_LEVEL_BIND_INQUIRY       = 0x09,
     HFP_SRV_LEVEL_ESTABLISHED        = 0x0a,
 } T_HFP_SRV_LEVEL_STEP;
+
+typedef struct t_hfp_cmd_item
+{
+    struct t_hfp_cmd_item *p_next;
+    uint8_t                cmd_id;
+    uint8_t                cmd_len;
+    const char             at_cmd[0];
+} T_HFP_CMD_ITEM;
+
+/* ..+CIND: ("service",(0-1)),("call",(0-1)),("callsetup",(0-3)),("battchg",(0-5)),("signal",(0-5)),("roam",(0-1)),("callheld",(0-2)).. */
+typedef struct t_hfp_ag_status_ind
+{
+    T_HFP_SERVICE_STATUS    service_status;
+    T_HFP_CALL_STATUS       call_status;
+    T_HFP_CALL_SETUP_STATUS call_setup_status;
+    T_HFP_CALL_HELD_STATUS  call_held_status;
+    uint8_t                 signal_status;
+    T_HFP_ROAM_STATUS       roam_status;
+    uint8_t                 batt_chg_status;
+} T_HFP_AG_STATUS_IND;
 
 #ifdef __cplusplus
 }

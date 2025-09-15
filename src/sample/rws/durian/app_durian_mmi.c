@@ -59,8 +59,8 @@ void app_durian_mmi_voice_recognition_disable(uint8_t app_idx)
     {
         if (app_db.br_link[app_idx].connected_profile & AVP_PROFILE_MASK)
         {
-            APP_PRINT_TRACE0("app_durian_mmi_voice_recognition_disable: bt_avp_voice_recognition_disable_req");
-            bt_avp_voice_recognition_disable_req(app_db.br_link[app_idx].bd_addr);
+            APP_PRINT_TRACE0("app_durian_mmi_voice_recognition_disable: app_durian_avp_voice_recognition_disable_req");
+            app_durian_avp_voice_recognition_disable_req(app_db.br_link[app_idx].bd_addr);
         }
     }
 }

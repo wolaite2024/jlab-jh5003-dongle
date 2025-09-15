@@ -57,7 +57,7 @@ static void adc_timer_finish_handler(void *xTimer);
   */
 static void board_adc_init(void)
 {
-    Pad_Config(ADC_0, PAD_SW_MODE, PAD_IS_PWRON, PAD_PULL_NONE, PAD_OUT_DISABLE, PAD_OUT_LOW);
+    Pad_Config(ADC_0, PAD_SW_MODE, PAD_SHUTDOWN, PAD_PULL_NONE, PAD_OUT_DISABLE, PAD_OUT_LOW);
     Pinmux_Config(ADC_0, IDLE_MODE);
 }
 

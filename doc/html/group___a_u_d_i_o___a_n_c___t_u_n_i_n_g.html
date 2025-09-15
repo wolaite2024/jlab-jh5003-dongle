@@ -42,31 +42,52 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Audio ANC Tuning<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___f_r_a_m_e_w_o_r_k.html">Framework</a> &raquo; <a class="el" href="group___a_u_d_i_o___m_a_n_a_g_e_r.html">Audio Manager</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Provide ANC control tools.  
+<p>Provide Active Noise Cancellation (ANC) control tools.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga9359e35bf5d1eadbef38632e2ca37bcd"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#gabc2d3188b2e3ab7b12f48926f976df0d">t_anc_resp_meas_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga9359e35bf5d1eadbef38632e2ca37bcd">T_ANC_RESP_MEAS_MODE</a></td></tr>
+<tr class="memdesc:ga9359e35bf5d1eadbef38632e2ca37bcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">ANC response measurement mode.  <a href="#ga9359e35bf5d1eadbef38632e2ca37bcd">More...</a><br /></td></tr>
+<tr class="separator:ga9359e35bf5d1eadbef38632e2ca37bcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gabc2d3188b2e3ab7b12f48926f976df0d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#gabc2d3188b2e3ab7b12f48926f976df0d">t_anc_resp_meas_mode</a> { <br />
+&#160;&#160;<a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ggabc2d3188b2e3ab7b12f48926f976df0daa7d541771d1fa61bdde86271004ba87d">ANC_RESP_MEAS_MODE_NONE</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ggabc2d3188b2e3ab7b12f48926f976df0dad653db07d81fe5cedaa0744eac473aab">ANC_RESP_MEAS_MODE_ENTER</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ggabc2d3188b2e3ab7b12f48926f976df0dab22d17af2ee1b3e8a1056f4d4beb2045">ANC_RESP_MEAS_MODE_EXIT</a>
+<br />
+ }</td></tr>
+<tr class="memdesc:gabc2d3188b2e3ab7b12f48926f976df0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">ANC response measurement mode.  <a href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#gabc2d3188b2e3ab7b12f48926f976df0d">More...</a><br /></td></tr>
+<tr class="separator:gabc2d3188b2e3ab7b12f48926f976df0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:gaaf236f8fdd01bdc6c0a6163c9a719a61"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#gaaf236f8fdd01bdc6c0a6163c9a719a61">anc_tool_load_scenario</a> (uint8_t image_sub_type, uint8_t scenario_id)</td></tr>
-<tr class="memdesc:gaaf236f8fdd01bdc6c0a6163c9a719a61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable active noise cancellation.  <a href="#gaaf236f8fdd01bdc6c0a6163c9a719a61">More...</a><br /></td></tr>
+<tr class="memdesc:gaaf236f8fdd01bdc6c0a6163c9a719a61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start to load ANC scenario image.  <a href="#gaaf236f8fdd01bdc6c0a6163c9a719a61">More...</a><br /></td></tr>
 <tr class="separator:gaaf236f8fdd01bdc6c0a6163c9a719a61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga68222feee33b477d9401aea8f9c62761"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga68222feee33b477d9401aea8f9c62761">anc_tool_set_feature_map</a> (uint32_t feature_map)</td></tr>
-<tr class="memdesc:ga68222feee33b477d9401aea8f9c62761"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set ANC feature map for ANC control. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga68222feee33b477d9401aea8f9c62761">More...</a><br /></td></tr>
+<tr class="memdesc:ga68222feee33b477d9401aea8f9c62761"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set ANC feature map for control. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga68222feee33b477d9401aea8f9c62761">More...</a><br /></td></tr>
 <tr class="separator:ga68222feee33b477d9401aea8f9c62761"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga003239a96c4a7591011689e4b9163ce0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga003239a96c4a7591011689e4b9163ce0">anc_tool_get_feature_map</a> (void)</td></tr>
 <tr class="memdesc:ga003239a96c4a7591011689e4b9163ce0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get ANC feature map for ANC control. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga003239a96c4a7591011689e4b9163ce0">More...</a><br /></td></tr>
 <tr class="separator:ga003239a96c4a7591011689e4b9163ce0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga662e569ee8a2a14b391d1c239522c4ad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga662e569ee8a2a14b391d1c239522c4ad">anc_tool_enable</a> (void)</td></tr>
-<tr class="memdesc:ga662e569ee8a2a14b391d1c239522c4ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply enable ANC setting directly. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga662e569ee8a2a14b391d1c239522c4ad">More...</a><br /></td></tr>
+<tr class="memdesc:ga662e569ee8a2a14b391d1c239522c4ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply enable ANC settings directly. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga662e569ee8a2a14b391d1c239522c4ad">More...</a><br /></td></tr>
 <tr class="separator:ga662e569ee8a2a14b391d1c239522c4ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga95b99e41b244a58c31c53c866ea14471"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga95b99e41b244a58c31c53c866ea14471">anc_tool_disable</a> (void)</td></tr>
-<tr class="memdesc:ga95b99e41b244a58c31c53c866ea14471"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply disable ANC setting directly. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga95b99e41b244a58c31c53c866ea14471">More...</a><br /></td></tr>
+<tr class="memdesc:ga95b99e41b244a58c31c53c866ea14471"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply disable ANC settings directly. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga95b99e41b244a58c31c53c866ea14471">More...</a><br /></td></tr>
 <tr class="separator:ga95b99e41b244a58c31c53c866ea14471"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga26897037843f27ce2dfeec82e6fd9a20"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga26897037843f27ce2dfeec82e6fd9a20">anc_tool_set_para</a> (void *anc_cmd_ptr)</td></tr>
 <tr class="memdesc:ga26897037843f27ce2dfeec82e6fd9a20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set ANC register or PALU register. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga26897037843f27ce2dfeec82e6fd9a20">More...</a><br /></td></tr>
@@ -75,83 +96,143 @@ Functions</h2></td></tr>
 <tr class="memdesc:gaf8aebe948e7dc88bce5e5ff6fa852e67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get ANC/PALU register content. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#gaf8aebe948e7dc88bce5e5ff6fa852e67">More...</a><br /></td></tr>
 <tr class="separator:gaf8aebe948e7dc88bce5e5ff6fa852e67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga89aef0ee9807d2bfdafd300a42ec14bf"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga89aef0ee9807d2bfdafd300a42ec14bf">anc_tool_get_data_log_length</a> (void)</td></tr>
-<tr class="memdesc:ga89aef0ee9807d2bfdafd300a42ec14bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get data log length from ANC reg. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga89aef0ee9807d2bfdafd300a42ec14bf">More...</a><br /></td></tr>
+<tr class="memdesc:ga89aef0ee9807d2bfdafd300a42ec14bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the length of ANC data log. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga89aef0ee9807d2bfdafd300a42ec14bf">More...</a><br /></td></tr>
 <tr class="separator:ga89aef0ee9807d2bfdafd300a42ec14bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5ab657187cd3a06d81ffec6e3f490c0c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga5ab657187cd3a06d81ffec6e3f490c0c">anc_tool_response_measure_enable</a> (uint8_t enable, uint8_t ch_sel, uint32_t *tx_freq, uint8_t freq_num, uint8_t amp_ratio)</td></tr>
-<tr class="memdesc:ga5ab657187cd3a06d81ffec6e3f490c0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable MCU play tone by specific frequencies and amp_ratio Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga5ab657187cd3a06d81ffec6e3f490c0c">More...</a><br /></td></tr>
+<tr class="memdesc:ga5ab657187cd3a06d81ffec6e3f490c0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable playing ringtone by MCU. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga5ab657187cd3a06d81ffec6e3f490c0c">More...</a><br /></td></tr>
 <tr class="separator:ga5ab657187cd3a06d81ffec6e3f490c0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa634f062f6ac3fb47dd927b7eecdf34d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#gaa634f062f6ac3fb47dd927b7eecdf34d">anc_tool_config_data_log</a> (uint8_t src0_sel, uint8_t src1_sel, uint16_t log_len)</td></tr>
 <tr class="memdesc:gaa634f062f6ac3fb47dd927b7eecdf34d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set ANC data log configuration and dump log. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#gaa634f062f6ac3fb47dd927b7eecdf34d">More...</a><br /></td></tr>
 <tr class="separator:gaa634f062f6ac3fb47dd927b7eecdf34d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaca886fc5d4692b4f6df92765f8452bf8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#gaca886fc5d4692b4f6df92765f8452bf8">anc_tool_load_data_log</a> (void)</td></tr>
-<tr class="memdesc:gaca886fc5d4692b4f6df92765f8452bf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unlock ram setting to read log directly. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#gaca886fc5d4692b4f6df92765f8452bf8">More...</a><br /></td></tr>
+<tr class="memdesc:gaca886fc5d4692b4f6df92765f8452bf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unlock RAM settings to read log directly. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#gaca886fc5d4692b4f6df92765f8452bf8">More...</a><br /></td></tr>
 <tr class="separator:gaca886fc5d4692b4f6df92765f8452bf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga591a872be108b3292b7d21a1cdc7b0b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga591a872be108b3292b7d21a1cdc7b0b6">anc_tool_convert_data_log_addr</a> (uint32_t *log_dest_addr)</td></tr>
-<tr class="memdesc:ga591a872be108b3292b7d21a1cdc7b0b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">convert data log dest addr. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga591a872be108b3292b7d21a1cdc7b0b6">More...</a><br /></td></tr>
+<tr class="memdesc:ga591a872be108b3292b7d21a1cdc7b0b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert destination address of ANC data log. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga591a872be108b3292b7d21a1cdc7b0b6">More...</a><br /></td></tr>
 <tr class="separator:ga591a872be108b3292b7d21a1cdc7b0b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gada80510173540e4cbe35ab624bdfb177"><td class="memItemLeft" align="right" valign="top">T_ANC_RESP_MEAS_MODE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#gada80510173540e4cbe35ab624bdfb177">anc_tool_check_resp_meas_mode</a> (void)</td></tr>
+<tr class="memitem:gada80510173540e4cbe35ab624bdfb177"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga9359e35bf5d1eadbef38632e2ca37bcd">T_ANC_RESP_MEAS_MODE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#gada80510173540e4cbe35ab624bdfb177">anc_tool_check_resp_meas_mode</a> (void)</td></tr>
 <tr class="memdesc:gada80510173540e4cbe35ab624bdfb177"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current response measurement mode. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#gada80510173540e4cbe35ab624bdfb177">More...</a><br /></td></tr>
 <tr class="separator:gada80510173540e4cbe35ab624bdfb177"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga612662df0208d4755853b10105db86c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga612662df0208d4755853b10105db86c3">anc_tool_set_resp_meas_mode</a> (T_ANC_RESP_MEAS_MODE resp_meas_mode)</td></tr>
-<tr class="memdesc:ga612662df0208d4755853b10105db86c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enter specific response measurement mode. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga612662df0208d4755853b10105db86c3">More...</a><br /></td></tr>
+<tr class="memitem:ga612662df0208d4755853b10105db86c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga612662df0208d4755853b10105db86c3">anc_tool_set_resp_meas_mode</a> (<a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga9359e35bf5d1eadbef38632e2ca37bcd">T_ANC_RESP_MEAS_MODE</a> resp_meas_mode)</td></tr>
+<tr class="memdesc:ga612662df0208d4755853b10105db86c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set specific response measurement mode. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga612662df0208d4755853b10105db86c3">More...</a><br /></td></tr>
 <tr class="separator:ga612662df0208d4755853b10105db86c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga47bc6c5604029bafd10eca9661cc0a2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga47bc6c5604029bafd10eca9661cc0a2d">anc_tool_set_gain_mismatch</a> (uint8_t gain_src, uint32_t l_gain, uint32_t r_gain)</td></tr>
-<tr class="memdesc:ga47bc6c5604029bafd10eca9661cc0a2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set gain mismatch to ram. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga47bc6c5604029bafd10eca9661cc0a2d">More...</a><br /></td></tr>
+<tr class="memdesc:ga47bc6c5604029bafd10eca9661cc0a2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set gain mismatch to RAM. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga47bc6c5604029bafd10eca9661cc0a2d">More...</a><br /></td></tr>
 <tr class="separator:ga47bc6c5604029bafd10eca9661cc0a2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga08d6a6cdff7650da225e2338c1b6b000"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga08d6a6cdff7650da225e2338c1b6b000">anc_tool_read_gain_mismatch</a> (uint8_t gain_src, uint8_t read_flash, uint32_t *l_gain, uint32_t *r_gain)</td></tr>
-<tr class="memdesc:ga08d6a6cdff7650da225e2338c1b6b000"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read gain mismatch from ram or flash. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga08d6a6cdff7650da225e2338c1b6b000">More...</a><br /></td></tr>
+<tr class="memdesc:ga08d6a6cdff7650da225e2338c1b6b000"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read gain mismatch from RAM or Flash. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga08d6a6cdff7650da225e2338c1b6b000">More...</a><br /></td></tr>
 <tr class="separator:ga08d6a6cdff7650da225e2338c1b6b000"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4f174714157de108bfd1aa3299294749"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga4f174714157de108bfd1aa3299294749">anc_tool_read_mp_ext_data</a> (uint32_t *mp_ext_data)</td></tr>
-<tr class="memdesc:ga4f174714157de108bfd1aa3299294749"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read MP extend data from flash. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga4f174714157de108bfd1aa3299294749">More...</a><br /></td></tr>
+<tr class="memdesc:ga4f174714157de108bfd1aa3299294749"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read MP extend data from Flash. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga4f174714157de108bfd1aa3299294749">More...</a><br /></td></tr>
 <tr class="separator:ga4f174714157de108bfd1aa3299294749"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga342bdf1dbce6393096df5963784932b3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga342bdf1dbce6393096df5963784932b3">anc_tool_read_llapt_ext_data</a> (uint32_t *llapt_ext_data)</td></tr>
-<tr class="memdesc:ga342bdf1dbce6393096df5963784932b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read LLAPT extend data from flash.  <a href="#ga342bdf1dbce6393096df5963784932b3">More...</a><br /></td></tr>
+<tr class="memdesc:ga342bdf1dbce6393096df5963784932b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read LLAPT extend data from Flash.  <a href="#ga342bdf1dbce6393096df5963784932b3">More...</a><br /></td></tr>
 <tr class="separator:ga342bdf1dbce6393096df5963784932b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga079e8e9ba342fe1f346345aca3c4257b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga079e8e9ba342fe1f346345aca3c4257b">anc_tool_burn_gain_mismatch</a> (uint32_t mp_ext_data)</td></tr>
-<tr class="memdesc:ga079e8e9ba342fe1f346345aca3c4257b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Burn gain mismatch and MP extend data from ram to flash. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga079e8e9ba342fe1f346345aca3c4257b">More...</a><br /></td></tr>
+<tr class="memdesc:ga079e8e9ba342fe1f346345aca3c4257b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Burn gain mismatch and MP extend data from RAM to Flash. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga079e8e9ba342fe1f346345aca3c4257b">More...</a><br /></td></tr>
 <tr class="separator:ga079e8e9ba342fe1f346345aca3c4257b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga50badfd42e2e30f16a16b5470f3b3701"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga50badfd42e2e30f16a16b5470f3b3701">anc_tool_get_anc_scenario_info</a> (uint8_t *scenario_mode)</td></tr>
-<tr class="memdesc:ga50badfd42e2e30f16a16b5470f3b3701"><td class="mdescLeft">&#160;</td><td class="mdescRight">get ANC scenario info  <a href="#ga50badfd42e2e30f16a16b5470f3b3701">More...</a><br /></td></tr>
+<tr class="memdesc:ga50badfd42e2e30f16a16b5470f3b3701"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get ANC scenario mode.  <a href="#ga50badfd42e2e30f16a16b5470f3b3701">More...</a><br /></td></tr>
 <tr class="separator:ga50badfd42e2e30f16a16b5470f3b3701"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5b4c4de09e44989d5bcfe5b71ebe5f81"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga5b4c4de09e44989d5bcfe5b71ebe5f81">anc_tool_get_llapt_scenario_info</a> (uint8_t *scenario_mode, uint8_t *scenario_apt_effect)</td></tr>
-<tr class="memdesc:ga5b4c4de09e44989d5bcfe5b71ebe5f81"><td class="mdescLeft">&#160;</td><td class="mdescRight">get LLAPT scenario info  <a href="#ga5b4c4de09e44989d5bcfe5b71ebe5f81">More...</a><br /></td></tr>
+<tr class="memdesc:ga5b4c4de09e44989d5bcfe5b71ebe5f81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get LLAPT scenario information.  <a href="#ga5b4c4de09e44989d5bcfe5b71ebe5f81">More...</a><br /></td></tr>
 <tr class="separator:ga5b4c4de09e44989d5bcfe5b71ebe5f81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga875a37b9bc5efdfbc4b8c4ab79e2e763"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga875a37b9bc5efdfbc4b8c4ab79e2e763">anc_tool_set_llapt_gain_mismatch</a> (uint32_t l_gain, uint32_t r_gain)</td></tr>
-<tr class="memdesc:ga875a37b9bc5efdfbc4b8c4ab79e2e763"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set LLAPT gain mismatch to ram. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga875a37b9bc5efdfbc4b8c4ab79e2e763">More...</a><br /></td></tr>
+<tr class="memdesc:ga875a37b9bc5efdfbc4b8c4ab79e2e763"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set LLAPT gain mismatch to RAM. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga875a37b9bc5efdfbc4b8c4ab79e2e763">More...</a><br /></td></tr>
 <tr class="separator:ga875a37b9bc5efdfbc4b8c4ab79e2e763"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5c479fd7692ae8f5dce605b30c566b59"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga5c479fd7692ae8f5dce605b30c566b59">anc_tool_read_llapt_gain_mismatch</a> (uint8_t read_flash, uint32_t *l_gain, uint32_t *r_gain)</td></tr>
-<tr class="memdesc:ga5c479fd7692ae8f5dce605b30c566b59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read LLAPT gain mismatch from ram or flash. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga5c479fd7692ae8f5dce605b30c566b59">More...</a><br /></td></tr>
+<tr class="memdesc:ga5c479fd7692ae8f5dce605b30c566b59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read LLAPT gain mismatch from RAM or Flash. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga5c479fd7692ae8f5dce605b30c566b59">More...</a><br /></td></tr>
 <tr class="separator:ga5c479fd7692ae8f5dce605b30c566b59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6cf77db288a07819265c871d1c949149"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga6cf77db288a07819265c871d1c949149">anc_tool_burn_llapt_gain_mismatch</a> (uint32_t llapt_ext_data)</td></tr>
-<tr class="memdesc:ga6cf77db288a07819265c871d1c949149"><td class="mdescLeft">&#160;</td><td class="mdescRight">Burn LLAPT gain mismatch from ram to flash. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga6cf77db288a07819265c871d1c949149">More...</a><br /></td></tr>
+<tr class="memdesc:ga6cf77db288a07819265c871d1c949149"><td class="mdescLeft">&#160;</td><td class="mdescRight">Burn LLAPT gain mismatch from RAM to Flash. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga6cf77db288a07819265c871d1c949149">More...</a><br /></td></tr>
 <tr class="separator:ga6cf77db288a07819265c871d1c949149"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0c41ce0e2135a7ad0eb6c937c9a9a872"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga0c41ce0e2135a7ad0eb6c937c9a9a872">anc_tool_limiter_wns_switch</a> (void)</td></tr>
 <tr class="memdesc:ga0c41ce0e2135a7ad0eb6c937c9a9a872"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch ANC/LLAPT limiter WNS on/off depend on feature map. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga0c41ce0e2135a7ad0eb6c937c9a9a872">More...</a><br /></td></tr>
 <tr class="separator:ga0c41ce0e2135a7ad0eb6c937c9a9a872"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac9de3dc9e5026627cb0f30e0384c32fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#gac9de3dc9e5026627cb0f30e0384c32fa">anc_tool_anc_mp_bak_buf_config</a> (uint32_t param1, uint32_t param2)</td></tr>
-<tr class="memdesc:gac9de3dc9e5026627cb0f30e0384c32fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">set anc MP backup buffer  <a href="#gac9de3dc9e5026627cb0f30e0384c32fa">More...</a><br /></td></tr>
+<tr class="memdesc:gac9de3dc9e5026627cb0f30e0384c32fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set ANC MP backup buffer.  <a href="#gac9de3dc9e5026627cb0f30e0384c32fa">More...</a><br /></td></tr>
 <tr class="separator:gac9de3dc9e5026627cb0f30e0384c32fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafc9561db8263d4523ad1b3a5281d7a4a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#gafc9561db8263d4523ad1b3a5281d7a4a">anc_tool_ramp_data_write</a> (uint32_t wdata)</td></tr>
-<tr class="memdesc:gafc9561db8263d4523ad1b3a5281d7a4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">ramp data write for ramp tool  <a href="#gafc9561db8263d4523ad1b3a5281d7a4a">More...</a><br /></td></tr>
+<tr class="memdesc:gafc9561db8263d4523ad1b3a5281d7a4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ramp data write for ramp tool.  <a href="#gafc9561db8263d4523ad1b3a5281d7a4a">More...</a><br /></td></tr>
 <tr class="separator:gafc9561db8263d4523ad1b3a5281d7a4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9043304ef742dfc0251192dd829212e8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga9043304ef742dfc0251192dd829212e8">anc_tool_get_scenario_addr</a> (uint32_t param)</td></tr>
-<tr class="memdesc:ga9043304ef742dfc0251192dd829212e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">get ramp scenario address for ramp tool  <a href="#ga9043304ef742dfc0251192dd829212e8">More...</a><br /></td></tr>
+<tr class="memdesc:ga9043304ef742dfc0251192dd829212e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get ramp scenario address for ramp tool.  <a href="#ga9043304ef742dfc0251192dd829212e8">More...</a><br /></td></tr>
 <tr class="separator:ga9043304ef742dfc0251192dd829212e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1b8da0d88d738b6afb710e9f226a7c9e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga1b8da0d88d738b6afb710e9f226a7c9e">anc_tool_set_scenario</a> (void *image_buf)</td></tr>
-<tr class="memdesc:ga1b8da0d88d738b6afb710e9f226a7c9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set scenario img to anc module.  <a href="#ga1b8da0d88d738b6afb710e9f226a7c9e">More...</a><br /></td></tr>
+<tr class="memdesc:ga1b8da0d88d738b6afb710e9f226a7c9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set scenario image to ANC module.  <a href="#ga1b8da0d88d738b6afb710e9f226a7c9e">More...</a><br /></td></tr>
 <tr class="separator:ga1b8da0d88d738b6afb710e9f226a7c9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga716e28b930ead2cf61965d3d9bdcb67a"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga716e28b930ead2cf61965d3d9bdcb67a">anc_tool_get_scenario_img</a> (uint8_t sub_type, uint8_t scenario_id, uint32_t *length)</td></tr>
-<tr class="memdesc:ga716e28b930ead2cf61965d3d9bdcb67a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get scenario img.  <a href="#ga716e28b930ead2cf61965d3d9bdcb67a">More...</a><br /></td></tr>
+<tr class="memdesc:ga716e28b930ead2cf61965d3d9bdcb67a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get scenario image.  <a href="#ga716e28b930ead2cf61965d3d9bdcb67a">More...</a><br /></td></tr>
 <tr class="separator:ga716e28b930ead2cf61965d3d9bdcb67a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga379eacd9322eef066700812e637f8ec6"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga379eacd9322eef066700812e637f8ec6">anc_tool_get_filter_info_img</a> (uint32_t *length)</td></tr>
-<tr class="memdesc:ga379eacd9322eef066700812e637f8ec6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get PALU filter info.  <a href="#ga379eacd9322eef066700812e637f8ec6">More...</a><br /></td></tr>
+<tr class="memdesc:ga379eacd9322eef066700812e637f8ec6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get PALU filter information.  <a href="#ga379eacd9322eef066700812e637f8ec6">More...</a><br /></td></tr>
 <tr class="separator:ga379eacd9322eef066700812e637f8ec6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga99aed3eafc1cddb2bc6ae2db1b8fcdf3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga99aed3eafc1cddb2bc6ae2db1b8fcdf3">anc_tool_para_aes_encrypt</a> (uint32_t scenario_img, uint32_t length)</td></tr>
-<tr class="memdesc:ga99aed3eafc1cddb2bc6ae2db1b8fcdf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypt img.  <a href="#ga99aed3eafc1cddb2bc6ae2db1b8fcdf3">More...</a><br /></td></tr>
+<tr class="memdesc:ga99aed3eafc1cddb2bc6ae2db1b8fcdf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypt image.  <a href="#ga99aed3eafc1cddb2bc6ae2db1b8fcdf3">More...</a><br /></td></tr>
 <tr class="separator:ga99aed3eafc1cddb2bc6ae2db1b8fcdf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga32c6a07da87ec2d8590b9253f2d24ba4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga32c6a07da87ec2d8590b9253f2d24ba4">anc_tool_query_para</a> (uint8_t *adsp_info)</td></tr>
+<tr class="memdesc:ga32c6a07da87ec2d8590b9253f2d24ba4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Query ADSP information. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga32c6a07da87ec2d8590b9253f2d24ba4">More...</a><br /></td></tr>
+<tr class="separator:ga32c6a07da87ec2d8590b9253f2d24ba4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga53344518e78defd66425f9f246fa8ff1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga53344518e78defd66425f9f246fa8ff1">anc_tool_config_adsp_para</a> (uint16_t crc_check, uint32_t adsp_para_len, uint8_t segment_total)</td></tr>
+<tr class="memdesc:ga53344518e78defd66425f9f246fa8ff1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Config ADSP transfer parameters. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga53344518e78defd66425f9f246fa8ff1">More...</a><br /></td></tr>
+<tr class="separator:ga53344518e78defd66425f9f246fa8ff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8e6b9dd5a897aa539ea706c38396f8b8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga8e6b9dd5a897aa539ea706c38396f8b8">anc_tool_turn_on_adsp</a> (uint8_t enable)</td></tr>
+<tr class="memdesc:ga8e6b9dd5a897aa539ea706c38396f8b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable ADSP. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga8e6b9dd5a897aa539ea706c38396f8b8">More...</a><br /></td></tr>
+<tr class="separator:ga8e6b9dd5a897aa539ea706c38396f8b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8a5dbdaf7cbc69a3cbf51c6495fd2f0b"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga8a5dbdaf7cbc69a3cbf51c6495fd2f0b">anc_tool_load_adsp_para</a> (uint8_t *para_ptr, uint8_t segment_index)</td></tr>
+<tr class="memdesc:ga8a5dbdaf7cbc69a3cbf51c6495fd2f0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set ADSP paramters. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga8a5dbdaf7cbc69a3cbf51c6495fd2f0b">More...</a><br /></td></tr>
+<tr class="separator:ga8a5dbdaf7cbc69a3cbf51c6495fd2f0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga14ef21fc6a749dc41bf6a55d34f35e47"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga14ef21fc6a749dc41bf6a55d34f35e47">anc_tool_enable_adaptive_anc</a> (uint8_t enable, uint8_t grp_idx)</td></tr>
+<tr class="memdesc:ga14ef21fc6a749dc41bf6a55d34f35e47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set adaptive ANC enable or disable. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga14ef21fc6a749dc41bf6a55d34f35e47">More...</a><br /></td></tr>
+<tr class="separator:ga14ef21fc6a749dc41bf6a55d34f35e47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6b2dbc7e9d7316e79474e13ef850e8e0"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga6b2dbc7e9d7316e79474e13ef850e8e0">anc_tool_load_adsp_image</a> (uint32_t encode)</td></tr>
+<tr class="memdesc:ga6b2dbc7e9d7316e79474e13ef850e8e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start to load ADSP image. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#ga6b2dbc7e9d7316e79474e13ef850e8e0">More...</a><br /></td></tr>
+<tr class="separator:ga6b2dbc7e9d7316e79474e13ef850e8e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae8eaf3f7af566df3c43b2a9a67026d0e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#gae8eaf3f7af566df3c43b2a9a67026d0e">anc_tool_get_adsp_image_load_done</a> (void)</td></tr>
+<tr class="memdesc:gae8eaf3f7af566df3c43b2a9a67026d0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check ADSP image load done. Only provided for tool usage, cannot invoke in normal uasge.  <a href="#gae8eaf3f7af566df3c43b2a9a67026d0e">More...</a><br /></td></tr>
+<tr class="separator:gae8eaf3f7af566df3c43b2a9a67026d0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Provide ANC control tools. </p>
+<p>Provide Active Noise Cancellation (ANC) control tools. </p>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="ga9359e35bf5d1eadbef38632e2ca37bcd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9359e35bf5d1eadbef38632e2ca37bcd">&#9670;&nbsp;</a></span>T_ANC_RESP_MEAS_MODE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#gabc2d3188b2e3ab7b12f48926f976df0d">t_anc_resp_meas_mode</a>  <a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga9359e35bf5d1eadbef38632e2ca37bcd">T_ANC_RESP_MEAS_MODE</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ANC response measurement mode. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="gabc2d3188b2e3ab7b12f48926f976df0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabc2d3188b2e3ab7b12f48926f976df0d">&#9670;&nbsp;</a></span>t_anc_resp_meas_mode</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#gabc2d3188b2e3ab7b12f48926f976df0d">t_anc_resp_meas_mode</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ANC response measurement mode. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggabc2d3188b2e3ab7b12f48926f976df0daa7d541771d1fa61bdde86271004ba87d"></a>ANC_RESP_MEAS_MODE_NONE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ggabc2d3188b2e3ab7b12f48926f976df0dad653db07d81fe5cedaa0744eac473aab"></a>ANC_RESP_MEAS_MODE_ENTER&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ggabc2d3188b2e3ab7b12f48926f976df0dab22d17af2ee1b3e8a1056f4d4beb2045"></a>ANC_RESP_MEAS_MODE_EXIT&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="gaaf236f8fdd01bdc6c0a6163c9a719a61"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaaf236f8fdd01bdc6c0a6163c9a719a61">&#9670;&nbsp;</a></span>anc_tool_load_scenario()</h2>
@@ -179,13 +260,19 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Enable active noise cancellation. </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
-<p>image_sub_type ANC image sub-type, only available for LL-APT image.  scenario_id Scenario id for ANC image type.</p>
-<dl class="section return"><dt>Returns</dt><dd>The status of load ANC scenario image. </dd></dl>
+<p>Start to load ANC scenario image. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">image_sub_type</td><td>ANC image sub-type, only available for LLAPT image. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">scenario_id</td><td>Scenario id for ANC image type.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of starting to load ANC scenario image. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">always</td><td>true </td></tr>
+    <tr><td class="paramname">true</td><td>Loading was started successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>Loading was fail to start. </td></tr>
   </table>
   </dd>
 </dl>
@@ -208,9 +295,13 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set ANC feature map for ANC control. Only provided for tool usage, cannot invoke in normal uasge. </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
-<p>feature_map ANC control option feature map. </p>
+<p>Set ANC feature map for control. Only provided for tool usage, cannot invoke in normal uasge. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">feature_map</td><td>ANC control feature map. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -231,14 +322,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get ANC feature map for ANC control. Only provided for tool usage, cannot invoke in normal uasge. </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">any</td><td>ANC feature map. </td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>Feature map of ANC control. </dd></dl>
 
 </div>
 </div>
@@ -258,8 +342,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Apply enable ANC setting directly. Only provided for tool usage, cannot invoke in normal uasge. </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a> </p>
+<p>Apply enable ANC settings directly. Only provided for tool usage, cannot invoke in normal uasge. </p>
 
 </div>
 </div>
@@ -279,8 +362,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Apply disable ANC setting directly. Only provided for tool usage, cannot invoke in normal uasge. </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a> </p>
+<p>Apply disable ANC settings directly. Only provided for tool usage, cannot invoke in normal uasge. </p>
 
 </div>
 </div>
@@ -301,13 +383,17 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Set ANC register or PALU register. Only provided for tool usage, cannot invoke in normal uasge. </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
-<p>anc_cmd_ptr ANC command which follow HCI cmd format. This command will indicate register offset and content, and parse by anc driver.</p>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">anc_cmd_ptr</td><td>ANC command which follow HCI CMD format. This command will indicate register offset and content, and parse by ANC driver.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The error code. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>ANC/PALU register write success. </td></tr>
-    <tr><td class="paramname">false</td><td>ANC/PALU register write fail. </td></tr>
+    <tr><td class="paramname">0x00</td><td>ANC/PALU register was written successfully. </td></tr>
+    <tr><td class="paramname">others</td><td>ANC/PALU register was failed to be written. </td></tr>
   </table>
   </dd>
 </dl>
@@ -331,13 +417,17 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get ANC/PALU register content. Only provided for tool usage, cannot invoke in normal uasge. </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
-<p>reg_addr Target register address by word.</p>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">reg_addr</td><td>The register address by word.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The value of the register. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">0xDEADBEEF</td><td>Cannot get content by target reg addr. </td></tr>
-    <tr><td class="paramname">others</td><td>Content by target reg addr. </td></tr>
+    <tr><td class="paramname">0xDEADBEEF</td><td>Cannot get content by target register address. </td></tr>
+    <tr><td class="paramname">others</td><td>Content by target register address. </td></tr>
   </table>
   </dd>
 </dl>
@@ -360,15 +450,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get data log length from ANC reg. Only provided for tool usage, cannot invoke in normal uasge. </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">any</td><td>Data log length by word. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Get the length of ANC data log. Only provided for tool usage, cannot invoke in normal uasge. </p>
+<dl class="section return"><dt>Returns</dt><dd>The length of ANC data log. </dd></dl>
 
 </div>
 </div>
@@ -416,14 +499,22 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Enable MCU play tone by specific frequencies and amp_ratio Only provided for tool usage, cannot invoke in normal uasge. </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
-<p>enable Enable/Disable MCU play tone.  ch_sel L/R channel select for measurement.  tx_freq User specific frequencies.  freq_num Number of frequencies.  amp_ratio Tone Amplitude, must be 0 ~ 128.</p>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<p>Enable/Disable playing ringtone by MCU. Only provided for tool usage, cannot invoke in normal uasge. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">enable</td><td>Enable/Disable MCU play ringtone. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ch_sel</td><td>L/R channel select for measurement. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tx_freq</td><td>User specific frequencies. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">freq_num</td><td>Number of frequencies. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">amp_ratio</td><td>Tone Amplitude, must be 0 ~ 128.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of settings. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>MCU play tone success. </td></tr>
-    <tr><td class="paramname">false</td><td>MCU play tone fail. </td></tr>
+    <tr><td class="paramname">true</td><td>The ringtone was played successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>The ringtone was failed to play. </td></tr>
   </table>
   </dd>
 </dl>
@@ -463,8 +554,14 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Set ANC data log configuration and dump log. Only provided for tool usage, cannot invoke in normal uasge. </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
-<p>src0_sel Log source 0 selection.  src1_sel Log source 1 selection.  log_len Log length(by word). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">src0_sel</td><td>Log source 0 selection. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">src1_sel</td><td>Log source 1 selection. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">log_len</td><td>Log length (by word). </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -484,8 +581,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Unlock ram setting to read log directly. Only provided for tool usage, cannot invoke in normal uasge. </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a> </p>
+<p>Unlock RAM settings to read log directly. Only provided for tool usage, cannot invoke in normal uasge. </p>
 
 </div>
 </div>
@@ -505,10 +601,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>convert data log dest addr. Only provided for tool usage, cannot invoke in normal uasge. </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
+<p>Convert destination address of ANC data log. Only provided for tool usage, cannot invoke in normal uasge. </p>
 <dl class="Added_API_2_13_0_0"><dt><b><a class="el" href="_added__a_p_i_2_13_0_0.html#_Added_API_2_13_0_0000009">Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
-<p>log_dest_addr Destination address of ANC data log. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">log_dest_addr</td><td>Destination address of ANC data log. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -519,7 +619,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">T_ANC_RESP_MEAS_MODE anc_tool_check_resp_meas_mode </td>
+          <td class="memname"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga9359e35bf5d1eadbef38632e2ca37bcd">T_ANC_RESP_MEAS_MODE</a> anc_tool_check_resp_meas_mode </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -529,14 +629,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get current response measurement mode. Only provided for tool usage, cannot invoke in normal uasge. </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">any</td><td>Response measurement mode. </td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>The mode of response measurement <a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga9359e35bf5d1eadbef38632e2ca37bcd">T_ANC_RESP_MEAS_MODE</a>. </dd></dl>
 
 </div>
 </div>
@@ -549,16 +642,20 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void anc_tool_set_resp_meas_mode </td>
           <td>(</td>
-          <td class="paramtype">T_ANC_RESP_MEAS_MODE&#160;</td>
+          <td class="paramtype"><a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga9359e35bf5d1eadbef38632e2ca37bcd">T_ANC_RESP_MEAS_MODE</a>&#160;</td>
           <td class="paramname"><em>resp_meas_mode</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Enter specific response measurement mode. Only provided for tool usage, cannot invoke in normal uasge. </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
-<p>resp_meas_mode Response measurement mode. </p>
+<p>Set specific response measurement mode. Only provided for tool usage, cannot invoke in normal uasge. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">resp_meas_mode</td><td>Response measurement mode <a class="el" href="group___a_u_d_i_o___a_n_c___t_u_n_i_n_g.html#ga9359e35bf5d1eadbef38632e2ca37bcd">T_ANC_RESP_MEAS_MODE</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -594,9 +691,15 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set gain mismatch to ram. Only provided for tool usage, cannot invoke in normal uasge. </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
-<p>gain_src Gain source selection, 0: external mic, 2: internal mic.  l_gain Gain value for Lch.  r_gain Gain value for Rch. </p>
+<p>Set gain mismatch to RAM. Only provided for tool usage, cannot invoke in normal uasge. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">gain_src</td><td>Gain source selection, 0: external MIC, 2: internal MIC. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">l_gain</td><td>Gain value for Lch. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">r_gain</td><td>Gain value for Rch. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -638,14 +741,21 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Read gain mismatch from ram or flash. Only provided for tool usage, cannot invoke in normal uasge. </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
-<p>gain_src Gain source selection, 0: external mic, 1: internal mic.  read_flash Read from flash or not, 0: from ram, 1: from flash.  l_gain Buffer to store Lch gain value.  r_gain Buffer to store Rch gain value.</p>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<p>Read gain mismatch from RAM or Flash. Only provided for tool usage, cannot invoke in normal uasge. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">gain_src</td><td>Gain source selection, 0: external MIC, 1: internal MIC. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">read_flash</td><td>Read from Flash or not, 0: from RAM, 1: from Flash. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">l_gain</td><td>Buffer to store Lch gain value. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">r_gain</td><td>Buffer to store Rch gain value.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of reading gain mismatch. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Read gain mismatch success. </td></tr>
-    <tr><td class="paramname">false</td><td>Read gain mismatch fail. </td></tr>
+    <tr><td class="paramname">true</td><td>The gain mismatch was read successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>The gain mismatch was failed to read. </td></tr>
   </table>
   </dd>
 </dl>
@@ -668,14 +778,18 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Read MP extend data from flash. Only provided for tool usage, cannot invoke in normal uasge. </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
-<p>mp_ext_data Buffer to store MP extend data.</p>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<p>Read MP extend data from Flash. Only provided for tool usage, cannot invoke in normal uasge. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">mp_ext_data</td><td>Buffer to store MP extend data.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of reading extend data. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Read MP extend data success. </td></tr>
-    <tr><td class="paramname">false</td><td>Read MP extend data fail. </td></tr>
+    <tr><td class="paramname">true</td><td>MP extend data was read successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>MP extend data was failed to read. </td></tr>
   </table>
   </dd>
 </dl>
@@ -698,14 +812,18 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Read LLAPT extend data from flash. </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
-<p>llapt_ext_data Buffer to store LLAPT extend data.</p>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<p>Read LLAPT extend data from Flash. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">llapt_ext_data</td><td>Buffer to store LLAPT extend data.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of reading extend LLAPT extend data. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Read LLAPT extend data success. </td></tr>
-    <tr><td class="paramname">false</td><td>Read LLAPT extend data fail. </td></tr>
+    <tr><td class="paramname">true</td><td>LLAPT extend data was read successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>LLAPT extend data was failed to read. </td></tr>
   </table>
   </dd>
 </dl>
@@ -728,14 +846,18 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Burn gain mismatch and MP extend data from ram to flash. Only provided for tool usage, cannot invoke in normal uasge. </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
-<p>mp_ext_data MP extend data.</p>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<p>Burn gain mismatch and MP extend data from RAM to Flash. Only provided for tool usage, cannot invoke in normal uasge. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">mp_ext_data</td><td>MP extend data.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of burn gain. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Burn MP extend data success. </td></tr>
-    <tr><td class="paramname">false</td><td>Burn MP extend data fail. </td></tr>
+    <tr><td class="paramname">true</td><td>MP extend data was burned successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>MP extend data was failed to burn. </td></tr>
   </table>
   </dd>
 </dl>
@@ -758,16 +880,15 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>get ANC scenario info </p>
+<p>Get ANC scenario mode. </p>
 <p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
-<p>scenario_mode Get ANC scenario mode.</p>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">any</td><td>ANC scenario num </td></tr>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">scenario_mode</td><td>Get ANC scenario mode.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of ANC scenarios. </dd></dl>
 
 </div>
 </div>
@@ -797,16 +918,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>get LLAPT scenario info </p>
+<p>Get LLAPT scenario information. </p>
 <p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
-<p>scenario_mode Get LLAPT scenario mode.</p>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">any</td><td>LLAPT scenario num </td></tr>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">scenario_mode</td><td>Get LLAPT scenario mode. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">scenario_apt_effect</td><td>Get LLAPT effect.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of ANC scenarios. </dd></dl>
 
 </div>
 </div>
@@ -836,9 +957,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set LLAPT gain mismatch to ram. Only provided for tool usage, cannot invoke in normal uasge. </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
-<p>l_gain Gain value for Lch.  r_gain Gain value for Rch. </p>
+<p>Set LLAPT gain mismatch to RAM. Only provided for tool usage, cannot invoke in normal uasge. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">l_gain</td><td>Gain value for Lch. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">r_gain</td><td>Gain value for Rch. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -874,14 +1000,20 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Read LLAPT gain mismatch from ram or flash. Only provided for tool usage, cannot invoke in normal uasge. </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
-<p>read_flash Read from flash or not, 0: from ram, 1: from flash.  l_gain Buffer to store Lch gain value.  r_gain Buffer to store Rch gain value.</p>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<p>Read LLAPT gain mismatch from RAM or Flash. Only provided for tool usage, cannot invoke in normal uasge. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">read_flash</td><td>Read from Flash or not, 0: from RAM, 1: from Flash. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">l_gain</td><td>Buffer to store Lch gain value. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">r_gain</td><td>Buffer to store Rch gain value.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of reading LLAPT gain. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Read LLAPT gain mismatch success. </td></tr>
-    <tr><td class="paramname">false</td><td>Read LLAPT gain mismatch fail. </td></tr>
+    <tr><td class="paramname">true</td><td>LLAPT gain mismatch was read successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>LLAPT gain mismatch was failed to read. </td></tr>
   </table>
   </dd>
 </dl>
@@ -904,14 +1036,18 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Burn LLAPT gain mismatch from ram to flash. Only provided for tool usage, cannot invoke in normal uasge. </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
-<p>llapt_ext_data LLAPT extend data.</p>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<p>Burn LLAPT gain mismatch from RAM to Flash. Only provided for tool usage, cannot invoke in normal uasge. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">llapt_ext_data</td><td>LLAPT extend data.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of burn LLAPT gain. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>Burn LLAPT gain mismatch success. </td></tr>
-    <tr><td class="paramname">false</td><td>Burn LLAPT gain mismatch fail. </td></tr>
+    <tr><td class="paramname">true</td><td>LLAPT gain mismatch was burned successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>LLAPT gain mismatch was failed to burn. </td></tr>
   </table>
   </dd>
 </dl>
@@ -935,7 +1071,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Switch ANC/LLAPT limiter WNS on/off depend on feature map. Only provided for tool usage, cannot invoke in normal uasge. </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a> </p>
 
 </div>
 </div>
@@ -965,9 +1100,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>set anc MP backup buffer </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
-<p>param1, param2 control parameters. </p>
+<p>Set ANC MP backup buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">param1</td><td>Control parameters. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">param2</td><td>Control parameters. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -987,9 +1127,13 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>ramp data write for ramp tool </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
-<p>wdata, data to be written. </p>
+<p>Ramp data write for ramp tool. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">wdata</td><td>Data to be written. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1009,9 +1153,13 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>get ramp scenario address for ramp tool </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
-<p>param, command buffer address send to driver. </p>
+<p>Get ramp scenario address for ramp tool. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">param</td><td>Command buffer address send to driver. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1031,10 +1179,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set scenario img to anc module. </p>
-<p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
+<p>Set scenario image to ANC module. </p>
 <dl class="Added_API_2_13_0_0"><dt><b><a class="el" href="_added__a_p_i_2_13_0_0.html#_Added_API_2_13_0_0000010">Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
-<p>sub image scenario. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">image_buf</td><td>Image scenario. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1070,16 +1222,18 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get scenario img. </p>
+<p>Get scenario image. </p>
 <p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
 <dl class="Added_API_2_13_0_0"><dt><b><a class="el" href="_added__a_p_i_2_13_0_0.html#_Added_API_2_13_0_0000011">Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
-<p>Sub_type ANC or LLAPT type.  Scenario_id scenario index .  Length ANC or LLAPT length . </p><dl class="section return"><dt>Returns</dt><dd></dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">anc</td><td>img buffer ptr. </td></tr>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">sub_type</td><td>ANC or LLAPT type. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">scenario_id</td><td>Scenario index. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">length</td><td>ANC or LLAPT length.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The buffer of scenario image. </dd></dl>
 
 </div>
 </div>
@@ -1099,16 +1253,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get PALU filter info. </p>
+<p>Get PALU filter information. </p>
 <p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
 <dl class="Added_API_2_13_0_0"><dt><b><a class="el" href="_added__a_p_i_2_13_0_0.html#_Added_API_2_13_0_0000012">Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
-<p>Length filter info length . </p><dl class="section return"><dt>Returns</dt><dd></dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">anc</td><td>img buffer ptr. </td></tr>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">length</td><td>The filter information length.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The buffer of filter information. </dd></dl>
 
 </div>
 </div>
@@ -1138,13 +1292,290 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Encrypt img. </p>
+<p>Encrypt image. </p>
 <p><a class="el" href="anc__tuning_8h_source.html">anc_tuning.h</a></p>
 <dl class="Added_API_2_13_0_0"><dt><b><a class="el" href="_added__a_p_i_2_13_0_0.html#_Added_API_2_13_0_0000013">Added Since 2.13.0.0:</a></b></dt><dd></dd></dl>
-<p>scenario_img scenario image  length scenario length </p><dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">scenario_img</td><td>Scenario image. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>The length of image. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga32c6a07da87ec2d8590b9253f2d24ba4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga32c6a07da87ec2d8590b9253f2d24ba4">&#9670;&nbsp;</a></span>anc_tool_query_para()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t anc_tool_query_para </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>adsp_info</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Query ADSP information. Only provided for tool usage, cannot invoke in normal uasge. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">adsp_info</td><td>The information of ADSP.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of getting ADSP information. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">anc</td><td>img buffer ptr. </td></tr>
+    <tr><td class="paramname">0x00</td><td>The information was got successfully. </td></tr>
+    <tr><td class="paramname">others</td><td>The information was failed to get. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga53344518e78defd66425f9f246fa8ff1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga53344518e78defd66425f9f246fa8ff1">&#9670;&nbsp;</a></span>anc_tool_config_adsp_para()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t anc_tool_config_adsp_para </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>crc_check</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>adsp_para_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>segment_total</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Config ADSP transfer parameters. Only provided for tool usage, cannot invoke in normal uasge. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">crc_check</td><td>The CRC16 checksum for all ADSP parameter payload. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">adsp_para_len</td><td>The length of adsp parameter payload. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">segment_total</td><td>The total number of segment.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of config. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0x00</td><td>The config was got successfully. </td></tr>
+    <tr><td class="paramname">others</td><td>The config was failed to get. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga8e6b9dd5a897aa539ea706c38396f8b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8e6b9dd5a897aa539ea706c38396f8b8">&#9670;&nbsp;</a></span>anc_tool_turn_on_adsp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t anc_tool_turn_on_adsp </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>enable</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable or disable ADSP. Only provided for tool usage, cannot invoke in normal uasge. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">enable</td><td>1: enable ADSP, 0: disable ADSP.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of config. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0x00</td><td>Enabled or disabled ADSP successfully. </td></tr>
+    <tr><td class="paramname">others</td><td>ADSP was fail to enable or disable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga8a5dbdaf7cbc69a3cbf51c6495fd2f0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8a5dbdaf7cbc69a3cbf51c6495fd2f0b">&#9670;&nbsp;</a></span>anc_tool_load_adsp_para()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t anc_tool_load_adsp_para </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>para_ptr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>segment_index</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set ADSP paramters. Only provided for tool usage, cannot invoke in normal uasge. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">para_ptr</td><td>ADSP paramters array. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">segment_index</td><td>The maximun is (adsp_para_len / mtusize + 1).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of setting ADSP paramters. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0x00</td><td>ADSP register was written successfully. </td></tr>
+    <tr><td class="paramname">others</td><td>ADSP register was failed to write. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga14ef21fc6a749dc41bf6a55d34f35e47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga14ef21fc6a749dc41bf6a55d34f35e47">&#9670;&nbsp;</a></span>anc_tool_enable_adaptive_anc()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t anc_tool_enable_adaptive_anc </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>enable</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>grp_idx</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set adaptive ANC enable or disable. Only provided for tool usage, cannot invoke in normal uasge. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">enable</td><td>1:enable, 0: disable.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of adaptive ANC enable or disable. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0x00</td><td>ANC/PALU register enabled or disabled successfully. </td></tr>
+    <tr><td class="paramname">others</td><td>ANC/PALU register was failed to enabled or disabled. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga6b2dbc7e9d7316e79474e13ef850e8e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6b2dbc7e9d7316e79474e13ef850e8e0">&#9670;&nbsp;</a></span>anc_tool_load_adsp_image()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t anc_tool_load_adsp_image </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>encode</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Start to load ADSP image. Only provided for tool usage, cannot invoke in normal uasge. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">encode</td><td>The config from tool to indicate which image should be loaded.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of starting to load ADSP image. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0x00</td><td>The ADSP image loading was started successfully. </td></tr>
+    <tr><td class="paramname">others</td><td>The ADSP image loading was failed to start. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gae8eaf3f7af566df3c43b2a9a67026d0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae8eaf3f7af566df3c43b2a9a67026d0e">&#9670;&nbsp;</a></span>anc_tool_get_adsp_image_load_done()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t anc_tool_get_adsp_image_load_done </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check ADSP image load done. Only provided for tool usage, cannot invoke in normal uasge. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">encode</td><td>The config from tool to indicate which image should be loaded</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of ADSP image loading. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0x01</td><td>The ADSP image was loaded successfully. </td></tr>
+    <tr><td class="paramname">0x00</td><td>The ADSP image wad failed to load. </td></tr>
   </table>
   </dd>
 </dl>

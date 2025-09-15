@@ -369,6 +369,10 @@ static void app_adp_plug_in_out_handle(T_ADP_PLUG_EVENT status)
                 {
                     loc_msg_handle = false;
                     APP_PRINT_INFO0("ignore adp out when get box zero volume");
+#if F_APP_ADP_CMD_SUPPORT
+                    app_adp_cmd_check_disable_charger_timer_stop();
+#endif
+                    app_adp_set_disallow_enable_charger(false);
                 }
             }
         }

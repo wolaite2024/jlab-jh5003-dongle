@@ -51,18 +51,26 @@
 #define USB_DS_SYNC_DATA_BUF_SIZE   1024
 #define USB_DS_TMP_BUF_SIZE         1920
 
-#define ASRC_DETECT_THRESHOLD       5
+#define ASRC_DETECT_THRESHOLD       1
 #define DS_PIPE_ASRC_RATIO          (500)
 
 #define FILL_TIME_DIFF_MIN   300
+#if (USB_AUDIO_DS_INTERVAL == 2)
+#define FILL_TIME_DIFF_MAX   2700
+#else
 #define FILL_TIME_DIFF_MAX   1700
+#endif
 #define FILL_TIME_DIFF_MIN2  500
+#if (USB_AUDIO_DS_INTERVAL == 2)
+#define FILL_TIME_DIFF_MAX2  3000
+#else
 #define FILL_TIME_DIFF_MAX2  2000
+#endif
 
-#define ASRC_TIME_DIFF_MIN   300
+#define ASRC_TIME_DIFF_MIN   500
 #define ASRC_TIME_DIFF_MAX   (ASRC_TIME_DIFF_MIN + PCM_DS_INTERVAL + 300)
 
-#define ASRC_TIME_DIFF_MIN2  300
+#define ASRC_TIME_DIFF_MIN2  500
 #define ASRC_TIME_DIFF_MAX2  (ASRC_TIME_DIFF_MIN2 + (2 * PCM_DS_INTERVAL) + 300)
 
 typedef enum
@@ -401,7 +409,7 @@ RAM_TEXT_SECTION static bool get_iso_time_info(T_APP_ISO_TIME_INFO *iso_time_inf
 }
 
 RAM_TEXT_SECTION void handle_iso_data_send(T_ISO_CHNL_INFO_DB *iso_elem, uint8_t *data,
-                                           uint16_t len, uint16_t pkt_seq)
+                                           uint16_t len, uint16_t pkt_seq, uint32_t time_diff_to_ap)
 {
     uint8_t chnl_cnt = 0;
     T_SYNCCLK_LATCH_INFO_TypeDef *p_latch_info = synclk_drv_time_get(SYNCCLK_ID4);
@@ -420,20 +428,35 @@ RAM_TEXT_SECTION void handle_iso_data_send(T_ISO_CHNL_INFO_DB *iso_elem, uint8_t
 
         if (chnl_cnt == 2)
         {
-            gap_iso_send_data(data, iso_elem->iso_conn_handle,
-                              len, true, timestamp, pkt_seq);
+            if (gap_iso_send_data(data, iso_elem->iso_conn_handle,
+                                  len, true, timestamp, pkt_seq) == GAP_CAUSE_SUCCESS)
+            {
+                APP_PRINT_TRACE4("handle_iso_data_send L/R: seq %d len %d time_diff_to_tp %d data %b",
+                                 pkt_seq, len / 2,
+                                 time_diff_to_ap, TRACE_BINARY(3, data));
+            }
         }
         else // chnl_cnt == 1
         {
             if (iso_elem->codec_data.audio_channel_allocation & (AUDIO_LOCATION_FL | AUDIO_LOCATION_SIL))
             {
-                gap_iso_send_data(data, iso_elem->iso_conn_handle,
-                                  len / 2, true, timestamp, pkt_seq);
+                if (gap_iso_send_data(data, iso_elem->iso_conn_handle,
+                                      len / 2, true, timestamp, pkt_seq) == GAP_CAUSE_SUCCESS)
+                {
+                    APP_PRINT_TRACE4("handle_iso_data_send L: seq %d len %d time_diff_to_tp %d data %b",
+                                     pkt_seq, len / 2,
+                                     time_diff_to_ap, TRACE_BINARY(3, data));
+                }
             }
             else
             {
-                gap_iso_send_data(data + (len / 2), iso_elem->iso_conn_handle,
-                                  len / 2, true, timestamp, pkt_seq);
+                if (gap_iso_send_data(data + (len / 2), iso_elem->iso_conn_handle,
+                                      len / 2, true, timestamp, pkt_seq) == GAP_CAUSE_SUCCESS)
+                {
+                    APP_PRINT_TRACE4("handle_iso_data_send R: seq %d len %d time_diff_to_tp %d data %b",
+                                     pkt_seq, len / 2,
+                                     time_diff_to_ap, TRACE_BINARY(3, data + len / 2));
+                }
             }
         }
     }
@@ -443,6 +466,7 @@ RAM_TEXT_SECTION static bool iso_need_to_resync(T_APP_ISO_TIME_INFO *iso_time_in
                                                 uint16_t curr_send_seq)
 {
     uint16_t last_send_seq = iso_time_info->last_send_seq;
+    uint16_t seq_diff;
 
     if (iso_time_info->next_ap > iso_time_info->last_ap)
     {
@@ -457,7 +481,9 @@ RAM_TEXT_SECTION static bool iso_need_to_resync(T_APP_ISO_TIME_INFO *iso_time_in
         }
     }
 
-    if (curr_send_seq != ((last_send_seq + 1) & 0xffff))
+    seq_diff = curr_send_seq - last_send_seq;
+
+    if (seq_diff != 1)
     {
         APP_PRINT_TRACE2("iso_need_to_resync: curr_send_seq 0x%x last_send_seq 0x%x", curr_send_seq,
                          last_send_seq);
@@ -513,7 +539,7 @@ static void downstream_asrc_state_machine(uint32_t time_diff_to_ap)
             {
                 detect_cnt++;
 
-                if (detect_cnt > ASRC_DETECT_THRESHOLD)
+                if (detect_cnt >= ASRC_DETECT_THRESHOLD)
                 {
                     new_state = ASRC_NORMAL_STATE;
                 }
@@ -540,7 +566,7 @@ static void downstream_asrc_state_machine(uint32_t time_diff_to_ap)
             {
                 detect_cnt++;
 
-                if (detect_cnt > ASRC_DETECT_THRESHOLD)
+                if (detect_cnt >= ASRC_DETECT_THRESHOLD)
                 {
                     new_state = ASRC_FAST_STATE;
                 }
@@ -566,7 +592,7 @@ static void downstream_asrc_state_machine(uint32_t time_diff_to_ap)
             {
                 detect_cnt++;
 
-                if (detect_cnt > ASRC_DETECT_THRESHOLD)
+                if (detect_cnt >= ASRC_DETECT_THRESHOLD)
                 {
                     new_state = ASRC_SLOW_STATE;
                 }
@@ -652,24 +678,22 @@ RAM_TEXT_SECTION static void send_audio_iso_data(uint8_t *data, uint16_t len)
     T_LE_AUDIO_CO_DB *p_audio_co_db = le_audio_get_audio_db();
     uint8_t curr_path_cnt = p_audio_co_db->input_path_queue.count;
     T_ISO_CHNL_INFO_DB *iso_elem = NULL;
-    bool resync_pkt = false;
-    bool send_iso = false;
     T_LEA_FRAME_DURATION_IDX time_diff_idx = get_lea_time_diff_idx();
     uint32_t min_fill_iso_time_diff = lea_iso_time_diff[time_diff_idx].time_diff_to_ap_fill_min;
     uint32_t max_fill_iso_time_diff = lea_iso_time_diff[time_diff_idx].time_diff_to_ap_fill_max;
-    uint32_t min_asrc_iso_time_diff = lea_iso_time_diff[time_diff_idx].time_diff_to_ap_asrc_min;
-    uint32_t max_asrc_iso_time_diff = lea_iso_time_diff[time_diff_idx].time_diff_to_ap_asrc_max;
     uint32_t time_diff_to_ap = 0;
+    static uint16_t send_iso_seq = 0;
+    uint8_t send_idx = 0;
+    bool resync_iso = false;
 
     for (i = 0; i < curr_path_cnt; i++)
     {
         T_APP_ISO_TIME_INFO iso_time_info;
-        uint16_t pkt_seq = 0;
         uint8_t failed_cause = 0;
 
         iso_elem = (T_ISO_CHNL_INFO_DB *)os_queue_peek(&p_audio_co_db->input_path_queue, i);
 
-        if (iso_elem)
+        if (iso_elem != NULL)
         {
             if (get_iso_time_info(&iso_time_info, iso_elem->iso_conn_handle) == false)
             {
@@ -685,40 +709,65 @@ RAM_TEXT_SECTION static void send_audio_iso_data(uint8_t *data, uint16_t len)
                     usb_ds_info.skip_pcm_interval = PCM_DS_INTERVAL;
                 }
             }
+            else if (iso_elem->first_iso_is_send)
+            {
+                if (iso_need_to_resync(&iso_time_info, send_iso_seq))
+                {
+                    APP_PRINT_TRACE1("iso resync: %d", i);
+
+                    resync_iso = true;
+                    failed_cause = 3;
+                    break;
+                }
+            }
 
             time_diff_to_ap = iso_time_info.time_diff_to_ap;
 
             if (failed_cause == 0)
             {
-                if (resync_pkt &&
-                    iso_elem->first_iso_is_send &&
-                    iso_need_to_resync(&iso_time_info, iso_elem->packet_seq_num))
-                {
-                    /* skip seq to trigger iso resync */
-                    iso_elem->packet_seq_num++;
-
-                    /* both cis data all need to check */
-                    resync_pkt = true;
-                }
-
-                pkt_seq = iso_elem->packet_seq_num;
-
-                handle_iso_data_send(iso_elem, data, len, pkt_seq);
-
-                send_iso = true;
-
-                iso_elem->first_iso_is_send = true;
+                send_idx |= (1 << i);
             }
-            iso_elem->packet_seq_num++;
-
-            APP_PRINT_TRACE6("send_audio_iso_data: cause %d seq %d len %d time_diff_to_ap %d (%d %d)",
-                             failed_cause, pkt_seq, len,
-                             time_diff_to_ap, min_asrc_iso_time_diff, max_asrc_iso_time_diff);
+            else
+            {
+                APP_PRINT_TRACE1("send_audio_iso_data failed: cause %d", failed_cause);
+            }
         }
     }
 
-    if (send_iso)
+    if (resync_iso)
     {
+        send_idx = 0;
+        send_iso_seq++;
+
+        for (i = 0; i < curr_path_cnt; i++)
+        {
+            iso_elem = (T_ISO_CHNL_INFO_DB *)os_queue_peek(&p_audio_co_db->input_path_queue, i);
+
+            if (iso_elem != NULL)
+            {
+                iso_elem->first_iso_is_send = false;
+            }
+        }
+    }
+
+    if (send_idx != 0)
+    {
+        for (i = 0; i < curr_path_cnt; i++)
+        {
+            if (send_idx & (1 << i))
+            {
+                iso_elem = (T_ISO_CHNL_INFO_DB *)os_queue_peek(&p_audio_co_db->input_path_queue, i);
+
+                if (iso_elem != NULL)
+                {
+                    handle_iso_data_send(iso_elem, data, len, send_iso_seq, time_diff_to_ap);
+                    iso_elem->first_iso_is_send = true;
+                }
+            }
+        }
+
+        send_iso_seq++;
+
         dongle_streaming_detect();
 #if F_APP_HANDLE_DS_PIPE_IN_ISR
         downstream_asrc_state_machine(time_diff_to_ap);
@@ -1094,13 +1143,19 @@ RAM_TEXT_SECTION bool app_usb_ds_rcv_pcm(uint8_t *data, uint16_t len, T_UAC_LABE
     uint16_t pre_pcm_size = ring_buffer_get_data_count(&pipe_info->pcm_ring_buf);
     static uint32_t pcm_cnt[USB_AUDIO_STREAM_NUM] = {0};
 
+    pcm_cnt[uac_label]++;
+
     if (app_pipe_is_ready(AUDIO_PIPE_DOWNSTREAM_UAC1) == false
 #if ENABLE_UAC2
         || app_pipe_is_ready(AUDIO_PIPE_DOWNSTREAM_UAC2) == false
 #endif
        )
     {
-        APP_PRINT_ERROR0("app_usb_ds_rcv_pcm: pipe not ready!");
+        if (pcm_cnt[uac_label] % 100 == 0)
+        {
+            APP_PRINT_ERROR0("app_usb_ds_rcv_pcm: pipe not ready!");
+        }
+
         return false;
     }
 
@@ -1151,8 +1206,6 @@ RAM_TEXT_SECTION bool app_usb_ds_rcv_pcm(uint8_t *data, uint16_t len, T_UAC_LABE
                          usb_ds_info.increase_usb_pcm_input, usb_ds_info.decrease_usb_pcm_input, len,
                          pre_pcm_size, ring_buffer_get_data_count(&pipe_info->pcm_ring_buf));
     }
-
-    pcm_cnt[uac_label]++;
 
 #if F_APP_HANDLE_DS_PIPE_IN_ISR
     app_usb_ds_pcm_encode();

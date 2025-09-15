@@ -417,7 +417,7 @@ void app_led_disable_non_repeat_mode(void)
 
     if (active_led_mode == LED_MODE_ENTER_PCBA_SHIPPING_MODE)
     {
-#if F_APP_ADP_CMD_SUPPORT
+#if F_APP_ADP_5V_CMD_SUPPORT || F_APP_ONE_WIRE_UART_SUPPORT
         app_adp_cmd_enter_pcba_shipping_mode();
 #endif
     }
@@ -879,7 +879,7 @@ static void app_led_set_mode(T_LED_MODE mode)
 
             if (mode == LED_MODE_ENTER_PCBA_SHIPPING_MODE)
             {
-#if F_APP_ADP_CMD_SUPPORT
+#if F_APP_ADP_5V_CMD_SUPPORT || F_APP_ONE_WIRE_UART_SUPPORT
                 app_adp_cmd_enter_pcba_shipping_mode();
 #endif
             }

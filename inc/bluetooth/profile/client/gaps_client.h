@@ -3,7 +3,7 @@
 *     Copyright(c) 2016, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * @file     gaps_client.h
-  * @brief    Head file for using GAP service client.
+  * @brief    Header file for using GAP service client.
   * @details  GAP service client data structs and external functions declaration.
   * @author   jane
   * @date     2016-02-18
@@ -27,11 +27,13 @@ extern "C" {
 /** @defgroup GAPS_Client GAP Service Client
   * @brief GAP service client
   * @details
-     Application shall register gaps client when initialization through @ref gaps_add_client function.
+     Applications shall register GAPS client during initialization through @ref gaps_add_client function.
 
-     Application can start discovery GAP service through @ref gaps_start_discovery function.
+     Applications can start discovering GAP service through @ref gaps_start_discovery function.
 
-     Application can read GAP service referenced values through @ref gaps_read function.
+     Applications can read GAP service referenced values through @ref gaps_read function.
+
+     Applications shall handle callback function registered by @ref gaps_add_client.
   * \code{.c}
     T_APP_RESULT app_client_callback(T_CLIENT_ID client_id, uint8_t conn_id, void *p_data)
     {
@@ -55,7 +57,7 @@ extern "C" {
   * @brief
   * @{
   */
-/** @brief  Define links number. range: 0-4 */
+/** @brief  Define links number. */
 #define GAPS_MAX_LINKS  4
 
 /** @brief  GAP service UUID */
@@ -72,13 +74,13 @@ extern "C" {
 /** @brief GAPS client handle type */
 typedef enum
 {
-    HDL_GAPS_SRV_START,                   //!< start handle of gap service
-    HDL_GAPS_SRV_END,                     //!< end handle of gap service
-    HDL_GAPS_DEVICE_NAME,                 //!< device name value handle
-    HDL_GAPS_APPEARANCE,                  //!< appearance value handle
-    HDL_GAPS_CENTRAL_ADDR_RESOLUTION,     //!< central address resolution value handle
-    HDL_GAPS_RESOLVABLE_PRIVATE_ADDR_ONLY,//!< resolvable private address only value handle
-    HDL_GAPS_CACHE_LEN                    //!< handle cache length
+    HDL_GAPS_SRV_START,                   //!< Start handle of GAP service.
+    HDL_GAPS_SRV_END,                     //!< End handle of GAP service.
+    HDL_GAPS_DEVICE_NAME,                 //!< Device name value handle.
+    HDL_GAPS_APPEARANCE,                  //!< Appearance value handle.
+    HDL_GAPS_CENTRAL_ADDR_RESOLUTION,     //!< Central address resolution value handle.
+    HDL_GAPS_RESOLVABLE_PRIVATE_ADDR_ONLY,//!< Resolvable private address only value handle.
+    HDL_GAPS_CACHE_LEN                    //!< Handle cache length.
 } T_GAP_CLIENT_HANDLE_TYPE;
 
 
@@ -115,7 +117,7 @@ typedef union
     uint8_t central_addr_res;
 } T_GAPS_READ_DATA;
 
-/** @brief GAPS client read data, used to inform app read response data */
+/** @brief GAPS client read data, used to inform APP read response data */
 typedef struct
 {
     T_GAPS_READ_TYPE type;
@@ -128,7 +130,7 @@ typedef struct
 typedef enum
 {
     GAPS_CLIENT_CB_TYPE_DISC_STATE,          //!< Discovery procedure state, done or pending.
-    GAPS_CLIENT_CB_TYPE_READ_RESULT,         //!< Read request's result data, responsed from server.
+    GAPS_CLIENT_CB_TYPE_READ_RESULT,         //!< Read request's result data, responded from server.
     GAPS_CLIENT_CB_TYPE_INVALID              //!< Invalid callback type, no practical usage.
 } T_GAPS_CLIENT_CB_TYPE;
 
@@ -149,23 +151,23 @@ typedef struct
 
 /** End of GAPS_Client_Exported_Types * @} */
 
-/** @defgroup GPAS_Client_Exported_Functions GAPS Client Exported Functions
+/** @defgroup GAPS_Client_Exported_Functions GAPS Client Exported Functions
   * @brief
   * @{
   */
 /**
-  * @brief  Add gap service client to application.
-  * @param[in]  app_cb pointer of app callback function to handle specific client module data.
-  * @param[in]  link_num initialize link num.
+  * @brief  Add GAP service client to application.
+  * @param[in]  app_cb Pointer of APP callback function to handle specific client module data.
+  * @param[in]  link_num Initialize link num.
   * @return Client ID of the specific client module.
-  * @retval 0xff failed.
-  * @retval other success.
+  * @retval 0xff Failed.
+  * @retval other Success.
   *
   * <b>Example usage</b>
   * \code{.c}
     void app_le_profile_init(void)
     {
-        client_init(1);
+        client_init(client_num);
         gaps_client_id  = gaps_add_client(app_client_callback, APP_MAX_LINKS);
     }
  * \endcode
@@ -174,17 +176,15 @@ T_CLIENT_ID gaps_add_client(P_FUN_GENERAL_APP_CB app_cb, uint8_t link_num);
 
 /**
   * @brief  Used by application, to start the discovery procedure of GAP service.
-  * @param[in]  conn_id connection ID.
-  * @retval true send request to upper stack success.
-  * @retval false send request to upper stack failed.
+  * @param[in]  conn_id Connection ID.
+  * @retval true Send request to Bluetooth Host success.
+  * @retval false Send request to Bluetooth Host failed.
   *
   * <b>Example usage</b>
   * \code{.c}
-    static T_USER_CMD_PARSE_RESULT cmd_gapdis(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        uint8_t conn_id = p_parse_value->dw_param[0];
         bool ret = gaps_start_discovery(conn_id);
-        ......
     }
  * \endcode
   */
@@ -192,19 +192,16 @@ bool gaps_start_discovery(uint8_t conn_id);
 
 /**
   * @brief  Used by application, to read data from server by using handles.
-  * @param[in]  conn_id connection ID.
-  * @param[in]  read_type one of characteristic that has the readable property.
-  * @retval true send request to upper stack success.
-  * @retval false send request to upper stack failed.
+  * @param[in]  conn_id Connection ID.
+  * @param[in]  read_type One of characteristic that has the readable property.
+  * @retval true Send request to Bluetooth Host success.
+  * @retval false Send request to Bluetooth Host failed.
   *
   * <b>Example usage</b>
   * \code{.c}
-    static T_USER_CMD_PARSE_RESULT cmd_gapread(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        uint8_t conn_id = p_parse_value->dw_param[0];
-        T_GAPS_READ_TYPE read_type = (T_GAPS_READ_TYPE)p_parse_value->dw_param[1];
         bool ret = gaps_read(conn_id, read_type);
-        ......
     }
  * \endcode
   */
@@ -212,21 +209,18 @@ bool gaps_read(uint8_t conn_id, T_GAPS_READ_TYPE read_type);
 
 /**
   * @brief  Used by application, to get handle cache.
-  * @param[in]  conn_id connection ID.
-  * @param[in,out]  p_hdl_cache pointer of the handle cache table
-  * @param[in]  len the length of handle cache table
-  * @retval true success.
-  * @retval false failed.
+  * @param[in]  conn_id Connection ID.
+  * @param[in,out]  p_hdl_cache Pointer of the handle cache table.
+  * @param[in]  len The length of handle cache table.
+  * @retval true Success.
+  * @retval false Failed.
   *
   * <b>Example usage</b>
   * \code{.c}
-    static T_USER_CMD_PARSE_RESULT cmd_gaphdl(T_USER_CMD_PARSED_VALUE *p_parse_value)
+    void test(void)
     {
-        uint8_t conn_id = p_parse_value->dw_param[0];
         uint16_t hdl_cache[HDL_GAPS_CACHE_LEN];
-        uint8_t hdl_idx;
         bool ret = gaps_get_hdl_cache(conn_id, hdl_cache, sizeof(uint16_t) * HDL_GAPS_CACHE_LEN);
-        ......
     }
  * \endcode
   */
@@ -234,15 +228,15 @@ bool gaps_get_hdl_cache(uint8_t conn_id, uint16_t *p_hdl_cache, uint8_t len);
 
 /**
   * @brief  Used by application, to set handle cache.
-  * @param[in]  conn_id connection ID.
-  * @param[in]  p_hdl_cache pointer of the handle cache table
-  * @param[in]  len the length of handle cache table
-  * @retval true success.
-  * @retval false failed.
+  * @param[in]  conn_id Connection ID.
+  * @param[in]  p_hdl_cache Pointer of the handle cache table.
+  * @param[in]  len The length of handle cache table.
+  * @retval true Success.
+  * @retval false Failed.
   *
   * <b>Example usage</b>
   * \code{.c}
-    void app_discov_services(uint8_t conn_id, bool start)
+    void test(void)
     {
         ......
         if (app_srvs_table.srv_found_flags & APP_DISCOV_GAPS_FLAG)
@@ -257,10 +251,10 @@ bool gaps_set_hdl_cache(uint8_t conn_id, uint16_t *p_hdl_cache, uint8_t len);
 
 /**
   * @brief  Used by application, to check Resolvable Private Address Only Characteristics whether existing.
-  * @param[in]  conn_id connection ID.
-  * @param[in,out]  p_is_exist whether existing
-  * @retval true success.
-  * @retval false failed.
+  * @param[in]  conn_id Connection ID.
+  * @param[in,out]  p_is_exist Whether existing.
+  * @retval true Success.
+  * @retval false Failed.
   */
 bool gaps_check_resolvable_private_addr_only_char(uint8_t conn_id, bool *p_is_exist);
 

@@ -1,6 +1,5 @@
-#if F_APP_ADP_CMD_SUPPORT
+#if F_APP_ADP_5V_CMD_SUPPORT || F_APP_ONE_WIRE_UART_SUPPORT
 #include <stdlib.h>
-#include <string.h>
 #include "trace.h"
 #include "rtl876x_pinmux.h"
 #include "system_status_api.h"
@@ -42,13 +41,6 @@
 #include "app_data_capture.h"
 #endif
 
-#define USB_STR_WAIT_1_TIM_CNT 1
-#define USB_STR_WAIT_0_TIM_CNT 0
-
-// Guard BIT, now we just use(6 bits), Spec define 8 bits.
-#define GUARD_BIT 0x3F
-
-#define ADP_FACTORY_RESET_LINK_DIS_TIMEOUT_MS           1500
 #define ADP_FACTORY_RESET_LINK_DIS_HEADSET_BROADCAST_MS 200
 #define ADP_CLOSE_CASE_TIMEOUT_MS                       3000
 #define ADP_DISABLE_CHARGER_LED_MS                      3000
@@ -56,7 +48,6 @@
 #define ADP_CLOSE_CASE_TO_DISC_PHONE_LINK_MS            5000
 #define ADP_IN_CASE_AUTO_POWER_OFF_MS                   120000
 #define ADP_CHECK_CLOSE_CASE_CMD_MS                     2000
-#define MAX_TIMES_CHECK_B2B_CONNECTED_STATE             8
 
 #define ADP_PAYLOAD_TYPE1   0x55    // For Normal Factory Reset and Enter Pairing mode
 #define ADP_PAYLOAD_TYPE2   0xAA    // For Enter DUT test mode
@@ -65,8 +56,17 @@
 #define ADP_PAYLOAD_TYPE5   0xA5    // For SaiYan mode
 #define ADP_PAYLOAD_TYPE6   0xA6    // For Captouch Calibration
 
-/*40Mhz 40 devide, set 1ms period=1000 */
-#define PERIOD_ADP_TIM      2000000 // 2s
+#if F_APP_ADP_5V_CMD_SUPPORT
+#define ADP_5V_CMD_RECEIVED_TIMEOUT         4000
+#endif
+
+#if F_APP_ONE_WIRE_UART_SUPPORT
+#define ADP_ONE_WIRE_CMD_RECEIVED_TIMEOUT   4000
+#endif
+
+#if F_APP_OTA_TOOLING_SUPPORT
+#define ADP_SPECIAL_CMD_RECEVIED_TIMEOUT    3000
+#endif
 
 /**
  * @brief ADAPTOR DET to APP cmd
@@ -106,32 +106,6 @@ typedef enum
     APP_TIMER_OTA_TOOLING_DELAY_START,
 } T_APP_ADP_CMD_TIMER;
 
-typedef struct
-{
-    uint32_t stop_bit: 1;
-    uint32_t parity_bit: 1;
-    uint32_t cmd_index: 6;
-    uint32_t start_bit: 1;
-    uint32_t reserved_bit: 23;
-} T_APP_ADP_CMDPACK09;
-
-typedef struct
-{
-    uint32_t stop_bit: 1;
-    uint32_t parity_bit: 1;
-    uint32_t payload: 8;
-    uint32_t cmd_index: 4;
-    uint32_t start_bit: 1;
-    uint32_t reserved_bit: 17;
-} T_APP_ADP_CMDPACK15;
-
-typedef union
-{
-    uint32_t bit_data;
-    T_APP_ADP_CMDPACK09 cmdpack09;
-    T_APP_ADP_CMDPACK15 cmdpack15;
-} T_APP_ADP_CMD_DECODE;
-
 static bool out_case_power_on_led_en = false;
 static bool in_case_is_power_off = false;
 
@@ -160,6 +134,27 @@ static bool case_batt_pre_updated = false;
 
 static void app_adp_cmd_linkback_b2s_when_open_case(void);
 static void app_adp_cmd_ota_tooling(uint8_t payload);
+static void app_adp_cmd_received_timer_start(uint32_t timeout_us);
+
+bool app_adp_cmd_case_bat_check(uint8_t *bat_in, uint8_t *bat_out)
+{
+    bool is_valid = false;
+
+    APP_PRINT_TRACE2("app_adp_cmd_case_bat_check: bat_in 0x%02x, bat_out 0x%02x",
+                     *bat_in, *bat_out);
+
+    if ((*bat_in & 0x7f) > 100)//invalid battery level
+    {
+        *bat_out = *bat_in & 0x80;
+    }
+    else
+    {
+        *bat_out = *bat_in;
+        is_valid = true;
+    }
+
+    return is_valid;
+}
 
 static void app_adp_cmd_case_battery(uint8_t battery)
 {
@@ -207,26 +202,6 @@ static void app_adp_cmd_case_battery(uint8_t battery)
     }
 }
 
-bool app_adp_cmd_case_bat_check(uint8_t *bat_in, uint8_t *bat_out)
-{
-    bool is_valid = false;
-
-    APP_PRINT_TRACE2("app_adp_cmd_case_bat_check: bat_in 0x%02x, bat_out 0x%02x",
-                     *bat_in, *bat_out);
-
-    if ((*bat_in & 0x7f) > 100)//invalid battery level
-    {
-        *bat_out = *bat_in & 0x80;
-    }
-    else
-    {
-        *bat_out = *bat_in;
-        is_valid = true;
-    }
-
-    return is_valid;
-}
-
 static void app_adp_cmd_power_on_handle(void)
 {
     app_db.power_on_by_cmd = true;
@@ -257,12 +232,6 @@ static void app_adp_cmd_power_on_handle(void)
     }
 
     app_loc_mgr_state_machine(EVENT_OPEN_CASE, 0, CAUSE_ACTION_NON);
-}
-
-void app_adp_cmd_clear_pending(void)
-{
-    adp_cmd_pending = AD2B_CMD_NONE;
-    adp_payload_pending = 0;
 }
 
 void app_adp_cmd_delay_charger_enable(void)
@@ -536,200 +505,204 @@ static void app_adp_cmd_exec(uint8_t cmd, uint8_t payload)
         app_auto_power_off_enable(AUTO_POWER_OFF_MASK_IN_BOX, app_cfg_const.timer_auto_power_off);
     }
 
-    if (app_cfg_const.enable_rtk_charging_box)
+    switch (cmd)
     {
-        switch (cmd)
+    case AD2B_CMD_FACTORY_RESET:
         {
-        case AD2B_CMD_FACTORY_RESET:
-            {
-                uint16_t link_dis_delay = 0;
+            uint16_t link_dis_delay = 0;
 
-                if (app_cfg_nv.adp_factory_reset_power_on != 0)
-                {
-                    APP_PRINT_INFO0("app_adp_cmd_exec power on by factory reset,ignore");
-                    break;
-                }
+            if (app_cfg_nv.adp_factory_reset_power_on != 0)
+            {
+                APP_PRINT_INFO0("app_adp_cmd_exec power on by factory reset,ignore");
+                break;
+            }
 
 #if F_APP_DURIAN_SUPPORT
-                app_durian_adv_factory_reset();
+            app_durian_adv_factory_reset();
 #endif
 
-                link_dis_delay = ADP_FACTORY_RESET_LINK_DIS_HEADSET_BROADCAST_MS;
+            link_dis_delay = ADP_FACTORY_RESET_LINK_DIS_HEADSET_BROADCAST_MS;
 
-                if (payload == ADP_PAYLOAD_TYPE1)
-                {
-                    app_db.disallow_charging_led = 0;
-                    app_stop_timer(&timer_idx_disallow_charger_led);
-                    app_adp_cmd_factory_reset_link_dis(link_dis_delay);
-                }
-                else if (payload == ADP_PAYLOAD_TYPE2)
-                {
-                    app_cfg_nv.adp_factory_reset_power_on = 1;
-
-                    app_mmi_handle_action(MMI_DEV_PHONE_RECORD_RESET);
-                }
-            }
-            break;
-
-        case AD2B_CMD_OPEN_CASE:
+            if (payload == ADP_PAYLOAD_TYPE1)
             {
-                if (app_cfg_const.smart_charger_box_cmd_set == CHARGER_BOX_CMD_SET_15BITS)
-                {
-                    app_adp_cmd_case_battery(payload);
-                }
+                app_db.disallow_charging_led = 0;
+                app_stop_timer(&timer_idx_disallow_charger_led);
+                app_adp_cmd_factory_reset_link_dis(link_dis_delay);
+            }
+            else if (payload == ADP_PAYLOAD_TYPE2)
+            {
+                app_cfg_nv.adp_factory_reset_power_on = 1;
+
+                app_mmi_handle_action(MMI_DEV_PHONE_RECORD_RESET);
+            }
+        }
+        break;
+
+    case AD2B_CMD_OPEN_CASE:
+        {
+            app_adp_cmd_case_battery(payload);
 
 #if LOCAL_PLAYBACK_FEATURE_SUPPORT
-                usb_stop(NULL);
-                audio_fs_update(AD2B_CMD_OPEN_CASE);
-                app_dlps_enable(APP_DLPS_ENTER_CHECK_USB);
+            usb_stop(NULL);
+            audio_fs_update(AD2B_CMD_OPEN_CASE);
+            app_dlps_enable(APP_DLPS_ENTER_CHECK_USB);
 #endif
 
-                app_adp_cmd_open_case_start();
+            app_adp_cmd_open_case_start();
 #if CONFIG_REALTEK_GFPS_FEATURE_SUPPORT
-                if (extend_app_cfg_const.gfps_support)
-                {
-                    app_gfps_handle_case_status(true);
-                }
+            if (extend_app_cfg_const.gfps_support)
+            {
+                app_gfps_handle_case_status(true);
+            }
 #endif
 #if F_APP_DURIAN_SUPPORT
-                if (app_db.bt_is_ready && !app_cfg_nv.power_on_cause_cmd)
-                {
-                    app_durian_adv_open_case();
-                }
+            if (app_db.bt_is_ready && !app_cfg_nv.power_on_cause_cmd)
+            {
+                app_durian_adv_open_case();
+            }
 #endif
-            }
-            break;
+        }
+        break;
 
-        case AD2B_CMD_CLOSE_CASE:
-            {
-                app_adp_cmd_close_case_start();
-                app_adp_cmd_other_feature_handle_when_close_case();
-            }
-            break;
+    case AD2B_CMD_CLOSE_CASE:
+        {
+            app_adp_cmd_close_case_start();
+            app_adp_cmd_other_feature_handle_when_close_case();
+        }
+        break;
 
-        case AD2B_CMD_ENTER_PAIRING:
+    case AD2B_CMD_ENTER_PAIRING:
+        {
+            if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_SECONDARY &&
+                app_cfg_nv.first_engaged)
             {
-                if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_SECONDARY &&
-                    app_cfg_nv.first_engaged)
+                if (app_db.device_state == APP_DEVICE_STATE_OFF)
                 {
-                    if (app_db.device_state == APP_DEVICE_STATE_OFF)
-                    {
-                        sys_mgr_power_on();
-                    }
+                    sys_mgr_power_on();
                 }
-                else
-                {
+            }
+            else
+            {
 #if F_APP_DURIAN_SUPPORT
-                    app_durian_adv_enter_pairing();
+                app_durian_adv_enter_pairing();
 #else
-                    app_mmi_handle_action(MMI_DEV_FORCE_ENTER_PAIRING_MODE);
+                app_mmi_handle_action(MMI_DEV_FORCE_ENTER_PAIRING_MODE);
 #endif
-                }
             }
-            break;
+        }
+        break;
 
-        case AD2B_CMD_ENTER_DUT_MODE:
+    case AD2B_CMD_ENTER_DUT_MODE:
+        {
+            if (payload == ADP_PAYLOAD_TYPE2)
             {
-                if (payload == ADP_PAYLOAD_TYPE2)
+                if (app_db.device_state == APP_DEVICE_STATE_ON)
                 {
-                    if (app_db.device_state == APP_DEVICE_STATE_ON)
-                    {
-                        app_db.ad2b_enter_dut_mode = true;
-                        app_mmi_handle_action(MMI_DUT_TEST_MODE);
-                    }
-                    else
-                    {
-                        app_cfg_nv.trigger_dut_mode_from_power_off = 1;
-                        app_cfg_store(&app_cfg_nv.eq_idx_gaming_mode_record, 4);
-
-                        app_mmi_handle_action(MMI_DEV_ENTER_PAIRING_MODE);
-
-                        app_start_timer(&timer_idx_power_off_enter_dut_mode, "power_off_enter_dut_mode",
-                                        app_adp_cmd_timer_id, APP_TIMER_POWE_OFF_ENTER_DUT_MODE, 0, false,
-                                        POWER_OFF_ENTER_DUT_MODE_INTERVAL);
-                    }
-                }
-                else if (payload == ADP_PAYLOAD_TYPE3)
-                {
-                    app_led_change_mode(LED_MODE_ENTER_PCBA_SHIPPING_MODE, true, false);
-                }
-#if F_APP_CAP_TOUCH_SUPPORT
-                else if (payload == ADP_PAYLOAD_TYPE6)
-                {
-                    app_cap_touch_calibration_start();
-                }
-#endif
-#if F_APP_DURIAN_SUPPORT
-                else if (payload == ADP_PAYLOAD_TYPE4)
-                {
-                    power_mode_set(POWER_SHIP_MODE);
+                    app_db.ad2b_enter_dut_mode = true;
+                    app_mmi_handle_action(MMI_DUT_TEST_MODE);
                 }
                 else
                 {
-                    app_durian_cfg_switch_one_key_trig(payload);
-                }
-#endif
-            }
-            break;
+                    app_cfg_nv.trigger_dut_mode_from_power_off = 1;
+                    app_cfg_store(&app_cfg_nv.eq_idx_gaming_mode_record, 4);
 
-        case AD2B_CMD_USB_STATE:
-            {
-                app_adp_cmd_parse_handle_usb_cmd(cmd, payload);
+                    app_mmi_handle_action(MMI_DEV_ENTER_PAIRING_MODE);
+
+                    app_start_timer(&timer_idx_power_off_enter_dut_mode, "power_off_enter_dut_mode",
+                                    app_adp_cmd_timer_id, APP_TIMER_POWE_OFF_ENTER_DUT_MODE, 0, false,
+                                    POWER_OFF_ENTER_DUT_MODE_INTERVAL);
+                }
             }
-            break;
+            else if (payload == ADP_PAYLOAD_TYPE3)
+            {
+                app_led_change_mode(LED_MODE_ENTER_PCBA_SHIPPING_MODE, true, false);
+            }
+#if F_APP_CAP_TOUCH_SUPPORT
+            else if (payload == ADP_PAYLOAD_TYPE6)
+            {
+                app_cap_touch_calibration_start();
+            }
+#endif
+#if F_APP_DURIAN_SUPPORT
+            else if (payload == ADP_PAYLOAD_TYPE4)
+            {
+                power_mode_set(POWER_SHIP_MODE);
+            }
+            else
+            {
+                app_durian_cfg_switch_one_key_trig(payload);
+            }
+#endif
+        }
+        break;
+
+    case AD2B_CMD_CASE_CHARGER:
+        {
+            app_adp_cmd_case_battery(payload);
+
+#if CONFIG_REALTEK_GFPS_FEATURE_SUPPORT
+            if (extend_app_cfg_const.gfps_support || (app_cfg_const.supported_profile_mask & GFPS_PROFILE_MASK))
+            {
+                app_gfps_battery_info_report(GFPS_BATTERY_REPORT_CASE_BATTERY_CHANGE);
+            }
+#endif
+        }
+        break;
+
+    case AD2B_CMD_ENTER_MP_MODE:
+        {
+            switch_into_hci_mode();
+        }
+        break;
+
+
+#if F_APP_ADP_5V_CMD_SUPPORT
+    case AD2B_CMD_USB_STATE:
+        {
+            app_adp_cmd_parse_handle_usb_cmd(cmd, payload);
+        }
+        break;
+#endif
 
 #if F_APP_SAIYAN_MODE
-        case AD2B_CMD_SAIYAN:
-            {
-                app_data_capture_saiyan_mode_ctl(1, payload);
-            }
-            break;
-#endif
-
-        case AD2B_CMD_CASE_CHARGER:
-            {
-                if (app_cfg_const.smart_charger_box_cmd_set == CHARGER_BOX_CMD_SET_15BITS)
-                {
-                    app_adp_cmd_case_battery(payload);
-#if CONFIG_REALTEK_GFPS_FEATURE_SUPPORT
-                    if (extend_app_cfg_const.gfps_support || (app_cfg_const.supported_profile_mask & GFPS_PROFILE_MASK))
-                    {
-                        app_gfps_battery_info_report(GFPS_BATTERY_REPORT_CASE_BATTERY_CHANGE);
-                    }
-#endif
-                }
-            }
-            break;
-
-        case AD2B_CMD_ENTER_MP_MODE:
-            {
-                switch_into_hci_mode();
-            }
-            break;
-
-        default:
-            break;
+    case AD2B_CMD_SAIYAN:
+        {
+            app_data_capture_saiyan_mode_ctl(1, payload);
         }
-    }
+        break;
+#endif
 
 #if F_APP_OTA_TOOLING_SUPPORT
-    if (cmd == AD2B_CMD_OTA_TOOLING)
-    {
-        app_adp_cmd_ota_tooling(payload);
-    }
+    case AD2B_CMD_OTA_TOOLING:
+        {
+            app_adp_cmd_ota_tooling(payload);
+        }
+        break;
 #endif
+
+    default:
+        break;
+    }
+}
+
+#if F_APP_ADP_5V_CMD_SUPPORT
+void app_adp_cmd_clear_pending(void)
+{
+    adp_cmd_pending = AD2B_CMD_NONE;
+    adp_payload_pending = 0;
 }
 
 void app_adp_cmd_pending_exec(void)
 {
     if (adp_cmd_pending != AD2B_CMD_NONE)
     {
-        APP_PRINT_INFO2("app_adp_cmd_pending_exec: cmd 0x%x payload 0x%x", adp_cmd_pending,
-                        adp_payload_pending);
+        APP_PRINT_INFO2("app_adp_cmd_pending_exec: cmd 0x%x payload 0x%x",
+                        adp_cmd_pending, adp_payload_pending);
         app_adp_cmd_exec(adp_cmd_pending, adp_payload_pending);
         app_adp_cmd_clear_pending();
     }
 }
+#endif
 
 #if F_APP_OTA_TOOLING_SUPPORT
 static bool app_adp_cmd_ota_tooling_check(uint8_t payload)
@@ -784,9 +757,7 @@ static void app_adp_cmd_ota_tooling(uint8_t payload)
 
     if (app_db.executing_charger_box_special_cmd == 0)
     {
-#if F_APP_OTA_TOOLING_SUPPORT
         app_cmd_stop_ota_parking_power_off();
-#endif
 
         app_db.executing_charger_box_special_cmd = app_cfg_nv.jig_subcmd;
         app_db.jig_subcmd = payload >> 5 & 0x07;
@@ -817,9 +788,7 @@ void app_adp_cmd_special_cmd_handle(uint8_t jig_subcmd, uint8_t jig_dongle_id)
 
     adp_cmd_exec = AD2B_CMD_OTA_TOOLING;
 
-    app_start_timer(&timer_idx_adp_cmd_received, "adp_cmd_received",
-                    app_adp_cmd_timer_id, APP_TIMER_ADP_CMD_RECEIVED, 0, false,
-                    3000);
+    app_adp_cmd_received_timer_start(ADP_SPECIAL_CMD_RECEVIED_TIMEOUT);
 
     switch (jig_subcmd)
     {
@@ -906,10 +875,7 @@ static void app_adp_cmd_dm_cback(T_SYS_EVENT event_type, void *event_buf, uint16
                 APP_PRINT_INFO1("app_adp_cmd_dm_cback: disallow_charging_led = %d", app_db.disallow_charging_led);
             }
 
-            if (app_cfg_const.enable_rtk_charging_box)
-            {
-                app_adp_cmd_case_bat_check(&app_db.case_battery, &app_cfg_nv.case_battery);
-            }
+            app_adp_cmd_case_bat_check(&app_db.case_battery, &app_cfg_nv.case_battery);
         }
         break;
 
@@ -926,10 +892,7 @@ static void app_adp_cmd_dm_cback(T_SYS_EVENT event_type, void *event_buf, uint16
                 app_db.disallow_charging_led = 1;
             }
 
-            if (app_cfg_const.enable_rtk_charging_box)
-            {
-                app_adp_cmd_case_bat_check(&app_cfg_nv.case_battery, &app_db.case_battery);
-            }
+            app_adp_cmd_case_bat_check(&app_cfg_nv.case_battery, &app_db.case_battery);
         }
         break;
 
@@ -1005,6 +968,11 @@ void app_adp_cmd_factory_reset_link_dis(uint16_t delay)
                     delay);
 }
 
+void app_adp_cmd_check_disable_charger_timer_stop(void)
+{
+    app_stop_timer(&timer_idx_check_adp_cmd_disable_charger);
+}
+
 static void app_adp_cmd_timeout_cb(uint8_t timer_evt, uint16_t param)
 {
     APP_PRINT_TRACE2("app_adp_timeout_cb: timer_evt 0x%02x, param %d", timer_evt, param);
@@ -1029,7 +997,10 @@ static void app_adp_cmd_timeout_cb(uint8_t timer_evt, uint16_t param)
         {
             app_stop_timer(&timer_idx_adp_cmd_received);
             adp_cmd_exec = AD2B_CMD_NONE;
+
+#if F_APP_ADP_5V_CMD_SUPPORT
             app_adp_cmd_clear_pending();
+#endif
         }
         break;
 
@@ -1133,6 +1104,7 @@ static void app_adp_cmd_timeout_cb(uint8_t timer_evt, uint16_t param)
             app_adp_set_disallow_enable_charger(false);
 
             if ((app_db.local_loc == BUD_LOC_IN_CASE) &&
+                (app_adp_get_plug_state() == ADAPTOR_PLUG) &&
                 ((app_cfg_nv.case_battery & 0x7F) > app_cfg_const.smart_charger_disable_threshold))
             {
                 app_adp_smart_box_charger_control(true);
@@ -1324,148 +1296,6 @@ static void app_adp_cmd_bud_loc_event_cback(uint32_t event, void *msg)
 }
 #endif
 
-uint8_t app_adp_cmd_parity_count(uint32_t data, uint8_t bit_num)
-{
-    uint8_t parity_count = 0;
-
-    for (int i = 0; i < bit_num; i++)
-    {
-        if (((data >> i) & BIT(0)) == 1)
-        {
-            parity_count++;
-        }
-    }
-    return parity_count;
-}
-
-/**
-* @brief: Process bit data, currently we use odd parity check
-*
-*   Payload of CMD_9
-*   |bit 8  |bit 7  |bit 6  |bit 5  |bit 4  |bit 3  |bit 2  |bit 1  |bit 0  |
-*   |START  |                     Data(6bits)               |PARITY |END    |
-*
-*   Payload of CMD_15
-*   |bit 14 |bit 13 |               ~               |bit 2  |bit 1  |bit 0  |
-*   |START  |                     Data(12bits)              |PARITY |END    |
-*
-*/
-static bool app_adp_cmd_process(uint32_t cmd_data, uint8_t *p_cmd_index, uint8_t *p_cmd_payload)
-{
-    uint8_t cmd_index = 0;
-    uint8_t payload = 0;
-    uint8_t cmd_parity_cnt = 0;
-    uint32_t cmd_guard = 0;
-    bool ret = false;
-
-    /* Handle adp_dat to app cmd here. */
-    switch (app_cfg_const.smart_charger_box_cmd_set)
-    {
-    case CHARGER_BOX_CMD_SET_9BITS:
-        {
-            T_APP_ADP_CMDPACK09 cmd_pack09;
-
-            memcpy(&cmd_pack09, &cmd_data, sizeof(uint32_t));
-
-            cmd_index = cmd_pack09.cmd_index;
-            payload = 0;
-            cmd_parity_cnt += app_adp_cmd_parity_count(cmd_index, 6);
-            cmd_parity_cnt += cmd_pack09.parity_bit;
-
-            if ((cmd_pack09.start_bit == 0) && (cmd_pack09.stop_bit == 0) &&
-                (app_adp_cmd_parity_count(cmd_parity_cnt, 1) == 1))
-            {
-                cmd_guard = (cmd_data >> 9) & GUARD_BIT;
-
-                if (cmd_guard == GUARD_BIT)
-                {
-                    *p_cmd_index = cmd_pack09.cmd_index;
-                    *p_cmd_payload = payload;
-                    ret = true;
-                }
-            }
-        }
-        break;
-
-    case CHARGER_BOX_CMD_SET_15BITS:
-        {
-            T_APP_ADP_CMDPACK15 cmd_pack15;
-
-            memcpy(&cmd_pack15, &cmd_data, sizeof(uint32_t));
-            APP_PRINT_INFO5("app_adp_cmd_process: cmd_pack15: 0x%x, 0x%x, 0x%x, 0x%x, 0x%x",
-                            cmd_pack15.start_bit, cmd_pack15.cmd_index, cmd_pack15.payload,
-                            cmd_pack15.parity_bit, cmd_pack15.stop_bit);
-
-            cmd_index = cmd_pack15.cmd_index;
-            payload = cmd_pack15.payload;
-            cmd_parity_cnt += app_adp_cmd_parity_count(cmd_index, 4);
-            cmd_parity_cnt += app_adp_cmd_parity_count(payload, 8);
-            cmd_parity_cnt += cmd_pack15.parity_bit;
-
-            if ((cmd_pack15.start_bit == 0) && (cmd_pack15.stop_bit == 0) &&
-                (app_adp_cmd_parity_count(cmd_parity_cnt, 1) == 1))
-            {
-                cmd_guard = (cmd_data >> 15) & GUARD_BIT;
-
-                if (cmd_guard == GUARD_BIT)
-                {
-                    *p_cmd_index = cmd_pack15.cmd_index;
-                    *p_cmd_payload = cmd_pack15.payload;
-                    ret = true;
-                }
-            }
-        }
-        break;
-
-    default:
-        break;
-    }
-
-    APP_PRINT_INFO6("app_adp_cmd_process: cmd_bits: 0x%x, cmd_data: 0x%x, cmd_guard: 0x%08x, cmd_index:0x%x payload: 0x%x, ret:%d",
-                    app_cfg_const.smart_charger_box_cmd_set, cmd_data, cmd_guard, *p_cmd_index, *p_cmd_payload, ret);
-
-    if (*p_cmd_index == 0xFF)
-    {
-        ret = false;
-    }
-
-    return ret;
-}
-
-static bool app_adp_cmd_check_payload_valid(uint8_t cmd_exec_index, uint8_t pay_load)
-{
-    bool ret = true;
-
-    if (app_cfg_const.smart_charger_box_cmd_set == CHARGER_BOX_CMD_SET_15BITS)
-    {
-        if ((cmd_exec_index == AD2B_CMD_FACTORY_RESET) || (cmd_exec_index == AD2B_CMD_ENTER_PAIRING))
-        {
-            if (pay_load != ADP_PAYLOAD_TYPE1 && pay_load != ADP_PAYLOAD_TYPE2)
-            {
-                ret = false;
-            }
-        }
-
-        if (cmd_exec_index == AD2B_CMD_ENTER_DUT_MODE)
-        {
-            if ((pay_load != ADP_PAYLOAD_TYPE2) && (pay_load != ADP_PAYLOAD_TYPE3)
-#if F_APP_DURIAN_SUPPORT
-                && (pay_load != ADP_PAYLOAD_AVP_OPEN) && (pay_load != ADP_PAYLOAD_AVP_CLOSE)
-                && (pay_load != ADP_PAYLOAD_TYPE4)
-#endif
-               )
-            {
-                ret = false;
-            }
-        }
-    }
-
-    APP_PRINT_TRACE3("app_adp_cmd_check_payload_valid: ret %d, cmd_index 0x%02x, payload 0x%02x",
-                     ret, cmd_exec_index, pay_load);
-
-    return ret;
-}
-
 static bool app_adp_cmd_pre_handle(uint32_t cmd_exec_index)
 {
     APP_PRINT_INFO4("app_adp_cmd_pre_handle: device_state %d, local_loc %d, adp_factory_reset_power_on %d, power_off_cause_cmd %d",
@@ -1524,11 +1354,11 @@ static void app_adp_cmd_disallow_charger_led_timer_start(void)
     }
 }
 
-static void app_adp_cmd_received_timer_start(void)
+static void app_adp_cmd_received_timer_start(uint32_t timeout_us)
 {
     app_start_timer(&timer_idx_adp_cmd_received, "adp_cmd_received",
                     app_adp_cmd_timer_id, APP_TIMER_ADP_CMD_RECEIVED, 0, false,
-                    4000);
+                    timeout_us);
 }
 
 #if F_APP_ONE_WIRE_UART_SUPPORT
@@ -1540,13 +1370,48 @@ void app_adp_one_wire_cmd_handle_msg(uint32_t cmd_exec_index, uint8_t pay_load)
     if (app_adp_cmd_pre_handle(cmd_exec_index))
     {
         app_adp_cmd_disallow_charger_led_timer_start();
-        app_adp_cmd_received_timer_start();
+        app_adp_cmd_received_timer_start(ADP_ONE_WIRE_CMD_RECEIVED_TIMEOUT);
 
         /*exe cmd if arrive here*/
         app_adp_cmd_exec(cmd_exec_index, pay_load);
     }
 }
 #endif
+
+#if F_APP_ADP_5V_CMD_SUPPORT
+bool app_adp_cmd_check_payload_valid(uint8_t cmd_exec_index, uint8_t pay_load)
+{
+    bool ret = true;
+
+    if (app_cfg_const.smart_charger_box_cmd_set == CHARGER_BOX_CMD_SET_15BITS)
+    {
+        if ((cmd_exec_index == AD2B_CMD_FACTORY_RESET) || (cmd_exec_index == AD2B_CMD_ENTER_PAIRING))
+        {
+            if (pay_load != ADP_PAYLOAD_TYPE1 && pay_load != ADP_PAYLOAD_TYPE2)
+            {
+                ret = false;
+            }
+        }
+
+        if (cmd_exec_index == AD2B_CMD_ENTER_DUT_MODE)
+        {
+            if ((pay_load != ADP_PAYLOAD_TYPE2) && (pay_load != ADP_PAYLOAD_TYPE3)
+#if F_APP_DURIAN_SUPPORT
+                && (pay_load != ADP_PAYLOAD_AVP_OPEN) && (pay_load != ADP_PAYLOAD_AVP_CLOSE)
+                && (pay_load != ADP_PAYLOAD_TYPE4)
+#endif
+               )
+            {
+                ret = false;
+            }
+        }
+    }
+
+    APP_PRINT_TRACE3("app_adp_cmd_check_payload_valid: ret %d, cmd_index 0x%02x, payload 0x%02x",
+                     ret, cmd_exec_index, pay_load);
+
+    return ret;
+}
 
 /**
     * @brief  App handle rx data message from peripherals of adp_det.
@@ -1559,7 +1424,7 @@ static void app_adp_cmd_handle_msg(uint32_t cmd_data)
     uint8_t pay_load = 0;
 
     /* Handle adp_dat to app cmd here. */
-    if (app_adp_cmd_process(cmd_data, &cmd_exec_index, &pay_load) == false ||
+    if (app_adp_cmd_parse_process(cmd_data, &cmd_exec_index, &pay_load) == false ||
         app_adp_cmd_check_payload_valid(cmd_exec_index, pay_load) == false)
     {
         APP_PRINT_WARN2("app_adp_cmd_handle_msg: rec invalid cmd 0x%0x, pay_load 0x%0x", cmd_exec_index,
@@ -1573,7 +1438,7 @@ static void app_adp_cmd_handle_msg(uint32_t cmd_data)
     if (app_adp_cmd_pre_handle(cmd_exec_index))
     {
         app_adp_cmd_disallow_charger_led_timer_start();
-        app_adp_cmd_received_timer_start();
+        app_adp_cmd_received_timer_start(ADP_5V_CMD_RECEIVED_TIMEOUT);
 
         if ((app_db.local_loc != BUD_LOC_IN_CASE) && (cmd_exec_index != AD2B_CMD_OPEN_CASE))
         {
@@ -1609,6 +1474,7 @@ static void app_adp_cmd_handle_msg(uint32_t cmd_data)
         app_adp_cmd_exec(cmd_exec_index, pay_load);
     }
 }
+#endif
 
 static void app_adp_cmd_device_event_cback(uint32_t event, void *msg)
 {
@@ -1647,10 +1513,7 @@ static void app_adp_cmd_device_event_cback(uint32_t event, void *msg)
                 }
             }
 
-            if (app_cfg_const.enable_rtk_charging_box)
-            {
-                app_adp_cmd_case_bat_check(&app_cfg_nv.case_battery, &app_db.case_battery);
-            }
+            app_adp_cmd_case_bat_check(&app_cfg_nv.case_battery, &app_db.case_battery);
         }
         break;
 
@@ -1674,71 +1537,22 @@ bool app_adp_cmd_in_case_timeout(void)
 }
 
 /************************************ init *****************************************/
-static void app_adp_cmd_parse_para_init(void)
+void app_adp_cmd_init(void)
 {
-    uint8_t cmd_bit_num = 0;
-    uint8_t cmd_bit_length = 0;
+#if F_APP_ADP_5V_CMD_SUPPORT
+    app_adp_cmd_parse_init((P_ADP_CMD_RAW_DATA_PARSE_CBACK)app_adp_cmd_handle_msg);
+#endif
 
-    /* bit number */
-    if (app_cfg_const.smart_charger_box_cmd_set == CHARGER_BOX_CMD_SET_9BITS)
-    {
-        cmd_bit_num = 9;
-    }
-    else if (app_cfg_const.smart_charger_box_cmd_set == CHARGER_BOX_CMD_SET_15BITS)
-    {
-        cmd_bit_num = 15;
-    }
-
-    /* bit length */
-    if (app_cfg_const.smart_charger_box_bit_length == CHARGER_BOX_BIT_LENGTH_20MS)
-    {
-        cmd_bit_length = 20;
-    }
-    else if (app_cfg_const.smart_charger_box_bit_length == CHARGER_BOX_BIT_LENGTH_40MS)
-    {
-        cmd_bit_length = 40;
-    }
-    app_adp_cmd_parse_para_set(cmd_bit_num, cmd_bit_length, app_adp_cmd_handle_msg);
-}
-
-static bool app_adp_cmd_parse_enable(void)
-{
-    bool ret = false;
+    app_timer_reg_cb(app_adp_cmd_timeout_cb, &app_adp_cmd_timer_id);
 
     if (app_cfg_const.enable_rtk_charging_box)
     {
-        ret = true;
-    }
-    else
-    {
-#if F_APP_OTA_TOOLING_SUPPORT
-        ret = true;
+        sys_mgr_cback_register(app_adp_cmd_dm_cback);
+        app_ipc_subscribe(APP_DEVICE_IPC_TOPIC, app_adp_cmd_device_event_cback);
+
+#if F_APP_ERWS_SUPPORT
+        app_ipc_subscribe(BUD_LOCATION_IPC_TOPIC, app_adp_cmd_bud_loc_event_cback);
 #endif
-    }
-
-    return ret;
-}
-
-void app_adp_cmd_init(void)
-{
-    if (app_adp_cmd_parse_enable())
-    {
-        if (!app_cfg_const.one_wire_uart_support)
-        {
-            app_adp_cmd_parse_para_init();
-            app_adp_cmd_parse_init();
-        }
-
-        app_timer_reg_cb(app_adp_cmd_timeout_cb, &app_adp_cmd_timer_id);
-
-        if (app_cfg_const.enable_rtk_charging_box)
-        {
-            sys_mgr_cback_register(app_adp_cmd_dm_cback);
-            app_ipc_subscribe(APP_DEVICE_IPC_TOPIC, app_adp_cmd_device_event_cback);
-#if (F_APP_ERWS_SUPPORT == 1)
-            app_ipc_subscribe(BUD_LOCATION_IPC_TOPIC, app_adp_cmd_bud_loc_event_cback);
-#endif
-        }
     }
 }
 #endif

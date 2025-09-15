@@ -3,7 +3,7 @@
 *               Copyright(c) 2015, Realtek Semiconductor Corporation. All rights reserved.
 **********************************************************************************************************
 * @file     aes_cmac_api.c
-* @brief    This file provides aes cmac api wrapper for sdk customer.
+* @brief    This file provides aes cmac API wrapper for sdk customer.
 * @details
 * @author   jane_zhang
 * @date
@@ -22,27 +22,27 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-/** @defgroup  HAL_87x3e_AES_CMAC    AES CMAC
-    * @brief aes cmac api
+/** @defgroup  HAL_87x3E_AES_CMAC    AES CMAC
+    * @brief AES CMAC.
     * @{
     */
 /*============================================================================*
  *                              Variables
 *============================================================================*/
-/** @defgroup HAL_87x3e_AES_CMAC_Exported_Macros AES CMAC Exported Macros
+/** @defgroup HAL_87x3E_AES_CMAC_EXPORTED_MACROS AES CMAC Exported Macros
     * @brief
     * @{
     */
 #define AES_CMAC128_LSB_MSG_LEN_MAX (255)
 
-/** End of HAL_87x3e_AES_CMAC_Exported_Macros
+/** End of HAL_87x3E_AES_CMAC_EXPORTED_MACROS
     * @}
     */
 /*============================================================================*
  *                              Functions
 *============================================================================*/
 
-/** @defgroup HAL_87x3e_AES_CMAC_Exported_Functions AES CMAC Exported Functions
+/** @defgroup HAL_87x3E_AES_CMAC_EXPORTED_FUNCTIONS AES CMAC Exported Functions
     * @brief
     * @{
     */
@@ -50,31 +50,31 @@
 extern "C" {
 #endif
 /**
- * Implementation of aes_cmac_msb function.
+ * @brief Calculate the AES CMAC for the input data (MSB) with 128-bit key.
  *
- * \param key   aes cmac key value.
- * \param input pointer to the msb input data buffer.
- * \param length input data length.
- * \param mac   pointer to the msb output data buffer.
+ * @param[in] key    Specify the 128-bit AES CMAC key (MSB).
+ * @param[in] input  Specify the input data buffer (MSB).
+ * @param[in] length Specify the input data length.
+ * @param[out] mac   Specify the data buffer to store the CMAC result.
  *
- * @return aes cmac calculation results
- * @retval true      successful
- * @retval false     fail
+ * @return Whether the AES CMAC calculation is successful.
+ * @retval true      Success.
+ * @retval false     Fail.
  */
 bool aes_cmac128_msb(unsigned char *key, unsigned char *input, int length,
                      unsigned char *mac);
 
 /**
- * Implementation of aes_cmac_lsb function.
+ * @brief Calculate the AES CMAC for the input data (LSB) with 128-bit key.
  *
- * \param key   aes cmac key value.
- * \param input pointer to the lsb input data buffer.
- * \param length input data length,it should be less than AES_CMAC128_LSB_MSG_LEN_MAX.
- * \param mac   pointer to the lsb output data buffer.
+ * @param[in] key     Specify the 128-bit AES CMAC key (LSB).
+ * @param[in] msg     Specify the input data buffer (LSB).
+ * @param[in] msg_len Specify the input data length.It should be less than AES_CMAC128_LSB_MSG_LEN_MAX.
+ * @param[out] mac    Specify the data buffer to store the CMAC result.
  *
- * @return aes cmac calculation results
- * @retval true      successful
- * @retval false     fail
+ * @return Whether the AES CMAC calculation is successful.
+ * @retval true      Success.
+ * @retval false     Fail.
  */
 bool aes_cmac128_lsb(unsigned char key[16], unsigned char *msg,
                      int msg_len, unsigned char mac[16]);
@@ -82,6 +82,6 @@ bool aes_cmac128_lsb(unsigned char key[16], unsigned char *msg,
 #ifdef __cplusplus
 }
 #endif
-/** @} */ /* End of group HAL_87x3e_AES_CMAC_Exported_Functions */
-/** @} */ /* End of group HAL_87x3e_AES_CMAC */
+/** @} */ /* End of group HAL_87x3E_AES_CMAC_EXPORTED_FUNCTIONS */
+/** @} */ /* End of group HAL_87x3E_AES_CMAC */
 #endif

@@ -44,11 +44,11 @@ $(function() {
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">SLEEP_LED_InitTypeDef Struct Reference<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3d.html">rtl87x3d</a> &raquo; <a class="el" href="group__x3d___l_e_d.html">LED</a><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___h_a_l.html">Hal</a> &raquo; <a class="el" href="group___h_a_l__87x3e.html">rtl87x3e</a> &raquo;  &#124; <a class="el" href="group___h_a_l__87x3e___l_e_d.html">LED</a> &raquo; <a class="el" href="group___l_e_d___exported___types.html">LED Exported Types</a></div></div>  </div>
+<div class="title">SLEEP_LED_InitTypeDef Struct Reference<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3d.html">rtl87x3d</a> &raquo; <a class="el" href="group__x3d___l_e_d.html">LED</a> &raquo; <a class="el" href="group___s_l_e_e_p___l_e_d___exported___types.html">SLEEP LED Exported Types</a><a class="el" href="group__x3e___l_e_d.html">SLEEP LED</a> &raquo;  &#124; <a class="el" href="group__x3e___s_l_e_e_p___l_e_d___exported___types.html">SLEEP LED Exported Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>SleepLed initialize parameters.  
+<p>SLEEP LED initialize parameters.  
  <a href="struct_s_l_e_e_p___l_e_d___init_type_def.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="rtl87x3d_2io_2rtl876x__sleep__led_8h_source.html">rtl876x_sleep_led.h</a>&gt;</code></p>
@@ -77,8 +77,7 @@ Data Fields</h2></td></tr>
 <tr class="separator:a78e27876a51ccdb5fc15b4f6572c9e78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>SleepLed initialize parameters. </p>
-<p>SleepLed initialize parameters </p>
+<div class="textblock"><p>SLEEP LED initialize parameters. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a id="a37e90f5e3bd99fac2021fb3a326607d4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a37e90f5e3bd99fac2021fb3a326607d4">&#9670;&nbsp;</a></span>mode</h2>
@@ -91,7 +90,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the LED working mode. This parameter can be a value of <a class="el" href="group___l_e_d__mode.html">LED working mode</a> </p>
+<p>Specifies the LED working mode. This parameter can be a value of LED_mode.</p>
+<p>Specifies the SLEEP LED working mode. This parameter can be a value of <a class="el" href="group__x3e___s_l_e_e_p___l_e_d__mode.html">SLEEP LED Working Mode</a>. </p>
 
 </div>
 </div>
@@ -106,7 +106,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the LED polarity. This parameter can be a value of <a class="el" href="group___l_e_d___output__polarity.html">LED output polarity</a> </p>
+<p>Specifies the LED polarity. This parameter can be a value of LED_Output_polarity.</p>
+<p>Specifies the SLEEP LED output polarity. This parameter can be a value of <a class="el" href="group__x3e___s_l_e_e_p___l_e_d___output__polarity.html">SLEEP LED Output Polarity</a>. </p>
 
 </div>
 </div>
@@ -121,7 +122,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the LED prescale value. This parameter can be a value of 0-1023 </p>
+<p>Specifies the LED prescale value. This parameter can be a value of 0-1023.</p>
+<p>Specifies the SLEEP LED prescale value. This parameter can be a value of 0-1023. period_timetick = prescale / 32000. </p>
 
 </div>
 </div>
@@ -136,7 +138,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the LED blink mode period high. This parameter can be a value of 0-1023 </p>
+<p>Specifies the LED blink mode period high. This parameter can be a value of 0-1023.</p>
+<p>Specifies the period high level count value in blink mode. This parameter can be a value of 0-255. Period high level time = period_high * period_timetick. </p>
 
 </div>
 </div>
@@ -151,7 +154,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the LED blink mode period low. This parameter can be a value of 0-1023 </p>
+<p>Specifies the LED blink mode period low. This parameter can be a value of 0-1023.</p>
+<p>Specifies the period low level count value in blink mode. This parameter can be a value of 0-255. Period low level time = period_low * period_timetick. </p>
 
 </div>
 </div>
@@ -166,7 +170,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the update rate. duty_step interval = (uptate_rate + 1) * phase_tick. This parameter can be a value of Range: 0~15. </p>
+<p>Specifies the update rate. duty_step interval = (uptate_rate + 1) * phase_tick. This parameter can be a value of Range: 0~15.</p>
+<p>Specifies the phase duty update rate in breathe mode. This parameter can be a value of 0-15. Duty update time = (phase_uptate_rate + 1) * phase_timetick. </p>
 
 </div>
 </div>
@@ -181,7 +186,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies Unit: 10ms, Range: 1~1023, 0: Bypass this phase </p>
+<p>Specifies Unit: 10ms, Range: 1~1023, 0: Bypass this phase.</p>
+<p>Specifies the duration of the whole phase in breathe mode. This parameter can be a value of 0-1023. Phase output time = phase_phase_tick * phase_timetick. </p>
 
 </div>
 </div>
@@ -196,7 +202,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies LED_TIME_TICK_SCALE = 100%, i.e. 3.2&ndash;&gt;1% 320&ndash;&gt;100% </p>
+<p>Specifies LED_TIME_TICK_SCALE = 100%, i.e. 3.2&ndash;&gt;1% 320&ndash;&gt;100%.</p>
+<p>Specifies the initial high level time in breathe mode. This parameter can be a value of 0-511. Initial high level time = phase_initial_duty / 32000. </p>
 
 </div>
 </div>
@@ -211,7 +218,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>1: Increase duty, 0: Decrease duty. It must be 0 if duty step = 0 or HW become abnormal </p>
+<p>Specifies phase increase duty. 1: Increase duty, 0: Decrease duty. It must be 0 if duty step = 0 or HW become abnormal.</p>
+<p>Specifies the direction of each change of duty in breathe mode. This parameter can be a value of 0 or 1. 1: increase duty. 0: decrease duty. </p>
 
 </div>
 </div>
@@ -226,7 +234,8 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Range: 0~LED_TIME_TICK_SCALE, i.e. 3.2&ndash;&gt;1% 320&ndash;&gt;100% </p>
+<p>Specifies phase duty step. Range: 0~LED_TIME_TICK_SCALE, i.e. 3.2&ndash;&gt;1% 320&ndash;&gt;100%.</p>
+<p>Specifies duty step in breathe mode. This parameter can be a value of 0-63. Duty step time = phase_duty_step / 32000. </p>
 
 </div>
 </div>

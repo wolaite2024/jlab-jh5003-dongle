@@ -276,6 +276,7 @@ typedef enum
     CMD_LOG_SWITCH                      = 0x0321,
     CMD_LOG_MASK_SET                    = 0x0322,
     CMD_LOG_MASK_GET                    = 0x0323,
+    CMD_ROLESWAP_ENABLE                 = 0x0324,
 
     CMD_RF_XTAK_K                       = 0x032A,
     CMD_RF_XTAL_K_GET_RESULT            = 0x032B,
@@ -695,6 +696,8 @@ typedef enum
     CMD_CHARGER_CASE_FIND_CHARGER_CASE  = 0x8103,
     CMD_CHARGER_CASE_LINK_INFO_SET      = 0x8104,
     CMD_CHARGER_CASE_PEER_ADDR_SET      = 0x8105,
+    CMD_CHARGER_CASE_GET_BT_ADDR        = 0x8106,
+    CMD_CHARGER_CASE_INFO               = 0x8107,
 #endif
 
 #if F_APP_FIND_EAR_BUD_SUPPORT
@@ -818,6 +821,7 @@ typedef enum
     CHARGER_CASE_GET_BUD_BATTERY_STATUS     = 0x03,
     CHARGER_CASE_GET_BUD_INFO               = 0x04,
     CHARGER_CASE_GET_CONNECT_STATUS         = 0x05,
+    CHARGER_CASE_GET_IN_CASE_STATUS         = 0x06,
 } T_CHARGER_CASE_GET_STATUS_TYPE;
 #endif
 typedef struct
@@ -902,7 +906,10 @@ typedef struct
     //Byte 8
     uint8_t snk_support_rsv8_1 : 1;
     uint8_t snk_support_listening_mode_custom_cycle : 1;//bit65
-    uint8_t snk_support_rsv8_2 : 6;
+    uint8_t snk_support_ullrha : 1;//bit66
+    uint8_t snk_support_rsv8_2 : 1;//bit67
+    uint8_t snk_support_charger_case : 1;//bit68
+    uint8_t snk_support_rsv8_3 : 3;
 } T_SNK_CAPABILITY;
 
 /**  @brief  cmd set status to phone
@@ -1179,28 +1186,23 @@ void app_cmd_charger_case_handle_ble_disconn(uint8_t link_id);
     * @param  vol avrcp volume.
     * @return void
     */
-void app_cmd_charger_case_record_volume(uint8_t vol, uint8_t *addr);
-#endif
-/**
-    * @brief  Set apk state.
-    * @param  state
-    * @return void
-    */
-void app_cmd_set_apk_init_state(bool state);
+void app_cmd_charger_case_record_level(uint8_t vol, uint8_t *addr);
 
 /**
-    * @brief  Get apk state.
-    * @param  void
-    * @return bool, apk state
+    * @brief  get charger case vol level.
+    * @param  void.
+    * @return level
     */
-bool app_cmd_get_apk_init_state(void);
+uint8_t app_cmd_charger_case_get_level(void);
+#endif
 
 /**
     * @brief  check slave latency update.
-    * @param  conn_id  le device's conn id
+    * @param  conn_id   le device's conn id
+    * @param  skip_common  skip common link check
     * @return void
     */
-void app_cmd_check_slave_latency_update(uint8_t conn_id);
+void app_cmd_check_slave_latency_update(uint8_t conn_id, bool skip_common);
 
 /** @} */ /* End of group APP_CMD_Exported_Functions */
 /** End of APP_CMD

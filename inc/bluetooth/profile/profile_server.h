@@ -3,15 +3,17 @@
 *     Copyright(c) 2016, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * @file     profile_server.h
-  * @brief    Head file for server structure.
-  * @details  This file can use when parameter use_ext of the server_cfg_use_ext_api is false.
+  * @brief    Header file for server structure.
+  * @details  This file can be used when the parameter use_ext of the server_cfg_use_ext_api is false.
   * @author
   * @date     2017-02-18
   * @version  v1.0
   * *************************************************************************************
   */
 
-/* Define to prevent recursive inclusion */
+/*============================================================================*
+ *               Define to prevent recursive inclusion
+ *============================================================================*/
 #ifndef PROFILE_SERVER_H
 #define PROFILE_SERVER_H
 
@@ -32,8 +34,8 @@ extern "C" {
   * @brief GATT Server API
   * @{
   */
-/** @defgroup GATT_SERVER_LEGACY_API GATT Server API
-  * @brief The GATT Server APIs can use when parameter use_ext of the server_cfg_use_ext_api is false.
+/** @defgroup GATT_SERVER_LEGACY_API GATT Server Legacy API
+  * @brief The GATT Server APIs can be used when the parameter use_ext of the server_cfg_use_ext_api is false.
   * @{
   */
 /*============================================================================*
@@ -43,11 +45,11 @@ extern "C" {
   * @brief
   * @{
   */
-/** @defgroup GATT_SERVER_CB_DATA Server Callback data
-  * @brief data for profile to inform application.
+/** @defgroup GATT_SERVER_CB_DATA Server Callback Data
+  * @brief Data for profile to inform application.
   * @{
   */
-/** @brief The callback data of PROFILE_EVT_SEND_DATA_COMPLETE */
+/** @brief The callback data of PROFILE_EVT_SEND_DATA_COMPLETE. */
 typedef struct
 {
     uint16_t        credits;
@@ -57,7 +59,7 @@ typedef struct
     uint16_t        cause;
 } T_SEND_DATA_RESULT;
 
-/** @brief Service callback data */
+/** @brief Service callback data. */
 typedef union
 {
     T_SERVER_RESULT     service_reg_result;
@@ -69,22 +71,26 @@ typedef union
 
 typedef struct
 {
-    T_SERVER_CB_TYPE   eventId;    /**<  @brief EventId defined upper */
-    T_SERVER_CB_DATA   event_data; /**<  @brief Event data */
+    T_SERVER_CB_TYPE   eventId;
+    T_SERVER_CB_DATA   event_data;
 } T_SERVER_APP_CB_DATA;
-/** @} End of GATT_SERVER_CB_DATA */
+/** End of GATT_SERVER_CB_DATA
+  * @}
+  */
 
 /** @defgroup P_FUN_WRITE_IND_POST_PROC Write Post Function Point Definition
-  * @brief Call back function to execute some post procedure after handle write request from client.
+  * @brief Callback function to execute some post procedure after handling write requests from clients.
   * @{
   */
 typedef void (* P_FUN_WRITE_IND_POST_PROC)(uint8_t conn_id, T_SERVER_ID service_id,
                                            uint16_t attrib_index, uint16_t length,
                                            uint8_t *p_value);
-/** @} End of P_FUN_WRITE_IND_POST_PROC */
+/** End of P_FUN_WRITE_IND_POST_PROC
+  * @}
+  */
 
 /** @defgroup P_FUN_SERVER_SPECIFIC_CB Specific Service Callback Function Point Definition
-  * @{ Function pointer used in each specific service module, to send events to specific service module.
+  * @{ Function pointer used in each specific service module, to send events to specific service modules.
   */
 typedef T_APP_RESULT(*P_FUN_GATT_READ_ATTR_CB)(uint8_t conn_id, T_SERVER_ID service_id,
                                                uint16_t attrib_index,
@@ -99,21 +105,22 @@ typedef void (*P_FUN_GATT_CCCD_UPDATE_CB)(uint8_t conn_id, T_SERVER_ID service_i
   */
 
 /** @defgroup P_FUN_SERVER_GENERAL_CB General Server Callback Function Point Definition
-  * @brief function pointer Type used to generate Call back, to send events to application.
+  * @brief Function pointer type used to generate callbacks, to send events to applications.
   * @{
   */
 typedef T_APP_RESULT(*P_FUN_SERVER_GENERAL_CB)(T_SERVER_ID service_id, void *p_para);
-/** @} End of P_FUN_SERVER_GENERAL_CB */
+/** End of P_FUN_SERVER_GENERAL_CB
+  * @}
+  */
 
-
-/** @brief GATT service callbacks */
+/** @brief GATT service callbacks. */
 typedef struct
 {
     P_FUN_GATT_READ_ATTR_CB read_attr_cb;     /**< Read callback function pointer.
                                                    Return value: @ref T_APP_RESULT. */
     P_FUN_GATT_WRITE_ATTR_CB write_attr_cb;   /**< Write callback function pointer.
                                                    Return value: @ref T_APP_RESULT. */
-    P_FUN_GATT_CCCD_UPDATE_CB cccd_update_cb; /**< Update cccd callback function pointer. */
+    P_FUN_GATT_CCCD_UPDATE_CB cccd_update_cb; /**< Update CCCD callback function pointer. */
 } T_FUN_GATT_SERVICE_CBS;
 
 /** End of GATT_SERVER_Exported_Types
@@ -129,16 +136,16 @@ typedef struct
   */
 
 /**
- * @brief Register specific service without start handle
+ * @brief Register specific service without start handle.
  *
- * Add specific service infomation to gatt_svc_table struct, will be registered to GATT later.
+ * Add specific service information to gatt_svc_table struct, will be registered to GATT later.
  *
  * @param[in,out] p_out_service_id     Service ID of specific service.
  * @param[in] p_database            Database pointer of specific service.
  * @param[in] length                Length of Database of specific service.
  * @param[in] srv_cbs               Service callback functions of specific service.
- * @retval true Add service success
- * @retval false Add service failed
+ * @retval true Add service success.
+ * @retval false Add service failed.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -162,17 +169,17 @@ bool server_add_service(T_SERVER_ID *p_out_service_id, uint8_t *p_database, uint
                         const T_FUN_GATT_SERVICE_CBS srv_cbs);
 
 /**
- * @brief Register specific service with start handle
+ * @brief Register specific service with start handle.
  *
- * Add specific service infomation to gatt_svc_table struct, will be registered to GATT later.
+ * Add specific service information to gatt_svc_table struct, will be registered to GATT later.
  *
  * @param[in,out] p_out_service_id     Service ID of specific service.
  * @param[in] p_database            Database pointer of specific service.
  * @param[in] length                Length of Database of specific service.
  * @param[in] srv_cbs               Service callback functions of specific service.
  * @param[in] start_handle          Start handle of this service.
- * @retval true Add service success
- * @retval false Add service failed
+ * @retval true Add service success.
+ * @retval false Add service failed.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -199,13 +206,13 @@ bool server_add_service_by_start_handle(uint8_t *p_out_service_id, uint8_t *p_da
  * @brief Register callback function to send events to application.
  *
  * @param[in] p_fun_cb          Callback function.
- * @retval None
+ * @return void.
  *
  * <b>Example usage</b>
  * \code{.c}
     void app_le_profile_init(void)
     {
-        server_init(1);
+        server_init(service_num);
         simp_srv_id = simp_ble_service_add_service(app_profile_callback);
         server_register_app_cb(app_profile_callback);
     }
@@ -214,36 +221,36 @@ bool server_add_service_by_start_handle(uint8_t *p_out_service_id, uint8_t *p_da
 void server_register_app_cb(P_FUN_SERVER_GENERAL_CB p_fun_cb);
 
 /**
-  * @brief  Confirm from application when receive read Request from client.
-  * @param[in]  conn_id       Connection id indicate which link is.
+  * @brief  Confirm from application when receiving a read request from client.
+  * @param[in]  conn_id       Connection ID indicates which link it is.
   * @param[in]  service_id    Service ID.
   * @param[in]  attrib_index  Attribute index of attribute to read confirm from application.
-  * @param[in]  p_data        Point to the readed value.
+  * @param[in]  p_data        Point to the read value.
   * @param[in]  data_len      The length of the data.
-  * @param[in]  cause         Cause for read confirm. @ref T_APP_RESULT
-  * @retval true: confirm from app OK.
-  * @retval false: confirm from app failed.
+  * @param[in]  cause         Cause for read confirm. @ref T_APP_RESULT.
+  * @retval true: Confirm from APP success.
+  * @retval false: Confirm from APP failed.
   */
 bool server_attr_read_confirm(uint8_t conn_id, T_SERVER_ID service_id, uint16_t attrib_index,
                               uint8_t *p_data, uint16_t data_len, T_APP_RESULT cause);
 /**
-  * @brief  Confirm from application when receive Execute Write Request from client.
-  * @param[in]  conn_id     Connection id indicate which link is.
-  * @param[in]  cause       Cause for execute write confirm. @ref T_APP_RESULT
-  * @param[in]  handle      Gatt attribute handle.
-  * @retval true: confirm from app OK.
-  * @retval false: confirm from app failed.
+  * @brief  Confirm from application when receiving an Execute Write Request from the client.
+  * @param[in]  conn_id     Connection ID indicates which link it is.
+  * @param[in]  cause       Cause for execute write confirm. @ref T_APP_RESULT.
+  * @param[in]  handle      GATT attribute handle.
+  * @retval true: Confirm from APP success.
+  * @retval false: Confirm from APP failed.
   */
 bool server_exec_write_confirm(uint8_t conn_id, uint16_t cause, uint16_t handle);
 
 /**
-  * @brief  Confirm from application when receive Write Request from client.
-  * @param[in]  conn_id      Connection id indicate which link is.
+  * @brief  Confirm from application when receiving a Write Request from the client.
+  * @param[in]  conn_id      Connection ID indicates which link it is.
   * @param[in]  service_id   Service ID.
   * @param[in]  attrib_index Attribute index of attribute to write confirm from application.
-  * @param[in]  cause        Write request app handle result, APP_RESULT_SUCCESS or other. @ref T_APP_RESULT
-  * @retval true: confirm from app OK.
-  * @retval false: confirm from app failed.
+  * @param[in]  cause        Write request APP handle result, APP_RESULT_SUCCESS or other. @ref T_APP_RESULT.
+  * @retval true: Confirm from APP success.
+  * @retval false: Confirm from APP failed.
   */
 bool server_attr_write_confirm(uint8_t conn_id, T_SERVER_ID service_id,
                                uint16_t attrib_index, T_APP_RESULT cause);
@@ -251,14 +258,14 @@ bool server_attr_write_confirm(uint8_t conn_id, T_SERVER_ID service_id,
 /**
  * @brief Send characteristic value to peer device.
  *
- * @param[in] conn_id         Connection id indicate which link is.
+ * @param[in] conn_id         Connection ID indicates which link it is.
  * @param[in] service_id      Service ID.
  * @param[in] attrib_index    Attribute index of characteristic.
  * @param[in] p_data          Point to data to be sent.
  * @param[in] data_len        Length of value to be sent, range: 0~(mtu_size - 3).
                               uint16_t mtu_size is acquired by le_get_conn_param(GAP_PARAM_CONN_MTU_SIZE, &mtu_size, conn_id).
  * @param[in] type            GATT pdu type.
- * @return Data sent result
+ * @return Data sent result.
  * @retval true Success.
  * @retval false Failed.
  *
@@ -279,10 +286,10 @@ bool server_send_data(uint8_t conn_id, T_SERVER_ID service_id, uint16_t attrib_i
  * This function is used to get the buffer point of the write command data.
  * This function only can be called in write_attr_cb.
  *
- * @param[in]     conn_id     Connection id indicate which link is.
+ * @param[in]     conn_id     Connection ID indicates which link it is.
  * @param[in,out] pp_buffer   Pointer to the address of the buffer.
  * @param[in,out] p_offset    Pointer to the offset of the data.
- * @return Buffer get result
+ * @return Buffer get result.
  * @retval true Success.
  * @retval false Failed.
  *
@@ -312,11 +319,11 @@ bool server_get_write_cmd_data_buffer(uint8_t conn_id, uint8_t **pp_buffer, uint
 
 /**
  * @brief  Send the multiple variable notification.
- * @param[in] conn_id       Connection id indicate which link is.
+ * @param[in] conn_id       Connection ID indicates which link it is.
  * @param[in] p_data        Point to data to be sent.
  * @param[in] data_len      Length of value to be sent, range: 0~(mtu_size - 1).
                             uint16_t mtu_size is acquired by le_get_conn_param(GAP_PARAM_CONN_MTU_SIZE, &mtu_size, conn_id).
- * @return Data sent result
+ * @return Data sent result.
  * @retval true Success.
  * @retval false Failed.
  *
@@ -362,9 +369,9 @@ bool server_send_multi_notify(uint8_t conn_id, uint8_t *p_data, uint16_t data_le
 
 /**
  * @brief  Get the CCCD information.
- * @param[in]  conn_id      Connection id indicate which link is.
+ * @param[in]  conn_id      Connection ID to indicate which link it is.
  * @param[in]  service_id   Service ID.
- * @param[in]  attrib_index Attribute index of attribute to get CCCD.
+ * @param[in]  attrib_index Attribute index of the attribute to get CCCD.
  * @param[in,out] p_cccd    The CCCD information.
  * @retval true Get success.
  * @retval false Get failed.
@@ -389,11 +396,17 @@ bool server_send_multi_notify(uint8_t conn_id, uint8_t *p_data, uint16_t data_le
 */
 bool server_get_cccd_info(uint8_t conn_id, T_SERVER_ID service_id, uint16_t attrib_index,
                           uint16_t *p_cccd);
-/** @} End of GATT_SERVER_Exported_Functions */
+/** End of GATT_SERVER_Exported_Functions
+  * @}
+  */
 
-/** @} End of GATT_SERVER_LEGACY_API */
+/** End of GATT_SERVER_LEGACY_API
+  * @}
+  */
 
-/** @} End of GATT_SERVER_API */
+/** End of GATT_SERVER_API
+  * @}
+  */
 
 
 #ifdef  __cplusplus

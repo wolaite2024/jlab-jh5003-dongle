@@ -44,19 +44,23 @@ $(function() {
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">GAP Bond Manager Exported Functions<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___b_l_u_e_t_o_o_t_h.html">Bluetooth</a> &raquo; <a class="el" href="group___g_a_p.html">GAP</a> &raquo; <a class="el" href="group___g_a_p___l_e.html">GAP LE Module</a><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___b_l_u_e_t_o_o_t_h.html">Bluetooth</a> &raquo; <a class="el" href="group___g_a_p.html">GAP</a> &raquo; <a class="el" href="group___g_a_p___c_o_m_m_o_n___m_o_d_u_l_e.html">GAP Common Module</a> &raquo;  &#124; <a class="el" href="group___g_a_p___b_o_n_d___manager.html">GAP Bond Manager</a> &raquo; <a class="el" href="group___g_a_p___c_b___m_s_g___m_o_d_u_l_e.html">GAP Callback Message</a></div></div>  </div>
+<div class="title">GAP Bond Manager Exported Functions<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___b_l_u_e_t_o_o_t_h.html">Bluetooth</a> &raquo; <a class="el" href="group___g_a_p.html">GAP</a> &raquo; <a class="el" href="group___g_a_p___c_o_m_m_o_n___m_o_d_u_l_e.html">GAP Common Module</a> &raquo; <a class="el" href="group___g_a_p___b_o_n_d___manager.html">GAP Bond Manager</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga5f11d969ff42fd9b5b251944f9a390e6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___b_o_n_d___m_a_n_a_g_e_r___exported___functions.html#ga5f11d969ff42fd9b5b251944f9a390e6">gap_get_gap_bond_manager</a> (void)</td></tr>
+<tr class="memdesc:ga5f11d969ff42fd9b5b251944f9a390e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether GAP Bond Manager is enabled.  <a href="#ga5f11d969ff42fd9b5b251944f9a390e6">More...</a><br /></td></tr>
 <tr class="separator:ga5f11d969ff42fd9b5b251944f9a390e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7a8153bc857c81f9d327c2f65c0a6aff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___g_a_p___common___exported___types.html#ga99268bc0507cd918edbd1c9d12c802ab">T_GAP_CAUSE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___b_o_n_d___m_a_n_a_g_e_r___exported___functions.html#ga7a8153bc857c81f9d327c2f65c0a6aff">le_bond_authen_result_confirm</a> (uint8_t *bd_addr, <a class="el" href="group___g_a_p___common___exported___types.html#ga41dd9d848e985c7c492f8f43e1da9249">T_GAP_REMOTE_ADDR_TYPE</a> remote_addr_type, <a class="el" href="group___g_a_p___common___exported___types.html#ga650a7fd65cec1deb63c45e05872a38b1">T_GAP_KEY_TYPE</a> key_type, <a class="el" href="group___g_a_p___common___exported___types.html#ga17c405b4388243cdfbfdbd543ddd09b2">T_GAP_CFM_CAUSE</a> cause)</td></tr>
+<tr class="memdesc:ga7a8153bc857c81f9d327c2f65c0a6aff"><td class="mdescLeft">&#160;</td><td class="mdescRight">When receiving <a class="el" href="group___a_p_p___b_o_n_d___m_a_n_a_g_e_r___m_s_g___opcodes.html#gab822e0d93aca3ceb9eef66510300af70">APP_BOND_MGR_LE_AUTHEN_RESULT_IND</a>, APP can call this API to confirm authentication result.  <a href="#ga7a8153bc857c81f9d327c2f65c0a6aff">More...</a><br /></td></tr>
 <tr class="separator:ga7a8153bc857c81f9d327c2f65c0a6aff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4f91b06f48c8890b761e4d91653e9a19"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___g_a_p___common___exported___types.html#ga99268bc0507cd918edbd1c9d12c802ab">T_GAP_CAUSE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___b_o_n_d___m_a_n_a_g_e_r___exported___functions.html#ga4f91b06f48c8890b761e4d91653e9a19">le_bond_authen_key_req_confirm</a> (uint8_t *bd_addr, <a class="el" href="group___g_a_p___common___exported___types.html#ga41dd9d848e985c7c492f8f43e1da9249">T_GAP_REMOTE_ADDR_TYPE</a> remote_addr_type, uint8_t key_len, uint8_t *p_key, <a class="el" href="group___g_a_p___common___exported___types.html#ga650a7fd65cec1deb63c45e05872a38b1">T_GAP_KEY_TYPE</a> key_type, <a class="el" href="group___g_a_p___common___exported___types.html#ga17c405b4388243cdfbfdbd543ddd09b2">T_GAP_CFM_CAUSE</a> cause)</td></tr>
+<tr class="memdesc:ga4f91b06f48c8890b761e4d91653e9a19"><td class="mdescLeft">&#160;</td><td class="mdescRight">When receiving <a class="el" href="group___a_p_p___b_o_n_d___m_a_n_a_g_e_r___m_s_g___opcodes.html#ga31d97a52cad6ce0e26746a2312c5ac0a">APP_BOND_MGR_LE_AUTHEN_KEY_REQ_IND</a>, APP can call this API to confirm authentication key request.  <a href="#ga4f91b06f48c8890b761e4d91653e9a19">More...</a><br /></td></tr>
 <tr class="separator:ga4f91b06f48c8890b761e4d91653e9a19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1f413f8a16dce59f11ac2e4715b3181c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p___b_o_n_d___m_a_n_a_g_e_r___exported___functions.html#ga1f413f8a16dce59f11ac2e4715b3181c">gap_update_cccd_info</a> (uint16_t conn_handle, uint8_t data_len, uint8_t *data)</td></tr>
+<tr class="memdesc:ga1f413f8a16dce59f11ac2e4715b3181c"><td class="mdescLeft">&#160;</td><td class="mdescRight">When receiving <a class="el" href="group___a_p_p___b_o_n_d___m_a_n_a_g_e_r___m_s_g___opcodes.html#gaffcf54ea9efbb226676dca50bee022fe">APP_BOND_MGR_GATT_SERVER_STORE_IND</a>, and the parameter op is <a class="el" href="group___g_a_p___b_o_n_d___m_a_n_a_g_e_r___exported___types.html#gga3d14f7be4ef1d4232290e78796bb3976a6b75d135facfc216aac6c134aaabd14e">GATT_STORE_OP_GET_CCC_BITS</a>, APP shall call this API to update the CCCD information.  <a href="#ga1f413f8a16dce59f11ac2e4715b3181c">More...</a><br /></td></tr>
 <tr class="separator:ga1f413f8a16dce59f11ac2e4715b3181c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -76,6 +80,16 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Check whether GAP Bond Manager is enabled. </p>
+<dl class="section return"><dt>Returns</dt><dd>Check result. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>GAP Bond Manager is enabled. </td></tr>
+    <tr><td class="paramname">false</td><td>GAP Bond Manager is disabled. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -116,6 +130,25 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>When receiving <a class="el" href="group___a_p_p___b_o_n_d___m_a_n_a_g_e_r___m_s_g___opcodes.html#gab822e0d93aca3ceb9eef66510300af70">APP_BOND_MGR_LE_AUTHEN_RESULT_IND</a>, APP can call this API to confirm authentication result. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote bluetooth device address. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">remote_addr_type</td><td>Remote bluetooth device address type. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Key type. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cause</td><td>User confirm result. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Operation result. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">GAP_CAUSE_SUCCESS</td><td>Operation success. </td></tr>
+    <tr><td class="paramname">GAP_CAUSE_NON_CONN</td><td>Operation failure. No connection. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -169,6 +202,27 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>When receiving <a class="el" href="group___a_p_p___b_o_n_d___m_a_n_a_g_e_r___m_s_g___opcodes.html#ga31d97a52cad6ce0e26746a2312c5ac0a">APP_BOND_MGR_LE_AUTHEN_KEY_REQ_IND</a>, APP can call this API to confirm authentication key request. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bd_addr</td><td>Remote bluetooth device address. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">remote_addr_type</td><td>Remote bluetooth device address type. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key_len</td><td>Key length to set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_key</td><td>Pointer to key to set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Key type. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cause</td><td>User confirm result. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Operation result. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">GAP_CAUSE_SUCCESS</td><td>Operation success. </td></tr>
+    <tr><td class="paramname">GAP_CAUSE_NON_CONN</td><td>Operation failure. No connection. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="ga1f413f8a16dce59f11ac2e4715b3181c"></a>
@@ -202,6 +256,24 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>When receiving <a class="el" href="group___a_p_p___b_o_n_d___m_a_n_a_g_e_r___m_s_g___opcodes.html#gaffcf54ea9efbb226676dca50bee022fe">APP_BOND_MGR_GATT_SERVER_STORE_IND</a>, and the parameter op is <a class="el" href="group___g_a_p___b_o_n_d___m_a_n_a_g_e_r___exported___types.html#gga3d14f7be4ef1d4232290e78796bb3976a6b75d135facfc216aac6c134aaabd14e">GATT_STORE_OP_GET_CCC_BITS</a>, APP shall call this API to update the CCCD information. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle of the ACL link. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data_len</td><td>The length of the updated CCCD data. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">data</td><td>Point to the updated CCCD data. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Operation result. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>Operation success. </td></tr>
+    <tr><td class="paramname">false</td><td>Operation failure. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

@@ -20,18 +20,18 @@ extern "C" {
 
 typedef struct ble_conn_param
 {
-    uint16_t ci_min;
-    uint16_t ci_max;
-    uint16_t latency;
-    uint16_t timeout;
-    uint16_t ce_min;
-    uint16_t ce_max;
-    uint16_t ci_min_pend;
-    uint16_t ci_max_pend;
-    uint16_t latency_pend;
-    uint16_t timeout_pend;
-    uint16_t ce_min_pend;
-    uint16_t ce_max_pend;
+    uint16_t ci_min;            //current CI in-use, get frome update success or connect param
+    uint16_t ci_max;            //current CI in-use, get frome update success or connect param
+    uint16_t latency;           //current latency in-use, get frome update success or connect param
+    uint16_t timeout;           //current timeout in-use, get frome update success or connect param
+    uint16_t ce_min;            //current CE in-use, get frome update success or connect param
+    uint16_t ce_max;            //current CE in-use, get frome update success or connect param
+    uint16_t ci_min_pend;       //CI to set, wait current update success or fail
+    uint16_t ci_max_pend;       //CI to set, wait current update success or fail
+    uint16_t latency_pend;      //latency to set, wait current update success or fail
+    uint16_t timeout_pend;      //timeout to set, wait current update success or fail
+    uint16_t ce_min_pend;       //CE to set, wait current update success or fail
+    uint16_t ce_max_pend;       //CE to set, wait current update success or fail
     bool     ce_2slot_used;
     bool     param_update_pend;
     uint8_t conn_mask;
@@ -51,6 +51,7 @@ bool ble_register_conn_callback_by_id(T_APP_ID app_id, T_LE_CONN_CBACK callback)
 void ble_unregister_conn_callback_by_id(T_APP_ID app_id);
 void ble_conn_mgr_register_app_cb(T_UAL_CONN_MGR_APP_CBACK cback);
 void ble_conn_update_by_app(bool enable);
+void ble_set_default_conn_interval(uint16_t interval);
 void ble_conn_mgr_init(void);
 
 #ifdef __cplusplus

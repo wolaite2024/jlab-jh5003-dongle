@@ -2,44 +2,45 @@
  * Copyright (c) 2018, Realsil Semiconductor Corporation. All rights reserved.
  */
 
-#include <string.h>
 #include <stdbool.h>
-#include "trace.h"
-#include "app_timer.h"
-#include "bt_types.h"
-#include "bt_bond.h"
-#include "bt_a2dp.h"
-#include "bt_rdtp.h"
 #include "bt_hfp.h"
-#include "btm.h"
-#include "sysm.h"
-#include "pm.h"
-#include "remote.h"
+#include "app_bt_sniffing.h"
 #include "app_cfg.h"
 #include "app_main.h"
 #include "app_mmi.h"
+#if F_APP_ERWS_SUPPORT
+#include <string.h>
+#include "pm.h"
+#include "trace.h"
+#include "ble_ext_adv.h"
+#include "btm.h"
+#include "remote.h"
+#include "bt_a2dp.h"
+#include "bt_bond.h"
+#include "bt_rdtp.h"
+#include "bt_types.h"
+#include "app_a2dp.h"
+#include "app_audio_policy.h"
+#include "app_ble_device.h"
+#include "app_bond.h"
+#include "app_bt_policy_int.h"
+#include "app_bt_policy_api.h"
+#include "app_hfp.h"
 #include "app_multilink.h"
 #include "app_roleswap.h"
 #include "app_roleswap_control.h"
-#include "app_bt_sniffing.h"
-#include "app_ble_device.h"
-#include "app_bt_policy_int.h"
-#include "app_bt_policy_api.h"
-#include "app_audio_policy.h"
-#include "app_hfp.h"
-#include "app_a2dp.h"
-#include "app_bond.h"
+#include "app_timer.h"
+
 #if F_APP_QOL_MONITOR_SUPPORT
 #include "app_qol.h"
 #include "audio_track.h"
 #endif
-#include "ble_ext_adv.h"
+
 #if F_APP_GAMING_DONGLE_SUPPORT
 #include "app_dongle_spp.h"
 #include "app_device.h"
 #endif
 
-#if F_APP_ERWS_SUPPORT
 #if F_APP_DUAL_AUDIO_TWS_SPATIAL_AUDIO
 #include "app_sensor_mems.h"
 #endif
@@ -338,7 +339,8 @@ bool app_bt_sniffing_roleswap(bool stop_after_shadow)
                 result = app_bt_sniffing_state_machine(app_db.br_link[app_idx].bd_addr,
                                                        APP_BT_SNIFFING_EVENT_ROLESWAP_START);
 
-                if (result == false)
+                if ((result == false) &&
+                    (app_db.br_link[app_idx].bt_sniffing_state == APP_BT_SNIFFING_STATE_ROLESWAP))
                 {
                     app_bt_sniffing_change_state(app_db.br_link[app_idx].bd_addr,
                                                  app_db.br_link[app_idx].sniffing_type_before_roleswap);
@@ -402,7 +404,7 @@ void app_bt_sniffing_process(uint8_t *bd_addr)
             app_bt_sniffing_change_state(p_link->bd_addr, APP_BT_SNIFFING_STATE_READY);
 #if F_APP_LEA_SUPPORT
             bool need_return = false;
-            if (mtc_if_fm_ap(AP_TO_MTC_SNIFFING_CHECK, NULL, &need_return) == MTC_RESULT_SUCCESS)
+            if (mtc_if_fm_ap_handle(AP_TO_MTC_SNIFFING_CHECK, NULL, &need_return) == MTC_RESULT_SUCCESS)
             {
                 APP_PRINT_TRACE1("app_bt_sniffing_process: need_return %d", need_return);
             }
@@ -787,7 +789,7 @@ static void app_bt_sniffing_pending_ind_confirm(uint8_t *bd_addr)
             {
                 if (bt_a2dp_stream_start_cfm(bd_addr, true))
                 {
-                    p_link->streaming_fg = true;
+                    app_link_update_a2dp_streaming(p_link, true);
                     p_link->pending_ind_confirm = false;
                     p_link->avrcp_ready_to_pause = true;
                     app_multi_judge_active_a2dp_idx_and_qos(p_link->id, JUDGE_EVENT_A2DP_START);
@@ -1569,7 +1571,10 @@ static bool app_bt_sniffing_state_roleswap_handle(uint8_t *bd_addr,
         {
             if (app_cfg_nv.bud_role == REMOTE_SESSION_ROLE_PRIMARY)
             {
-                remote_roleswap_stop(bd_addr);
+                if (app_db.local_loc != BUD_LOC_IN_CASE)
+                {
+                    remote_roleswap_stop(bd_addr);
+                }
             }
         }
         break;
@@ -1686,8 +1691,8 @@ static void app_bt_sniffing_event_cback(T_BT_EVENT event_type, void *event_buf, 
             // recovery link connected
 #if F_APP_LEA_SUPPORT
             bool need_return = false;
-            if (mtc_if_fm_ap(AP_TO_MTC_SCO_CMPL, param->sco_conn_cmpl.bd_addr,
-                             &need_return) == MTC_RESULT_SUCCESS)
+            if (mtc_if_fm_ap_handle(AP_TO_MTC_SCO_CMPL, param->sco_conn_cmpl.bd_addr,
+                                    &need_return) == MTC_RESULT_SUCCESS)
             {
                 if (need_return)
                 {

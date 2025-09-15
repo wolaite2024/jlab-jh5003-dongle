@@ -44,7 +44,7 @@ $(function() {
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">IF8080_InitTypeDef Struct Reference<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___i_f8080.html">IF8080</a><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___i_f8080.html">IF8080</a> &raquo;  &#124; <a class="el" href="group___i_f8080___exported___types.html">Init Params Struct</a></div></div>  </div>
+<div class="title">IF8080_InitTypeDef Struct Reference<div class="ingroups"><a class="el" href="group___a_p_i___reference.html">API Reference</a> &raquo; <a class="el" href="group___r_t_k___periph___driver.html">IO Driver</a> &raquo; <a class="el" href="group___r_t_k___periph___driver__87x3e.html">rtl87x3e</a> &raquo; <a class="el" href="group__x3e___i_f8080.html">IF8080</a> &raquo; <a class="el" href="group__x3e___i_f8080___exported___types.html">IF8080 Exported Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -102,7 +102,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the IF8080 clock speed. </p>
+<p>Specifies the IF8080 clock divider. IF8080 clock = 40MHz / clock divider; This parameter can be a value of <a class="el" href="group__x3e___i_f8080___clock_div.html">IF8080 Clock Divider</a>. </p>
 
 </div>
 </div>
@@ -117,7 +117,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the IF8080 operation mode. </p>
+<p>Specifies the IF8080 operation mode. This parameter can be a value of <a class="el" href="group__x3e___i_f8080___mode.html">IF8080 Mode</a>. </p>
 
 </div>
 </div>
@@ -132,7 +132,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the IF8080 read or write operation. </p>
+<p>Specifies the IF8080 read or write operation. This parameter can be a value of <a class="el" href="group__x3e___i_f8080___auto___mode___direction.html">IF8080 Auto Mode Direction</a>. </p>
 
 </div>
 </div>
@@ -147,7 +147,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the init guard time function. </p>
+<p>Enable or disable the init guard time function. The guard time only avaliable for hardware continuously write mode. This parameter can be a value of <a class="el" href="group__x3e___i_f8080___init_guard_time___cmd.html">IF8080 Init Guard Time Enable</a>. </p>
 
 </div>
 </div>
@@ -162,7 +162,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the guard time. This parameter is 0~3T of divider clock. </p>
+<p>Specifies the init guard time. This parameter can be a value of <a class="el" href="group__x3e___i_f8080___init_guard_time.html">IF8080 Init Guard Time</a>. </p>
 
 </div>
 </div>
@@ -177,7 +177,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the command guard time function. </p>
+<p>Enable or disable the command guard time function. The guard time only avaliable for hardware continuously write mode. This parameter can be a value of <a class="el" href="group__x3e___i_f8080___cmd_guard_time___cmd.html">IF8080 Command Guard Time Enable</a>. </p>
 
 </div>
 </div>
@@ -192,7 +192,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the guard time. This parameter is 0~3T of divider clock. </p>
+<p>Specifies the command guard time. This parameter can be a value of <a class="el" href="group__x3e___i_f8080___cmd_guard_time.html">IF8080 Command Guard Time</a>. </p>
 
 </div>
 </div>
@@ -207,7 +207,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the guard time function. The guard time only avaliable for hardware continuously wtite mode </p>
+<p>Enable or disable the guard time function. The guard time only avaliable for hardware continuously write mode. This parameter can be a value of <a class="el" href="group__x3e___i_f8080___guard_time___cmd.html">IF8080 Guard Time Enable</a>. </p>
 
 </div>
 </div>
@@ -222,7 +222,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the guard time. This parameter is 0~3T of divider clock. </p>
+<p>Specifies the guard time. This parameter can be a value of <a class="el" href="group__x3e___i_f8080___guard_time.html">IF8080 Guard Time</a>. </p>
 
 </div>
 </div>
@@ -237,7 +237,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the delay time for WR. This parameter is half or one bus clock cycle. </p>
+<p>Specifies the delay time for WR. This parameter can be a value of <a class="el" href="group__x3e___i_f8080___w_r_delay.html">IF8080 WR Delay</a>. </p>
 
 </div>
 </div>
@@ -252,7 +252,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the FIFO data format. </p>
+<p>Enable or disable IF8080 8-bit data swap function. This parameter can be a value of <a class="el" href="group__x3e___i_f8080__8_bit_swap.html">IF8080 8-Bit Swap</a>. </p>
 
 </div>
 </div>
@@ -267,7 +267,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the FIFO data format. </p>
+<p>Enable or disable IF8080 16-bit data swap function. This parameter can be a value of <a class="el" href="group__x3e___i_f8080__16_bit_swap.html">IF8080 16-Bit Swap</a>. </p>
 
 </div>
 </div>
@@ -297,7 +297,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the TX DMA status in auto mode. </p>
+<p>Enable or disable the TX GDMA in auto mode. This parameter can be a value of <a class="el" href="group__x3e___i_f8080___tx_d_m_a_cmd.html">IF8080 TX GDMA Enable</a>. </p>
 
 </div>
 </div>
@@ -312,7 +312,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the Vsync signal. </p>
+<p>Enable or disable the Vsync signal. This parameter can be a value of <a class="el" href="group__x3e___i_f8080___vsync_cmd.html">IF8080 Vsync Enable</a>. </p>
 
 </div>
 </div>
@@ -327,7 +327,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Specifies the Vsync trigger polarity. </p>
+<p>Specifies the Vsync trigger polarity. This parameter can be a value of <a class="el" href="group__x3e___i_f8080___vsync_polarity.html">IF8080 Vsync Polarity</a>. </p>
 
 </div>
 </div>

@@ -22,8 +22,15 @@ extern "C" {
   * @brief App Ble Gap
   * @{
   */
+#if F_APP_CHATGPT_SUPPORT
+/*ChatGPT needs to send or receive real-time voice data through BLE.
+It is necessary to reduce transfer latency to improve data transmission.*/
+#define RWS_LE_DEFAULT_MIN_CONN_INTERVAL   (8)
+#define RWS_LE_DEFAULT_MAX_CONN_INTERVAL   (8)
+#else
 #define RWS_LE_DEFAULT_MIN_CONN_INTERVAL   (12)//12*1.25 = 15ms
 #define RWS_LE_DEFAULT_MAX_CONN_INTERVAL   (32)//32*1.25 = 40ms
+#endif
 #define RWS_LE_DEFAULT_SLAVE_LATENCY       (0)
 #define RWS_LE_MAX_SLAVE_LATENCY           (15)
 #define RWS_LE_DEFAULT_SUPERVISION_TIMEOUT (500)//500*10 = 5000ms
@@ -106,16 +113,6 @@ bool app_ble_gap_disconnect(T_APP_LE_LINK *p_link, T_LE_LOCAL_DISC_CAUSE disc_ca
  * @param disc_cause @ref T_LE_LOCAL_DISC_CAUSE
  */
 void app_ble_gap_disconnect_all(T_LE_LOCAL_DISC_CAUSE disc_cause);
-
-#if F_APP_LEA_SUPPORT
-/**
- * @brief Get ble stack ready or not
- *
- * @return true  ble stack ready
- * @return false ble stack not ready
- */
-bool app_ble_gap_stack_info(void);
-#endif
 
 /**
     * @brief  All the bt gap msg events are pre-handled in this function.

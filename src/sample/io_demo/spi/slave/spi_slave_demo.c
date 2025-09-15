@@ -135,6 +135,7 @@ static void spi0_handler(void)
 
     if (SPI_GetINTStatus(SPI0, SPI_INT_RXF) == SET)
     {
+        /* It is recommended to post the os msg to the task thread for data processing. */
         len = SPI_GetRxFIFOLen(SPI0);
         for (idx = 0; idx < len; idx++)
         {

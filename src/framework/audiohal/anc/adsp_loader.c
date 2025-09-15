@@ -24,7 +24,7 @@ typedef struct
     uint8_t reload_count;
     T_ADSP_LOAD_STATE state;
     T_ADSP_ALGORITHM_SCENARIO loader_scenario;
-    T_BIN_LOADER_SESSION_HANDLE *adsp_load_session;
+    T_BIN_LOADER_SESSION_HANDLE adsp_load_session;
 } T_ADSP_LOAD_DB;
 
 T_ADSP_LOAD_DB *adsp_load_db = NULL;
@@ -90,7 +90,7 @@ bool adsp_loader_dsp_fw_cb_check_finish(T_BIN_LOADER_SESSION_HANDLE  session,
 {
     T_ADSP_ALGORITHM_SCENARIO scenario = adsp_load_get_scenario();
 
-    if (bin_loader_driver_check_image_correct(scenario) == 0)
+    if (adsp_loader_driver_check_image_correct(scenario) == 0)
     {
         DIPC_PRINT_ERROR1("adsp_loader_dsp_fw_cb_check_finish: ADSP load fail 0x%02X",
                           scenario);

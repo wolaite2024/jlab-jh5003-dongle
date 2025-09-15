@@ -3,7 +3,7 @@
 *     Copyright(c) 2017, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * @file    aon_wdg_ext.h
-  * @brief   This file provides api wrapper for bbpro compatibility..
+  * @brief   This file provides API wrapper for bbpro compatibility..
   * @author  huan_yang
   * @date    2023-4-23
   * @version v1.0

@@ -77,10 +77,6 @@
 #include "os_mem.h"
 #endif
 
-#if F_APP_LEA_SUPPORT
-#include "app_lea_mgr.h"
-#endif
-
 #if F_APP_EXT_MIC_SWITCH_SUPPORT
 #include "app_ext_mic_switch.h"
 #endif
@@ -89,8 +85,17 @@
 #include "app_adc.h"
 #endif
 
+#if F_APP_USB_HID_SUPPORT
+#include "app_usb_hid_report.h"
+#include "app_usb_audio_hid.h"
+#endif
+
 #if F_APP_GAMING_CONTROLLER_SUPPORT
 #include "app_dongle_controller.h"
+#endif
+
+#if F_APP_LEA_SUPPORT
+#include "app_lea_unicast_audio.h"
 #endif
 
 RAM_TEXT_SECTION bool app_io_msg_send(T_IO_MSG *io_msg)
@@ -225,16 +230,6 @@ void app_io_msg_handler(T_IO_MSG io_driver_msg_recv)
 #endif
 #endif
 
-            case IO_MSG_GPIO_ADAPTOR_DAT:
-                {
-#if F_APP_ADP_CMD_SUPPORT
-                    uint32_t cmd_data = io_driver_msg_recv.u.param;
-
-                    app_adp_cmd_delay_charger_enable();
-                    app_adp_cmd_parse_handle_msg(cmd_data);
-#endif
-                }
-                break;
 
 #if F_APP_LINEIN_SUPPORT
             case IO_MSG_GPIO_LINE_IN:
@@ -267,29 +262,34 @@ void app_io_msg_handler(T_IO_MSG io_driver_msg_recv)
                 break;
 #endif
 
+#if F_APP_ADP_5V_CMD_SUPPORT
+            case IO_MSG_GPIO_ADAPTOR_DAT:
+                {
+                    uint32_t cmd_data = io_driver_msg_recv.u.param;
+
+                    app_adp_cmd_delay_charger_enable();
+                    app_adp_cmd_parse_handle_msg(cmd_data);
+                }
+                break;
+
             case IO_MSG_GPIO_SMARTBOX_COMMAND_PROTECT:
                 {
-#if F_APP_ADP_CMD_SUPPORT
                     app_adp_cmd_parse_protect();
-#endif
                 }
                 break;
 
             case IO_MSG_GPIO_ADP_INT:
                 {
-#if F_APP_ADP_CMD_SUPPORT
                     app_adp_cmd_parse_int_handle(&io_driver_msg_recv);
-#endif
                 }
                 break;
 
             case IO_MSG_GPIO_ADP_HW_TIMER_HANDLER:
                 {
-#if F_APP_ADP_CMD_SUPPORT
                     app_adp_cmd_parse_hw_timer_handler();
-#endif
                 }
                 break;
+#endif
 
             case IO_MSG_GPIO_ADAPTOR_PLUG:
             case IO_MSG_GPIO_ADAPTOR_UNPLUG:
@@ -364,6 +364,13 @@ void app_io_msg_handler(T_IO_MSG io_driver_msg_recv)
 
     case IO_MSG_TYPE_USB_HID:
         {
+#if F_APP_USB_HID_SUPPORT
+            if (io_driver_msg_recv.subtype == USB_HID_MSG_TYPE_HID_BUFFERED_REPORT)
+            {
+                usb_hid_report_handle();
+            }
+#endif
+
 //            extern void app_usb_hid_handle_msg(T_IO_MSG * msg);
 //            app_usb_hid_handle_msg(&io_driver_msg_recv);
         }
@@ -453,10 +460,18 @@ void app_io_msg_handler(T_IO_MSG io_driver_msg_recv)
 #endif
 #endif
 
+#if F_APP_GAMING_CONTROLLER_SUPPORT
+    case IO_MSG_TYPE_CONTROLLER:
+        {
+            app_dongle_controller_send_hid_buf_data();
+        }
+        break;
+#endif
+
 #if F_APP_LEA_SUPPORT
     case IO_MSG_TYPE_LEA_SNK:
         {
-            app_lea_mgr_msg_handle(&io_driver_msg_recv);
+            app_lea_uca_msg_handle(&io_driver_msg_recv);
         }
         break;
 #endif

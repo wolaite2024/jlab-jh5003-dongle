@@ -26,7 +26,7 @@
 #include "console_uart.h"
 #include "test_mode.h"
 #include "single_tone.h"
-#include "engage.h"
+//#include "engage.h"
 #include "voice_prompt.h"
 #include "app_cfg.h"
 #include "app_main.h"

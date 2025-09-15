@@ -61,6 +61,20 @@
 #include "app_lea_scan.h"
 #endif
 
+#if F_APP_TMAP_CT_SUPPORT
+#include <string.h>
+#include "app_cfg.h"
+#include "app_lea_ccp.h"
+#include "app_lea_pacs.h"
+#endif
+
+#if F_APP_HAS_SUPPORT
+#include "has_def.h"
+#include "has_mgr.h"
+#include "app_ble_common_adv.h"
+#include "app_lea_has_preset_record.h"
+#endif
+
 #define SCO_PKT_TYPES_HV3_EV3_2EV3          (GAP_PKT_TYPE_HV3 | GAP_PKT_TYPE_EV3 | GAP_PKT_TYPE_NO_3EV3 | GAP_PKT_TYPE_NO_2EV5 | GAP_PKT_TYPE_NO_3EV5)
 
 void app_console_handle_msg(T_IO_MSG console_msg)
@@ -979,6 +993,245 @@ void app_console_handle_msg(T_IO_MSG console_msg)
             }
         }
 #endif
+#if F_APP_PBP_SUPPORT
+        else if (id == BQB_CMD_PBP)
+        {
+            LE_STREAM_TO_UINT8(action, p);
+
+            switch (action)
+            {
+#if F_APP_TMAP_BMR_SUPPORT
+            case BQB_ACTION_PBP_BMR_START:
+                {
+                    if (app_lea_bca_state() == LEA_BCA_STATE_IDLE)
+                    {
+                        app_lea_bca_sm(LEA_BCA_MMI, NULL);
+                        app_lea_bca_sm(LEA_BCA_BIS_SYNC, NULL);
+                    }
+                }
+                break;
+
+            case BQB_ACTION_PBP_BMR_STOP:
+                {
+                    app_lea_bca_bmr_terminate();
+                }
+                break;
+#endif
+            case BQB_ACTION_PBP_BROADCAST_CODE:
+                {
+                    app_cfg_nv.lea_encryp = 1;
+                    app_cfg_nv.lea_valid = 1;
+                    STREAM_TO_ARRAY(app_cfg_nv.lea_code, p, 16);
+                }
+                break;
+
+            default:
+                break;
+            }
+        }
+#endif
+#if F_APP_TMAP_CT_SUPPORT
+        else if (id == BQB_CMD_TMAP)
+        {
+            LE_STREAM_TO_UINT8(action, p);
+
+            switch (action)
+            {
+            case BQB_ACTION_TMAP_ADV_START:
+                {
+                    app_lea_adv_start();
+                }
+                break;
+
+            case BQB_ACTION_TMAP_ADV_STOP:
+                {
+                    app_lea_adv_stop();
+                }
+                break;
+
+            case BQB_ACTION_TMAP_GAMING_MODE:
+                {
+                    uint8_t gaming_mode;
+
+                    LE_STREAM_TO_UINT8(gaming_mode, p);
+                    app_lea_pacs_update_low_latency(gaming_mode);
+                }
+                break;
+
+            case BQB_ACTION_TMAP_ORIGINATE_CALL:
+                {
+                    char *p_uri = "BLUETOOTH SIG";
+                    uint16_t len = strlen(p_uri);
+                    T_APP_LE_LINK *p_link;
+
+                    p_link = app_link_find_le_link_by_conn_handle(app_lea_ccp_get_active_conn_handle());
+                    if (p_link != NULL)
+                    {
+                        T_CCP_CLIENT_WRITE_CALL_CP_PARAM write_call_cp_param = {0};
+
+                        write_call_cp_param.opcode = TBS_CALL_CONTROL_POINT_CHAR_OPCODE_ORIGINATE;
+                        write_call_cp_param.param.originate_opcode_param.p_uri = (uint8_t *)p_uri;
+                        write_call_cp_param.param.originate_opcode_param.uri_len = len;
+
+                        ccp_client_write_call_cp(p_link->conn_handle, 0, true, false, &write_call_cp_param);
+                    }
+                }
+                break;
+
+            case BQB_ACTION_TMAP_TERMINATE_CALL:
+                {
+                    T_CCP_CLIENT_WRITE_CALL_CP_PARAM write_call_cp_param = {0};
+                    T_APP_LE_LINK *p_link;
+
+                    p_link = app_link_find_le_link_by_conn_handle(app_lea_ccp_get_active_conn_handle());
+                    if (p_link != NULL)
+                    {
+                        T_LEA_CALL_ENTRY *p_call_entry;
+
+                        p_call_entry = app_lea_ccp_find_call_entry_by_idx(p_link->conn_id, p_link->active_call_index);
+                        if (p_call_entry != NULL)
+                        {
+                            write_call_cp_param.opcode = TBS_CALL_CONTROL_POINT_CHAR_OPCODE_TERMINATE;
+                            write_call_cp_param.param.terminate_opcode_call_index = p_call_entry->call_index;
+
+                            ccp_client_write_call_cp(p_link->conn_handle, 0, p_link->gtbs, false, &write_call_cp_param);
+                        }
+                    }
+                }
+                break;
+
+            default:
+                break;
+            }
+        }
+#endif
+#if F_APP_HAS_SUPPORT
+        else if (id == BQB_CMD_HAP)
+        {
+            LE_STREAM_TO_UINT8(action, p);
+
+            switch (action)
+            {
+            case BQB_ACTION_HAP_FEATURE:
+                {
+                    T_HAS_HA_FEATURES hearing_aid_features;
+
+                    LE_STREAM_TO_UINT8(*(uint8_t *)&hearing_aid_features, p);
+                    has_update_ha_features(hearing_aid_features);
+                }
+                break;
+
+            case BQB_ACTION_HAP_ACTIVE_INDEX:
+                {
+                    uint8_t index;
+
+                    LE_STREAM_TO_UINT8(index, p);
+                    has_update_active_preset_idx(index);
+                }
+                break;
+
+            case BQB_ACTION_HAP_PRESET_NAME:
+                {
+                    uint8_t index;
+                    char name[20];
+                    uint8_t len;
+
+                    LE_STREAM_TO_UINT8(index, p);
+                    LE_STREAM_TO_UINT8(len, p);
+                    STREAM_TO_ARRAY(name, p, len);
+
+                    for (uint8_t i = 0; i < len; i++)
+                    {
+                        if (name[i] == '_')
+                        {
+                            name[i] = ' ';
+                        }
+                    }
+
+                    app_lea_has_modify_preset_record_list(PRESET_CHANGE_NAME_CHANGE,
+                                                          index, 0, len, name, true);
+                }
+                break;
+
+            case BQB_ACTION_HAP_PRESET_AVAILABLE:
+                {
+                    uint8_t index;
+
+                    LE_STREAM_TO_UINT8(index, p);
+                    app_lea_has_modify_preset_record_list(PRESET_CHANGE_AVAILABLE,
+                                                          index, 0, 1, NULL, true);
+                }
+                break;
+
+            case BQB_ACTION_HAP_PRESET_UNAVAILABLE:
+                {
+                    uint8_t index;
+
+                    LE_STREAM_TO_UINT8(index, p);
+                    app_lea_has_modify_preset_record_list(PRESET_CHANGE_UNAVAILABLE,
+                                                          index, 0, 1, NULL, true);
+                }
+                break;
+
+            case BQB_ACTION_HAP_PRESET_ADD:
+                {
+                    uint8_t index;
+                    char name[20];
+                    uint8_t len;
+                    uint8_t preset_prop;
+
+                    LE_STREAM_TO_UINT8(index, p);
+                    LE_STREAM_TO_UINT8(len, p);
+                    STREAM_TO_ARRAY(name, p, len);
+                    LE_STREAM_TO_UINT8(preset_prop, p);
+
+                    for (uint8_t i = 0; i < len; i++)
+                    {
+                        if (name[i] == '_')
+                        {
+                            name[i] = ' ';
+                        }
+                    }
+
+                    app_lea_has_modify_preset_record_list(PRESET_CHANGE_ADD,
+                                                          index, preset_prop, len, name, true);
+                }
+                break;
+
+            case BQB_ACTION_HAP_PRESET_DELETE:
+                {
+                    uint8_t index;
+
+                    LE_STREAM_TO_UINT8(index, p);
+
+                    if (index == 0xff)
+                    {
+                        for (uint16_t i = 1; i <= 0xff; i++)
+                        {
+                            app_lea_has_modify_preset_record_list(PRESET_CHANGE_DELETE, i, 0,
+                                                                  1, NULL, true);
+                        }
+                    }
+                    else
+                    {
+                        app_lea_has_modify_preset_record_list(PRESET_CHANGE_DELETE,
+                                                              index, 0, 1, NULL, true);
+                    }
+                }
+                break;
+
+            case BQB_ACTION_HAP_RTK_ADV_START:
+                {
+                    app_ble_common_adv_init();
+                    app_ble_common_adv_start_rws(60 * 100);
+                }
+                break;
+
+            default:
+                break;
+            }
+        }
+#endif
 #if ISOC_TEST_SUPPORT
         else if (id & ISOC_CMD_SET)
         {
@@ -1100,7 +1353,7 @@ void app_console_handle_msg(T_IO_MSG console_msg)
                     LE_STREAM_TO_UINT8(bis_channel, p);
                     app_cfg_const.iso_mode = 1;
                     app_cfg_const.subgroup = bis_channel;
-                    app_lea_scan_start(LE_AUDIO_SCAN_TIME);
+                    app_lea_scan_start();
                     //app_lea_bca_state_change(LEA_BCA_STATE_SCAN); for feature change
                     app_bt_sniffing_param_update(APP_BT_SNIFFING_EVENT_ISO_SUSPEND);
                 }

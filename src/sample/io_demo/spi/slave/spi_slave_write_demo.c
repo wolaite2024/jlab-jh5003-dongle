@@ -170,6 +170,7 @@ static void spi_slave_tx_dma_handler(void)
 {
     IO_PRINT_INFO0("spi_slave_tx_dma_handler");
     GDMA_ClearINTPendingBit(SPI_SLAVE_TX_DMA_CHANNEL_NUM, GDMA_INT_Transfer);
+    /* It is recommended to post the os msg to the task thread for data processing. */
 }
 
 static void spi_slave_handler(void)
@@ -180,6 +181,7 @@ static void spi_slave_handler(void)
     IO_PRINT_INFO0("spi_slave_handler");
     if (SPI_GetINTStatus(SPI_SLAVE, SPI_INT_RXF) == SET)
     {
+        /* It is recommended to post the os msg to the task thread for data processing. */
         len = SPI_GetRxFIFOLen(SPI_SLAVE);
         for (idx = 0; idx < len; idx++)
         {

@@ -5,6 +5,7 @@
 
 #include "trace.h"
 #include "board.h"
+#include "pm.h"
 #include "app_main.h"
 #include "app_sensor.h"
 #include "app_cfg.h"
@@ -13,6 +14,7 @@
 #include "mfb_api.h"
 #if (F_APP_SENSOR_SUPPORT == 1)
 #include "hal_gpio.h"
+#include "io_dlps.h"
 #include "platform_utils.h"
 #include "hw_tim.h"
 #include "wdg.h"
@@ -265,16 +267,35 @@ void app_sensor_ld_init(void)
 }
 #endif
 
+static void app_sensor_ld_enter_dlps(void)
+{
+    POWERMode lps_mode = power_mode_get();
+
+    if (lps_mode == POWER_DLPS_MODE)
+    {
+        if (app_db.device_state != APP_DEVICE_STATE_OFF)
+        {
+            hal_gpio_irq_enable(app_cfg_const.sensor_detect_pinmux);
+        }
+    }
+    else if (lps_mode == POWER_POWERDOWN_MODE)
+    {
+        hal_gpio_irq_disable(app_cfg_const.sensor_detect_pinmux);
+    }
+}
+
 void app_sensor_ld_io_init(void)
 {
     APP_PRINT_TRACE1("app_sensor_ld_io_init: sensor_detect_pinmux 0x%x",
                      app_cfg_const.sensor_detect_pinmux);
 
-    hal_gpio_init_pin(app_cfg_const.sensor_detect_pinmux, GPIO_TYPE_CORE, GPIO_DIR_INPUT, GPIO_PULL_UP);
+    hal_gpio_init_pin(app_cfg_const.sensor_detect_pinmux, GPIO_TYPE_AUTO, GPIO_DIR_INPUT, GPIO_PULL_UP);
     hal_gpio_set_up_irq(app_cfg_const.sensor_detect_pinmux, GPIO_IRQ_EDGE, GPIO_IRQ_ACTIVE_HIGH, true);
     hal_gpio_register_isr_callback(app_cfg_const.sensor_detect_pinmux,
                                    app_sensor_ld_io_int_gpio_intr_cb, 0);
     hal_gpio_irq_enable(app_cfg_const.sensor_detect_pinmux);
+
+    io_dlps_register_enter_cb(app_sensor_ld_enter_dlps);
 }
 
 static uint8_t app_sensor_ld_io_status(void)
@@ -600,8 +621,6 @@ ISR_TEXT_SECTION void app_sensor_ld_io_int_gpio_intr_cb(uint32_t param)
     /* Control of entering DLPS */
     app_dlps_disable(APP_DLPS_ENTER_CHECK_GPIO);
 
-    app_dlps_pad_wake_up_polarity_invert(pinmux);
-
     /* Disable GPIO interrupt */
     hal_gpio_irq_disable(pinmux);
     /* Change GPIO Interrupt Polarity */
@@ -635,7 +654,7 @@ ISR_TEXT_SECTION void app_sensor_ld_io_int_gpio_intr_cb(uint32_t param)
 void app_sensor_int_gpio_init(uint8_t pinmux, P_GPIO_CBACK isr_cb)
 {
     /*gpio init*/
-    hal_gpio_init_pin(pinmux, GPIO_TYPE_CORE, GPIO_DIR_INPUT, GPIO_PULL_UP);
+    hal_gpio_init_pin(pinmux, GPIO_TYPE_AUTO, GPIO_DIR_INPUT, GPIO_PULL_UP);
     hal_gpio_set_up_irq(pinmux, GPIO_IRQ_EDGE, GPIO_IRQ_ACTIVE_LOW, true);
     hal_gpio_register_isr_callback(pinmux, isr_cb, 0);
     hal_gpio_irq_enable(pinmux);
@@ -661,8 +680,6 @@ ISR_TEXT_SECTION void app_sensor_sl_int_gpio_intr_cb(uint32_t param)
 
     /* Disable GPIO interrupt */
     hal_gpio_irq_disable(app_cfg_const.gsensor_int_pinmux);
-
-    app_dlps_pad_wake_up_polarity_invert(app_cfg_const.gsensor_int_pinmux);
 
     /* Change GPIO Interrupt Polarity */
     if (int_status == GSENSOR_INT_RELEASED)
@@ -1178,6 +1195,19 @@ static uint8_t app_sensor_gsensor_vendor_sl_click_status(void)
     return 0;
 }
 
+static void app_sensor_gsensor_enter_dlps(void)
+{
+    POWERMode lps_mode = power_mode_get();
+
+    if (lps_mode == POWER_POWERDOWN_MODE)
+    {
+#if F_APP_SENSOR_SL7A20_SUPPORT
+        app_sensor_gsensor_vendor_sl_disable();
+#endif
+        hal_gpio_irq_disable(app_cfg_const.gsensor_int_pinmux);
+    }
+}
+
 void app_sensor_gsensor_init(void)
 {
     app_sensor_i2c_init(GSENSOR_I2C_SLAVE_ADDR_SILAN, DEF_I2C_CLK_SPD, false);
@@ -1187,17 +1217,33 @@ void app_sensor_gsensor_init(void)
         app_sensor_int_gpio_init(app_cfg_const.gsensor_int_pinmux, app_sensor_sl_int_gpio_intr_cb);
     }
 
+    io_dlps_register_enter_cb(app_sensor_gsensor_enter_dlps);
+
     app_sensor_gsensor_vendor_sl_init();
 }
 #endif
 
+static void app_sensor_psensor_enter_dlps(void)
+{
+    POWERMode lps_mode = power_mode_get();
+
+    if (lps_mode == POWER_POWERDOWN_MODE)
+    {
+        hal_gpio_irq_disable(app_cfg_const.gsensor_int_pinmux);
+    }
+}
+
 void app_sensor_psensor_init(void)
 {
-    /*gpio init*/
-    hal_gpio_init_pin(app_cfg_const.gsensor_int_pinmux, GPIO_TYPE_CORE, GPIO_DIR_INPUT, GPIO_PULL_UP);
+    /*psensor io pinmux map to key0*/
+    app_cfg_const.key_pinmux[0] = app_cfg_const.gsensor_int_pinmux;
+
+    hal_gpio_init_pin(app_cfg_const.gsensor_int_pinmux, GPIO_TYPE_AUTO, GPIO_DIR_INPUT, GPIO_PULL_UP);
     hal_gpio_set_up_irq(app_cfg_const.gsensor_int_pinmux, GPIO_IRQ_EDGE, GPIO_IRQ_ACTIVE_LOW, true);
     hal_gpio_register_isr_callback(app_cfg_const.gsensor_int_pinmux, key_gpio_intr_cb, 0);
     hal_gpio_irq_enable(app_cfg_const.gsensor_int_pinmux);
+
+    io_dlps_register_enter_cb(app_sensor_psensor_enter_dlps);
 }
 
 static void app_sensor_timeout_cb(uint8_t timer_evt, uint16_t param)
