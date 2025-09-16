@@ -300,6 +300,7 @@ void app_gaming_sync_legacy_cmd_register(P_GAMING_SYNC_LEGACY_CMD_CB cb);
 void app_gaming_sync_le_cmd_register(P_GAMING_SYNC_LE_CMD_CB cb);
 bool app_gaming_sync_data_send(uint8_t *data, uint16_t size, bool flushable);
 void app_gaming_sync_init(bool append_to_streaming, uint16_t max_data_len);
+bool app_gaming_get_connect_state(void);
 
 
 extern T_DONGLE_STATUS dongle_status;

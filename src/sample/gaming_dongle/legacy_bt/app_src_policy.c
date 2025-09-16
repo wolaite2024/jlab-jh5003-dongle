@@ -7931,6 +7931,14 @@ int gaming_bt_disconnect_by_id(uint8_t id)
 
     return 0;
 }
+void gaming_bt_disconnect_all_link(void)
+{
+		uint8_t i;
+    for (i = 0; i < SINK_DEV_NUM_MAX; i++)
+    {
+        src_dev_cleanup(i, KEY_NONE);
+    }	
+}
 
 void gaming_bt_remove_bond_by_bdaddr(uint8_t *bdaddr)
 {

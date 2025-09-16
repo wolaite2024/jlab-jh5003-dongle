@@ -17,6 +17,10 @@
 #include "legacy_audio_wrapper.h"
 #include "app_adapter_service.h"
 #include "app_le_audio.h"
+#include "app_cfu.h"
+#include "app_general_policy.h"
+#include "app_src_policy.h"
+
 
 #ifdef LEGACY_BT_GAMING
 
@@ -179,15 +183,30 @@ static void gaming_app_bt_connection_state_event(uint8_t idx, uint8_t conn_state
     }
 }
 
+static uint32_t gaming_version_get(void)
+{
+	uint32_t addr = 0;
+	uint32_t version = 0;
+	addr = get_header_addr_by_img_id(CFU_VERSION_SECTION);
+    if (addr != 0)
+    {
+        version =  *(uint32_t *)(addr + 0x3f4);
+    }
+	return version;
+}
 static void gaming_app_get_version_event(void)
 {
-    uint8_t report[4];
+    uint8_t report[6];
     uint8_t *pp = report;
+		//uint8_t state = 0;
     UINT16_TO_STREAM(pp, GAMING_BT_DONGLE_VERSION_REPORT_EVENT);
-    UINT8_TO_STREAM(pp, (uint8_t)RTL8763EAU_VER_MAJOR);
-    UINT8_TO_STREAM(pp, (uint8_t)RTL8763EAU_VER_MINOR);
+    //UINT8_TO_STREAM(pp, (uint8_t)RTL8763EAU_VER_MAJOR);
+    //UINT8_TO_STREAM(pp, (uint8_t)RTL8763EAU_VER_MINOR);
+	UINT32_TO_STREAM(pp, gaming_version_get());
+    app_usb_hid_send_bt_ctrl_data(6, report);
 
-    app_usb_hid_send_bt_ctrl_data(4, report);
+	//state = src_get_audio_device_pair_state();
+	//APP_PRINT_INFO1("----> src_get_audio_device_pair_state state %d",state);
 }
 
 extern T_APP_CFG_NV app_cfg_nv;
@@ -404,6 +423,42 @@ void gaming_app_cis_pair_status_report_event(uint8_t connect_status)
     app_usb_hid_send_bt_ctrl_data(3, report);
 }
 
+static void gaming_app_get_connect_state(void)
+{
+	app_gaming_get_connect_state();
+    uint8_t report[3];
+    uint8_t *pp = report;
+		//uint8_t state = 0;
+    UINT16_TO_STREAM(pp, GAMING_BT_CONNECT_STATE);
+    UINT8_TO_STREAM(pp, app_gaming_get_connect_state());
+
+    app_usb_hid_send_bt_ctrl_data(3, report);
+
+}
+static void gaming_app_cancel_bond(uint8_t *p_data)
+{
+	uint8_t bd_addr[6];
+	uint8_t save_status;
+	uint8_t *pp = p_data;
+	
+	for (uint8_t i = 0; i < 6; i++)
+	{
+		bd_addr[5 - i] = *pp++;
+	}
+	if (app_device_save_pairing_id(bd_addr, 3))
+	{
+		save_status = 0;
+	}
+	else
+	{
+		save_status = 1;
+	}
+	
+	gaming_app_write_address_status_event(save_status);
+
+	gaming_bt_disconnect_all_link();
+}
+
 uint8_t app_usb_hid_handle_gaming_cmd(uint8_t *p_data, uint16_t len)
 {
     uint8_t status = GAMING_COMMAND_COMPLETE_SUCCESS;
@@ -413,10 +468,23 @@ uint8_t app_usb_hid_handle_gaming_cmd(uint8_t *p_data, uint16_t len)
     STREAM_TO_UINT16(opcode, pp);
     length -= 2;
 
-    APP_PRINT_INFO0("app_usb_hid_handle_gaming_cmd(): start");
+    APP_PRINT_INFO1("app_usb_hid_handle_gaming_cmd(): start opcode 0x%x",opcode);
 
     switch (opcode)
     {
+    case GAMING_BT_CANCEL_BOND:
+        {
+            legacy_gaming_cmd_complete_event(opcode, status);
+			gaming_app_cancel_bond(p_data);
+        }
+        break;    
+    case GAMING_BT_GET_CONNECT_STATE:
+    	{
+            legacy_gaming_cmd_complete_event(opcode, status);
+            gaming_app_get_connect_state();		
+    	}
+		break;
+		
     case GAMING_BT_START_DISCOVERY_OPCODE:
         {
             legacy_gaming_cmd_complete_event(opcode, status);

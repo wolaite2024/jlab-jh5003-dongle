@@ -911,4 +911,10 @@ void app_gaming_sync_init(bool append_to_streaming, uint16_t max_data_len)
         ring_buffer_init(&ctrl_data_ack_ring_buf, ctrl_data_ack_buf, CTRL_DATA_ACK_BUF_SIZE);
     }
 }
+
+bool app_gaming_get_connect_state(void)
+{
+	return ctrl_data_link_connected;
+}
+
 #endif

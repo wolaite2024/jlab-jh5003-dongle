@@ -358,6 +358,7 @@ void src_legacy_gaming_event_cback(T_LEGACY_GAMING_EVENT event, uint8_t *addr);
  * \return            true if it sends successfully
  */
 bool all_src_a2dp_stream_stop(void);
+void gaming_bt_disconnect_all_link(void);
 
 extern bool rtp_voice_prequeue_ready;
 extern bool rtp_voice_transmitting;

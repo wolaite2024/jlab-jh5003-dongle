@@ -69,6 +69,9 @@ typedef enum
 #define GAMING_READ_ADDRESS_OPCODE                  0x1017
 #define GAMING_BT_PAIR_OPCODE                       0x1018
 #define GAMING_BT_STOP_PAIR_OPCODE                  0x1019
+#define GAMING_BT_GET_CONNECT_STATE                 0x101A
+#define GAMING_BT_CANCEL_BOND	                    0x101B
+
 
 /**
 * app_gming_ctrl_cfg.h
@@ -89,6 +92,7 @@ typedef enum
 #define GAMING_WRITE_ADDRESS_STATUS_EVENT           0x1E0B
 #define GAMING_READ_ADDRESS_REPORT_EVENT            0x1E0C
 #define GAMING_PAIR_STATUS_REPORT_EVENT             0x1E0D
+#define GAMING_BT_CONNECT_STATE			            0x1E0E
 
 
 //internal event
